@@ -1,0 +1,48 @@
+{
+  "private": true,
+  "scripts": {
+    "dev": "vite --port 3333 --open",
+    "build": "cross-env NODE_ENV=production vite-ssg build",
+    "preview": "vite preview",
+    "preview-https": "serve dist"
+  },
+  "dependencies": {
+    "@vueuse/core": "^6.0.0",
+    "@vueuse/head": "^0.6.0",
+    "nprogress": "^0.2.0",
+    "pinia": "^2.0.0-rc.6",
+    "prism-theme-vars": "^0.2.2",
+    "vue": "^3.2.4",
+    "vue-demi": "^0.11.3",
+    "vue-i18n": "^9.1.7",
+    "vue-router": "^4.0.11"
+  },
+  "devDependencies": {
+    "@antfu/eslint-config": "^0.7.0",
+    "@iconify/json": "^1.1.392",
+    "@intlify/vite-plugin-vue-i18n": "^2.4.0",
+    "@types/nprogress": "^0.2.0",
+    "@vitejs/plugin-vue": "^1.4.0",
+    "@vue/compiler-sfc": "^3.2.4",
+    "@vue/server-renderer": "^3.2.4",
+    "critters": "^0.0.10",
+    "cross-env": "^7.0.3",
+    "eslint": "^7.32.0",
+    "https-localhost": "^4.6.5",
+    "markdown-it-link-attributes": "^3.0.0",
+    "markdown-it-prism": "^2.2.0",
+    "pnpm": "^6.14.3",
+    "typescript": "^4.3.5",
+    "unplugin-auto-import": "^0.0.6",
+    "vite": "^2.5.0",
+    "vite-plugin-components": "^0.13.2",
+    "vite-plugin-icons": "^0.6.5",
+    "vite-plugin-md": "^0.11.0",
+    "vite-plugin-pages": "^0.17.4",
+    "vite-plugin-pwa": "^0.11.0",
+    "vite-plugin-vue-layouts": "^0.3.1",
+    "vite-plugin-windicss": "^1.2.8",
+    "vite-ssg": "^0.14.6",
+    "vue-tsc": "^0.3.0"
+  }
+}

@@ -1,7 +1,7 @@
 <template>
-  <!-- <img alt="Vue logo" src="./assets/logo.png"/>
+  <img alt="Vue logo" src="./assets/logo.png"/>
   <Counter/>
-  <HelloWorld msg="Hello Vue 3 + Vite"/> -->
+  <HelloWorld msg="Hello Vue 3 + Vite"/>
   <intro/>
 </template>
 
