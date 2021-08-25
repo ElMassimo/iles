@@ -1,0 +1,52 @@
+:root {
+  --color-bg: #fff;
+  --color-primary: theme('colors.violet.600');
+  --color-primary-deep: theme('colors.violet.700');
+  --color-subtle: theme('colors.gray.200');
+  --fg-shallow: theme('colors.gray.400');
+  --fg: theme('colors.gray.700');
+  --fg-deep: theme('colors.gray.800');
+  --fg-deeper: theme('colors.gray.900');
+}
+
+html {
+  background-color: var(--color-bg);
+  color: var(--fg);
+}
+
+html.dark {
+  --color-bg: theme('colors.black');
+  --color-primary: theme('colors.violet.500');
+  --color-primary-deep: theme('colors.violet.400');
+  --color-subtle: theme('colors.gray.800');
+  --fg-shallow: theme('colors.gray.500');
+  --fg: theme('colors.gray.300');
+  --fg-deep: theme('colors.gray.200');
+  --fg-deeper: theme('colors.gray.100');
+
+  .prose p,
+  .prose a {
+    --color-primary: theme('colors.gray.100');
+  }
+}
+
+.icon-next {
+  @apply ml-1;
+}
+
+.icon-prev {
+  @apply mr-1;
+}
+
+.icon {
+  display: block;
+  fill: var(--fg);
+  flex-shrink: 0;
+  height: 16px;
+  transform: translateY(1px);
+  width: 16px;
+}
+
+.audio-player {
+  min-height: 87px;
+}
