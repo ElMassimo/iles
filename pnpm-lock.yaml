@@ -4,6 +4,7 @@ specifiers:
   '@iconify/json': ^1.1.393
   '@mussi/eslint-config': ^0.5.1
   '@mussi/stylelint-config': ^0.1.1
+  '@nuxt/devalue': ^2.0.0
   '@types/nprogress': ^0.2.0
   '@vitejs/plugin-vue': ^1.6.0
   '@vitejs/plugin-vue-jsx': ^1.1.7
@@ -52,6 +53,7 @@ devDependencies:
   '@iconify/json': 1.1.393
   '@mussi/eslint-config': 0.5.1_eslint@7.32.0+typescript@4.3.5
   '@mussi/stylelint-config': 0.1.1
+  '@nuxt/devalue': 2.0.0
   '@types/nprogress': 0.2.0
   '@vitejs/plugin-vue': 1.6.0_@vue+compiler-sfc@3.2.6
   '@vitejs/plugin-vue-jsx': 1.1.7
@@ -1432,6 +1434,10 @@ packages:
     dependencies:
       '@nodelib/fs.scandir': 2.1.5
       fastq: 1.12.0
+    dev: true
+
+  /@nuxt/devalue/2.0.0:
+    resolution: {integrity: sha512-YBI/6o2EBz02tdEJRBK8xkt3zvOFOWlLBf7WKYGBsSYSRtjjgrqPe2skp6VLLmKx5WbHHDNcW+6oACaurxGzeA==}
     dev: true
 
   /@polka/url/1.0.0-next.17:

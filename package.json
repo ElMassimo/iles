@@ -29,6 +29,7 @@
     "@iconify/json": "^1.1.393",
     "@mussi/eslint-config": "^0.5.1",
     "@mussi/stylelint-config": "^0.1.1",
+    "@nuxt/devalue": "^2.0.0",
     "@types/nprogress": "^0.2.0",
     "@vitejs/plugin-vue": "^1.6.0",
     "@vitejs/plugin-vue-jsx": "^1.1.7",

@@ -26,7 +26,11 @@ export default defineConfig({
       name: 'build-var',
       apply: 'build',
     },
-    viteSSR(),
+    viteSSR({
+      build: {
+        keepIndexHtml: true,
+      }
+    }),
     {
       name: 'ile',
       transform (code, id) {
