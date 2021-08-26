@@ -1,0 +1,1 @@
+import{c as a,d as n}from"./index.567bddf4.js";import{l as o,o as s,a as t,c as e,L as r,M as c}from"./vendor.ca5446d8.js";const d={},l={class:"px-4 py-10 w-max-65ch mx-auto"};d.render=function(d,m){const i=n,p=o("router-view");return s(),t("main",l,[e(i,{component:a,"client:idle":""},null,8,["component"]),e(p,r(c(d.$attrs)),null,16)])};export{d as default};

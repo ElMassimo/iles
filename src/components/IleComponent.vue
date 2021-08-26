@@ -1,6 +1,7 @@
 <script lang="ts">
 import { defineComponent, h } from 'vue'
 import type { DefineComponent } from 'vue'
+import { useHead } from '@vueuse/head'
 
 export default defineComponent({
   name: 'IleComponent',
@@ -13,9 +14,16 @@ export default defineComponent({
     'client:media': { type: String, default: '' },
     'client:only': { type: Boolean, default: false },
   },
+  setup ({ component }) {
+    useHead({
+      script: [
+        { type: 'module', 'client-keep': '', children: `console.log('Should hydrate ${component?.name}.')` }
+      ]
+    })
+  },
   render () {
-    return h('ile-root', null,
-      h(this.component as DefineComponent, this.$attrs, this.$slots))
+    const prerendered = h(this.component as DefineComponent, this.$attrs, this.$slots)
+    return h('ile-root', null, prerendered)
   },
 })
 </script>

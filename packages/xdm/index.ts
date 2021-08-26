@@ -6,7 +6,7 @@ import { createFilter } from '@rollup/pluginutils'
 import { createFormatAwareProcessors } from 'xdm/lib/util/create-format-aware-processors.js'
 
 import remarkFrontmatter from 'remark-frontmatter'
-import { remarkMdxFrontmatter } from 'remark-mdx-frontmatter'
+import { remarkMdxFrontmatter } from './frontmatter'
 import { remarkMdxImages } from 'remark-mdx-images'
 
 type Options = Parameters<typeof rollup>[0]

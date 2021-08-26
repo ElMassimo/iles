@@ -1,3 +1,7 @@
+<script lang="ts">
+export default { name: 'AudioPlayer' }
+</script>
+
 <script setup lang="ts">
 import { formatDate } from '~/helpers/FormatHelper'
 

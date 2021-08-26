@@ -1,0 +1,12 @@
+{
+  "private": true,
+  "dependencies": {
+    "node-fetch": "*",
+    "@vueuse/core": "^6.0.0",
+    "@vueuse/head": "^0.6.0",
+    "nprogress": "^0.2.0",
+    "vue": "^3.2.0",
+    "@vue/server-renderer": "^3.2.6",
+    "vue-router": "^4.0.11"
+  }
+}

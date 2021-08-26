@@ -1,4 +1,5 @@
 import path from 'path'
+import fs from 'fs'
 import { defineConfig } from 'vite'
 import Vue from '@vitejs/plugin-vue'
 import Pages from 'vite-plugin-pages'
@@ -10,6 +11,8 @@ import viteSSR from 'vite-ssr/plugin'
 
 import VueJSX from '@vitejs/plugin-vue-jsx'
 import XDM from './packages/xdm'
+import matter from 'gray-matter'
+
 import Inspect from 'vite-plugin-inspect'
 
 export default defineConfig({
@@ -19,8 +22,15 @@ export default defineConfig({
     },
   },
   plugins: [
-    viteSSR(),
-
+    {
+      name: 'build-var',
+      apply: 'build',
+    },
+    viteSSR({
+      build: {
+        keepIndexHtml: true,
+      },
+    }),
     {
       name: 'ile',
       transform (code, id) {
@@ -67,7 +77,9 @@ export default defineConfig({
         return code.replace('export default MDXContent', `
           ${code.includes('defineComponent') ? '' : "import { defineComponent } from 'vue'"}
 
-          export default defineComponent({
+          const _default = defineComponent({
+            ...frontmatter,
+            frontmatter,
             props: {
               components: { type: Object, default: () => ({}) },
             },
@@ -75,6 +87,7 @@ export default defineConfig({
               return MDXContent({ ...this.$props, ...this.$attrs })
             },
           })
+          export default _default
         `)
       },
     },
@@ -86,9 +99,16 @@ export default defineConfig({
     // https://github.com/hannoeru/vite-plugin-pages
     Pages({
       extensions: ['vue', 'md', 'mdx'],
-
-      importMode(path) {
-        return path.endsWith('mdx') ? 'sync' : 'async';
+      extendRoute (route) {
+        const file = path.resolve(__dirname, route.component.slice(1))
+        if (file.endsWith('.mdx') || file.endsWith('.md')) {
+          const md = fs.readFileSync(file, 'utf-8')
+          const { data } = matter(md)
+          route.meta = Object.assign(route.meta || {}, { frontmatter: data })
+          if (file.includes('posts/') && !file.endsWith('index.vue'))
+            route.meta.layout = 'post'
+        }
+        return route
       },
     }),
 
