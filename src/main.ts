@@ -4,8 +4,8 @@ import viteSSR, { ClientOnly } from 'vite-ssr'
 import { createHead } from '@vueuse/head'
 import generatedRoutes from 'virtual:generated-pages'
 import { setupLayouts } from 'virtual:generated-layouts'
-import { installI18n, extractLocaleFromPath, DEFAULT_LOCALE } from './i18n'
 import App from './App.vue'
+import type { Router } from 'vue-router'
 
 const routes = setupLayouts(generatedRoutes)
 
@@ -14,11 +14,6 @@ export default viteSSR(
   App,
   {
     routes,
-    // Use Router's base for i18n routes
-    base: ({ url }) => {
-      const locale = extractLocaleFromPath(url.pathname)
-      return locale === DEFAULT_LOCALE ? '/' : `/${locale}/`
-    },
   },
   async (ctx) => {
     // install all modules under `modules/`
@@ -26,15 +21,14 @@ export default viteSSR(
       i.install?.(ctx)
     )
 
-    const { app, url, router, isClient, initialState, initialRoute } = ctx
+    const { app } = ctx
+
+    const router = ctx.router as Router
 
     const head = createHead()
     app.use(head)
 
     app.component(ClientOnly.name, ClientOnly)
-
-    // Load language asyncrhonously to avoid bundling all languages
-    await installI18n(app, extractLocaleFromPath(initialRoute.href))
 
     // // Freely modify initialState and it will be serialized later
     // if (import.meta.env.SSR) {
@@ -55,7 +49,7 @@ export default viteSSR(
       // `isClient` here is a handy way to determine if it's SSR or not.
       // However, it is a runtime variable so it won't be tree-shaked.
       // Use Vite's `import.meta.env.SSR` instead for tree-shaking.
-      const baseUrl = isClient ? '' : url.origin
+      // const baseUrl = isClient ? '' : url.origin
 
       // Explanation:
       // The first rendering happens in the server. Therefore, when this code runs,

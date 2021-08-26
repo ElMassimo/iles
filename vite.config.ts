@@ -1,55 +1,16 @@
 import path from 'path'
-import { defineConfig, resolveConfig } from 'vite'
-import type { Plugin } from 'vite'
+import { defineConfig } from 'vite'
 import Vue from '@vitejs/plugin-vue'
 import Pages from 'vite-plugin-pages'
 import Layouts from 'vite-plugin-vue-layouts'
 import ViteIcons, { ViteIconsResolver } from 'vite-plugin-icons'
 import ViteComponents from 'vite-plugin-components'
 import WindiCSS from 'vite-plugin-windicss'
-import { VitePWA } from 'vite-plugin-pwa'
-import VueI18n from '@intlify/vite-plugin-vue-i18n'
 import viteSSR from 'vite-ssr/plugin'
-import {createFilter} from '@rollup/pluginutils'
 
 import VueJSX from '@vitejs/plugin-vue-jsx'
+import XDM from './packages/xdm'
 import Inspect from 'vite-plugin-inspect'
-
-function XDM (options = {}): Plugin {
-  let processor
-  let filter
-  let VFile
-
-  return {
-    name: 'xdm',
-
-    async transform (value, path) {
-      if (!processor) {
-        const {include, exclude, ...rest} = options
-        rest.remarkPlugins = [
-          (await import('remark-mdx-images')).remarkMdxImages,
-          (await import('remark-frontmatter')).default,
-          (await import('remark-mdx-frontmatter')).remarkMdxFrontmatter,
-        ]
-        VFile = (await import('vfile')).VFile
-        const { createFormatAwareProcessors } =
-          await import('xdm/lib/util/create-format-aware-processors.js')
-        processor = createFormatAwareProcessors(rest)
-        filter = createFilter(include, exclude)
-      }
-
-      const file = new VFile({value, path})
-
-      if (filter(file.path) && processor.extnames.includes(file.extname)) {
-        const compiled = await processor.process(file)
-        // @ts-expect-error `map` is added if a `SourceMapGenerator` is passed in.
-        return {code: String(compiled.value), map: compiled.map}
-        // V8 on Erbium.
-        /* c8 ignore next 2 */
-      }
-    }
-  }
-}
 
 export default defineConfig({
   resolve: {
@@ -60,18 +21,49 @@ export default defineConfig({
   plugins: [
     viteSSR(),
 
-    XDM({
-      jsx: true,
-    }),
+    {
+      name: 'ile',
+      transform (code, id) {
+        if (!id.endsWith('.mdx') && !id.endsWith('.vue')) return
+
+        const components = /<([A-Z]\w+)\s*(?:([^/]+?)\/>|([^>]+)>(.*?)<\/\1>)/sg
+
+        return code.replace(components, (str, tagName, attrs, otherAttrs, children) => {
+          if (otherAttrs) attrs = otherAttrs
+          if (tagName === 'AudioPlayer' || tagName === 'DarkModeSwitch')
+            console.log({ str, tagName, attrs, children })
+          if (!attrs?.match(/(\s|^)client:/)) return str
+
+          const component = id.endsWith('.vue')
+            ? `:component='_resolveComponent("${tagName}")'`
+            : `component={props.components.${tagName}}`
+          return `<IleComponent ${component} ${attrs}>${children || ''}</IleComponent>`
+        })
+      },
+    },
 
     Vue({
       refTransform: true,
+      template: {
+        compilerOptions: {
+          isCustomElement: (tagName) => tagName.startsWith('ile-')
+        }
+      },
+    }),
+
+    XDM({
+      jsx: true,
     }),
 
     {
       name: 'mdx-transform',
       transform (code, id) {
-        if (!id.endsWith('.mdx')) return null
+        if (!id.endsWith('.mdx') || !code.includes('MDXContent')) return null
+
+        if (code.includes('IleComponent')) {
+          code = `import IleComponent from '~/components/IleComponent.vue'\n${code}`
+          code = code.replace('IleComponent, ', '')
+        }
         return code.replace('export default MDXContent', `
           ${code.includes('defineComponent') ? '' : "import { defineComponent } from 'vue'"}
 
@@ -94,6 +86,10 @@ export default defineConfig({
     // https://github.com/hannoeru/vite-plugin-pages
     Pages({
       extensions: ['vue', 'md', 'mdx'],
+
+      importMode(path) {
+        return path.endsWith('mdx') ? 'sync' : 'async';
+      },
     }),
 
     // https://github.com/JohnCampionJr/vite-plugin-vue-layouts
@@ -102,10 +98,10 @@ export default defineConfig({
     // https://github.com/antfu/vite-plugin-components
     ViteComponents({
       // allow auto load markdown components under `./src/components/`
-      extensions: ['vue', 'md'],
+      extensions: ['vue', 'md', 'mdx'],
 
       // allow auto import and register components used in markdown
-      customLoaderMatcher: id => id.endsWith('.md'),
+      customLoaderMatcher: id => id.endsWith('.md') || id.endsWith('.mdx'),
 
       // auto import icons
       customComponentResolvers: [
@@ -114,46 +110,30 @@ export default defineConfig({
           componentPrefix: '',
           // enabledCollections: ['carbon']
         }),
+        (name) => {
+          if (name === 'IleComponent')
+            return { importName: name, path: '~/components/IleComponent.vue' }
+          else
+            return null
+        },
       ],
     }),
+
+    {
+      name: 'ile-post',
+      enforce: 'post',
+      transform (code, id) {
+        if (!id.endsWith('.vue')) return
+
+        return code.replace('_ctx.__vite_components_', '__vite_components_')
+      },
+    },
 
     // https://github.com/antfu/vite-plugin-icons
     ViteIcons(),
 
     // https://github.com/antfu/vite-plugin-windicss
     WindiCSS(),
-
-    // https://github.com/antfu/vite-plugin-pwa
-    VitePWA({
-      manifest: {
-        name: 'Vitesse',
-        short_name: 'Vitesse',
-        theme_color: '#ffffff',
-        icons: [
-          {
-            src: '/pwa-192x192.png',
-            sizes: '192x192',
-            type: 'image/png',
-          },
-          {
-            src: '/pwa-512x512.png',
-            sizes: '512x512',
-            type: 'image/png',
-          },
-          {
-            src: '/pwa-512x512.png',
-            sizes: '512x512',
-            type: 'image/png',
-            purpose: 'any maskable',
-          },
-        ],
-      },
-    }),
-
-    // https://github.com/intlify/vite-plugin-vue-i18n
-    VueI18n({
-      include: [path.resolve(__dirname, 'src/i18n/translations/**')],
-    }),
 
     Inspect(),
   ],

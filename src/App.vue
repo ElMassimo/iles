@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { useHead } from '@vueuse/head'
 
-const title = 'Vitesse SSR'
-const description = 'Opinionated SSR Vite Starter Template'
+const title = 'îles'
+const description = 'Static Site Generator with Islands Architecture'
 
 // https://github.com/vueuse/head
 // you can use this to manipulate the document head in any components,

@@ -1,0 +1,32 @@
+{
+  "name": "vite-plugin-xdm",
+  "type": "module",
+  "scripts": {
+    "build": "tsup index.ts --dts --sourcemap --format cjs,esm"
+  },
+  "files": [
+    "dist",
+    "index.ts"
+  ],
+  "types": "dist/index.dts",
+  "main": "dist/index.cjs",
+  "module": "dist/index.js",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    }
+  },
+  "devDependencies": {
+    "@rollup/pluginutils": "^4.1.1",
+    "remark-frontmatter": "^4.0.0",
+    "remark-mdx-frontmatter": "^1.0.1",
+    "remark-mdx-images": "^1.0.3",
+    "source-map-js": "^0.6.2",
+    "tsup": "^3.11.0",
+    "typescript": "^4.1.3",
+    "vfile": "^5.1.0",
+    "vite": "^2.5.1",
+    "xdm": "^2.0.0"
+  }
+}
