@@ -17,7 +17,7 @@ export default defineComponent({
   setup ({ component }) {
     useHead({
       script: [
-        { type: 'module', 'client-keep': '', children: `console.log('Should hydrate ${component?.name}.')` }
+        { type: 'module', 'client-keep': '', children: `console.log('Should hydrate ${(component || {}).name}.')` }
       ]
     })
   },

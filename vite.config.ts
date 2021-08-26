@@ -26,11 +26,7 @@ export default defineConfig({
       name: 'build-var',
       apply: 'build',
     },
-    viteSSR({
-      build: {
-        keepIndexHtml: true,
-      },
-    }),
+    viteSSR(),
     {
       name: 'ile',
       transform (code, id) {
@@ -40,10 +36,7 @@ export default defineConfig({
 
         return code.replace(components, (str, tagName, attrs, otherAttrs, children) => {
           if (otherAttrs) attrs = otherAttrs
-          if (tagName === 'AudioPlayer' || tagName === 'DarkModeSwitch')
-            console.log({ str, tagName, attrs, children })
           if (!attrs?.match(/(\s|^)client:/)) return str
-
           const component = id.endsWith('.vue')
             ? `:component='_resolveComponent("${tagName}")'`
             : `component={props.components.${tagName}}`

@@ -41,10 +41,10 @@ export default viteSSR(
 
     // As an example, make a getPageProps request before each route navigation
     router.beforeEach(async (to, from, next) => {
-      if (!!to.meta.state && (!import.meta.env.DEV || import.meta.env.SSR)) {
-        // This route has state already (from server) so it can be reused.
-        return next()
-      }
+      // if (!!to.meta.state && (!import.meta.env.DEV || import.meta.env.SSR)) {
+      //   // This route has state already (from server) so it can be reused.
+      //   return next()
+      // }
 
       // `isClient` here is a handy way to determine if it's SSR or not.
       // However, it is a runtime variable so it won't be tree-shaked.

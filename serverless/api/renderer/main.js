@@ -604,10 +604,6 @@ ul {
   font-size: 2.25rem;
   line-height: 2.5rem;
 }
-.text-3xl {
-  font-size: 1.875rem;
-  line-height: 2.25rem;
-}
 .text-5xl {
   font-size: 3rem;
   line-height: 1;
@@ -651,14 +647,14 @@ ul {
 .mt-8 {
   margin-top: 2rem;
 }
-.mb-8 {
-  margin-bottom: 2rem;
-}
 .-mb-6 {
   margin-bottom: -1.5rem;
 }
 .mb-16 {
   margin-bottom: 4rem;
+}
+.mb-8 {
+  margin-bottom: 2rem;
 }
 .opacity-75 {
   opacity: 0.75;
@@ -999,16 +995,16 @@ const viteSSR = function viteSSR2(App, { routes: routes2, base, routerOptions = 
   <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#00aba9">
   <meta name="msapplication-TileColor" content="#00aba9">
   <meta name="theme-color" content="#ffffff">
-  <script type="module" crossorigin src="/assets/index.567bddf4.js"><\/script>
-    <link rel="modulepreload" href="/assets/vendor.ca5446d8.js">
-    <link rel="stylesheet" href="/assets/index.ccd4b6e2.css">
+  <script type="module" crossorigin src="/assets/index.5edc173e.js"><\/script>
+    <link rel="modulepreload" href="/assets/vendor.bd1b4017.js">
+    <link rel="stylesheet" href="/assets/index.ccec0ab4.css">
   ${headTags}
 </head>
 <body ${bodyAttrs} >
   <div id="app" data-server-rendered="true">${body}</div>
 
   <script>window.__INITIAL_STATE__=${initialState}<\/script>
-  <script>
+  <script client-keep>
     (function() {
       const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
       const setting = localStorage.getItem('color-schema') || 'auto'
@@ -1029,6 +1025,35 @@ const viteSSR = function viteSSR2(App, { routes: routes2, base, routerOptions = 
     }, response);
   };
 };
+var _sfc_main$d = vue.defineComponent({
+  name: "IleComponent",
+  inheritAttrs: false,
+  props: {
+    component: { required: true },
+    "client:idle": { type: Boolean, default: false },
+    "client:load": { type: Boolean, default: false },
+    "client:visible": { type: Boolean, default: false },
+    "client:media": { type: String, default: "" },
+    "client:only": { type: Boolean, default: false }
+  },
+  setup({ component }) {
+    head.useHead({
+      script: [
+        { type: "module", "client-keep": "", children: `console.log('Should hydrate ${(component || {}).name}.')` }
+      ]
+    });
+  },
+  render() {
+    const prerendered = vue.h(this.component, this.$attrs, this.$slots);
+    return vue.h("ile-root", null, prerendered);
+  }
+});
+const _sfc_setup$d = _sfc_main$d.setup;
+_sfc_main$d.setup = (props, ctx) => {
+  const ssrContext = vue.useSSRContext();
+  (ssrContext.modules || (ssrContext.modules = new Set())).add("src/components/IleComponent.vue");
+  return _sfc_setup$d ? _sfc_setup$d(props, ctx) : void 0;
+};
 function ssrRegisterHelper(comp, filename) {
   const setup2 = comp.setup;
   comp.setup = (props, ctx) => {
@@ -1039,8 +1064,127 @@ function ssrRegisterHelper(comp, filename) {
     }
   };
 }
-const title$3 = "Meditando en el campo", date$2 = "2021-07-13 15:00 -03:00", image$2 = "/images/meditando-en-el-campo.jpg";
+const title$3 = "Conexi\xF3n con la madre tierra", date$2 = "2021-07-18 17:41 -03:00", recorded$1 = new Date(15869088e5), category$1 = "practicas", image$2 = "/images/conexion-con-la-madre-tierra.jpg", audio$1 = "/audio/conexion-con-la-madre-tierra.mp3";
+const frontmatter$4 = {
+  title: title$3,
+  date: date$2,
+  recorded: recorded$1,
+  category: category$1,
+  image: image$2,
+  audio: audio$1
+};
 function MDXContent$4(props) {
+  const _components = Object.assign({
+    p: "p"
+  }, props.components), {
+    wrapper: MDXLayout
+  } = _components;
+  const _content = vue.createVNode(vue.Fragment, null, [vue.createVNode(_components.p, null, {
+    default: () => ["Esta visualizaci\xF3n la compart\xED cuando iban pasando los d\xEDas de aislamiento\nsocial y se volv\xEDa m\xE1s dif\xEDcil mantener la quietud y la calma."]
+  }), "\n", vue.createVNode(_sfc_main$d, {
+    "component": props.components.AudioPlayer,
+    "client:idle": true,
+    "title": title$3,
+    "url": audio$1,
+    "recorded": recorded$1
+  }, null)]);
+  return MDXLayout ? vue.createVNode(MDXLayout, props, _isSlot$4(_content) ? _content : {
+    default: () => [_content]
+  }) : _content;
+}
+function _isSlot$4(s) {
+  return typeof s === "function" || Object.prototype.toString.call(s) === "[object Object]" && !vue.isVNode(s);
+}
+const _default$2 = vue.defineComponent(__spreadProps(__spreadValues({}, frontmatter$4), {
+  frontmatter: frontmatter$4,
+  props: {
+    components: {
+      type: Object,
+      default: () => ({})
+    }
+  },
+  render() {
+    return MDXContent$4(__spreadValues(__spreadValues({}, this.$props), this.$attrs));
+  }
+}));
+const __moduleId$2 = "src/pages/posts/conexion-con-la-madre-tierra.mdx";
+ssrRegisterHelper(_default$2, __moduleId$2);
+var __glob_4_0 = /* @__PURE__ */ Object.freeze({
+  __proto__: null,
+  [Symbol.toStringTag]: "Module",
+  title: title$3,
+  date: date$2,
+  recorded: recorded$1,
+  category: category$1,
+  image: image$2,
+  audio: audio$1,
+  frontmatter: frontmatter$4,
+  "default": _default$2
+});
+const title$2 = "Meditaci\xF3n de la tangerina", date$1 = "2021-08-15 11:05 -03:00", recorded = new Date(162864e7), category = "practicas", image$1 = "/images/meditacion-de-la-tangerina.jpg", audio = "/audio/meditacion-de-la-tangerina.mp3";
+const frontmatter$3 = {
+  title: title$2,
+  date: date$1,
+  recorded,
+  category,
+  image: image$1,
+  audio
+};
+function MDXContent$3(props) {
+  const _components = Object.assign({
+    p: "p"
+  }, props.components), {
+    wrapper: MDXLayout
+  } = _components;
+  const _content = vue.createVNode(vue.Fragment, null, [vue.createVNode(_components.p, null, {
+    default: () => ["Esta meditaci\xF3n la comparto para que los ni\xF1os la puedan realizar en familia o con el docente en su grupo escolar. Promueve la alimentaci\xF3n consciente y la conexi\xF3n con la naturaleza."]
+  }), "\n", vue.createVNode(_sfc_main$d, {
+    "component": props.components.AudioPlayer,
+    "client:idle": true,
+    "title": title$2,
+    "url": audio,
+    "recorded": recorded
+  }, null)]);
+  return MDXLayout ? vue.createVNode(MDXLayout, props, _isSlot$3(_content) ? _content : {
+    default: () => [_content]
+  }) : _content;
+}
+function _isSlot$3(s) {
+  return typeof s === "function" || Object.prototype.toString.call(s) === "[object Object]" && !vue.isVNode(s);
+}
+const _default$1 = vue.defineComponent(__spreadProps(__spreadValues({}, frontmatter$3), {
+  frontmatter: frontmatter$3,
+  props: {
+    components: {
+      type: Object,
+      default: () => ({})
+    }
+  },
+  render() {
+    return MDXContent$3(__spreadValues(__spreadValues({}, this.$props), this.$attrs));
+  }
+}));
+const __moduleId$1 = "src/pages/posts/meditacion-de-la-tangerina.mdx";
+ssrRegisterHelper(_default$1, __moduleId$1);
+var __glob_4_1 = /* @__PURE__ */ Object.freeze({
+  __proto__: null,
+  [Symbol.toStringTag]: "Module",
+  title: title$2,
+  date: date$1,
+  recorded,
+  category,
+  image: image$1,
+  audio,
+  frontmatter: frontmatter$3,
+  "default": _default$1
+});
+const title$1 = "Meditando en el campo", date = "2021-07-13 15:00 -03:00", image = "/images/meditando-en-el-campo.jpg";
+const frontmatter$2 = {
+  title: title$1,
+  date,
+  image
+};
+function MDXContent$2(props) {
   const _components = Object.assign({
     p: "p",
     a: "a"
@@ -1062,126 +1206,6 @@ function MDXContent$4(props) {
   }), "\n", vue.createVNode(_components.p, null, {
     default: () => ["Estos nuevos aprendizajes y experiencias son lo que compartir\xE9 en este espacio."]
   })]);
-  return MDXLayout ? vue.createVNode(MDXLayout, props, _isSlot$4(_content) ? _content : {
-    default: () => [_content]
-  }) : _content;
-}
-function _isSlot$4(s) {
-  return typeof s === "function" || Object.prototype.toString.call(s) === "[object Object]" && !vue.isVNode(s);
-}
-const __default__$4 = vue.defineComponent({
-  props: {
-    components: {
-      type: Object,
-      default: () => ({})
-    }
-  },
-  render() {
-    return MDXContent$4(__spreadValues(__spreadValues({}, this.$props), this.$attrs));
-  }
-});
-const __moduleId$2 = "src/pages/posts/meditando-en-el-campo.mdx";
-ssrRegisterHelper(__default__$4, __moduleId$2);
-var __glob_4_2 = /* @__PURE__ */ Object.freeze({
-  __proto__: null,
-  [Symbol.toStringTag]: "Module",
-  title: title$3,
-  date: date$2,
-  image: image$2,
-  "default": __default__$4
-});
-var _sfc_main$c = vue.defineComponent({
-  name: "IleComponent",
-  inheritAttrs: false,
-  props: {
-    component: { required: true },
-    "client:idle": { type: Boolean, default: false },
-    "client:load": { type: Boolean, default: false },
-    "client:visible": { type: Boolean, default: false },
-    "client:media": { type: String, default: "" },
-    "client:only": { type: Boolean, default: false }
-  },
-  setup({ component }) {
-    head.useHead({
-      script: [
-        { type: "module", "client-keep": "", children: `console.log('Should hydrate ${component.name}.')` }
-      ]
-    });
-  },
-  render() {
-    const prerendered = vue.h(this.component, this.$attrs, this.$slots);
-    return vue.h("ile-root", null, prerendered);
-  }
-});
-const _sfc_setup$c = _sfc_main$c.setup;
-_sfc_main$c.setup = (props, ctx) => {
-  const ssrContext = vue.useSSRContext();
-  (ssrContext.modules || (ssrContext.modules = new Set())).add("src/components/IleComponent.vue");
-  return _sfc_setup$c ? _sfc_setup$c(props, ctx) : void 0;
-};
-const title$2 = "Meditaci\xF3n de la tangerina", date$1 = "2021-08-15 11:05 -03:00", recorded$1 = new Date(162864e7), category$1 = "practicas", image$1 = "/images/meditacion-de-la-tangerina.jpg", audio$1 = "/audio/meditacion-de-la-tangerina.mp3";
-function MDXContent$3(props) {
-  const _components = Object.assign({
-    p: "p"
-  }, props.components), {
-    wrapper: MDXLayout
-  } = _components;
-  const _content = vue.createVNode(vue.Fragment, null, [vue.createVNode(_components.p, null, {
-    default: () => ["Esta meditaci\xF3n la comparto para que los ni\xF1os la puedan realizar en familia o con el docente en su grupo escolar. Promueve la alimentaci\xF3n consciente y la conexi\xF3n con la naturaleza."]
-  }), "\n", vue.createVNode(_sfc_main$c, {
-    "component": props.components.AudioPlayer,
-    "client:idle": true,
-    "title": title$2,
-    "url": audio$1,
-    "recorded": recorded$1
-  }, null)]);
-  return MDXLayout ? vue.createVNode(MDXLayout, props, _isSlot$3(_content) ? _content : {
-    default: () => [_content]
-  }) : _content;
-}
-function _isSlot$3(s) {
-  return typeof s === "function" || Object.prototype.toString.call(s) === "[object Object]" && !vue.isVNode(s);
-}
-const __default__$3 = vue.defineComponent({
-  props: {
-    components: {
-      type: Object,
-      default: () => ({})
-    }
-  },
-  render() {
-    return MDXContent$3(__spreadValues(__spreadValues({}, this.$props), this.$attrs));
-  }
-});
-const __moduleId$1 = "src/pages/posts/meditacion-de-la-tangerina.mdx";
-ssrRegisterHelper(__default__$3, __moduleId$1);
-var __glob_4_1 = /* @__PURE__ */ Object.freeze({
-  __proto__: null,
-  [Symbol.toStringTag]: "Module",
-  title: title$2,
-  date: date$1,
-  recorded: recorded$1,
-  category: category$1,
-  image: image$1,
-  audio: audio$1,
-  "default": __default__$3
-});
-const title$1 = "Conexi\xF3n con la madre tierra", date = "2021-07-18 17:41 -03:00", recorded = new Date(15869088e5), category = "practicas", image = "/images/conexion-con-la-madre-tierra.jpg", audio = "/audio/conexion-con-la-madre-tierra.mp3";
-function MDXContent$2(props) {
-  const _components = Object.assign({
-    p: "p"
-  }, props.components), {
-    wrapper: MDXLayout
-  } = _components;
-  const _content = vue.createVNode(vue.Fragment, null, [vue.createVNode(_components.p, null, {
-    default: () => ["Esta visualizaci\xF3n la compart\xED cuando iban pasando los d\xEDas de aislamiento\nsocial y se volv\xEDa m\xE1s dif\xEDcil mantener la quietud y la calma."]
-  }), "\n", vue.createVNode(_sfc_main$c, {
-    "component": props.components.AudioPlayer,
-    "client:idle": true,
-    "title": title$1,
-    "url": audio,
-    "recorded": recorded
-  }, null)]);
   return MDXLayout ? vue.createVNode(MDXLayout, props, _isSlot$2(_content) ? _content : {
     default: () => [_content]
   }) : _content;
@@ -1189,7 +1213,8 @@ function MDXContent$2(props) {
 function _isSlot$2(s) {
   return typeof s === "function" || Object.prototype.toString.call(s) === "[object Object]" && !vue.isVNode(s);
 }
-const __default__$2 = vue.defineComponent({
+const _default = vue.defineComponent(__spreadProps(__spreadValues({}, frontmatter$2), {
+  frontmatter: frontmatter$2,
   props: {
     components: {
       type: Object,
@@ -1199,223 +1224,17 @@ const __default__$2 = vue.defineComponent({
   render() {
     return MDXContent$2(__spreadValues(__spreadValues({}, this.$props), this.$attrs));
   }
-});
-const __moduleId = "src/pages/posts/conexion-con-la-madre-tierra.mdx";
-ssrRegisterHelper(__default__$2, __moduleId);
-var __glob_4_0 = /* @__PURE__ */ Object.freeze({
+}));
+const __moduleId = "src/pages/posts/meditando-en-el-campo.mdx";
+ssrRegisterHelper(_default, __moduleId);
+var __glob_4_2 = /* @__PURE__ */ Object.freeze({
   __proto__: null,
   [Symbol.toStringTag]: "Module",
   title: title$1,
   date,
-  recorded,
-  category,
   image,
-  audio,
-  "default": __default__$2
-});
-const routes$1 = [{ "name": "posts", "path": "/posts", "component": () => Promise.resolve().then(function() {
-  return index;
-}), "props": true, "meta": { "layout": "home" } }, { "name": "posts-meditando-en-el-campo", "path": "/posts/meditando-en-el-campo", "component": __default__$4, "props": true }, { "name": "posts-meditacion-de-la-tangerina", "path": "/posts/meditacion-de-la-tangerina", "component": __default__$3, "props": true }, { "name": "posts-conexion-con-la-madre-tierra", "path": "/posts/conexion-con-la-madre-tierra", "component": __default__$2, "props": true }, { "name": "index", "path": "/", "component": () => Promise.resolve().then(function() {
-  return index$1;
-}), "props": true, "meta": { "layout": "home" } }, { "name": "about", "path": "/about", "component": () => Promise.resolve().then(function() {
-  return about;
-}), "props": true }, { "name": "README", "path": "/readme", "component": () => Promise.resolve().then(function() {
-  return README;
-}), "props": true }, { "name": "all", "path": "/:all(.*)*", "component": () => Promise.resolve().then(function() {
-  return ____all_;
-}), "props": true, "meta": { "layout": 404 } }];
-const _hoisted_1$3 = {
-  xmlns: "http://www.w3.org/2000/svg",
-  "xmlns:xlink": "http://www.w3.org/1999/xlink",
-  width: "1.2em",
-  height: "1.2em",
-  preserveAspectRatio: "xMidYMid meet",
-  viewBox: "0 0 24 24"
-};
-const _hoisted_2$3 = /* @__PURE__ */ vue.createElementVNode("path", {
-  d: "M20.742 13.045a8.088 8.088 0 0 1-2.077.271c-2.135 0-4.14-.83-5.646-2.336a8.025 8.025 0 0 1-2.064-7.723A1 1 0 0 0 9.73 2.034a10.014 10.014 0 0 0-4.489 2.582c-3.898 3.898-3.898 10.243 0 14.143a9.937 9.937 0 0 0 7.072 2.93a9.93 9.93 0 0 0 7.07-2.929a10.007 10.007 0 0 0 2.583-4.491a1.001 1.001 0 0 0-1.224-1.224zm-2.772 4.301a7.947 7.947 0 0 1-5.656 2.343a7.953 7.953 0 0 1-5.658-2.344c-3.118-3.119-3.118-8.195 0-11.314a7.923 7.923 0 0 1 2.06-1.483a10.027 10.027 0 0 0 2.89 7.848a9.972 9.972 0 0 0 7.848 2.891a8.036 8.036 0 0 1-1.484 2.059z",
-  fill: "currentColor"
-}, null, -1);
-const _hoisted_3$3 = [
-  _hoisted_2$3
-];
-function render$3(_ctx, _cache) {
-  return vue.openBlock(), vue.createElementBlock("svg", _hoisted_1$3, _hoisted_3$3);
-}
-var __vite_components_0$1 = { name: "bx-bx-moon", render: render$3 };
-const _hoisted_1$2 = {
-  xmlns: "http://www.w3.org/2000/svg",
-  "xmlns:xlink": "http://www.w3.org/1999/xlink",
-  width: "1.2em",
-  height: "1.2em",
-  preserveAspectRatio: "xMidYMid meet",
-  viewBox: "0 0 24 24"
-};
-const _hoisted_2$2 = /* @__PURE__ */ vue.createElementVNode("path", {
-  d: "M6.993 12c0 2.761 2.246 5.007 5.007 5.007s5.007-2.246 5.007-5.007S14.761 6.993 12 6.993S6.993 9.239 6.993 12zM12 8.993c1.658 0 3.007 1.349 3.007 3.007S13.658 15.007 12 15.007S8.993 13.658 8.993 12S10.342 8.993 12 8.993zM10.998 19h2v3h-2zm0-17h2v3h-2zm-9 9h3v2h-3zm17 0h3v2h-3zM4.219 18.363l2.12-2.122l1.415 1.414l-2.12 2.122zM16.24 6.344l2.122-2.122l1.414 1.414l-2.122 2.122zM6.342 7.759L4.22 5.637l1.415-1.414l2.12 2.122zm13.434 10.605l-1.414 1.414l-2.122-2.122l1.414-1.414z",
-  fill: "currentColor"
-}, null, -1);
-const _hoisted_3$2 = [
-  _hoisted_2$2
-];
-function render$2(_ctx, _cache) {
-  return vue.openBlock(), vue.createElementBlock("svg", _hoisted_1$2, _hoisted_3$2);
-}
-var __vite_components_1$1 = { name: "bx-bx-sun", render: render$2 };
-const __default__$1 = { name: "DarkSwitch" };
-function setup$1(__props) {
-  const isDark = core.useDark();
-  core.useToggle(isDark);
-  return (_ctx, _push, _parent, _attrs) => {
-    const _component_bx58bx_moon = __vite_components_0$1;
-    const _component_bx58bx_sun = __vite_components_1$1;
-    _push(`<nav${serverRenderer.ssrRenderAttrs(vue.mergeProps({ class: "text-xl space-x-2 absolute right-8 top-8" }, _attrs))} data-v-51988034><button class="icon-btn" title="Toggle Dark" data-v-51988034>`);
-    if (vue.unref(isDark)) {
-      _push(serverRenderer.ssrRenderComponent(_component_bx58bx_moon, null, null, _parent));
-    } else {
-      _push(serverRenderer.ssrRenderComponent(_component_bx58bx_sun, null, null, _parent));
-    }
-    _push(`</button></nav>`);
-  };
-}
-var _sfc_main$b = vue.defineComponent(__spreadProps(__spreadValues({}, __default__$1), {
-  __ssrInlineRender: true,
-  setup: setup$1
-}));
-;
-var DarkSwitch_vue_vue_type_style_index_0_scoped_true_lang = ".icon-btn[data-v-51988034] {\n  --tw-bg-opacity: 1;\n  background-color: rgba(245, 245, 244, var(--tw-bg-opacity));\n  border-radius: 0.5rem;\n  cursor: pointer;\n  display: -webkit-inline-box;\n  display: -ms-inline-flexbox;\n  display: -webkit-inline-flex;\n  display: inline-flex;\n  font-size: 1.05rem;\n  line-height: 1;\n  overflow: hidden;\n  padding: 0.5rem;\n  color: var(--c-text);\n}\n.icon-btn[data-v-51988034]:hover {\n  --tw-bg-opacity: 1;\n  background-color: rgba(231, 229, 228, var(--tw-bg-opacity));\n}\n.dark .icon-btn[data-v-51988034] {\n  --tw-bg-opacity: 1;\n  background-color: rgba(34, 34, 34, var(--tw-bg-opacity));\n}\n.dark .icon-btn[data-v-51988034]:hover {\n  --tw-bg-opacity: 1;\n  background-color: rgba(45, 45, 45, var(--tw-bg-opacity));\n}\n.icon-btn[data-v-51988034]:focus {\n  outline: 2px solid transparent;\n  outline-offset: 2px;\n}\n.slide-enter-active[data-v-51988034], .slide-leave-active[data-v-51988034] {\n  transition: transform 0.15s ease;\n}\n.slide-enter-from[data-v-51988034] {\n  transform: translateY(-100%);\n}\n.slide-enter-to[data-v-51988034], .slide-leave-from[data-v-51988034] {\n  transform: translateY(0);\n}\n.slide-leave-to[data-v-51988034] {\n  transform: translateY(100%);\n}";
-_sfc_main$b.__scopeId = "data-v-51988034";
-const _sfc_setup$b = _sfc_main$b.setup;
-_sfc_main$b.setup = (props, ctx) => {
-  const ssrContext = vue.useSSRContext();
-  (ssrContext.modules || (ssrContext.modules = new Set())).add("src/components/DarkSwitch.vue");
-  return _sfc_setup$b ? _sfc_setup$b(props, ctx) : void 0;
-};
-var _sfc_main$a = vue.defineComponent({
-  __ssrInlineRender: true,
-  setup(__props) {
-    let title2 = vue.ref("");
-    async function onRouteChange(route) {
-      console.log({ route });
-      const component = await route.component;
-      console.log({ component });
-    }
-    return (_ctx, _push, _parent, _attrs) => {
-      const _component_IleComponent = _sfc_main$c;
-      const _component_router_view = vue.resolveComponent("router-view");
-      _push(`<main${serverRenderer.ssrRenderAttrs(vue.mergeProps({ class: "px-4 py-10 w-max-65ch mx-auto" }, _attrs))}>`);
-      _push(serverRenderer.ssrRenderComponent(_component_IleComponent, {
-        component: _ctx.__vite_components_1,
-        "client:idle": ""
-      }, null, _parent));
-      _push(serverRenderer.ssrRenderComponent(_component_router_view, null, {
-        default: vue.withCtx(({ Component, route }, _push2, _parent2, _scopeId) => {
-          if (_push2) {
-            _push2(`<article${serverRenderer.ssrRenderAttrs(_attrs)}${_scopeId}>${serverRenderer.ssrInterpolate(onRouteChange(route))} <h1 class="text-3xl font-extrabold mb-8"${_scopeId}>${serverRenderer.ssrInterpolate(title2.value)}</h1>`);
-            serverRenderer.ssrRenderVNode(_push2, vue.createVNode(vue.resolveDynamicComponent(Component), {
-              key: route.meta.usePathKey ? route.path : void 0
-            }, null), _parent2, _scopeId);
-            _push2(`</article>`);
-          } else {
-            return [
-              vue.createVNode(vue.Transition, {
-                name: route.meta.transition || "fade",
-                mode: "out-in"
-              }, {
-                default: vue.withCtx(() => [
-                  vue.createVNode("article", null, [
-                    vue.createTextVNode(vue.toDisplayString(onRouteChange(route)) + " ", 1),
-                    vue.createVNode("h1", { class: "text-3xl font-extrabold mb-8" }, vue.toDisplayString(title2.value), 1),
-                    (vue.openBlock(), vue.createBlock(vue.resolveDynamicComponent(Component), {
-                      key: route.meta.usePathKey ? route.path : void 0
-                    }))
-                  ])
-                ]),
-                _: 2
-              }, 1032, ["name"])
-            ];
-          }
-        }),
-        _: 1
-      }, _parent));
-      _push(`</main>`);
-    };
-  }
-});
-const _sfc_setup$a = _sfc_main$a.setup;
-_sfc_main$a.setup = (props, ctx) => {
-  const ssrContext = vue.useSSRContext();
-  (ssrContext.modules || (ssrContext.modules = new Set())).add("src/layouts/default.vue");
-  return _sfc_setup$a ? _sfc_setup$a(props, ctx) : void 0;
-};
-const layouts = {
-  "404": () => Promise.resolve().then(function() {
-    return _404;
-  }),
-  "default": _sfc_main$a,
-  "home": () => Promise.resolve().then(function() {
-    return home;
-  })
-};
-function setupLayouts(routes2) {
-  return routes2.map((route) => {
-    var _a;
-    return {
-      path: route.path,
-      component: layouts[((_a = route.meta) == null ? void 0 : _a.layout) || "default"],
-      children: [route]
-    };
-  });
-}
-var _sfc_main$9 = vue.defineComponent({
-  __ssrInlineRender: true,
-  setup(__props) {
-    const title2 = "\xEEles";
-    const description = "Static Site Generator with Islands Architecture";
-    head.useHead({
-      title: title2,
-      meta: [
-        { name: "description", content: description },
-        { name: "description", content: description },
-        { property: "og:title", content: title2 },
-        {
-          property: "og:image",
-          content: "https://repository-images.githubusercontent.com/341177866/d42c1300-7633-11eb-84fd-ec68894d4fc9"
-        }
-      ]
-    });
-    return (_ctx, _push, _parent, _attrs) => {
-      const _component_router_view = vue.resolveComponent("router-view");
-      _push(serverRenderer.ssrRenderComponent(_component_router_view, _attrs, null, _parent));
-    };
-  }
-});
-const _sfc_setup$9 = _sfc_main$9.setup;
-_sfc_main$9.setup = (props, ctx) => {
-  const ssrContext = vue.useSSRContext();
-  (ssrContext.modules || (ssrContext.modules = new Set())).add("src/App.vue");
-  return _sfc_setup$9 ? _sfc_setup$9(props, ctx) : void 0;
-};
-const routes = setupLayouts(routes$1);
-var main = viteSSR(_sfc_main$9, {
-  routes
-}, async (ctx) => {
-  Object.values({ "./modules/nprogress.ts": __glob_7_0 }).map((i) => {
-    var _a;
-    return (_a = i.install) == null ? void 0 : _a.call(i, ctx);
-  });
-  const { app } = ctx;
-  const router = ctx.router;
-  const head$1 = head.createHead();
-  app.use(head$1);
-  app.component(ClientOnly.name, ClientOnly);
-  router.beforeEach(async (to, from, next) => {
-    if (!!to.meta.state && true) {
-      return next();
-    }
-    next();
-  });
-  return { head: head$1 };
+  frontmatter: frontmatter$2,
+  "default": _default
 });
 function formatSecondsAsMinutes(secondsDuration) {
   if (!isFinite(secondsDuration))
@@ -1431,7 +1250,7 @@ function formatDate(date2) {
     month: "long"
   }).format(date2);
 }
-var _sfc_main$8 = vue.defineComponent({
+var _sfc_main$c = vue.defineComponent({
   __ssrInlineRender: true,
   props: {
     duration: { type: Number, required: true },
@@ -1495,14 +1314,14 @@ var _sfc_main$8 = vue.defineComponent({
 });
 ;
 var SeekBar_vue_vue_type_style_index_0_scoped_true_lang = '.seek-bar-wrapper[data-v-07506942] {\n  -webkit-box-align: center;\n  -ms-flex-align: center;\n  -webkit-align-items: center;\n  align-items: center;\n  z-index: 1;\n  display: grid;\n  grid-template-columns: 1fr;\n  grid-template-rows: 1fr;\n  height: 40px;\n}\n.seek-bar-line[data-v-07506942] {\n  height: 6px;\n  overflow: hidden;\n  grid-area: 1/1;\n}\n.seek-bar-touch[data-v-07506942]:active {\n  cursor: grabbing;\n}\n.seek-bar-touch[data-v-07506942] {\n  grid-area: 1/1;\n}\n.seek-bar-progress[data-v-07506942] {\n  --tw-translate-x: calc(var(--4ebcdfa1) * 100% - 100%);\n}\n.seek-bar-indicator[data-v-07506942] {\n  --tw-translate-x: calc(var(--4ebcdfa1) * var(--399cd6e4) * 1px);\n  grid-area: 1/1;\n}\n.duration[data-v-07506942] {\n  font-family: ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace;\n  font-size: 0.875rem;\n  line-height: 1.25rem;\n  color: var(--fg-deep);\n  white-space: pre;\n}';
-_sfc_main$8.__scopeId = "data-v-07506942";
-const _sfc_setup$8 = _sfc_main$8.setup;
-_sfc_main$8.setup = (props, ctx) => {
+_sfc_main$c.__scopeId = "data-v-07506942";
+const _sfc_setup$c = _sfc_main$c.setup;
+_sfc_main$c.setup = (props, ctx) => {
   const ssrContext = vue.useSSRContext();
   (ssrContext.modules || (ssrContext.modules = new Set())).add("src/components/SeekBar.vue");
-  return _sfc_setup$8 ? _sfc_setup$8(props, ctx) : void 0;
+  return _sfc_setup$c ? _sfc_setup$c(props, ctx) : void 0;
 };
-var _sfc_main$7 = vue.defineComponent({
+var _sfc_main$b = vue.defineComponent({
   __ssrInlineRender: true,
   props: {
     isPlaying: { type: Boolean, required: true }
@@ -1530,12 +1349,12 @@ var _sfc_main$7 = vue.defineComponent({
 });
 ;
 var PlayButton_vue_vue_type_style_index_0_scoped_true_lang = ".play-button[data-v-57460bb0] {\n  opacity: 0.85;\n  -webkit-transition-duration: 400ms;\n  -o-transition-duration: 400ms;\n  transition-duration: 400ms;\n  outline: none !important;\n}\n.play-button[data-v-57460bb0]:hover, .play-button[data-v-57460bb0]:focus {\n  opacity: 1;\n  --tw-scale-x: 1.1;\n  --tw-scale-y: 1.1;\n  --tw-scale-z: 1.1;\n}";
-_sfc_main$7.__scopeId = "data-v-57460bb0";
-const _sfc_setup$7 = _sfc_main$7.setup;
-_sfc_main$7.setup = (props, ctx) => {
+_sfc_main$b.__scopeId = "data-v-57460bb0";
+const _sfc_setup$b = _sfc_main$b.setup;
+_sfc_main$b.setup = (props, ctx) => {
   const ssrContext = vue.useSSRContext();
   (ssrContext.modules || (ssrContext.modules = new Set())).add("src/components/PlayButton.vue");
-  return _sfc_setup$7 ? _sfc_setup$7(props, ctx) : void 0;
+  return _sfc_setup$b ? _sfc_setup$b(props, ctx) : void 0;
 };
 let currentPlayer;
 function pauseWhenOtherPlays(player) {
@@ -1550,7 +1369,7 @@ function pauseWhenOtherPlays(player) {
       currentPlayer = void 0;
   });
 }
-var _sfc_main$6 = vue.defineComponent({
+var _sfc_main$a = vue.defineComponent({
   __ssrInlineRender: true,
   props: {
     src: { type: String, required: true }
@@ -1576,8 +1395,8 @@ var _sfc_main$6 = vue.defineComponent({
       observer.stop();
     });
     return (_ctx, _push, _parent, _attrs) => {
-      const _component_SeekBar = _sfc_main$8;
-      const _component_PlayButton = _sfc_main$7;
+      const _component_SeekBar = _sfc_main$c;
+      const _component_PlayButton = _sfc_main$b;
       _push(`<div${serverRenderer.ssrRenderAttrs(vue.mergeProps({
         ref: el,
         class: "flex items-center whitespace-nowrap"
@@ -1601,13 +1420,13 @@ var _sfc_main$6 = vue.defineComponent({
     };
   }
 });
-const _sfc_setup$6 = _sfc_main$6.setup;
-_sfc_main$6.setup = (props, ctx) => {
+const _sfc_setup$a = _sfc_main$a.setup;
+_sfc_main$a.setup = (props, ctx) => {
   const ssrContext = vue.useSSRContext();
   (ssrContext.modules || (ssrContext.modules = new Set())).add("src/components/Audio.vue");
-  return _sfc_setup$6 ? _sfc_setup$6(props, ctx) : void 0;
+  return _sfc_setup$a ? _sfc_setup$a(props, ctx) : void 0;
 };
-const _hoisted_1$1 = {
+const _hoisted_1$3 = {
   xmlns: "http://www.w3.org/2000/svg",
   "xmlns:xlink": "http://www.w3.org/1999/xlink",
   width: "1.2em",
@@ -1615,28 +1434,28 @@ const _hoisted_1$1 = {
   preserveAspectRatio: "xMidYMid meet",
   viewBox: "0 0 24 24"
 };
-const _hoisted_2$1 = /* @__PURE__ */ vue.createElementVNode("path", {
+const _hoisted_2$3 = /* @__PURE__ */ vue.createElementVNode("path", {
   d: "M12 16l4-5h-3V4h-2v7H8z",
   fill: "currentColor"
 }, null, -1);
-const _hoisted_3$1 = /* @__PURE__ */ vue.createElementVNode("path", {
+const _hoisted_3$3 = /* @__PURE__ */ vue.createElementVNode("path", {
   d: "M20 18H4v-7H2v7c0 1.103.897 2 2 2h16c1.103 0 2-.897 2-2v-7h-2v7z",
   fill: "currentColor"
 }, null, -1);
 const _hoisted_4$1 = [
-  _hoisted_2$1,
-  _hoisted_3$1
+  _hoisted_2$3,
+  _hoisted_3$3
 ];
-function render$1(_ctx, _cache) {
-  return vue.openBlock(), vue.createElementBlock("svg", _hoisted_1$1, _hoisted_4$1);
+function render$3(_ctx, _cache) {
+  return vue.openBlock(), vue.createElementBlock("svg", _hoisted_1$3, _hoisted_4$1);
 }
-var __vite_components_1 = { name: "bx-bx-download", render: render$1 };
-const __default__ = { name: "AudioPlayer" };
-function setup(__props) {
+var __vite_components_1$1 = { name: "bx-bx-download", render: render$3 };
+const __default__$1 = { name: "AudioPlayer" };
+function setup$1(__props) {
   let errorMessage = vue.ref("");
   return (_ctx, _push, _parent, _attrs) => {
-    const _component_Audio = _sfc_main$6;
-    const _component_bx58bx_download = __vite_components_1;
+    const _component_Audio = _sfc_main$a;
+    const _component_bx58bx_download = __vite_components_1$1;
     _push(`<div${serverRenderer.ssrRenderAttrs(vue.mergeProps({ class: "audio-player" }, _attrs))}>`);
     if (!errorMessage.value) {
       _push(serverRenderer.ssrRenderComponent(_component_Audio, { src: __props.url }, null, _parent));
@@ -1654,31 +1473,31 @@ function setup(__props) {
     _push(` Descarga esta pr\xE1ctica </a><p class="opacity-75 text-sm"> Grabada en ${serverRenderer.ssrInterpolate(vue.unref(formatDate)(__props.recorded))}. </p></div></div>`);
   };
 }
-var _sfc_main$5 = vue.defineComponent(__spreadProps(__spreadValues({}, __default__), {
+var _sfc_main$9 = vue.defineComponent(__spreadProps(__spreadValues({}, __default__$1), {
   __ssrInlineRender: true,
   props: {
     url: { type: String, required: true },
     title: { type: String, required: true },
     recorded: { type: null, required: true }
   },
-  setup
+  setup: setup$1
 }));
-const _sfc_setup$5 = _sfc_main$5.setup;
-_sfc_main$5.setup = (props, ctx) => {
+const _sfc_setup$9 = _sfc_main$9.setup;
+_sfc_main$9.setup = (props, ctx) => {
   const ssrContext = vue.useSSRContext();
   (ssrContext.modules || (ssrContext.modules = new Set())).add("src/components/AudioPlayer.vue");
-  return _sfc_setup$5 ? _sfc_setup$5(props, ctx) : void 0;
+  return _sfc_setup$9 ? _sfc_setup$9(props, ctx) : void 0;
 };
-var _sfc_main$4 = vue.defineComponent({
+var _sfc_main$8 = vue.defineComponent({
   __ssrInlineRender: true,
   setup(__props) {
     const posts = { "./posts/conexion-con-la-madre-tierra.mdx": __glob_4_0, "./posts/meditacion-de-la-tangerina.mdx": __glob_4_1, "./posts/meditando-en-el-campo.mdx": __glob_4_2 };
     return (_ctx, _push, _parent, _attrs) => {
       _push(`<!--[--><h1 class="font-extrabold text-5xl mb-16">Posts</h1><ul><!--[-->`);
-      serverRenderer.ssrRenderList(vue.unref(posts), (post, file) => {
-        _push(`<li class="mb-8"><h2 class="text-2xl font-bold tracking-tight mb-4"><a${serverRenderer.ssrRenderAttr("href", file.slice(1, file.length).replace(".mdx", ""))}>${serverRenderer.ssrInterpolate(post.title)}</a></h2><article class="prose">`);
-        serverRenderer.ssrRenderVNode(_push, vue.createVNode(vue.resolveDynamicComponent(post.default), {
-          components: { AudioPlayer: _sfc_main$5 }
+      serverRenderer.ssrRenderList(vue.unref(posts), (post2, file) => {
+        _push(`<li class="mb-8"><h2 class="text-2xl font-bold tracking-tight mb-4"><a${serverRenderer.ssrRenderAttr("href", file.slice(1, file.length).replace(".mdx", ""))}>${serverRenderer.ssrInterpolate(post2.title)}</a></h2><article class="prose">`);
+        serverRenderer.ssrRenderVNode(_push, vue.createVNode(vue.resolveDynamicComponent(post2.default), {
+          components: { AudioPlayer: _sfc_main$9 }
         }, null), _parent);
         _push(`</article></li>`);
       });
@@ -1688,37 +1507,205 @@ var _sfc_main$4 = vue.defineComponent({
 });
 var block0$2 = {};
 if (typeof block0$2 === "function")
-  block0$2(_sfc_main$4);
+  block0$2(_sfc_main$8);
+const _sfc_setup$8 = _sfc_main$8.setup;
+_sfc_main$8.setup = (props, ctx) => {
+  const ssrContext = vue.useSSRContext();
+  (ssrContext.modules || (ssrContext.modules = new Set())).add("src/pages/index.vue");
+  return _sfc_setup$8 ? _sfc_setup$8(props, ctx) : void 0;
+};
+const routes$1 = [{ "name": "posts", "path": "/posts", "component": () => Promise.resolve().then(function() {
+  return index;
+}), "props": true, "meta": { "layout": "home" } }, { "name": "posts-meditando-en-el-campo", "path": "/posts/meditando-en-el-campo", "component": () => Promise.resolve().then(function() {
+  return __glob_4_2;
+}), "props": true, "meta": { "frontmatter": { "title": "Meditando en el campo", "date": "2021-07-13 15:00 -03:00", "image": "/images/meditando-en-el-campo.jpg" }, "layout": "post" } }, { "name": "posts-meditacion-de-la-tangerina", "path": "/posts/meditacion-de-la-tangerina", "component": () => Promise.resolve().then(function() {
+  return __glob_4_1;
+}), "props": true, "meta": { "frontmatter": { "title": "Meditaci\xF3n de la tangerina", "date": "2021-08-15 11:05 -03:00", "recorded": "2021-08-11T00:00:00.000Z", "category": "practicas", "image": "/images/meditacion-de-la-tangerina.jpg", "audio": "/audio/meditacion-de-la-tangerina.mp3" }, "layout": "post" } }, { "name": "posts-conexion-con-la-madre-tierra", "path": "/posts/conexion-con-la-madre-tierra", "component": () => Promise.resolve().then(function() {
+  return __glob_4_0;
+}), "props": true, "meta": { "frontmatter": { "title": "Conexi\xF3n con la madre tierra", "date": "2021-07-18 17:41 -03:00", "recorded": "2020-04-15T00:00:00.000Z", "category": "practicas", "image": "/images/conexion-con-la-madre-tierra.jpg", "audio": "/audio/conexion-con-la-madre-tierra.mp3" }, "layout": "post" } }, { "name": "index", "path": "/", "component": _sfc_main$8, "props": true, "meta": { "layout": "home" } }, { "name": "about", "path": "/about", "component": () => Promise.resolve().then(function() {
+  return about;
+}), "props": true, "meta": { "frontmatter": { "title": "About" } } }, { "name": "README", "path": "/readme", "component": () => Promise.resolve().then(function() {
+  return README;
+}), "props": true, "meta": { "frontmatter": {} } }, { "name": "all", "path": "/:all(.*)*", "component": () => Promise.resolve().then(function() {
+  return ____all_;
+}), "props": true, "meta": { "layout": 404 } }];
+const _hoisted_1$2 = {
+  xmlns: "http://www.w3.org/2000/svg",
+  "xmlns:xlink": "http://www.w3.org/1999/xlink",
+  width: "1.2em",
+  height: "1.2em",
+  preserveAspectRatio: "xMidYMid meet",
+  viewBox: "0 0 24 24"
+};
+const _hoisted_2$2 = /* @__PURE__ */ vue.createElementVNode("path", {
+  d: "M20.742 13.045a8.088 8.088 0 0 1-2.077.271c-2.135 0-4.14-.83-5.646-2.336a8.025 8.025 0 0 1-2.064-7.723A1 1 0 0 0 9.73 2.034a10.014 10.014 0 0 0-4.489 2.582c-3.898 3.898-3.898 10.243 0 14.143a9.937 9.937 0 0 0 7.072 2.93a9.93 9.93 0 0 0 7.07-2.929a10.007 10.007 0 0 0 2.583-4.491a1.001 1.001 0 0 0-1.224-1.224zm-2.772 4.301a7.947 7.947 0 0 1-5.656 2.343a7.953 7.953 0 0 1-5.658-2.344c-3.118-3.119-3.118-8.195 0-11.314a7.923 7.923 0 0 1 2.06-1.483a10.027 10.027 0 0 0 2.89 7.848a9.972 9.972 0 0 0 7.848 2.891a8.036 8.036 0 0 1-1.484 2.059z",
+  fill: "currentColor"
+}, null, -1);
+const _hoisted_3$2 = [
+  _hoisted_2$2
+];
+function render$2(_ctx, _cache) {
+  return vue.openBlock(), vue.createElementBlock("svg", _hoisted_1$2, _hoisted_3$2);
+}
+var __vite_components_0$1 = { name: "bx-bx-moon", render: render$2 };
+const _hoisted_1$1 = {
+  xmlns: "http://www.w3.org/2000/svg",
+  "xmlns:xlink": "http://www.w3.org/1999/xlink",
+  width: "1.2em",
+  height: "1.2em",
+  preserveAspectRatio: "xMidYMid meet",
+  viewBox: "0 0 24 24"
+};
+const _hoisted_2$1 = /* @__PURE__ */ vue.createElementVNode("path", {
+  d: "M6.993 12c0 2.761 2.246 5.007 5.007 5.007s5.007-2.246 5.007-5.007S14.761 6.993 12 6.993S6.993 9.239 6.993 12zM12 8.993c1.658 0 3.007 1.349 3.007 3.007S13.658 15.007 12 15.007S8.993 13.658 8.993 12S10.342 8.993 12 8.993zM10.998 19h2v3h-2zm0-17h2v3h-2zm-9 9h3v2h-3zm17 0h3v2h-3zM4.219 18.363l2.12-2.122l1.415 1.414l-2.12 2.122zM16.24 6.344l2.122-2.122l1.414 1.414l-2.122 2.122zM6.342 7.759L4.22 5.637l1.415-1.414l2.12 2.122zm13.434 10.605l-1.414 1.414l-2.122-2.122l1.414-1.414z",
+  fill: "currentColor"
+}, null, -1);
+const _hoisted_3$1 = [
+  _hoisted_2$1
+];
+function render$1(_ctx, _cache) {
+  return vue.openBlock(), vue.createElementBlock("svg", _hoisted_1$1, _hoisted_3$1);
+}
+var __vite_components_1 = { name: "bx-bx-sun", render: render$1 };
+const __default__ = { name: "DarkSwitch" };
+function setup(__props) {
+  const isDark = core.useDark();
+  core.useToggle(isDark);
+  return (_ctx, _push, _parent, _attrs) => {
+    const _component_bx58bx_moon = __vite_components_0$1;
+    const _component_bx58bx_sun = __vite_components_1;
+    _push(`<nav${serverRenderer.ssrRenderAttrs(vue.mergeProps({ class: "text-xl space-x-2 absolute right-8 top-8" }, _attrs))} data-v-51988034><button class="icon-btn" title="Toggle Dark" data-v-51988034>`);
+    if (vue.unref(isDark)) {
+      _push(serverRenderer.ssrRenderComponent(_component_bx58bx_moon, null, null, _parent));
+    } else {
+      _push(serverRenderer.ssrRenderComponent(_component_bx58bx_sun, null, null, _parent));
+    }
+    _push(`</button></nav>`);
+  };
+}
+var _sfc_main$7 = vue.defineComponent(__spreadProps(__spreadValues({}, __default__), {
+  __ssrInlineRender: true,
+  setup
+}));
+;
+var DarkSwitch_vue_vue_type_style_index_0_scoped_true_lang = ".icon-btn[data-v-51988034] {\n  --tw-bg-opacity: 1;\n  background-color: rgba(245, 245, 244, var(--tw-bg-opacity));\n  border-radius: 0.5rem;\n  cursor: pointer;\n  display: -webkit-inline-box;\n  display: -ms-inline-flexbox;\n  display: -webkit-inline-flex;\n  display: inline-flex;\n  font-size: 1.05rem;\n  line-height: 1;\n  overflow: hidden;\n  padding: 0.5rem;\n  color: var(--c-text);\n}\n.icon-btn[data-v-51988034]:hover {\n  --tw-bg-opacity: 1;\n  background-color: rgba(231, 229, 228, var(--tw-bg-opacity));\n}\n.dark .icon-btn[data-v-51988034] {\n  --tw-bg-opacity: 1;\n  background-color: rgba(34, 34, 34, var(--tw-bg-opacity));\n}\n.dark .icon-btn[data-v-51988034]:hover {\n  --tw-bg-opacity: 1;\n  background-color: rgba(45, 45, 45, var(--tw-bg-opacity));\n}\n.icon-btn[data-v-51988034]:focus {\n  outline: 2px solid transparent;\n  outline-offset: 2px;\n}\n.slide-enter-active[data-v-51988034], .slide-leave-active[data-v-51988034] {\n  transition: transform 0.15s ease;\n}\n.slide-enter-from[data-v-51988034] {\n  transform: translateY(-100%);\n}\n.slide-enter-to[data-v-51988034], .slide-leave-from[data-v-51988034] {\n  transform: translateY(0);\n}\n.slide-leave-to[data-v-51988034] {\n  transform: translateY(100%);\n}";
+_sfc_main$7.__scopeId = "data-v-51988034";
+const _sfc_setup$7 = _sfc_main$7.setup;
+_sfc_main$7.setup = (props, ctx) => {
+  const ssrContext = vue.useSSRContext();
+  (ssrContext.modules || (ssrContext.modules = new Set())).add("src/components/DarkSwitch.vue");
+  return _sfc_setup$7 ? _sfc_setup$7(props, ctx) : void 0;
+};
+const _sfc_main$6 = {};
+function _sfc_ssrRender$2(_ctx, _push, _parent, _attrs) {
+  const _component_IleComponent = _sfc_main$d;
+  const _component_router_view = vue.resolveComponent("router-view");
+  _push(`<main${serverRenderer.ssrRenderAttrs(vue.mergeProps({ class: "px-4 py-10 w-max-65ch mx-auto" }, _attrs))}>`);
+  _push(serverRenderer.ssrRenderComponent(_component_IleComponent, {
+    component: _sfc_main$7,
+    "client:idle": ""
+  }, null, _parent));
+  _push(serverRenderer.ssrRenderComponent(_component_router_view, null, null, _parent));
+  _push(`</main>`);
+}
+_sfc_main$6.ssrRender = _sfc_ssrRender$2;
+const _sfc_setup$6 = _sfc_main$6.setup;
+_sfc_main$6.setup = (props, ctx) => {
+  const ssrContext = vue.useSSRContext();
+  (ssrContext.modules || (ssrContext.modules = new Set())).add("src/layouts/default.vue");
+  return _sfc_setup$6 ? _sfc_setup$6(props, ctx) : void 0;
+};
+const layouts = {
+  "404": () => Promise.resolve().then(function() {
+    return _404;
+  }),
+  "default": _sfc_main$6,
+  "home": () => Promise.resolve().then(function() {
+    return home;
+  }),
+  "post": () => Promise.resolve().then(function() {
+    return post;
+  })
+};
+function setupLayouts(routes2) {
+  return routes2.map((route) => {
+    var _a;
+    return {
+      path: route.path,
+      component: layouts[((_a = route.meta) == null ? void 0 : _a.layout) || "default"],
+      children: [route]
+    };
+  });
+}
+var _sfc_main$5 = vue.defineComponent({
+  __ssrInlineRender: true,
+  setup(__props) {
+    const title2 = "\xEEles";
+    const description = "Static Site Generator with Islands Architecture";
+    head.useHead({
+      title: title2,
+      meta: [
+        { name: "description", content: description },
+        { name: "description", content: description },
+        { property: "og:title", content: title2 },
+        {
+          property: "og:image",
+          content: "https://repository-images.githubusercontent.com/341177866/d42c1300-7633-11eb-84fd-ec68894d4fc9"
+        }
+      ]
+    });
+    return (_ctx, _push, _parent, _attrs) => {
+      const _component_router_view = vue.resolveComponent("router-view");
+      _push(serverRenderer.ssrRenderComponent(_component_router_view, _attrs, null, _parent));
+    };
+  }
+});
+const _sfc_setup$5 = _sfc_main$5.setup;
+_sfc_main$5.setup = (props, ctx) => {
+  const ssrContext = vue.useSSRContext();
+  (ssrContext.modules || (ssrContext.modules = new Set())).add("src/App.vue");
+  return _sfc_setup$5 ? _sfc_setup$5(props, ctx) : void 0;
+};
+const routes = setupLayouts(routes$1);
+var main = viteSSR(_sfc_main$5, {
+  routes
+}, async (ctx) => {
+  Object.values({ "./modules/nprogress.ts": __glob_7_0 }).map((i) => {
+    var _a;
+    return (_a = i.install) == null ? void 0 : _a.call(i, ctx);
+  });
+  const { app } = ctx;
+  const router = ctx.router;
+  const head$1 = head.createHead();
+  app.use(head$1);
+  app.component(ClientOnly.name, ClientOnly);
+  router.beforeEach(async (to, from, next) => {
+    next();
+  });
+  return { head: head$1 };
+});
+var block0$1 = {};
+const _sfc_main$4 = _sfc_main$8;
+if (typeof block0$1 === "function")
+  block0$1(_sfc_main$4);
 const _sfc_setup$4 = _sfc_main$4.setup;
 _sfc_main$4.setup = (props, ctx) => {
   const ssrContext = vue.useSSRContext();
-  (ssrContext.modules || (ssrContext.modules = new Set())).add("src/pages/index.vue");
-  return _sfc_setup$4 ? _sfc_setup$4(props, ctx) : void 0;
-};
-var index$1 = /* @__PURE__ */ Object.freeze({
-  __proto__: null,
-  [Symbol.toStringTag]: "Module",
-  "default": _sfc_main$4
-});
-var block0$1 = {};
-const _sfc_main$3 = _sfc_main$4;
-if (typeof block0$1 === "function")
-  block0$1(_sfc_main$3);
-const _sfc_setup$3 = _sfc_main$3.setup;
-_sfc_main$3.setup = (props, ctx) => {
-  const ssrContext = vue.useSSRContext();
   (ssrContext.modules || (ssrContext.modules = new Set())).add("src/pages/posts/index.vue");
-  return _sfc_setup$3 ? _sfc_setup$3(props, ctx) : void 0;
+  return _sfc_setup$4 ? _sfc_setup$4(props, ctx) : void 0;
 };
 var index = /* @__PURE__ */ Object.freeze({
   __proto__: null,
   [Symbol.toStringTag]: "Module",
-  "default": _sfc_main$3
+  "default": _sfc_main$4
 });
 function _isSlot$1(s) {
   return typeof s === "function" || Object.prototype.toString.call(s) === "[object Object]" && !vue.isVNode(s);
 }
 const title = "About";
+const frontmatter$1 = {
+  title
+};
 function MDXContent$1(props) {
   const _components = Object.assign({
     p: "p",
@@ -1774,11 +1761,13 @@ var about = /* @__PURE__ */ Object.freeze({
   __proto__: null,
   [Symbol.toStringTag]: "Module",
   title,
+  frontmatter: frontmatter$1,
   "default": MDXContent$1
 });
 function _isSlot(s) {
   return typeof s === "function" || Object.prototype.toString.call(s) === "[object Object]" && !vue.isVNode(s);
 }
+const frontmatter = {};
 function MDXContent(props) {
   const _components = Object.assign({
     h2: "h2",
@@ -1832,26 +1821,27 @@ function MDXContent(props) {
 var README = /* @__PURE__ */ Object.freeze({
   __proto__: null,
   [Symbol.toStringTag]: "Module",
+  frontmatter,
   "default": MDXContent
 });
 var block0 = {};
-const _sfc_main$2 = {};
+const _sfc_main$3 = {};
 function _sfc_ssrRender$1(_ctx, _push, _parent, _attrs) {
   _push(`<div${serverRenderer.ssrRenderAttrs(_attrs)}> Not Found </div>`);
 }
 if (typeof block0 === "function")
-  block0(_sfc_main$2);
-_sfc_main$2.ssrRender = _sfc_ssrRender$1;
-const _sfc_setup$2 = _sfc_main$2.setup;
-_sfc_main$2.setup = (props, ctx) => {
+  block0(_sfc_main$3);
+_sfc_main$3.ssrRender = _sfc_ssrRender$1;
+const _sfc_setup$3 = _sfc_main$3.setup;
+_sfc_main$3.setup = (props, ctx) => {
   const ssrContext = vue.useSSRContext();
   (ssrContext.modules || (ssrContext.modules = new Set())).add("src/pages/[...all].vue");
-  return _sfc_setup$2 ? _sfc_setup$2(props, ctx) : void 0;
+  return _sfc_setup$3 ? _sfc_setup$3(props, ctx) : void 0;
 };
 var ____all_ = /* @__PURE__ */ Object.freeze({
   __proto__: null,
   [Symbol.toStringTag]: "Module",
-  "default": _sfc_main$2
+  "default": _sfc_main$3
 });
 const _hoisted_1 = {
   xmlns: "http://www.w3.org/2000/svg",
@@ -1882,7 +1872,7 @@ function render(_ctx, _cache) {
   return vue.openBlock(), vue.createElementBlock("svg", _hoisted_1, _hoisted_5);
 }
 var __vite_components_0 = { name: "carbon-warning", render };
-var _sfc_main$1 = vue.defineComponent({
+var _sfc_main$2 = vue.defineComponent({
   __ssrInlineRender: true,
   setup(__props) {
     vueRouter.useRouter();
@@ -1897,37 +1887,94 @@ var _sfc_main$1 = vue.defineComponent({
     };
   }
 });
-const _sfc_setup$1 = _sfc_main$1.setup;
-_sfc_main$1.setup = (props, ctx) => {
+const _sfc_setup$2 = _sfc_main$2.setup;
+_sfc_main$2.setup = (props, ctx) => {
   const ssrContext = vue.useSSRContext();
   (ssrContext.modules || (ssrContext.modules = new Set())).add("src/layouts/404.vue");
-  return _sfc_setup$1 ? _sfc_setup$1(props, ctx) : void 0;
+  return _sfc_setup$2 ? _sfc_setup$2(props, ctx) : void 0;
 };
 var _404 = /* @__PURE__ */ Object.freeze({
   __proto__: null,
   [Symbol.toStringTag]: "Module",
-  "default": _sfc_main$1
+  "default": _sfc_main$2
 });
-const _sfc_main = {};
+const _sfc_main$1 = {};
 function _sfc_ssrRender(_ctx, _push, _parent, _attrs) {
-  const _component_IleComponent = _sfc_main$c;
+  const _component_IleComponent = _sfc_main$d;
   const _component_router_view = vue.resolveComponent("router-view");
   _push(`<main${serverRenderer.ssrRenderAttrs(vue.mergeProps({ class: "px-4 py-10 w-max-65ch mx-auto" }, _attrs))}>`);
   _push(serverRenderer.ssrRenderComponent(_component_IleComponent, {
-    component: _sfc_main$b,
+    component: _sfc_main$7,
     "client:idle": ""
   }, null, _parent));
   _push(serverRenderer.ssrRenderComponent(_component_router_view, _ctx.$attrs, null, _parent));
   _push(`</main>`);
 }
-_sfc_main.ssrRender = _sfc_ssrRender;
+_sfc_main$1.ssrRender = _sfc_ssrRender;
+const _sfc_setup$1 = _sfc_main$1.setup;
+_sfc_main$1.setup = (props, ctx) => {
+  const ssrContext = vue.useSSRContext();
+  (ssrContext.modules || (ssrContext.modules = new Set())).add("src/layouts/home.vue");
+  return _sfc_setup$1 ? _sfc_setup$1(props, ctx) : void 0;
+};
+var home = /* @__PURE__ */ Object.freeze({
+  __proto__: null,
+  [Symbol.toStringTag]: "Module",
+  "default": _sfc_main$1
+});
+var _sfc_main = vue.defineComponent({
+  __ssrInlineRender: true,
+  setup(__props) {
+    return (_ctx, _push, _parent, _attrs) => {
+      const _component_IleComponent = _sfc_main$d;
+      const _component_router_view = vue.resolveComponent("router-view");
+      _push(`<main${serverRenderer.ssrRenderAttrs(vue.mergeProps({ class: "px-4 py-10 w-max-65ch mx-auto" }, _attrs))}>`);
+      _push(serverRenderer.ssrRenderComponent(_component_IleComponent, {
+        component: _ctx.__vite_components_1,
+        "client:idle": ""
+      }, null, _parent));
+      _push(serverRenderer.ssrRenderComponent(_component_router_view, null, {
+        default: vue.withCtx(({ Component, route }, _push2, _parent2, _scopeId) => {
+          if (_push2) {
+            _push2(`<article${serverRenderer.ssrRenderAttrs(vue.mergeProps({ class: "prose" }, _attrs))}${_scopeId}><h1${_scopeId}>${serverRenderer.ssrInterpolate(Component.type.title)}</h1>`);
+            serverRenderer.ssrRenderVNode(_push2, vue.createVNode(vue.resolveDynamicComponent(Component), {
+              components: { AudioPlayer: _sfc_main$9 },
+              key: route.meta.usePathKey ? route.path : void 0
+            }, null), _parent2, _scopeId);
+            _push2(`</article>`);
+          } else {
+            return [
+              vue.createVNode(vue.Transition, {
+                name: route.meta.transition || "fade",
+                mode: "out-in"
+              }, {
+                default: vue.withCtx(() => [
+                  vue.createVNode("article", { class: "prose" }, [
+                    vue.createVNode("h1", null, vue.toDisplayString(Component.type.title), 1),
+                    (vue.openBlock(), vue.createBlock(vue.resolveDynamicComponent(Component), {
+                      components: { AudioPlayer: _sfc_main$9 },
+                      key: route.meta.usePathKey ? route.path : void 0
+                    }, null, 8, ["components"]))
+                  ])
+                ]),
+                _: 2
+              }, 1032, ["name"])
+            ];
+          }
+        }),
+        _: 1
+      }, _parent));
+      _push(`</main>`);
+    };
+  }
+});
 const _sfc_setup = _sfc_main.setup;
 _sfc_main.setup = (props, ctx) => {
   const ssrContext = vue.useSSRContext();
-  (ssrContext.modules || (ssrContext.modules = new Set())).add("src/layouts/home.vue");
+  (ssrContext.modules || (ssrContext.modules = new Set())).add("src/layouts/post.vue");
   return _sfc_setup ? _sfc_setup(props, ctx) : void 0;
 };
-var home = /* @__PURE__ */ Object.freeze({
+var post = /* @__PURE__ */ Object.freeze({
   __proto__: null,
   [Symbol.toStringTag]: "Module",
   "default": _sfc_main

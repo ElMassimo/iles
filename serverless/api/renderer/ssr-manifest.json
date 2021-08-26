@@ -4,198 +4,162 @@
   "src/modules/nprogress.ts": [],
   "../../../../@windicss/windi.css": [],
   "src/styles/main.scss": [],
-  "src/pages/posts/meditando-en-el-campo.mdx": [],
   "src/components/IleComponent.vue?vue&type=script&lang.ts": [],
-  "src/pages/posts/meditacion-de-la-tangerina.mdx": [],
   "src/pages/posts/conexion-con-la-madre-tierra.mdx": [],
+  "src/pages/posts/meditacion-de-la-tangerina.mdx": [],
+  "src/pages/posts/meditando-en-el-campo.mdx": [],
+  "src/helpers/FormatHelper.ts": [],
+  "src/components/SeekBar.vue?vue&type=script&setup=true&lang.ts": [],
+  "src/components/SeekBar.vue?vue&type=style&index=0&scoped=true&lang.scss": [],
+  "src/components/SeekBar.vue": [],
+  "src/components/PlayButton.vue?vue&type=script&setup=true&lang.ts": [],
+  "src/components/PlayButton.vue?vue&type=style&index=0&scoped=true&lang.scss": [],
+  "src/components/PlayButton.vue": [],
+  "src/logic/audio.ts": [],
+  "src/components/Audio.vue?vue&type=script&setup=true&lang.ts": [],
+  "@vite-icons/bx/bx-download": [],
+  "src/components/AudioPlayer.vue?vue&type=script&setup=true&lang.ts": [],
+  "src/pages/index.vue?vue&type=script&setup=true&lang.ts": [],
+  "src/pages/index.vue?vue&type=route&index=0&lang.yaml": [],
+  "src/pages/index.vue": [],
   "../../../../@vite-plugin-pages/generated-pages": [],
   "@vite-icons/bx/bx-moon": [],
   "@vite-icons/bx/bx-sun": [],
   "src/components/DarkSwitch.vue?vue&type=script&setup=true&lang.ts": [],
   "src/components/DarkSwitch.vue?vue&type=style&index=0&scoped=true&lang.scss": [],
   "src/components/DarkSwitch.vue": [],
-  "src/layouts/default.vue?vue&type=script&setup=true&lang.ts": [],
+  "src/layouts/default.vue": [],
   "../../../../@vite-plugin-vue-layouts/generated-layouts": [],
   "src/App.vue?vue&type=script&setup=true&lang.ts": [],
   "src/main.ts": [],
   "index.html": [],
   "\u0000commonjsHelpers.js": [
-    "/assets/vendor.ca5446d8.js"
+    "/assets/vendor.bd1b4017.js"
   ],
   "\u0000/Users/maximomussini/Projects/vitestatic/node_modules/.pnpm/nprogress@0.2.0/node_modules/nprogress/nprogress.js?commonjs-module": [
-    "/assets/vendor.ca5446d8.js"
+    "/assets/vendor.bd1b4017.js"
   ],
   "node_modules/.pnpm/nprogress@0.2.0/node_modules/nprogress/nprogress.js": [
-    "/assets/vendor.ca5446d8.js"
+    "/assets/vendor.bd1b4017.js"
   ],
   "node_modules/.pnpm/@vue+shared@3.2.6/node_modules/@vue/shared/dist/shared.esm-bundler.js": [
-    "/assets/vendor.ca5446d8.js"
+    "/assets/vendor.bd1b4017.js"
   ],
   "node_modules/.pnpm/@vue+reactivity@3.2.6/node_modules/@vue/reactivity/dist/reactivity.esm-bundler.js": [
-    "/assets/vendor.ca5446d8.js"
+    "/assets/vendor.bd1b4017.js"
   ],
   "node_modules/.pnpm/@vue+runtime-core@3.2.6/node_modules/@vue/runtime-core/dist/runtime-core.esm-bundler.js": [
-    "/assets/vendor.ca5446d8.js"
+    "/assets/vendor.bd1b4017.js"
   ],
   "node_modules/.pnpm/@vue+runtime-dom@3.2.6/node_modules/@vue/runtime-dom/dist/runtime-dom.esm-bundler.js": [
-    "/assets/vendor.ca5446d8.js"
+    "/assets/vendor.bd1b4017.js"
   ],
   "node_modules/.pnpm/vue@3.2.6/node_modules/vue/dist/vue.runtime.esm-bundler.js": [
-    "/assets/vendor.ca5446d8.js"
+    "/assets/vendor.bd1b4017.js"
   ],
   "node_modules/.pnpm/@vue+devtools-api@6.0.0-beta.15/node_modules/@vue/devtools-api/lib/esm/env.js": [
-    "/assets/vendor.ca5446d8.js"
+    "/assets/vendor.bd1b4017.js"
   ],
   "node_modules/.pnpm/@vue+devtools-api@6.0.0-beta.15/node_modules/@vue/devtools-api/lib/esm/const.js": [
-    "/assets/vendor.ca5446d8.js"
+    "/assets/vendor.bd1b4017.js"
   ],
   "node_modules/.pnpm/@vue+devtools-api@6.0.0-beta.15/node_modules/@vue/devtools-api/lib/esm/api/api.js": [
-    "/assets/vendor.ca5446d8.js"
+    "/assets/vendor.bd1b4017.js"
   ],
   "node_modules/.pnpm/@vue+devtools-api@6.0.0-beta.15/node_modules/@vue/devtools-api/lib/esm/api/app.js": [
-    "/assets/vendor.ca5446d8.js"
+    "/assets/vendor.bd1b4017.js"
   ],
   "node_modules/.pnpm/@vue+devtools-api@6.0.0-beta.15/node_modules/@vue/devtools-api/lib/esm/api/component.js": [
-    "/assets/vendor.ca5446d8.js"
+    "/assets/vendor.bd1b4017.js"
   ],
   "node_modules/.pnpm/@vue+devtools-api@6.0.0-beta.15/node_modules/@vue/devtools-api/lib/esm/api/context.js": [
-    "/assets/vendor.ca5446d8.js"
+    "/assets/vendor.bd1b4017.js"
   ],
   "node_modules/.pnpm/@vue+devtools-api@6.0.0-beta.15/node_modules/@vue/devtools-api/lib/esm/api/hooks.js": [
-    "/assets/vendor.ca5446d8.js"
+    "/assets/vendor.bd1b4017.js"
   ],
   "node_modules/.pnpm/@vue+devtools-api@6.0.0-beta.15/node_modules/@vue/devtools-api/lib/esm/api/util.js": [
-    "/assets/vendor.ca5446d8.js"
+    "/assets/vendor.bd1b4017.js"
   ],
   "node_modules/.pnpm/@vue+devtools-api@6.0.0-beta.15/node_modules/@vue/devtools-api/lib/esm/api/index.js": [
-    "/assets/vendor.ca5446d8.js"
+    "/assets/vendor.bd1b4017.js"
   ],
   "node_modules/.pnpm/@vue+devtools-api@6.0.0-beta.15/node_modules/@vue/devtools-api/lib/esm/index.js": [
-    "/assets/vendor.ca5446d8.js"
+    "/assets/vendor.bd1b4017.js"
   ],
   "node_modules/.pnpm/vue-router@4.0.11_vue@3.2.6/node_modules/vue-router/dist/vue-router.esm-bundler.js": [
-    "/assets/vendor.ca5446d8.js"
+    "/assets/vendor.bd1b4017.js"
   ],
   "node_modules/.pnpm/vite-ssr@0.13.0_eb72391d06e16a5d81c812ff7e8a7713/node_modules/vite-ssr/utils/route.js": [
-    "/assets/vendor.ca5446d8.js"
+    "/assets/vendor.bd1b4017.js"
   ],
   "node_modules/.pnpm/vite-ssr@0.13.0_eb72391d06e16a5d81c812ff7e8a7713/node_modules/vite-ssr/utils/state.js": [
-    "/assets/vendor.ca5446d8.js"
+    "/assets/vendor.bd1b4017.js"
   ],
   "node_modules/.pnpm/vite-ssr@0.13.0_eb72391d06e16a5d81c812ff7e8a7713/node_modules/vite-ssr/utils/defer.js": [
-    "/assets/vendor.ca5446d8.js"
+    "/assets/vendor.bd1b4017.js"
   ],
   "node_modules/.pnpm/vite-ssr@0.13.0_eb72391d06e16a5d81c812ff7e8a7713/node_modules/vite-ssr/utils/response.js": [
-    "/assets/vendor.ca5446d8.js"
+    "/assets/vendor.bd1b4017.js"
   ],
   "node_modules/.pnpm/vite-ssr@0.13.0_eb72391d06e16a5d81c812ff7e8a7713/node_modules/vite-ssr/vue/utils.js": [
-    "/assets/vendor.ca5446d8.js"
+    "/assets/vendor.bd1b4017.js"
   ],
   "node_modules/.pnpm/vite-ssr@0.13.0_eb72391d06e16a5d81c812ff7e8a7713/node_modules/vite-ssr/vue/components.js": [
-    "/assets/vendor.ca5446d8.js"
+    "/assets/vendor.bd1b4017.js"
   ],
   "node_modules/.pnpm/vite-ssr@0.13.0_eb72391d06e16a5d81c812ff7e8a7713/node_modules/vite-ssr/vue/entry-client.js": [
-    "/assets/vendor.ca5446d8.js"
+    "/assets/vendor.bd1b4017.js"
   ],
   "node_modules/.pnpm/@vueuse+head@0.6.0_vue@3.2.6/node_modules/@vueuse/head/dist/index.mjs": [
-    "/assets/vendor.ca5446d8.js"
+    "/assets/vendor.bd1b4017.js"
   ],
   "node_modules/.pnpm/vue-demi@0.11.3_vue@3.2.6/node_modules/vue-demi/lib/index.mjs": [
-    "/assets/vendor.ca5446d8.js"
+    "/assets/vendor.bd1b4017.js"
   ],
   "node_modules/.pnpm/@vueuse+shared@6.0.0_vue@3.2.6/node_modules/@vueuse/shared/index.esm.js": [
-    "/assets/vendor.ca5446d8.js"
+    "/assets/vendor.bd1b4017.js"
   ],
   "node_modules/.pnpm/@vueuse+core@6.0.0_vue@3.2.6/node_modules/@vueuse/core/index.esm.js": [
-    "/assets/vendor.ca5446d8.js"
+    "/assets/vendor.bd1b4017.js"
   ],
   "../../../../@windicss/devtools": [
     "/assets/devtools.2162ad4a.js"
   ],
   "src/pages/posts/index.vue?vue&type=route&index=0&lang.yaml": [
-    "/assets/index.bcbbb099.js"
+    "/assets/index.3919caa4.js"
   ],
   "src/pages/posts/index.vue": [
-    "/assets/index.bcbbb099.js"
-  ],
-  "src/helpers/FormatHelper.ts": [
-    "/assets/index.b2b2815c.js",
-    "/assets/index.1e588b07.css"
-  ],
-  "src/components/SeekBar.vue?vue&type=script&setup=true&lang.ts": [
-    "/assets/index.b2b2815c.js",
-    "/assets/index.1e588b07.css"
-  ],
-  "src/components/SeekBar.vue?vue&type=style&index=0&scoped=true&lang.scss": [
-    "/assets/index.b2b2815c.js",
-    "/assets/index.1e588b07.css"
-  ],
-  "src/components/SeekBar.vue": [
-    "/assets/index.b2b2815c.js",
-    "/assets/index.1e588b07.css"
-  ],
-  "src/components/PlayButton.vue?vue&type=script&setup=true&lang.ts": [
-    "/assets/index.b2b2815c.js",
-    "/assets/index.1e588b07.css"
-  ],
-  "src/components/PlayButton.vue?vue&type=style&index=0&scoped=true&lang.scss": [
-    "/assets/index.b2b2815c.js",
-    "/assets/index.1e588b07.css"
-  ],
-  "src/components/PlayButton.vue": [
-    "/assets/index.b2b2815c.js",
-    "/assets/index.1e588b07.css"
-  ],
-  "src/logic/audio.ts": [
-    "/assets/index.b2b2815c.js",
-    "/assets/index.1e588b07.css"
-  ],
-  "src/components/Audio.vue?vue&type=script&setup=true&lang.ts": [
-    "/assets/index.b2b2815c.js",
-    "/assets/index.1e588b07.css"
-  ],
-  "@vite-icons/bx/bx-download": [
-    "/assets/index.b2b2815c.js",
-    "/assets/index.1e588b07.css"
-  ],
-  "src/components/AudioPlayer.vue?vue&type=script&setup=true&lang.ts": [
-    "/assets/index.b2b2815c.js",
-    "/assets/index.1e588b07.css"
-  ],
-  "src/pages/index.vue?vue&type=script&setup=true&lang.ts": [
-    "/assets/index.b2b2815c.js",
-    "/assets/index.1e588b07.css"
-  ],
-  "src/pages/index.vue?vue&type=route&index=0&lang.yaml": [
-    "/assets/index.b2b2815c.js",
-    "/assets/index.1e588b07.css"
-  ],
-  "src/pages/index.vue": [
-    "/assets/index.b2b2815c.js",
-    "/assets/index.1e588b07.css"
+    "/assets/index.3919caa4.js"
   ],
   "src/pages/about.md": [
-    "/assets/about.387f1d18.js"
+    "/assets/about.be087fe1.js"
   ],
   "src/pages/README.md": [
-    "/assets/README.a63cf14d.js"
+    "/assets/README.d60843eb.js"
   ],
   "src/pages/[...all].vue?vue&type=route&index=0&lang.yaml": [
-    "/assets/[...all].c5cbe1ee.js"
+    "/assets/[...all].f92ea2b9.js"
   ],
   "src/pages/[...all].vue": [
-    "/assets/[...all].c5cbe1ee.js"
+    "/assets/[...all].f92ea2b9.js"
   ],
   "@vite-icons/carbon/warning": [
-    "/assets/404.aef8da03.js"
+    "/assets/404.ff86bd1e.js"
   ],
   "src/layouts/404.vue?vue&type=script&setup=true&lang.ts": [
-    "/assets/404.aef8da03.js"
+    "/assets/404.ff86bd1e.js"
   ],
   "src/layouts/404.vue": [
-    "/assets/404.aef8da03.js"
+    "/assets/404.ff86bd1e.js"
   ],
   "src/layouts/home.vue": [
-    "/assets/home.aa794b46.js"
+    "/assets/home.43290f0b.js"
+  ],
+  "src/layouts/post.vue?vue&type=script&setup=true&lang.ts": [
+    "/assets/post.0d9faa81.js"
+  ],
+  "src/layouts/post.vue": [
+    "/assets/post.0d9faa81.js"
   ]
 }
