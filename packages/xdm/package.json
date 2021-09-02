@@ -2,7 +2,8 @@
   "name": "vite-plugin-xdm",
   "type": "module",
   "scripts": {
-    "build": "tsup index.ts --dts --sourcemap --format cjs,esm"
+    "build": "tsup index.ts --dts --sourcemap --format cjs,esm",
+    "quick:build": "tsup index.ts --format cjs,esm"
   },
   "files": [
     "dist",
