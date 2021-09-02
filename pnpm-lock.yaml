@@ -12,6 +12,7 @@ specifiers:
   '@vue/server-renderer': ^3.2.6
   '@vueuse/core': ^6.0.0
   '@vueuse/head': ^0.6.0
+  chalk: ^4.1.2
   cross-env: ^7.0.3
   eslint: ^7.32.0
   esno: ^0.9.1
@@ -60,6 +61,7 @@ devDependencies:
   '@vitejs/plugin-vue-jsx': 1.1.7
   '@vue/compiler-sfc': 3.2.6
   '@vue/server-renderer': 3.2.6_vue@3.2.6
+  chalk: 4.1.2
   cross-env: 7.0.3
   eslint: 7.32.0
   esno: 0.9.1

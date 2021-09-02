@@ -1,4 +1,5 @@
 import path from 'path'
+import chalk from 'chalk'
 import fs from 'fs'
 import { defineConfig } from 'vite'
 import Vue from '@vitejs/plugin-vue'
@@ -20,7 +21,9 @@ function escapeRegex(str: string) {
   return str.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
 }
 
-let mode = 'production'
+function getSize(str: string) {
+  return `${(str.length / 1024).toFixed(2)}KiB`;
+}
 
 export function parseId(id: string) {
   const index = id.indexOf('?')
@@ -37,11 +40,35 @@ export function parseId(id: string) {
   }
 }
 
+let mode = 'production'
+let logger: any
+
 export default defineConfig({
   resolve: {
     alias: {
       '~/': `${path.resolve(__dirname, 'src')}/`,
     },
+  },
+  ssgOptions: {
+    onPageRendered (route, html) {
+      let counter = 0
+      const outDir = path.resolve(__dirname, '.vite-ssg-temp', route === '/' ? 'index' : route.replace(/^\//, '').replaceAll('/', '-'))
+      fs.mkdirSync(outDir, { recursive: true })
+      html = html.replace(/<script\s*([^>]*?)>.*?<\/script>/sg, (script, attrs) => {
+        if (script.includes('client-keep')) return script
+        return ''
+      })
+      html = html.replace(/<link\s*([^>]*?)>/sg, (link, attrs) => {
+        if (attrs.includes('modulepreload') && attrs.includes('.js')) return ''
+        return link
+      })
+      return html.replace(/\/\* ILE_HYDRATION_BEGIN \*\/(.*?)\/\* ILE_HYDRATION_END \*\//sg, (str, script) => {
+        const filename = `ile-${++counter}.js`
+        logger.warn(`${chalk.dim(`${outDir}/`)}${chalk.cyan(filename)} ${chalk.dim(getSize(script))}`);
+        fs.writeFileSync(path.join(outDir, filename), script, "utf-8")
+        return script
+      })
+    }
   },
   plugins: [
     {
@@ -83,8 +110,9 @@ export default defineConfig({
 
     {
       name: 'mdx-transform',
-      config (_, env) {
-        mode = env.mode
+      configResolved (config) {
+        logger = config.logger
+        mode = config.mode
       },
       transform (code, id) {
         const { path } = parseId(id)

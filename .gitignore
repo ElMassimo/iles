@@ -6,3 +6,4 @@ dist-ssr
 serverless/api/renderer
 serverless/public/*
 components.d.ts
+.vite-ssg-temp
