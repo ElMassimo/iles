@@ -6,6 +6,7 @@
   "scripts": {
     "vite": "vite",
     "view": "sirv dist/client",
+    "xdm:build": "npm -C packages/xdm run build",
     "preview": "sirv dist",
     "debug": "vite --port 3333 --open",
     "prerender": "esno src/prerender.ts",

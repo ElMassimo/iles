@@ -1,0 +1,4 @@
+#!/usr/bin/env sh
+npx pnpm i --store=node_modules/.pnpm-store
+npx pnpm run xdm:build
+npx pnpm run build
