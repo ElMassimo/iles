@@ -22,6 +22,21 @@ function escapeRegex(str: string) {
 
 let mode = 'production'
 
+export function parseId(id: string) {
+  const index = id.indexOf('?')
+  if (index < 0) {
+    return { path: id, query: {} }
+  }
+  else {
+    // @ts-ignore
+    const query = Object.fromEntries(new URLSearchParams(id.slice(index)))
+    return {
+      path: id.slice(0, index),
+      query,
+    }
+  }
+}
+
 export default defineConfig({
   resolve: {
     alias: {
@@ -36,14 +51,15 @@ export default defineConfig({
     {
       name: 'ile',
       transform (code, id) {
-        if (!id.endsWith('.mdx') && !id.endsWith('.vue')) return
+        const { path } = parseId(id)
+        if (!path.endsWith('.mdx') && !path.endsWith('.vue')) return
 
         const components = /<([A-Z]\w+)\s*(?:([^/]+?)\/>|([^>]+)>(.*?)<\/\1>)/sg
 
         return code.replace(components, (str, tagName, attrs, otherAttrs, children) => {
           if (otherAttrs) attrs = otherAttrs
           if (!attrs?.match(/(\s|^)client:/)) return str
-          const component = id.endsWith('.vue')
+          const component = path.endsWith('.vue')
             ? `:ileIs='_resolveComponent("${tagName}")'`
             : `ileIs={_resolveComponent("${tagName}")}`
           const file = component.replace('ileIs=', 'ileFile=')
@@ -71,7 +87,8 @@ export default defineConfig({
         mode = env.mode
       },
       transform (code, id) {
-        if (!id.endsWith('.mdx') || !code.includes('MDXContent')) return null
+        const { path } = parseId(id)
+        if (!path.endsWith('.mdx') || !code.includes('MDXContent')) return null
 
         // if (code.includes('IleComponent')) {
         //   code = `import IleComponent from '~/components/IleComponent.vue'\n${code}`
@@ -80,18 +97,18 @@ export default defineConfig({
 
         const match = code.match(/props\.components\), \{(.*?), wrapper: /)
         const importedComponents = match ? match[1].split(',') : []
+        console.log('mdx-transform', id, importedComponents)
 
         const pattern = '_components = Object.assign({'
         const index = code.indexOf(pattern) + pattern.length
         const comps = importedComponents.map(name => `    ${name}: _resolveComponent("${name}"),`).join("\n")
-        console.log(match && match[1], importedComponents, comps)
         code = code.slice(0, index) + `\n${comps}\n` + code.slice(index + 1, code.length)
 
         return code.replace('export default MDXContent', `
           ${code.includes('defineComponent') ? '' : "import { defineComponent } from 'vue'"}
 
           const _default = defineComponent({
-            ${mode === 'development' ? `__file: '${id}',` : ''}
+            ${mode === 'development' ? `__file: '${path}',` : ''}
             ...frontmatter,
             frontmatter,
             props: {
@@ -136,7 +153,7 @@ export default defineConfig({
       extensions: ['vue', 'md', 'mdx'],
 
       // allow auto import and register components used in markdown
-      include: [/\.vue$/, /\.vue?vue/, /\.mdx?/],
+      include: [/\.vue$/, /\.vue\?vue/, /\.mdx?/],
 
       // auto import icons
       resolvers: [
@@ -161,16 +178,20 @@ export default defineConfig({
       name: 'ile-post',
       enforce: 'post',
       transform (code, id) {
-        if (!id.endsWith('.mdx') && !id.endsWith('.vue')) return
+        const { path } = parseId(id)
+        if (!path.endsWith('.mdx') && !path.endsWith('.vue')) return
+        console.warn('ile:post', id)
+        if (path.endsWith('AudioPlayer.vue')) console.warn({ before: code })
 
         code = code.replaceAll('_ctx.__unplugin_components_', '__unplugin_components_')
 
         const files = /"?ileFile"?(="|:\s)([^",]+)"?/sg
         code = code.replace(files, (str, separator, importVar) => {
           const match = code.match(new RegExp(`import ${escapeRegex(importVar)} from (['"])(.*?)\\1`))
-          console.warn(match, { importVar })
           return match ? `ileFile${separator}'${match![2]}'` : str
         })
+
+        if (path.endsWith('AudioPlayer.vue')) console.warn({ after: code })
 
         return code
       },

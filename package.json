@@ -6,13 +6,13 @@
   "scripts": {
     "vite": "vite",
     "view": "sirv dist/client",
-    "preview": "cd serverless && vercel dev",
+    "preview": "sirv dist",
     "debug": "vite --port 3333 --open",
     "prerender": "node --inspect-brk src/prerender.js",
     "dev:ssr": "vite-ssr --port 3333 --open",
     "dev": "vite --port 3333 --open",
     "clean": "rm -rf dist && rm -rf serverless/public && rm -rf serverless/api/renderer",
-    "build": "pnpm clean && cross-env NODE_ENV=production vite-ssr build && ./scripts/move-dist.sh",
+    "build": "cross-env NODE_ENV=production vite-ssg build",
     "deploy": "cd serverless && vercel",
     "deploy:prod": "cd serverless && vercel --prod"
   },
@@ -47,16 +47,17 @@
     "sass": "^1.38.1",
     "sirv-cli": "^1.0.14",
     "typescript": "^4.3.5",
+    "unplugin-icons": "^0.7.0",
+    "unplugin-vue-components": "^0.14.1",
     "vercel": "^23.1.2",
     "vite": "^2.5.1",
-    "unplugin-vue-components": "^0.14.1",
-    "unplugin-icons": "^0.7.0",
     "vite-plugin-inspect": "^0.2.2",
     "vite-plugin-md": "^0.11.0",
     "vite-plugin-pages": "^0.18.0-beta.1",
     "vite-plugin-pwa": "^0.11.2",
     "vite-plugin-vue-layouts": "^0.3.1",
-    "vite-plugin-windicss": "^1.3.0"
+    "vite-plugin-windicss": "^1.3.0",
+    "vite-ssg": "^0.14.7"
   },
   "eslintConfig": {
     "extends": "@mussi/eslint-config",

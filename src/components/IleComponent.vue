@@ -29,13 +29,16 @@ export default defineComponent({
     const strategy = strategies.find(st => this.$props[`client:${st}`]) || 'load'
 
     const script =
-`import c from '${this.ileFile}'
+`
+/* ILE_HYDRATION_BEGIN */
+import c from '${this.ileFile}'
 import { ${strategy} as hydrate } from '/src/logic/hydration'
 hydrate(c, '${this.id}', ${devalue(this.$attrs)}${ strategy === 'media' ? this['client:media'] : '' })
+/* ILE_HYDRATION_END */
 `
     return [
       h('ile-root', { id: this.id }, content),
-      // h(import.meta.env.SSR ? 'script' : 'script', { type: 'module', class: '', 'client-keep': '', innerHTML: script }),
+      h(import.meta.env.SSR ? 'script' : 'script', { type: 'module', class: '', 'client-keep': '', innerHTML: script }),
     ]
   },
 })
