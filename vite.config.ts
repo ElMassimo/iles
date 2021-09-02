@@ -1,7 +1,8 @@
 import path from 'path'
 import chalk from 'chalk'
 import fs from 'fs'
-import { defineConfig } from 'vite'
+import { build, defineConfig } from 'vite'
+import type { ResolvedConfig } from 'vite'
 import Vue from '@vitejs/plugin-vue'
 import Pages from 'vite-plugin-pages'
 import Layouts from 'vite-plugin-vue-layouts'
@@ -40,8 +41,19 @@ export function parseId(id: string) {
   }
 }
 
-let mode = 'production'
-let logger: any
+function routeFilename (route: string) {
+  const relativeRoute = (route.endsWith("/") ? `${route}index` : route).replace(/^\//g, "")
+  const filename = `${relativeRoute}.html`
+  return path.join(config.build.outDir, filename)
+}
+
+let config: ResolvedConfig
+
+const hydrationBegin = '<!--ILE_HYDRATION_BEGIN-->'
+const hydrationEnd = '<!--ILE_HYDRATION_END-->'
+const hydrationRegex = new RegExp(escapeRegex(hydrationBegin) + '(.*?)' + escapeRegex(hydrationEnd), 'sg')
+
+let islandsByRoute: Record<string, string[]> = Object.create(null)
 
 export default defineConfig({
   resolve: {
@@ -50,10 +62,11 @@ export default defineConfig({
     },
   },
   ssgOptions: {
-    onPageRendered (route, html) {
+    async onPageRendered (route, html) {
       let counter = 0
-      const outDir = path.resolve(__dirname, '.vite-ssg-temp', route === '/' ? 'index' : route.replace(/^\//, '').replaceAll('/', '-'))
-      fs.mkdirSync(outDir, { recursive: true })
+      const pageIslands: string[] = []
+      const pageOutDir = path.resolve(__dirname, '.vite-ssg-temp', route === '/' ? 'index' : route.replace(/^\//, '').replaceAll('/', '-'))
+      fs.mkdirSync(pageOutDir, { recursive: true })
       html = html.replace(/<script\s*([^>]*?)>.*?<\/script>/sg, (script, attrs) => {
         if (script.includes('client-keep')) return script
         return ''
@@ -62,13 +75,54 @@ export default defineConfig({
         if (attrs.includes('modulepreload') && attrs.includes('.js')) return ''
         return link
       })
-      return html.replace(/\/\* ILE_HYDRATION_BEGIN \*\/(.*?)\/\* ILE_HYDRATION_END \*\//sg, (str, script) => {
-        const filename = `ile-${++counter}.js`
-        logger.warn(`${chalk.dim(`${outDir}/`)}${chalk.cyan(filename)} ${chalk.dim(getSize(script))}`);
-        fs.writeFileSync(path.join(outDir, filename), script, "utf-8")
-        return script
+      html = html.replace(hydrationRegex, (str, script) => {
+        const basename = `ile-${++counter}.js`
+        config.logger.warn(`${chalk.dim(`${pageOutDir}/`)}${chalk.cyan(basename)} ${chalk.dim(getSize(script))}`);
+        const filename = path.join(pageOutDir, basename)
+        pageIslands.push(filename)
+        fs.writeFileSync(filename, script, "utf-8")
+        return  `${hydrationBegin}${filename}${hydrationEnd}`
       })
-    }
+      if (pageIslands.length) islandsByRoute[route] = pageIslands
+      return html
+    },
+    async onFinished () {
+      const islandFiles = Object.values(islandsByRoute).flat()
+      if (islandFiles.length === 0) return
+
+      const outDir = config.build.outDir
+      await build({
+        logLevel: 'warn',
+        publicDir: false,
+        build: {
+          emptyOutDir: false,
+          manifest: true,
+          outDir: outDir,
+          rollupOptions: {
+            input: islandFiles,
+          },
+        },
+        mode: config.mode
+      })
+      const manifest = JSON.parse(fs.readFileSync(path.join(outDir, 'manifest.json'), 'utf-8'))
+      console.log({ outDir, manifest, islandsByRoute })
+      await Promise.all(Object.entries(islandsByRoute).map(async ([route, scriptFiles]) => {
+        const htmlFilename = routeFilename(route)
+        const html = fs.readFileSync(htmlFilename, 'utf-8')
+        const entriesByFilename = Object.fromEntries(await Promise.all(scriptFiles.map(async file => {
+          return [
+            file,
+            manifest[path.relative(config.root, file)],
+          ]
+        })))
+        console.log(entriesByFilename)
+        const transformed = html.replace(hydrationRegex, (str, file) => {
+          console.log({ file, entry: entriesByFilename[file] })
+          return `<script type="module" src="${path.join(config.base, entriesByFilename[file].file)}"></script>`
+        })
+        await fs.promises.writeFile(htmlFilename, transformed, 'utf-8')
+      }))
+    },
   },
   plugins: [
     {
@@ -110,9 +164,8 @@ export default defineConfig({
 
     {
       name: 'mdx-transform',
-      configResolved (config) {
-        logger = config.logger
-        mode = config.mode
+      configResolved (resolvedConfig) {
+        config = resolvedConfig
       },
       transform (code, id) {
         const { path } = parseId(id)
@@ -125,7 +178,7 @@ export default defineConfig({
 
         const match = code.match(/props\.components\), \{(.*?), wrapper: /)
         const importedComponents = match ? match[1].split(',') : []
-        console.log('mdx-transform', id, importedComponents)
+        // console.log('mdx-transform', id, importedComponents)
 
         const pattern = '_components = Object.assign({'
         const index = code.indexOf(pattern) + pattern.length
@@ -136,7 +189,7 @@ export default defineConfig({
           ${code.includes('defineComponent') ? '' : "import { defineComponent } from 'vue'"}
 
           const _default = defineComponent({
-            ${mode === 'development' ? `__file: '${path}',` : ''}
+            ${config.mode === 'development' ? `__file: '${path}',` : ''}
             ...frontmatter,
             frontmatter,
             props: {
@@ -208,8 +261,6 @@ export default defineConfig({
       transform (code, id) {
         const { path } = parseId(id)
         if (!path.endsWith('.mdx') && !path.endsWith('.vue')) return
-        console.warn('ile:post', id)
-        if (path.endsWith('AudioPlayer.vue')) console.warn({ before: code })
 
         code = code.replaceAll('_ctx.__unplugin_components_', '__unplugin_components_')
 
@@ -218,8 +269,6 @@ export default defineConfig({
           const match = code.match(new RegExp(`import ${escapeRegex(importVar)} from (['"])(.*?)\\1`))
           return match ? `ileFile${separator}'${match![2]}'` : str
         })
-
-        if (path.endsWith('AudioPlayer.vue')) console.warn({ after: code })
 
         return code
       },

@@ -1,5 +1,5 @@
 <script lang="ts">
-import { defineComponent, h } from 'vue'
+import { defineComponent, h, createCommentVNode } from 'vue'
 import type { DefineComponent } from 'vue'
 import { strategies } from '~/logic/hydration'
 import devalue from '@nuxt/devalue'
@@ -25,20 +25,20 @@ export default defineComponent({
   },
   render () {
     const content = [h(this.ileIs as DefineComponent, this.$attrs, this.$slots)]
+    const rootNode = h('ile-root', { id: this.id }, content)
 
     const strategy = strategies.find(st => this.$props[`client:${st}`]) || 'load'
 
     const script =
-`
-/* ILE_HYDRATION_BEGIN */
-import c from '${this.ileFile}'
+`import c from '${this.ileFile}'
 import { ${strategy} as hydrate } from '/src/logic/hydration'
-hydrate(c, '${this.id}', ${devalue(this.$attrs)}${ strategy === 'media' ? this['client:media'] : '' })
-/* ILE_HYDRATION_END */
-`
-    return [
-      h('ile-root', { id: this.id }, content),
-      h(import.meta.env.SSR ? 'script' : 'script', { type: 'module', class: '', 'client-keep': '', innerHTML: script }),
+hydrate(c, '${this.id}', ${devalue(this.$attrs)}${ strategy === 'media' ? this['client:media'] : '' })`
+
+    return !import.meta.env.SSR ? rootNode : [
+      rootNode,
+      createCommentVNode('ILE_HYDRATION_BEGIN'),
+      script,
+      createCommentVNode('ILE_HYDRATION_END'),
     ]
   },
 })
