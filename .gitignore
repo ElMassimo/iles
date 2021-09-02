@@ -4,5 +4,5 @@ dist
 dist-ssr
 *.local
 serverless/api/renderer
-serverless/public
+serverless/public/*
 components.d.ts

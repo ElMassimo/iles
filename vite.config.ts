@@ -19,23 +19,9 @@ function escapeRegex(str: string) {
   return str.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
 }
 
+let mode = 'production'
+
 export default defineConfig({
-  build: {
-    rollupOptions: {
-      output: {
-        format: 'es',
-      },
-    },
-  },
-  config () {
-    return {
-      server: {
-        watch: {
-          disableGlobbing: false,
-        },
-      },
-    }
-  },
   resolve: {
     alias: {
       '~/': `${path.resolve(__dirname, 'src')}/`,
@@ -85,6 +71,9 @@ export default defineConfig({
 
     {
       name: 'mdx-transform',
+      config (_, env) {
+        mode = env.mode
+      },
       transform (code, id) {
         if (!id.endsWith('.mdx') || !code.includes('MDXContent')) return null
 
@@ -106,7 +95,7 @@ export default defineConfig({
           ${code.includes('defineComponent') ? '' : "import { defineComponent } from 'vue'"}
 
           const _default = defineComponent({
-            name: '${path.relative(__dirname, id).replace('src/pages/', '').replace('.mdx', '').replace(/\//g, '.')}',
+            ${mode === 'development' ? `__file: '${id}',` : ''}
             ...frontmatter,
             frontmatter,
             props: {

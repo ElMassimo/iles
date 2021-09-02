@@ -14,6 +14,7 @@ const routesToPrerender = glob.sync('**/*.{md,mdx,vue}', { cwd: toAbsolute('src/
     return `/${file.replace(/\.(vue|mdx|md)$/, '').toLowerCase()}`
       .replace('/index', '/')
   })
+  .filter(file => !file.includes(':') && !file.includes('['))
 
 // pre-render each route...
 async function prerenderRoutes (routes) {
