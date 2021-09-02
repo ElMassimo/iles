@@ -5,7 +5,7 @@ import Vue from '@vitejs/plugin-vue'
 import Pages from 'vite-plugin-pages'
 import Layouts from 'vite-plugin-vue-layouts'
 import ViteIcons, { ViteIconsResolver } from 'vite-plugin-icons'
-import ViteComponents from 'vite-plugin-components'
+import ViteComponents from 'unplugin-vue-components/vite'
 import WindiCSS from 'vite-plugin-windicss'
 import viteSSR from 'vite-ssr/plugin'
 
@@ -16,6 +16,13 @@ import matter from 'gray-matter'
 import Inspect from 'vite-plugin-inspect'
 
 export default defineConfig({
+  build: {
+    rollupOptions: {
+      output: {
+        format: 'es',
+      },
+    },
+  },
   resolve: {
     alias: {
       '~/': `${path.resolve(__dirname, 'src')}/`,
@@ -43,7 +50,7 @@ export default defineConfig({
           if (!attrs?.match(/(\s|^)client:/)) return str
           const component = id.endsWith('.vue')
             ? `:component='_resolveComponent("${tagName}")'`
-            : `component={props.components.${tagName}}`
+            : `component={_resolveComponent("${tagName}")}`
           return `<IleComponent ${component} ${attrs}>${children || ''}</IleComponent>`
         })
       },
@@ -114,14 +121,15 @@ export default defineConfig({
 
     // https://github.com/antfu/vite-plugin-components
     ViteComponents({
+      dts: true,
       // allow auto load markdown components under `./src/components/`
       extensions: ['vue', 'md', 'mdx'],
 
       // allow auto import and register components used in markdown
-      customLoaderMatcher: id => id.endsWith('.md') || id.endsWith('.mdx'),
+      include: [/\.vue$/, /\.mdx?$/],
 
       // auto import icons
-      customComponentResolvers: [
+      resolvers: [
         // https://github.com/antfu/vite-plugin-icons
         ViteIconsResolver({
           componentPrefix: '',
@@ -142,7 +150,7 @@ export default defineConfig({
       transform (code, id) {
         if (!id.endsWith('.vue')) return
 
-        return code.replace('_ctx.__vite_components_', '__vite_components_')
+        return code.replace('_ctx.__unplugin_components_', '__unplugin_components_')
       },
     },
 

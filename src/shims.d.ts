@@ -16,3 +16,5 @@ declare module '*.vue' {
   const component: ComponentOptions
   export default component
 }
+
+/// <reference types="vue/ref-macros" />

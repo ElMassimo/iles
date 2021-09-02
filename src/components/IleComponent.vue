@@ -1,8 +1,6 @@
 <script lang="ts">
 import { defineComponent, h } from 'vue'
 import type { DefineComponent } from 'vue'
-import { useHead } from '@vueuse/head'
-import devalue from '@nuxt/devalue'
 
 let idNumber = 0
 
@@ -28,11 +26,13 @@ export default defineComponent({
   render () {
     const prerendered = [h(this.component as DefineComponent, this.$attrs, this.$slots)]
 
-    if (import.meta.env.SSR)
-      prerendered.push(h('script', { type: 'module', 'client-keep': '', innerHTML: `
-        import '/assets/components/${this.name}.js'
-        ${this.name}('${this.id}', ${devalue(this.$attrs)})
-      ` }))
+    // if (import.meta.env.SSR)
+    // import { useHead } from '@vueuse/head'
+    // import devalue from '@nuxt/devalue'
+    //   prerendered.push(h('script', { type: 'module', 'client-keep': '', innerHTML: `
+    //     import '/assets/components/${this.name}.js'
+    //     ${this.name}('${this.id}', ${devalue(this.$attrs)})
+    //   ` }))
     return h('ile-root', { id: this.id }, prerendered)
   },
 })
