@@ -1,7 +1,3 @@
-<script setup lang="ts">
-import AudioPlayer from '~/components/AudioPlayer.vue'
-</script>
-
 <template>
   <main class="px-4 py-10 w-max-65ch mx-auto">
     <DarkSwitch client:idle/>
@@ -11,7 +7,6 @@ import AudioPlayer from '~/components/AudioPlayer.vue'
           <h1>{{ Component.type.title }}</h1>
           <component
             :is="Component"
-            :components="{ AudioPlayer }"
             :key="route.meta.usePathKey ? route.path : undefined"
           />
         </article>

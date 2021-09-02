@@ -33,7 +33,7 @@ const audioListeners = {
   },
   error (event: ErrorEvent) {
     status = 'stopped'
-    emit('audio:error', event)
+    errorMessage = 'Error al reproducir la práctica.'
   },
   durationchange () {
     if (audioRef) duration = audioRef.duration || NaN
@@ -66,10 +66,15 @@ const observer = useIntersectionObserver($$(el), ([{ isIntersecting }]) => {
   isVisible = isIntersecting
   observer.stop()
 })
+
+let errorMessage = $ref('')
 </script>
 
 <template>
-  <div ref="el" class="flex items-center whitespace-nowrap">
+  <div v-if="errorMessage" class="text-pink-500 md:text-center mt-2 mb-4" @click="errorMessage = ''">
+    {{ errorMessage }}
+  </div>
+  <div v-else ref="el" class="flex items-center whitespace-nowrap">
     <SeekBar
       :duration="duration"
       :currentTime="currentTime"

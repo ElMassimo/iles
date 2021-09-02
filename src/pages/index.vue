@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import AudioPlayer from '~/components/AudioPlayer.vue'
-
 const posts = import.meta.globEager('./posts/**/*.{md,mdx}')
 </script>
 
@@ -12,7 +10,7 @@ const posts = import.meta.globEager('./posts/**/*.{md,mdx}')
         <a :href="file.slice(1, file.length).replace('.mdx', '')">{{ post.title }}</a>
       </h2>
       <article class="prose">
-        <component :is="post.default" :components="{ AudioPlayer }"/>
+        <component :is="post.default"/>
       </article>
     </li>
   </ul>

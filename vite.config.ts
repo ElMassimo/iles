@@ -15,6 +15,10 @@ import matter from 'gray-matter'
 
 import Inspect from 'vite-plugin-inspect'
 
+function escapeRegex(str: string) {
+  return str.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
+}
+
 export default defineConfig({
   build: {
     rollupOptions: {
@@ -22,6 +26,15 @@ export default defineConfig({
         format: 'es',
       },
     },
+  },
+  config () {
+    return {
+      server: {
+        watch: {
+          disableGlobbing: false,
+        },
+      },
+    }
   },
   resolve: {
     alias: {
@@ -49,9 +62,10 @@ export default defineConfig({
           if (otherAttrs) attrs = otherAttrs
           if (!attrs?.match(/(\s|^)client:/)) return str
           const component = id.endsWith('.vue')
-            ? `:component='_resolveComponent("${tagName}")'`
-            : `component={_resolveComponent("${tagName}")}`
-          return `<IleComponent ${component} ${attrs}>${children || ''}</IleComponent>`
+            ? `:ileIs='_resolveComponent("${tagName}")'`
+            : `ileIs={_resolveComponent("${tagName}")}`
+          const file = component.replace('ileIs=', 'ileFile=')
+          return `<IleComponent ${component} ${file} ${attrs}>${children || ''}</IleComponent>`
         })
       },
     },
@@ -74,14 +88,25 @@ export default defineConfig({
       transform (code, id) {
         if (!id.endsWith('.mdx') || !code.includes('MDXContent')) return null
 
-        if (code.includes('IleComponent')) {
-          code = `import IleComponent from '~/components/IleComponent.vue'\n${code}`
-          code = code.replace('IleComponent, ', '')
-        }
+        // if (code.includes('IleComponent')) {
+        //   code = `import IleComponent from '~/components/IleComponent.vue'\n${code}`
+        //   code = code.replace('IleComponent, ', '')
+        // }
+
+        const match = code.match(/props\.components\), \{(.*?), wrapper: /)
+        const importedComponents = match ? match[1].split(',') : []
+
+        const pattern = '_components = Object.assign({'
+        const index = code.indexOf(pattern) + pattern.length
+        const comps = importedComponents.map(name => `    ${name}: _resolveComponent("${name}"),`).join("\n")
+        console.log(match && match[1], importedComponents, comps)
+        code = code.slice(0, index) + `\n${comps}\n` + code.slice(index + 1, code.length)
+
         return code.replace('export default MDXContent', `
           ${code.includes('defineComponent') ? '' : "import { defineComponent } from 'vue'"}
 
           const _default = defineComponent({
+            name: '${path.relative(__dirname, id).replace('src/pages/', '').replace('.mdx', '').replace(/\//g, '.')}',
             ...frontmatter,
             frontmatter,
             props: {
@@ -126,7 +151,7 @@ export default defineConfig({
       extensions: ['vue', 'md', 'mdx'],
 
       // allow auto import and register components used in markdown
-      include: [/\.vue$/, /\.mdx?$/],
+      include: [/\.vue$/, /\.vue?vue/, /\.mdx?/],
 
       // auto import icons
       resolvers: [
@@ -148,9 +173,18 @@ export default defineConfig({
       name: 'ile-post',
       enforce: 'post',
       transform (code, id) {
-        if (!id.endsWith('.vue')) return
+        if (!id.endsWith('.mdx') && !id.endsWith('.vue')) return
 
-        return code.replace('_ctx.__unplugin_components_', '__unplugin_components_')
+        code = code.replaceAll('_ctx.__unplugin_components_', '__unplugin_components_')
+
+        const files = /"?ileFile"?(="|:\s)([^",]+)"?/sg
+        code = code.replace(files, (str, separator, importVar) => {
+          const match = code.match(new RegExp(`import ${escapeRegex(importVar)} from (['"])(.*?)\\1`))
+          console.warn(match, { importVar })
+          return match ? `ileFile${separator}'${match![2]}'` : str
+        })
+
+        return code
       },
     },
 
