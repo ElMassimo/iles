@@ -82,7 +82,7 @@ export default defineConfig({
     async onPageRendered (route, html) {
       let counter = 0
       const pageIslands: string[] = []
-      const pageOutDir = path.resolve(__dirname, '.vite-ssg-temp', route === '/' ? 'index' : route.replace(/^\//, '').replaceAll('/', '-'))
+      const pageOutDir = path.resolve(__dirname, '.ile-temp', route === '/' ? 'index' : route.replace(/^\//, '').replaceAll('/', '-'))
       fs.mkdirSync(pageOutDir, { recursive: true })
       html = html.replace(/<script\s*([^>]*?)>.*?<\/script>/sg, (script, attrs) => {
         if (script.includes('client-keep')) return script
@@ -143,6 +143,7 @@ export default defineConfig({
         html = html.replace('</head>', `${stringifyPreload(manifest, preloadScripts)}</head>`)
         await fs.promises.writeFile(htmlFilename, html, 'utf-8')
       }))
+      fs.rmSync(path.resolve(__dirname, '.ile-temp'), { recursive: true, force: true })
     },
   },
   plugins: [
