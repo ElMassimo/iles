@@ -4,7 +4,8 @@ import { defineConfig } from 'vite'
 import Vue from '@vitejs/plugin-vue'
 import Pages from 'vite-plugin-pages'
 import Layouts from 'vite-plugin-vue-layouts'
-import ViteIcons, { ViteIconsResolver } from 'vite-plugin-icons'
+import Icons from 'unplugin-icons/vite'
+import IconsResolver from 'unplugin-icons/resolver'
 import ViteComponents from 'unplugin-vue-components/vite'
 import WindiCSS from 'vite-plugin-windicss'
 import viteSSR from 'vite-ssr/plugin'
@@ -32,11 +33,6 @@ export default defineConfig({
       name: 'build-var',
       apply: 'build',
     },
-    viteSSR({
-      build: {
-        keepIndexHtml: true,
-      }
-    }),
     {
       name: 'ile',
       transform (code, id) {
@@ -145,7 +141,7 @@ export default defineConfig({
       // auto import icons
       resolvers: [
         // https://github.com/antfu/vite-plugin-icons
-        ViteIconsResolver({
+        IconsResolver({
           componentPrefix: '',
           // enabledCollections: ['carbon']
         }),
@@ -157,6 +153,9 @@ export default defineConfig({
         },
       ],
     }),
+
+    // https://github.com/antfu/vite-plugin-icons
+    Icons(),
 
     {
       name: 'ile-post',
@@ -177,11 +176,14 @@ export default defineConfig({
       },
     },
 
-    // https://github.com/antfu/vite-plugin-icons
-    ViteIcons(),
-
     // https://github.com/antfu/vite-plugin-windicss
     WindiCSS(),
+
+    viteSSR({
+      build: {
+        keepIndexHtml: true,
+      }
+    }),
 
     Inspect(),
   ],
