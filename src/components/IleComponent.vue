@@ -16,7 +16,6 @@ export default defineComponent({
     'client:load': { type: Boolean, default: false },
     'client:visible': { type: Boolean, default: false },
     'client:media': { type: String, default: '' },
-    'client:only': { type: Boolean, default: false },
   },
   setup () {
     return {

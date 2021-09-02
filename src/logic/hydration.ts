@@ -6,7 +6,6 @@ export const strategies = [
   'load',
   'visible',
   'media',
-  'only',
 ]
 
 type Props = Record<string, unknown>

@@ -2,7 +2,7 @@ import path from 'path'
 import chalk from 'chalk'
 import fs from 'fs'
 import { build, defineConfig } from 'vite'
-import type { ResolvedConfig } from 'vite'
+import type { Manifest, ManifestChunk, ResolvedConfig } from 'vite'
 import Vue from '@vitejs/plugin-vue'
 import Pages from 'vite-plugin-pages'
 import Layouts from 'vite-plugin-vue-layouts'
@@ -24,6 +24,23 @@ function escapeRegex(str: string) {
 
 function getSize(str: string) {
   return `${(str.length / 1024).toFixed(2)}KiB`;
+}
+
+function resolveManifestEntries (manifest: Manifest, entryNames: string[]): string[] {
+  return entryNames.flatMap(entryName => {
+    const entry = manifest[entryName]
+    return [entry.file, ...resolveManifestEntries(manifest, entry.imports || [])]
+  })
+}
+
+function uniq<T> (arr: Array<T>) {
+  return [...new Set(arr.filter(x => x))]
+}
+
+function stringifyPreload (manifest: Manifest, hrefs: string[]) {
+  return uniq(resolveManifestEntries(manifest, hrefs))
+    .map(href => `<link rel="modulepreload" href="${path.join(config.base, href)}" crossorigin/>`)
+    .join('')
 }
 
 export function parseId(id: string) {
@@ -104,23 +121,27 @@ export default defineConfig({
         },
         mode: config.mode
       })
-      const manifest = JSON.parse(fs.readFileSync(path.join(outDir, 'manifest.json'), 'utf-8'))
+      const manifest: Manifest = JSON.parse(fs.readFileSync(path.join(outDir, 'manifest.json'), 'utf-8'))
       console.log({ outDir, manifest, islandsByRoute })
       await Promise.all(Object.entries(islandsByRoute).map(async ([route, scriptFiles]) => {
         const htmlFilename = routeFilename(route)
-        const html = fs.readFileSync(htmlFilename, 'utf-8')
-        const entriesByFilename = Object.fromEntries(await Promise.all(scriptFiles.map(async file => {
+        let html = fs.readFileSync(htmlFilename, 'utf-8')
+        const entriesByFilename: Record<string, ManifestChunk> = Object.fromEntries(await Promise.all(scriptFiles.map(async file => {
           return [
             file,
             manifest[path.relative(config.root, file)],
           ]
         })))
+        let preloadScripts: string[] = []
         console.log(entriesByFilename)
-        const transformed = html.replace(hydrationRegex, (str, file) => {
-          console.log({ file, entry: entriesByFilename[file] })
-          return `<script type="module" src="${path.join(config.base, entriesByFilename[file].file)}"></script>`
+        html = html.replace(hydrationRegex, (str, file) => {
+          const entry = entriesByFilename[file]
+          if (entry.imports) preloadScripts.push(...entry.imports)
+          console.log({ file, entry })
+          return `<script type="module" src="${path.join(config.base, entry.file)}"></script>`
         })
-        await fs.promises.writeFile(htmlFilename, transformed, 'utf-8')
+        html = html.replace('</head>', `${stringifyPreload(manifest, preloadScripts)}</head>`)
+        await fs.promises.writeFile(htmlFilename, html, 'utf-8')
       }))
     },
   },
