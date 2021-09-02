@@ -1,0 +1,15 @@
+[build.environment]
+  NPM_FLAGS = "--prefix=/dev/null"
+  NODE_VERSION = "14"
+
+[build]
+  base = "/"
+  ignore = "git diff --quiet 'HEAD^' HEAD ."
+  publish = "dist"
+  command = "npx pnpm i --store=node_modules/.pnpm-store && npx pnpm run build"
+
+[[plugins]]
+  package = "netlify-plugin-cache"
+    [plugins.inputs]
+    # Optional (but highly recommended). Defaults to [".cache"].
+    paths = ["node_modules/.vite"]

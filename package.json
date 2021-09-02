@@ -42,6 +42,7 @@
     "fast-glob": "^3.2.7",
     "grey-matter": "^0.0.0",
     "markdown-it-prism": "^2.2.0",
+    "netlify-plugin-cache": "^1.0.3",
     "node-fetch": "^2.6.1",
     "pnpm": "^6.14.3",
     "rimraf": "^3.0.2",
