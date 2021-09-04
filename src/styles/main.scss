@@ -7,6 +7,7 @@
   --fg: theme('colors.gray.700');
   --fg-deep: theme('colors.gray.800');
   --fg-deeper: theme('colors.gray.900');
+  --bg-subtle: rgba(0, 0, 0, 0.05);
 }
 
 html {
@@ -23,6 +24,7 @@ html.dark {
   --fg: theme('colors.gray.300');
   --fg-deep: theme('colors.gray.200');
   --fg-deeper: theme('colors.gray.100');
+  --bg-subtle: rgba(255, 255, 255, 0.15);
 
   .prose p,
   .prose a {

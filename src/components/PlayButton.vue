@@ -42,7 +42,6 @@ watch(() => props.isPlaying, (isPlaying) => {
         />
       </path>
     </svg>
-    <slot/>
   </button>
 </template>
 

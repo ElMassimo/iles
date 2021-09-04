@@ -1,5 +1,5 @@
-import { createApp } from 'vue'
-import type { Component } from 'vue'
+import { h, defineComponent, createApp, createStaticVNode, createSSRApp } from 'vue'
+import type { DefineComponent } from 'vue'
 
 export const strategies = [
   'idle',
@@ -9,13 +9,23 @@ export const strategies = [
 ]
 
 type Props = Record<string, unknown>
+type Slots = Record<string, string>
 
-export function load (component: Component, id: string, props: Props) {
+const createIsland = import.meta.env.SSR ? createSSRApp : createApp
+
+export function load (component: DefineComponent, id: string, props: Props, slots: Slots) {
   const el = document.getElementById(id)
-  createApp(component, props).mount(el, true)
-  console.log(`Hydrated ${component.__file?.split('/').reverse()[0]}`, el)
+  const slotFns = slots && Object.fromEntries(Object.entries(slots)
+    .map(([name, str]) => [name, () => createStaticVNode(str)]))
+
+  createIsland({
+    render: () =>
+      h(component, props, slotFns),
+  })
+    .mount(el!, true)
+  console.log(`Hydrated ${component.__file?.split('/').reverse()[0]}`, el, slots)
 }
 
-export function idle (component: Component, id: string, props: Props) {
-  load(component, id, props)
+export function idle (component: DefineComponent, id: string, props: Props, slots: Slots) {
+  load(component, id, props, slots)
 }

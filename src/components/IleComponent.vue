@@ -1,5 +1,5 @@
 <script lang="ts">
-import { defineComponent, h, createCommentVNode } from 'vue'
+import { defineComponent, h, createCommentVNode, createTextVNode } from 'vue'
 import type { PropType, DefineComponent } from 'vue'
 import { strategies } from '~/logic/hydration'
 import devalue from '@nuxt/devalue'
@@ -33,13 +33,14 @@ export default defineComponent({
 
     const strategy = strategies.find(st => (this.$props as any)[`client:${st}`]) || 'load'
 
-    const hydrationArg = strategy === 'media' ? `, ${this['client:media']}` : ''
+    const props = { ...this.$attrs }
+    if (strategy === 'media') props._mediaQuery = this['client:media']
     const script = `import { ${this.importName} as ${this.componentName} } from '${this.importPath}'
 import { ${strategy} as hydrate } from '/src/logic/hydration'
-hydrate(${this.componentName}, '${this.id}', ${devalue(this.$attrs)}${hydrationArg})
+hydrate(${this.componentName}, '${this.id}', ${devalue(props)}, /* ILE_HYDRATION_SLOTS */)
 `
 
-    if (!import.meta.env.SSR) {
+    if (!import.meta.env.SSR && Object.keys(this.$slots).length === 0) {
       return [
         rootNode,
         h('script', { type: 'module', innerHTML: script }),
@@ -50,6 +51,14 @@ hydrate(${this.componentName}, '${this.id}', ${devalue(this.$attrs)}${hydrationA
       rootNode,
       createCommentVNode('ILE_HYDRATION_BEGIN'),
       script,
+      ...Object.entries(this.$slots).flatMap(([slotName, slotFn]) => {
+        return [
+          createCommentVNode(`ILE_SLOT_BEGIN`),
+          createTextVNode(slotName),
+          createTextVNode(`ILE_SLOT_SEPARATOR`),
+          slotFn(),
+        ]
+      }),
       createCommentVNode('ILE_HYDRATION_END'),
     ]
   },

@@ -17,6 +17,7 @@ import matter from 'gray-matter'
 
 import Inspect from 'vite-plugin-inspect'
 import XDM from './packages/xdm'
+import devalue from '@nuxt/devalue'
 
 import { pascalCase, escapeRegex, parseImports } from './src/parse'
 
@@ -66,6 +67,9 @@ let config: ResolvedConfig
 
 const hydrationBegin = '<!--ILE_HYDRATION_BEGIN-->'
 const hydrationEnd = '<!--ILE_HYDRATION_END-->'
+const slotBegin = '<!--ILE_SLOT_BEGIN-->'
+const slotSeparator = `ILE_SLOT_SEPARATOR`
+const commentsRegex = /<!--\[-->|<!--]-->/g
 const hydrationRegex = new RegExp(`${escapeRegex(hydrationBegin)}(.*?)${escapeRegex(hydrationEnd)}`, 'sg')
 const contextComponentRegex = new RegExp(escapeRegex('_ctx.__unplugin_components_'), 'g')
 const ileResolvedComponentKey = '__ileResolvedComponent'
@@ -83,7 +87,7 @@ export default defineConfig({
     async onPageRendered (route, html) {
       let counter = 0
       const pageIslands: string[] = []
-      const pageOutDir = path.resolve(__dirname, '.ile-temp', route === '/' ? 'index' : route.replace(/^\//, '').replace(/\//g, '-'))
+      const pageOutDir = path.resolve(config.build.outDir, '.ile-temp', route === '/' ? 'index' : route.replace(/^\//, '').replace(/\//g, '-'))
       fs.mkdirSync(pageOutDir, { recursive: true })
       html = html.replace(/<script\s*([^>]*?)>.*?<\/script>/sg, (script, attrs) => {
         if (attrs.includes('client-keep') || !attrs.includes('module')) return script
@@ -93,12 +97,15 @@ export default defineConfig({
         if (attrs.includes('modulepreload') && attrs.includes('.js')) return ''
         return link
       })
-      html = html.replace(hydrationRegex, (str, script) => {
+      html = html.replace(hydrationRegex, (str, ileContent) => {
         const basename = `ile-${++counter}.js`
-        config.logger.warn(`${chalk.dim(`${pageOutDir}/`)}${chalk.cyan(basename)} ${chalk.dim(getSize(script))}`)
         const filename = path.join(pageOutDir, basename)
-        pageIslands.push(filename)
+        const [scriptTemplate, ...slotStrs] = ileContent.replace(commentsRegex, '').split(slotBegin)
+        const slots = Object.fromEntries(slotStrs.map(str => str.split(slotSeparator)))
+        const script = scriptTemplate.replace('/* ILE_HYDRATION_SLOTS */', devalue(slots))
+        config.logger.warn(`${chalk.dim(`${pageOutDir}/`)}${chalk.cyan(basename)} ${chalk.dim(getSize(script))}`)
         fs.writeFileSync(filename, script, 'utf-8')
+        pageIslands.push(filename)
         return `${hydrationBegin}${filename}${hydrationEnd}`
       })
       if (pageIslands.length) islandsByRoute[route] = pageIslands
@@ -110,7 +117,6 @@ export default defineConfig({
 
       const outDir = config.build.outDir
       await build({
-        logLevel: 'warn',
         publicDir: false,
         build: {
           emptyOutDir: false,
@@ -123,7 +129,7 @@ export default defineConfig({
         mode: config.mode,
       })
       const manifest: Manifest = JSON.parse(fs.readFileSync(path.join(outDir, 'manifest.json'), 'utf-8'))
-      console.log({ outDir, manifest, islandsByRoute })
+      // console.log({ outDir, manifest, islandsByRoute })
       await Promise.all(Object.entries(islandsByRoute).map(async ([route, scriptFiles]) => {
         const htmlFilename = routeFilename(route)
         let html = fs.readFileSync(htmlFilename, 'utf-8')
@@ -134,17 +140,17 @@ export default defineConfig({
           ]
         })))
         const preloadScripts: string[] = []
-        console.log(entriesByFilename)
+        // console.log(entriesByFilename)
         html = html.replace(hydrationRegex, (str, file) => {
           const entry = entriesByFilename[file]
           if (entry.imports) preloadScripts.push(...entry.imports)
-          console.log({ file, entry })
+          // console.log({ file, entry })
           return `<script type="module" src="${path.join(config.base, entry.file)}"></script>`
         })
         html = html.replace('</head>', `${stringifyPreload(manifest, preloadScripts)}</head>`)
         await fs.promises.writeFile(htmlFilename, html, 'utf-8')
       }))
-      fs.rmSync(path.resolve(__dirname, '.ile-temp'), { recursive: true, force: true })
+      fs.rmSync(path.resolve(config.build.outDir, '.ile-temp'), { recursive: true, force: true })
     },
   },
   plugins: [
