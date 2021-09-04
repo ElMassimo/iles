@@ -3,11 +3,11 @@ import { onMounted } from 'vue'
 import { useIntersectionObserver } from '@vueuse/core'
 import { pauseWhenOtherPlays } from '~/logic/audio'
 
-const props = defineProps<{ src: string }>()
+const props = defineProps<{ src: string, initialDuration: number }>()
 const emit = defineEmits(['audio:error'])
 
 let currentTime = $ref(0)
-let duration = $ref<number>(NaN)
+let duration = $ref<number>(props.initialDuration)
 
 // Internal: Indicates the internal status of the player.
 type Status = 'playing' | 'paused' | 'stopped'
@@ -68,12 +68,6 @@ const observer = useIntersectionObserver($$(el), ([{ isIntersecting }]) => {
 })
 
 let errorMessage = $ref('')
-
-if (import.meta.env.SSR) {
-  const getMP3Duration = require('get-mp3-duration')
-  const buffer = require('fs').readFileSync(`${__dirname}${props.src}`)
-  duration = getMP3Duration(buffer) / 1000
-}
 </script>
 
 <template>
