@@ -18,11 +18,7 @@ import matter from 'gray-matter'
 import Inspect from 'vite-plugin-inspect'
 import XDM from './packages/xdm'
 
-import { pascalCase, parseImports } from './src/parse'
-
-function escapeRegex (str: string) {
-  return str.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&')
-}
+import { pascalCase, escapeRegex, parseImports } from './src/parse'
 
 function getSize (str: string) {
   return `${(str.length / 1024).toFixed(2)}KiB`
@@ -71,9 +67,11 @@ let config: ResolvedConfig
 const hydrationBegin = '<!--ILE_HYDRATION_BEGIN-->'
 const hydrationEnd = '<!--ILE_HYDRATION_END-->'
 const hydrationRegex = new RegExp(`${escapeRegex(hydrationBegin)}(.*?)${escapeRegex(hydrationEnd)}`, 'sg')
+const contextComponentRegex = new RegExp(escapeRegex('_ctx.__unplugin_components_'), 'g')
+const ileResolvedComponentKey = '__ileResolvedComponent'
+const ileComponentRegex = new RegExp(`"?${escapeRegex(ileResolvedComponentKey)}"?:\\s*([^,]+),`, 'sg')
 
 const islandsByRoute: Record<string, string[]> = Object.create(null)
-
 
 export default defineConfig({
   resolve: {
@@ -85,10 +83,10 @@ export default defineConfig({
     async onPageRendered (route, html) {
       let counter = 0
       const pageIslands: string[] = []
-      const pageOutDir = path.resolve(__dirname, '.ile-temp', route === '/' ? 'index' : route.replace(/^\//, '').replaceAll('/', '-'))
+      const pageOutDir = path.resolve(__dirname, '.ile-temp', route === '/' ? 'index' : route.replace(/^\//, '').replace(/\//g, '-'))
       fs.mkdirSync(pageOutDir, { recursive: true })
       html = html.replace(/<script\s*([^>]*?)>.*?<\/script>/sg, (script, attrs) => {
-        if (script.includes('client-keep')) return script
+        if (attrs.includes('client-keep') || !attrs.includes('module')) return script
         return ''
       })
       html = html.replace(/<link\s*([^>]*?)>/sg, (link, attrs) => {
@@ -170,8 +168,8 @@ export default defineConfig({
           // Parse imports and set options as needed.
           const resolveComponent = `_resolveComponent("${tagName}")`
           const component = path.endsWith('.vue')
-            ? `:_$$ileResolvedComponent$$='${resolveComponent}'`
-            : `_$$ileResolvedComponent$$={${resolveComponent}}`
+            ? `:${ileResolvedComponentKey}='${resolveComponent}'`
+            : `${ileResolvedComponentKey}={${resolveComponent}}`
 
           return `<IleComponent componentName="${pascalCase(tagName)}" ${component} ${attrs}>${children || ''}</IleComponent>`
         })
@@ -287,23 +285,25 @@ export default defineConfig({
     {
       name: 'ile-post',
       enforce: 'post',
-      transform (code, id) {
+      async transform (code, id) {
         const { path } = parseId(id)
         if (!path.endsWith('.mdx') && !path.endsWith('.vue')) return
 
-        code = code.replaceAll('_ctx.__unplugin_components_', '__unplugin_components_')
+        code = code.replace(contextComponentRegex, '__unplugin_components_')
 
-        const files = /"?_\$\$ileResolvedComponent\$\$"?:\s*([^,]+),/sg
-        code = code.replace(files, (str, resolvedName) => {
-          const match = code.match(new RegExp(`import ${escapeRegex(resolvedName)} from (['"])(.*?)\\1`))
-          if (resolvedName.startsWith('_resolveComponent') || !match) {
+        if (!code.includes(ileResolvedComponentKey)) return code
+
+        const imports = await parseImports(code)
+        code = code.replace(ileComponentRegex, (str, resolvedName) => {
+          const importMetadata = imports[resolvedName]
+          if (!importMetadata) {
             const name = resolvedName.replace(/_resolveComponent\(([^)]+?)\)/, '$1')
             throw new Error(`Unable to infer '${name}' import for island in ${path}`)
           }
           return `
             component: ${resolvedName},
-            importName: 'default',
-            importPath: '${match[2]}',
+            importName: '${importMetadata.name}',
+            importPath: '${importMetadata.path}',
           `
         })
 
