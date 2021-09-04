@@ -23,6 +23,7 @@ importers:
       eslint: ^7.32.0
       esno: ^0.9.1
       fast-glob: ^3.2.7
+      get-mp3-duration: ^1.0.0
       grey-matter: ^0.0.0
       markdown-it-prism: ^2.2.0
       netlify-plugin-cache: ^1.0.3
@@ -75,6 +76,7 @@ importers:
       eslint: 7.32.0
       esno: 0.9.1
       fast-glob: 3.2.7
+      get-mp3-duration: 1.0.0
       grey-matter: 0.0.0
       markdown-it-prism: 2.2.0
       netlify-plugin-cache: 1.0.3
@@ -4186,6 +4188,10 @@ packages:
       function-bind: 1.1.1
       has: 1.0.3
       has-symbols: 1.0.2
+    dev: true
+
+  /get-mp3-duration/1.0.0:
+    resolution: {integrity: sha1-Rx78oPnkkw54ZgFvYHhYL0zpNMs=}
     dev: true
 
   /get-own-enumerable-property-symbols/3.0.2:

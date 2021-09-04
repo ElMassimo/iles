@@ -68,6 +68,12 @@ const observer = useIntersectionObserver($$(el), ([{ isIntersecting }]) => {
 })
 
 let errorMessage = $ref('')
+
+if (import.meta.env.SSR) {
+  const getMP3Duration = require('get-mp3-duration')
+  const buffer = require('fs').readFileSync(`${__dirname}${props.src}`)
+  duration = getMP3Duration(buffer) / 1000
+}
 </script>
 
 <template>
