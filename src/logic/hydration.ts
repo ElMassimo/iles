@@ -19,4 +19,3 @@ export function load (component: Component, id: string, props: Props) {
 export function idle (component: Component, id: string, props: Props) {
   load(component, id, props)
 }
-

@@ -1,6 +1,6 @@
 import path from 'path'
-import chalk from 'chalk'
 import fs from 'fs'
+import chalk from 'chalk'
 import { build, defineConfig } from 'vite'
 import type { Manifest, ManifestChunk, ResolvedConfig } from 'vite'
 import Vue from '@vitejs/plugin-vue'
@@ -13,21 +13,23 @@ import WindiCSS from 'vite-plugin-windicss'
 import viteSSR from 'vite-ssr/plugin'
 
 import VueJSX from '@vitejs/plugin-vue-jsx'
-import XDM from './packages/xdm'
 import matter from 'gray-matter'
 
 import Inspect from 'vite-plugin-inspect'
+import XDM from './packages/xdm'
 
-function escapeRegex(str: string) {
-  return str.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
+import { pascalCase, parseImports } from './src/parse'
+
+function escapeRegex (str: string) {
+  return str.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&')
 }
 
-function getSize(str: string) {
-  return `${(str.length / 1024).toFixed(2)}KiB`;
+function getSize (str: string) {
+  return `${(str.length / 1024).toFixed(2)}KiB`
 }
 
 function resolveManifestEntries (manifest: Manifest, entryNames: string[]): string[] {
-  return entryNames.flatMap(entryName => {
+  return entryNames.flatMap((entryName) => {
     const entry = manifest[entryName]
     return [entry.file, ...resolveManifestEntries(manifest, entry.imports || [])]
   })
@@ -43,7 +45,7 @@ function stringifyPreload (manifest: Manifest, hrefs: string[]) {
     .join('')
 }
 
-export function parseId(id: string) {
+export function parseId (id: string) {
   const index = id.indexOf('?')
   if (index < 0) {
     return { path: id, query: {} }
@@ -59,7 +61,7 @@ export function parseId(id: string) {
 }
 
 function routeFilename (route: string) {
-  const relativeRoute = (route.endsWith("/") ? `${route}index` : route).replace(/^\//g, "")
+  const relativeRoute = (route.endsWith('/') ? `${route}index` : route).replace(/^\//g, '')
   const filename = `${relativeRoute}.html`
   return path.join(config.build.outDir, filename)
 }
@@ -68,9 +70,10 @@ let config: ResolvedConfig
 
 const hydrationBegin = '<!--ILE_HYDRATION_BEGIN-->'
 const hydrationEnd = '<!--ILE_HYDRATION_END-->'
-const hydrationRegex = new RegExp(escapeRegex(hydrationBegin) + '(.*?)' + escapeRegex(hydrationEnd), 'sg')
+const hydrationRegex = new RegExp(`${escapeRegex(hydrationBegin)}(.*?)${escapeRegex(hydrationEnd)}`, 'sg')
 
-let islandsByRoute: Record<string, string[]> = Object.create(null)
+const islandsByRoute: Record<string, string[]> = Object.create(null)
+
 
 export default defineConfig({
   resolve: {
@@ -94,11 +97,11 @@ export default defineConfig({
       })
       html = html.replace(hydrationRegex, (str, script) => {
         const basename = `ile-${++counter}.js`
-        config.logger.warn(`${chalk.dim(`${pageOutDir}/`)}${chalk.cyan(basename)} ${chalk.dim(getSize(script))}`);
+        config.logger.warn(`${chalk.dim(`${pageOutDir}/`)}${chalk.cyan(basename)} ${chalk.dim(getSize(script))}`)
         const filename = path.join(pageOutDir, basename)
         pageIslands.push(filename)
-        fs.writeFileSync(filename, script, "utf-8")
-        return  `${hydrationBegin}${filename}${hydrationEnd}`
+        fs.writeFileSync(filename, script, 'utf-8')
+        return `${hydrationBegin}${filename}${hydrationEnd}`
       })
       if (pageIslands.length) islandsByRoute[route] = pageIslands
       return html
@@ -114,25 +117,25 @@ export default defineConfig({
         build: {
           emptyOutDir: false,
           manifest: true,
-          outDir: outDir,
+          outDir,
           rollupOptions: {
             input: islandFiles,
           },
         },
-        mode: config.mode
+        mode: config.mode,
       })
       const manifest: Manifest = JSON.parse(fs.readFileSync(path.join(outDir, 'manifest.json'), 'utf-8'))
       console.log({ outDir, manifest, islandsByRoute })
       await Promise.all(Object.entries(islandsByRoute).map(async ([route, scriptFiles]) => {
         const htmlFilename = routeFilename(route)
         let html = fs.readFileSync(htmlFilename, 'utf-8')
-        const entriesByFilename: Record<string, ManifestChunk> = Object.fromEntries(await Promise.all(scriptFiles.map(async file => {
+        const entriesByFilename: Record<string, ManifestChunk> = Object.fromEntries(await Promise.all(scriptFiles.map(async (file) => {
           return [
             file,
             manifest[path.relative(config.root, file)],
           ]
         })))
-        let preloadScripts: string[] = []
+        const preloadScripts: string[] = []
         console.log(entriesByFilename)
         html = html.replace(hydrationRegex, (str, file) => {
           const entry = entriesByFilename[file]
@@ -162,11 +165,15 @@ export default defineConfig({
         return code.replace(components, (str, tagName, attrs, otherAttrs, children) => {
           if (otherAttrs) attrs = otherAttrs
           if (!attrs?.match(/(\s|^)client:/)) return str
+
+          // TODO: Only if not imported directly.
+          // Parse imports and set options as needed.
+          const resolveComponent = `_resolveComponent("${tagName}")`
           const component = path.endsWith('.vue')
-            ? `:ileIs='_resolveComponent("${tagName}")'`
-            : `ileIs={_resolveComponent("${tagName}")}`
-          const file = component.replace('ileIs=', 'ileFile=')
-          return `<IleComponent ${component} ${file} ${attrs}>${children || ''}</IleComponent>`
+            ? `:_$$ileResolvedComponent$$='${resolveComponent}'`
+            : `_$$ileResolvedComponent$$={${resolveComponent}}`
+
+          return `<IleComponent componentName="${pascalCase(tagName)}" ${component} ${attrs}>${children || ''}</IleComponent>`
         })
       },
     },
@@ -175,8 +182,8 @@ export default defineConfig({
       refTransform: true,
       template: {
         compilerOptions: {
-          isCustomElement: (tagName) => tagName.startsWith('ile-')
-        }
+          isCustomElement: tagName => tagName.startsWith('ile-'),
+        },
       },
     }),
 
@@ -199,16 +206,16 @@ export default defineConfig({
         // }
 
         const match = code.match(/props\.components\), \{(.*?), wrapper: /)
-        const importedComponents = match ? match[1].split(',') : []
+        const importedComponents = match ? match[1].split(', ') : []
         // console.log('mdx-transform', id, importedComponents)
 
         const pattern = '_components = Object.assign({'
         const index = code.indexOf(pattern) + pattern.length
-        const comps = importedComponents.map(name => `    ${name}: _resolveComponent("${name}"),`).join("\n")
-        code = code.slice(0, index) + `\n${comps}\n` + code.slice(index + 1, code.length)
+        const comps = importedComponents.map(name => `    ${name}: _resolveComponent("${name}"),`).join('\n')
+        code = `${code.slice(0, index)}\n${comps}\n${code.slice(index + 1, code.length)}`
 
         return code.replace('export default MDXContent', `
-          ${code.includes('defineComponent') ? '' : "import { defineComponent } from 'vue'"}
+          ${code.includes('defineComponent') ? '' : 'import { defineComponent } from \'vue\''}
 
           const _default = defineComponent({
             ${config.mode === 'development' ? `__file: '${path}',` : ''}
@@ -227,7 +234,7 @@ export default defineConfig({
     },
 
     VueJSX({
-      include: /\.[jt]sx|mdx?$/
+      include: /\.[jt]sx|mdx?$/,
     }),
 
     // https://github.com/hannoeru/vite-plugin-pages
@@ -286,10 +293,18 @@ export default defineConfig({
 
         code = code.replaceAll('_ctx.__unplugin_components_', '__unplugin_components_')
 
-        const files = /"?ileFile"?(="|:\s)([^",]+)"?/sg
-        code = code.replace(files, (str, separator, importVar) => {
-          const match = code.match(new RegExp(`import ${escapeRegex(importVar)} from (['"])(.*?)\\1`))
-          return match ? `ileFile${separator}'${match![2]}'` : str
+        const files = /"?_\$\$ileResolvedComponent\$\$"?:\s*([^,]+),/sg
+        code = code.replace(files, (str, resolvedName) => {
+          const match = code.match(new RegExp(`import ${escapeRegex(resolvedName)} from (['"])(.*?)\\1`))
+          if (resolvedName.startsWith('_resolveComponent') || !match) {
+            const name = resolvedName.replace(/_resolveComponent\(([^)]+?)\)/, '$1')
+            throw new Error(`Unable to infer '${name}' import for island in ${path}`)
+          }
+          return `
+            component: ${resolvedName},
+            importName: 'default',
+            importPath: '${match[2]}',
+          `
         })
 
         return code
@@ -302,7 +317,7 @@ export default defineConfig({
     viteSSR({
       build: {
         keepIndexHtml: true,
-      }
+      },
     }),
 
     Inspect(),

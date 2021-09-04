@@ -1,5 +1,11 @@
 /* eslint-disable import/no-duplicates */
 
+/// <reference types="vue/ref-macros" />
+/// <reference types="vite/client" />
+/// <reference types="@peeky/runner" />
+/// <reference types="vite-plugin-pages/client" />
+/// <reference types="vite-plugin-vue-layouts/client" />
+
 declare interface Window {
   // extend the window
 }
@@ -16,5 +22,3 @@ declare module '*.vue' {
   const component: ComponentOptions
   export default component
 }
-
-/// <reference types="vue/ref-macros" />
