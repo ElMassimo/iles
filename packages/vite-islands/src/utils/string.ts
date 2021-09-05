@@ -1,6 +1,4 @@
-import { devalue } from '@nuxt/devalue'
-
-export const serialize = devalue
+export { default as serialize } from '@nuxt/devalue'
 
 export function escapeRegex (str: string) {
   return str.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&')
@@ -11,7 +9,7 @@ export function pascalCase(str: string) {
 }
 
 export function camelCase(str: string) {
-  return str.replace(/[^\w_]+(\w)/g, (_, c) => (c ? c.toUpperCase() : ''))
+  return str.replace(/[^\w_]+(\w)/g, (_, c) => c ? c.toUpperCase() : '')
 }
 
 export function capitalize(str: string) {

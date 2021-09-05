@@ -1,4 +1,4 @@
-import { parseImports, parseImportVariables } from '../src/parse'
+import { parseImports, parseImportVariables } from '../src/utils/parse'
 import { init as initESLexer, parse as parseESModules } from 'es-module-lexer'
 
 describe('parsing component imports', () => {
