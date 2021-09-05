@@ -1,13 +1,13 @@
 <script lang="ts">
 import { defineComponent, h, createCommentVNode, createTextVNode } from 'vue'
 import type { PropType, DefineComponent } from 'vue'
-import { strategies } from '~/logic/hydration'
+import { strategies } from '../../hydration'
 import devalue from '@nuxt/devalue'
 
 let idNumber = 0
 
 export default defineComponent({
-  name: 'IleComponent',
+  name: 'ViteIsland',
   inheritAttrs: false,
   props: {
     component: { type: Object as PropType<DefineComponent>, required: true },

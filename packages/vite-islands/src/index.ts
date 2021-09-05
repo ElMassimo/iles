@@ -3,7 +3,7 @@ import fs from 'fs'
 import glob from 'fast-glob'
 import chalk from 'chalk'
 import { build, defineConfig } from 'vite'
-import type { Manifest, ResolvedConfig } from 'vite'
+import type { Manifest, ManifestChunk, ResolvedConfig } from 'vite'
 import Vue from '@vitejs/plugin-vue'
 import Pages from 'vite-plugin-pages'
 import Layouts from 'vite-plugin-vue-layouts'
@@ -11,13 +11,12 @@ import Icons from 'unplugin-icons/vite'
 import IconsResolver from 'unplugin-icons/resolver'
 import ViteComponents from 'unplugin-vue-components/vite'
 import WindiCSS from 'vite-plugin-windicss'
-import viteSSR from 'vite-ssr/plugin'
 
 import VueJSX from '@vitejs/plugin-vue-jsx'
 import matter from 'gray-matter'
 
 import Inspect from 'vite-plugin-inspect'
-import XDM from './packages/vite-plugin-xdm'
+import XDM from './packages/xdm'
 import devalue from '@nuxt/devalue'
 
 import { pascalCase, escapeRegex, parseImports, rebaseImports } from './src/parse'
@@ -98,6 +97,9 @@ export default defineConfig({
       '~/': `${path.resolve(__dirname, 'src')}/`,
     },
   },
+  build: {
+    minify: false,
+  },
   ssgOptions: {
     async onPageRendered (route, html) {
       let counter = 0
@@ -146,6 +148,7 @@ export default defineConfig({
       await build({
         publicDir: false,
         build: {
+          minify: 'esbuild',
           emptyOutDir: false,
           manifest: true,
           outDir,
@@ -352,12 +355,6 @@ export default defineConfig({
 
     // https://github.com/antfu/vite-plugin-windicss
     WindiCSS(),
-
-    viteSSR({
-      build: {
-        keepIndexHtml: true,
-      },
-    }),
 
     Inspect(),
   ],
