@@ -1,4 +1,3 @@
-<script lang="ts">
 import { defineComponent, h, createCommentVNode, createTextVNode } from 'vue'
 import type { PropType, DefineComponent } from 'vue'
 import { newHydrationId, hydrationFn, Hydrate } from '../hydration'
@@ -64,4 +63,3 @@ hydrate(${this.componentName}, '${this.id}', ${serialize(props)}, /* ILE_HYDRATI
     ]
   },
 })
-</script>

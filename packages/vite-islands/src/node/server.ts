@@ -1,14 +1,16 @@
 import { createServer as createViteServer, ServerOptions } from 'vite'
 import { resolveConfig } from './config'
-import { addViteIslandsPlugin } from './plugin'
+import ViteIslandsPlugin from './plugin'
 
-export async function createServer (options: ServerOptions = {}) {
-  const config = await resolveConfig(options.root)
+export async function createServer ({ root, ...options }: ServerOptions = {}) {
+  const config = await resolveConfig({ root }, 'serve')
 
   return createViteServer({
     root: config.srcDir,
     base: config.site.base,
-    plugins: addViteIslandsPlugin(root, config),
+    plugins: [
+      ViteIslandsPlugin(),
+    ],
     server: options,
   })
 }

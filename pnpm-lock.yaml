@@ -125,6 +125,7 @@ importers:
       vite-plugin-pages: ^0.18.0-beta.1
       vite-plugin-pwa: ^0.11.2
       vite-plugin-vue-layouts: ^0.3.1
+      vite-plugin-xdm: workspace:*
       vue: ^3.2.0
       vue-router: ^4.0.9
     dependencies:
@@ -143,6 +144,7 @@ importers:
       vite-plugin-pages: 0.18.0-beta.1_0af502564fb53278e4f42e4690bab263
       vite-plugin-pwa: 0.11.2_vite@2.5.1
       vite-plugin-vue-layouts: 0.3.1_vite@2.5.1
+      vite-plugin-xdm: link:../vite-plugin-xdm
     devDependencies:
       '@nuxt/devalue': 2.0.0
       '@peeky/cli': 0.4.2_eslint@7.32.0

@@ -7,7 +7,7 @@ export async function build (options: BuildOptions = {}) {
   const start = Date.now()
 
   process.env.NODE_ENV = 'production'
-  const config = await resolveConfig(options)
+  const config = await resolveConfig(options, 'build', 'production')
 
   try {
     const [clientResult, , pageToHashMap] = await ssgBuild(config)

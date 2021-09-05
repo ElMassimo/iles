@@ -6,8 +6,7 @@ export interface ServeOptions {
   port?: number
 }
 
-export async function serve (options: ServeOptions = {}) {
-  if (options.port === undefined) options.port = 5000
-  const config = await resolveConfig(options)
-  await preview(config, options)
+export async function serve ({ root, port = 5000 }: ServeOptions = {}) {
+  const config = await resolveConfig({ root }, 'serve', 'production')
+  await preview(config, { root })
 }
