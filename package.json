@@ -47,7 +47,6 @@
     "esno": "^0.9.1",
     "fast-glob": "^3.2.7",
     "get-mp3-duration": "^1.0.0",
-    "grey-matter": "^0.0.0",
     "magic-string": "^0.25.7",
     "markdown-it-prism": "^2.2.0",
     "netlify-plugin-cache": "^1.0.3",

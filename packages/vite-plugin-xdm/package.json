@@ -1,0 +1,52 @@
+{
+  "name": "vite-plugin-xdm",
+  "type": "module",
+  "version": "0.0.1",
+  "scripts": {
+    "build": "tsup src/index.ts --dts --sourcemap --format cjs,esm",
+    "quick:build": "tsup src/index.ts --format cjs,esm"
+  },
+  "files": [
+    "dist",
+    "src"
+  ],
+  "types": "dist/index.dts",
+  "main": "dist/index.cjs",
+  "module": "dist/index.js",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    }
+  },
+  "funding": "https://github.com/sponsors/ElMassimo",
+  "author": "Máximo Mussini <maximomussini@gmail.com>",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/maximomussini/vite-plugin-xdm"
+  },
+  "homepage": "https://github.com/maximomussini/vite-plugin-xdm",
+  "bugs": "https://github.com/maximomussini/vite-plugin-xdm/issues",
+  "dependencies": {
+    "@rollup/pluginutils": "^4.1.1",
+    "vfile": "^5.1.0",
+    "remark-frontmatter": "^4.0.0",
+    "remark-mdx-images": "^1.0.3",
+    "xdm": "^2.0.0",
+    "estree-util-is-identifier-name": "^1.1.0",
+    "estree-util-value-to-estree": "^1.0.0",
+    "js-yaml": "^4.0.0",
+    "unist-util-visit": "^2.0.3",
+    "toml": "^3.0.0"
+  },
+  "peerDependencies": {
+    "vite": "^2.5.1"
+  },
+  "devDependencies": {
+    "@types/estree": "^0.0.46",
+    "@types/js-yaml": "^4.0.0",
+    "tsup": "^3.11.0",
+    "typescript": "^4.1.3",
+    "vite": "^2.5.1"
+  }
+}

@@ -1,2 +1,3 @@
 packages:
-  - packages/xdm/
+  - packages/vite-plugin-xdm/
+  - packages/vite-islands/
