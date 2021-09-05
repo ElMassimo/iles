@@ -235,15 +235,8 @@ export default defineConfig({
         const { path } = parseId(id)
         if (!path.endsWith('.mdx') || !code.includes('MDXContent')) return null
 
-        // if (code.includes('IleComponent')) {
-        //   code = `import IleComponent from '~/components/IleComponent.vue'\n${code}`
-        //   code = code.replace('IleComponent, ', '')
-        // }
-
         const match = code.match(/props\.components\), \{(.*?), wrapper: /)
-        const imports = await parseImports(code)
-        const importedComponents = (match ? match[1].split(', ') : [])
-          .filter(name => !imports[name])
+        const importedComponents = match ? match[1].split(', ') : []
         // console.log('mdx-transform', id, importedComponents)
 
         const pattern = '_components = Object.assign({'
