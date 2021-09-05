@@ -15,6 +15,7 @@
     "dev": "vite --port 3333 --open",
     "clean": "rm -rf dist && rm -rf serverless/public && rm -rf serverless/api/renderer",
     "build": "cross-env NODE_ENV=production vite-ssg build",
+    "rebuild": "pnpm run build && pnpx serve dist",
     "deploy": "cd serverless && vercel",
     "deploy:prod": "cd serverless && vercel --prod"
   },
@@ -47,6 +48,7 @@
     "fast-glob": "^3.2.7",
     "get-mp3-duration": "^1.0.0",
     "grey-matter": "^0.0.0",
+    "magic-string": "^0.25.7",
     "markdown-it-prism": "^2.2.0",
     "netlify-plugin-cache": "^1.0.3",
     "node-fetch": "^2.6.1",

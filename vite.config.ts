@@ -1,5 +1,6 @@
 import path from 'path'
 import fs from 'fs'
+import glob from 'fast-glob'
 import chalk from 'chalk'
 import { build, defineConfig } from 'vite'
 import type { Manifest, ManifestChunk, ResolvedConfig } from 'vite'
@@ -19,7 +20,7 @@ import Inspect from 'vite-plugin-inspect'
 import XDM from './packages/xdm'
 import devalue from '@nuxt/devalue'
 
-import { pascalCase, escapeRegex, parseImports } from './src/parse'
+import { pascalCase, escapeRegex, parseImports, rebaseImports } from './src/parse'
 
 function getSize (str: string) {
   return `${(str.length / 1024).toFixed(2)}KiB`
@@ -115,7 +116,13 @@ export default defineConfig({
       const islandFiles = Object.values(islandsByRoute).flat()
       if (islandFiles.length === 0) return
 
-      const outDir = config.build.outDir
+      const { assetsDir, outDir } = config.build
+      const assetsBase = path.join(config.base, assetsDir)
+
+      // Remove unnecessary client scripts.
+      const files = await glob(path.join(outDir, '**/*.js'))
+      files.forEach(fileName => fs.promises.rm(fileName))
+
       await build({
         publicDir: false,
         build: {
@@ -132,25 +139,30 @@ export default defineConfig({
       // console.log({ outDir, manifest, islandsByRoute })
       await Promise.all(Object.entries(islandsByRoute).map(async ([route, scriptFiles]) => {
         const htmlFilename = routeFilename(route)
-        let html = fs.readFileSync(htmlFilename, 'utf-8')
-        const entriesByFilename: Record<string, ManifestChunk> = Object.fromEntries(await Promise.all(scriptFiles.map(async (file) => {
+
+        let html = await fs.promises.readFile(htmlFilename, 'utf-8')
+        const entriesByFilename: Record<string, [ManifestChunk, string]> = Object.fromEntries(await Promise.all(scriptFiles.map(async (file) => {
+          const entry = manifest[path.relative(config.root, file)]
+          const filename = path.join(outDir, entry.file)
+          const code = await fs.promises.readFile(filename, 'utf-8')
+          await fs.promises.rm(filename)
           return [
             file,
-            manifest[path.relative(config.root, file)],
+            [entry, await rebaseImports(assetsBase, code)],
           ]
         })))
         const preloadScripts: string[] = []
         // console.log(entriesByFilename)
         html = html.replace(hydrationRegex, (str, file) => {
-          const entry = entriesByFilename[file]
+          const [entry, content] = entriesByFilename[file]
           if (entry.imports) preloadScripts.push(...entry.imports)
           // console.log({ file, entry })
-          return `<script type="module" src="${path.join(config.base, entry.file)}"></script>`
+          return `<script type="module">${content}</script>`
         })
         html = html.replace('</head>', `${stringifyPreload(manifest, preloadScripts)}</head>`)
         await fs.promises.writeFile(htmlFilename, html, 'utf-8')
       }))
-      fs.rmSync(path.resolve(config.build.outDir, '.ile-temp'), { recursive: true, force: true })
+      fs.rmSync(path.resolve(outDir, '.ile-temp'), { recursive: true, force: true })
     },
   },
   plugins: [
