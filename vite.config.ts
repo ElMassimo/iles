@@ -102,11 +102,13 @@ export default defineConfig({
     async onPageRendered (route, html) {
       let counter = 0
       const pageIslands: string[] = []
+      const assetsBase = path.join(config.base, config.build.assetsDir)
       const pageOutDir = path.resolve(config.root, '.ile-temp', route === '/' ? 'index' : route.replace(/^\//, '').replace(/\//g, '-'))
       fs.mkdirSync(pageOutDir, { recursive: true })
       html = html.replace(scriptTagsRegex, (script, attrs) => {
-        if (attrs.includes('client-keep') || !attrs.includes('module')) return script
-        return ''
+        return !attrs.includes('client-keep') && attrs.includes('type="module"') && attrs.includes(`src="${assetsBase}`)
+          ? ''
+          : script
       })
       html = html.replace(/<link\s*([^>]*?)>/sg, (link, attrs) => {
         if (attrs.includes('modulepreload') && attrs.includes('.js')) return ''
