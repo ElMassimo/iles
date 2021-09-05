@@ -19,6 +19,9 @@ useHead({
         'https://repository-images.githubusercontent.com/341177866/d42c1300-7633-11eb-84fd-ec68894d4fc9',
     },
   ],
+  script: [
+    { type: 'module', children: 'console.log("Yeah!")' },
+  ],
 })
 </script>
 

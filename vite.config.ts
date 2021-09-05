@@ -69,7 +69,15 @@ function buildLog (text: string, count: number | undefined) {
 ${chalk.gray("[isles]")} ${chalk.yellow(text)}${count ? chalk.blue(` (${count})`) : ""}`);
 }
 
+async function replaceAsync (str: string, regex: RegExp, asyncFn: (...groups: string[]) => Promise<string>) {
+  const promises = Array.from(str.matchAll(regex))
+    .map(([match, ...args]) => asyncFn(match, ...args))
+  const replacements = await Promise.all(promises)
+  return str.replace(regex, () => replacements.shift()!)
+}
+
 let config: ResolvedConfig
+let resolveVitePath: ReturnType<ResolvedConfig['createResolver']>
 
 const hydrationBegin = '<!--ILE_HYDRATION_BEGIN-->'
 const hydrationEnd = '<!--ILE_HYDRATION_END-->'
@@ -80,6 +88,7 @@ const hydrationRegex = new RegExp(`${escapeRegex(hydrationBegin)}(.*?)${escapeRe
 const contextComponentRegex = new RegExp(escapeRegex('_ctx.__unplugin_components_'), 'g')
 const ileResolvedComponentKey = '__ileResolvedComponent'
 const ileComponentRegex = new RegExp(`"?${escapeRegex(ileResolvedComponentKey)}"?:\\s*([^,]+),`, 'sg')
+const scriptTagsRegex = /<script\s*([^>]*?)>(.*?)<\/script>/sg
 
 const islandsByRoute: Record<string, string[]> = Object.create(null)
 
@@ -95,7 +104,7 @@ export default defineConfig({
       const pageIslands: string[] = []
       const pageOutDir = path.resolve(config.root, '.ile-temp', route === '/' ? 'index' : route.replace(/^\//, '').replace(/\//g, '-'))
       fs.mkdirSync(pageOutDir, { recursive: true })
-      html = html.replace(/<script\s*([^>]*?)>.*?<\/script>/sg, (script, attrs) => {
+      html = html.replace(scriptTagsRegex, (script, attrs) => {
         if (attrs.includes('client-keep') || !attrs.includes('module')) return script
         return ''
       })
@@ -146,27 +155,22 @@ export default defineConfig({
       })
       const manifest: Manifest = JSON.parse(fs.readFileSync(path.join(outDir, 'manifest.json'), 'utf-8'))
       // console.log({ outDir, manifest, islandsByRoute })
-      await Promise.all(Object.entries(islandsByRoute).map(async ([route, scriptFiles]) => {
+      await Promise.all(Object.keys(islandsByRoute).map(async route => {
         const htmlFilename = routeFilename(route)
 
         let html = await fs.promises.readFile(htmlFilename, 'utf-8')
-        const entriesByFilename: Record<string, [ManifestChunk, string]> = Object.fromEntries(await Promise.all(scriptFiles.map(async (file) => {
+        const preloadScripts: string[] = []
+        html = await replaceAsync(html, hydrationRegex, async (str, file) => {
           const entry = manifest[path.relative(config.root, file)]
+          if (entry.imports) preloadScripts.push(...entry.imports)
+
           const filename = path.join(outDir, entry.file)
           const code = await fs.promises.readFile(filename, 'utf-8')
-          await fs.promises.rm(filename)
-          return [
-            file,
-            [entry, await rebaseImports(assetsBase, code)],
-          ]
-        })))
-        const preloadScripts: string[] = []
-        // console.log(entriesByFilename)
-        html = html.replace(hydrationRegex, (str, file) => {
-          const [entry, content] = entriesByFilename[file]
-          if (entry.imports) preloadScripts.push(...entry.imports)
-          // console.log({ file, entry })
-          return `<script type="module">${content}</script>`
+          const rebasedCode = await rebaseImports(assetsBase, code)
+
+          fs.promises.rm(filename)
+
+          return `<script type="module">${rebasedCode}</script>`
         })
         html = html.replace('</head>', `${stringifyPreload(manifest, preloadScripts)}</head>`)
         await fs.promises.writeFile(htmlFilename, html, 'utf-8')
@@ -181,19 +185,24 @@ export default defineConfig({
     },
     {
       name: 'ile',
-      transform (code, id) {
+      async transform (code, id) {
         const { path } = parseId(id)
         if (!path.endsWith('.mdx') && !path.endsWith('.vue')) return
 
         const components = /<([A-Z]\w+)\s*(?:([^/]+?)\/>|([^>]+)>(.*?)<\/\1>)/sg
 
+        // TODO: Only if not imported directly.
+        // Parse imports and set options as needed.
+        const scriptContent = path.endsWith('.vue') && Array.from(code.matchAll(scriptTagsRegex)).map(([,,js]) => js).join(';')
+        const imports = scriptContent
+          ? await parseImports(scriptContent)
+          : {}
+
         return code.replace(components, (str, tagName, attrs, otherAttrs, children) => {
           if (otherAttrs) attrs = otherAttrs
           if (!attrs?.match(/(\s|^)client:/)) return str
 
-          // TODO: Only if not imported directly.
-          // Parse imports and set options as needed.
-          const resolveComponent = `_resolveComponent("${tagName}")`
+          const resolveComponent = imports[tagName] ? tagName : `_resolveComponent("${tagName}")`
           const component = path.endsWith('.vue')
             ? `:${ileResolvedComponentKey}='${resolveComponent}'`
             : `${ileResolvedComponentKey}={${resolveComponent}}`
@@ -220,8 +229,9 @@ export default defineConfig({
       name: 'mdx-transform',
       configResolved (resolvedConfig) {
         config = resolvedConfig
+        resolveVitePath = config.createResolver()
       },
-      transform (code, id) {
+      async transform (code, id) {
         const { path } = parseId(id)
         if (!path.endsWith('.mdx') || !code.includes('MDXContent')) return null
 
@@ -231,7 +241,9 @@ export default defineConfig({
         // }
 
         const match = code.match(/props\.components\), \{(.*?), wrapper: /)
-        const importedComponents = match ? match[1].split(', ') : []
+        const imports = await parseImports(code)
+        const importedComponents = (match ? match[1].split(', ') : [])
+          .filter(name => !imports[name])
         // console.log('mdx-transform', id, importedComponents)
 
         const pattern = '_components = Object.assign({'
@@ -321,18 +333,23 @@ export default defineConfig({
         if (!code.includes(ileResolvedComponentKey)) return code
 
         const imports = await parseImports(code)
-        code = code.replace(ileComponentRegex, (str, resolvedName) => {
+        code = await replaceAsync(code, ileComponentRegex, async (str, resolvedName) => {
+          resolvedName = resolvedName.replace(/^\$setup\./, '')
           const importMetadata = imports[resolvedName]
           if (!importMetadata) {
             const name = resolvedName.replace(/_resolveComponent\(([^)]+?)\)/, '$1')
-            throw new Error(`Unable to infer '${name}' import for island in ${path}`)
+            throw new Error(`Unable to infer '${name}' island component in ${path}`)
           }
           return `
             component: ${resolvedName},
             importName: '${importMetadata.name}',
-            importPath: '${importMetadata.path}',
+            importPath: '${await resolveVitePath(importMetadata.path, path)}',
           `
         })
+
+        let match
+        if (path.endsWith('.mdx') && (match = code.match(/_resolveComponent\(([^)]+?)\)/)))
+          throw new Error(`Unable to infer '${match[1]}' component in ${path}`)
 
         return code
       },

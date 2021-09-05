@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref, computed, watch } from 'vue'
 
-const props = defineProps<{ isPlaying: boolean }>()
+const props = withDefaults(defineProps<{ isPlaying: boolean }>(), { isPlaying: false })
 
 const label = computed(() => props.isPlaying ? 'Pausar' : 'Reproducir')
 
