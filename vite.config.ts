@@ -64,6 +64,11 @@ function routeFilename (route: string) {
   return path.join(config.build.outDir, filename)
 }
 
+function buildLog (text: string, count: number | undefined) {
+  console.log(`
+${chalk.gray("[isles]")} ${chalk.yellow(text)}${count ? chalk.blue(` (${count})`) : ""}`);
+}
+
 let config: ResolvedConfig
 
 const hydrationBegin = '<!--ILE_HYDRATION_BEGIN-->'
@@ -88,7 +93,7 @@ export default defineConfig({
     async onPageRendered (route, html) {
       let counter = 0
       const pageIslands: string[] = []
-      const pageOutDir = path.resolve(config.build.outDir, '.ile-temp', route === '/' ? 'index' : route.replace(/^\//, '').replace(/\//g, '-'))
+      const pageOutDir = path.resolve(config.root, '.ile-temp', route === '/' ? 'index' : route.replace(/^\//, '').replace(/\//g, '-'))
       fs.mkdirSync(pageOutDir, { recursive: true })
       html = html.replace(/<script\s*([^>]*?)>.*?<\/script>/sg, (script, attrs) => {
         if (attrs.includes('client-keep') || !attrs.includes('module')) return script
@@ -104,17 +109,21 @@ export default defineConfig({
         const [scriptTemplate, ...slotStrs] = ileContent.replace(commentsRegex, '').split(slotBegin)
         const slots = Object.fromEntries(slotStrs.map(str => str.split(slotSeparator)))
         const script = scriptTemplate.replace('/* ILE_HYDRATION_SLOTS */', devalue(slots))
-        config.logger.warn(`${chalk.dim(`${pageOutDir}/`)}${chalk.cyan(basename)} ${chalk.dim(getSize(script))}`)
         fs.writeFileSync(filename, script, 'utf-8')
         pageIslands.push(filename)
         return `${hydrationBegin}${filename}${hydrationEnd}`
       })
-      if (pageIslands.length) islandsByRoute[route] = pageIslands
+      if (pageIslands.length) {
+        islandsByRoute[route] = pageIslands
+        config.logger.warn(`${chalk.dim(`${path.relative(config.root, pageOutDir)}`)} ${chalk.blue(` (${pageIslands.length})`)}`)
+      }
       return html
     },
     async onFinished () {
       const islandFiles = Object.values(islandsByRoute).flat()
       if (islandFiles.length === 0) return
+
+      buildLog('Build for islands...', islandFiles.length)
 
       const { assetsDir, outDir } = config.build
       const assetsBase = path.join(config.base, assetsDir)
@@ -162,7 +171,7 @@ export default defineConfig({
         html = html.replace('</head>', `${stringifyPreload(manifest, preloadScripts)}</head>`)
         await fs.promises.writeFile(htmlFilename, html, 'utf-8')
       }))
-      fs.rmSync(path.resolve(outDir, '.ile-temp'), { recursive: true, force: true })
+      fs.rmSync(path.resolve(config.root, '.ile-temp'), { recursive: true, force: true })
     },
   },
   plugins: [

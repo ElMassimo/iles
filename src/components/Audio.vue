@@ -93,6 +93,3 @@ let errorMessage = $ref('')
     />
   </div>
 </template>
-
-<style lang="scss" scoped>
-</style>

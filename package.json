@@ -15,7 +15,7 @@
     "dev": "vite --port 3333 --open",
     "clean": "rm -rf dist && rm -rf serverless/public && rm -rf serverless/api/renderer",
     "build": "cross-env NODE_ENV=production vite-ssg build",
-    "rebuild": "pnpm run build && pnpx serve dist",
+    "rebuild": "rm -rf dist && pnpm run build && pnpx serve dist",
     "deploy": "cd serverless && vercel",
     "deploy:prod": "cd serverless && vercel --prod"
   },
