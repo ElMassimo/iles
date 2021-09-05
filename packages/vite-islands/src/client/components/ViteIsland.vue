@@ -1,10 +1,8 @@
 <script lang="ts">
 import { defineComponent, h, createCommentVNode, createTextVNode } from 'vue'
 import type { PropType, DefineComponent } from 'vue'
-import { strategies } from '../../hydration'
-import devalue from '@nuxt/devalue'
-
-let idNumber = 0
+import { newHydrationId, hydrationFn, Hydrate } from '../hydration'
+import { serialize } from '../../utils/string'
 
 export default defineComponent({
   name: 'ViteIsland',
@@ -14,32 +12,35 @@ export default defineComponent({
     componentName: { type: String, required: true },
     importName: { type: String, required: true },
     importPath: { type: String, required: true },
-    'client:idle': { type: Boolean, default: false },
-    'client:load': { type: Boolean, default: false },
-    'client:visible': { type: Boolean, default: false },
-    'client:only': { type: Boolean, default: false },
-    'client:media': { type: String, default: '' },
+    [Hydrate.WhenIdle]: { type: Boolean, default: false },
+    [Hydrate.OnLoad]: { type: Boolean, default: false },
+    [Hydrate.MediaQuery]: { type: Boolean, default: false },
+    [Hydrate.New]: { type: Boolean, default: false },
+    [Hydrate.WhenVisible]: { type: String, default: '' },
   },
-  setup () {
+  setup (props) {
     return {
-      id: `ile-${++idNumber}`,
+      id: newHydrationId(),
+      strategy: Object.values(Hydrate).find(s => props[s])
+        || Hydrate.OnLoad,
     }
   },
   render () {
-    const content = import.meta.env.SSR && this.$props['client:only']
+    const content = import.meta.env.SSR && this.$props[Hydrate.New]
       ? []
       : [h(this.component, this.$attrs, this.$slots)]
-    const rootNode = h('ile-root', { id: this.id }, content)
-
-    const strategy = strategies.find(st => (this.$props as any)[`client:${st}`]) || 'load'
+    const rootNode = h('ile-root', { id: this.id, style: 'display: contents' }, content)
 
     const props = { ...this.$attrs }
-    if (strategy === 'media') props._mediaQuery = this['client:media']
+    if (this.strategy === Hydrate.MediaQuery)
+      props._mediaQuery = this.$props[Hydrate.MediaQuery]
+
     const script = `import { ${this.importName} as ${this.componentName} } from '${this.importPath}'
-import { ${strategy} as hydrate } from '/src/logic/hydration'
-hydrate(${this.componentName}, '${this.id}', ${devalue(props)}, /* ILE_HYDRATION_SLOTS */)
+import { ${hydrationFn(this.strategy)} as hydrate } from '/src/logic/hydration'
+hydrate(${this.componentName}, '${this.id}', ${serialize(props)}, /* ILE_HYDRATION_SLOTS */)
 `
 
+    // TEMPORARY, for debugging purposes.
     if (!import.meta.env.SSR && Object.keys(this.$slots).length === 0) {
       return [
         rootNode,
@@ -52,12 +53,12 @@ hydrate(${this.componentName}, '${this.id}', ${devalue(props)}, /* ILE_HYDRATION
       createCommentVNode('ILE_HYDRATION_BEGIN'),
       script,
       ...Object.entries(this.$slots).flatMap(([slotName, slotFn]) => {
-        return [
+        return slotFn ? [
           createCommentVNode(`ILE_SLOT_BEGIN`),
           createTextVNode(slotName),
           createTextVNode(`ILE_SLOT_SEPARATOR`),
           slotFn(),
-        ]
+        ] : []
       }),
       createCommentVNode('ILE_HYDRATION_END'),
     ]

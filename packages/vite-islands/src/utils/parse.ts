@@ -2,22 +2,6 @@ import path from 'path'
 import { init as initESLexer, parse as parseESModules } from 'es-module-lexer'
 import MagicString from 'magic-string'
 
-export function escapeRegex (str: string) {
-  return str.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&')
-}
-
-export function pascalCase(str: string) {
-  return capitalize(camelCase(str))
-}
-
-export function camelCase(str: string) {
-  return str.replace(/[^\w_]+(\w)/g, (_, c) => (c ? c.toUpperCase() : ''))
-}
-
-export function capitalize(str: string) {
-  return str.charAt(0).toUpperCase() + str.slice(1)
-}
-
 interface ImportMetadata {
   name: string
   path: string
