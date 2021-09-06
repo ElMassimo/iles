@@ -4,7 +4,7 @@ import DarkSwitch from '~/components/DarkSwitch.vue'
 
 <template>
   <main class="px-4 py-10 w-max-65ch mx-auto">
-    <DarkSwitch client:idle/>
+    <DarkSwitch client:media="(min-width: 700px)"/>
     <router-view v-bind="$attrs"/>
   </main>
 </template>

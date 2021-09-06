@@ -1,3 +1,1 @@
-import ViteIsland from './client/components'
-
-export { ViteIsland }
+export { default as ViteIsland } from './ViteIsland'

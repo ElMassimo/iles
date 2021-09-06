@@ -9,7 +9,7 @@
   <meta name="msapplication-TileColor" content="#00aba9">
   <meta name="theme-color" content="#ffffff">
   <script client-keep>
-    (function() {
+    (function () {
       const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
       const setting = localStorage.getItem('vueuse-color-scheme') || 'auto'
       if (setting === 'dark' || (prefersDark && setting !== 'light'))

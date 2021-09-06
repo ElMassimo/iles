@@ -19,8 +19,8 @@ export default defineConfig({
         subtle: 'var(--color-subtle)',
       },
       cursor: {
-        'grab': 'grab',
-        'grabbing': 'grabbing',
+        grab: 'grab',
+        grabbing: 'grabbing',
       },
       screens: {
         print: { raw: 'print' },

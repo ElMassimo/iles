@@ -1,3 +1,3 @@
-import ViteIslandsPlugin from './node/plugins'
+export { default } from './node/plugin'
 
-export default ViteIslandsPlugin
+export * from './types'

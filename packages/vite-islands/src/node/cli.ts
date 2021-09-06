@@ -1,48 +1,22 @@
-/* eslint-disable no-unused-expressions */
-import yargs from 'yargs'
-import { createServer, build, preview } from '.'
+import { createServer } from './server'
+import { build } from './build'
+import chalk from 'chalk'
+import minimist from 'minimist'
 
-yargs
-  .scriptName('vite-islands')
-  .usage('$0 [args]')
-  .command(
-    'build [root]',
-    'Build Static Site with Islands of Interactivity',
-    args => args
-      .option('mock', {
-        type: 'boolean',
-        describe: 'Mock browser globals (window, document, etc.) for SSG',
-      }),
-    async (argv) => {
-      await build(argv).catch(error => {
-        console.error(chalk.red(`build error:\n`), error)
-        process.exit(1)
-      })
-    },
-  )
-  .command(
-    ['dev [root]', 'serve [root]', '$0 [root]'],
-    'Serve for Development',
-    async (argv) => {
-      await createServer(argv)
-        .then(server => server.listen())
-        .catch(error => {
-          console.error(chalk.red(`failed to start server. error:\n`), error)
-          process.exit(1)
-        })
-    },
-  )
-  .command(
-    'preview [root]',
-    'Preview the built site',
-    async (argv) => {
-      await preview(argv).catch((error) => {
-        console.error(chalk.red(`failed to start server. error:\n`), error)
-        process.exit(1)
-      })
-    },
-  )
-  .argv
-  .showHelpOnFail(false)
-  .help()
-  .argv
+const argv: any = minimist(process.argv.slice(2))
+
+console.log(chalk.cyan(`vite-islands v${require('../../package.json').version}`))
+console.log(chalk.cyan(`vite v${require('vite/package.json').version}`))
+
+const command = argv._[0]
+
+if (command === 'build') {
+  build(argv).catch((err) => {
+    console.error(chalk.red(`build error:\n`), err)
+    process.exit(1)
+  })
+} else {
+  console.log(chalk.red(`unknown command "${command}".`))
+  process.exit(1)
+}
+

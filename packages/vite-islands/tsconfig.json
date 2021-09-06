@@ -1,7 +1,10 @@
 {
   "extends": "../../tsconfig.json",
+  "references": [
+    { "path": "../vite-plugin-xdm" },
+  ],
   "compilerOptions": {
-    "outDir": "./dist"
+    "outDir": "./dist",
   },
   "include": [
     "./src/**/*",

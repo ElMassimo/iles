@@ -1,12 +1,9 @@
-<script lang="ts">
-{ inheritAttrs: false }
-</script>
-
 <script setup lang="ts">
+/* eslint-disable @typescript-eslint/no-var-requires */
 import { formatDate } from '~/helpers/FormatHelper'
 
 // Public: Url of the audio file
-const props = defineProps<{ audio: string; title: string, recorded: Date }>()
+const props = defineProps<{ audio: string; title: string; recorded: Date }>()
 
 let initialDuration = NaN
 if (import.meta.env.SSR) {
@@ -18,7 +15,7 @@ if (import.meta.env.SSR) {
 
 <template>
   <div class="audio-player">
-    <Audio client:idle :src="audio" :initialDuration="initialDuration"/>
+    <Audio client:visible :src="audio" :initialDuration="initialDuration"/>
     <div class="flex flex-col md:items-center mt-2">
       <a class="flex items-center opacity-75 hover:opacity-100 select-none !no-underline" :href="audio" :download="`${title}.mp3`">
         <bx:bx-download class="inline mr-2"/> Descarga esta práctica

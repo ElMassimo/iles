@@ -1,5 +1,8 @@
+import path from 'path'
+import fs from 'fs'
 import { build as viteBuild } from 'vite'
-import type { Manifest, PluginOption, ResolvedConfig } from 'vite'
+import type { Manifest, PluginOption, ResolvedConfig, ResolveFn, UserConfig } from 'vite'
+import type { ViteSSGOptions } from '@mussi/vite-ssg'
 
 import Vue from '@vitejs/plugin-vue'
 import Pages from 'vite-plugin-pages'
@@ -10,22 +13,20 @@ import VueJSX from '@vitejs/plugin-vue-jsx'
 import XDM from 'vite-plugin-xdm'
 
 import matter from 'gray-matter'
-import { uniq } from './utils/array'
-import { parseImports, rebaseImports } from './utils/parse'
-import { escapeRegex, pascalCase, serialize } from './utils/string'
-
-import type { IslandsConfig } from './node/config'
-
-import path from 'path'
-import fs from 'fs'
 import glob from 'fast-glob'
 import chalk from 'chalk'
 import createDebugger from 'debug'
+import { uniq } from '../utils/array'
+import { parseImports, rebaseImports } from '../utils/parse'
+import { escapeRegex, pascalCase, serialize } from '../utils/string'
+
+import type { IslandsConfig } from '../types'
 
 const debug = {
   mdx: createDebugger('vite-islands:mdx'),
   wrap: createDebugger('vite-islands:wrap'),
   resolve: createDebugger('vite-islands:resolve'),
+  build: createDebugger('vite-islands:build'),
 }
 
 function resolveManifestEntries (manifest: Manifest, entryNames: string[]): string[] {
@@ -64,7 +65,7 @@ function filenameFromRoute (route: string) {
 
 function buildLog (text: string, count: number | undefined) {
   console.log(`
-${chalk.gray("[isles]")} ${chalk.yellow(text)}${count ? chalk.blue(` (${count})`) : ""}`);
+${chalk.gray('[vite-islands]')} ${chalk.yellow(text)}${count ? chalk.blue(` (${count})`) : ''}`)
 }
 
 async function replaceAsync (str: string, regex: RegExp, asyncFn: (...groups: string[]) => Promise<string>) {
@@ -75,44 +76,48 @@ async function replaceAsync (str: string, regex: RegExp, asyncFn: (...groups: st
 }
 
 let base: ResolvedConfig['base']
-let assetsDir: ResolvedConfig['build.assetsDir']
-let outDir: ResolvedConfig['build.outDir']
+let assetsDir: ResolvedConfig['build']['assetsDir']
+let outDir: ResolvedConfig['build']['outDir']
 let logger: ResolvedConfig['logger']
 let mode: ResolvedConfig['mode']
 let root: ResolvedConfig['root']
-let resolveVitePath: ReturnType<ResolvedConfig['createResolver']>
+let resolveVitePath: ResolveFn
 let islandsConfig: IslandsConfig
 
-const hydrationBegin = '<!--ILE_HYDRATION_BEGIN-->'
-const hydrationEnd = '<!--ILE_HYDRATION_END-->'
-const slotBegin = '<!--ILE_SLOT_BEGIN-->'
-const slotSeparator = `ILE_SLOT_SEPARATOR`
+const hydrationBegin = '<!--VITE_ISLAND_HYDRATION_BEGIN-->'
+const hydrationEnd = '<!--VITE_ISLAND_HYDRATION_END-->'
+const slotBegin = '<!--VITE_ISLAND_SLOT_BEGIN-->'
+const slotSeparator = `VITE_ISLAND_SLOT_SEPARATOR`
 const commentsRegex = /<!--\[-->|<!--]-->/g
 const hydrationRegex = new RegExp(`${escapeRegex(hydrationBegin)}(.*?)${escapeRegex(hydrationEnd)}`, 'sg')
 const contextComponentRegex = new RegExp(escapeRegex('_ctx.__unplugin_components_'), 'g')
-const ileResolvedComponentKey = '__ileResolvedComponent'
-const viteIslandRegex = new RegExp(`"?${escapeRegex(ileResolvedComponentKey)}"?:\\s*([^,]+),`, 'sg')
+const unresolvedIslandKey = '__viteIslandComponent'
+const viteIslandRegex = new RegExp(`"?${escapeRegex(unresolvedIslandKey)}"?:\\s*([^,]+),`, 'sg')
 const scriptTagsRegex = /<script\s*([^>]*?)>(.*?)<\/script>/sg
 
 const islandsByRoute: Record<string, string[]> = Object.create(null)
 
-function config (config: Config) {
+function config (config: UserConfig) {
   return {
     build: {
       minify: false,
+      ...config.build
     },
     optimizeDeps: {
       include: [
         'vue',
         'vue-router',
         '@vueuse/core',
+        '@vueuse/head',
+        '@nuxt/devalue',
       ],
       exclude: [
         'vue-demi',
+        'vue-islands',
       ],
     },
     islands: {
-      tempDir: path.resolve(config.root, '.vite-island-temp'),
+      tempDir: path.join(config.root || process.cwd(), '.vite-islands-temp'),
     },
     ssgOptions: {
       async onPageRendered (route, html) {
@@ -121,28 +126,30 @@ function config (config: Config) {
         const assetsBase = path.join(base, assetsDir)
         const pageOutDir = path.resolve(islandsConfig.tempDir, route === '/' ? 'index' : route.replace(/^\//, '').replace(/\//g, '-'))
         fs.mkdirSync(pageOutDir, { recursive: true })
-        html = html.replace(scriptTagsRegex, (script, attrs) => {
+        html = html.replace(scriptTagsRegex, (script: string, attrs: string) => {
           return !attrs.includes('client-keep') && attrs.includes('type="module"') && attrs.includes(`src="${assetsBase}`)
             ? ''
             : script
         })
-        html = html.replace(/<link\s*([^>]*?)>/sg, (link, attrs) => {
+        html = html.replace(/<link\s*([^>]*?)>/sg, (link: string, attrs: string) => {
           if (attrs.includes('modulepreload') && attrs.includes('.js')) return ''
           return link
         })
-        html = html.replace(hydrationRegex, (str, ileContent) => {
+        html = await replaceAsync(html, hydrationRegex, async (str, slotsContent) => {
           const basename = `vite-island-${++counter}.js`
           const filename = path.join(pageOutDir, basename)
-          const [scriptTemplate, ...slotStrs] = ileContent.replace(commentsRegex, '').split(slotBegin)
+          const [scriptTemplate, ...slotStrs] = slotsContent.replace(commentsRegex, '').split(slotBegin)
           const slots = Object.fromEntries(slotStrs.map(str => str.split(slotSeparator)))
-          const script = scriptTemplate.replace('/* ILE_HYDRATION_SLOTS */', devalue(slots))
-          fs.writeFileSync(filename, script, 'utf-8')
+          const script = scriptTemplate.replace('/* VITE_ISLAND_HYDRATION_SLOTS */', slotStrs.length ? serialize(slots) : '')
+          await fs.promises.writeFile(filename, script, 'utf-8')
           pageIslands.push(filename)
           return `${hydrationBegin}${filename}${hydrationEnd}`
         })
         if (pageIslands.length) {
           islandsByRoute[route] = pageIslands
-          logger.warn(`${chalk.dim(`${path.relative(root, pageOutDir)}`)} ${chalk.blue(` (${pageIslands.length})`)}`)
+          logger.warn(`${chalk.dim(`${path.relative(root, pageOutDir)}`)} ${chalk.green(` (${pageIslands.length})`)}`)
+        } else {
+          logger.warn(`${chalk.dim(`${path.relative(root, pageOutDir)}`)} ${chalk.yellow(` no islands`)}`)
         }
         return html
       },
@@ -150,7 +157,7 @@ function config (config: Config) {
         const islandFiles = Object.values(islandsByRoute).flat()
         if (islandFiles.length === 0) return
 
-        buildLog('Build for islands...', islandFiles.length)
+        buildLog('Build for islands...', islandFiles.length, islandFiles)
 
         const assetsBase = path.join(base, assetsDir)
 
@@ -169,11 +176,11 @@ function config (config: Config) {
               input: islandFiles,
             },
           },
-          mode: mode,
+          mode,
         })
         const manifest: Manifest = JSON.parse(fs.readFileSync(path.join(outDir, 'manifest.json'), 'utf-8'))
-        // console.log({ outDir, manifest, islandsByRoute })
-        await Promise.all(Object.keys(islandsByRoute).map(async route => {
+
+        await Promise.all(Object.keys(islandsByRoute).map(async (route) => {
           const htmlFilename = filenameFromRoute(route)
 
           let html = await fs.promises.readFile(htmlFilename, 'utf-8')
@@ -195,7 +202,7 @@ function config (config: Config) {
         }))
         fs.rmSync(islandsConfig.tempDir, { recursive: true, force: true })
       },
-    }
+    } as ViteSSGOptions,
   }
 }
 
@@ -207,6 +214,8 @@ export default function ViteIslandsPlugin (): PluginOption[] {
       enforce: 'pre',
       config,
       configResolved (config) {
+        debug.build('minify:', config.build.minify)
+        if (base) return
         base = config.base
         assetsDir = config.build.assetsDir
         outDir = config.build.outDir
@@ -215,6 +224,7 @@ export default function ViteIslandsPlugin (): PluginOption[] {
         root = config.root
         islandsConfig = (config as any).islands
         resolveVitePath = config.createResolver()
+        debug.wrap({ outDir, assetsDir })
       },
       async transform (code, id) {
         const { path } = parseId(id)
@@ -223,7 +233,7 @@ export default function ViteIslandsPlugin (): PluginOption[] {
         const components = /<([A-Z]\w+)\s*(?:([^/]+?)\/>|([^>]+)>(.*?)<\/\1>)/sg
 
         // Parse imports and set options as needed.
-        const scriptContent = path.endsWith('.vue') && Array.from(code.matchAll(scriptTagsRegex)).map(([,,js]) => js).join(';')
+        const scriptContent = path.endsWith('.vue') && Array.from(code.matchAll(scriptTagsRegex)).map(([,, js]) => js).join(';')
         const imports = scriptContent
           ? await parseImports(scriptContent)
           : {}
@@ -236,8 +246,8 @@ export default function ViteIslandsPlugin (): PluginOption[] {
 
           const resolveComponent = imports[tagName] ? tagName : `_resolveComponent("${tagName}")`
           const component = path.endsWith('.vue')
-            ? `:${ileResolvedComponentKey}='${resolveComponent}'`
-            : `${ileResolvedComponentKey}={${resolveComponent}}`
+            ? `:${unresolvedIslandKey}='${resolveComponent}'`
+            : `${unresolvedIslandKey}={${resolveComponent}}`
 
           return `<ViteIsland componentName="${pascalCase(tagName)}" ${component} ${attrs}>${children || ''}</ViteIsland>`
         })
@@ -248,7 +258,7 @@ export default function ViteIslandsPlugin (): PluginOption[] {
       refTransform: true,
       template: {
         compilerOptions: {
-          isCustomElement: tagName => tagName.startsWith('ile-'),
+          isCustomElement: (tagName: string) => tagName.startsWith('ile-'),
         },
       },
     }),
@@ -299,7 +309,7 @@ export default function ViteIslandsPlugin (): PluginOption[] {
     Pages({
       extensions: ['vue', 'md', 'mdx'],
       extendRoute (route) {
-        const file = path.resolve(__dirname, route.component.slice(1))
+        const file = path.resolve(root, route.component.slice(1))
         if (file.endsWith('.mdx') || file.endsWith('.md')) {
           const md = fs.readFileSync(file, 'utf-8')
           const { data } = matter(md)
@@ -318,7 +328,7 @@ export default function ViteIslandsPlugin (): PluginOption[] {
     ViteComponents({
       dts: true,
       // allow auto load markdown components under `./src/components/`
-      extensions: ['vue', 'md', 'mdx'],
+      extensions: ['vue'],
 
       // allow auto import and register components used in markdown
       include: [/\.vue$/, /\.vue\?vue/, /\.mdx?/],
@@ -348,14 +358,14 @@ export default function ViteIslandsPlugin (): PluginOption[] {
 
         code = code.replace(contextComponentRegex, '__unplugin_components_')
 
-        if (!code.includes(ileResolvedComponentKey)) return code
+        if (!code.includes(unresolvedIslandKey)) return code
 
         const imports = await parseImports(code)
         code = await replaceAsync(code, viteIslandRegex, async (str, resolvedName) => {
           resolvedName = resolvedName.replace(/^\$setup\./, '')
           const importMetadata = imports[resolvedName]
 
-          const componentName = str.match(/componentName="([^"]+)"/)?.[1]
+          const componentName = resolvedName.match(/_resolveComponent\(([^)]+?)\)/)?.[1]
 
           if (!importMetadata)
             throw new Error(`Unable to infer '${componentName}' island component in ${path}`)
@@ -369,9 +379,11 @@ export default function ViteIslandsPlugin (): PluginOption[] {
           `
         })
 
-        let match
-        if (path.endsWith('.mdx') && (match = code.match(/_resolveComponent\(([^)]+?)\)/)))
-          throw new Error(`Unable to infer '${match[1]}' component in ${path}`)
+        if (path.endsWith('.mdx')) {
+          const name = code.match(/_resolveComponent\(([^)]+?)\)/)?.[1]
+          if (name)
+            throw new Error(`Unable to infer '${name}' component in ${path}`)
+        }
 
         return code
       },

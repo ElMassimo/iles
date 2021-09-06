@@ -9,7 +9,7 @@ interface Player {
 let currentPlayer: Player | undefined
 
 export function pauseWhenOtherPlays (player: Player) {
-  watch(player.isPlaying, playing => {
+  watch(player.isPlaying, (playing) => {
     if (playing && currentPlayer !== player) {
       currentPlayer?.pauseAudio()
       currentPlayer = player

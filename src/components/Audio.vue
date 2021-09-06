@@ -3,7 +3,7 @@ import { onMounted } from 'vue'
 import { useIntersectionObserver } from '@vueuse/core'
 import { pauseWhenOtherPlays } from '~/logic/audio'
 
-const props = defineProps<{ src: string, initialDuration: number }>()
+const props = defineProps<{ src: string; initialDuration: number }>()
 const emit = defineEmits(['audio:error'])
 
 let currentTime = $ref(0)
