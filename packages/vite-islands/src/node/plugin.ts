@@ -100,8 +100,9 @@ const islandsByRoute: Record<string, string[]> = Object.create(null)
 function config (config: UserConfig) {
   return {
     build: {
+      brotliSize: false,
       minify: false,
-      ...config.build
+      ...config.build,
     },
     optimizeDeps: {
       include: [
@@ -169,6 +170,7 @@ function config (config: UserConfig) {
           publicDir: false,
           build: {
             minify: 'esbuild',
+            brotliSize: true,
             emptyOutDir: false,
             manifest: true,
             outDir,

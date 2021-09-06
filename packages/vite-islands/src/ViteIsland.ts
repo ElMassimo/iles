@@ -40,7 +40,6 @@ export default defineComponent({
     }
   },
   render () {
-    console.log(this.strategy)
     const isSSR = typeof window === 'undefined'
 
     const packageUrl = `${isSSR ? '' : '/@id/'}vite-islands/hydration`

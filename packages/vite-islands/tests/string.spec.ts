@@ -14,7 +14,6 @@ describe('serialize', () => {
     const recordedAt = new Date()
     const value = { audio, recordedAt }
     const serialized = serialize(value)
-    console.log({ serialized })
     // eslint-disable-next-line no-new-func
     expect(Function(`return ${serialized}`)()).toEqual(value)
   })
