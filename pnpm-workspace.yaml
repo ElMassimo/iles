@@ -1,4 +1,5 @@
 packages:
   - packages/iles/
+  - packages/hydration/
   - packages/vite-plugin-xdm/
   - playground/blog/

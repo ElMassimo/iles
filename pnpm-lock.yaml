@@ -25,8 +25,17 @@ importers:
       eslint: 7.32.0
       typescript: 4.3.5
 
+  packages/hydration:
+    specifiers:
+      tsup: ^4.14.0
+      typescript: ^4.3.2
+    devDependencies:
+      tsup: 4.14.0_typescript@4.3.5
+      typescript: 4.3.5
+
   packages/iles:
     specifiers:
+      '@types/fs-extra': ^9.0.12
       '@types/node': ^15.6.1
       '@vitejs/plugin-vue': ^1.6.0
       '@vitejs/plugin-vue-jsx': ^1.1.8
@@ -53,6 +62,7 @@ importers:
       semver: ^7.3.5
       typescript: ^4.3.2
       vite: ^2.5.0
+      vite-plugin-xdm: workspace:*
       vue: ^3.2.11
     dependencies:
       '@vitejs/plugin-vue': 1.6.2_@vue+compiler-sfc@3.2.11
@@ -72,8 +82,10 @@ importers:
       ora: 5.4.1
       polka: 0.5.2
       vite: 2.5.1
+      vite-plugin-xdm: link:../vite-plugin-xdm
       vue: 3.2.11
     devDependencies:
+      '@types/fs-extra': 9.0.12
       '@types/node': 15.14.9
       chokidar: 3.5.2
       conventional-changelog-cli: 2.1.1
@@ -927,6 +939,12 @@ packages:
 
   /@types/estree/0.0.48:
     resolution: {integrity: sha512-LfZwXoGUDo0C3me81HXgkBg5CTQYb6xzEl+fNmbO4JdRiSKQ8A0GD1OBBvKAIsbCUgoyAty7m99GqqMQe784ew==}
+
+  /@types/fs-extra/9.0.12:
+    resolution: {integrity: sha512-I+bsBr67CurCGnSenZZ7v94gd3tc3+Aj2taxMT4yu4ABLuOgOjeFxX3dokG24ztSRg5tnT00sL8BszO7gSMoIw==}
+    dependencies:
+      '@types/node': 15.14.9
+    dev: true
 
   /@types/hast/2.3.4:
     resolution: {integrity: sha512-wLEm0QvaoawEDoTRwzTXp4b4jpwiJDvR5KMnFnVodm3scufTlBOWRD6N1OBf9TZMhjlNsSfcO5V+7AF4+Vy+9g==}

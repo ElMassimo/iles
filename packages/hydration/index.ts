@@ -7,12 +7,6 @@ type Component = DefineComponent
 type Props = Record<string, unknown>
 type Slots = Record<string, string>
 
-let idNumber = 0
-
-export function newHydrationId () {
-  return `ile-${++idNumber}`
-}
-
 function createVueIsland (component: Component, el: Element, props: Props, slots: Slots | undefined) {
   const slotFns = slots && Object.fromEntries(Object.entries(slots).map(([slotName, content]) => {
     return [slotName, () => (createStaticVNode as any)(content)]
@@ -55,8 +49,9 @@ export function hydrateWhenIdle (component: Component, id: string, props: Props,
 }
 
 // Public: Hydrate this component when the specified media query is matched.
-export function hydrateOnMediaQuery (component: Component, id: string, { _mediaQuery, ...props }: Props, slots: Slots) {
-  const mediaQuery = matchMedia(_mediaQuery as string)
+export function hydrateOnMediaQuery (component: Component, id: string, props: Props, slots: Slots) {
+  const mediaQuery = matchMedia(props._mediaQuery as string)
+  delete props._mediaQuery
 
   const onMediaMatch = mediaQuery.matches
     ? (fn: () => void) => fn()

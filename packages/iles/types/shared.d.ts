@@ -1,3 +1,4 @@
+/* eslint-disable no-use-before-define */
 // types shared between server and client
 
 export interface LocaleConfig {

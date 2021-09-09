@@ -12,7 +12,7 @@
     "dist",
     "src"
   ],
-  "types": "dist/index.dts",
+  "types": "dist/index.d.ts",
   "module": "dist/index.js",
   "main": "dist/index.cjs",
   "exports": {

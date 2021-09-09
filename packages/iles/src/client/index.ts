@@ -1,5 +1,5 @@
-// exports in this file are exposed to themes and md files via 'vitepress'
-// so the user can do `import { useRoute, useSiteData } from 'vitepress'`
+// exports in this file are exposed to themes and md files via 'iles'
+// so the user can do `import { useRoute, useSiteData } from 'iles'`
 
 // generic types
 export type { Router, Route } from './app/router'
@@ -15,9 +15,6 @@ export { useRouter, useRoute } from './app/router'
 export { inBrowser, withBase } from './app/utils'
 
 // components
-export { Content } from './app/components/Content'
-
-import { ComponentOptions } from 'vue'
-import _Debug from './app/components/Debug.vue'
-const Debug = _Debug as ComponentOptions
-export { Debug }
+export { PageContent } from './app/components/PageContent'
+export { ViteIsland } from './app/components/ViteIsland'
+export { Debug } from './app/components/Debug'

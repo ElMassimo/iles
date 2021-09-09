@@ -1,7 +1,12 @@
 import { defineComponent, h, createCommentVNode, createTextVNode } from 'vue'
 import type { PropType, DefineComponent } from 'vue'
-import { newHydrationId } from './hydration'
-import { serialize } from './utils/string'
+import { serialize } from './shared'
+
+let idNumber = 0
+
+export function newHydrationId () {
+  return `ile-${++idNumber}`
+}
 
 export enum Hydrate {
   WhenIdle = 'client:idle',
@@ -42,7 +47,7 @@ export default defineComponent({
   render () {
     const isSSR = typeof window === 'undefined'
 
-    const packageUrl = `${isSSR ? '' : '/@id/'}vite-islands/hydration`
+    const packageUrl = `${isSSR ? '' : '/@id/'}@islands/hydration`
 
     const content = isSSR && this.$props[Hydrate.New]
       ? []
@@ -71,14 +76,11 @@ hydrate(${this.componentName}, '${this.id}', ${serialize(props)}, /* VITE_ISLAND
       createCommentVNode('VITE_ISLAND_HYDRATION_BEGIN'),
       script,
       ...Object.entries(this.$slots).flatMap(([slotName, slotFn]) => {
-        const vNodes = slotFn()
         return slotFn ? [
           createCommentVNode('VITE_ISLAND_SLOT_BEGIN'),
           createTextVNode(slotName),
           createTextVNode('VITE_ISLAND_SLOT_SEPARATOR'),
-          vNodes,
-          createTextVNode('VITE_ISLAND_SLOT_SEPARATOR'),
-          createTextVNode(vNodes.length),
+          slotFn(),
         ] : []
       }),
       createCommentVNode('VITE_ISLAND_HYDRATION_END'),

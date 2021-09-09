@@ -20,7 +20,7 @@ import { uniq } from '../utils/array'
 import { parseImports, rebaseImports } from '../utils/parse'
 import { escapeRegex, pascalCase, serialize } from '../utils/string'
 
-import { APP_PATH } from './alias'
+import { resolveAliases, APP_PATH, DEFAULT_THEME_PATH } from './alias'
 
 import type { IslandsConfig } from '../types'
 
