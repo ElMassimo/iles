@@ -1,154 +1,103 @@
-import {
-  App,
-  createApp as createClientApp,
-  createSSRApp,
-  defineAsyncComponent,
-  h,
-  onMounted,
-  watch
-} from 'vue'
-import { inBrowser, pathToFile } from './utils'
-import { Router, RouterSymbol, createRouter } from './router'
-import { siteDataRef, useData } from './data'
-import { useUpdateHead } from './composables/head'
-import Theme from '/@theme/index'
-import { usePrefetch } from './composables/preFetch'
-import { dataSymbol, initData } from './data'
-import { Content } from './components/Content'
-import { ClientOnly } from './components/ClientOnly'
+import { createApp as createClientApp, createSSRApp } from 'vue'
+import { createMemoryHistory, createRouter as createVueRouter, createWebHistory } from 'vue-router'
+import { createHead } from '@vueuse/head'
+import routes from '@islands/routes'
+import enhance from '@islands/enhance'
+import type { CreateAppFactory, SSGContext, RouterOptions } from '../../../types/shared'
+import { serialize, inBrowser } from './utils'
+import { App, Debug, Island, PageContent } from './components'
+// import { siteDataRef, useData, dataSymbol, initData } from './data'
 
-const NotFound = Theme.NotFound || (() => '404 Not Found')
-
-const VitePressApp = {
-  name: 'VitePressApp',
-  setup() {
-    const { site } = useData()
-
-    // change the language on the HTML element based on the current lang
-    onMounted(() => {
-      watch(
-        () => site.value.lang,
-        (lang: string) => {
-          document.documentElement.lang = lang
-        },
-        { immediate: true }
-      )
-    })
-
-    if (import.meta.env.PROD) {
-      // in prod mode, enable intersectionObserver based pre-fetch
-      usePrefetch()
-    }
-    return () => h(Theme.Layout)
-  }
+function newApp () {
+  return import.meta.env.SSR ? createSSRApp(App) : createClientApp(App)
 }
 
-export function createApp() {
-  const router = newRouter()
+function transformState (state: any) {
+  return import.meta.env.SSR ? serialize(state) : state
+}
 
-  handleHMR(router)
+function createRouter ({ base, ...routerOptions }: RouterOptions) {
+  return createVueRouter({
+    routes,
+    history: inBrowser ? createWebHistory(base) : createMemoryHistory(base),
+    ...routerOptions,
+  })
+}
 
+export const createApp: CreateAppFactory = async ({ inBrowser, routePath }) => {
   const app = newApp()
 
-  app.provide(RouterSymbol, router)
+  const head = createHead()
+  app.use(head)
 
-  const data = initData(router.route)
-  app.provide(dataSymbol, data)
+  // TODO: Take routerOptions.
+  const base = '/'
+  const router = createRouter({ base })
+  app.use(router)
 
-  if (inBrowser) {
-    // dynamically update head tags
-    useUpdateHead(router.route, data.site)
+  // Install global components
+  app.component('PageContent', PageContent)
+  app.component('Island', Island)
+  app.component('Debug', inBrowser ? Debug : () => null)
+
+  // TODO: Provide frontmatter
+  // const data = initData(router.route)
+  // app.provide(dataSymbol, data)
+
+  // // expose $frontmatter
+  // Object.defineProperty(app.config.globalProperties, '$frontmatter', {
+  //   get() {
+  //     return data.frontmatter.value
+  //   }
+  // })
+
+  const context: SSGContext = {
+    app,
+    head,
+    inBrowser,
+    router,
+    routes,
+    initialState: {},
+    routePath,
   }
 
-  // install global components
-  app.component('Content', Content)
-  app.component('ClientOnly', ClientOnly)
-  app.component(
-    'Debug',
-    import.meta.env.PROD
-      ? () => null
-      : defineAsyncComponent(() => import('./components/Debug.vue'))
-  )
+  if (import.meta.env.SSR)
+    // @ts-ignore
+    context.initialState = transformState(window.__INITIAL_STATE__ || {})
 
-  // expose $frontmatter
-  Object.defineProperty(app.config.globalProperties, '$frontmatter', {
-    get() {
-      return data.frontmatter.value
+  await enhance(context)
+
+  let entryRoutePath: string | undefined
+  let isFirstRoute = true
+  router.beforeEach((to, from, next) => {
+    if (isFirstRoute || (entryRoutePath && entryRoutePath === to.path)) {
+      // The first route is rendered in the server and its state is provided globally.
+      isFirstRoute = false
+      entryRoutePath = to.path
+      to.meta.state = context.initialState
     }
+
+    next()
   })
 
-  if (Theme.enhanceApp) {
-    Theme.enhanceApp({
-      app,
-      router,
-      siteData: siteDataRef
-    })
+  if (!inBrowser) {
+    const route = context.routePath ?? base ?? '/'
+    router.push(route)
+
+    await router.isReady()
+    context.initialState = router.currentRoute.value.meta.state as Record<string, any> || {}
   }
 
-  return { app, router }
-}
+  // serialize initial state for SSR app for it to be interpolated to output HTML
+  const initialState = transformState(context.initialState)
 
-function newApp(): App {
-  return import.meta.env.PROD
-    ? createSSRApp(VitePressApp)
-    : createClientApp(VitePressApp)
-}
-
-function newRouter(): Router {
-  let isInitialPageLoad = inBrowser
-  let initialPath: string
-
-  return createRouter((path) => {
-    let pageFilePath = pathToFile(path)
-
-    if (isInitialPageLoad) {
-      initialPath = pageFilePath
-    }
-
-    // use lean build if this is the initial page load or navigating back
-    // to the initial loaded path (the static vnodes already adopted the
-    // static content on that load so no need to re-fetch the page)
-    if (isInitialPageLoad || initialPath === pageFilePath) {
-      pageFilePath = pageFilePath.replace(/\.js$/, '.lean.js')
-    }
-
-    // in browser: native dynamic import
-    if (inBrowser) {
-      isInitialPageLoad = false
-
-      return import(/*@vite-ignore*/ pageFilePath)
-    }
-
-    // SSR: sync require
-    // @ts-ignore
-    return require(pageFilePath)
-  }, NotFound)
-}
-
-function handleHMR(router: Router): void {
-  // update route.data on HMR updates of active page
-  if (import.meta.hot) {
-    // hot reload pageData
-    import.meta.hot!.on('vitepress:pageData', (payload) => {
-      if (shouldHotReload(payload)) {
-        router.route.data = payload.pageData
-      }
-    })
-  }
-}
-
-function shouldHotReload(payload: any): boolean {
-  const payloadPath = payload.path.replace(/(\bindex)?\.md$/, '')
-  const locationPath = location.pathname.replace(/(\bindex)?\.html$/, '')
-
-  return payloadPath === locationPath
+  return { ...context, initialState } as SSGContext
 }
 
 if (inBrowser) {
-  const { app, router } = createApp()
-
-  // wait until page component is fetched before mounting
-  router.go().then(() => {
-    app.mount('#app')
-  })
+  (async () => {
+    const { app, router } = await createApp({ inBrowser: true })
+    await router.isReady() // wait until page component is fetched before mounting
+    app.mount('#app', true)
+  })()
 }

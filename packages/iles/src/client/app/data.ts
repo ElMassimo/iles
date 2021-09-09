@@ -1,10 +1,8 @@
 import { InjectionKey, Ref, shallowRef, readonly, computed, inject } from 'vue'
-import { Route } from './router'
 import serializedSiteData from '@siteData'
 import { resolveSiteDataByRoute, PageData, SiteData } from '../shared'
+import { Route } from './router'
 import { withBase } from './utils'
-
-export const dataSymbol: InjectionKey<VitePressData> = Symbol()
 
 export interface VitePressData<T = any> {
   site: Ref<SiteData<T>>
@@ -17,12 +15,14 @@ export interface VitePressData<T = any> {
   localePath: Ref<string>
 }
 
+export const dataSymbol: InjectionKey<VitePressData> = Symbol('islandsData')
+
 // site data is a singleton
 export type SiteDataRef<T = any> = Ref<SiteData<T>>
 
 export const siteDataRef: Ref<SiteData> = shallowRef(parse(serializedSiteData))
 
-function parse(data: string): SiteData {
+function parse (data: string): SiteData {
   return readonly(JSON.parse(data)) as SiteData
 }
 
@@ -34,9 +34,9 @@ if (import.meta.hot) {
 }
 
 // per-app data
-export function initData(route: Route): VitePressData {
+export function initData (route: Route): VitePressData {
   const site = computed(() =>
-    resolveSiteDataByRoute(siteDataRef.value, route.path)
+    resolveSiteDataByRoute(siteDataRef.value, route.path),
   )
 
   return {
@@ -48,25 +48,25 @@ export function initData(route: Route): VitePressData {
     localePath: computed(() => {
       const { langs, lang } = site.value
       const path = Object.keys(langs).find(
-        (langPath) => langs[langPath].lang === lang
+        langPath => langs[langPath].lang === lang,
       )
       return withBase(path || '/')
     }),
     title: computed(() => {
       return route.data.title
-        ? route.data.title + ' | ' + site.value.title
+        ? `${route.data.title} | ${site.value.title}`
         : site.value.title
     }),
     description: computed(() => {
       return route.data.description || site.value.description
-    })
+    }),
   }
 }
 
-export function useData<T = any>(): VitePressData<T> {
+export function useData<T = any> (): VitePressData<T> {
   const data = inject(dataSymbol)
-  if (!data) {
+  if (!data)
     throw new Error('vitepress data not properly injected in app')
-  }
+
   return data
 }

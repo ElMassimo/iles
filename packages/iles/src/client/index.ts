@@ -15,6 +15,4 @@ export { useRouter, useRoute } from './app/router'
 export { inBrowser, withBase } from './app/utils'
 
 // components
-export { PageContent } from './app/components/PageContent'
-export { ViteIsland } from './app/components/ViteIsland'
-export { Debug } from './app/components/Debug'
+export * from './app/components'

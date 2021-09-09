@@ -1,6 +1,6 @@
 import { defineComponent, h, createCommentVNode, createTextVNode } from 'vue'
 import type { PropType, DefineComponent } from 'vue'
-import { serialize } from './shared'
+import { serialize } from '../../shared'
 
 let idNumber = 0
 
@@ -45,7 +45,7 @@ export default defineComponent({
     }
   },
   render () {
-    const isSSR = typeof window === 'undefined'
+    const isSSR = import.meta.env.SSR
 
     const packageUrl = `${isSSR ? '' : '/@id/'}@islands/hydration`
 

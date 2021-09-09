@@ -1,3 +1,9 @@
+<script lang="ts">
+export default {
+  name: 'DebugIslands',
+}
+</script>
+
 <script setup lang="ts">
 import { ref, watch, reactive } from 'vue'
 import { useData } from '../data'

@@ -13,10 +13,18 @@ export const SHARED_PATH = path.join(DIST_CLIENT_PATH, 'shared')
 export const SITE_DATA_ID = '@siteData'
 export const SITE_DATA_REQUEST_PATH = `/${SITE_DATA_ID}`
 
+export const ROUTES_ID = '@islands/routes'
+export const ROUTES_REQUEST_PATH = `/${ROUTES_ID}`
+
+export const ENHANCE_ID = '@islands/enhance'
+export const ENHANCE_REQUEST_PATH = `/${ENHANCE_ID}`
+
 export function resolveAliases (): AliasOptions {
   const paths: Record<string, string> = {
     '/@shared': SHARED_PATH,
     [SITE_DATA_ID]: SITE_DATA_REQUEST_PATH,
+    [ROUTES_ID]: ROUTES_REQUEST_PATH,
+    [ENHANCE_ID]: ENHANCE_REQUEST_PATH,
   }
 
   const aliases: Alias[] = [
@@ -27,10 +35,6 @@ export function resolveAliases (): AliasOptions {
     {
       find: /^iles$/,
       replacement: path.join(__dirname, '../client/index'),
-    },
-    {
-      find: /^iles\/theme$/,
-      replacement: path.join(__dirname, '../client/theme-default/index'),
     },
     // alias for local linked development
     { find: /^iles\//, replacement: `${PKG_ROOT}/` },
