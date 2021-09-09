@@ -1,1 +1,2 @@
-vite: npm run dev
+vite: npm run dev:playground
+packages: npm run dev:packages

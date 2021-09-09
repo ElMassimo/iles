@@ -1,10 +1,5 @@
-node_modules
+node_modules/
+dist/
+.vite-islands-temp/
 .DS_Store
-dist
-dist-ssr
 *.local
-serverless/api/renderer
-serverless/public/*
-components.d.ts
-.vite-ssg-temp
-/dist/

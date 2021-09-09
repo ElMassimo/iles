@@ -3,8 +3,8 @@ import { resolveConfig } from 'vite'
 import type { BuildOptions } from 'vite'
 
 import ssgBuild from '@mussi/vite-ssg/build'
-import ViteIslandsPlugin from './plugin'
 import type { ViteSSGOptions } from '@mussi/vite-ssg'
+import ViteIslandsPlugin from './plugin'
 import type { IslandsConfig } from './config'
 
 export async function build (options: BuildOptions) {

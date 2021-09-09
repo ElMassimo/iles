@@ -78,7 +78,7 @@ hydrate(${this.componentName}, '${this.id}', ${serialize(props)}, /* VITE_ISLAND
           createTextVNode('VITE_ISLAND_SLOT_SEPARATOR'),
           vNodes,
           createTextVNode('VITE_ISLAND_SLOT_SEPARATOR'),
-          createTextVNode(vNodes.length)
+          createTextVNode(vNodes.length),
         ] : []
       }),
       createCommentVNode('VITE_ISLAND_HYDRATION_END'),

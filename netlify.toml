@@ -3,7 +3,6 @@
   NODE_VERSION = "16"
 
 [build]
-  base = "/"
-  ignore = "git diff --quiet 'HEAD^' HEAD ."
+  base = "playground/blog/"
   publish = "dist"
   command = "exe/deploy"

@@ -20,6 +20,8 @@ import { uniq } from '../utils/array'
 import { parseImports, rebaseImports } from '../utils/parse'
 import { escapeRegex, pascalCase, serialize } from '../utils/string'
 
+import { APP_PATH } from './alias'
+
 import type { IslandsConfig } from '../types'
 
 const debug = {
@@ -87,7 +89,7 @@ let islandsConfig: IslandsConfig
 const hydrationBegin = '<!--VITE_ISLAND_HYDRATION_BEGIN-->'
 const hydrationEnd = '<!--VITE_ISLAND_HYDRATION_END-->'
 const slotBegin = '<!--VITE_ISLAND_SLOT_BEGIN-->'
-const slotSeparator = `VITE_ISLAND_SLOT_SEPARATOR`
+const slotSeparator = 'VITE_ISLAND_SLOT_SEPARATOR'
 const commentsRegex = /<!--\[-->|<!--]-->/g
 const hydrationRegex = new RegExp(`${escapeRegex(hydrationBegin)}(.*?)${escapeRegex(hydrationEnd)}`, 'sg')
 const contextComponentRegex = new RegExp(escapeRegex('_ctx.__unplugin_components_'), 'g')
@@ -148,9 +150,10 @@ function config (config: UserConfig) {
         })
         if (pageIslands.length) {
           islandsByRoute[route] = pageIslands
-          logger.warn(`${chalk.dim(`${path.relative(root, pageOutDir)}`)} ${chalk.green(` (${pageIslands.length})`)}`)
-        } else {
-          logger.warn(`${chalk.dim(`${path.relative(root, pageOutDir)}`)} ${chalk.yellow(` no islands`)}`)
+          logger.warn(`${chalk.dim(`${path.relative(islandsConfig.tempDir, pageOutDir)}`)} ${chalk.green(` (${pageIslands.length})`)}`)
+        }
+        else {
+          logger.warn(`${chalk.dim(`${path.relative(islandsConfig.tempDir, pageOutDir)}`)} ${chalk.yellow(' no islands')}`)
         }
         return html
       },
@@ -211,6 +214,37 @@ function config (config: UserConfig) {
 // Public: Configures MDX, Vue, Components, and Islands plugins.
 export default function ViteIslandsPlugin (): PluginOption[] {
   return [
+    {
+      name: 'islands',
+      configureServer(server) {
+        // server.watcher.add(configPath)
+
+        // serve our index.html after vite history fallback
+        return () => {
+          server.middlewares.use((req, res, next) => {
+            if (req.url!.endsWith('.html')) {
+              res.statusCode = 200
+              res.end(`
+  <!DOCTYPE html>
+  <html>
+    <head>
+      <title></title>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      <meta name="description" content="">
+    </head>
+    <body>
+      <div id="app"></div>
+      <script type="module" src="/@fs/${APP_PATH}/index.js"></script>
+    </body>
+  </html>`)
+              return
+            }
+            next()
+          })
+        }
+      },
+    },
     {
       name: 'vite-islands:wrap-components',
       enforce: 'pre',

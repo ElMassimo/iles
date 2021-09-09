@@ -1,9 +1,10 @@
 {
   "name": "vite-plugin-xdm",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "scripts": {
     "dev": "npm run build -- --watch",
     "build": "tsup src/index.ts --dts --sourcemap --format cjs,esm",
+    "prepublishOnly": "npm run build",
     "quick:build": "tsup src/index.ts --format cjs,esm"
   },
   "type": "module",

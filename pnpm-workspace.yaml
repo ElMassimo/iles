@@ -1,3 +1,4 @@
 packages:
+  - packages/iles/
   - packages/vite-plugin-xdm/
-  - packages/vite-islands/
+  - playground/blog/

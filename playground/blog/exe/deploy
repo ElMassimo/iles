@@ -1,4 +1,4 @@
 #!/usr/bin/env sh
 npx pnpm i --store=node_modules/.pnpm-store
-npx pnpm -C packages/xdm run quick:build
-npx pnpm run build
+npx pnpm -w build:packages
+npx pnpm build

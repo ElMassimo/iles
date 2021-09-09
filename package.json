@@ -3,67 +3,24 @@
   "engines": {
     "node": ">=14"
   },
-  "workspaces": [
-    "packages/vite-plugin-xdm",
-    "packages/vite-islands"
-  ],
   "scripts": {
-    "test:open": "peeky open",
-    "test": "peeky run",
-    "vite": "vite",
-    "preview": "vite preview --open",
-    "build:plugin": "npm -C packages/vite-islands run build",
-    "build:xdm": "npm -C packages/vite-plugin-xdm run build",
+    "dev:packages": "npm -C packages run dev",
+    "dev:playground": "npm -C playground run dev",
+    "build:packages": "npm -C packages run build",
+    "dev": "concurrently \"nr dev:packages\" \"nr dep:playground\" --kill-others",
     "lint": "eslint --ignore-pattern 'node_modules'  --ignore-pattern 'dist' . --ext .ts,.js,.vue,.html",
-    "debug": "vite --port 3333 --open",
-    "prerender": "esno src/prerender.ts",
-    "dev": "vite --port 3333 --open",
-    "clean": "rm -rf dist && rm -rf serverless/public && rm -rf serverless/api/renderer",
-    "build": "vite-islands build",
-    "rebuild": "rm -rf dist && pnpm run build && pnpx serve dist"
-  },
-  "dependencies": {
-    "@vueuse/core": "^6.0.0",
-    "@vueuse/head": "^0.6.0",
-    "nprogress": "^0.2.0",
-    "prism-theme-vars": "^0.2.2",
-    "vue": "^3.2.6",
-    "vue-router": "^4.0.11"
+    "test": "peeky run",
+    "test:open": "peeky open"
   },
   "devDependencies": {
-    "@iconify/json": "^1.1.393",
     "@mussi/eslint-config": "^0.5.1",
     "@mussi/stylelint-config": "^0.1.1",
     "@nuxt/devalue": "^2.0.0",
     "@peeky/cli": "^0.4.2",
     "@peeky/runner": "^0.4.2",
-    "@types/nprogress": "^0.2.0",
-    "@vitejs/plugin-vue": "^1.6.0",
-    "@vitejs/plugin-vue-jsx": "^1.1.7",
-    "@vue/compiler-sfc": "^3.2.6",
-    "@vue/server-renderer": "^3.2.6",
-    "chalk": "^4.1.2",
-    "cross-env": "^7.0.3",
-    "es-module-lexer": "^0.7.1",
+    "concurrently": "^6.2.1",
     "eslint": "^7.32.0",
-    "esno": "^0.9.1",
-    "fast-glob": "^3.2.7",
-    "get-mp3-duration": "^1.0.0",
-    "magic-string": "^0.25.7",
-    "markdown-it-prism": "^2.2.0",
-    "netlify-plugin-cache": "^1.0.3",
-    "node-fetch": "^2.6.1",
-    "pnpm": "^6.14.3",
-    "rimraf": "^3.0.2",
-    "sass": "^1.38.1",
-    "sirv-cli": "^1.0.14",
-    "typescript": "^4.3.5",
-    "unplugin-icons": "^0.7.0",
-    "vite": "^2.5.1",
-    "vite-islands": "workspace:*",
-    "vite-plugin-inspect": "^0.2.2",
-    "vite-plugin-windicss": "^1.3.0",
-    "vite-ssr": "^0.13.1"
+    "typescript": "^4.3.5"
   },
   "resolutions": {
     "eslint-plugin-vue": "7.17.0"
@@ -76,6 +33,7 @@
       "$$": "readonly"
     },
     "rules": {
+      "prefer-const": "off",
       "no-unused-vars": "off",
       "import/named": "off",
       "@typescript-eslint/no-unused-vars": "off"

@@ -1,28 +1,18 @@
 {
-  "references": [
-    { "path": "./packages/vite-plugin-islands" },
-    { "path": "./packages/vite-plugin-xdm" }
-  ],
   "compilerOptions": {
-    "baseUrl": ".",
     "module": "ESNext",
-    "target": "esnext",
-    "lib": ["DOM", "ESNext"],
-    "strict": true,
+    "target": "es2020",
+    "lib": ["ESNext", "DOM"],
     "esModuleInterop": true,
-    "skipLibCheck": true,
-    "moduleResolution": "node",
-    "resolveJsonModule": true,
-    "noUnusedLocals": true,
+    "strict": true,
     "strictNullChecks": true,
-    "forceConsistentCasingInFileNames": true,
-    "paths": {
-      "~/*": ["src/*"],
-    }
+    "moduleResolution": "Node",
+    "resolveJsonModule": true,
+    "skipLibCheck": true
   },
-  "include": [
-    "./packages/vite-plugin-islands",
-    "./packages/vite-plugin-xdm"
-  ],
-  "exclude": ["dist", "node_modules"]
+  "exclude": [
+    "**/dist",
+    "**/node_modules",
+    "**/test"
+  ]
 }
