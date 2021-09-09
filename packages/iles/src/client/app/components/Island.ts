@@ -25,7 +25,7 @@ export const hydrationFns = {
 }
 
 export default defineComponent({
-  name: 'ViteIsland',
+  name: 'Island',
   inheritAttrs: false,
   props: {
     component: { type: Object as PropType<DefineComponent>, required: true },

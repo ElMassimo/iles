@@ -1,0 +1,21 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "module": "esnext",
+    "moduleResolution": "node",
+    "strict": true,
+    "declaration": true,
+    "noUnusedLocals": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "lib": ["ESNext", "DOM"],
+    "types": ["node", "vite/client"],
+    "paths": {
+      "~/*": ["src/*"],
+    }
+  },
+  "include": [
+    "src",
+    "__tests__"
+  ]
+}

@@ -11,7 +11,7 @@ defineProps({
       <slot/>
     </p>
     <p v-if="author || $slots.author" class="text-right text-sm mb-2 -mt-2 font-semibold">
-      — <a :href="href" target="_blank" rel="noreferrer"><slot name="author">{{ author }}</slot></a>
+      — <a :href="{ path: href }" target="_blank" rel="noreferrer"><slot name="author">{{ author }}</slot></a>
     </p>
   </div>
 </template>

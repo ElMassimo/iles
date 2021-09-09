@@ -10,8 +10,11 @@ import type ComponentsPlugin from 'unplugin-vue-components/vite'
 import type VueJsxPlugin from '@vitejs/plugin-vue-jsx'
 import type XdmPlugin from 'vite-plugin-xdm'
 
-import type { Router, RouteRecordRaw, RouterOptions as VueRouterOptions } from 'vue-router'
-import type { HeadClient } from '@vueuse/head'
+import type { Router, RouteRecordRaw, RouterOptions as VueRouterOptions, RouteMeta } from 'vue-router'
+import type { HeadClient, HeadObject } from '@vueuse/head'
+
+export type { Router }
+export type PageData = RouteMeta
 
 export type RouterOptions = PartialKeys<VueRouterOptions, 'history'> & { base?: string }
 
@@ -87,18 +90,7 @@ export interface SiteData<ThemeConfig = any> {
   >
 }
 
-export type HeadConfig =
-  | [string, Record<string, string>]
-  | [string, Record<string, string>, string]
-
-export interface PageData {
-  relativePath: string
-  title: string
-  description: string
-  headers: Header[]
-  frontmatter: Record<string, any>
-  lastUpdated: number
-}
+export type HeadConfig = HeadObject
 
 export interface Header {
   level: number

@@ -1,20 +1,23 @@
 <script setup lang="ts">
+import Default from './default.vue'
+import { useRoute } from 'iles'
 import DarkSwitch from '../components/DarkSwitch.vue'
+
+const { meta } = useRoute()
 </script>
 
 <template>
-  <main class="px-4 py-10 w-max-65ch mx-auto">
-    <DarkSwitch client:idle/>
-    <router-view v-slot="{ Component, route }">
-      <transition :name="route.meta.transition || 'fade'" mode="out-in">
+  <Default>
+    <template #switch>
+      <DarkSwitch client:idle></DarkSwitch>
+    </template>
+    <template #default>
+      <transition :name="meta.transition || 'fade'" mode="out-in">
         <article class="prose">
-          <h1>{{ Component.type.title }}</h1>
-          <component
-            :is="Component"
-            :key="route.meta.usePathKey ? route.path : undefined"
-          />
+          <h1>{{ meta.frontmatter.title }}</h1>
+          <slot/>
         </article>
       </transition>
-    </router-view>
-  </main>
+    </template>
+  </Default>
 </template>

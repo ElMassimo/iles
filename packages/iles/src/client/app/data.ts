@@ -1,10 +1,10 @@
 import { InjectionKey, Ref, shallowRef, readonly, computed, inject } from 'vue'
 import serializedSiteData from '@siteData'
+import { RouteLocationNormalizedLoaded } from 'vue-router'
 import { resolveSiteDataByRoute, PageData, SiteData } from '../shared'
-import { Route } from './router'
 import { withBase } from './utils'
 
-export interface VitePressData<T = any> {
+export interface IslandsData<T = any> {
   site: Ref<SiteData<T>>
   page: Ref<PageData>
   theme: Ref<T>
@@ -15,7 +15,7 @@ export interface VitePressData<T = any> {
   localePath: Ref<string>
 }
 
-export const dataSymbol: InjectionKey<VitePressData> = Symbol('islandsData')
+export const dataSymbol: InjectionKey<IslandsData> = Symbol('islandsData')
 
 // site data is a singleton
 export type SiteDataRef<T = any> = Ref<SiteData<T>>
@@ -34,16 +34,16 @@ if (import.meta.hot) {
 }
 
 // per-app data
-export function initData (route: Route): VitePressData {
+export function initData (route: Ref<RouteLocationNormalizedLoaded>): IslandsData {
   const site = computed(() =>
-    resolveSiteDataByRoute(siteDataRef.value, route.path),
+    resolveSiteDataByRoute(siteDataRef.value, route.value.path),
   )
 
   return {
     site,
     theme: computed(() => site.value.themeConfig),
-    page: computed(() => route.data),
-    frontmatter: computed(() => route.data.frontmatter),
+    page: computed(() => route.value.meta),
+    frontmatter: computed(() => route.value.meta.frontmatter),
     lang: computed(() => site.value.lang),
     localePath: computed(() => {
       const { langs, lang } = site.value
@@ -53,20 +53,20 @@ export function initData (route: Route): VitePressData {
       return withBase(path || '/')
     }),
     title: computed(() => {
-      return route.data.title
-        ? `${route.data.title} | ${site.value.title}`
+      return route.value.meta.title
+        ? `${route.value.meta.title} | ${site.value.title}`
         : site.value.title
     }),
     description: computed(() => {
-      return route.data.description || site.value.description
+      return route.value.meta.description || site.value.description
     }),
   }
 }
 
-export function useData<T = any> (): VitePressData<T> {
+export function useData<T = any> (): IslandsData<T> {
   const data = inject(dataSymbol)
   if (!data)
-    throw new Error('vitepress data not properly injected in app')
+    throw new Error('Islands data not properly injected in app')
 
   return data
 }

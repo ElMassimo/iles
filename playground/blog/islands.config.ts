@@ -13,4 +13,6 @@ export default defineConfig({
       { type: 'module', children: 'console.log("Yeah!")' },
     ],
   },
+  async enhanceApp () {
+  },
 })

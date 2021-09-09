@@ -7,7 +7,7 @@ const posts = import.meta.globEager('./posts/**/*.{md,mdx}')
   <ul>
     <li v-for="(post, file) in posts" :key="post.title" class="mb-8">
       <h2 class="text-2xl font-bold tracking-tight mb-4">
-        <a :href="file.slice(1, file.length).replace('.mdx', '')">{{ post.title }}</a>
+        <router-link :to="file.slice(1, file.length).replace('.mdx', '')">{{ post.title }}</router-link>
       </h2>
       <article class="prose">
         <component :is="post.default"/>

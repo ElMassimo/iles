@@ -2,11 +2,11 @@ import { createApp as createClientApp, createSSRApp } from 'vue'
 import { createMemoryHistory, createRouter as createVueRouter, createWebHistory } from 'vue-router'
 import { createHead } from '@vueuse/head'
 import routes from '@islands/routes'
-import enhance from '@islands/enhance'
+import config from '@islands/enhance'
 import type { CreateAppFactory, SSGContext, RouterOptions } from '../../../types/shared'
 import { serialize, inBrowser } from './utils'
 import { App, Debug, Island, PageContent } from './components'
-// import { siteDataRef, useData, dataSymbol, initData } from './data'
+import { dataSymbol, initData } from './data'
 
 function newApp () {
   return import.meta.env.SSR ? createSSRApp(App) : createClientApp(App)
@@ -38,18 +38,16 @@ export const createApp: CreateAppFactory = async ({ inBrowser, routePath }) => {
   // Install global components
   app.component('PageContent', PageContent)
   app.component('Island', Island)
-  app.component('Debug', inBrowser ? Debug : () => null)
+  app.component('DebugIslands', inBrowser ? Debug : () => null)
 
-  // TODO: Provide frontmatter
-  // const data = initData(router.route)
-  // app.provide(dataSymbol, data)
+  const data = initData(router.currentRoute)
+  app.provide(dataSymbol, data)
 
-  // // expose $frontmatter
-  // Object.defineProperty(app.config.globalProperties, '$frontmatter', {
-  //   get() {
-  //     return data.frontmatter.value
-  //   }
-  // })
+  Object.defineProperty(app.config.globalProperties, '$frontmatter', {
+    get() {
+      return data.frontmatter.value
+    }
+  })
 
   const context: SSGContext = {
     app,
@@ -65,7 +63,7 @@ export const createApp: CreateAppFactory = async ({ inBrowser, routePath }) => {
     // @ts-ignore
     context.initialState = transformState(window.__INITIAL_STATE__ || {})
 
-  await enhance(context)
+  await ((config as any).enhanceApp as any)?.(context)
 
   let entryRoutePath: string | undefined
   let isFirstRoute = true

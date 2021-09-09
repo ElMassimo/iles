@@ -4,11 +4,15 @@ export * from './array'
 export * from './parse'
 
 export type {
+  Router,
   SiteData,
   PageData,
   HeadConfig,
   LocaleConfig,
+  IslandsConfig,
   Header,
+  SSGContext,
+  CreateAppFactory,
 } from '../../types/shared'
 
 export const EXTERNAL_URL_RE = /^https?:/i
@@ -63,7 +67,7 @@ export function resolveSiteDataByRoute (
 
   const localeData = resolveLocales(siteData.locales || {}, route)
   const localeThemeConfig = resolveLocales<any>(
-    siteData.themeConfig.locales || {},
+    siteData.themeConfig?.locales || {},
     route,
   )
 

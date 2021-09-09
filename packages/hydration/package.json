@@ -7,12 +7,6 @@
   "types": "dist/index.d.ts",
   "module": "dist/index.js",
   "main": "dist/index.cjs",
-  "exports": {
-    ".": {
-      "import": "./dist/index.js",
-      "require": "./dist/index.cjs"
-    }
-  },
   "scripts": {
     "dev": "npm run build --watch",
     "build": "tsup index.ts --dts --format cjs,esm --external vue"

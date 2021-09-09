@@ -16,13 +16,12 @@ import matter from 'gray-matter'
 import glob from 'fast-glob'
 import chalk from 'chalk'
 import createDebugger from 'debug'
-import { uniq } from '../utils/array'
-import { parseImports, rebaseImports } from '../utils/parse'
-import { escapeRegex, pascalCase, serialize } from '../utils/string'
+import { escapeRegex, pascalCase, serialize } from './string'
+import type { IslandsConfig } from './shared'
+import { uniq } from './array'
+import { parseImports, rebaseImports } from './parse'
 
-import { resolveAliases, APP_PATH, DEFAULT_THEME_PATH } from './alias'
-
-import type { IslandsConfig } from '../types'
+import { resolveAliases, APP_PATH, DIST_CLIENT_PATH, SITE_DATA_REQUEST_PATH, ROUTES_REQUEST_PATH, ENHANCE_REQUEST_PATH } from './alias'
 
 const debug = {
   mdx: createDebugger('vite-islands:mdx'),
@@ -101,6 +100,14 @@ const islandsByRoute: Record<string, string[]> = Object.create(null)
 
 function config (config: UserConfig) {
   return {
+    resolve: {
+      alias: resolveAliases(),
+    },
+    server: {
+      fs: {
+        allow: [DIST_CLIENT_PATH, config.root ?? process.cwd()],
+      },
+    },
     build: {
       brotliSize: false,
       minify: false,
@@ -161,7 +168,7 @@ function config (config: UserConfig) {
         const islandFiles = Object.values(islandsByRoute).flat()
         if (islandFiles.length === 0) return
 
-        buildLog('Build for islands...', islandFiles.length, islandFiles)
+        buildLog('Build for islands...', islandFiles.length)
 
         const assetsBase = path.join(base, assetsDir)
 
@@ -216,7 +223,33 @@ export default function ViteIslandsPlugin (): PluginOption[] {
   return [
     {
       name: 'islands',
-      configureServer(server) {
+      resolveId (id) {
+        if (id === SITE_DATA_REQUEST_PATH)
+          return SITE_DATA_REQUEST_PATH
+
+        if (id === ROUTES_REQUEST_PATH)
+          return 'virtual:generated-pages'
+
+        if (id === ENHANCE_REQUEST_PATH)
+          return ENHANCE_REQUEST_PATH
+      },
+      load (id) {
+        // TODO: Provide actual site data.
+        const siteData = { base: '/' }
+
+        if (id === SITE_DATA_REQUEST_PATH)
+          return `export default ${JSON.stringify(JSON.stringify(siteData))}`
+
+        if (id === ENHANCE_REQUEST_PATH) {
+          const configPath = path.join(root, 'islands.config.ts')
+          this.addWatchFile(configPath)
+          return fs.readFileSync(configPath, 'utf-8')
+        }
+      },
+      transform (code, id) {
+        return code.replace(/__LAYOUTS_ROOT__/g, '/src/layouts')
+      },
+      configureServer (server) {
         // server.watcher.add(configPath)
 
         // serve our index.html after vite history fallback
@@ -378,7 +411,7 @@ export default function ViteIslandsPlugin (): PluginOption[] {
         }),
         (name) => {
           if (name === 'ViteIsland' || name === 'Island')
-            return { importName: 'ViteIsland', path: 'vite-islands/components' }
+            return { importName: 'Island', path: 'iles' }
           else
             return null
         },

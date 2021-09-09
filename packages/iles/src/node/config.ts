@@ -25,7 +25,7 @@ export interface UserConfig<ThemeConfig = any> {
   base?: string
   title?: string
   description?: string
-  head?: HeadConfig[]
+  head?: HeadConfig
   themeConfig?: ThemeConfig
   locales?: Record<string, LocaleConfig>
   markdown?: MarkdownOptions
@@ -112,7 +112,7 @@ export async function resolveUserConfig(root: string): Promise<UserConfig> {
   // always delete cache first before loading config
   delete require.cache[configPath]
   const userConfig: RawConfigExports = hasUserConfig ? require(configPath) : {}
-  debug(hasUserConfig ? `loaded config at ${chalk.yellow(configPath)}` : `no config file found.`))
+  debug(hasUserConfig ? `loaded config at ${chalk.yellow(configPath)}` : `no config file found.`)
   return resolveConfigExtends(userConfig)
 }
 

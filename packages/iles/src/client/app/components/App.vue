@@ -1,3 +1,7 @@
+<script setup lang="ts">
+import { getLayout } from '../layouts'
+</script>
+
 <script lang="ts">
 export default {
   name: 'IslandsApp',
@@ -7,10 +11,10 @@ export default {
 <template>
   <Suspense>
     <router-view v-slot="{ Component: Page, route }">
-      <component :is="route.meta.layout">
+      <component :is="getLayout(route)">
         <component :is="Page"/>
       </component>
     </router-view>
-    <DebugIslands/>
   </Suspense>
+  <DebugIslands/>
 </template>
