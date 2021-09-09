@@ -34,7 +34,7 @@ function DefaultIncludedRoutes (paths: string[]) {
   // ignore dynamic routes
   return paths.filter(i => !i.includes(':') && !i.includes('*'))
 }
-export default async function ssgBuild (config: ResolvedConfig) {
+export async function ssgBuild (config: ResolvedConfig) {
   const root = config.root || process.cwd()
   const ssgOut = join(root, '.vite-ssg-temp')
   const outDir = config.build.outDir || 'dist'

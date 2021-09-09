@@ -43,7 +43,7 @@ function stringifyPreload (manifest: Manifest, hrefs: string[]) {
     .join('')
 }
 
-export function parseId (id: string) {
+function parseId (id: string) {
   const index = id.indexOf('?')
   if (index < 0) {
     return { path: id, query: {} }
@@ -219,7 +219,7 @@ function config (config: UserConfig) {
 }
 
 // Public: Configures MDX, Vue, Components, and Islands plugins.
-export default function ViteIslandsPlugin (): PluginOption[] {
+export default function IslandsPlugins (): PluginOption[] {
   return [
     {
       name: 'islands',
