@@ -1,9 +1,8 @@
 // exports in this file are exposed to themes and md files via 'iles'
 // so the user can do `import { useRoute, useSiteData } from 'iles'`
-import { EnhanceAppContext } from './app/theme'
 
 // generic types
-import type { HeadConfig } from './shared'
+import type { IslandsAppConfig } from './shared'
 export type { Router, RouteRecordRaw } from 'vue-router'
 
 // theme types
@@ -20,12 +19,6 @@ export { inBrowser, withBase } from './app/utils'
 // components
 export * from './app/components'
 
-interface IslandsAppConfig {
-  title: string
-  description: string
-  enhanceApp?: (ctx: EnhanceAppContext) => void | Promise<void>
-}
-
-export function defineConfig (config: { head?: HeadConfig } & Partial<IslandsAppConfig>) {
+export function defineConfig (config: Partial<IslandsAppConfig>) {
   return config
 }

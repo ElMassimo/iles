@@ -15,8 +15,8 @@ declare module '@islands/routes' {
   export default routes
 }
 
-declare module '@islands/enhance' {
-  import type { SSGContext } from '../../types/shared'
-  const enhance: (ctx: SSGContext) => void
-  export default enhance
+declare module '@islands/user-config' {
+  import type { IslandsAppConfig } from '../../types/shared'
+  const config: IslandsAppConfig
+  export default config
 }

@@ -30,7 +30,8 @@
     "globals": {
       "$ref": "readonly",
       "$computed": "readonly",
-      "$$": "readonly"
+      "$$": "readonly",
+      "$": "readonly"
     },
     "rules": {
       "prefer-const": "off",

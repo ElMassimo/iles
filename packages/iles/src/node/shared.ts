@@ -4,6 +4,7 @@ export * from './array'
 export * from './parse'
 
 export type {
+  IslandsAppConfig,
   Router,
   SiteData,
   PageData,

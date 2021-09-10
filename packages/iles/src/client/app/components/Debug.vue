@@ -1,11 +1,5 @@
-<script lang="ts">
-export default {
-  name: 'DebugIslands',
-}
-</script>
-
 <script setup lang="ts">
-import { ref, watch, reactive } from 'vue'
+import { reactive, ref, watch } from 'vue'
 import { useData } from '../data'
 
 const data = useData()
@@ -20,6 +14,12 @@ watch(open, (value) => {
     el.value!.scrollTop = 0
   }
 })
+</script>
+
+<script lang="ts">
+export default {
+  name: 'DebugIslands',
+}
 </script>
 
 <template>

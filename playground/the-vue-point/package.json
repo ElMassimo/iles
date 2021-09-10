@@ -1,0 +1,19 @@
+{
+  "name": "vue-blog",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "vite --port 3334 --open",
+    "build": "iles build",
+    "feed": "node ./scripts/genFeed",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "@iconify/json": "1.1.393",
+    "@vueuse/core": "^6.2.0",
+    "feed": "^4.2.1",
+    "vite": "^2.5.3",
+    "iles": "workspace:*",
+    "vite-plugin-windicss": "^1.4.1"
+  }
+}

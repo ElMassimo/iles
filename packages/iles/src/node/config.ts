@@ -70,9 +70,7 @@ export interface SiteConfig<ThemeConfig = any> {
   vite: ViteConfig | undefined
 }
 
-export async function resolveConfig(
-  root: string = process.cwd()
-): Promise<SiteConfig> {
+export async function resolveConfig(root: string = process.cwd()): Promise<SiteConfig> {
   const userConfig = await resolveUserConfig(root)
 
   if (userConfig.vueOptions) {
@@ -97,9 +95,9 @@ export async function resolveConfig(
     outDir: resolve(root, 'dist'),
     tempDir: path.resolve(APP_PATH, 'temp'),
     markdown: userConfig.markdown,
-    alias: resolveAliases(),
+    alias: resolveAliases(root),
     vue: userConfig.vue,
-    vite: userConfig.vite
+    vite: userConfig.vite,
   }
 
   return config

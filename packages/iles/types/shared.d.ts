@@ -36,6 +36,13 @@ export interface SSGContext extends CreateAppConfig {
 
 export type CreateAppFactory = (options: CreateAppConfig) => Promise<SSGContext<true> | SSGContext<false>>
 
+export interface IslandsAppConfig {
+  title: string
+  description: string
+  head: HeadConfig
+  enhanceApp: (ctx: EnhanceAppContext) => void | Promise<void>
+}
+
 export interface IslandsConfig {
   tempDir: string
   vite: ViteConfig

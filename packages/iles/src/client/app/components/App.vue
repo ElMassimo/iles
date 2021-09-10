@@ -1,5 +1,8 @@
 <script setup lang="ts">
 import { getLayout } from '../layouts'
+import { useRouterLinks } from '../composables/routerLinks'
+
+useRouterLinks()
 </script>
 
 <script lang="ts">

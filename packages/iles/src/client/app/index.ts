@@ -1,8 +1,8 @@
-import { createApp as createClientApp, createSSRApp } from 'vue'
+import { createApp as createClientApp, createSSRApp, ref } from 'vue'
 import { createMemoryHistory, createRouter as createVueRouter, createWebHistory } from 'vue-router'
 import { createHead } from '@vueuse/head'
 import routes from '@islands/routes'
-import config from '@islands/enhance'
+import userConfig from '@islands/user-config'
 import type { CreateAppFactory, SSGContext, RouterOptions } from '../../../types/shared'
 import { serialize, inBrowser } from './utils'
 import { App, Debug, Island, PageContent } from './components'
@@ -63,7 +63,18 @@ export const createApp: CreateAppFactory = async ({ inBrowser, routePath }) => {
     // @ts-ignore
     context.initialState = transformState(window.__INITIAL_STATE__ || {})
 
-  await ((config as any).enhanceApp as any)?.(context)
+  const { title, description, head: headConfig, enhanceApp } = userConfig
+
+  head.addHeadObjs(ref({
+    title,
+    meta: [{ name: 'description', content: description }],
+  }))
+
+  if (headConfig)
+    head.addHeadObjs(ref(userConfig.head))
+
+  if (enhanceApp)
+    await enhanceApp(context)
 
   let entryRoutePath: string | undefined
   let isFirstRoute = true

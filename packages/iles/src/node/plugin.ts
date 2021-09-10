@@ -21,13 +21,13 @@ import type { IslandsConfig } from './shared'
 import { uniq } from './array'
 import { parseImports, rebaseImports } from './parse'
 
-import { resolveAliases, APP_PATH, DIST_CLIENT_PATH, SITE_DATA_REQUEST_PATH, ROUTES_REQUEST_PATH, ENHANCE_REQUEST_PATH } from './alias'
+import { resolveAliases, APP_PATH, DIST_CLIENT_PATH, SITE_DATA_REQUEST_PATH, ROUTES_REQUEST_PATH, USER_CONFIG_REQUEST_PATH } from './alias'
 
 const debug = {
-  mdx: createDebugger('vite-islands:mdx'),
-  wrap: createDebugger('vite-islands:wrap'),
-  resolve: createDebugger('vite-islands:resolve'),
-  build: createDebugger('vite-islands:build'),
+  mdx: createDebugger('islands:mdx'),
+  wrap: createDebugger('islands:wrap'),
+  resolve: createDebugger('islands:resolve'),
+  build: createDebugger('islands:build'),
 }
 
 function resolveManifestEntries (manifest: Manifest, entryNames: string[]): string[] {
@@ -66,7 +66,7 @@ function filenameFromRoute (route: string) {
 
 function buildLog (text: string, count: number | undefined) {
   console.log(`
-${chalk.gray('[vite-islands]')} ${chalk.yellow(text)}${count ? chalk.blue(` (${count})`) : ''}`)
+${chalk.gray('[islands]')} ${chalk.yellow(text)}${count ? chalk.blue(` (${count})`) : ''}`)
 }
 
 async function replaceAsync (str: string, regex: RegExp, asyncFn: (...groups: string[]) => Promise<string>) {
@@ -101,7 +101,7 @@ const islandsByRoute: Record<string, string[]> = Object.create(null)
 function config (config: UserConfig) {
   return {
     resolve: {
-      alias: resolveAliases(),
+      alias: resolveAliases(config.root ?? process.cwd()),
     },
     server: {
       fs: {
@@ -230,8 +230,8 @@ export default function IslandsPlugins (): PluginOption[] {
         if (id === ROUTES_REQUEST_PATH)
           return 'virtual:generated-pages'
 
-        if (id === ENHANCE_REQUEST_PATH)
-          return ENHANCE_REQUEST_PATH
+        if (id === USER_CONFIG_REQUEST_PATH)
+          return USER_CONFIG_REQUEST_PATH
       },
       load (id) {
         // TODO: Provide actual site data.
@@ -240,8 +240,8 @@ export default function IslandsPlugins (): PluginOption[] {
         if (id === SITE_DATA_REQUEST_PATH)
           return `export default ${JSON.stringify(JSON.stringify(siteData))}`
 
-        if (id === ENHANCE_REQUEST_PATH) {
-          const configPath = path.join(root, 'islands.config.ts')
+        if (id === USER_CONFIG_REQUEST_PATH) {
+          const configPath = path.join(root, 'iles.config.ts')
           this.addWatchFile(configPath)
           return fs.readFileSync(configPath, 'utf-8')
         }
@@ -279,7 +279,7 @@ export default function IslandsPlugins (): PluginOption[] {
       },
     },
     {
-      name: 'vite-islands:wrap-components',
+      name: 'islands:wrap-components',
       enforce: 'pre',
       config,
       configResolved (config) {
@@ -337,7 +337,7 @@ export default function IslandsPlugins (): PluginOption[] {
     }),
 
     {
-      name: 'vite-islands:mdx',
+      name: 'islands:mdx',
       async transform (code, id) {
         const { path } = parseId(id)
         if (!path.endsWith('.mdx') || !code.includes('MDXContent')) return null
@@ -349,10 +349,14 @@ export default function IslandsPlugins (): PluginOption[] {
         const pattern = '_components = Object.assign({'
         const index = code.indexOf(pattern) + pattern.length
         const comps = importedComponents.map(name => `    ${name}: _resolveComponent("${name}"),`).join('\n')
-        code = `${code.slice(0, index)}\n${comps}\n${code.slice(index + 1, code.length)}`
+        code = `${code.slice(0, index)}\n${comps}\n${code.slice(index, code.length + 1)}`
 
+        // Allow mdx pages with only frontmatter.
+        code = code.replace('_content = <></>', '_content = null')
+
+        // TODO: Allow component to receive an excerpt prop.
         return code.replace('export default MDXContent', `
-          ${code.includes('defineComponent') ? '' : 'import { defineComponent } from \'vue\''}
+          ${code.includes(' defineComponent') ? '' : 'import { defineComponent } from \'vue\''}
 
           const _default = defineComponent({
             ${mode === 'development' ? `__file: '${path}',` : ''}
@@ -365,6 +369,7 @@ export default function IslandsPlugins (): PluginOption[] {
               return MDXContent({ ...this.$props, ...this.$attrs })
             },
           })
+          export const content = _default
           export default _default
         `)
       },
@@ -381,8 +386,8 @@ export default function IslandsPlugins (): PluginOption[] {
         const file = path.resolve(root, route.component.slice(1))
         if (file.endsWith('.mdx') || file.endsWith('.md')) {
           const md = fs.readFileSync(file, 'utf-8')
-          const { data } = matter(md)
-          route.meta = Object.assign(route.meta || {}, { frontmatter: data })
+          const { data: { layout, ...frontmatter } } = matter(md)
+          route.meta = Object.assign(route.meta || {}, { frontmatter, layout })
           if (file.includes('posts/') && !file.endsWith('index.vue'))
             route.meta.layout = 'post'
         }
@@ -419,7 +424,7 @@ export default function IslandsPlugins (): PluginOption[] {
     }),
 
     {
-      name: 'vite-islands:import-analysis',
+      name: 'islands:import-analysis',
       enforce: 'post',
       async transform (code, id) {
         const { path } = parseId(id)

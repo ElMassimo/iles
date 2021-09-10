@@ -16,15 +16,15 @@ export const SITE_DATA_REQUEST_PATH = `/${SITE_DATA_ID}`
 export const ROUTES_ID = '@islands/routes'
 export const ROUTES_REQUEST_PATH = `/${ROUTES_ID}`
 
-export const ENHANCE_ID = '@islands/enhance'
-export const ENHANCE_REQUEST_PATH = `/${ENHANCE_ID}`
+export const USER_CONFIG_ID = '@islands/user-config'
+export const USER_CONFIG_REQUEST_PATH = `/${USER_CONFIG_ID}`
 
-export function resolveAliases (): AliasOptions {
+export function resolveAliases (root: string): AliasOptions {
   const paths: Record<string, string> = {
     '/@shared': SHARED_PATH,
     [SITE_DATA_ID]: SITE_DATA_REQUEST_PATH,
     [ROUTES_ID]: ROUTES_REQUEST_PATH,
-    [ENHANCE_ID]: ENHANCE_REQUEST_PATH,
+    [USER_CONFIG_ID]: USER_CONFIG_REQUEST_PATH,
   }
 
   const aliases: Alias[] = [
@@ -32,6 +32,10 @@ export function resolveAliases (): AliasOptions {
       find: p,
       replacement: paths[p],
     })),
+    {
+      find: /^~\//,
+      replacement: `${path.resolve(root, 'src')}/`,
+    },
     {
       find: /^iles$/,
       replacement: path.join(__dirname, '../client/index'),

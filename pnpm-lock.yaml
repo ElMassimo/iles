@@ -163,7 +163,23 @@ importers:
       sass: 1.39.0
       unplugin-icons: 0.7.5_@iconify+json@1.1.393
       vite-plugin-inspect: 0.2.2
-      vite-plugin-windicss: 1.3.0
+      vite-plugin-windicss: 1.3.0_typescript@4.3.5
+
+  playground/the-vue-point:
+    specifiers:
+      '@iconify/json': 1.1.393
+      '@vueuse/core': ^6.2.0
+      feed: ^4.2.1
+      iles: workspace:*
+      vite: ^2.5.3
+      vite-plugin-windicss: ^1.4.1
+    devDependencies:
+      '@iconify/json': 1.1.393
+      '@vueuse/core': 6.3.2
+      feed: 4.2.2
+      iles: link:../../packages/iles
+      vite: 2.5.6
+      vite-plugin-windicss: 1.4.2_typescript@4.3.5+vite@2.5.6
 
 packages:
 
@@ -2378,12 +2394,12 @@ packages:
       vue-demi: 0.11.4
     dev: true
 
-  /@windicss/config/1.3.0:
+  /@windicss/config/1.3.0_typescript@4.3.5:
     resolution: {integrity: sha512-/F2dg9ltkoQLA4cpr4YQP4V+Y1hO0WOF8jtHoErCKKBr1wBnFLieRjhsXcolM5ZbqH7wLoUrPkdBkIFlocDblg==}
     dependencies:
       debug: 4.3.2
       jiti: 1.11.0
-      tsup: 4.14.0
+      tsup: 4.14.0_typescript@4.3.5
       windicss: 3.1.7
     transitivePeerDependencies:
       - supports-color
@@ -2391,11 +2407,40 @@ packages:
       - typescript
     dev: true
 
-  /@windicss/plugin-utils/1.3.0:
+  /@windicss/config/1.4.2_typescript@4.3.5:
+    resolution: {integrity: sha512-wjvZH1m8Rb60zCxYQDiZmgpSsljirqBNWsKo5G7JbkHGuEgCQdC+27jtPWQoMyBJY2w76Ofa7+7jvMqgoAS+ag==}
+    dependencies:
+      debug: 4.3.2
+      jiti: 1.11.0
+      tsup: 4.14.0_typescript@4.3.5
+      windicss: 3.1.7
+    transitivePeerDependencies:
+      - supports-color
+      - ts-node
+      - typescript
+    dev: true
+
+  /@windicss/plugin-utils/1.3.0_typescript@4.3.5:
     resolution: {integrity: sha512-4qOXUStYPI3WTHR6WdxGhzKWMZar7vwWY08QFVc9Zztg5eoQ3GyYsMPn83OSRwc/jA7mSkkoCtHLGzop2KjHcg==}
     dependencies:
       '@antfu/utils': 0.2.4
-      '@windicss/config': 1.3.0
+      '@windicss/config': 1.3.0_typescript@4.3.5
+      debug: 4.3.2
+      fast-glob: 3.2.7
+      magic-string: 0.25.7
+      micromatch: 4.0.4
+      windicss: 3.1.7
+    transitivePeerDependencies:
+      - supports-color
+      - ts-node
+      - typescript
+    dev: true
+
+  /@windicss/plugin-utils/1.4.2_typescript@4.3.5:
+    resolution: {integrity: sha512-EVMclEc8lSp03ljQIviKGe9SjdJkxkhwL99H8fAVRKVDJXhTAlpRc8nqcnkf8agZ4eTY6BE3kEJaC9hDICLjBg==}
+    dependencies:
+      '@antfu/utils': 0.2.4
+      '@windicss/config': 1.4.2_typescript@4.3.5
       debug: 4.3.2
       fast-glob: 3.2.7
       magic-string: 0.25.7
@@ -4071,6 +4116,13 @@ packages:
     resolution: {integrity: sha512-JsDj9LFcoC+4ChII1QpXPA7YIaY8zmqPYw7h9j5n7St7a0BBKfNnwEBAUQRBx70o2q4rs+BeSNHk8Exm6xE7fQ==}
     dependencies:
       format: 0.2.2
+    dev: true
+
+  /feed/4.2.2:
+    resolution: {integrity: sha512-u5/sxGfiMfZNtJ3OvQpXcvotFpYkL0n9u9mM2vkui2nGo8b4wvDkJ8gAkYqbA8QpGyFCv3RK0Z+Iv+9veCS9bQ==}
+    engines: {node: '>=0.4.0'}
+    dependencies:
+      xml-js: 1.6.11
     dev: true
 
   /file-entry-cache/6.0.1:
@@ -6806,6 +6858,10 @@ packages:
       chokidar: 3.5.2
     dev: true
 
+  /sax/1.2.4:
+    resolution: {integrity: sha512-NqVDv9TpANUjFm0N8uM5GxL36UgKi9/atZw+x7YFnQ8ckwFGKrl4xX4yWtrey3UJm5nP1kUbnYgLopqWNSRhWw==}
+    dev: true
+
   /saxes/5.0.1:
     resolution: {integrity: sha512-5LBh1Tls8c9xgGjw3QrMwETmTMVk0oFgvrFSvWx62llR2hcEInrKNZ2GZCCuuy2lvWrdl5jhbpeqc5hRYKFOcw==}
     engines: {node: '>=10'}
@@ -7524,33 +7580,6 @@ packages:
       - typescript
     dev: true
 
-  /tsup/4.14.0:
-    resolution: {integrity: sha512-77rWdzhikTP9mQ34XMRzK83tw++LF6f4ox/HNERlgesB7g6g5VQ1iJlueG9O0P9HAZGVKavUwyoZv0+322p6rg==}
-    hasBin: true
-    peerDependencies:
-      typescript: ^4.2.3
-    peerDependenciesMeta:
-      typescript:
-        optional: true
-    dependencies:
-      cac: 6.7.3
-      chalk: 4.1.2
-      chokidar: 3.5.2
-      debug: 4.3.2
-      esbuild: 0.12.25
-      execa: 5.1.1
-      globby: 11.0.4
-      joycon: 3.0.1
-      postcss-load-config: 3.1.0
-      resolve-from: 5.0.0
-      rollup: 2.56.3
-      sucrase: 3.20.1
-      tree-kill: 1.2.2
-    transitivePeerDependencies:
-      - supports-color
-      - ts-node
-    dev: true
-
   /tsup/4.14.0_typescript@4.3.5:
     resolution: {integrity: sha512-77rWdzhikTP9mQ34XMRzK83tw++LF6f4ox/HNERlgesB7g6g5VQ1iJlueG9O0P9HAZGVKavUwyoZv0+322p6rg==}
     hasBin: true
@@ -7965,14 +7994,30 @@ packages:
       - supports-color
     dev: true
 
-  /vite-plugin-windicss/1.3.0:
+  /vite-plugin-windicss/1.3.0_typescript@4.3.5:
     resolution: {integrity: sha512-Xd9VxXX8z9bsdKs3iL6qXJDXsDDl/HQSWqJOLZFkkp23b3goGRnlT4Rlo5WeIAfrEV944r8bF7wfpDXCkk8XCg==}
     peerDependencies:
       vite: ^2.0.1
     dependencies:
-      '@windicss/plugin-utils': 1.3.0
+      '@windicss/plugin-utils': 1.3.0_typescript@4.3.5
       chalk: 4.1.2
       debug: 4.3.2
+      windicss: 3.1.7
+    transitivePeerDependencies:
+      - supports-color
+      - ts-node
+      - typescript
+    dev: true
+
+  /vite-plugin-windicss/1.4.2_typescript@4.3.5+vite@2.5.6:
+    resolution: {integrity: sha512-lyjyZ7q/5CiRppKH5RrSuchE7vz4N6LWT5cJOeTsh2bCFAEuBURmIJGOtLGL7uYfmXjNRZjQIS98BV0aQ7kFDw==}
+    peerDependencies:
+      vite: ^2.0.1
+    dependencies:
+      '@windicss/plugin-utils': 1.4.2_typescript@4.3.5
+      chalk: 4.1.2
+      debug: 4.3.2
+      vite: 2.5.6
       windicss: 3.1.7
     transitivePeerDependencies:
       - supports-color
@@ -7991,6 +8036,19 @@ packages:
       rollup: 2.56.3
     optionalDependencies:
       fsevents: 2.3.2
+
+  /vite/2.5.6:
+    resolution: {integrity: sha512-P++qzXuOPhTql8iDamsatlJfD7/yGi8NCNwzyqkB2p0jrNJC567WEdXiKn3hQ+ZV8amQmB2dTH6svo3Z2tJ6MQ==}
+    engines: {node: '>=12.2.0'}
+    hasBin: true
+    dependencies:
+      esbuild: 0.12.25
+      postcss: 8.3.6
+      resolve: 1.20.0
+      rollup: 2.56.3
+    optionalDependencies:
+      fsevents: 2.3.2
+    dev: true
 
   /vue-demi/0.11.4:
     resolution: {integrity: sha512-/3xFwzSykLW2HiiLie43a+FFgNOcokbBJ+fzvFXd0r2T8MYohqvphUyDQ8lbAwzQ3Dlcrb1c9ykifGkhSIAk6A==}
@@ -8351,6 +8409,13 @@ packages:
       deasync: 0.1.23
     transitivePeerDependencies:
       - supports-color
+    dev: true
+
+  /xml-js/1.6.11:
+    resolution: {integrity: sha512-7rVi2KMfwfWFl+GpPg6m80IVMWXLRjO+PxTq7V2CDhoGak0wzYzFgUY2m4XJ47OGdXd8eLE8EmwfAmdjw7lC1g==}
+    hasBin: true
+    dependencies:
+      sax: 1.2.4
     dev: true
 
   /xml-name-validator/3.0.0:

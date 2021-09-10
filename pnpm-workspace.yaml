@@ -3,3 +3,4 @@ packages:
   - packages/hydration/
   - packages/vite-plugin-xdm/
   - playground/blog/
+  - playground/the-vue-point/
