@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import Default from './default.vue'
-import { useRoute } from 'iles'
+import { useData } from 'iles'
 import DarkSwitch from '../components/DarkSwitch.vue'
+import Default from './default.vue'
 
-const { meta } = useRoute()
+const { frontmatter } = useData()
 </script>
 
 <template>
@@ -12,9 +12,9 @@ const { meta } = useRoute()
       <DarkSwitch client:idle></DarkSwitch>
     </template>
     <template #default>
-      <transition :name="meta.transition || 'fade'" mode="out-in">
+      <transition :name="frontmatter.transition || 'fade'" mode="out-in">
         <article class="prose">
-          <h1>{{ meta.frontmatter.title }}</h1>
+          <h1>{{ frontmatter.title }}</h1>
           <slot/>
         </article>
       </transition>

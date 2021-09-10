@@ -1,4 +1,4 @@
-import path from 'path'
+import path, { relative } from 'path'
 import fs from 'fs'
 import { build as viteBuild } from 'vite'
 import type { Manifest, PluginOption, ResolvedConfig, ResolveFn, UserConfig } from 'vite'
@@ -354,9 +354,16 @@ export default function IslandsPlugins (): PluginOption[] {
         // Allow mdx pages with only frontmatter.
         code = code.replace('_content = <></>', '_content = null')
 
+        // Set path to the specified page.
+        // TODO: Add option in vite-plugin-xdm to extend frontmatter, like Jekyll.
+        const href = relative(root, path).replace(/\.\w+$/, '').replace('src/pages/', '/')
+
         // TODO: Allow component to receive an excerpt prop.
         return code.replace('export default MDXContent', `
           ${code.includes(' defineComponent') ? '' : 'import { defineComponent } from \'vue\''}
+
+          export const href = '${href}'
+          frontmatter.href = href
 
           const _default = defineComponent({
             ${mode === 'development' ? `__file: '${path}',` : ''}
