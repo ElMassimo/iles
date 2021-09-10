@@ -11,7 +11,7 @@ export { useHead } from '@vueuse/head'
 
 // Utilities
 export { inBrowser } from './app/utils'
-export { defineConfig } from './config'
+export { defineConfig } from './shared'
 
 // Components
 export * from './app/components'

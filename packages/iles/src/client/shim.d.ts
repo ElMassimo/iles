@@ -16,7 +16,7 @@ declare module '@islands/routes' {
 }
 
 declare module '@islands/user-config' {
-  import type { IlesUserConfig } from './shared'
-  const config: IlesUserConfig
+  import type { UserConfig } from './shared'
+  const config: UserConfig
   export default config
 }

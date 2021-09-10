@@ -1,3 +1,5 @@
+import { UserConfig } from '../../types/shared'
+
 export {
   Router,
   RouteRecordRaw,
@@ -7,12 +9,16 @@ export {
   CreateAppConfig,
   SSGContext,
   CreateAppFactory,
-  IlesPlugin,
-  IlesPluginOption,
-  IlesUserConfig,
-  IlesConfig,
+  Plugin,
+  PluginOption,
+  UserConfig,
+  AppConfig,
 } from '../../types/shared'
 
 export const EXTERNAL_URL_RE = /^https?:/i
 
 export const inBrowser = typeof window !== 'undefined'
+
+export function defineConfig (config: UserConfig) {
+  return config
+}

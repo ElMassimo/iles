@@ -15,7 +15,7 @@ import XDM from 'vite-plugin-xdm'
 import glob from 'fast-glob'
 import chalk from 'chalk'
 import createDebugger from 'debug'
-import type { IlesConfig } from '../shared'
+import type { AppConfig } from '../shared'
 import { resolveAliases, APP_PATH, DIST_CLIENT_PATH, HYDRATION_DIST_PATH, SITE_DATA_REQUEST_PATH, ROUTES_REQUEST_PATH, USER_CONFIG_REQUEST_PATH } from '../alias'
 import { escapeRegex, pascalCase, uniq } from './utils'
 import { parseImports, rebaseImports } from './parse'
@@ -84,7 +84,7 @@ let logger: ResolvedConfig['logger']
 let mode: ResolvedConfig['mode']
 let root: ResolvedConfig['root']
 let resolveVitePath: ResolveFn
-let islandsConfig: IlesConfig
+let islandsConfig: AppConfig
 
 const hydrationBegin = '<!--VITE_ISLAND_HYDRATION_BEGIN-->'
 const hydrationEnd = '<!--VITE_ISLAND_HYDRATION_END-->'

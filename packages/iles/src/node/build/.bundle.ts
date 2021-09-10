@@ -7,9 +7,6 @@ import { RollupOutput } from 'rollup'
 import { build, BuildOptions, UserConfig as ViteUserConfig } from 'vite'
 import IslandsPlugins from '../plugin/index'
 
-export const okMark = '\x1b[32m✓\x1b[0m'
-export const failMark = '\x1b[31m✖\x1b[0m'
-
 // bundles the VitePress app for both client AND server.
 export async function bundle(config: SiteConfig, options: BuildOptions) {
   const { root, srcDir } = config

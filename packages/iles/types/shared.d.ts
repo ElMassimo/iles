@@ -1,4 +1,5 @@
-import type { UserConfig as ViteConfig } from 'vite'
+/* eslint-disable no-use-before-define */
+import type { UserConfig as ViteConfig, ConfigEnv } from 'vite'
 
 import type VuePlugin from '@vitejs/plugin-vue'
 import type PagesPlugin from 'vite-plugin-pages'
@@ -34,32 +35,36 @@ export interface SSGContext extends CreateAppConfig {
 
 export type CreateAppFactory = (options: CreateAppConfig) => Promise<SSGContext<true> | SSGContext<false>>
 
-export interface IlesPlugin {
+export interface Plugin {
+  config: (config: UserConfig, env: ConfigEnv) => UserConfig | null | void | Promise<UserConfig | null | void>
   enhanceApp: (ctx: EnhanceAppContext) => void | Promise<void>
 }
 
-export type IlesPluginOption = IlesPlugin | false | null | undefined
+export type PluginOption = Plugin | false | null | undefined
 
-export interface IlesUserConfig {
-  title: string
-  description: string
-  head: HeadConfig
-  plugins: (PluginOption | PluginOption[])[]
-}
-
-export interface IlesConfig extends IlesUserConfig {
+export interface RequiredConfig {
   base: string
   title: string
   description: string
-  head: HeadConfig
+  outDir: string
+  layoutsDir: string
+  pagesDir: string
   srcDir: string
   tempDir: string
-  outDir: string
-  vite: ViteConfig
-  vue: Parameters<typeof VuePlugin>[0]
-  pages: Parameters<typeof PagesPlugin>[0]
-  layouts: Parameters<typeof LayoutsPlugin>[0]
-  components: Parameters<typeof ComponentsPlugin>[0]
-  vueJsx: Parameters<typeof VueJsxPlugin>[0]
-  markdown: Parameters<typeof XdmPlugin>[0]
+  plugins: (PluginOption | PluginOption[])[]
+}
+
+export interface UserConfig extends Partial<RequiredConfig> {
+  head?: HeadConfig
+  vite?: ViteConfig
+  vue?: Parameters<typeof VuePlugin>[0]
+  pages?: Parameters<typeof PagesPlugin>[0]
+  layouts?: Parameters<typeof LayoutsPlugin>[0]
+  components?: Parameters<typeof ComponentsPlugin>[0]
+  vueJsx?: Parameters<typeof VueJsxPlugin>[0]
+  markdown?: Parameters<typeof XdmPlugin>[0]
+}
+
+export interface AppConfig extends RequiredConfig, UserConfig {
+  root: string
 }
