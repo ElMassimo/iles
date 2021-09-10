@@ -1,5 +1,6 @@
-import { defineComponent, h, createCommentVNode, createTextVNode } from 'vue'
+import { createApp, defineComponent, h, useSlots, createCommentVNode, createTextVNode } from 'vue'
 import type { PropType, DefineComponent } from 'vue'
+import { renderToString } from '@vue/server-renderer'
 import { serialize } from '../../shared'
 
 let idNumber = 0
@@ -38,10 +39,20 @@ export default defineComponent({
     [Hydrate.New]: { type: Boolean, default: false },
     [Hydrate.WhenVisible]: { type: Boolean, default: false },
   },
-  setup (props) {
+  async setup (props) {
+    const slots = useSlots()
+    const hydrateInDev = true
+
+    const renderedSlots = import.meta.env.SSR || hydrateInDev ? Object.fromEntries(await Promise.all(Object.entries(slots).map(async ([name, slotFn]) => {
+      const rendered = slotFn ? await renderToString(createApp(() => slotFn()), {}) : null
+      return [name, rendered]
+    }))) : []
+
     return {
       id: newHydrationId(),
       strategy: Object.values(Hydrate).find(s => props[s]) || Hydrate.OnLoad,
+      renderedSlots,
+      hydrateInDev,
     }
   },
   render () {
@@ -60,11 +71,11 @@ export default defineComponent({
 
     const script = `import { ${this.importName} as ${this.componentName} } from '${this.importPath}'
 import { ${hydrationFns[this.strategy]} as hydrate } from '${packageUrl}'
-hydrate(${this.componentName}, '${this.id}', ${serialize(props)}, /* VITE_ISLAND_HYDRATION_SLOTS */)
+hydrate(${this.componentName}, '${this.id}', ${serialize(props)}, ${serialize(this.renderedSlots)})
 `
 
     // TEMPORARY, for debugging purposes.
-    if (!isSSR && Object.keys(this.$slots).length === 0) {
+    if (this.hydrateInDev) {
       return [
         rootNode,
         h('script', { type: 'module', innerHTML: script }),
@@ -75,14 +86,14 @@ hydrate(${this.componentName}, '${this.id}', ${serialize(props)}, /* VITE_ISLAND
       rootNode,
       createCommentVNode('VITE_ISLAND_HYDRATION_BEGIN'),
       script,
-      ...Object.entries(this.$slots).flatMap(([slotName, slotFn]) => {
-        return slotFn ? [
-          createCommentVNode('VITE_ISLAND_SLOT_BEGIN'),
-          createTextVNode(slotName),
-          createTextVNode('VITE_ISLAND_SLOT_SEPARATOR'),
-          slotFn(),
-        ] : []
-      }),
+      // ...Object.entries(this.$slots).flatMap(([slotName, slotFn]) => {
+      //   return slotFn ? [
+      //     createCommentVNode('VITE_ISLAND_SLOT_BEGIN'),
+      //     createTextVNode(slotName),
+      //     createTextVNode('VITE_ISLAND_SLOT_SEPARATOR'),
+      //     slotFn(),
+      //   ] : []
+      // }),
       createCommentVNode('VITE_ISLAND_HYDRATION_END'),
     ]
   },

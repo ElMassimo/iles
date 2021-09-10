@@ -87,8 +87,8 @@ let islandsConfig: IslandsConfig
 
 const hydrationBegin = '<!--VITE_ISLAND_HYDRATION_BEGIN-->'
 const hydrationEnd = '<!--VITE_ISLAND_HYDRATION_END-->'
-const slotBegin = '<!--VITE_ISLAND_SLOT_BEGIN-->'
-const slotSeparator = 'VITE_ISLAND_SLOT_SEPARATOR'
+// const slotBegin = '<!--VITE_ISLAND_SLOT_BEGIN-->'
+// const slotSeparator = 'VITE_ISLAND_SLOT_SEPARATOR'
 const commentsRegex = /<!--\[-->|<!--]-->/g
 const hydrationRegex = new RegExp(`${escapeRegex(hydrationBegin)}(.*?)${escapeRegex(hydrationEnd)}`, 'sg')
 const contextComponentRegex = new RegExp(escapeRegex('_ctx.__unplugin_components_'), 'g')
@@ -145,12 +145,13 @@ function config (config: UserConfig) {
           if (attrs.includes('modulepreload') && attrs.includes('.js')) return ''
           return link
         })
-        html = await replaceAsync(html, hydrationRegex, async (str, slotsContent) => {
+        html = await replaceAsync(html, hydrationRegex, async (str, islandHydrationScript) => {
           const basename = `vite-island-${++counter}.js`
           const filename = path.join(pageOutDir, basename)
-          const [scriptTemplate, ...slotStrs] = slotsContent.replace(commentsRegex, '').split(slotBegin)
-          const slots = Object.fromEntries(slotStrs.map(str => str.split(slotSeparator)))
-          const script = scriptTemplate.replace('/* VITE_ISLAND_HYDRATION_SLOTS */', slotStrs.length ? serialize(slots) : '')
+          // const [scriptTemplate, ...slotStrs] = islandHydrationScript.replace(commentsRegex, '').split(slotBegin)
+          // const slots = Object.fromEntries(slotStrs.map(str => str.split(slotSeparator)))
+          // const script = scriptTemplate.replace('/* VITE_ISLAND_HYDRATION_SLOTS */', slotStrs.length ? serialize(slots) : '')
+          const script = islandHydrationScript.replace(commentsRegex, '')
           await fs.promises.writeFile(filename, script, 'utf-8')
           pageIslands.push(filename)
           return `${hydrationBegin}${filename}${hydrationEnd}`
