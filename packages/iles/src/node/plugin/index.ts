@@ -58,6 +58,10 @@ function parseId (id: string) {
   }
 }
 
+function isMarkdown (path: string) {
+  return path.endsWith('.mdx') || path.endsWith('.md')
+}
+
 function filenameFromRoute (route: string) {
   const relativeRoute = (route.endsWith('/') ? `${route}index` : route).replace(/^\//g, '')
   const filename = `${relativeRoute}.html`
@@ -299,7 +303,7 @@ export default function IslandsPlugins (): PluginOption[] {
       },
       async transform (code, id) {
         const { path } = parseId(id)
-        if (!path.endsWith('.mdx') && !path.endsWith('.vue')) return
+        if (!isMarkdown(path) && !path.endsWith('.vue')) return
 
         const components = /<([A-Z]\w+)\s*(?:([^/]+?)\/>|([^>]+)>(.*?)<\/\1>)/sg
 
@@ -342,7 +346,7 @@ export default function IslandsPlugins (): PluginOption[] {
       name: 'islands:mdx',
       async transform (code, id) {
         const { path } = parseId(id)
-        if (!path.endsWith('.mdx') || !code.includes('MDXContent')) return null
+        if (!isMarkdown(path) || !code.includes('MDXContent')) return null
 
         const match = code.match(/props\.components\), \{(.*?), wrapper: /)
         const importedComponents = match ? match[1].split(', ') : []
@@ -398,7 +402,7 @@ export default function IslandsPlugins (): PluginOption[] {
           const { data: { layout, ...frontmatter } } = matter(md)
           route.meta = Object.assign(route.meta || {}, { frontmatter, layout })
           if (file.includes('posts/') && !file.endsWith('index.vue'))
-            route.meta.layout = 'post'
+            route.meta.layout ||= 'post'
         }
         return route
       },
@@ -437,7 +441,7 @@ export default function IslandsPlugins (): PluginOption[] {
       enforce: 'post',
       async transform (code, id) {
         const { path } = parseId(id)
-        if (!path.endsWith('.mdx') && !path.endsWith('.vue')) return
+        if (!isMarkdown(path) && !path.endsWith('.vue')) return
 
         code = code.replace(contextComponentRegex, '__unplugin_components_')
 
@@ -462,7 +466,7 @@ export default function IslandsPlugins (): PluginOption[] {
           `
         })
 
-        if (path.endsWith('.mdx')) {
+        if (isMarkdown(path)) {
           const name = code.match(/_resolveComponent\(([^)]+?)\)/)?.[1]
           if (name)
             throw new Error(`Unable to infer '${name}' component in ${path}`)
