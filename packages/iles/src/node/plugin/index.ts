@@ -439,6 +439,14 @@ export default function IslandsPlugins (): PluginOption[] {
         const { path } = parseId(id)
         if (!isMarkdown(path) && !path.endsWith('.vue')) return
 
+        if (path.includes('src/pages/') && path.endsWith('.vue')) {
+          // Set path to the specified page.
+          // TODO: Unify with MDX
+          const href = relative(root, path).replace(/\.\w+$/, '').replace('src/pages/', '/')
+            .replace(/\/index$/, '/')
+          code = `${code}\nexport const href = '${href}'`
+        }
+
         code = code.replace(contextComponentRegex, '__unplugin_components_')
 
         if (!code.includes(unresolvedIslandKey)) return code
