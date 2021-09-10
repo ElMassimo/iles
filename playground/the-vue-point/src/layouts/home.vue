@@ -5,13 +5,6 @@ import { usePosts } from '~/logic/posts'
 
 const posts = usePosts()
 const { frontmatter } = useData()
-
-const ExcerptOnly = (props, { slots }) => {
-  const mdxDoc = slots.default?.()?.[0] ?? {}
-  const { children: mdElements = [] } = mdxDoc
-  const excerptIndex = mdElements.findIndex(el => el.type === 'hr')
-  return excerptIndex ? mdElements.slice(0, excerptIndex) : mdElements
-}
 </script>
 
 <template>
@@ -43,7 +36,7 @@ const ExcerptOnly = (props, { slots }) => {
                   <a class="text-gray-900" :href="post.href">{{ post.title }}</a>
                 </h2>
                 <div class="prose max-w-none text-gray-500">
-                  <component :is="post.content" :components="{ wrapper: ExcerptOnly }"/>
+                  <component :is="post.excerpt"/>
                 </div>
                 <!-- <component v-else class="prose max-w-none text-gray-500" :is="post.default"/> -->
               </div>
