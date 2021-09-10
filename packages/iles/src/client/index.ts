@@ -1,24 +1,17 @@
 // exports in this file are exposed to themes and md files via 'iles'
 // so the user can do `import { useRoute, useSiteData } from 'iles'`
 
-// generic types
-import type { IslandsAppConfig } from './shared'
-export type { Router, RouteRecordRaw } from 'vue-router'
+// Generic Types
+export type { Router, RouteRecordRaw } from './shared'
 
-// theme types
-export type { Theme, EnhanceAppContext } from './app/theme'
-
-// composables
-export { useData } from './app/data'
+// Composables
+export { usePage } from './app/pageData'
 export { useRouter, useRoute } from 'vue-router'
 export { useHead } from '@vueuse/head'
 
-// utilities
-export { inBrowser, withBase } from './app/utils'
+// Utilities
+export { inBrowser } from './app/utils'
+export { defineConfig } from './config'
 
-// components
+// Components
 export * from './app/components'
-
-export function defineConfig (config: Partial<IslandsAppConfig>) {
-  return config
-}

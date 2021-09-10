@@ -1,12 +1,14 @@
 import { createApp as createClientApp, createSSRApp, ref } from 'vue'
 import { createMemoryHistory, createRouter as createVueRouter, createWebHistory } from 'vue-router'
 import { createHead } from '@vueuse/head'
+
 import routes from '@islands/routes'
 import userConfig from '@islands/user-config'
-import type { CreateAppFactory, SSGContext, RouterOptions } from '../../../types/shared'
+
+import type { CreateAppFactory, SSGContext, RouterOptions } from '../shared'
 import { serialize, inBrowser } from './utils'
 import { App, Debug, Island, PageContent } from './components'
-import { dataSymbol, initData } from './data'
+import { installPageData } from './pageData'
 
 function newApp () {
   return import.meta.env.SSR ? createSSRApp(App) : createClientApp(App)
@@ -40,13 +42,10 @@ export const createApp: CreateAppFactory = async ({ inBrowser, routePath }) => {
   app.component('Island', Island)
   app.component('DebugIslands', inBrowser ? Debug : () => null)
 
-  const data = initData(router.currentRoute)
-  app.provide(dataSymbol, data)
+  const { frontmatter } = installPageData(app, router.currentRoute)
 
   Object.defineProperty(app.config.globalProperties, '$frontmatter', {
-    get() {
-      return data.frontmatter.value
-    }
+    get: () => frontmatter.value,
   })
 
   const context: SSGContext = {

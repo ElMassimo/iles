@@ -1,6 +1,3 @@
-/* eslint-disable no-use-before-define */
-// types shared between server and client
-
 import type { UserConfig as ViteConfig } from 'vite'
 
 import type VuePlugin from '@vitejs/plugin-vue'
@@ -13,10 +10,11 @@ import type XdmPlugin from 'vite-plugin-xdm'
 import type { Router, RouteRecordRaw, RouterOptions as VueRouterOptions, RouteMeta } from 'vue-router'
 import type { HeadClient, HeadObject } from '@vueuse/head'
 
-export type { Router }
-export type PageData = RouteMeta
-
+export type { Router, RouteRecordRaw }
+export type PageMeta = RouteMeta
 export type RouterOptions = PartialKeys<VueRouterOptions, 'history'> & { base?: string }
+
+export type HeadConfig = HeadObject
 
 export interface CreateAppConfig {
   inBrowser: boolean
@@ -36,15 +34,27 @@ export interface SSGContext extends CreateAppConfig {
 
 export type CreateAppFactory = (options: CreateAppConfig) => Promise<SSGContext<true> | SSGContext<false>>
 
-export interface IslandsAppConfig {
-  title: string
-  description: string
-  head: HeadConfig
+export interface IlesPlugin {
   enhanceApp: (ctx: EnhanceAppContext) => void | Promise<void>
 }
 
-export interface IslandsConfig {
+export type IlesPluginOption = IlesPlugin | false | null | undefined
+
+export interface IlesUserConfig {
+  title: string
+  description: string
+  head: HeadConfig
+  plugins: (PluginOption | PluginOption[])[]
+}
+
+export interface IlesConfig extends IlesUserConfig {
+  base: string
+  title: string
+  description: string
+  head: HeadConfig
+  srcDir: string
   tempDir: string
+  outDir: string
   vite: ViteConfig
   vue: Parameters<typeof VuePlugin>[0]
   pages: Parameters<typeof PagesPlugin>[0]
@@ -52,55 +62,4 @@ export interface IslandsConfig {
   components: Parameters<typeof ComponentsPlugin>[0]
   vueJsx: Parameters<typeof VueJsxPlugin>[0]
   markdown: Parameters<typeof XdmPlugin>[0]
-}
-
-export interface LocaleConfig {
-  lang: string
-  title?: string
-  description?: string
-  head?: HeadConfig[]
-  label?: string
-  selectText?: string
-}
-
-export interface SiteData<ThemeConfig = any> {
-  base: string
-  /**
-   * Language of the site as it should be set on the `html` element.
-   * @example `en-US`, `zh-CN`
-   */
-  lang: string
-  title: string
-  description: string
-  head: HeadConfig[]
-  themeConfig: ThemeConfig
-  locales: Record<string, LocaleConfig>
-  /**
-   * Available locales for the site when it has defined `locales` in its
-   * `themeConfig`. This object is otherwise empty. Keys are paths like `/` or
-   * `/zh/`.
-   */
-  langs: Record<
-    string,
-    {
-      /**
-       * Lang attribute as set on the `<html>` element.
-       * @example `en-US`, `zh-CN`
-       */
-      lang: string
-      /**
-       * Label to display in the language menu.
-       * @example `English', `简体中文`
-       */
-      label: string
-    }
-  >
-}
-
-export type HeadConfig = HeadObject
-
-export interface Header {
-  level: number
-  title: string
-  slug: string
 }

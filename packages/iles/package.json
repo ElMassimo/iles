@@ -14,7 +14,7 @@
     "types"
   ],
   "scripts": {
-    "dev": "npm run dev-shared && npm run dev-start",
+    "dev": "rimraf -rf dist && npm run dev-shared && npm run dev-start",
     "dev-start": "run-p dev-client dev-node dev-watch",
     "dev-client": "tsc -w -p src/client",
     "dev-node": "tsc -w -p src/node",

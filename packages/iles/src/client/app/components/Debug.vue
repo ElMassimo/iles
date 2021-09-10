@@ -1,18 +1,19 @@
 <script setup lang="ts">
-import { reactive, ref, watch } from 'vue'
-import { useData } from '../data'
+import { watch } from 'vue'
+import { usePage } from 'iles'
 
-const data = useData()
-const el = ref<HTMLElement | null>(null)
-const open = ref(false)
+let page = usePage()
+let el = $ref<HTMLElement | null>(null)
+let open = $ref(false)
 
-// FIXME: remove in next Vue release
-const tempData = reactive(data)
+let cleanPage = $computed(() => {
+  const meta = { ...page.meta.value }
+  delete meta.frontmatter
+  return { ...page, meta }
+})
 
-watch(open, (value) => {
-  if (!value) {
-    el.value!.scrollTop = 0
-  }
+watch($$(open), (open) => {
+  if (!open) el!.scrollTop = 0
 })
 </script>
 
@@ -25,7 +26,7 @@ export default {
 <template>
   <div class="debug" :class="{ open }" ref="el" @click="open = !open">
     <p class="title">Debug</p>
-    <pre class="block">{{ tempData }}</pre>
+    <pre class="block">{{ cleanPage }}</pre>
   </div>
 </template>
 

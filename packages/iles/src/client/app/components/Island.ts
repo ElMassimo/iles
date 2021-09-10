@@ -1,29 +1,8 @@
 import { createSSRApp, defineAsyncComponent, defineComponent, h, createCommentVNode, createTextVNode } from 'vue'
 import type { PropType, DefineComponent } from 'vue'
 import { renderToString } from '@vue/server-renderer'
-import { serialize } from '../../shared'
-
-let idNumber = 0
-
-export function newHydrationId () {
-  return `ile-${++idNumber}`
-}
-
-export enum Hydrate {
-  WhenIdle = 'client:idle',
-  OnLoad = 'client:load',
-  MediaQuery = 'client:media',
-  New = 'client:only',
-  WhenVisible = 'client:visible',
-}
-
-export const hydrationFns = {
-  [Hydrate.WhenIdle]: 'hydrateWhenIdle',
-  [Hydrate.OnLoad]: 'hydrateNow',
-  [Hydrate.MediaQuery]: 'hydrateOnMediaQuery',
-  [Hydrate.New]: 'mountNewApp',
-  [Hydrate.WhenVisible]: 'hydrateWhenVisible',
-}
+import { serialize } from '../utils'
+import { newHydrationId, Hydrate, hydrationFns } from '../hydration'
 
 export default defineComponent({
   name: 'Island',
@@ -67,8 +46,7 @@ export default defineComponent({
       if (!import.meta.env.SSR && !this.hydrateInDev) return ''
 
       const promises = slotVNodes.map(async ([name, slotVNode]) =>
-        [name, await renderToString(createSSRApp(() => slotVNode), {})]
-      )
+        [name, await renderToString(createSSRApp(() => slotVNode), {})])
 
       const renderedSlots = Object.fromEntries(await Promise.all(promises))
 

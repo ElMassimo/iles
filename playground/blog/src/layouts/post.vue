@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import { useData } from 'iles'
+import { usePage } from 'iles'
 import DarkSwitch from '../components/DarkSwitch.vue'
-import { href } from '~/pages/index.vue'
 import Default from './default.vue'
+import { href } from '~/pages/index.vue'
 
-const { frontmatter } = useData()
+const { frontmatter } = usePage()
 </script>
 
 <template>
