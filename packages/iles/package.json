@@ -59,7 +59,7 @@
     "ora": "^5.4.0",
     "polka": "^0.5.2",
     "vite": "^2.5.0",
-    "vite-plugin-pages": "^0.18.0",
+    "vite-plugin-pages": "file:../../../vite-plugin-pages",
     "vite-plugin-xdm": "workspace:*",
     "vue": "^3.2.11",
     "vue-router": "^4.0.11"

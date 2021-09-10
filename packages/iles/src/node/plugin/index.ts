@@ -12,7 +12,6 @@ import ViteComponents from 'unplugin-vue-components/vite'
 import VueJSX from '@vitejs/plugin-vue-jsx'
 import XDM from 'vite-plugin-xdm'
 
-import matter from 'gray-matter'
 import glob from 'fast-glob'
 import chalk from 'chalk'
 import createDebugger from 'debug'
@@ -397,13 +396,10 @@ export default function IslandsPlugins (): PluginOption[] {
       extensions: ['vue', 'md', 'mdx'],
       extendRoute (route) {
         const file = path.resolve(root, route.component.slice(1))
-        if (file.endsWith('.mdx') || file.endsWith('.md')) {
-          const md = fs.readFileSync(file, 'utf-8')
-          const { data: { layout, ...frontmatter } } = matter(md)
-          route.meta = Object.assign(route.meta || {}, { frontmatter, layout })
-          if (file.includes('posts/') && !file.endsWith('index.vue'))
-            route.meta.layout ||= 'post'
-        }
+
+        if (isMarkdown(file) && file.includes('posts/') && !file.endsWith('index.vue'))
+          return { ...route, meta: { layout: 'post', ...route.meta } }
+
         return route
       },
     }),

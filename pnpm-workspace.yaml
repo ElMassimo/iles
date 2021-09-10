@@ -1,6 +1,7 @@
 packages:
   - packages/iles/
   - packages/hydration/
+  - packages/vite-plugin-pages/
   - packages/vite-plugin-xdm/
   - playground/blog/
   - playground/the-vue-point/

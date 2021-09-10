@@ -9,6 +9,7 @@ declare module 'vue' {
     'Bx:bxDownload': typeof import('~icons/bx/bx-download')['default']
     'Bx:bxMoon': typeof import('~icons/bx/bx-moon')['default']
     'Bx:bxSun': typeof import('~icons/bx/bx-sun')['default']
+    CarbonWarning: typeof import('~icons/carbon/warning')['default']
     DarkSwitch: typeof import('./src/components/DarkSwitch.vue')['default']
     PlayButton: typeof import('./src/components/PlayButton.vue')['default']
     Quote: typeof import('./src/components/Quote.vue')['default']
