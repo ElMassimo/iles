@@ -16,12 +16,12 @@ import matter from 'gray-matter'
 import glob from 'fast-glob'
 import chalk from 'chalk'
 import createDebugger from 'debug'
-import { escapeRegex, pascalCase, serialize } from './string'
-import type { IslandsConfig } from './shared'
-import { uniq } from './array'
+import { escapeRegex, pascalCase, uniq } from './utils'
 import { parseImports, rebaseImports } from './parse'
+// import { serialize } from '../shared'
+import type { IslandsConfig } from '../shared'
 
-import { resolveAliases, APP_PATH, DIST_CLIENT_PATH, SITE_DATA_REQUEST_PATH, ROUTES_REQUEST_PATH, USER_CONFIG_REQUEST_PATH } from './alias'
+import { resolveAliases, APP_PATH, DIST_CLIENT_PATH, HYDRATION_DIST_PATH, SITE_DATA_REQUEST_PATH, ROUTES_REQUEST_PATH, USER_CONFIG_REQUEST_PATH } from '../alias'
 
 const debug = {
   mdx: createDebugger('islands:mdx'),
@@ -99,14 +99,14 @@ const scriptTagsRegex = /<script\s*([^>]*?)>(.*?)<\/script>/sg
 const islandsByRoute: Record<string, string[]> = Object.create(null)
 
 function config (config: UserConfig) {
+  const allow = [DIST_CLIENT_PATH, HYDRATION_DIST_PATH, config.root ?? process.cwd()]
+
   return {
     resolve: {
       alias: resolveAliases(config.root ?? process.cwd()),
     },
     server: {
-      fs: {
-        allow: [DIST_CLIENT_PATH, config.root ?? process.cwd()],
-      },
+      fs: { allow },
     },
     build: {
       brotliSize: false,
@@ -120,10 +120,11 @@ function config (config: UserConfig) {
         '@vueuse/core',
         '@vueuse/head',
         '@nuxt/devalue',
+        '@vue/server-renderer',
       ],
       exclude: [
         'vue-demi',
-        'vue-islands',
+        'iles',
       ],
     },
     islands: {

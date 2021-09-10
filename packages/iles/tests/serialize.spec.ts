@@ -1,12 +1,6 @@
-import { pascalCase, serialize } from '../src/utils/string'
+/// <reference types="@peeky/runner" />
 
-describe('case conversions', () => {
-  test('pascalCase', async () => {
-    expect(pascalCase('AudioPlayer')).toEqual('AudioPlayer')
-    expect(pascalCase('audio-player')).toEqual('AudioPlayer')
-    expect(pascalCase('bx:bx-sun')).toEqual('BxBxSun')
-  })
-})
+import { serialize } from '../src/shared/shared'
 
 describe('serialize', () => {
   test('to string', async () => {

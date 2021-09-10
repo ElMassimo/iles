@@ -9,7 +9,7 @@
     "skipLibCheck": true,
     "esModuleInterop": true,
     "lib": ["ESNext", "DOM"],
-    "types": ["node"],
+    "types": ["node", "@peeky/runner"],
     "paths": {
       "src/*": ["src/*"],
       "client/*": ["src/client/*"],

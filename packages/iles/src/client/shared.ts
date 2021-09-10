@@ -1,7 +1,5 @@
 import { LocaleConfig, SiteData } from '../../types/shared'
-export * from './string'
-export * from './array'
-export * from './parse'
+export { default as serialize } from '@nuxt/devalue'
 
 export type {
   IslandsAppConfig,

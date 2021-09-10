@@ -1,4 +1,4 @@
-import { createApp, defineComponent, h, useSlots, createCommentVNode, createTextVNode } from 'vue'
+import { createSSRApp, defineAsyncComponent, defineComponent, h, createCommentVNode, createTextVNode } from 'vue'
 import type { PropType, DefineComponent } from 'vue'
 import { renderToString } from '@vue/server-renderer'
 import { serialize } from '../../shared'
@@ -40,19 +40,10 @@ export default defineComponent({
     [Hydrate.WhenVisible]: { type: Boolean, default: false },
   },
   async setup (props) {
-    const slots = useSlots()
-    const hydrateInDev = true
-
-    const renderedSlots = import.meta.env.SSR || hydrateInDev ? Object.fromEntries(await Promise.all(Object.entries(slots).map(async ([name, slotFn]) => {
-      const rendered = slotFn ? await renderToString(createApp(() => slotFn()), {}) : null
-      return [name, rendered]
-    }))) : []
-
     return {
       id: newHydrationId(),
       strategy: Object.values(Hydrate).find(s => props[s]) || Hydrate.OnLoad,
-      renderedSlots,
-      hydrateInDev,
+      hydrateInDev: true,
     }
   },
   render () {
@@ -69,31 +60,36 @@ export default defineComponent({
     if (this.strategy === Hydrate.MediaQuery)
       props._mediaQuery = this.$props[Hydrate.MediaQuery]
 
-    const script = `import { ${this.importName} as ${this.componentName} } from '${this.importPath}'
-import { ${hydrationFns[this.strategy]} as hydrate } from '${packageUrl}'
-hydrate(${this.componentName}, '${this.id}', ${serialize(props)}, ${serialize(this.renderedSlots)})
-`
+    const slotVNodes = Object.entries(this.$slots)
+      .map(([name, slotFn]) => [name, slotFn?.()])
+
+    const renderScript = async () => {
+      if (!import.meta.env.SSR && !this.hydrateInDev) return ''
+
+      const promises = slotVNodes.map(async ([name, slotVNode]) =>
+        [name, await renderToString(createSSRApp(() => slotVNode), {})]
+      )
+
+      const renderedSlots = Object.fromEntries(await Promise.all(promises))
+
+      return `import { ${this.importName} as ${this.componentName} } from '${this.importPath}'
+  import { ${hydrationFns[this.strategy]} as hydrate } from '${packageUrl}'
+  hydrate(${this.componentName}, '${this.id}', ${serialize(props)}, ${serialize(renderedSlots)})
+  `
+    }
 
     // TEMPORARY, for debugging purposes.
     if (this.hydrateInDev) {
       return [
         rootNode,
-        h('script', { type: 'module', innerHTML: script }),
+        h(defineAsyncComponent(async () => h('script', { type: 'module', innerHTML: await renderScript() }))),
       ]
     }
 
     return !isSSR ? rootNode : [
       rootNode,
       createCommentVNode('VITE_ISLAND_HYDRATION_BEGIN'),
-      script,
-      // ...Object.entries(this.$slots).flatMap(([slotName, slotFn]) => {
-      //   return slotFn ? [
-      //     createCommentVNode('VITE_ISLAND_SLOT_BEGIN'),
-      //     createTextVNode(slotName),
-      //     createTextVNode('VITE_ISLAND_SLOT_SEPARATOR'),
-      //     slotFn(),
-      //   ] : []
-      // }),
+      h(defineAsyncComponent(async () => createTextVNode(await renderScript()))),
       createCommentVNode('VITE_ISLAND_HYDRATION_END'),
     ]
   },

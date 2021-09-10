@@ -5,6 +5,7 @@ const PKG_ROOT = path.join(__dirname, '../../')
 export const DIST_CLIENT_PATH = path.join(__dirname, '../client')
 export const APP_PATH = path.join(DIST_CLIENT_PATH, 'app')
 export const SHARED_PATH = path.join(DIST_CLIENT_PATH, 'shared')
+export const HYDRATION_DIST_PATH = path.join(path.dirname(require.resolve('@islands/hydration/package.json')), 'dist')
 
 // special virtual file
 // we can't directly import '/@siteData' because

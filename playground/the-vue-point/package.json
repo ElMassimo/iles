@@ -12,8 +12,9 @@
     "@iconify/json": "1.1.393",
     "@vueuse/core": "^6.2.0",
     "feed": "^4.2.1",
-    "vite": "^2.5.3",
     "iles": "workspace:*",
+    "vite": "^2.5.3",
+    "vite-plugin-restart": "^0.0.2",
     "vite-plugin-windicss": "^1.4.1"
   }
 }
