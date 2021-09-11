@@ -76,6 +76,7 @@ function appConfigDefaults (root: string): AppConfig {
     layoutsDir: 'layouts',
     tempDir: resolve(APP_PATH, 'temp'),
     plugins: [] as Plugin[],
+    head: {},
     pages: {
       extensions: ['vue', 'md', 'mdx'],
     },

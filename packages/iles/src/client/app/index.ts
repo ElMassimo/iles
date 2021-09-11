@@ -60,7 +60,7 @@ export const createApp: CreateAppFactory = async ({ inBrowser, routePath }) => {
 
   if (import.meta.env.SSR)
     // @ts-ignore
-    context.initialState = transformState(window.__INITIAL_STATE__ || {})
+    context.initialState = transformState(((typeof window !== 'undefined') && window.__INITIAL_STATE__) || {})
 
   // const { title, description, head: headConfig, enhanceApp } = userConfig
 

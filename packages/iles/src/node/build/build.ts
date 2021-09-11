@@ -1,10 +1,10 @@
 import fs from 'fs-extra'
-import { bundle } from './bundle'
 import { BuildOptions } from 'vite'
 import ora from 'ora'
+import { OutputChunk, OutputAsset } from 'rollup'
 import { resolveConfig } from '../config'
-// import { renderPage } from './render'
-// import { OutputChunk, OutputAsset } from 'rollup'
+import { renderPage } from './render'
+import { bundle } from './bundle'
 import { okMark, failMark } from './utils'
 
 export async function build (root: string, buildOptions: BuildOptions = {}) {
@@ -14,37 +14,37 @@ export async function build (root: string, buildOptions: BuildOptions = {}) {
   const appConfig = await resolveConfig(root, { command: 'build', mode: 'production' })
 
   try {
-    const { clientResult } = await bundle(appConfig, buildOptions)
+    const { clientResult, pageToHashMap, pages } = await bundle(appConfig, buildOptions)
 
     const spinner = ora()
     spinner.start('rendering pages...')
 
     try {
-      //   const appChunk = clientResult.output.find(
-      //     (chunk) => chunk.type === 'chunk' && chunk.isEntry
-      //   ) as OutputChunk
+      const appChunk = clientResult.output.find(
+        chunk => chunk.type === 'chunk' && chunk.isEntry,
+      ) as OutputChunk
 
-      //   const cssChunk = clientResult.output.find(
-      //     (chunk) => chunk.type === 'asset' && chunk.fileName.endsWith('.css')
-      //   ) as OutputAsset
+      const cssChunk = clientResult.output.find(
+        chunk => chunk.type === 'asset' && chunk.fileName.endsWith('.css'),
+      ) as OutputAsset
 
-      //   // We embed the hash map string into each page directly so that it doesn't
-      //   // alter the main chunk's hash on every build. It's also embedded as a
-      //   // string and JSON.parsed from the client because it's faster than embedding
-      //   // as JS object literal.
-      //   const hashMapString = JSON.stringify(JSON.stringify(pageToHashMap))
+      // We embed the hash map string into each page directly so that it doesn't
+      // alter the main chunk's hash on every build. It's also embedded as a
+      // string and JSON.parsed from the client because it's faster than embedding
+      // as JS object literal.
+      const hashMapString = JSON.stringify(JSON.stringify(pageToHashMap))
 
-      //   for (const page of appConfig.pages) {
-      //     await renderPage(
-      //       appConfig,
-      //       page,
-      //       clientResult,
-      //       appChunk,
-      //       cssChunk,
-      //       pageToHashMap,
-      //       hashMapString
-      //     )
-      //   }
+      for (const [, page] of pages) {
+        await renderPage(
+          appConfig,
+          page,
+          clientResult,
+          appChunk,
+          cssChunk,
+          pageToHashMap,
+          hashMapString,
+        )
+      }
     }
     catch (e) {
       spinner.stopAndPersist({ symbol: failMark })

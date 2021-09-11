@@ -2,7 +2,8 @@
   "private": true,
   "scripts": {
     "dev": "iles dev --port 3333 --open",
-    "build": "iles build"
+    "build": "iles build",
+    "preview": "vite preview"
   },
   "devDependencies": {
     "@iconify/json": "^1.1.393",

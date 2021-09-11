@@ -14,13 +14,11 @@ export function installPageData (app: App, route: Ref<RouteLocationNormalizedLoa
     meta: computed(() => route.value.meta),
     frontmatter: computed(() => route.value.meta.frontmatter),
   }
-  console.log('provide', 'pageData', dataSymbol)
   app.provide(dataSymbol, pageData)
   return pageData
 }
 
 export function usePage<T = any> (): PageData<T> {
-  console.log('use', 'pageData', dataSymbol)
   const data = inject(dataSymbol)
   if (!data) throw new Error('Page data not properly injected in app')
   return data

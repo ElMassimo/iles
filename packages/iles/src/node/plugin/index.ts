@@ -4,7 +4,7 @@ import { yellow } from 'chalk'
 import type { PluginOption, ResolvedConfig, ResolveFn } from 'vite'
 
 import vue from '@vitejs/plugin-vue'
-import pages from 'vite-plugin-pages'
+import pages, { MODULE_ID_VIRTUAL as PAGES_REQUEST_PATH } from 'vite-plugin-pages'
 import components from 'unplugin-vue-components/vite'
 import vueJsx from '@vitejs/plugin-vue-jsx'
 import xdm from 'vite-plugin-xdm'
@@ -73,7 +73,7 @@ export default function IslandsPlugins (appConfig: AppConfig): PluginOption[] {
           return SITE_DATA_REQUEST_PATH
 
         if (id === ROUTES_REQUEST_PATH)
-          return 'virtual:generated-pages'
+          return PAGES_REQUEST_PATH
 
         if (id === USER_CONFIG_REQUEST_PATH)
           return USER_CONFIG_REQUEST_PATH

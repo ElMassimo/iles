@@ -71,4 +71,5 @@ export interface AppConfig extends RequiredConfig, AppPlugins {
   root: string
   configPath?: string
   plugins: Plugin[]
+  head: HeadConfig
 }
