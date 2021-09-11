@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "dev": "vite --port 3334 --open",
+    "dev": "iles --port 3334 --open",
     "build": "iles build",
     "feed": "node ./scripts/genFeed",
     "preview": "vite preview"

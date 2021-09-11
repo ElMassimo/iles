@@ -1,10 +1,8 @@
 <script setup lang="ts">
-import { useData } from 'iles'
 import Layout from './default.vue'
 import { usePosts } from '~/logic/posts'
 
 const posts = usePosts()
-const { frontmatter } = useData()
 </script>
 
 <template>
@@ -22,9 +20,9 @@ const { frontmatter } = useData()
             md:text-6xl md:leading-14
           "
         >
-          {{ frontmatter.title }}
+          {{ $frontmatter.title }}
         </h1>
-        <p class="text-lg leading-7 text-gray-500">{{ frontmatter.subtext }}</p>
+        <p class="text-lg leading-7 text-gray-500">{{ $frontmatter.subtext }}</p>
       </div>
       <ul class="divide-y divide-gray-200">
         <li v-for="post of posts" :key="post.href" class="py-12">

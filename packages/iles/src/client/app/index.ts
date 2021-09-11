@@ -3,7 +3,7 @@ import { createMemoryHistory, createRouter as createVueRouter, createWebHistory 
 import { createHead } from '@vueuse/head'
 
 import routes from '@islands/routes'
-import userConfig from '@islands/user-config'
+// import userConfig from '@islands/user-config'
 
 import type { CreateAppFactory, SSGContext, RouterOptions } from '../shared'
 import { serialize, inBrowser } from './utils'
@@ -62,18 +62,18 @@ export const createApp: CreateAppFactory = async ({ inBrowser, routePath }) => {
     // @ts-ignore
     context.initialState = transformState(window.__INITIAL_STATE__ || {})
 
-  const { title, description, head: headConfig, enhanceApp } = userConfig
+  // const { title, description, head: headConfig, enhanceApp } = userConfig
 
-  head.addHeadObjs(ref({
-    title,
-    meta: [{ name: 'description', content: description }],
-  }))
+  // head.addHeadObjs(ref({
+  //   title,
+  //   meta: [{ name: 'description', content: description }],
+  // }))
 
-  if (headConfig)
-    head.addHeadObjs(ref(userConfig.head))
+  // if (headConfig)
+  //   head.addHeadObjs(ref(userConfig.head))
 
-  if (enhanceApp)
-    await enhanceApp(context)
+  // if (enhanceApp)
+  //   await enhanceApp(context)
 
   let entryRoutePath: string | undefined
   let isFirstRoute = true

@@ -1,15 +1,16 @@
 /* eslint-disable no-use-before-define */
-import type { UserConfig as ViteConfig, ConfigEnv } from 'vite'
+import type { UserConfig as ViteOptions, ConfigEnv } from 'vite'
 
-import type VuePlugin from '@vitejs/plugin-vue'
-import type PagesPlugin from 'vite-plugin-pages'
-import type LayoutsPlugin from 'vite-plugin-vue-layouts'
-import type ComponentsPlugin from 'unplugin-vue-components/vite'
+import type { Options as VueOptions } from '@vitejs/plugin-vue'
+import type { UserOptions as PagesOptions } from 'vite-plugin-pages'
+import type { Options as ComponentOptions } from 'unplugin-vue-components/types'
 import type VueJsxPlugin from '@vitejs/plugin-vue-jsx'
-import type XdmPlugin from 'vite-plugin-xdm'
+import type { PluginOptions as XdmOptions } from 'vite-plugin-xdm'
 
 import type { Router, RouteRecordRaw, RouterOptions as VueRouterOptions, RouteMeta } from 'vue-router'
 import type { HeadClient, HeadObject } from '@vueuse/head'
+
+export { ViteOptions, ConfigEnv }
 
 export type { Router, RouteRecordRaw }
 export type PageMeta = RouteMeta
@@ -35,7 +36,17 @@ export interface SSGContext extends CreateAppConfig {
 
 export type CreateAppFactory = (options: CreateAppConfig) => Promise<SSGContext<true> | SSGContext<false>>
 
-export interface Plugin {
+export interface AppPlugins {
+  vite: ViteOptions
+  vue: VueOptions
+  pages: PagesOptions
+  components: ComponentOptions
+  vueJsx: Parameters<typeof VueJsxPlugin>[0]
+  markdown: XdmOptions
+}
+
+export interface Plugin extends Partial<AppPlugins> {
+  head?: HeadConfig
   config: (config: UserConfig, env: ConfigEnv) => UserConfig | null | void | Promise<UserConfig | null | void>
   enhanceApp: (ctx: EnhanceAppContext) => void | Promise<void>
 }
@@ -48,23 +59,16 @@ export interface RequiredConfig {
   description: string
   outDir: string
   layoutsDir: string
-  pagesDir: string
   srcDir: string
   tempDir: string
-  plugins: (PluginOption | PluginOption[])[]
 }
 
-export interface UserConfig extends Partial<RequiredConfig> {
-  head?: HeadConfig
-  vite?: ViteConfig
-  vue?: Parameters<typeof VuePlugin>[0]
-  pages?: Parameters<typeof PagesPlugin>[0]
-  layouts?: Parameters<typeof LayoutsPlugin>[0]
-  components?: Parameters<typeof ComponentsPlugin>[0]
-  vueJsx?: Parameters<typeof VueJsxPlugin>[0]
-  markdown?: Parameters<typeof XdmPlugin>[0]
+export interface UserConfig extends Partial<RequiredConfig>, Partial<Plugin> {
+  plugins?: (PluginOption | PluginOption[])[]
 }
 
-export interface AppConfig extends RequiredConfig, UserConfig {
+export interface AppConfig extends RequiredConfig, AppPlugins {
   root: string
+  configPath?: string
+  plugins: Plugin[]
 }

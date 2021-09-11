@@ -18,7 +18,7 @@ export default defineComponent({
     [Hydrate.New]: { type: Boolean, default: false },
     [Hydrate.WhenVisible]: { type: Boolean, default: false },
   },
-  async setup (props) {
+  setup (props) {
     return {
       id: newHydrationId(),
       strategy: Object.values(Hydrate).find(s => props[s]) || Hydrate.OnLoad,
@@ -41,6 +41,7 @@ export default defineComponent({
 
     const slotVNodes = Object.entries(this.$slots)
       .map(([name, slotFn]) => [name, slotFn?.()])
+      .filter(([name, slotFn]) => slotFn !== null && slotFn !== undefined)
 
     const renderScript = async () => {
       if (!import.meta.env.SSR && !this.hydrateInDev) return ''

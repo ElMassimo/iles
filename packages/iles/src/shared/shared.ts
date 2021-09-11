@@ -1,6 +1,8 @@
 import { UserConfig } from '../../types/shared'
 
 export {
+  ViteOptions,
+  ConfigEnv,
   Router,
   RouteRecordRaw,
   PageMeta,
@@ -13,6 +15,7 @@ export {
   PluginOption,
   UserConfig,
   AppConfig,
+  AppPlugins,
 } from '../../types/shared'
 
 export const EXTERNAL_URL_RE = /^https?:/i

@@ -1,5 +1,5 @@
 import fs from 'fs-extra'
-// import { bundle, okMark, failMark } from './bundle'
+import { bundle } from './bundle'
 import { BuildOptions } from 'vite'
 import ora from 'ora'
 import { resolveConfig } from '../config'
@@ -13,10 +13,8 @@ export async function build (root: string, buildOptions: BuildOptions = {}) {
   process.env.NODE_ENV = 'production'
   const appConfig = await resolveConfig(root, { command: 'build', mode: 'production' })
 
-  console.warn({ appConfig })
-
   try {
-    // const [clientResult, , pageToHashMap] = await bundle(appConfig, buildOptions)
+    const { clientResult } = await bundle(appConfig, buildOptions)
 
     const spinner = ora()
     spinner.start('rendering pages...')

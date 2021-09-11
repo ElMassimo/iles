@@ -3,62 +3,138 @@ import { resolve } from 'path'
 import chalk from 'chalk'
 import creatDebugger from 'debug'
 import { loadConfigFromFile, mergeConfig as mergeViteConfig } from 'vite'
-import type { ConfigEnv } from 'vite'
-import { UserConfig, Plugin } from '../../types/shared'
-import { AppConfig } from './shared'
-import { APP_PATH } from './alias'
+import type { ComponentResolver } from 'unplugin-vue-components/types'
+import IslandsPlugins from './plugin/index'
+import type { AppConfig, AppPlugins, ConfigEnv, ViteOptions, Plugin } from './shared'
+import { resolveAliases, APP_PATH, DIST_CLIENT_PATH, HYDRATION_DIST_PATH } from './alias'
 
 const debug = creatDebugger('iles:config')
 
-export async function resolveConfig (root: string, env: ConfigEnv): Promise<AppConfig> {
-  if (!root) root = process.cwd()
-  const userConfig = await resolveUserConfig(root, env) as ReturnType<typeof appConfigDefaults> & UserConfig
+export type { AppConfig }
 
-  const srcDir = resolve(root, userConfig.srcDir)
-
-  return Object.assign(userConfig, {
-    root,
-    srcDir,
-    outDir: resolve(root, userConfig.outDir),
-    layoutsDir: resolve(srcDir, userConfig.layoutsDir),
-    pagesDir: resolve(srcDir, userConfig.pagesDir),
-  })
+export const IlesComponentResolver: ComponentResolver = (name) => {
+  if (name === 'ViteIsland' || name === 'Island')
+    return { importName: 'Island', path: 'iles' }
 }
 
-function appConfigDefaults (root: string) {
+export async function resolveConfig (root?: string, env?: ConfigEnv): Promise<AppConfig> {
+  if (!root) root = process.cwd()
+  if (!env) env = { mode: 'development', command: 'serve' }
+
+  const appConfig = await resolveUserConfig(root, env)
+
+  const srcDir = resolve(root, appConfig.srcDir)
+
+  const config = Object.assign(appConfig, {
+    srcDir,
+    outDir: resolve(root, appConfig.outDir),
+    layoutsDir: resolve(srcDir, appConfig.layoutsDir),
+  })
+
+  chainPluginCallbacks(config, 'pages', ['onRoutesGenerated', 'onClientGenerated'], true)
+  chainPluginCallbacks(config, 'pages', ['extendRoute'], false)
+
+  const ceChecks = config.plugins.map(plugin => plugin.vue?.template?.compilerOptions?.isCustomElement).filter(x => x)
+  config.vue.template!.compilerOptions!.isCustomElement = (tagName: string) =>
+    tagName.startsWith('ile-') || ceChecks.some(fn => fn!(tagName))
+
+  return config
+}
+
+async function resolveUserConfig (root: string, configEnv: ConfigEnv) {
+  const defaults = appConfigDefaults(root)
+  const result = await loadConfigFromFile(configEnv, 'iles.config.ts', root)
+  debug(result ? `loaded config at ${chalk.yellow(result.path)}` : 'no iles.config.ts file found.')
+
+  let { plugins = [], ...config } = result ? mergeConfig(defaults, result.config as any) : defaults
+  const userPlugins = [config, ...plugins].flat().filter(p => p) as Plugin[]
+
+  for (const plugin of userPlugins) {
+    if (plugin.config) {
+      const partialConfig = await plugin.config(config, configEnv)
+      if (partialConfig) config = mergeConfig(config, partialConfig as any)
+    }
+  }
+
+  const appConfig: AppConfig = { ...config, configPath: result?.path, plugins: userPlugins }
+  appConfig.vite = mergeViteConfig(appConfig.vite, {
+    base: appConfig.base,
+    plugins: IslandsPlugins(appConfig),
+  })
+
+  return appConfig
+}
+
+function appConfigDefaults (root: string): AppConfig {
   return {
+    root,
     title: 'îles',
     description: 'Partial hydration in Vue and Vite.js',
     base: '/',
     srcDir: 'src',
     outDir: 'dist',
     layoutsDir: 'layouts',
-    pagesDir: 'pages',
     tempDir: resolve(APP_PATH, 'temp'),
-    plugins: [],
+    plugins: [] as Plugin[],
+    pages: {
+      extensions: ['vue', 'md', 'mdx'],
+    },
+    vite: viteConfigDefaults(root),
+    vue: {
+      refTransform: true,
+      template: {
+        compilerOptions: {},
+      },
+    },
+    vueJsx: {
+      include: /\.[jt]sx|mdx?$/,
+    },
+    markdown: {
+      jsx: true,
+    },
+    components: {
+      dts: true,
+      extensions: ['vue', 'jsx'],
+      include: [/\.vue$/, /\.vue\?vue/, /\.mdx?/],
+      resolvers: [IlesComponentResolver],
+    },
   }
 }
 
-export async function resolveUserConfig (root: string, configEnv: ConfigEnv): Promise<UserConfig> {
-  const defaults = appConfigDefaults(root) as UserConfig
-  const result = await loadConfigFromFile(configEnv, 'iles.config.ts', root)
-  debug(result ? `loaded config at ${chalk.yellow(result.path)}` : 'no iles.config.ts file found.')
-
-  let config = { ...defaults, ...result?.config as UserConfig }
-  const userPlugins = (config.plugins || []).flat().filter(p => p) as Plugin[]
-  for (const plugin of userPlugins) {
-    if (plugin.config) {
-      const partialConfig = await plugin.config(config, configEnv)
-      if (partialConfig) config = mergeConfig(config, partialConfig)
-    }
+function viteConfigDefaults (root: string): ViteOptions {
+  return {
+    root,
+    resolve: {
+      alias: resolveAliases(root),
+    },
+    server: {
+      fs: { allow: [root, DIST_CLIENT_PATH, HYDRATION_DIST_PATH] },
+    },
+    build: {
+      brotliSize: false,
+      minify: false,
+    },
+    optimizeDeps: {
+      include: [
+        'vue',
+        'vue-router',
+        '@vueuse/head',
+        '@nuxt/devalue',
+        '@vue/server-renderer',
+      ],
+      exclude: [
+        'vue-demi',
+        'iles',
+        '@islands/hydration',
+      ],
+    },
   }
-  return config
 }
 
-function mergeConfig (a: UserConfig, b: UserConfig, isRoot = true) {
+function mergeConfig<T = Record<string, any>> (a: T, b: T, isRoot = true): AppConfig {
   const merged: Record<string, any> = { ...a }
   for (const key in b) {
-    const value = b[key as keyof UserConfig]
+    const value = b[key as keyof T]
     if (value == null)
       continue
 
@@ -71,13 +147,46 @@ function mergeConfig (a: UserConfig, b: UserConfig, isRoot = true) {
       if (isRoot && key === 'vite')
         merged[key] = mergeViteConfig(existing, value)
       else
-        merged[key] = mergeConfig(existing, value as any, false)
+        merged[key] = mergeConfig(existing, value, false)
 
       continue
     }
     merged[key] = value
   }
-  return merged
+  return merged as AppConfig
+}
+
+function chainPluginCallbacks<T extends keyof AppPlugins> (
+  config: AppConfig, option: T, callbackNames: (keyof AppPlugins[T])[], isAsync: boolean) {
+  callbackNames.forEach((callbackName) => {
+    const pluginCallbacks = config.plugins
+      .map(plugin => plugin[option]?.[callbackName as keyof Plugin[T]])
+      .filter(x => x)
+
+    if (pluginCallbacks.length > 0)
+      config[option][callbackName] = chainCallbacks(pluginCallbacks, isAsync) as any
+  })
+}
+
+function chainCallbacks (fns: any, isAsync: boolean): Function {
+  if (isAsync) {
+    return async (...args: any[]) => {
+      for (let i = 0; i < fns.length; i++) {
+        const result = await (fns[i] as any)(...args)
+        if (result) args[0] = result
+      }
+      return args[0]
+    }
+  }
+  else {
+    return (...args: any[]) => {
+      for (let i = 0; i < fns.length; i++) {
+        const result = (fns[i] as any)(...args)
+        if (result) args[0] = result
+      }
+      return args[0]
+    }
+  }
 }
 
 function isObject (value: unknown): value is Record<string, any> {

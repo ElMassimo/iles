@@ -15,7 +15,6 @@ export function useRouterLinks () {
       const link = (e.target as Element).closest('a')
       if (link) {
         const { href, protocol, hostname, pathname, hash, target } = link
-        console.log({ href, pathname, link })
         const currentUrl = window.location
         const extMatch = pathname.match(/\.\w+$/)
         // only intercept inbound links
@@ -31,7 +30,6 @@ export function useRouterLinks () {
         ) {
           if (pathname !== currentUrl.pathname) {
             e.preventDefault()
-            console.log({ path: href })
             router.push({ path: pathname, hash })
           }
         }
