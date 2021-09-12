@@ -87,4 +87,5 @@ export interface IslandDefinition {
   id: string
   script: string
   placeholder: string
+  entryFilename: string
 }

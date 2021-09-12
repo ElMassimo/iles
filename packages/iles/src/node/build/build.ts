@@ -6,6 +6,7 @@ import { OutputChunk, OutputAsset } from 'rollup'
 import { resolveConfig } from '../config'
 import { renderPage } from './render'
 import { bundle } from './bundle'
+import { bundleIslands } from './islands'
 import { okMark, failMark, routesToPaths } from './utils'
 import { CreateAppFactory } from '../shared'
 
@@ -36,22 +37,22 @@ export async function build (root: string, buildOptions: BuildOptions = {}) {
 
       const { routes } = await createApp()
 
-      const routesPaths = routesToPaths(routes)
+      const ssgRoutes = routesToPaths(routes)
         .filter(({ path }) => !path.includes(':') && !path.includes('*'))
 
-      for (const routePath of routesPaths) {
-        await renderPage(
+      for (const ssgRoute of ssgRoutes) {
+        Object.assign(ssgRoute, { content: await renderPage(
           appConfig,
-          routePath,
+          ssgRoute,
           clientResult,
           appChunk,
           cssChunk,
           createApp,
           islandsByPath,
-        )
+        )})
       }
 
-      console.log({ islandsByPath })
+      bundleIslands(appConfig, ssgRoutes, islandsByPath)
     }
     catch (e) {
       spinner.stopAndPersist({ symbol: failMark })

@@ -36,6 +36,7 @@ importers:
   packages/iles:
     specifiers:
       '@islands/hydration': 'workspace: *'
+      '@rollup/plugin-virtual': ^2.0.3
       '@types/fs-extra': ^9.0.12
       '@types/jsdom': ^16.2.13
       '@types/node': ^15.6.1
@@ -65,6 +66,7 @@ importers:
       polka: ^0.5.2
       rimraf: ^3.0.2
       rollup: ^2.56.3
+      rollup-plugin-virtual: ^1.0.1
       semver: ^7.3.5
       typescript: ^4.3.2
       vite: ^2.5.0
@@ -75,6 +77,7 @@ importers:
       vue-router: ^4.0.11
     dependencies:
       '@islands/hydration': link:../hydration
+      '@rollup/plugin-virtual': 2.0.3_rollup@2.56.3
       '@vitejs/plugin-vue': 1.6.2_@vue+compiler-sfc@3.2.11
       '@vitejs/plugin-vue-jsx': 1.1.8
       '@vue/compiler-sfc': 3.2.11
@@ -94,6 +97,7 @@ importers:
       minimist: 1.2.5
       ora: 5.4.1
       polka: 0.5.2
+      rollup-plugin-virtual: 1.0.1
       vite: 2.5.1
       vite-plugin-pages: link:../../../vite-plugin-pages
       vite-plugin-xdm: link:../vite-plugin-xdm
@@ -1847,6 +1851,14 @@ packages:
       magic-string: 0.25.7
       rollup: 2.56.3
     dev: true
+
+  /@rollup/plugin-virtual/2.0.3_rollup@2.56.3:
+    resolution: {integrity: sha512-pw6ziJcyjZtntQ//bkad9qXaBx665SgEL8C8KI5wO8G5iU5MPxvdWrQyVaAvjojGm9tJoS8M9Z/EEepbqieYmw==}
+    peerDependencies:
+      rollup: ^1.20.0||^2.0.0
+    dependencies:
+      rollup: 2.56.3
+    dev: false
 
   /@rollup/pluginutils/3.1.0_rollup@2.56.3:
     resolution: {integrity: sha512-GksZ6pr6TpIjHm8h9lSQ8pi8BE9VeubNT0OMJ3B5uZJ8pz73NPiqOtCog/x2/QzM1ENChPKxMDhiQuRHsqc+lg==}
@@ -6861,6 +6873,11 @@ packages:
       serialize-javascript: 4.0.0
       terser: 5.7.2
     dev: true
+
+  /rollup-plugin-virtual/1.0.1:
+    resolution: {integrity: sha512-HCTBpV8MwP5lNzZrHD2moVxHIToHU1EkzkKGVj6Z0DcgUfxrxrZmeQirQeLz2yhnkJqRjwiVywK9CS8jDYakrw==}
+    deprecated: This package has been deprecated and is no longer maintained. Please use @rollup/plugin-virtual.
+    dev: false
 
   /rollup/2.56.3:
     resolution: {integrity: sha512-Au92NuznFklgQCUcV96iXlxUbHuB1vQMaH76DHl5M11TotjOHwqk9CwcrT78+Tnv4FN9uTBxq6p4EJoYkpyekg==}

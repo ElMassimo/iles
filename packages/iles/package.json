@@ -39,6 +39,7 @@
   },
   "dependencies": {
     "@islands/hydration": "workspace: *",
+    "@rollup/plugin-virtual": "^2.0.3",
     "@vitejs/plugin-vue": "^1.6.0",
     "@vitejs/plugin-vue-jsx": "^1.1.8",
     "@vue/compiler-sfc": "^3.2.11",
@@ -57,7 +58,7 @@
     "lru-cache": "^6.0.0",
     "minimist": "^1.2.5",
     "ora": "^5.4.0",
-    "polka": "^0.5.2",
+    "rollup-plugin-virtual": "^1.0.1",
     "vite": "^2.5.0",
     "vite-plugin-pages": "file:../../../vite-plugin-pages",
     "vite-plugin-xdm": "workspace:*",

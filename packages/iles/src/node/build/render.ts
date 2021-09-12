@@ -24,41 +24,37 @@ export async function renderPage (
   // lazy require server-renderer for production build
   let content = await require('@vue/server-renderer').renderToString(app, { islandsByPage })
 
-  if (extension === 'html') {
-    const preloadLinks = [
-      // resolve imports for index.js + page.md.js and inject script tags for
-      // them as well so we fetch everything as early as possible without having
-      // to wait for entry chunks to parse
-      ...resolvePageImports(config, route, result, appChunk),
-      appChunk.fileName,
-    ]
-      .map((file) => {
-        return `<link rel="modulepreload" href="${config.base}${file}">`
-      })
-      .join('\n    ')
+  if (extension !== 'html') return content
+  const preloadLinks = [
+    // resolve imports for index.js + page.md.js and inject script tags for
+    // them as well so we fetch everything as early as possible without having
+    // to wait for entry chunks to parse
+    ...resolvePageImports(config, route, result, appChunk),
+    appChunk.fileName,
+  ]
+    .map((file) => {
+      return `<link rel="modulepreload" href="${config.base}${file}">`
+    })
+    .join('\n    ')
 
-    const stylesheetLink = cssChunk
-      ? `<link rel="stylesheet" href="${config.base}${cssChunk.fileName}">`
-      : ''
+  const stylesheetLink = cssChunk
+    ? `<link rel="stylesheet" href="${config.base}${cssChunk.fileName}">`
+    : ''
 
-    const { headTags, htmlAttrs, bodyAttrs } = renderHeadToString(head)
+  const { headTags, htmlAttrs, bodyAttrs } = renderHeadToString(head)
 
-    content = `
-  <!DOCTYPE html>
-  <html ${htmlAttrs}>
-    <head>
-      ${headTags}
-      ${stylesheetLink}
-      ${preloadLinks}
-    </head>
-    <body ${bodyAttrs}>
-      <div id="app">${content}</div>
-    </body>
-  </html>`.trim()
-  }
-  const renderedFilename = path.join(config.outDir, outputFilename)
-  await fs.ensureDir(path.dirname(renderedFilename))
-  await fs.writeFile(renderedFilename, content)
+  return `
+<!DOCTYPE html>
+<html ${htmlAttrs}>
+  <head>
+    ${headTags}
+    ${stylesheetLink}
+    ${preloadLinks}
+  </head>
+  <body ${bodyAttrs}>
+    <div id="app">${content}</div>
+  </body>
+</html>`.trim()
 }
 
 function resolvePageImports (

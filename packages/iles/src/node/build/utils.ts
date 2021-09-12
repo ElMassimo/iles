@@ -13,11 +13,16 @@ export function fileToAssetName (path: string): string {
   return slash(path).replace(/\//g, '_')
 }
 
+export function uniq<T> (arr: Array<T>) {
+  return [...new Set(arr.filter(x => x))]
+}
+
 export interface SSGRoute {
   path: string
   filename: string | undefined
   extension: string
   outputFilename: string
+  content: string | undefined
 }
 
 function pathToFilename (path: string, ext: string) {
@@ -57,4 +62,11 @@ export function routesToPaths (routes: RouteRecordRaw[]) {
 
   getPaths(routes)
   return [...paths]
+}
+
+export async function replaceAsync (str: string, regex: RegExp, asyncFn: (...groups: string[]) => Promise<string>) {
+  const promises = Array.from(str.matchAll(regex))
+    .map(([match, ...args]) => asyncFn(match, ...args))
+  const replacements = await Promise.all(promises)
+  return str.replace(regex, () => replacements.shift()!)
 }
