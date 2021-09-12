@@ -6,7 +6,8 @@ import type { PropType, DefineComponent, Slot } from 'vue'
 import { renderToString, SSRContext } from '@vue/server-renderer'
 import { serialize } from '../utils'
 import { newHydrationId, Hydrate, hydrationFns } from '../hydration'
-import { useIslandsForPage } from '../composables/islandDefinitions'
+import { useIslandsForPath } from '../composables/islandDefinitions'
+import { useAppConfig } from '../composables/appConfig'
 
 export default defineComponent({
   name: 'Island',
@@ -24,12 +25,12 @@ export default defineComponent({
   },
   setup (props) {
     return {
+      appConfig: useAppConfig(),
       id: newHydrationId(),
       route: useRoute(),
-      islandsForPage: import.meta.env.SSR ? useIslandsForPage() : undefined,
+      islandsForPath: import.meta.env.SSR ? useIslandsForPath() : undefined,
       ssrContext: import.meta.env.SSR ? useSSRContext() : undefined,
       strategy: Object.values(Hydrate).find(s => props[s]) || Hydrate.OnLoad,
-      hydrateInDev: true,
     }
   },
   render () {
@@ -58,7 +59,7 @@ export default defineComponent({
     const renderPlaceholder = async () => {
       const placeholder = `ISLAND_HYDRATION_PLACEHOLDER_${this.id}`
       const script = await renderScript()
-      this.islandsForPage?.push({ id: this.id, script, placeholder })
+      this.islandsForPath?.push({ id: this.id, script, placeholder })
       return placeholder
     }
 
@@ -69,8 +70,8 @@ export default defineComponent({
       ]
     }
 
-    // TEMPORARY, for debugging purposes.
-    if (this.hydrateInDev) {
+    // Hydrate in development to debug potential problems with the script.
+    if (this.appConfig.debug) {
       return [
         rootNode,
         h(defineAsyncComponent(async () => h('script', { type: 'module', innerHTML: await renderScript() }))),

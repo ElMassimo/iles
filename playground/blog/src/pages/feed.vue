@@ -10,6 +10,6 @@ export default () => createStaticVNode(`
 
 <route lang="yaml">
 meta:
-  extension: xml
+  extension: .xml
   layout: false
 </route>

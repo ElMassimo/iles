@@ -8,5 +8,5 @@
     "lib": ["ESNext", "DOM"],
     "sourceMap": true
   },
-  "include": [".", "../../types/shared.d.ts"]
+  "include": [".", "../../types/shared.d.ts", "../../types/router.d.ts"]
 }

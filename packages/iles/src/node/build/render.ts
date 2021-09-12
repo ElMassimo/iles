@@ -1,30 +1,38 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
-import { RollupOutput } from 'rollup'
+import { join } from 'path'
 import { renderHeadToString } from '@vueuse/head'
-import { AppConfig } from '../config'
-import { CreateAppFactory, IslandDefinition, SSGContext } from '../shared'
-import { SSGRoute } from './utils'
+import type { RollupOutput } from 'rollup'
+import type { Awaited, AppConfig, CreateAppFactory, IslandsByPath, SSGRoute } from '../shared'
+import type { bundle } from './bundle'
+import { getRoutesForSSG } from './routes'
+
+export async function renderPages (
+  config: AppConfig,
+  islandsByPath: IslandsByPath,
+  { clientResult }: Awaited<ReturnType<typeof bundle>>,
+) {
+  const { createApp }: { createApp: CreateAppFactory} = require(join(config.tempDir, 'app.js'))
+
+  const routesToRender = await getRoutesForSSG(config, createApp)
+
+  const clientChunks = clientResult.output
+  for (const ssgRoute of routesToRender)
+    ssgRoute.rendered = await renderPage(config, islandsByPath, clientChunks, ssgRoute, createApp)
+
+  return { routesToRender }
+}
 
 export async function renderPage (
   config: AppConfig,
-  route: SSGRoute, // foo.md
-  result: RollupOutput,
+  islandsByPath: IslandsByPath,
+  clientChunks: RollupOutput['output'],
+  route: SSGRoute,
   createApp: CreateAppFactory,
-  islandsByPage: Record<string, IslandDefinition[]>,
 ) {
-  const { extension, path: routePath } = route
+  const { app, head } = await createApp({ routePath: route.path })
+  const content = await require('@vue/server-renderer').renderToString(app, { islandsByPath })
 
-  const { app, head } = await createApp({ routePath }) as SSGContext
-  // lazy require server-renderer for production build
-  let content = await require('@vue/server-renderer').renderToString(app, { islandsByPage })
-
-  if (extension !== 'html') return content
-
-  const cssChunk = result.output.find(chunk =>
-    chunk.type === 'asset' && chunk.fileName.endsWith('.css'))
-  const stylesheetLink = cssChunk
-    ? `<link rel="stylesheet" href="${config.base}${cssChunk.fileName}">`
-    : ''
+  if (route.extension !== '.html') return content
 
   const { headTags, htmlAttrs, bodyAttrs } = renderHeadToString(head)
 
@@ -33,10 +41,19 @@ export async function renderPage (
 <html ${htmlAttrs}>
   <head>
     ${headTags}
-    ${stylesheetLink}
+    ${stylesheetTagsFrom(config, clientChunks)}
   </head>
   <body ${bodyAttrs}>
     <div id="app">${content}</div>
   </body>
 </html>`.trim()
+}
+
+function stylesheetTagsFrom (config: AppConfig, clientChunks: RollupOutput['output']) {
+  const cssChunk = clientChunks.find(chunk =>
+    chunk.type === 'asset' && chunk.fileName.endsWith('.css'))
+
+  return cssChunk
+    ? `<link rel="stylesheet" href="${config.base}${cssChunk.fileName}">`
+    : ''
 }

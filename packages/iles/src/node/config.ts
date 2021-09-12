@@ -68,14 +68,17 @@ async function resolveUserConfig (root: string, configEnv: ConfigEnv) {
 
   const appConfig: AppConfig = { ...config, configPath: result?.path, plugins: userPlugins }
   appConfig.vite.base = appConfig.base
+  appConfig.vite.build!.assetsDir = appConfig.assetsDir
 
   return appConfig
 }
 
 function appConfigDefaults (root: string): AppConfig {
   return {
+    debug: false,
     root,
     base: '/',
+    assetsDir: 'assets',
     srcDir: 'src',
     outDir: 'dist',
     layoutsDir: 'layouts',

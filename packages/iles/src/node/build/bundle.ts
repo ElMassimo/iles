@@ -1,12 +1,11 @@
 import path from 'path'
-import ora from 'ora'
 import { RollupOutput } from 'rollup'
 import { build, BuildOptions, mergeConfig as mergeViteConfig, UserConfig as ViteUserConfig } from 'vite'
 import { resolvePages, resolveOptions as resolvePageOptions } from 'vite-plugin-pages'
 import { APP_PATH } from '../alias'
 import { AppConfig } from '../shared'
 import IslandsPlugins from '../plugin'
-import { fileToAssetName, okMark, failMark } from './utils'
+import { fileToAssetName } from './utils'
 
 // Internal: Bundles the Islands app for both client and server.
 //
@@ -64,26 +63,10 @@ export async function bundle (config: AppConfig, options: BuildOptions) {
     },
   } as ViteUserConfig)
 
-  let clientResult: RollupOutput
-  let serverResult: RollupOutput
-
-  const spinner = ora()
-  spinner.start('building client + server bundles...')
-  try {
-    [clientResult, serverResult] = await (Promise.all([
-      build(resolveViteConfig(false)),
-      build(resolveViteConfig(true)),
-    ]) as Promise<[RollupOutput, RollupOutput]>)
-  }
-  catch (e) {
-    spinner.stopAndPersist({
-      symbol: failMark,
-    })
-    throw e
-  }
-  spinner.stopAndPersist({
-    symbol: okMark,
-  })
+  const [clientResult, serverResult] = await (Promise.all([
+    build(resolveViteConfig(false)),
+    build(resolveViteConfig(true)),
+  ]) as Promise<[RollupOutput, RollupOutput]>)
 
   return { clientResult, serverResult, pages }
 }

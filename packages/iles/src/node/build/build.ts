@@ -1,13 +1,10 @@
-import { join } from 'path'
-import fs from 'fs-extra'
+import { promises as fs } from 'fs'
 import { BuildOptions } from 'vite'
-import ora from 'ora'
 import { resolveConfig } from '../config'
-import { CreateAppFactory } from '../shared'
-import { renderPage } from './render'
+import { renderPages } from './render'
 import { bundle } from './bundle'
 import { bundleIslands } from './islands'
-import { okMark, failMark, routesToPaths } from './utils'
+import { withSpinner } from './utils'
 
 export async function build (root: string, buildOptions: BuildOptions = {}) {
   const start = Date.now()
@@ -16,34 +13,19 @@ export async function build (root: string, buildOptions: BuildOptions = {}) {
   const appConfig = await resolveConfig(root, { command: 'build', mode: 'production' })
 
   try {
-    const { clientResult } = await bundle(appConfig, buildOptions)
+    const bundleResult = await withSpinner('building client + server bundles',
+      async () => await bundle(appConfig, buildOptions))
 
-    const spinner = ora()
-    spinner.start('rendering pages...')
+    const islandsByPath = Object.create(null)
 
-    try {
-      const islandsByPath = Object.create(null)
+    const pagesResult = await withSpinner('rendering pages',
+      async () => await renderPages(appConfig, islandsByPath, bundleResult))
 
-      const { createApp }: { createApp: CreateAppFactory} = require(join(appConfig.tempDir, 'app.js'))
-
-      const { routes } = await createApp()
-
-      const ssgRoutes = routesToPaths(routes)
-        .filter(({ path }) => !path.includes(':') && !path.includes('*'))
-
-      for (const ssgRoute of ssgRoutes)
-        ssgRoute.content = await renderPage(appConfig, ssgRoute, clientResult, createApp, islandsByPath)
-
-      await bundleIslands(appConfig, ssgRoutes, islandsByPath)
-    }
-    catch (e) {
-      spinner.stopAndPersist({ symbol: failMark })
-      throw e
-    }
-    spinner.stopAndPersist({ symbol: okMark })
+    await withSpinner('building islands bundle',
+      async () => await bundleIslands(appConfig, islandsByPath, pagesResult))
   }
   finally {
-    await fs.remove(appConfig.tempDir)
+    await fs.rm(appConfig.tempDir, { recursive: true, force: true })
   }
 
   console.log(`build complete in ${((Date.now() - start) / 1000).toFixed(2)}s.`)

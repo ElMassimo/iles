@@ -82,8 +82,8 @@ export default function IslandsPlugins (appConfig: AppConfig): PluginOption[] {
       },
       load (id) {
         if (id === APP_CONFIG_REQUEST_PATH) {
-          const { base, router, root } = appConfig
-          const clientConfig: AppClientConfig = { base, router, root }
+          const { base, debug, router, root } = appConfig
+          const clientConfig: AppClientConfig = { base, debug, router, root }
           return `export default ${serialize(clientConfig)}`
         }
 

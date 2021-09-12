@@ -1,7 +1,21 @@
-import { RouteRecordRaw } from 'vue-router'
+import ora from 'ora'
 
 export const okMark = '\x1B[32m✓\x1B[0m'
 export const failMark = '\x1B[31m✖\x1B[0m'
+
+export async function withSpinner<T> (message: string, fn: () => Promise<T>) {
+  const spinner = ora()
+  spinner.start(message)
+  try {
+    const result = await fn()
+    spinner.stopAndPersist({ symbol: okMark })
+    return result
+  }
+  catch (e) {
+    spinner.stopAndPersist({ symbol: failMark })
+    throw e
+  }
+}
 
 export function slash (path: string): string {
   return path.replace(/\\/g, '/')
@@ -17,50 +31,9 @@ export function uniq<T> (arr: Array<T>) {
   return [...new Set(arr.filter(x => x))]
 }
 
-export interface SSGRoute {
-  path: string
-  filename: string | undefined
-  extension: string
-  outputFilename: string
-  content?: string
-}
-
-function pathToFilename (path: string, ext: string) {
-  return `${(path.endsWith('/') ? `${path}index` : path).replace(/^\//g, '')}.${ext}`
-}
-
-export function routesToPaths (routes: RouteRecordRaw[]) {
-  const paths: Set<SSGRoute> = new Set()
-
-  const getPaths = (routes: RouteRecordRaw[], prefix = '') => {
-    // remove trailing slash
-    prefix = prefix.replace(/\/$/g, '')
-    for (const route of routes) {
-      let path = route.path
-      // check for leading slash
-      if (route.path) {
-        path = prefix && !route.path.startsWith('/')
-          ? `${prefix}/${route.path}`
-          : route.path
-
-        const filename = route.meta?.filename as any
-
-        const extension = (route.meta?.extension as string | undefined) || 'html'
-
-        paths.add({
-          path,
-          filename,
-          extension,
-          outputFilename: pathToFilename(path, extension),
-        })
-      }
-      if (Array.isArray(route.children))
-        getPaths(route.children, path)
-    }
-  }
-
-  getPaths(routes)
-  return [...paths]
+export function pathToFilename (path: string, ext: string) {
+  if (path.endsWith(ext)) ext = ''
+  return `${(path.endsWith('/') ? `${path}index` : path).replace(/^\//g, '')}${ext}`
 }
 
 export async function replaceAsync (str: string, regex: RegExp, asyncFn: (...groups: string[]) => Promise<string>) {

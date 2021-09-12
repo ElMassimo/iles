@@ -17,14 +17,12 @@ function createVueIsland (component: Component, el: Element, props: Props, slots
 }
 
 function createIsland (component: Component, id: string, props: Props, slots?: Slots) {
-  const name = component.__file?.split('/').reverse()[0]
-
   const el = document.getElementById(id)
-  if (!el) return console.error(`Unable to find element #${id}, could not mount ${name}`)
+  if (!el) return console.error(`Unable to find element #${id}, could not mount island.`)
 
   createVueIsland(component, el, props, slots)
 
-  console.info(`Hydrated ${name}`, el, slots)
+  if (import.meta.env.DEV) console.info(`Hydrated ${component.__file?.split('/').reverse()[0]}`, el, slots)
 }
 
 // Public: Hydrates the component immediately.

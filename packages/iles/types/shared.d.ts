@@ -1,5 +1,6 @@
 /* eslint-disable no-use-before-define */
 import type { UserConfig as ViteOptions, ConfigEnv } from 'vite'
+import type { App } from 'vue'
 
 import type { Options as VueOptions } from '@vitejs/plugin-vue'
 import type { UserOptions as PagesOptions } from 'vite-plugin-pages'
@@ -26,14 +27,22 @@ export interface CreateAppConfig {
 }
 
 export interface SSGContext extends Required<CreateAppConfig> {
-  app: App<Element>
+  app: App
   router: Router
   routes: RouteRecordRaw[]
   initialState: Record<string, any>
   head: HeadClient
 }
 
-export type CreateAppFactory = (options?: CreateAppConfig) => Promise<SSGContext<true> | SSGContext<false>>
+export interface SSGRoute {
+  path: string
+  filename: string | undefined
+  extension: string
+  outputFilename: string
+  rendered?: string
+}
+
+export type CreateAppFactory = (options?: CreateAppConfig) => Promise<SSGContext>
 
 export interface AppPlugins {
   router: Pick<VueRouterOptions, 'linkActiveClass' | 'linkExactActiveClass'>
@@ -64,10 +73,12 @@ export type PluginOption = Plugin | false | null | undefined
 
 export interface RequiredConfig {
   base: string
+  debug: boolean
   outDir: string
   layoutsDir: string
   srcDir: string
   tempDir: string
+  assetsDir: string
 }
 
 export interface UserConfig extends Partial<RequiredConfig>, Partial<Plugin> {
@@ -80,7 +91,7 @@ export interface AppConfig extends RequiredConfig, AppPlugins {
   plugins: Plugin[]
 }
 
-export type AppClientConfig = Pick<AppConfig, 'base' | 'router' | 'root'>
+export type AppClientConfig = Pick<AppConfig, 'base' | 'router' | 'root' | 'debug'>
 
 export interface IslandDefinition {
   id: string
@@ -88,3 +99,7 @@ export interface IslandDefinition {
   placeholder: string
   entryFilename: string
 }
+
+export type IslandsByPath = Record<string, IslandDefinition[]>
+
+export type Awaited<T> = T extends PromiseLike<infer U> ? Awaited<U> : T
