@@ -6,7 +6,7 @@ import { bundle } from './bundle'
 import { bundleIslands } from './islands'
 import { withSpinner } from './utils'
 
-export async function build (root: string, buildOptions: BuildOptions = {}) {
+export async function build (root: string) {
   const start = Date.now()
 
   process.env.NODE_ENV = 'production'
@@ -14,7 +14,7 @@ export async function build (root: string, buildOptions: BuildOptions = {}) {
 
   try {
     const bundleResult = await withSpinner('building client + server bundles',
-      async () => await bundle(appConfig, buildOptions))
+      async () => await bundle(appConfig))
 
     const islandsByPath = Object.create(null)
 

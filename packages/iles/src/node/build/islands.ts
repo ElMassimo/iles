@@ -1,13 +1,14 @@
 /* eslint-disable no-restricted-syntax */
 import path from 'path'
 import { promises as fs } from 'fs'
+import type { OutputChunk } from 'rollup'
 import virtual from '@rollup/plugin-virtual'
 import { build as viteBuild, mergeConfig as mergeViteConfig } from 'vite'
 import glob from 'fast-glob'
 import type { Manifest, UserConfig as ViteUserConfig } from 'vite'
 import IslandsPlugins from '../plugin'
-import type { Awaited, AppConfig, IslandsByPath } from '../shared'
-import { rebaseImports } from '../plugin/parse'
+import type { Awaited, AppConfig, IslandsByPath, IslandDefinition, SSGRoute } from '../shared'
+import rebaseImports from './rebaseImports'
 import { fileToAssetName, uniq } from './utils'
 import type { renderPages } from './render'
 
@@ -16,49 +17,49 @@ export async function bundleIslands (
   islandsByPath: IslandsByPath,
   { routesToRender }: Awaited<ReturnType<typeof renderPages>>,
 ) {
-  // Remove unnecessary client scripts.
-  const files = await glob(path.join(config.outDir, '**/*.js'))
-  files.forEach(fileName => fs.rm(fileName))
+  const unnecessaryClientFiles = await glob(path.join(config.outDir, '**/*.js'))
+  console.log({ unnecessaryClientFiles })
 
   await buildIslands(config, islandsByPath)
   const manifestPath = path.join(config.outDir, 'manifest.json')
   const manifest: Manifest = JSON.parse(await fs.readFile(manifestPath, 'utf-8'))
 
-  const assetsBase = path.join(config.base, config.assetsDir)
-
-  await Promise.all(routesToRender.map(async (route) => {
-    let content = route.rendered!
-    if (route.extension === '.html') {
-      const islands = islandsByPath[route.path] || []
-      const preloadScripts: string[] = []
-
-      for (const island of islands) {
-        // Find the corresponding entrypoint for the island.
-        const entry = manifest[`\x00virtual:${path.relative(config.root, island.entryFilename)}`]
-        if (entry.imports) preloadScripts.push(...entry.imports)
-
-        // Read the compiled code for the island.
-        const filename = path.resolve(config.outDir, entry.file)
-        const code = await fs.readFile(filename, 'utf-8')
-
-        // Inline the script in the SSR'ed html to load the island.
-        const rebasedCode = await rebaseImports(assetsBase, code)
-        content = content.replace(`<!--${island.placeholder}-->`,
-          `<script type="module">${rebasedCode}</script>`)
-      }
-
-      // Preload scripts for islands in the page (if any).
-      content = content.replace('</head>', `${stringifyPreload(config.base, manifest, preloadScripts)}</head>`)
-    }
-
-    const filename = path.resolve(config.outDir, route.outputFilename)
-    await fs.mkdir(path.dirname(filename), { recursive: true })
-    await fs.writeFile(filename, content, 'utf-8')
-  }))
+  await Promise.all(routesToRender.map(async route =>
+    await renderRoute (config, manifest, route, islandsByPath[route.path])))
 
   // Remove temporary island script files.
   const tempIslandFiles = await glob(path.join(config.outDir, '**/_virtual_*.js'))
   for (const temp of tempIslandFiles) await fs.rm(temp)
+}
+
+async function renderRoute (config: AppConfig, manifest: Manifest, route: SSGRoute, islands: IslandDefinition[] = []) {
+  let content = route.rendered!
+
+  if (route.extension === '.html') {
+    const preloadScripts: string[] = []
+
+    for (const island of islands) {
+      // Find the corresponding entrypoint for the island.
+      const entry = manifest[`\x00virtual:${path.relative(config.root, island.entryFilename)}`]
+      if (entry.imports) preloadScripts.push(...entry.imports)
+
+      // Read the compiled code for the island.
+      const filename = path.resolve(config.outDir, entry.file)
+      const code = await fs.readFile(filename, 'utf-8')
+
+      // Inline the script in the SSR'ed html to load the island.
+      const rebasedCode = await rebaseImports(config, code)
+      content = content.replace(`<!--${island.placeholder}-->`,
+        `<script type="module">${rebasedCode}</script>`)
+    }
+
+    // Preload scripts for islands in the page.
+    content = content.replace('</head>', `${stringifyPreload(config.base, manifest, preloadScripts)}</head>`)
+  }
+
+  const filename = path.resolve(config.outDir, route.outputFilename)
+  await fs.mkdir(path.dirname(filename), { recursive: true })
+  await fs.writeFile(filename, content, 'utf-8')
 }
 
 async function buildIslands (config: AppConfig, islandsByPath: IslandsByPath) {
@@ -78,24 +79,16 @@ async function buildIslands (config: AppConfig, islandsByPath: IslandsByPath) {
     logLevel: 'warn',
     publicDir: false,
     build: {
-      minify: 'esbuild',
       emptyOutDir: false,
       manifest: true,
+      minify: 'esbuild',
       rollupOptions: {
         input: entryFiles,
-        output: {
-          chunkFileNames (chunk) {
-            if (!chunk.isEntry && /runtime/.test(chunk.name))
-              return 'assets/framework.[hash].js'
-
-            return 'assets/[name].[hash].js'
-          },
-        },
       },
     },
     plugins: [
       IslandsPlugins(config),
-      virtual(entrypoints) as any,
+      virtual(entrypoints),
     ],
   } as ViteUserConfig))
 }

@@ -17,12 +17,12 @@ if (!command || command === 'dev' || command === 'serve') {
   createServer(root, argv)
     .then(server => server.listen())
     .catch((err) => {
-      console.error(chalk.red(`failed to start server. error:\n`), err)
+      console.error(chalk.red('failed to start server. error:\n'), err)
       process.exit(1)
     })
 }
 else if (command === 'build') {
-  build(root, argv).catch((err: any) => {
+  build(root).catch((err: any) => {
     console.error(chalk.red('build error:\n'), err)
     process.exit(1)
   })

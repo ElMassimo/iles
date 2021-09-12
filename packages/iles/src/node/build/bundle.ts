@@ -1,5 +1,7 @@
-import path from 'path'
-import { RollupOutput } from 'rollup'
+/* eslint-disable no-restricted-syntax */
+import { resolve } from 'path'
+import type { RollupOutput } from 'rollup'
+import type { Plugin } from 'vite'
 import { build, BuildOptions, mergeConfig as mergeViteConfig, UserConfig as ViteUserConfig } from 'vite'
 import { resolvePages, resolveOptions as resolvePageOptions } from 'vite-plugin-pages'
 import { APP_PATH } from '../alias'
@@ -7,66 +9,65 @@ import { AppConfig } from '../shared'
 import IslandsPlugins from '../plugin'
 import { fileToAssetName } from './utils'
 
+type Entrypoints = Record<string, string>
+
 // Internal: Bundles the Islands app for both client and server.
 //
 // Multi-entry build: every page is considered an entry chunk.
-export async function bundle (config: AppConfig, options: BuildOptions) {
-  const { root } = config
+export async function bundle (config: AppConfig) {
+  const entrypoints = await resolveEntrypoints(config)
 
-  const input: Record<string, string> = {
-    app: path.resolve(APP_PATH, 'index.js'),
-  }
+  const [clientResult, serverResult] = await Promise.all([
+    bundleWithVite(config, entrypoints, { ssr: false }),
+    bundleWithVite(config, entrypoints, { ssr: true }),
+  ])
 
-  const pageOptions = resolvePageOptions(config.pages, root)
-  const pages = await resolvePages(pageOptions)
+  return { clientResult, serverResult }
+}
 
-  pages.forEach(page => {
-    input[fileToAssetName(page.route)] = page.filepath
-  })
-
-  // resolve options to pass to vite
-  const { rollupOptions } = options
-
-  const resolveViteConfig = (ssr: boolean): ViteUserConfig => mergeViteConfig(config.vite, {
+async function bundleWithVite (config: AppConfig, entrypoints: Entrypoints, { ssr }: BuildOptions) {
+  return await build(mergeViteConfig(config.vite, {
     logLevel: 'warn',
     ssr: {
       external: ['vue', '@vue/server-renderer'],
       noExternal: ['iles'],
     },
-    plugins: IslandsPlugins(config),
+    plugins: [...IslandsPlugins(config), !ssr && removeJsPlugin()],
     build: {
-      ...options,
-      emptyOutDir: true,
       ssr,
+      minify: ssr ? false : 'esbuild',
+      emptyOutDir: true,
       outDir: ssr ? config.tempDir : config.outDir,
-      manifest: !ssr,
       rollupOptions: {
-        ...rollupOptions,
-        input,
-        // important so that each page chunk and the index export things for each
-        // other
+        input: entrypoints,
         preserveEntrySignatures: 'allow-extension',
-        output: {
-          ...rollupOptions?.output,
-          ...(ssr
-            ? {}
-            : {
-              chunkFileNames (chunk) {
-                if (!chunk.isEntry && /runtime/.test(chunk.name))
-                  return 'assets/framework.[hash].js'
-
-                return 'assets/[name].[hash].js'
-              },
-            }),
-        },
       },
     },
-  } as ViteUserConfig)
+  } as ViteUserConfig)) as RollupOutput
+}
 
-  const [clientResult, serverResult] = await (Promise.all([
-    build(resolveViteConfig(false)),
-    build(resolveViteConfig(true)),
-  ]) as Promise<[RollupOutput, RollupOutput]>)
+// Internal: Each page is treated as an entrypoint, so that stylesheets can be
+// added separately as needed.
+async function resolveEntrypoints (config: AppConfig) {
+  const entrypoints: Entrypoints = {
+    app: resolve(APP_PATH, 'index.js'),
+  }
+  const pages = await resolvePages(resolvePageOptions(config.pages, config.root))
+  pages.forEach(page => {
+    entrypoints[fileToAssetName(page.route)] = page.filepath
+  })
+  return entrypoints
+}
 
-  return { clientResult, serverResult, pages }
+function removeJsPlugin (): Plugin {
+  return {
+    name: 'iles:client-js-removal',
+    generateBundle (_, bundle) {
+      for (const name in bundle) {
+        const chunk = bundle[name]
+        console.log('chunk', name, chunk.fileName)
+        if (chunk.fileName.endsWith('.js')) delete bundle[name]
+      }
+    },
+  }
 }

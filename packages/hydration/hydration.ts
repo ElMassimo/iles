@@ -1,29 +1,9 @@
 import { h, defineComponent, createApp as createClientApp, createStaticVNode, createSSRApp } from 'vue'
 import type { DefineComponent } from 'vue'
 
-const createVueApp = typeof window !== 'undefined' ? createClientApp : createSSRApp
-
 type Component = DefineComponent
 type Props = Record<string, unknown>
 type Slots = Record<string, string>
-
-function createVueIsland (component: Component, el: Element, props: Props, slots: Slots | undefined) {
-  const slotFns = slots && Object.fromEntries(Object.entries(slots).map(([slotName, content]) => {
-    return [slotName, () => (createStaticVNode as any)(content)]
-  }))
-
-  createVueApp({ render: () => h(component, props, slotFns) })
-    .mount(el!, Boolean(slots))
-}
-
-function createIsland (component: Component, id: string, props: Props, slots?: Slots) {
-  const el = document.getElementById(id)
-  if (!el) return console.error(`Unable to find element #${id}, could not mount island.`)
-
-  createVueIsland(component, el, props, slots)
-
-  if (import.meta.env.DEV) console.info(`Hydrated ${component.__file?.split('/').reverse()[0]}`, el, slots)
-}
 
 // Public: Hydrates the component immediately.
 export function hydrateNow (component: Component, id: string, props: Props, slots: Slots) {
@@ -70,4 +50,26 @@ export function hydrateWhenVisible (component: Component, id: string, props: Pro
   // NOTE: Targets child elements since the root uses `display: contents`.
   Array.from(document.getElementById(id)!.children)
     .forEach(child => observer.observe(child))
+}
+
+const createVueApp = import.meta.env.SSR ? createSSRApp : createClientApp
+
+// Internal: Creates a Vue app and mounts it on the specified island root.
+function createVueIsland (component: Component, el: Element, props: Props, slots: Slots | undefined) {
+  const slotFns = slots && Object.fromEntries(Object.entries(slots).map(([slotName, content]) => {
+    return [slotName, () => (createStaticVNode as any)(content)]
+  }))
+
+  createVueApp({ render: () => h(component, props, slotFns) })
+    .mount(el!, Boolean(slots))
+}
+
+// NOTE: In the future we might support mounting components from other frameworks.
+function createIsland (component: Component, id: string, props: Props, slots?: Slots) {
+  const el = document.getElementById(id)
+  if (!el) return console.error(`Unable to find element #${id}, could not mount island.`)
+
+  createVueIsland(component, el, props, slots)
+
+  if (import.meta.env.DEV) console.info(`Hydrated ${component.__file?.split('/').reverse()[0]}`, el, slots)
 }

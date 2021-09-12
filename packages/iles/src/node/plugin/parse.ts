@@ -1,6 +1,4 @@
-import path from 'path'
 import { init as initESLexer, parse as parseESModules } from 'es-module-lexer'
-import MagicString from 'magic-string'
 
 interface ImportMetadata {
   name: string
@@ -25,23 +23,6 @@ export async function parseImports (code: string) {
   catch (error) {
     console.error(error)
     return {}
-  }
-}
-
-export async function rebaseImports (assetsBase: string, codeStr: string) {
-  if (!assetsBase) return codeStr
-  try {
-    await initESLexer
-    const imports = parseESModules(codeStr)[0]
-    const code = new MagicString(codeStr)
-    imports.forEach(({ s, e }) => {
-      code.overwrite(s, e, path.join(assetsBase, code.slice(s, e)))
-    })
-    return code.toString()
-  }
-  catch (error) {
-    console.error(error)
-    return codeStr
   }
 }
 

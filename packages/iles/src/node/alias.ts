@@ -53,7 +53,7 @@ export function resolveAliases (root: string): AliasOptions {
     },
     {
       find: /^@islands\/hydration$/,
-      replacement: require.resolve('@islands/hydration/dist/index.js'),
+      replacement: require.resolve('@islands/hydration/dist/hydration.js'),
     },
   ]
 
