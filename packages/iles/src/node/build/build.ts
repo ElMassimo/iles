@@ -1,5 +1,4 @@
 import { promises as fs } from 'fs'
-import { BuildOptions } from 'vite'
 import { resolveConfig } from '../config'
 import { renderPages } from './render'
 import { bundle } from './bundle'

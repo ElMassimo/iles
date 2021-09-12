@@ -1,4 +1,4 @@
-import { h, defineComponent, createApp as createClientApp, createStaticVNode, createSSRApp } from 'vue'
+import { h, createApp as createClientApp, createStaticVNode, createSSRApp } from 'vue'
 import type { DefineComponent } from 'vue'
 
 type Component = DefineComponent

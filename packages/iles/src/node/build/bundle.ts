@@ -63,11 +63,8 @@ function removeJsPlugin (): Plugin {
   return {
     name: 'iles:client-js-removal',
     generateBundle (_, bundle) {
-      for (const name in bundle) {
-        const chunk = bundle[name]
-        console.log('chunk', name, chunk.fileName)
-        if (chunk.fileName.endsWith('.js')) delete bundle[name]
-      }
+      for (const name in bundle)
+        if (bundle[name].fileName.endsWith('.js')) delete bundle[name]
     },
   }
 }

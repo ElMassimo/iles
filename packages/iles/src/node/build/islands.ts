@@ -1,7 +1,6 @@
 /* eslint-disable no-restricted-syntax */
 import path from 'path'
 import { promises as fs } from 'fs'
-import type { OutputChunk } from 'rollup'
 import virtual from '@rollup/plugin-virtual'
 import { build as viteBuild, mergeConfig as mergeViteConfig } from 'vite'
 import glob from 'fast-glob'
