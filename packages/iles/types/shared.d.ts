@@ -14,12 +14,11 @@ export { ViteOptions, ConfigEnv }
 
 export type { Router, RouteRecordRaw }
 export type PageMeta = RouteMeta
-export type RouterOptions = PartialKeys<VueRouterOptions, 'history'> & { base?: string }
+export type RouterOptions = VueRouterOptions & { base?: string }
 
 export type HeadConfig = HeadObject
 
 export interface CreateAppConfig {
-  inBrowser: boolean
   /**
    * Current router path on SSG, `undefined` on client side.
    */
@@ -31,12 +30,13 @@ export interface SSGContext extends CreateAppConfig {
   router: Router
   routes: RouteRecordRaw[]
   initialState: Record<string, any>
-  head: HeadClient | undefined
+  head: HeadClient
 }
 
-export type CreateAppFactory = (options: CreateAppConfig) => Promise<SSGContext<true> | SSGContext<false>>
+export type CreateAppFactory = (options?: CreateAppConfig) => Promise<SSGContext<true> | SSGContext<false>>
 
 export interface AppPlugins {
+  router: Pick<VueRouterOptions, 'linkActiveClass' | 'linkExactActiveClass'>
   vite: ViteOptions
   vue: VueOptions
   pages: PagesOptions
@@ -48,6 +48,16 @@ export interface AppPlugins {
 export interface Plugin extends Partial<AppPlugins> {
   head?: HeadConfig
   config: (config: UserConfig, env: ConfigEnv) => UserConfig | null | void | Promise<UserConfig | null | void>
+}
+
+export interface EnhanceAppContext {
+  app: App
+  router: Router
+  head: HeadClient
+}
+
+export interface UserApp {
+  head?: HeadConfig
   enhanceApp: (ctx: EnhanceAppContext) => void | Promise<void>
 }
 
@@ -55,8 +65,6 @@ export type PluginOption = Plugin | false | null | undefined
 
 export interface RequiredConfig {
   base: string
-  title: string
-  description: string
   outDir: string
   layoutsDir: string
   srcDir: string
@@ -71,5 +79,12 @@ export interface AppConfig extends RequiredConfig, AppPlugins {
   root: string
   configPath?: string
   plugins: Plugin[]
-  head: HeadConfig
+}
+
+export type AppClientConfig = Pick<AppConfig, 'base' | 'router' | 'root'>
+
+export interface IslandDefinition {
+  id: string
+  script: string
+  placeholder: string
 }

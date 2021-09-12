@@ -1,5 +1,6 @@
 <script setup lang="ts">
 /* eslint-disable @typescript-eslint/no-var-requires */
+import { useFile } from 'iles'
 import { formatDate } from '~/helpers/FormatHelper'
 
 // Public: Url of the audio file
@@ -8,7 +9,7 @@ const props = defineProps<{ audio: string; title: string; recorded: Date }>()
 let initialDuration = NaN
 if (import.meta.env.SSR) {
   const getMP3Duration = require('get-mp3-duration')
-  const buffer = require('fs').readFileSync(`${__dirname}${props.audio}`)
+  const buffer = useFile(`public${props.audio}`)
   initialDuration = getMP3Duration(buffer) / 1000
 }
 </script>

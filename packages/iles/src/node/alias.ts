@@ -8,24 +8,25 @@ export const SHARED_PATH = path.join(DIST_CLIENT_PATH, 'shared')
 export const HYDRATION_DIST_PATH = path.join(path.dirname(require.resolve('@islands/hydration/package.json')), 'dist')
 
 // special virtual file
-// we can't directly import '/@siteData' because
+// we can't directly import '/@islands' because
 // - it's not an actual file so we can't use tsconfig paths to redirect it
 // - TS doesn't allow shimming a module that starts with '/'
-export const SITE_DATA_ID = '@siteData'
-export const SITE_DATA_REQUEST_PATH = `/${SITE_DATA_ID}`
-
 export const ROUTES_ID = '@islands/routes'
 export const ROUTES_REQUEST_PATH = `/${ROUTES_ID}`
 
-export const USER_CONFIG_ID = '@islands/user-config'
-export const USER_CONFIG_REQUEST_PATH = `/${USER_CONFIG_ID}`
+export const APP_CONFIG_ID = '@islands/app-config'
+export const APP_CONFIG_REQUEST_PATH = `/${APP_CONFIG_ID}`
+
+export const USER_APP_ID = '@islands/user-app'
+export const USER_APP_REQUEST_PATH = `/${USER_APP_ID}`
+
 
 export function resolveAliases (root: string): AliasOptions {
   const paths: Record<string, string> = {
     '/@shared': SHARED_PATH,
-    [SITE_DATA_ID]: SITE_DATA_REQUEST_PATH,
     [ROUTES_ID]: ROUTES_REQUEST_PATH,
-    [USER_CONFIG_ID]: USER_CONFIG_REQUEST_PATH,
+    [USER_APP_ID]: USER_APP_REQUEST_PATH,
+    [APP_CONFIG_ID]: APP_CONFIG_REQUEST_PATH,
   }
 
   const aliases: Alias[] = [

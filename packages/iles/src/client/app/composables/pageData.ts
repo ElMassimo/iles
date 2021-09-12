@@ -1,6 +1,6 @@
 import { App, InjectionKey, Ref, computed, inject } from 'vue'
 import { RouteLocationNormalizedLoaded } from 'vue-router'
-import { PageMeta } from '../shared'
+import { PageMeta } from '../../shared'
 
 export interface PageData<T = any> {
   meta: Ref<PageMeta>

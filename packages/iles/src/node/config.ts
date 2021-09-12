@@ -4,9 +4,8 @@ import chalk from 'chalk'
 import creatDebugger from 'debug'
 import { loadConfigFromFile, mergeConfig as mergeViteConfig } from 'vite'
 import type { ComponentResolver } from 'unplugin-vue-components/types'
-import IslandsPlugins from './plugin/index'
 import type { AppConfig, AppPlugins, ConfigEnv, ViteOptions, Plugin } from './shared'
-import { resolveAliases, APP_PATH, DIST_CLIENT_PATH, HYDRATION_DIST_PATH } from './alias'
+import { resolveAliases, DIST_CLIENT_PATH, HYDRATION_DIST_PATH } from './alias'
 
 const debug = creatDebugger('iles:config')
 
@@ -28,6 +27,7 @@ export async function resolveConfig (root?: string, env?: ConfigEnv): Promise<Ap
   const config = Object.assign(appConfig, {
     srcDir,
     outDir: resolve(root, appConfig.outDir),
+    tempDir: resolve(root, appConfig.tempDir),
     layoutsDir: resolve(srcDir, appConfig.layoutsDir),
   })
 
@@ -57,10 +57,7 @@ async function resolveUserConfig (root: string, configEnv: ConfigEnv) {
   }
 
   const appConfig: AppConfig = { ...config, configPath: result?.path, plugins: userPlugins }
-  appConfig.vite = mergeViteConfig(appConfig.vite, {
-    base: appConfig.base,
-    plugins: IslandsPlugins(appConfig),
-  })
+  appConfig.vite.base = appConfig.base
 
   return appConfig
 }
@@ -68,15 +65,13 @@ async function resolveUserConfig (root: string, configEnv: ConfigEnv) {
 function appConfigDefaults (root: string): AppConfig {
   return {
     root,
-    title: 'îles',
-    description: 'Partial hydration in Vue and Vite.js',
     base: '/',
     srcDir: 'src',
     outDir: 'dist',
     layoutsDir: 'layouts',
-    tempDir: resolve(APP_PATH, 'temp'),
+    tempDir: '.iles-ssg-temp',
     plugins: [] as Plugin[],
-    head: {},
+    router: {},
     pages: {
       extensions: ['vue', 'md', 'mdx'],
     },

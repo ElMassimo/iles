@@ -1,4 +1,4 @@
-import { UserConfig } from '../../types/shared'
+import { UserApp, UserConfig } from '../../types/shared'
 
 export {
   ViteOptions,
@@ -8,12 +8,15 @@ export {
   PageMeta,
   RouterOptions,
   HeadConfig,
+  IslandDefinition,
   CreateAppConfig,
   SSGContext,
   CreateAppFactory,
   Plugin,
   PluginOption,
+  UserApp,
   UserConfig,
+  AppClientConfig,
   AppConfig,
   AppPlugins,
 } from '../../types/shared'
@@ -24,4 +27,8 @@ export const inBrowser = typeof window !== 'undefined'
 
 export function defineConfig (config: UserConfig) {
   return config
+}
+
+export function defineApp (app: UserApp) {
+  return app
 }

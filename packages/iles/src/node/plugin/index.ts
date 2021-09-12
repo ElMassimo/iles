@@ -1,4 +1,5 @@
-import { relative } from 'path'
+/* eslint-disable no-restricted-syntax */
+import { resolve, relative } from 'path'
 import fs from 'fs'
 import { yellow } from 'chalk'
 import type { PluginOption, ResolvedConfig, ResolveFn } from 'vite'
@@ -10,9 +11,9 @@ import vueJsx from '@vitejs/plugin-vue-jsx'
 import xdm from 'vite-plugin-xdm'
 
 import createDebugger from 'debug'
-import type { AppConfig } from '../shared'
-import { APP_PATH, SITE_DATA_REQUEST_PATH, ROUTES_REQUEST_PATH, USER_CONFIG_REQUEST_PATH } from '../alias'
-import { escapeRegex, pascalCase } from './utils'
+import type { AppConfig, AppClientConfig } from '../shared'
+import { APP_PATH, ROUTES_REQUEST_PATH, USER_APP_REQUEST_PATH, APP_CONFIG_REQUEST_PATH } from '../alias'
+import { escapeRegex, pascalCase, serialize } from './utils'
 import { parseImports } from './parse'
 
 const debug = {
@@ -49,14 +50,6 @@ async function replaceAsync (str: string, regex: RegExp, asyncFn: (...groups: st
   return str.replace(regex, () => replacements.shift()!)
 }
 
-let base: ResolvedConfig['base']
-let assetsDir: ResolvedConfig['build']['assetsDir']
-let outDir: ResolvedConfig['build']['outDir']
-let mode: ResolvedConfig['mode']
-let root: ResolvedConfig['root']
-let configFile: ResolvedConfig['configFile']
-let resolveVitePath: ResolveFn
-
 const contextComponentRegex = new RegExp(escapeRegex('_ctx.__unplugin_components_'), 'g')
 const unresolvedIslandKey = '__viteIslandComponent'
 const viteIslandRegex = new RegExp(`"?${escapeRegex(unresolvedIslandKey)}"?:\\s*([^,]+),`, 'sg')
@@ -65,31 +58,40 @@ const scriptTagsRegex = /<script\s*([^>]*?)>(.*?)<\/script>/sg
 // Public: Configures MDX, Vue, Components, and Islands plugins.
 export default function IslandsPlugins (appConfig: AppConfig): PluginOption[] {
   debug.config(appConfig)
+
+  let base: ResolvedConfig['base']
+  let assetsDir: ResolvedConfig['build']['assetsDir']
+  let outDir: ResolvedConfig['build']['outDir']
+  let mode: ResolvedConfig['mode']
+  let root: ResolvedConfig['root']
+  let configFile: ResolvedConfig['configFile']
+  let resolveVitePath: ResolveFn
+
   return [
     {
       name: 'islands',
       resolveId (id) {
-        if (id === SITE_DATA_REQUEST_PATH)
-          return SITE_DATA_REQUEST_PATH
-
         if (id === ROUTES_REQUEST_PATH)
           return PAGES_REQUEST_PATH
 
-        if (id === USER_CONFIG_REQUEST_PATH)
-          return USER_CONFIG_REQUEST_PATH
+        if (id === USER_APP_REQUEST_PATH)
+          return USER_APP_REQUEST_PATH
+
+        if (id === APP_CONFIG_REQUEST_PATH)
+          return APP_CONFIG_REQUEST_PATH
       },
       load (id) {
-        // TODO: Provide actual site data.
-        const siteData = { base: '/' }
+        if (id === APP_CONFIG_REQUEST_PATH) {
+          const { base, router, root } = appConfig
+          const clientConfig: AppClientConfig = { base, router, root }
+          return `export default ${serialize(clientConfig)}`
+        }
 
-        if (id === SITE_DATA_REQUEST_PATH)
-          return `export default ${JSON.stringify(JSON.stringify(siteData))}`
-
-        if (id === USER_CONFIG_REQUEST_PATH) {
-          const { configPath } = appConfig
-          if (!configPath) return ''
-          this.addWatchFile(configPath)
-          return fs.readFileSync(configPath, 'utf-8')
+        if (id === USER_APP_REQUEST_PATH) {
+          const appPath = resolve(appConfig.srcDir, 'app.ts')
+          if (!fs.existsSync(appPath)) return 'export default {}'
+          this.addWatchFile(appPath)
+          return fs.readFileSync(appPath, 'utf-8')
         }
       },
       transform (code, id) {
@@ -233,10 +235,10 @@ export default function IslandsPlugins (appConfig: AppConfig): PluginOption[] {
       name: 'islands:import-analysis',
       enforce: 'post',
       async transform (code, id) {
-        const { path } = parseId(id)
+        const { path, query } = parseId(id)
         if (!isMarkdown(path) && !path.endsWith('.vue')) return
 
-        if (path.includes('src/pages/') && path.endsWith('.vue')) {
+        if (path.includes('src/pages/') && path.endsWith('.vue') && !query.type) {
           // Set path to the specified page.
           // TODO: Unify with MDX
           const href = relative(root, path).replace(/\.\w+$/, '').replace('src/pages/', '/')

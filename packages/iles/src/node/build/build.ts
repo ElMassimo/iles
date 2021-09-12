@@ -14,7 +14,7 @@ export async function build (root: string, buildOptions: BuildOptions = {}) {
   const appConfig = await resolveConfig(root, { command: 'build', mode: 'production' })
 
   try {
-    const { clientResult, pageToHashMap, pages } = await bundle(appConfig, buildOptions)
+    const { clientResult, pages } = await bundle(appConfig, buildOptions)
 
     const spinner = ora()
     spinner.start('rendering pages...')
@@ -28,11 +28,7 @@ export async function build (root: string, buildOptions: BuildOptions = {}) {
         chunk => chunk.type === 'asset' && chunk.fileName.endsWith('.css'),
       ) as OutputAsset
 
-      // We embed the hash map string into each page directly so that it doesn't
-      // alter the main chunk's hash on every build. It's also embedded as a
-      // string and JSON.parsed from the client because it's faster than embedding
-      // as JS object literal.
-      const hashMapString = JSON.stringify(JSON.stringify(pageToHashMap))
+      const islandsByPath = Object.create(null)
 
       for (const [, page] of pages) {
         await renderPage(
@@ -41,10 +37,11 @@ export async function build (root: string, buildOptions: BuildOptions = {}) {
           clientResult,
           appChunk,
           cssChunk,
-          pageToHashMap,
-          hashMapString,
+          islandsByPath,
         )
       }
+
+      console.log({ islandsByPath })
     }
     catch (e) {
       spinner.stopAndPersist({ symbol: failMark })
