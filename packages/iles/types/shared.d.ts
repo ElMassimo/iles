@@ -46,7 +46,6 @@ export interface AppPlugins {
 }
 
 export interface Plugin extends Partial<AppPlugins> {
-  head?: HeadConfig
   config: (config: UserConfig, env: ConfigEnv) => UserConfig | null | void | Promise<UserConfig | null | void>
 }
 
@@ -58,7 +57,7 @@ export interface EnhanceAppContext {
 
 export interface UserApp {
   head?: HeadConfig
-  enhanceApp: (ctx: EnhanceAppContext) => void | Promise<void>
+  enhanceApp?: (ctx: EnhanceAppContext) => void | Promise<void>
 }
 
 export type PluginOption = Plugin | false | null | undefined

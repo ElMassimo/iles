@@ -3,7 +3,7 @@
   "scripts": {
     "dev": "iles dev --port 3333 --open",
     "build": "iles build",
-    "preview": "vite preview"
+    "preview": "vite preview --open"
   },
   "devDependencies": {
     "@iconify/json": "^1.1.393",

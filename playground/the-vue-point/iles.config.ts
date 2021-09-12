@@ -8,15 +8,6 @@ import inspect from 'vite-plugin-inspect'
 import restart from 'vite-plugin-restart'
 
 export default defineConfig({
-  head: {
-    title: 'The Vue Point',
-    meta: [
-      { property: 'description', content: 'The offical blog for the Vue.js project' },
-    ],
-    link: [
-      { rel: 'icon', href: '/favicon.ico', type: 'image/x-icon' },
-    ],
-  },
   components: {
     resolvers: [iconsResolver({ componentPrefix: '' })],
   },

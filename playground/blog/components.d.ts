@@ -6,16 +6,12 @@ declare module 'vue' {
   export interface GlobalComponents {
     Audio: typeof import('./src/components/Audio.vue')['default']
     AudioPlayer: typeof import('./src/components/AudioPlayer.vue')['default']
-    'Bx:bxDownload': typeof import('~icons/bx/bx-download')['default']
     'Bx:bxMoon': typeof import('~icons/bx/bx-moon')['default']
     'Bx:bxSun': typeof import('~icons/bx/bx-sun')['default']
-    CarbonDicomOverlay: typeof import('~icons/carbon/dicom-overlay')['default']
-    CarbonWarning: typeof import('~icons/carbon/warning')['default']
     DarkSwitch: typeof import('./src/components/DarkSwitch.vue')['default']
     PlayButton: typeof import('./src/components/PlayButton.vue')['default']
     Quote: typeof import('./src/components/Quote.vue')['default']
     SeekBar: typeof import('./src/components/SeekBar.vue')['default']
-    ViteIsland: typeof import('iles')['Island']
   }
 }
 

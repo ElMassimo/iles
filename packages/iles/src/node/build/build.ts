@@ -2,13 +2,12 @@ import { join } from 'path'
 import fs from 'fs-extra'
 import { BuildOptions } from 'vite'
 import ora from 'ora'
-import { OutputChunk, OutputAsset } from 'rollup'
 import { resolveConfig } from '../config'
+import { CreateAppFactory } from '../shared'
 import { renderPage } from './render'
 import { bundle } from './bundle'
 import { bundleIslands } from './islands'
 import { okMark, failMark, routesToPaths } from './utils'
-import { CreateAppFactory } from '../shared'
 
 export async function build (root: string, buildOptions: BuildOptions = {}) {
   const start = Date.now()
@@ -23,14 +22,6 @@ export async function build (root: string, buildOptions: BuildOptions = {}) {
     spinner.start('rendering pages...')
 
     try {
-      const appChunk = clientResult.output.find(
-        chunk => chunk.type === 'chunk' && chunk.isEntry,
-      ) as OutputChunk
-
-      const cssChunk = clientResult.output.find(
-        chunk => chunk.type === 'asset' && chunk.fileName.endsWith('.css'),
-      ) as OutputAsset
-
       const islandsByPath = Object.create(null)
 
       const { createApp }: { createApp: CreateAppFactory} = require(join(appConfig.tempDir, 'app.js'))
@@ -40,19 +31,10 @@ export async function build (root: string, buildOptions: BuildOptions = {}) {
       const ssgRoutes = routesToPaths(routes)
         .filter(({ path }) => !path.includes(':') && !path.includes('*'))
 
-      for (const ssgRoute of ssgRoutes) {
-        Object.assign(ssgRoute, { content: await renderPage(
-          appConfig,
-          ssgRoute,
-          clientResult,
-          appChunk,
-          cssChunk,
-          createApp,
-          islandsByPath,
-        )})
-      }
+      for (const ssgRoute of ssgRoutes)
+        ssgRoute.content = await renderPage(appConfig, ssgRoute, clientResult, createApp, islandsByPath)
 
-      bundleIslands(appConfig, ssgRoutes, islandsByPath)
+      await bundleIslands(appConfig, ssgRoutes, islandsByPath)
     }
     catch (e) {
       spinner.stopAndPersist({ symbol: failMark })

@@ -1,3 +1,4 @@
+import { useSSRContext } from 'vue'
 import {
   hydrateWhenIdle,
   hydrateNow,
@@ -9,7 +10,13 @@ import {
 let idNumber = 0
 
 export function newHydrationId () {
-  return `ile-${++idNumber}`
+  if (import.meta.env.SSR) {
+    const context = useSSRContext()
+    context!.hydrationSerialNumber ||= 1
+    return `ile-${context!.hydrationSerialNumber++}`
+  } else {
+    return `ile-${++idNumber}`
+  }
 }
 
 export enum Hydrate {

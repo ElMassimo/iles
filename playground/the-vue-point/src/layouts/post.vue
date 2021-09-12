@@ -10,14 +10,7 @@ let frontmatter = $computed(() => route.meta.frontmatter)
 
 useHead({ title: frontmatter.title })
 
-console.log({ posts })
-
-let currentIndex = $computed(() => posts.findIndex((p) => {
-  console.log({ p: p.href, route: route.path, eq: p.href === route.path })
-  return p.href === route.path
-}))
-
-// use the customData date which contains pre-resolved date info
+let currentIndex = $computed(() => posts.findIndex(p => p.href === route.path))
 let date = $computed(() => posts[currentIndex]?.date)
 let nextPost = $computed(() => posts[currentIndex - 1])
 let prevPost = $computed(() => posts[currentIndex + 1])

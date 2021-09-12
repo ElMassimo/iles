@@ -69,6 +69,7 @@
     "@types/fs-extra": "^9.0.12",
     "@types/jsdom": "^16.2.13",
     "@types/node": "^15.6.1",
+    "@types/rollup__plugin-virtual": "^2.0.1",
     "chokidar": "^3.5.1",
     "conventional-changelog-cli": "^2.1.1",
     "enquirer": "^2.3.6",

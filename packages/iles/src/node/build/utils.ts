@@ -22,7 +22,7 @@ export interface SSGRoute {
   filename: string | undefined
   extension: string
   outputFilename: string
-  content: string | undefined
+  content?: string
 }
 
 function pathToFilename (path: string, ext: string) {
@@ -31,7 +31,6 @@ function pathToFilename (path: string, ext: string) {
 
 export function routesToPaths (routes: RouteRecordRaw[]) {
   const paths: Set<SSGRoute> = new Set()
-  console.log({ routes })
 
   const getPaths = (routes: RouteRecordRaw[], prefix = '') => {
     // remove trailing slash
@@ -46,7 +45,7 @@ export function routesToPaths (routes: RouteRecordRaw[]) {
 
         const filename = route.meta?.filename as any
 
-        const extension = route.meta?.extension || 'html'
+        const extension = (route.meta?.extension as string | undefined) || 'html'
 
         paths.add({
           path,

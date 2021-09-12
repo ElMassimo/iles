@@ -12,7 +12,7 @@ export default defineComponent({
   name: 'Island',
   inheritAttrs: false,
   props: {
-    component: { type: Object as PropType<DefineComponent>, required: true },
+    component: { type: [Object, Function] as PropType<DefineComponent>, required: true },
     componentName: { type: String, required: true },
     importName: { type: String, required: true },
     importPath: { type: String, required: true },
@@ -35,8 +35,6 @@ export default defineComponent({
   render () {
     const isSSR = import.meta.env.SSR
 
-    const packageUrl = `${isSSR ? '' : '/@id/'}@islands/hydration`
-
     const content = isSSR && this.$props[Hydrate.New]
       ? []
       : [h(this.component, this.$attrs, this.$slots)]
@@ -52,7 +50,7 @@ export default defineComponent({
       const slots = await renderSlots(slotVNodes, this.ssrContext)
 
       return `import { ${this.importName} as ${this.componentName} } from '${this.importPath}'
-  import { ${hydrationFns[this.strategy]} as hydrate } from '${packageUrl}'
+  import { ${hydrationFns[this.strategy]} as hydrate } from '${isSSR ? '' : '/@id/'}@islands/hydration'
   hydrate(${this.componentName}, '${this.id}', ${serialize(props)}, ${serialize(slots)})
   `
     }

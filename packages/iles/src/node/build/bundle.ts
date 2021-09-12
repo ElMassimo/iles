@@ -40,7 +40,6 @@ export async function bundle (config: AppConfig, options: BuildOptions) {
       emptyOutDir: true,
       ssr,
       outDir: ssr ? config.tempDir : config.outDir,
-      cssCodeSplit: false,
       manifest: !ssr,
       rollupOptions: {
         ...rollupOptions,

@@ -1,7 +1,5 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
-import path from 'path'
-import fs from 'fs-extra'
-import { RollupOutput, OutputChunk, OutputAsset } from 'rollup'
+import { RollupOutput } from 'rollup'
 import { renderHeadToString } from '@vueuse/head'
 import { AppConfig } from '../config'
 import { CreateAppFactory, IslandDefinition, SSGContext } from '../shared'
@@ -11,32 +9,19 @@ export async function renderPage (
   config: AppConfig,
   route: SSGRoute, // foo.md
   result: RollupOutput,
-  appChunk: OutputChunk,
-  cssChunk: OutputAsset,
   createApp: CreateAppFactory,
   islandsByPage: Record<string, IslandDefinition[]>,
 ) {
-  const { filename, extension, path: routePath, outputFilename } = route
-
-  console.log('Rendering', { filename, routePath, outputFilename })
+  const { extension, path: routePath } = route
 
   const { app, head } = await createApp({ routePath }) as SSGContext
   // lazy require server-renderer for production build
   let content = await require('@vue/server-renderer').renderToString(app, { islandsByPage })
 
   if (extension !== 'html') return content
-  const preloadLinks = [
-    // resolve imports for index.js + page.md.js and inject script tags for
-    // them as well so we fetch everything as early as possible without having
-    // to wait for entry chunks to parse
-    ...resolvePageImports(config, route, result, appChunk),
-    appChunk.fileName,
-  ]
-    .map((file) => {
-      return `<link rel="modulepreload" href="${config.base}${file}">`
-    })
-    .join('\n    ')
 
+  const cssChunk = result.output.find(chunk =>
+    chunk.type === 'asset' && chunk.fileName.endsWith('.css'))
   const stylesheetLink = cssChunk
     ? `<link rel="stylesheet" href="${config.base}${cssChunk.fileName}">`
     : ''
@@ -49,31 +34,9 @@ export async function renderPage (
   <head>
     ${headTags}
     ${stylesheetLink}
-    ${preloadLinks}
   </head>
   <body ${bodyAttrs}>
     <div id="app">${content}</div>
   </body>
 </html>`.trim()
-}
-
-function resolvePageImports (
-  config: AppConfig,
-  page: SSGRoute,
-  result: RollupOutput,
-  indexChunk: OutputChunk,
-) {
-  // find the page's js chunk and inject script tags for its imports so that
-  // they are start fetching as early as possible
-  const pageChunk = result.output.find(
-    chunk => chunk.type === 'chunk' && chunk.facadeModuleId === page.filename,
-  ) as OutputChunk
-  return Array.from(
-    new Set([
-      ...indexChunk.imports,
-      ...indexChunk.dynamicImports,
-      ...pageChunk.imports,
-      ...pageChunk.dynamicImports,
-    ]),
-  )
 }
