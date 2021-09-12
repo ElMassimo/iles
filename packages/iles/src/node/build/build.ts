@@ -1,3 +1,4 @@
+import { join } from 'path'
 import fs from 'fs-extra'
 import { BuildOptions } from 'vite'
 import ora from 'ora'
@@ -5,7 +6,8 @@ import { OutputChunk, OutputAsset } from 'rollup'
 import { resolveConfig } from '../config'
 import { renderPage } from './render'
 import { bundle } from './bundle'
-import { okMark, failMark } from './utils'
+import { okMark, failMark, routesToPaths } from './utils'
+import { CreateAppFactory } from '../shared'
 
 export async function build (root: string, buildOptions: BuildOptions = {}) {
   const start = Date.now()
@@ -14,7 +16,7 @@ export async function build (root: string, buildOptions: BuildOptions = {}) {
   const appConfig = await resolveConfig(root, { command: 'build', mode: 'production' })
 
   try {
-    const { clientResult, pages } = await bundle(appConfig, buildOptions)
+    const { clientResult } = await bundle(appConfig, buildOptions)
 
     const spinner = ora()
     spinner.start('rendering pages...')
@@ -30,13 +32,21 @@ export async function build (root: string, buildOptions: BuildOptions = {}) {
 
       const islandsByPath = Object.create(null)
 
-      for (const [, page] of pages) {
+      const { createApp }: { createApp: CreateAppFactory} = require(join(appConfig.tempDir, 'app.js'))
+
+      const { routes } = await createApp()
+
+      const routesPaths = routesToPaths(routes)
+        .filter(({ path }) => !path.includes(':') && !path.includes('*'))
+
+      for (const routePath of routesPaths) {
         await renderPage(
           appConfig,
-          page,
+          routePath,
           clientResult,
           appChunk,
           cssChunk,
+          createApp,
           islandsByPath,
         )
       }

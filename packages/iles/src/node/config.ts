@@ -1,5 +1,5 @@
 /* eslint-disable no-restricted-syntax */
-import { resolve } from 'path'
+import { join, resolve } from 'path'
 import chalk from 'chalk'
 import creatDebugger from 'debug'
 import { loadConfigFromFile, mergeConfig as mergeViteConfig } from 'vite'
@@ -41,13 +41,23 @@ export async function resolveConfig (root?: string, env?: ConfigEnv): Promise<Ap
   return config
 }
 
+const defaultPlugins = (root: string) => [
+  {
+    pages: {
+      extendRoute (route) {
+        return { ...route, meta: { ...route.meta, filename: join(root, route.component) } }
+      },
+    } as AppConfig['pages'],
+  },
+]
+
 async function resolveUserConfig (root: string, configEnv: ConfigEnv) {
   const defaults = appConfigDefaults(root)
   const result = await loadConfigFromFile(configEnv, 'iles.config.ts', root)
   debug(result ? `loaded config at ${chalk.yellow(result.path)}` : 'no iles.config.ts file found.')
 
   let { plugins = [], ...config } = result ? mergeConfig(defaults, result.config as any) : defaults
-  const userPlugins = [config, ...plugins].flat().filter(p => p) as Plugin[]
+  const userPlugins = [...defaultPlugins(root), config, ...plugins].flat().filter(p => p) as Plugin[]
 
   for (const plugin of userPlugins) {
     if (plugin.config) {
@@ -73,6 +83,7 @@ function appConfigDefaults (root: string): AppConfig {
     plugins: [] as Plugin[],
     router: {},
     pages: {
+      syncIndex: false,
       extensions: ['vue', 'md', 'mdx'],
     },
     vite: viteConfigDefaults(root),

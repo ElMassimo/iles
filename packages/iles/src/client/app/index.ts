@@ -21,6 +21,7 @@ function transformState (state: any) {
 }
 
 function createRouter ({ base, ...routerOptions }: Partial<RouterOptions>) {
+  if (base === '/') base = undefined
   return createVueRouter({
     ...routerOptions,
     routes,
@@ -28,7 +29,10 @@ function createRouter ({ base, ...routerOptions }: Partial<RouterOptions>) {
   })
 }
 
-export const createApp: CreateAppFactory = async ({ routePath } = {}) => {
+export const createApp: CreateAppFactory = async (options = {}) => {
+  const { base, router: routerOptions } = appConfig
+  const { routePath = base } = options
+
   const app = newApp()
 
   installAppConfig(app, appConfig)
@@ -36,7 +40,6 @@ export const createApp: CreateAppFactory = async ({ routePath } = {}) => {
   const head = createHead()
   app.use(head)
 
-  const { base, router: routerOptions } = appConfig
   const router = createRouter({ base, ...routerOptions })
   app.use(router)
 
@@ -88,8 +91,7 @@ export const createApp: CreateAppFactory = async ({ routePath } = {}) => {
   })
 
   if (import.meta.env.SSR) {
-    const route = context.routePath ?? routerOptions.base ?? '/'
-    router.push(route)
+    router.push(context.routePath)
 
     await router.isReady()
     context.initialState = router.currentRoute.value.meta.state as Record<string, any> || {}

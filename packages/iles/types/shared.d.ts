@@ -25,7 +25,7 @@ export interface CreateAppConfig {
   routePath?: string
 }
 
-export interface SSGContext extends CreateAppConfig {
+export interface SSGContext extends Required<CreateAppConfig> {
   app: App<Element>
   router: Router
   routes: RouteRecordRaw[]

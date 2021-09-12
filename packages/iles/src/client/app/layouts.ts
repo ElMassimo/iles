@@ -5,6 +5,8 @@ const layouts = import.meta.glob('__LAYOUTS_ROOT__/**/*.vue')
 
 export function getLayout ({ meta }: RouteLocationNormalizedLoaded) {
   const name = meta.frontmatter?.layout ?? meta.layout ?? 'default'
+  if (name === false) return false
+
   const layout = layouts[`__LAYOUTS_ROOT__/${name}.vue`]
   if (layout) {
     const component = defineAsyncComponent(layout)

@@ -20,7 +20,6 @@ export const APP_CONFIG_REQUEST_PATH = `/${APP_CONFIG_ID}`
 export const USER_APP_ID = '@islands/user-app'
 export const USER_APP_REQUEST_PATH = `/${USER_APP_ID}`
 
-
 export function resolveAliases (root: string): AliasOptions {
   const paths: Record<string, string> = {
     '/@shared': SHARED_PATH,
