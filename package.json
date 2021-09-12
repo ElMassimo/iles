@@ -4,10 +4,10 @@
     "node": ">=14"
   },
   "scripts": {
+    "dev:blog": "npm run -C playground/blog dev",
     "dev:packages": "npm -C packages run dev",
-    "dev:playground": "npm -C playground run dev",
+    "build:blog": "npm run -C playground/blog build",
     "build:packages": "npm -C packages run build",
-    "dev": "concurrently \"nr dev:packages\" \"nr dep:playground\" --kill-others",
     "lint": "eslint --ignore-pattern 'node_modules'  --ignore-pattern 'dist' . --ext .ts,.js,.vue,.html",
     "test": "peeky run",
     "test:open": "peeky open"

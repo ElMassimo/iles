@@ -20,16 +20,7 @@ export async function bundleIslands (
   const files = await glob(path.join(config.outDir, '**/*.js'))
   files.forEach(fileName => fs.rm(fileName))
 
-  const entrypoints = Object.create(null)
-
-  for (const path in islandsByPath) {
-    islandsByPath[path].forEach((island) => {
-      island.entryFilename = fileToAssetName(`${path}/${island.id}`)
-      entrypoints[island.entryFilename] = island.script
-    })
-  }
-
-  buildIslands(config, entrypoints)
+  await buildIslands(config, islandsByPath)
   const manifestPath = path.join(config.outDir, 'manifest.json')
   const manifest: Manifest = JSON.parse(await fs.readFile(manifestPath, 'utf-8'))
 
@@ -70,7 +61,16 @@ export async function bundleIslands (
   for (const temp of tempIslandFiles) await fs.rm(temp)
 }
 
-async function buildIslands (config: AppConfig, entrypoints: Record<string, string>) {
+async function buildIslands (config: AppConfig, islandsByPath: IslandsByPath) {
+  const entrypoints = Object.create(null)
+
+  for (const path in islandsByPath) {
+    islandsByPath[path].forEach((island) => {
+      island.entryFilename = fileToAssetName(`${path}/${island.id}`)
+      entrypoints[island.entryFilename] = island.script
+    })
+  }
+
   const entryFiles = Object.keys(entrypoints)
   if (entryFiles.length === 0) return
 

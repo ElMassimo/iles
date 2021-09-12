@@ -30,7 +30,6 @@ export interface SSGContext extends Required<CreateAppConfig> {
   app: App
   router: Router
   routes: RouteRecordRaw[]
-  initialState: Record<string, any>
   head: HeadClient
 }
 
