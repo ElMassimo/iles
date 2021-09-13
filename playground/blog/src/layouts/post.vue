@@ -15,7 +15,7 @@ const { frontmatter } = usePage()
     <template #default>
       <a :href="href">Back to index</a>
       <transition :name="frontmatter.transition || 'fade'" mode="out-in">
-        <article class="prose">
+        <article class="prose mt-2">
           <h1>{{ frontmatter.title }}</h1>
           <slot/>
         </article>
