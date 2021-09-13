@@ -1,20 +1,21 @@
 /* eslint-disable no-restricted-syntax */
 import { resolve, relative } from 'path'
 import fs from 'fs'
-import { yellow } from 'chalk'
-import type { PluginOption, ResolvedConfig, ResolveFn } from 'vite'
+import chalk from 'chalk'
+import type { PluginOption, ResolvedConfig, ResolveFn, ViteDevServer } from 'vite'
 
 import vue from '@vitejs/plugin-vue'
 import pages, { MODULE_ID_VIRTUAL as PAGES_REQUEST_PATH } from 'vite-plugin-pages'
 import components from 'unplugin-vue-components/vite'
 import vueJsx from '@vitejs/plugin-vue-jsx'
-import xdm from 'vite-plugin-xdm'
+import MagicString from 'magic-string'
 
 import createDebugger from 'debug'
 import type { AppConfig, AppClientConfig } from '../shared'
 import { APP_PATH, ROUTES_REQUEST_PATH, USER_APP_REQUEST_PATH, APP_CONFIG_REQUEST_PATH } from '../alias'
 import { escapeRegex, pascalCase, serialize } from './utils'
 import { parseImports } from './parse'
+import { createServer } from '../server'
 
 const debug = {
   config: createDebugger('iles:config'),
@@ -56,12 +57,11 @@ const viteIslandRegex = new RegExp(`"?${escapeRegex(unresolvedIslandKey)}"?:\\s*
 const scriptTagsRegex = /<script\s*([^>]*?)>(.*?)<\/script>/sg
 
 // Public: Configures MDX, Vue, Components, and Islands plugins.
-export default function IslandsPlugins (appConfig: AppConfig): PluginOption[] {
+export default async function IslandsPlugins (appConfig: AppConfig): Promise<PluginOption[]> {
   debug.config(appConfig)
 
   let base: ResolvedConfig['base']
-  let assetsDir: ResolvedConfig['build']['assetsDir']
-  let outDir: ResolvedConfig['build']['outDir']
+  let sourcemap: ResolvedConfig['build']['sourcemap']
   let mode: ResolvedConfig['mode']
   let root: ResolvedConfig['root']
   let resolveVitePath: ResolveFn
@@ -96,7 +96,10 @@ export default function IslandsPlugins (appConfig: AppConfig): PluginOption[] {
       transform (code, id) {
         return code.replace(/__LAYOUTS_ROOT__/g, '/src/layouts')
       },
+
       configureServer (server) {
+        restartOnConfigChanges(appConfig, server)
+
         // serve our index.html after vite history fallback
         return () => {
           server.middlewares.use((req, res, next) => {
@@ -124,12 +127,10 @@ export default function IslandsPlugins (appConfig: AppConfig): PluginOption[] {
         debug.build('minify:', config.build.minify)
         if (base) return
         base = config.base
-        assetsDir = config.build.assetsDir
-        outDir = config.build.outDir
+        sourcemap = config.build.sourcemap
         mode = config.mode
         root = config.root
         resolveVitePath = config.createResolver()
-        debug.wrap({ outDir, assetsDir })
       },
       async transform (code, id) {
         const { path } = parseId(id)
@@ -160,10 +161,31 @@ export default function IslandsPlugins (appConfig: AppConfig): PluginOption[] {
     },
 
     vue(appConfig.vue),
-    xdm(appConfig.markdown),
 
     {
-      name: 'islands:mdx',
+      name: 'islands:mdx:pre',
+      async transform (code, id) {
+        const { path } = parseId(id)
+        if (!isMarkdown(path)) return null
+
+        // TODO: Use pages plugin to obtain the path pages.pathForFile(path)
+        const href = relative(root, path).replace(/\.\w+$/, '').replace('src/pages/', '/')
+        const s = new MagicString(code)
+
+        const marker = '---\n'
+        if (code.startsWith(marker))
+          s.appendRight(marker.length, `href: '${href}'\n`)
+        else
+          s.append(`---\nhref: '${href}'\n---`)
+
+        return { code: s.toString(), map: sourcemap ? s.generateMap({ hires: true }) : null }
+      },
+    },
+
+    await (await import('vite-plugin-xdm')).default(appConfig.markdown),
+
+    {
+      name: 'islands:mdx:pos',
       async transform (code, id) {
         const { path } = parseId(id)
         if (!isMarkdown(path) || !code.includes('MDXContent')) return null
@@ -180,19 +202,12 @@ export default function IslandsPlugins (appConfig: AppConfig): PluginOption[] {
         // Allow mdx pages with only frontmatter.
         code = code.replace('_content = <></>', '_content = null')
 
-        // Set path to the specified page.
-        // TODO: Add option in vite-plugin-xdm to extend frontmatter, like Jekyll.
-        const href = relative(root, path).replace(/\.\w+$/, '').replace('src/pages/', '/')
-
         // Allow MDX content to be rendered without args.
         code = code.replace('MDXContent(props)', 'MDXContent(props = {})')
 
         // TODO: Allow component to receive an excerpt prop.
         return code.replace('export default MDXContent', `
           ${code.includes(' defineComponent') ? '' : 'import { defineComponent } from \'vue\''}
-
-          export const href = '${href}'
-          frontmatter.href = href
 
           const _default = defineComponent({
             ${mode === 'development' ? `__file: '${path}',` : ''}
@@ -267,4 +282,26 @@ export default function IslandsPlugins (appConfig: AppConfig): PluginOption[] {
       },
     },
   ]
+}
+
+async function restartOnConfigChanges(config: AppConfig, server: ViteDevServer) {
+  const restartIfConfigChanged = async (path: string) => {
+    if (path === config.configPath) {
+      server.config.logger.info(
+        chalk.green(
+          `${relative(process.cwd(), config.configPath)} changed, restarting server...`
+        ),
+        { clear: true, timestamp: true }
+      )
+      await server.close()
+      // @ts-ignore
+      global.__vite_start_time = Date.now()
+      const { server: newServer } = await createServer(server.config.root, server.config.server)
+      await newServer.listen()
+    }
+  }
+  // Shut down the server and start a new one if config changes.
+  server.watcher.add(config.configPath)
+  server.watcher.on('add', restartIfConfigChanged)
+  server.watcher.on('change', restartIfConfigChanged)
 }

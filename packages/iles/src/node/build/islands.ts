@@ -83,7 +83,7 @@ async function buildIslands (config: AppConfig, islandsByPath: IslandsByPath) {
       },
     },
     plugins: [
-      IslandsPlugins(config),
+      await IslandsPlugins(config),
       virtual(entrypoints),
     ],
   } as ViteUserConfig))
