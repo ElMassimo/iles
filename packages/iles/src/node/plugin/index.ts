@@ -64,7 +64,6 @@ export default function IslandsPlugins (appConfig: AppConfig): PluginOption[] {
   let outDir: ResolvedConfig['build']['outDir']
   let mode: ResolvedConfig['mode']
   let root: ResolvedConfig['root']
-  let configFile: ResolvedConfig['configFile']
   let resolveVitePath: ResolveFn
 
   return [
@@ -97,35 +96,22 @@ export default function IslandsPlugins (appConfig: AppConfig): PluginOption[] {
       transform (code, id) {
         return code.replace(/__LAYOUTS_ROOT__/g, '/src/layouts')
       },
-      handleHotUpdate ({ file }) {
-        // TODO: Implement server auto-restart
-        if (file === appConfig.configPath && configFile)
-          console.warn(yellow('[iles]: config file has changed. Please restart the dev server.'))
-      },
       configureServer (server) {
-        if (appConfig.configPath) server.watcher.add(appConfig.configPath)
-
         // serve our index.html after vite history fallback
         return () => {
           server.middlewares.use((req, res, next) => {
-            if (req.url!.endsWith('.html')) {
-              res.statusCode = 200
-              res.end(`
-  <!DOCTYPE html>
-  <html>
-    <head>
-      <title></title>
-      <meta charset="utf-8">
-      <meta name="viewport" content="width=device-width,initial-scale=1">
-      <meta name="description" content="">
-    </head>
-    <body>
-      <div id="app"></div>
-      <script type="module" src="/@fs/${APP_PATH}/index.js"></script>
-    </body>
-  </html>`)
-              return
-            }
+            // if (req.url!.endsWith('.html')) {
+            res.statusCode = 200
+            res.end(`
+<!DOCTYPE html>
+<html>
+  <body>
+    <div id="app"></div>
+    <script type="module" src="/@fs/${APP_PATH}/index.js"></script>
+  </body>
+</html>`)
+            return
+            // }
             next()
           })
         }
@@ -142,7 +128,6 @@ export default function IslandsPlugins (appConfig: AppConfig): PluginOption[] {
         outDir = config.build.outDir
         mode = config.mode
         root = config.root
-        configFile = config.configFile
         resolveVitePath = config.createResolver()
         debug.wrap({ outDir, assetsDir })
       },

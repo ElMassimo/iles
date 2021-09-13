@@ -62,6 +62,9 @@ function createVueIsland (component: Component, el: Element, props: Props, slots
 
   createVueApp({ render: () => h(component, props, slotFns) })
     .mount(el!, Boolean(slots))
+
+  if (import.meta.env.DEV)
+    console.log(`🏝 hydrated ${component.__file?.split('/').reverse()[0]}`, el, slots)
 }
 
 // NOTE: In the future we might support mounting components from other frameworks.

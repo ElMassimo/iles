@@ -36,7 +36,7 @@ async function renderRoute (config: AppConfig, manifest: Manifest, route: SSGRou
 
     for (const island of islands) {
       // Find the corresponding entrypoint for the island.
-      const entry = manifest[`\x00virtual:${path.relative(config.root, island.entryFilename)}`]
+      const entry = manifest[`\x00virtual:${path.relative(config.root, island.entryFilename!)}`]
       if (entry.imports) preloadScripts.push(...entry.imports)
 
       // Read the compiled code for the island.

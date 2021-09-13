@@ -87,7 +87,7 @@ export interface UserConfig extends Partial<RequiredConfig>, Partial<Plugin> {
 
 export interface AppConfig extends RequiredConfig, AppPlugins {
   root: string
-  configPath?: string
+  configPath: string
   plugins: Plugin[]
 }
 
@@ -97,7 +97,7 @@ export interface IslandDefinition {
   id: string
   script: string
   placeholder: string
-  entryFilename: string
+  entryFilename?: string
 }
 
 export type IslandsByPath = Record<string, IslandDefinition[]>

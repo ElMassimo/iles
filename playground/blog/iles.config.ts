@@ -3,9 +3,6 @@ import IconsResolver from 'unplugin-icons/resolver'
 
 export default defineConfig({
   debug: true,
-  router: {
-    linkActiveClass: 'wow!',
-  },
   components: {
     resolvers: [IconsResolver({ componentPrefix: '' })],
   },

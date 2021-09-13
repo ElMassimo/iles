@@ -25,6 +25,8 @@ export async function bundle (config: AppConfig) {
   return { clientResult, serverResult }
 }
 
+// Internal: Creates a client and server bundle.
+// NOTE: The client bundle is used only to obtain styles, JS is discarded.
 async function bundleWithVite (config: AppConfig, entrypoints: Entrypoints, { ssr }: BuildOptions) {
   return await build(mergeViteConfig(config.vite, {
     logLevel: 'warn',
@@ -53,12 +55,14 @@ async function resolveEntrypoints (config: AppConfig) {
     app: resolve(APP_PATH, 'index.js'),
   }
   const pages = await resolvePages(resolvePageOptions(config.pages, config.root))
-  pages.forEach(page => {
+  pages.forEach((page) => {
     entrypoints[fileToAssetName(page.route)] = page.filepath
   })
   return entrypoints
 }
 
+// Internal: Removes any client JS files from the bundle, islands will be used
+// instead, which are bundled in a separate build.
 function removeJsPlugin (): Plugin {
   return {
     name: 'iles:client-js-removal',

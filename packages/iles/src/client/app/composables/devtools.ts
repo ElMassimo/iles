@@ -46,7 +46,7 @@ export function installDevtools (app: App) {
     api.addInspector({
       id: INSPECTOR_ID,
       label: ISLAND_TYPE,
-      icon: 'water',
+      icon: 'waves',
       treeFilterPlaceholder: 'Search islands',
     })
 

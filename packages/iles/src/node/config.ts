@@ -66,7 +66,8 @@ async function resolveUserConfig (root: string, configEnv: ConfigEnv) {
     }
   }
 
-  const appConfig: AppConfig = { ...config, configPath: result?.path, plugins: userPlugins }
+  if (result?.path) config.configPath = result?.path
+  const appConfig: AppConfig = { ...config, plugins: userPlugins }
   appConfig.vite.base = appConfig.base
   appConfig.vite.build!.assetsDir = appConfig.assetsDir
 
@@ -78,6 +79,7 @@ function appConfigDefaults (root: string): AppConfig {
     debug: false,
     root,
     base: '/',
+    configPath: resolve(root, 'iles.config.ts'),
     assetsDir: 'assets',
     srcDir: 'src',
     outDir: 'dist',
@@ -128,6 +130,7 @@ function viteConfigDefaults (root: string): ViteOptions {
       include: [
         'vue',
         'vue-router',
+        '@vue/devtools-api',
         '@vueuse/head',
         '@nuxt/devalue',
         '@vue/server-renderer',
