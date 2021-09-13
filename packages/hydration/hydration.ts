@@ -70,6 +70,4 @@ function createIsland (component: Component, id: string, props: Props, slots?: S
   if (!el) return console.error(`Unable to find element #${id}, could not mount island.`)
 
   createVueIsland(component, el, props, slots)
-
-  if (import.meta.env.DEV) console.info(`Hydrated ${component.__file?.split('/').reverse()[0]}`, el, slots)
 }

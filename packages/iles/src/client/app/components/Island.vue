@@ -33,6 +33,18 @@ export default defineComponent({
       strategy: Object.values(Hydrate).find(s => props[s]) || Hydrate.OnLoad,
     }
   },
+  mounted () {
+    if (!import.meta.env.SSR) {
+      import('../composables/devtools')
+        .then(({ addIslandToDevtools }) => addIslandToDevtools(this))
+    }
+  },
+  unmounted () {
+    if (!import.meta.env.SSR) {
+      import('../composables/devtools')
+        .then(({ removeIslandFromDevtools }) => removeIslandFromDevtools(this))
+    }
+  },
   render () {
     const isSSR = import.meta.env.SSR
 
@@ -63,22 +75,18 @@ export default defineComponent({
       return placeholder
     }
 
-    if (isSSR) {
-      return [
-        rootNode,
-        h(defineAsyncComponent(async () => createCommentVNode(await renderPlaceholder()))),
-      ]
-    }
-
     // Hydrate in development to debug potential problems with the script.
-    if (this.appConfig.debug) {
+    if (this.appConfig.debug && !isSSR) {
       return [
         rootNode,
         h(defineAsyncComponent(async () => h('script', { type: 'module', innerHTML: await renderScript() }))),
       ]
     }
 
-    return rootNode
+    return [
+      rootNode,
+      h(defineAsyncComponent(async () => createCommentVNode(await renderPlaceholder()))),
+    ]
   },
 })
 

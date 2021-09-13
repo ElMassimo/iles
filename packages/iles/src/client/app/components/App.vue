@@ -9,8 +9,8 @@ useRouterLinks()
 const route = useRoute()
 let layout = $computed(() => getLayout(route))
 
-const DebugIslands = import.meta.env.DEV
-  ? defineAsyncComponent(() => import('./Debug.vue'))
+const DebugPanel = import.meta.env.DEV
+  ? defineAsyncComponent(() => import('./DebugPanel.vue'))
   : () => null
 </script>
 
@@ -29,5 +29,5 @@ export default {
       <component v-else :is="Page"/>
     </router-view>
   </Suspense>
-  <DebugIslands/>
+  <DebugPanel/>
 </template>

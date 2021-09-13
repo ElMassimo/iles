@@ -75,7 +75,11 @@ export const createApp: CreateAppFactory = async (options = {}) => {
 if (!import.meta.env.SSR) {
   (async () => {
     const { app, router } = await createApp()
+
     await router.isReady() // wait until page component is fetched before mounting
     app.mount('#app', true)
+
+    const devtools = await import('./composables/devtools')
+    devtools.installDevtools(app)
   })()
 }
