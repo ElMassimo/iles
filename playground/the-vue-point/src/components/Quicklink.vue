@@ -1,9 +1,10 @@
 <script setup lang="ts">
+/* eslint-disable vue/valid-template-root */
+/* eslint-disable vue/html-self-closing */
 import { onMounted } from 'vue'
 
 onMounted(() => import('~/logic/quicklink'))
 </script>
 
-<script lang="ts">
-export default () => null
-</script>
+<template>
+</template>

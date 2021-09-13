@@ -1,13 +1,13 @@
 <script lang="ts">
 /* eslint-disable no-restricted-syntax */
-import { defineAsyncComponent, defineComponent, h, createCommentVNode, useSSRContext } from 'vue'
+import { defineAsyncComponent, defineComponent, h, createCommentVNode } from 'vue'
 import { useRoute } from 'iles'
 import type { PropType, DefineComponent, Slot } from 'vue'
-import { renderToString, SSRContext } from '@vue/server-renderer'
 import { serialize } from '../utils'
 import { newHydrationId, Hydrate, hydrationFns } from '../hydration'
 import { useIslandsForPath } from '../composables/islandDefinitions'
 import { useAppConfig } from '../composables/appConfig'
+import { useVueRenderer, VNodeRenderer } from '../composables/vueRenderer'
 
 export default defineComponent({
   name: 'Island',
@@ -29,7 +29,7 @@ export default defineComponent({
       id: newHydrationId(),
       route: useRoute(),
       islandsForPath: import.meta.env.SSR ? useIslandsForPath() : undefined,
-      ssrContext: import.meta.env.SSR ? useSSRContext() : undefined,
+      renderVNodes: useVueRenderer(),
       strategy: Object.values(Hydrate).find(s => props[s]) || Hydrate.OnLoad,
     }
   },
@@ -60,7 +60,7 @@ export default defineComponent({
     const slotVNodes = mapObject(this.$slots, slotFn => slotFn?.())
 
     const renderScript = async () => {
-      const slots = await renderSlots(slotVNodes, this.ssrContext)
+      const slots = await asyncMapObject(slotVNodes, this.renderVNodes)
 
       return `import { ${this.importName} as ${this.componentName} } from '${this.importPath}'
   import { ${hydrationFns[this.strategy]} as hydrate } from '${isSSR ? '' : '/@id/'}@islands/hydration'
@@ -97,10 +97,11 @@ function mapObject<I, O> (obj: Record<string, I>, fn: (i: I) => O): Record<strin
   return result
 }
 
-async function renderSlots (slotVNodes: Record<string, undefined | ReturnType<Slot>>, context: SSRContext = {}) {
-  return Object.fromEntries(await Promise.all(Object.entries(slotVNodes).map(async ([name, vNodes]) =>
-    [name, vNodes ? await Promise.all(vNodes.map(async vNode => await renderToString(vNode, context))) : vNodes],
-  )))
+async function asyncMapObject<I, O> (obj: Record<string, I>, fn: (i: I) => Promise<O>): Promise<Record<string, O>> {
+  const result = Object.create(null)
+  for (let key in obj)
+    result[key] = await fn(obj[key])
+  return result
 }
 </script>
 

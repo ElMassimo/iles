@@ -17,8 +17,7 @@ export async function getRoutesForSSG (config: AppConfig, createApp: CreateAppFa
         const { meta = {} } = route
         const {
           filename,
-          permalink = path,
-          extension = (permalink && extname(permalink).slice(1)) || '.html',
+          extension = extname(path).slice(1) || '.html',
         } = meta
 
         routesForSSG.set(path, {

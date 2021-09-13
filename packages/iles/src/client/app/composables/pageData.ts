@@ -7,7 +7,7 @@ export interface PageData<T = any> {
   frontmatter: Ref<PageMeta['frontmatter']>
 }
 
-export const dataSymbol: InjectionKey<PageData> = Symbol('ilesPageData')
+export const dataSymbol: InjectionKey<PageData> = Symbol('[iles-page-data]')
 
 export function installPageData (app: App, route: Ref<RouteLocationNormalizedLoaded>): PageData {
   const pageData: PageData = {

@@ -8,6 +8,7 @@
   "devDependencies": {
     "@iconify/json": "^1.1.393",
     "@vueuse/core": "^6.3.2",
+    "feed": "^4.2.2",
     "get-mp3-duration": "^1.0.0",
     "iles": "workspace:*",
     "sass": "^1.39.0",

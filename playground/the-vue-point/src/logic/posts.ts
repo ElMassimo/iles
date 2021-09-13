@@ -28,7 +28,7 @@ const ExcerptOnly: FunctionalComponent = (_props, { slots }) => {
 
 function withExcerpt (post: Post) {
   const excerpt: FunctionalComponent = (props, ctx) =>
-    h(post.content, { components: { wrapper: ExcerptOnly } })
+    h(post.default || post, { components: { wrapper: ExcerptOnly } })
   return { ...post, excerpt }
 }
 

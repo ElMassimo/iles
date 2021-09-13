@@ -184,6 +184,9 @@ export default function IslandsPlugins (appConfig: AppConfig): PluginOption[] {
         // TODO: Add option in vite-plugin-xdm to extend frontmatter, like Jekyll.
         const href = relative(root, path).replace(/\.\w+$/, '').replace('src/pages/', '/')
 
+        // Allow MDX content to be rendered without args.
+        code = code.replace('MDXContent(props)', 'MDXContent(props = {})')
+
         // TODO: Allow component to receive an excerpt prop.
         return code.replace('export default MDXContent', `
           ${code.includes(' defineComponent') ? '' : 'import { defineComponent } from \'vue\''}
@@ -202,7 +205,7 @@ export default function IslandsPlugins (appConfig: AppConfig): PluginOption[] {
               return MDXContent({ ...this.$props, ...this.$attrs })
             },
           })
-          export const content = _default
+          export const render = MDXContent
           export default _default
         `)
       },

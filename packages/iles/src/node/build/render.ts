@@ -6,6 +6,8 @@ import type { Awaited, AppConfig, CreateAppFactory, IslandsByPath, SSGRoute } fr
 import type { bundle } from './bundle'
 import { getRoutesForSSG } from './routes'
 
+const commentsRegex = /<!--\[-->|<!--]-->|<!---->/g
+
 export async function renderPages (
   config: AppConfig,
   islandsByPath: IslandsByPath,
@@ -33,7 +35,7 @@ export async function renderPage (
   const { app, head } = await createApp({ routePath: route.path })
   const content = await require('@vue/server-renderer').renderToString(app, { islandsByPath })
 
-  if (route.extension !== '.html') return content
+  if (route.extension !== '.html') return content.replace(commentsRegex, '')
 
   const { headTags, htmlAttrs, bodyAttrs } = renderHeadToString(head)
 

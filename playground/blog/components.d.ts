@@ -12,6 +12,7 @@ declare module 'vue' {
     CarbonDicomOverlay: typeof import('~icons/carbon/dicom-overlay')['default']
     CarbonWarning: typeof import('~icons/carbon/warning')['default']
     DarkSwitch: typeof import('./src/components/DarkSwitch.vue')['default']
+    GoBackButton: typeof import('./src/components/GoBackButton.vue')['default']
     PlayButton: typeof import('./src/components/PlayButton.vue')['default']
     Quote: typeof import('./src/components/Quote.vue')['default']
     SeekBar: typeof import('./src/components/SeekBar.vue')['default']

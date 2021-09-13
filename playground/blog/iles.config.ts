@@ -12,4 +12,7 @@ export default defineConfig({
         return { ...route, meta: { ...route.meta, layout: 'post' } }
     },
   },
+  vite: {
+    optimizeDeps: { include: ['@vueuse/core', 'feed'] },
+  },
 })

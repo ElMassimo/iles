@@ -76,7 +76,7 @@ async function resolveUserConfig (root: string, configEnv: ConfigEnv) {
 
 function appConfigDefaults (root: string): AppConfig {
   return {
-    debug: false,
+    debug: true,
     root,
     base: '/',
     configPath: resolve(root, 'iles.config.ts'),

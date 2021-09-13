@@ -36,7 +36,6 @@ const posts = usePosts()
                 <div class="prose max-w-none text-gray-500">
                   <component :is="post.excerpt"/>
                 </div>
-                <!-- <component v-else class="prose max-w-none text-gray-500" :is="post.default"/> -->
               </div>
               <div class="text-base leading-6 font-medium">
                 <a class="link" aria-label="read more" :href="post.href">Read more →</a>
