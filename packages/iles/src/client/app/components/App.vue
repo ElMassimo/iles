@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { defineAsyncComponent } from 'vue'
 import { useRoute } from 'iles'
 import { getLayout } from '../layouts'
 import { useRouterLinks } from '../composables/routerLinks'
@@ -7,6 +8,10 @@ useRouterLinks()
 
 const route = useRoute()
 let layout = $computed(() => getLayout(route))
+
+const DebugIslands = import.meta.env.DEV
+  ? defineAsyncComponent(() => import('./Debug.vue'))
+  : () => null
 </script>
 
 <script lang="ts">

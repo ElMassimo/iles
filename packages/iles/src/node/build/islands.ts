@@ -16,15 +16,12 @@ export async function bundleIslands (
   islandsByPath: IslandsByPath,
   { routesToRender }: Awaited<ReturnType<typeof renderPages>>,
 ) {
-  const unnecessaryClientFiles = await glob(path.join(config.outDir, '**/*.js'))
-  console.log({ unnecessaryClientFiles })
-
   await buildIslands(config, islandsByPath)
   const manifestPath = path.join(config.outDir, 'manifest.json')
   const manifest: Manifest = JSON.parse(await fs.readFile(manifestPath, 'utf-8'))
 
   await Promise.all(routesToRender.map(async route =>
-    await renderRoute (config, manifest, route, islandsByPath[route.path])))
+    await renderRoute(config, manifest, route, islandsByPath[route.path])))
 
   // Remove temporary island script files.
   const tempIslandFiles = await glob(path.join(config.outDir, '**/_virtual_*.js'))

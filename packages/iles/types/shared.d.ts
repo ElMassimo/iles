@@ -1,7 +1,7 @@
 /* eslint-disable no-use-before-define */
 import type { UserConfig as ViteOptions, ConfigEnv } from 'vite'
 import type { App } from 'vue'
-
+import type { Options as CritterOptions } from 'critters'
 import type { Options as VueOptions } from '@vitejs/plugin-vue'
 import type { UserOptions as PagesOptions } from 'vite-plugin-pages'
 import type { Options as ComponentOptions } from 'unplugin-vue-components/types'
@@ -51,6 +51,7 @@ export interface AppPlugins {
   components: ComponentOptions
   vueJsx: Parameters<typeof VueJsxPlugin>[0]
   markdown: XdmOptions
+  critters?: CritterOptions | false
 }
 
 export interface Plugin extends Partial<AppPlugins> {

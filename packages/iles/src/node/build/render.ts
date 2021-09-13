@@ -16,6 +16,7 @@ export async function renderPages (
   const routesToRender = await getRoutesForSSG(config, createApp)
 
   const clientChunks = clientResult.output
+
   for (const ssgRoute of routesToRender)
     ssgRoute.rendered = await renderPage(config, islandsByPath, clientChunks, ssgRoute, createApp)
 
@@ -41,7 +42,7 @@ export async function renderPage (
 <html ${htmlAttrs}>
   <head>
     ${headTags}
-    ${stylesheetTagsFrom(config, clientChunks)}
+    ${stylesheetTagsFrom(config, clientChunks, route)}
   </head>
   <body ${bodyAttrs}>
     <div id="app">${content}</div>
@@ -49,11 +50,9 @@ export async function renderPage (
 </html>`.trim()
 }
 
-function stylesheetTagsFrom (config: AppConfig, clientChunks: RollupOutput['output']) {
-  const cssChunk = clientChunks.find(chunk =>
-    chunk.type === 'asset' && chunk.fileName.endsWith('.css'))
-
-  return cssChunk
-    ? `<link rel="stylesheet" href="${config.base}${cssChunk.fileName}">`
-    : ''
+function stylesheetTagsFrom (config: AppConfig, clientChunks: RollupOutput['output'], route: SSGRoute) {
+  return clientChunks
+    .filter(chunk => chunk.type === 'asset' && chunk.fileName.endsWith('.css'))
+    .map(chunk => `<link rel="stylesheet" href="${config.base}${chunk.fileName}">`)
+    .join('\n')
 }

@@ -6,7 +6,7 @@ import routes from '@islands/routes'
 import appConfig from '@islands/app-config'
 import userApp from '@islands/user-app'
 import type { CreateAppFactory, SSGContext, RouterOptions } from '../shared'
-import { App, Debug, Island } from './components'
+import { App, Island } from './components'
 import { installPageData } from './composables/pageData'
 import { installAppConfig } from './composables/appConfig'
 
@@ -47,7 +47,6 @@ export const createApp: CreateAppFactory = async (options = {}) => {
 
   // Install global components
   app.component('Island', Island)
-  app.component('DebugIslands', import.meta.env.SSR ? () => null : Debug)
 
   // Default meta tags
   head.addHeadObjs(ref({
