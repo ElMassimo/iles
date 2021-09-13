@@ -1,6 +1,7 @@
 import type { App, ComponentPublicInstance } from 'vue'
 import { reactive, computed } from 'vue'
-import { DevtoolsPluginApi, setupDevtoolsPlugin } from '@vue/devtools-api'
+import type { InspectorNodeTag, DevtoolsPluginApi } from '@vue/devtools-api'
+import { setupDevtoolsPlugin } from '@vue/devtools-api'
 
 const ISLAND_TYPE = 'Islands 🏝'
 const componentStateTypes = [ISLAND_TYPE]
@@ -84,7 +85,7 @@ export function installDevtools (app: App) {
             { label: island.id, textColor: 0, backgroundColor: 0x84CC16 },
             { label: (strategyLabels as any)[island.strategy], textColor: 0, backgroundColor: 0x22D3EE },
             island.strategy === 'client:media' && { label: island['client:media'], textColor: 0, backgroundColor: 0xFB923C },
-          ].filter(x => x),
+          ].filter(x => x) as InspectorNodeTag[],
         }))
     })
 
