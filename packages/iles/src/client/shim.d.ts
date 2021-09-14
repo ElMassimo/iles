@@ -17,6 +17,11 @@ declare module '@islands/routes' {
   export default routes
 }
 
+declare module '@islands/layouts' {
+  import type { getLayout } from './app/layouts'
+  export { getLayout }
+}
+
 declare module '@islands/app-config' {
   import type { AppClientConfig } from './shared'
   const config: AppClientConfig

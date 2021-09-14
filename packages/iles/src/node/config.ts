@@ -143,6 +143,7 @@ function viteConfigDefaults (root: string): ViteOptions {
         'vue-demi',
         'iles',
         '@islands/hydration',
+        '@islands/layouts',
       ],
     },
   }

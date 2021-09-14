@@ -17,7 +17,7 @@ const posts = usePosts()
             text-gray-900
             tracking-tight
             sm:text-4xl sm:leading-10
-            md:text-6xl md:leading-14
+            md:text-6xl
           "
         >
           {{ $frontmatter.title }}

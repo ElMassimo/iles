@@ -15,6 +15,10 @@ p img {
   border-top: 1px solid #e5e7eb;
 }
 
+.prose > :first-child {
+  margin-top:  1.25em!important;
+}
+
 .link {
   color: var(--c-brand);
 }

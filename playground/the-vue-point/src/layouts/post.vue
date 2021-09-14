@@ -29,7 +29,7 @@ let prevPost = $computed(() => posts[currentIndex + 1])
             text-gray-900
             tracking-tight
             sm:text-4xl sm:leading-10
-            md:text-5xl md:leading-14
+            md:text-5xl
           "
         >{{ frontmatter.title }}</h1>
       </header>
