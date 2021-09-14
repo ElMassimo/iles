@@ -2,12 +2,12 @@
 /* eslint-disable no-restricted-syntax */
 import { defineAsyncComponent, defineComponent, h, createCommentVNode } from 'vue'
 import { useRoute } from 'iles'
-import type { PropType, DefineComponent, Slot } from 'vue'
+import type { PropType, DefineComponent } from 'vue'
 import { serialize } from '../utils'
 import { newHydrationId, Hydrate, hydrationFns } from '../hydration'
 import { useIslandsForPath } from '../composables/islandDefinitions'
 import { useAppConfig } from '../composables/appConfig'
-import { useVueRenderer, VNodeRenderer } from '../composables/vueRenderer'
+import { useVueRenderer } from '../composables/vueRenderer'
 
 export default defineComponent({
   name: 'Island',
@@ -34,16 +34,10 @@ export default defineComponent({
     }
   },
   mounted () {
-    if (!import.meta.env.SSR) {
-      import('../composables/devtools')
-        .then(({ addIslandToDevtools }) => addIslandToDevtools(this))
-    }
+    (window as any).__ILE_DEVTOOLS__?.addIslandToDevtools(this)
   },
   unmounted () {
-    if (!import.meta.env.SSR) {
-      import('../composables/devtools')
-        .then(({ removeIslandFromDevtools }) => removeIslandFromDevtools(this))
-    }
+    (window as any).__ILE_DEVTOOLS__?.removeIslandFromDevtools(this)
   },
   render () {
     const isSSR = import.meta.env.SSR

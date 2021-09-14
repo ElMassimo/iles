@@ -2,18 +2,18 @@ import type { App, ComponentPublicInstance } from 'vue'
 import { reactive, computed } from 'vue'
 import type { InspectorNodeTag, DevtoolsPluginApi } from '@vue/devtools-api'
 import { setupDevtoolsPlugin } from '@vue/devtools-api'
+import type { AppConfig } from '../../shared'
 
 const ISLAND_TYPE = 'Islands 🏝'
 const componentStateTypes = [ISLAND_TYPE]
 
 const INSPECTOR_ID = 'iles'
+const HYDRATION_LAYER_ID = 'iles:hydration'
 
 const islandsById = reactive<Record<string, ComponentPublicInstance>>({})
 const islands = computed(() => Object.values(islandsById))
 
-let devtoolsApi: DevtoolsPluginApi
-
-const strategyLabels = {
+const strategyLabels: Record<string, any> = {
   'client:idle': 'whenIdle',
   'client:load': 'instant',
   'client:media': 'onMediaQuery',
@@ -21,17 +21,43 @@ const strategyLabels = {
   'client:visible': 'whenVisible',
 }
 
-export function addIslandToDevtools (island: any) {
-  islandsById[island.id] = island
-  devtoolsApi?.sendInspectorTree(INSPECTOR_ID)
+let devtoolsApi: DevtoolsPluginApi
+let appConfig: AppConfig
+
+const devtools = {
+  addIslandToDevtools (island: any) {
+    islandsById[island.id] = island
+    devtoolsApi?.sendInspectorTree(INSPECTOR_ID)
+  },
+
+  removeIslandFromDevtools (island: any) {
+    delete islandsById[island.id]
+    devtoolsApi?.sendInspectorTree(INSPECTOR_ID)
+  },
+
+  onHydration ({ id, ...event }: any) {
+    const island: any = islandsById[id]
+    const hydrated = getStrategy(island)
+    devtoolsApi?.addTimelineEvent({
+      layerId: HYDRATION_LAYER_ID,
+      event: {
+        time: Date.now(),
+        title: island.componentName,
+        subtitle: hydrated,
+        data: { ...event, hydrated },
+      },
+    })
+    if (appConfig?.debug) {
+      const { el, slots } = event
+      console.log(`🏝 hydrated ${island.componentName}`, el, slots)
+    }
+  },
 }
 
-export function removeIslandFromDevtools (island: any) {
-  delete islandsById[island.id]
-  devtoolsApi?.sendInspectorTree(INSPECTOR_ID)
-}
+export function installDevtools (app: App, config: AppConfig) {
+  appConfig = config
+  ;(window as any).__ILE_DEVTOOLS__ = devtools
 
-export function installDevtools (app: App) {
   setupDevtoolsPlugin({
     id: 'com.maximomussini.iles',
     label: ISLAND_TYPE,
@@ -41,6 +67,7 @@ export function installDevtools (app: App) {
     componentStateTypes,
     app,
   }, (api) => {
+    (devtools as any).api = api
     devtoolsApi = api
 
     api.addInspector({
@@ -48,6 +75,12 @@ export function installDevtools (app: App) {
       label: ISLAND_TYPE,
       icon: 'waves',
       treeFilterPlaceholder: 'Search islands',
+    })
+
+    api.addTimelineLayer({
+      id: HYDRATION_LAYER_ID,
+      color: 0xFF984F,
+      label: '🏝 Hydration',
     })
 
     api.on.inspectComponent(({ componentInstance, instanceData }) => {
@@ -82,8 +115,8 @@ export function installDevtools (app: App) {
           id: island.id,
           label: island.componentName,
           tags: [
-            { label: island.id, textColor: 0, backgroundColor: 0x84CC16 },
-            { label: (strategyLabels as any)[island.strategy], textColor: 0, backgroundColor: 0x22D3EE },
+            { label: island.id, textColor: 0, backgroundColor: 0x42B983 },
+            { label: getStrategy(island), textColor: 0, backgroundColor: 0x22D3EE },
             island.strategy === 'client:media' && { label: island['client:media'], textColor: 0, backgroundColor: 0xFB923C },
           ].filter(x => x) as InspectorNodeTag[],
         }))
@@ -95,28 +128,11 @@ export function installDevtools (app: App) {
       if (!island) return
       payload.state = {
         props: [
-          { key: 'id', value: island.id },
-          { key: 'strategy', value: (strategyLabels as any)[island.strategy] },
-          { key: 'componentName', value: island.componentName },
+          { key: 'el', value: island.$el?.nextSibling },
+          { key: 'strategy', value: getStrategy(island) },
+          { key: 'component', value: island.component },
           { key: 'importName', value: island.importName },
           { key: 'importPath', value: island.importPath.replace(island.appConfig.root, '') },
-          {
-            key: 'el',
-            value: {
-              _custom: {
-                display: 'ile-root',
-                actions: [
-                  {
-                    icon: 'preview',
-                    tooltip: 'Show Element',
-                    action () {
-                      api.highlightElement(island)
-                    },
-                  },
-                ],
-              },
-            },
-          },
         ],
       }
     })
@@ -127,4 +143,8 @@ function findIsland (component: any): any {
   if (!component) return null
   if (component.strategy?.startsWith('client:')) return component
   return findIsland(component.$parent)
+}
+
+function getStrategy (island: any) {
+  return strategyLabels[island.strategy]
 }

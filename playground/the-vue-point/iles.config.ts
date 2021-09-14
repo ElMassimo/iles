@@ -24,6 +24,7 @@ export default defineConfig({
       inspect(),
       restart({
         restart: '../../packages/iles/dist/**/*.{ts,js}',
+        delay: 5000,
       }),
     ],
   },

@@ -3,7 +3,8 @@ import { useSSRContext } from 'vue'
 
 export function useVueRenderer () {
   const context = import.meta.env.SSR ? useSSRContext() : {}
-  return async (vNodes: VNode | VNode[]) => {
+  return async (vNodes: undefined | VNode | VNode[]) => {
+    if (!vNodes) return
     const { renderToString } = await import('@vue/server-renderer')
     if (!Array.isArray(vNodes)) return await renderToString(vNodes, context)
     const strs = vNodes.map(async vNode => await renderToString(vNode, context))

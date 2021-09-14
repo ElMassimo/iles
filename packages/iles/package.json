@@ -3,6 +3,7 @@
   "description": "Vite & Vue powered static site generator with partial hydration",
   "version": "0.0.1",
   "main": "dist/node/index.js",
+  "module": "dist/node/index.mjs",
   "typings": "types/index.d.ts",
   "bin": {
     "iles": "bin/iles.js"
@@ -16,11 +17,13 @@
   "scripts": {
     "dev": "rimraf -rf dist && npm run dev-shared && npm run dev-start",
     "dev-start": "run-p dev-client dev-node dev-watch",
-    "dev-client": "tsc -w -p src/client",
-    "dev-node": "tsc -w -p src/node",
+    "dev-client": "npm run build-client -- --watch",
+    "dev-node": "npm run build-node -- --watch",
     "dev-shared": "node scripts/copyShared",
     "dev-watch": "node scripts/watchAndCopy",
-    "build": "rimraf -rf dist && node scripts/copyShared && tsc -p src/client && tsc -p src/node && node scripts/copyClient"
+    "build-node": "tsup src/node",
+    "build-client": "tsc -p src/client",
+    "build": "rimraf -rf dist && node scripts/copyShared && npm run build-client && npm run build-node && node scripts/copyClient"
   },
   "engines": {
     "node": ">=12.0.0"
@@ -59,7 +62,6 @@
     "lru-cache": "^6.0.0",
     "minimist": "^1.2.5",
     "ora": "^5.4.0",
-    "rollup-plugin-virtual": "^1.0.1",
     "unplugin-vue-components": "^0.15.0",
     "vite": "^2.5.7",
     "vite-plugin-pages": "file:../../../vite-plugin-pages",
@@ -78,6 +80,8 @@
     "enquirer": "^2.3.6",
     "execa": "^5.0.0",
     "npm-run-all": "^4.1.5",
+    "remark-frontmatter": "^4.0.0",
+    "remark-mdx-frontmatter": "^1.0.1",
     "rimraf": "^3.0.2",
     "rollup": "^2.56.3",
     "semver": "^7.3.5",

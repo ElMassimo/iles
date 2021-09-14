@@ -2,7 +2,7 @@ import { defineConfig } from 'iles'
 import IconsResolver from 'unplugin-icons/resolver'
 
 export default defineConfig({
-  // debug: false,
+  debug: true,
   components: {
     resolvers: [IconsResolver({ componentPrefix: '' })],
   },

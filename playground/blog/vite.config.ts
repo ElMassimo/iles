@@ -10,7 +10,8 @@ export default defineConfig({
     icons(),
     inspect(),
     restart({
-      restart: '../../packages/iles/dist/**/*.{ts,js}',
+      restart: '../../packages/iles/dist/{node,shared}/**/*.{ts,js}',
+      delay: 5000,
     }),
   ],
 })

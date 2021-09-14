@@ -8,14 +8,15 @@ import vue from '@vitejs/plugin-vue'
 import pages, { MODULE_ID_VIRTUAL as PAGES_REQUEST_PATH } from 'vite-plugin-pages'
 import components from 'unplugin-vue-components/vite'
 import vueJsx from '@vitejs/plugin-vue-jsx'
+import xdm from 'vite-plugin-xdm'
 import MagicString from 'magic-string'
 
 import createDebugger from 'debug'
 import type { AppConfig, AppClientConfig } from '../shared'
 import { APP_PATH, ROUTES_REQUEST_PATH, USER_APP_REQUEST_PATH, APP_CONFIG_REQUEST_PATH } from '../alias'
-import { escapeRegex, pascalCase, serialize } from './utils'
-import { parseImports } from './parse'
 import { createServer } from '../server'
+import { escapeRegex, pascalCase, serialize, replaceAsync } from './utils'
+import { parseId, parseImports } from './parse'
 
 const debug = {
   config: createDebugger('iles:config'),
@@ -25,30 +26,8 @@ const debug = {
   build: createDebugger('iles:build'),
 }
 
-function parseId (id: string) {
-  const index = id.indexOf('?')
-  if (index < 0) {
-    return { path: id, query: {} }
-  }
-  else {
-    // @ts-ignore
-    const query = Object.fromEntries(new URLSearchParams(id.slice(index)))
-    return {
-      path: id.slice(0, index),
-      query,
-    }
-  }
-}
-
 function isMarkdown (path: string) {
   return path.endsWith('.mdx') || path.endsWith('.md')
-}
-
-async function replaceAsync (str: string, regex: RegExp, asyncFn: (...groups: string[]) => Promise<string>) {
-  const promises = Array.from(str.matchAll(regex))
-    .map(([match, ...args]) => asyncFn(match, ...args))
-  const replacements = await Promise.all(promises)
-  return str.replace(regex, () => replacements.shift()!)
 }
 
 const contextComponentRegex = new RegExp(escapeRegex('_ctx.__unplugin_components_'), 'g')
@@ -68,7 +47,7 @@ export default async function IslandsPlugins (appConfig: AppConfig): Promise<Plu
 
   return [
     {
-      name: 'islands',
+      name: 'iles',
       resolveId (id) {
         if (id === ROUTES_REQUEST_PATH)
           return PAGES_REQUEST_PATH
@@ -93,10 +72,10 @@ export default async function IslandsPlugins (appConfig: AppConfig): Promise<Plu
           return fs.readFileSync(appPath, 'utf-8')
         }
       },
+      // Allows to do a glob import in 'src/client/app/layouts.ts'
       transform (code, id) {
-        return code.replace(/__LAYOUTS_ROOT__/g, '/src/layouts')
+        return code.replace(/__LAYOUTS_ROOT__/g, `/${relative(root, appConfig.layoutsDir)}`)
       },
-
       configureServer (server) {
         restartOnConfigChanges(appConfig, server)
 
@@ -113,15 +92,12 @@ export default async function IslandsPlugins (appConfig: AppConfig): Promise<Plu
     <script type="module" src="/@fs/${APP_PATH}/index.js"></script>
   </body>
 </html>`)
-            return
-            // }
-            next()
           })
         }
       },
     },
     {
-      name: 'islands:wrap-components',
+      name: 'iles:wrap-components',
       enforce: 'pre',
       configResolved (config) {
         debug.build('minify:', config.build.minify)
@@ -163,7 +139,7 @@ export default async function IslandsPlugins (appConfig: AppConfig): Promise<Plu
     vue(appConfig.vue),
 
     {
-      name: 'islands:mdx:pre',
+      name: 'iles:mdx:pre',
       async transform (code, id) {
         const { path } = parseId(id)
         if (!isMarkdown(path)) return null
@@ -182,10 +158,10 @@ export default async function IslandsPlugins (appConfig: AppConfig): Promise<Plu
       },
     },
 
-    await (await import('vite-plugin-xdm')).default(appConfig.markdown),
+    await xdm(appConfig.markdown),
 
     {
-      name: 'islands:mdx:pos',
+      name: 'iles:mdx:pos',
       async transform (code, id) {
         const { path } = parseId(id)
         if (!isMarkdown(path) || !code.includes('MDXContent')) return null
@@ -235,7 +211,7 @@ export default async function IslandsPlugins (appConfig: AppConfig): Promise<Plu
     components(appConfig.components),
 
     {
-      name: 'islands:import-analysis',
+      name: 'iles:import-analysis',
       enforce: 'post',
       async transform (code, id) {
         const { path, query } = parseId(id)

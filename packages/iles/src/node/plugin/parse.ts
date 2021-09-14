@@ -5,6 +5,15 @@ interface ImportMetadata {
   path: string
 }
 
+export function parseId (id: string) {
+  const index = id.indexOf('?')
+  if (index < 0) return { path: id, query: {} }
+
+  // @ts-ignore
+  const query = Object.fromEntries(new URLSearchParams(id.slice(index)))
+  return { path: id.slice(0, index), query }
+}
+
 export async function parseImports (code: string) {
   try {
     await initESLexer

@@ -55,7 +55,7 @@ export function hydrateWhenVisible (component: Component, id: string, props: Pro
 const createVueApp = import.meta.env.SSR ? createSSRApp : createClientApp
 
 // Internal: Creates a Vue app and mounts it on the specified island root.
-function createVueIsland (component: Component, el: Element, props: Props, slots: Slots | undefined) {
+function createVueIsland (component: Component, id: string, el: Element, props: Props, slots: Slots | undefined) {
   const slotFns = slots && Object.fromEntries(Object.entries(slots).map(([slotName, content]) => {
     return [slotName, () => (createStaticVNode as any)(content)]
   }))
@@ -64,7 +64,7 @@ function createVueIsland (component: Component, el: Element, props: Props, slots
     .mount(el!, Boolean(slots))
 
   if (import.meta.env.DEV)
-    console.log(`🏝 hydrated ${component.__file?.split('/').reverse()[0]}`, el, slots)
+    (window as any).__ILE_DEVTOOLS__?.onHydration({ id, el, slots, component })
 }
 
 // NOTE: In the future we might support mounting components from other frameworks.
@@ -72,5 +72,5 @@ function createIsland (component: Component, id: string, props: Props, slots?: S
   const el = document.getElementById(id)
   if (!el) return console.error(`Unable to find element #${id}, could not mount island.`)
 
-  createVueIsland(component, el, props, slots)
+  createVueIsland(component, id, el, props, slots)
 }

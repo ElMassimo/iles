@@ -1,6 +1,6 @@
 import { UserApp, UserConfig } from '../../types/shared'
 
-export {
+export type {
   AppClientConfig,
   AppConfig,
   AppPlugins,

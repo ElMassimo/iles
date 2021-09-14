@@ -1,3 +1,5 @@
+/* eslint-disable import/no-duplicates */
+/* eslint-disable import/order */
 declare module '*.vue' {
   import { ComponentOptions } from 'vue'
   const comp: ComponentOptions
@@ -25,4 +27,10 @@ declare module '@islands/user-app' {
   import type { UserApp } from './shared'
   const config: UserApp
   export default config
+}
+
+declare module 'vite-plugin-xdm/frontmatter' {
+  import type { FrontmatterPlugin } from 'vite-plugin-xdm'
+  const plugin: FrontmatterPlugin
+  export default plugin
 }

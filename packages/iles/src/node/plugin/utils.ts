@@ -19,3 +19,10 @@ export function camelCase (str: string) {
 export function capitalize (str: string) {
   return str.charAt(0).toUpperCase() + str.slice(1)
 }
+
+export async function replaceAsync (str: string, regex: RegExp, asyncFn: (...groups: string[]) => Promise<string>) {
+  const promises = Array.from(str.matchAll(regex))
+    .map(([match, ...args]) => asyncFn(match, ...args))
+  const replacements = await Promise.all(promises)
+  return str.replace(regex, () => replacements.shift()!)
+}
