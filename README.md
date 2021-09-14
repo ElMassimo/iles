@@ -42,6 +42,8 @@
 [matchMedia]: https://developer.mozilla.org/en-US/docs/Web/API/Window/matchMedia
 [Vitepress]: https://vitepress.vuejs.org/
 [vite-ssg]: https://github.com/antfu/vite-ssg
+[devtools1]: https://pbs.twimg.com/media/E_Q2BWaWYAQG0KY?format=jpg&name=large
+[devtools2]: https://pbs.twimg.com/media/E_Q2BYHXMAMBU0a?format=jpg&name=896x896
 
 __[îles]__ is a static-site generator that provides automatic [partial hydration].
 
@@ -72,6 +74,8 @@ __[Live Demo]__
   Use Vue components as layouts for Markdown or Vue pages.
 
 - 🛣 [File-system Based Routing][vite-plugin-pages]
+
+- 🛠 Vue [Devtools][devtools1] [Support][devtools2]
 
 ## Project Status
 

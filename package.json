@@ -16,7 +16,6 @@
   "devDependencies": {
     "@mussi/eslint-config": "^0.5.1",
     "@mussi/stylelint-config": "^0.1.1",
-    "@nuxt/devalue": "^2.0.0",
     "@peeky/cli": "^0.4.2",
     "@peeky/runner": "^0.4.2",
     "concurrently": "^6.2.1",
