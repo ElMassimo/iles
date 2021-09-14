@@ -1,9 +1,7 @@
 <script setup lang="ts">
-import { computed } from 'vue'
-import { useRoute } from 'vue-router'
+import { usePage } from 'iles'
 
-const route = useRoute()
-const frontmatter = computed(() => route.meta.frontmatter)
+const { frontmatter } = usePage()
 </script>
 
 <template>
