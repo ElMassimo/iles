@@ -1,5 +1,4 @@
 packages:
   - packages/iles/
   - packages/hydration/
-  - playground/blog/
   - playground/the-vue-point/

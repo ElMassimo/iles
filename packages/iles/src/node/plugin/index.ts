@@ -152,7 +152,7 @@ export default function IslandsPlugins (appConfig: AppConfig): PluginOption[] {
         if (code.startsWith(marker))
           s.appendRight(marker.length, `href: '${href}'\n`)
         else
-          s.append(`---\nhref: '${href}'\n---`)
+          s.prepend(`---\nhref: '${href}'\n---\n`)
 
         return { code: s.toString(), map: sourcemap ? s.generateMap({ hires: true }) : null }
       },

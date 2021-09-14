@@ -103,7 +103,6 @@ function appConfigDefaults (root: string): AppConfig {
     },
     markdown: {
       jsx: true,
-      mdxExtensions: ['.md', '.mdx'],
       remarkPlugins: [
         import('remark-frontmatter').then(mod => mod.default),
         import('vite-plugin-xdm/frontmatter').then(mod => mod.default),

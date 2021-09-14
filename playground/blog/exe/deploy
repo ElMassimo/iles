@@ -1,4 +1,0 @@
-#!/usr/bin/env sh
-npx pnpm i --store=node_modules/.pnpm-store
-npx pnpm -w build:packages
-npx pnpm build

@@ -64,8 +64,8 @@
     "ora": "^5.4.0",
     "unplugin-vue-components": "^0.15.0",
     "vite": "^2.5.7",
-    "vite-plugin-pages": "file:../../../vite-plugin-pages",
-    "vite-plugin-xdm": "file:../../../vite-plugin-xdm",
+    "vite-plugin-pages": "npm:@mussi/vite-plugin-pages",
+    "vite-plugin-xdm": "^0.1.0",
     "vue": "^3.2.11",
     "vue-router": "^4.0.11"
   },
