@@ -1,3 +1,5 @@
+/// <reference types="vite/client" />
+
 import { h, createApp as createClientApp, createStaticVNode, createSSRApp } from 'vue'
 import type { DefineComponent } from 'vue'
 

@@ -3,7 +3,9 @@
   "description": "Hydration utilities for îles",
   "version": "0.0.1",
   "type": "module",
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "types": "dist/hydration.d.ts",
   "module": "dist/hydration.js",
   "main": "dist/hydration.cjs",
@@ -28,6 +30,8 @@
   },
   "devDependencies": {
     "tsup": "^4.14.0",
-    "typescript": "^4.3.2"
+    "typescript": "^4.3.2",
+    "vite": "^2.5.7",
+    "vue": "^3.2.11"
   }
 }

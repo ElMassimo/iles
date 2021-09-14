@@ -29,9 +29,13 @@ importers:
     specifiers:
       tsup: ^4.14.0
       typescript: ^4.3.2
+      vite: ^2.5.7
+      vue: ^3.2.11
     devDependencies:
       tsup: 4.14.0_typescript@4.3.5
       typescript: 4.3.5
+      vite: 2.5.7
+      vue: 3.2.11
 
   packages/iles:
     specifiers:
@@ -2200,14 +2204,12 @@ packages:
       '@vue/shared': 3.2.11
       estree-walker: 2.0.2
       source-map: 0.6.1
-    dev: false
 
   /@vue/compiler-dom/3.2.11:
     resolution: {integrity: sha512-DNvhUHI/1Hn0/+ZYDYGAuDGasUm+XHKC3FE4GqkNCTO/fcLaJMRg/7eT1m1lkc7jPffUwwfh1rZru5mwzOjrNw==}
     dependencies:
       '@vue/compiler-core': 3.2.11
       '@vue/shared': 3.2.11
-    dev: false
 
   /@vue/compiler-sfc/3.2.11:
     resolution: {integrity: sha512-cUIaS8mgJrQ6yucj2AupWAwBRITK3W/a8wCOn9g5fJGtOl8h4APY8vN3lzP8HIJDyEeRF3I8SfRhL+oX97kSnw==}
@@ -2247,7 +2249,6 @@ packages:
     resolution: {integrity: sha512-hEQstxPQbgGZq5qApzrvbDmRdK1KP96O/j4XrwT8fVkT1ytkFs4fH2xNEh9QKwXfybbQkLs77W7OfXCv5o6qbA==}
     dependencies:
       '@vue/shared': 3.2.11
-    dev: false
 
   /@vue/ref-transform/3.2.11:
     resolution: {integrity: sha512-7rX0YsfYb7+1PeKPME1tQyUQcQgt0sIXRRnPD1Vw8Zs2KIo90YLy9CrvwalcRCxGw0ScsjBEhVjJtWIT79TElg==}
@@ -2264,7 +2265,6 @@ packages:
     dependencies:
       '@vue/reactivity': 3.2.11
       '@vue/shared': 3.2.11
-    dev: false
 
   /@vue/runtime-dom/3.2.11:
     resolution: {integrity: sha512-cOK1g0INdiCbds2xrrJKrrN+pDHuLz6esUs/crdEiupDuX7IeiMbdqrAQCkYHp5P1KLWcbGlkmwfVD7HQGii0Q==}
@@ -2272,7 +2272,6 @@ packages:
       '@vue/runtime-core': 3.2.11
       '@vue/shared': 3.2.11
       csstype: 2.6.17
-    dev: false
 
   /@vue/server-renderer/3.2.11_vue@3.2.11:
     resolution: {integrity: sha512-ihWdzJ48QjgiKFTSz6iAKmO6zd5zUme6RtdHaVVodQlFY2o5X7E8YcfRCc1TZOdYHwgjlktlqpd1noyAAzEnZw==}
@@ -2286,7 +2285,6 @@ packages:
 
   /@vue/shared/3.2.11:
     resolution: {integrity: sha512-ovfXAsSsCvV9JVceWjkqC/7OF5HbgLOtCWjCIosmPGG8lxbPuavhIxRH1dTx4Dg9xLgRTNLvI3pVxG4ItQZekg==}
-    dev: false
 
   /@vueuse/core/6.3.2:
     resolution: {integrity: sha512-Uq8XT4iH9tq7uIxsxDWeH3YXo5GJAJC9cB7q58oVMym3o34oO6AaMVDJd6HlqjzoIwoOAlsrd3ZLHrEUjBGPsw==}
@@ -3144,7 +3142,6 @@ packages:
 
   /csstype/2.6.17:
     resolution: {integrity: sha512-u1wmTI1jJGzCJzWndZo8mk4wnPTZd1eOIYTYvuEyOQGfmDl3TrabCCfKnOC86FZwW/9djqTl933UF/cS425i9A==}
-    dev: false
 
   /dargs/7.0.0:
     resolution: {integrity: sha512-2iy1EkLdlBzQGvbweYRFxmFath8+K7+AKB0TlhHWkNuH+TmovaMH/Wp7V7R4u7f4SnX3OgLsU9t1NI9ioDnUpg==}
@@ -3476,12 +3473,18 @@ packages:
     resolution: {integrity: sha512-YmTkhPKjvTJ+G5e96NyhGf69bP+hzO0DscqaVJTi5GM34uaD4Ecj7omu5lJO+NrxCUBRhy2chONLK1h/2LwoXA==}
     hasBin: true
     requiresBuild: true
+    dev: true
 
   /esbuild/0.12.27:
     resolution: {integrity: sha512-G42siADcTdRU1qRBxhiIiVLG4gcEMyWV4CWfLBdSii+olCueZJHFRHc7EqQRnRvNkSQq88i0k1Oufw/YVueUWQ==}
     hasBin: true
     requiresBuild: true
     dev: true
+
+  /esbuild/0.12.28:
+    resolution: {integrity: sha512-pZ0FrWZXlvQOATlp14lRSk1N9GkeJ3vLIwOcUoo3ICQn9WNR4rWoNi81pbn6sC1iYUy7QPqNzI3+AEzokwyVcA==}
+    hasBin: true
+    requiresBuild: true
 
   /esbuild/0.8.57:
     resolution: {integrity: sha512-j02SFrUwFTRUqiY0Kjplwjm1psuzO1d6AjaXKuOR9hrY0HuPsT6sV42B6myW34h1q4CRy+Y3g4RU/cGJeI/nNA==}
@@ -3854,7 +3857,6 @@ packages:
 
   /estree-walker/2.0.2:
     resolution: {integrity: sha512-Rfkk/Mp/DL7JVje3u18FxFujQlTNR2q6QfMSMB7AvCBx91NGj/ba3kCfza0f6dVDbw7YlRf/nDrn7pQrCCyQ/w==}
-    dev: false
 
   /esutils/2.0.3:
     resolution: {integrity: sha512-kVscqXk4OCp68SZ0dkgEKVi6/8ij300KBWTJq32P/dYeWTSwK41WyTxalN1eRmA5Z9UU/LX9D7FWSmV9SAYx6g==}
@@ -7217,13 +7219,12 @@ packages:
     engines: {node: '>=12.2.0'}
     hasBin: true
     dependencies:
-      esbuild: 0.12.26
+      esbuild: 0.12.28
       postcss: 8.3.6
       resolve: 1.20.0
       rollup: 2.56.3
     optionalDependencies:
       fsevents: 2.3.2
-    dev: false
 
   /vue-demi/0.11.4:
     resolution: {integrity: sha512-/3xFwzSykLW2HiiLie43a+FFgNOcokbBJ+fzvFXd0r2T8MYohqvphUyDQ8lbAwzQ3Dlcrb1c9ykifGkhSIAk6A==}
@@ -7271,7 +7272,6 @@ packages:
       '@vue/compiler-dom': 3.2.11
       '@vue/runtime-dom': 3.2.11
       '@vue/shared': 3.2.11
-    dev: false
 
   /w3c-hr-time/1.0.2:
     resolution: {integrity: sha512-z8P5DvDNjKDoFIHK7q8r8lackT6l+jo/Ye3HOle7l9nICP9lf1Ci25fy9vHd0JOWewkIFzXIEig3TdKT7JQ5fQ==}
