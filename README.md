@@ -32,9 +32,16 @@
 [Vite.js]: https://vitejs.dev/
 [Vue]: https://v3.vuejs.org/
 [MDX]: https://mdxjs.com/
+[xdm]: https://github.com/wooorm/xdm
+[Astro]: https://docs.astro.build/core-concepts/component-hydration
 [vite-plugin-pages]: https://github.com/hannoeru/vite-plugin-pages
 [unplugin-vue-components]: https://github.com/antfu/unplugin-vue-components
 [Live Demo]: https://vue-iles.netlify.app/
+[requestIdleCallback]: https://developer.mozilla.org/en-US/docs/Web/API/Window/requestIdleCallback
+[intersectionobserver]: https://developer.mozilla.org/en-US/docs/Web/API/Intersection_Observer_API
+[matchMedia]: https://developer.mozilla.org/en-US/docs/Web/API/Window/matchMedia
+[Vitepress]: https://vitepress.vuejs.org/
+[vite-ssg]: https://github.com/antfu/vite-ssg
 
 __[îles]__ is a static-site generator that provides automatic [partial hydration].
 
@@ -56,7 +63,7 @@ __[Live Demo]__
 
   That means the server starts fast, and HMR feels instant.
 
-- 📖 Great MDX Support
+- 📖 Great [MDX] Support
   
   Use components inside markdown. With HMR, the browser becomes a live preview.
 
@@ -123,6 +130,66 @@ use `~/` which is aliased to the `src` dir. For example:
 import { useDark } from '~/logic/dark'
 ```
 
+## Hydration Directives 🏝
+
+You can define which components should remain interactive in the production
+build by using `client:` directives in your components (borrowed from [Astro]).
+
+Any JS required for these components will be automatically inferred and optimized to perform partial hydration in the final build.
+
+> No JS is shipped for components without a hydration directive! 🏝
+
+Here's an example with MDX, an interactive audio player in a mostly static page:
+
+```mdx
+---
+title: Song for You
+audio: /song-for-you.mp3
+---
+
+I've recently recorded a song, listen:
+
+<AudioPlayer {...frontmatter} client:visible/>
+```
+
+You can also use these directives inside your Vue components. In the following
+example, the _Download_ link is rendered statically, while the `<Audio>`
+component is interactive and will be hydrated when visible.
+
+```vue
+<template>
+  <div class="audio-player">
+    <Audio client:visible :src="audio" :initialDuration="initialDuration"/>
+    <div>
+      <a :href="audio" :download="`${title}.mp3`">
+        Download the Song 
+      </a>
+    </div>
+  </div>
+</template>
+```
+
+### Hydration Strategies 🏝
+
+The following hydration strategies are available.
+
+- `client:load`
+  Hydrates the component immediately as the page loads.
+
+- `client:idle`
+  Hydrate the component as soon as the main thread is [free][requestIdleCallback].
+
+- `client:visible`
+  Hydrates the component as soon as the element [enters the viewport][intersectionobserver].
+
+- `client:media`
+  Hydrates the component as soon as the browser [matches the given media query][matchMedia].
+
+  Useful to avoid unnecessary work depending on the available viewport, such as in mobile devices.
+
+- `client:only`
+  Does not prerender the component during build. It's usually better to use one of the previous strategies, as it could create a flash of content.
+
 ## Configuration ⚙️
 
 You can configure Vite.js as [usual](https://vitejs.dev/config/).
@@ -179,3 +246,12 @@ You can use TypeScript autocompletion to discover available options.
 ## Documentation 📖
 
 A documentation website is __coming soon__.
+
+## Acknowledgements 🙇‍♂️
+
+- [Vite.js] and [Vue]: for enabling an amazing development experience
+- [Astro](https://astro.build): for sharing a novel way to define islands
+- [xdm]: provides amazing flexibility when processing Markdown
+- [unplugin-vue-components]: allows you to avoid the boilerplate
+- [vite-plugin-pages]: the backbone of this library
+- [Vitepress] and [vite-ssg]: for their different ideas on SSR

@@ -13,7 +13,7 @@
     "feed": "^4.2.1",
     "iles": "workspace:*",
     "unplugin-icons": "^0.10.0",
-    "vite": "npm:@mussi/vite@2.5.7",
+    "vite": "^2.5.7",
     "vite-plugin-windicss": "^1.4.1"
   },
   "dependencies": {

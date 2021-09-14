@@ -1,7 +1,7 @@
 {
   "name": "iles",
   "description": "Vite & Vue powered static site generator with partial hydration",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "main": "dist/node/index.js",
   "module": "dist/node/index.mjs",
   "typings": "types/index.d.ts",
@@ -23,7 +23,8 @@
     "dev-watch": "node scripts/watchAndCopy",
     "build-node": "tsup src/node",
     "build-client": "tsc -p src/client",
-    "build": "rimraf -rf dist && node scripts/copyShared && npm run build-client && npm run build-node && node scripts/copyClient"
+    "build": "rimraf -rf dist && node scripts/copyShared && npm run build-client && npm run build-node && node scripts/copyClient",
+    "prepublishOnly": "npm run build"
   },
   "engines": {
     "node": ">=12.0.0"
@@ -58,12 +59,11 @@
     "fs-extra": "^10.0.0",
     "globby": "^11.0.3",
     "gray-matter": "^4.0.3",
-    "jsdom": "^17.0.0",
     "lru-cache": "^6.0.0",
     "minimist": "^1.2.5",
     "ora": "^5.4.0",
     "unplugin-vue-components": "^0.15.0",
-    "vite": "npm:@mussi/vite@2.5.7",
+    "vite": "^2.5.7",
     "vite-plugin-pages": "npm:@mussi/vite-plugin-pages",
     "vite-plugin-xdm": "^0.1.0",
     "vue": "^3.2.11",
@@ -72,7 +72,6 @@
   "devDependencies": {
     "@types/debug": "^4.1.7",
     "@types/fs-extra": "^9.0.12",
-    "@types/jsdom": "^16.2.13",
     "@types/node": "^15.6.1",
     "@types/rollup__plugin-virtual": "^2.0.1",
     "chokidar": "^3.5.1",

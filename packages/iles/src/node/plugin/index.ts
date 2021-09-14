@@ -76,9 +76,7 @@ export default function IslandsPlugins (appConfig: AppConfig): PluginOption[] {
       // Allows to do a glob import in 'src/client/app/layouts.ts'
       transform (code, id) {
         if (id.includes('client/app/layouts')) {
-          console.warn({ id, root, layoutsDir: appConfig.layoutsDir, layoutsRoot: relative(root, appConfig.layoutsDir), code })
           code = code.replace(/__LAYOUTS_ROOT__/g, `/${relative(root, appConfig.layoutsDir)}`)
-          console.warn({ replacedCode: code })
           return code
         }
       },

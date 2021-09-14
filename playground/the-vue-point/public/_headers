@@ -2,14 +2,14 @@
   cache-control: max-age=31536000
   cache-control: immutable
 
-logo.svg
+/logo.svg
   cache-control: max-age=31536000
   cache-control: immutable
 
-favicon.ico
+/favicon.ico
   cache-control: max-age=31536000
   cache-control: immutable
 
-bench.png
+/bench.png
   cache-control: max-age=31536000
   cache-control: immutable

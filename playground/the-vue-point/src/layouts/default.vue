@@ -32,5 +32,4 @@ let isIndex = $computed(() => route.path.replace(/index.html$/, '') === '/')
       <slot/>
     </main>
   </div>
-  <Quicklink client:only/>
 </template>
