@@ -42,8 +42,8 @@
 [matchMedia]: https://developer.mozilla.org/en-US/docs/Web/API/Window/matchMedia
 [Vitepress]: https://vitepress.vuejs.org/
 [vite-ssg]: https://github.com/antfu/vite-ssg
-[devtools1]: https://pbs.twimg.com/media/E_Q2BWaWYAQG0KY?format=jpg&name=large
-[devtools2]: https://pbs.twimg.com/media/E_Q2BYHXMAMBU0a?format=jpg&name=896x896
+[devtools1]: https://user-images.githubusercontent.com/1158253/133314267-f0ba784c-ff64-4ee8-b2bf-97ecffc2facd.jpg
+[devtools2]: https://user-images.githubusercontent.com/1158253/133314279-1edc22d1-3ffb-414e-b994-212cb316593b.jpg
 
 __[îles]__ is a static-site generator that provides automatic [partial hydration].
 
