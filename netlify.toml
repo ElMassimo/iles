@@ -3,6 +3,6 @@
   NODE_VERSION = "16"
 
 [build]
-  base = "playground/blog/"
-  publish = "dist"
-  command = "exe/deploy"
+  publish = "playground/the-vue-point/dist"
+  ignore = "./scripts/doc-checks.sh"
+  command = "npx pnpm i --store=node_modules/.pnpm-store && npx pnpm run build && npx pnpm run build:blog"

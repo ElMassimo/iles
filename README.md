@@ -29,6 +29,7 @@
 [MDX]: https://mdxjs.com/
 [vite-plugin-pages]: https://github.com/hannoeru/vite-plugin-pages
 [unplugin-vue-components]: https://github.com/antfu/unplugin-vue-components
+[Demo]: https://vue-iles.netlify.app/
 
 [îles] is a static-site generator that provides automatic [partial hydration].
 
@@ -37,6 +38,8 @@ experience provided by [Vite.js].
 
 When building for production, use directives to specify which components are
 interactive, and [îles] will take care of shipping the minimal amount of JS needed.
+
+[Demo]
 
 ## Features ✨
 
