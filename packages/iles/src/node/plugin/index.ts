@@ -36,7 +36,7 @@ const viteIslandRegex = new RegExp(`"?${escapeRegex(unresolvedIslandKey)}"?:\\s*
 const scriptTagsRegex = /<script\s*([^>]*?)>(.*?)<\/script>/sg
 
 // Public: Configures MDX, Vue, Components, and Islands plugins.
-export default async function IslandsPlugins (appConfig: AppConfig): Promise<PluginOption[]> {
+export default function IslandsPlugins (appConfig: AppConfig): PluginOption[] {
   debug.config(appConfig)
 
   let base: ResolvedConfig['base']
@@ -158,7 +158,7 @@ export default async function IslandsPlugins (appConfig: AppConfig): Promise<Plu
       },
     },
 
-    await xdm(appConfig.markdown),
+    xdm(appConfig.markdown),
 
     {
       name: 'iles:mdx:pos',

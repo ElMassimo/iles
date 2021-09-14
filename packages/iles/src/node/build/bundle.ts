@@ -34,7 +34,7 @@ async function bundleWithVite (config: AppConfig, entrypoints: Entrypoints, { ss
       external: ['vue', '@vue/server-renderer'],
       noExternal: ['iles'],
     },
-    plugins: [await IslandsPlugins(config), !ssr && removeJsPlugin()],
+    plugins: [IslandsPlugins(config), !ssr && removeJsPlugin()],
     build: {
       ssr,
       minify: ssr ? false : 'esbuild',

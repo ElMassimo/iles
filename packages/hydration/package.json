@@ -8,8 +8,8 @@
   "module": "dist/hydration.js",
   "main": "dist/hydration.cjs",
   "scripts": {
-    "dev": "npm run build --watch",
-    "build": "tsup hydration.ts --dts --format cjs,esm --external vue"
+    "dev": "npm run build -- --watch",
+    "build": "tsup hydration.ts"
   },
   "engines": {
     "node": ">=12.0.0"

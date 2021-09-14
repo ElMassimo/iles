@@ -41,7 +41,6 @@ export function resolveAliases (root: string): AliasOptions {
       find: /^iles$/,
       replacement: path.join(__dirname, '../client/index'),
     },
-    // alias for local linked development
     { find: /^iles\//, replacement: `${PKG_ROOT}/` },
     // make sure it always use the same vue dependency that comes with
     // iles itself

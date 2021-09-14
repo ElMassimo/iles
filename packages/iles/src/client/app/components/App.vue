@@ -17,7 +17,7 @@ const DebugPanel = import.meta.env.DEV && appConfig.debug
 
 <script lang="ts">
 export default {
-  name: 'IslandsApp',
+  name: 'îles',
 }
 </script>
 

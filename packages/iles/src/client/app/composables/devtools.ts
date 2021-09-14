@@ -36,27 +36,29 @@ const devtools = {
   },
 
   onHydration ({ id, ...event }: any) {
+    const time = Date.now()
     const island: any = islandsById[id]
     const hydrated = getStrategy(island)
+    const mediaQuery = getMediaQuery(island)
+    const component = island.componentName
+
+    const data = { event, hydrated, ...(mediaQuery ? { mediaQuery } : {}) }
     devtoolsApi?.addTimelineEvent({
       layerId: HYDRATION_LAYER_ID,
-      event: {
-        time: Date.now(),
-        title: island.componentName,
-        subtitle: hydrated,
-        data: { ...event, hydrated },
-      },
+      event: { time, title: component, subtitle: hydrated, data },
     })
+
     if (appConfig?.debug) {
       const { el, slots } = event
-      console.log(`🏝 hydrated ${island.componentName}`, el, slots)
+      console.log(`🏝 hydrated ${component}`, el, slots)
     }
   },
 }
 
+;(window as any).__ILE_DEVTOOLS__ = devtools
+
 export function installDevtools (app: App, config: AppConfig) {
-  appConfig = config
-  ;(window as any).__ILE_DEVTOOLS__ = devtools
+  if (config) appConfig = config
 
   setupDevtoolsPlugin({
     id: 'com.maximomussini.iles',
@@ -67,7 +69,6 @@ export function installDevtools (app: App, config: AppConfig) {
     componentStateTypes,
     app,
   }, (api) => {
-    (devtools as any).api = api
     devtoolsApi = api
 
     api.addInspector({
@@ -80,30 +81,13 @@ export function installDevtools (app: App, config: AppConfig) {
     api.addTimelineLayer({
       id: HYDRATION_LAYER_ID,
       color: 0xFF984F,
-      label: '🏝 Hydration',
+      label: 'Hydration 🏝',
     })
 
     api.on.inspectComponent(({ componentInstance, instanceData }) => {
       const island = findIsland(componentInstance?.proxy)
       if (!island) return
-      instanceData.state.push({
-        type: ISLAND_TYPE,
-        key: 'id',
-        value: {
-          _custom: {
-            display: island.id,
-            actions: [
-              {
-                icon: 'open_in_new',
-                tooltip: 'Open in Islands Inspector',
-                action () {
-                  api.selectInspectorNode(INSPECTOR_ID, island.id)
-                },
-              },
-            ],
-          },
-        },
-      })
+      instanceData.state.push({ type: ISLAND_TYPE, key: 'within', value: island })
     })
 
     api.on.getInspectorTree((payload) => {
@@ -117,7 +101,7 @@ export function installDevtools (app: App, config: AppConfig) {
           tags: [
             { label: island.id, textColor: 0, backgroundColor: 0x42B983 },
             { label: getStrategy(island), textColor: 0, backgroundColor: 0x22D3EE },
-            island.strategy === 'client:media' && { label: island['client:media'], textColor: 0, backgroundColor: 0xFB923C },
+            getMediaQuery(island) && { label: getMediaQuery(island), textColor: 0, backgroundColor: 0xFB923C },
           ].filter(x => x) as InspectorNodeTag[],
         }))
     })
@@ -128,12 +112,13 @@ export function installDevtools (app: App, config: AppConfig) {
       if (!island) return
       payload.state = {
         props: [
+          { key: 'component', value: island.component },
           { key: 'el', value: island.$el?.nextSibling },
           { key: 'strategy', value: getStrategy(island) },
-          { key: 'component', value: island.component },
+          getMediaQuery(island) && { key: 'mediaQuery', value: getMediaQuery(island) },
           { key: 'importName', value: island.importName },
           { key: 'importPath', value: island.importPath.replace(island.appConfig.root, '') },
-        ],
+        ].filter(x => x),
       }
     })
   })
@@ -147,4 +132,8 @@ function findIsland (component: any): any {
 
 function getStrategy (island: any) {
   return strategyLabels[island.strategy]
+}
+
+function getMediaQuery(island: any) {
+  if (island.strategy === 'client:media') return island['client:media']
 }

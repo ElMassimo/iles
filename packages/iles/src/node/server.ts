@@ -6,7 +6,7 @@ import IslandsPlugins from './plugin'
 export async function createServer(root: string = process.cwd(), serverOptions: ServerOptions = {}) {
   const config = await resolveConfig(root)
   const viteConfig = mergeConfig(config.vite, {
-    plugins: await IslandsPlugins(config),
+    plugins: IslandsPlugins(config),
     server: serverOptions,
   } as ViteUserConfig)
 
