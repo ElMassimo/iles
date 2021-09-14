@@ -1,0 +1,91 @@
+{
+  "name": "iles",
+  "description": "Vite & Vue powered static site generator with partial hydration",
+  "version": "0.0.1",
+  "main": "dist/node/index.js",
+  "module": "dist/node/index.mjs",
+  "typings": "types/index.d.ts",
+  "bin": {
+    "iles": "bin/iles.js"
+  },
+  "files": [
+    "bin",
+    "lib",
+    "dist",
+    "types"
+  ],
+  "scripts": {
+    "dev": "rimraf -rf dist && npm run dev-shared && npm run dev-start",
+    "dev-start": "run-p dev-client dev-node dev-watch",
+    "dev-client": "npm run build-client -- --watch",
+    "dev-node": "npm run build-node -- --watch",
+    "dev-shared": "node scripts/copyShared",
+    "dev-watch": "node scripts/watchAndCopy",
+    "build-node": "tsup src/node",
+    "build-client": "tsc -p src/client",
+    "build": "rimraf -rf dist && node scripts/copyShared && npm run build-client && npm run build-node && node scripts/copyClient"
+  },
+  "engines": {
+    "node": ">=12.0.0"
+  },
+  "keywords": [
+    "vite",
+    "vue",
+    "islands",
+    "ssg"
+  ],
+  "author": "Máximo Mussini",
+  "license": "MIT",
+  "homepage": "https://github.com/ElMassimo/iles",
+  "bugs": {
+    "url": "https://github.com/ElMassimo/iles/issues"
+  },
+  "dependencies": {
+    "@islands/hydration": "workspace:*",
+    "@rollup/plugin-virtual": "^2.0.3",
+    "@vitejs/plugin-vue": "^1.6.0",
+    "@vitejs/plugin-vue-jsx": "^1.1.8",
+    "@vue/compiler-sfc": "^3.2.11",
+    "@vue/devtools-api": "^6.0.0-beta.15",
+    "@vue/server-renderer": "^3.2.11",
+    "@vueuse/head": "^0.6.0",
+    "chalk": "^4.1.1",
+    "critters": "^0.0.10",
+    "debug": "^4.3.2",
+    "diacritics": "^1.3.0",
+    "es-module-lexer": "^0.7.1",
+    "escape-html": "^1.0.3",
+    "fs-extra": "^10.0.0",
+    "globby": "^11.0.3",
+    "gray-matter": "^4.0.3",
+    "jsdom": "^17.0.0",
+    "lru-cache": "^6.0.0",
+    "minimist": "^1.2.5",
+    "ora": "^5.4.0",
+    "unplugin-vue-components": "^0.15.0",
+    "vite": "npm:@mussi/vite@2.5.7",
+    "vite-plugin-pages": "npm:@mussi/vite-plugin-pages",
+    "vite-plugin-xdm": "^0.1.0",
+    "vue": "^3.2.11",
+    "vue-router": "^4.0.11"
+  },
+  "devDependencies": {
+    "@types/debug": "^4.1.7",
+    "@types/fs-extra": "^9.0.12",
+    "@types/jsdom": "^16.2.13",
+    "@types/node": "^15.6.1",
+    "@types/rollup__plugin-virtual": "^2.0.1",
+    "chokidar": "^3.5.1",
+    "conventional-changelog-cli": "^2.1.1",
+    "enquirer": "^2.3.6",
+    "execa": "^5.0.0",
+    "npm-run-all": "^4.1.5",
+    "remark-frontmatter": "^4.0.0",
+    "remark-mdx-frontmatter": "^1.0.1",
+    "rimraf": "^3.0.2",
+    "rollup": "^2.56.3",
+    "semver": "^7.3.5",
+    "typescript": "^4.3.2",
+    "vite-plugin-pwa": "^0.11.2"
+  }
+}

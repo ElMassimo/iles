@@ -1,0 +1,22 @@
+{
+  "name": "vue-blog",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "iles --open",
+    "build": "iles build",
+    "preview": "vite preview --open"
+  },
+  "devDependencies": {
+    "@iconify/json": "1.1.393",
+    "@vueuse/core": "^6.2.0",
+    "feed": "^4.2.1",
+    "iles": "workspace:*",
+    "unplugin-icons": "^0.10.0",
+    "vite": "npm:@mussi/vite@2.5.7",
+    "vite-plugin-windicss": "^1.4.1"
+  },
+  "dependencies": {
+    "quicklink": "^2.2.0"
+  }
+}

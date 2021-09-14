@@ -1,0 +1,46 @@
+{
+  "private": true,
+  "engines": {
+    "node": ">=14"
+  },
+  "scripts": {
+    "dev:blog": "npm run -C playground/the-vue-point dev",
+    "dev": "npm -C packages run dev",
+    "build:blog": "npm run -C playground/the-vue-point build",
+    "preview": "npm run -C playground/the-vue-point preview",
+    "build": "npm -C packages run build",
+    "lint": "eslint --ignore-pattern 'node_modules'  --ignore-pattern 'dist' . --ext .ts,.js,.vue,.html",
+    "test": "peeky run",
+    "test:open": "peeky open"
+  },
+  "devDependencies": {
+    "@mussi/eslint-config": "^0.5.1",
+    "@mussi/stylelint-config": "^0.1.1",
+    "@nuxt/devalue": "^2.0.0",
+    "@peeky/cli": "^0.4.2",
+    "@peeky/runner": "^0.4.2",
+    "concurrently": "^6.2.1",
+    "eslint": "^7.32.0",
+    "pnpm": "^6.15.0",
+    "typescript": "^4.3.5"
+  },
+  "resolutions": {
+    "eslint-plugin-vue": "7.17.0"
+  },
+  "eslintConfig": {
+    "extends": "@mussi/eslint-config",
+    "globals": {
+      "$ref": "readonly",
+      "$computed": "readonly",
+      "$$": "readonly",
+      "$": "readonly"
+    },
+    "rules": {
+      "prefer-const": "off",
+      "no-unused-vars": "off",
+      "import/named": "off",
+      "@typescript-eslint/no-var-requires": "off",
+      "@typescript-eslint/no-unused-vars": "off"
+    }
+  }
+}

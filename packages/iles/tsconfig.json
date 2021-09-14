@@ -1,0 +1,28 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "module": "es2020",
+    "target": "es2020",
+    "moduleResolution": "node",
+    "strict": true,
+    "declaration": true,
+    "noUnusedLocals": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "lib": ["ESNext", "DOM"],
+    "types": ["node", "@peeky/runner"],
+    "paths": {
+      "src/*": ["src/*"],
+      "client/*": ["src/client/*"],
+      "node/*": ["src/node/*"],
+      "shared/*": ["src/shared/*"],
+      "tests/*": ["__tests__/*"],
+      "/@shared/*": ["src/client/shared/*"],
+      "iles": ["src/client/index.ts"]
+    }
+  },
+  "include": [
+    "src",
+    "__tests__"
+  ]
+}

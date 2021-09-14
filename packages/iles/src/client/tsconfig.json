@@ -1,0 +1,16 @@
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "outDir": "../../dist/client",
+    "target": "esnext",
+    "module": "esnext",
+    "lib": ["ESNext", "DOM"],
+    "types": ["vite/client"],
+    "paths": {
+      "/@theme/*": ["theme-default/*"],
+      "iles": ["index.ts"]
+    }
+  },
+  "include": [".", "../../types/shared.d.ts", "../../types/router.d.ts"]
+}

@@ -1,0 +1,5 @@
+node_modules/
+dist/
+.vite-islands-temp/
+.DS_Store
+*.local
