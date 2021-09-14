@@ -134,6 +134,6 @@ function getStrategy (island: any) {
   return strategyLabels[island.strategy]
 }
 
-function getMediaQuery(island: any) {
+function getMediaQuery (island: any) {
   if (island.strategy === 'client:media') return island['client:media']
 }

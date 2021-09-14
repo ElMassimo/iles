@@ -1,7 +1,7 @@
 const fs = require('fs-extra')
 const glob = require('globby')
 
-function toDest(file) {
+function toDest (file) {
   return file.replace(/^src\//, 'dist/')
 }
 

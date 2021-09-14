@@ -17,7 +17,7 @@ if (!command || command === 'dev' || command === 'serve') {
   createServer(root, argv)
     .then(({ server }) => server.listen())
     .catch((err: any) => {
-      console.error(chalk.red(`error starting server:\n`), err)
+      console.error(chalk.red('error starting server:\n'), err)
       process.exit(1)
     })
 }

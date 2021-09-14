@@ -260,14 +260,14 @@ export default function IslandsPlugins (appConfig: AppConfig): PluginOption[] {
   ]
 }
 
-async function restartOnConfigChanges(config: AppConfig, server: ViteDevServer) {
+async function restartOnConfigChanges (config: AppConfig, server: ViteDevServer) {
   const restartIfConfigChanged = async (path: string) => {
     if (path === config.configPath) {
       server.config.logger.info(
         chalk.green(
-          `${relative(process.cwd(), config.configPath)} changed, restarting server...`
+          `${relative(process.cwd(), config.configPath)} changed, restarting server...`,
         ),
-        { clear: true, timestamp: true }
+        { clear: true, timestamp: true },
       )
       await server.close()
       // @ts-ignore

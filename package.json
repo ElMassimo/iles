@@ -4,9 +4,9 @@
     "node": ">=14"
   },
   "scripts": {
-    "dev:blog": "npm run -C playground/blog dev",
+    "dev:blog": "npm run -C playground/the-vue-point dev",
     "dev:packages": "npm -C packages run dev",
-    "build:blog": "npm run -C playground/blog build",
+    "build:blog": "npm run -C playground/the-vue-point build",
     "build:packages": "npm -C packages run build",
     "lint": "eslint --ignore-pattern 'node_modules'  --ignore-pattern 'dist' . --ext .ts,.js,.vue,.html",
     "test": "peeky run",

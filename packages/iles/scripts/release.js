@@ -8,20 +8,20 @@ const currentVersion = require('../package.json').version
 
 const versionIncrements = ['patch', 'minor', 'major']
 
-const inc = (i) => semver.inc(currentVersion, i)
-const bin = (name) => path.resolve(__dirname, `../node_modules/.bin/${name}`)
+const inc = i => semver.inc(currentVersion, i)
+const bin = name => path.resolve(__dirname, `../node_modules/.bin/${name}`)
 const run = (bin, args, opts = {}) =>
   execa(bin, args, { stdio: 'inherit', ...opts })
-const step = (msg) => console.log(chalk.cyan(msg))
+const step = msg => console.log(chalk.cyan(msg))
 
-async function main() {
+async function main () {
   let targetVersion
 
   const { release } = await prompt({
     type: 'select',
     name: 'release',
     message: 'Select release type',
-    choices: versionIncrements.map((i) => `${i} (${inc(i)})`).concat(['custom'])
+    choices: versionIncrements.map(i => `${i} (${inc(i)})`).concat(['custom']),
   })
 
   if (release === 'custom') {
@@ -30,26 +30,25 @@ async function main() {
         type: 'input',
         name: 'version',
         message: 'Input custom version',
-        initial: currentVersion
+        initial: currentVersion,
       })
     ).version
-  } else {
+  }
+  else {
     targetVersion = release.match(/\((.*)\)/)[1]
   }
 
-  if (!semver.valid(targetVersion)) {
+  if (!semver.valid(targetVersion))
     throw new Error(`Invalid target version: ${targetVersion}`)
-  }
 
   const { yes: tagOk } = await prompt({
     type: 'confirm',
     name: 'yes',
-    message: `Releasing v${targetVersion}. Confirm?`
+    message: `Releasing v${targetVersion}. Confirm?`,
   })
 
-  if (!tagOk) {
+  if (!tagOk)
     return
-  }
 
   // Update the package version.
   step('\nUpdating the package version...')
@@ -67,12 +66,11 @@ async function main() {
   const { yes: changelogOk } = await prompt({
     type: 'confirm',
     name: 'yes',
-    message: `Changelog generated. Does it look good?`
+    message: 'Changelog generated. Does it look good?',
   })
 
-  if (!changelogOk) {
+  if (!changelogOk)
     return
-  }
 
   // Commit changes to the Git and create a tag.
   step('\nCommitting changes...')
@@ -87,7 +85,7 @@ async function main() {
     '--new-version',
     targetVersion,
     '--no-commit-hooks',
-    '--no-git-tag-version'
+    '--no-git-tag-version',
   ])
 
   // Push to GitHub.
@@ -96,13 +94,13 @@ async function main() {
   await run('git', ['push'])
 }
 
-function updatePackage(version) {
+function updatePackage (version) {
   const pkgPath = path.resolve(path.resolve(__dirname, '..'), 'package.json')
   const pkg = JSON.parse(fs.readFileSync(pkgPath, 'utf-8'))
 
   pkg.version = version
 
-  fs.writeFileSync(pkgPath, JSON.stringify(pkg, null, 2) + '\n')
+  fs.writeFileSync(pkgPath, `${JSON.stringify(pkg, null, 2)}\n`)
 }
 
-main().catch((err) => console.error(err))
+main().catch(err => console.error(err))

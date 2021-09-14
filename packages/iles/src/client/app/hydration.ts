@@ -14,7 +14,8 @@ export function newHydrationId () {
     const context = useSSRContext()
     context!.hydrationSerialNumber ||= 1
     return `ile-${context!.hydrationSerialNumber++}`
-  } else {
+  }
+  else {
     return `ile-${++idNumber}`
   }
 }
