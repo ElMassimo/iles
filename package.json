@@ -10,7 +10,7 @@
     "preview": "npm run -C playground/the-vue-point preview",
     "build": "npm -C packages run build",
     "lint": "eslint --ignore-pattern 'node_modules'  --ignore-pattern 'dist' . --ext .ts,.js,.vue,.html",
-    "release": "node scripts/release.cjs",
+    "release": "node scripts/release",
     "changelog": "node scripts/changelog",
     "test": "peeky run",
     "test:open": "peeky open"
