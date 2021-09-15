@@ -135,7 +135,7 @@ export default function IslandsPlugins (appConfig: AppConfig): PluginOption[] {
             ? `:${unresolvedIslandKey}='${resolveComponent}'`
             : `${unresolvedIslandKey}={${resolveComponent}}`
 
-          return `<ViteIsland componentName="${pascalCase(tagName)}" ${component} ${attrs}>${children || ''}</ViteIsland>`
+          return `<Island componentName="${pascalCase(tagName)}" ${component} ${attrs}>${children || ''}</Island>`
         })
       },
     },

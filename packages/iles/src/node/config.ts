@@ -13,8 +13,7 @@ const debug = creatDebugger('iles:config')
 export type { AppConfig }
 
 export const IlesComponentResolver: ComponentResolver = (name) => {
-  if (name === 'ViteIsland' || name === 'Island')
-    return { importName: 'Island', path: 'iles' }
+  if (name === 'Island') return { importName: 'Island', path: 'iles' }
 }
 
 export async function resolveConfig (root?: string, env?: ConfigEnv): Promise<AppConfig> {
