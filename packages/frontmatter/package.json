@@ -1,0 +1,40 @@
+{
+  "name": "@islands/frontmatter",
+  "version": "0.0.1",
+  "scripts": {
+    "dev": "npm run build -- --watch",
+    "build": "tsup src/frontmatter.ts",
+    "release": "node scripts/release.cjs",
+    "prepublishOnly": "npm run build"
+  },
+  "type": "module",
+  "files": [
+    "dist",
+    "src"
+  ],
+  "types": "dist/frontmatter.d.ts",
+  "module": "dist/frontmatter.js",
+  "main": "dist/frontmatter.cjs",
+  "funding": "https://github.com/sponsors/ElMassimo",
+  "author": "Máximo Mussini <maximomussini@gmail.com>",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/maximomussini/iles"
+  },
+  "homepage": "https://github.com/maximomussini/iles",
+  "bugs": "https://github.com/maximomussini/iles/issues",
+  "dependencies": {
+    "js-yaml": "^4.1",
+    "toml": "^3.0",
+    "unified": "^10.1.0",
+    "unist-util-visit": "^2.0.3",
+    "estree-util-is-identifier-name": "^1.1.0",
+    "estree-util-value-to-estree": "^1.0.0"
+  },
+  "devDependencies": {
+    "@types/estree": "^0.0.46",
+    "@types/js-yaml": "^4.0.0",
+    "tsup": "^4.14.0",
+    "typescript": "^4.1.3"
+  }
+}

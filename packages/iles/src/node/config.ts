@@ -1,9 +1,10 @@
 /* eslint-disable no-restricted-syntax */
-import { join, resolve } from 'path'
+import { join, relative, resolve } from 'path'
 import chalk from 'chalk'
 import creatDebugger from 'debug'
 import { loadConfigFromFile, mergeConfig as mergeViteConfig } from 'vite'
 import type { ComponentResolver } from 'unplugin-vue-components/types'
+import type { Frontmatter, FrontmatterPluggable } from '@islands/frontmatter'
 import type { AppConfig, AppPlugins, ConfigEnv, ViteOptions, Plugin } from './shared'
 import { resolveAliases, DIST_CLIENT_PATH, HYDRATION_DIST_PATH } from './alias'
 
@@ -33,21 +34,32 @@ export async function resolveConfig (root?: string, env?: ConfigEnv): Promise<Ap
 
   chainPluginCallbacks(config, 'pages', ['onRoutesGenerated', 'onClientGenerated'], true)
   chainPluginCallbacks(config, 'pages', ['extendRoute'], false)
+  chainPluginCallbacks(config, 'markdown', ['extendFrontmatter'], false)
 
   const ceChecks = config.plugins.map(plugin => plugin.vue?.template?.compilerOptions?.isCustomElement).filter(x => x)
   config.vue.template!.compilerOptions!.isCustomElement = (tagName: string) =>
     tagName.startsWith('ile-') || ceChecks.some(fn => fn!(tagName))
 
+  withResolvedConfig(config)
   return config
 }
 
-const defaultPlugins = (root: string) => [
+const defaultPlugins = (root: string): Partial<AppConfig>[] => [
   {
     pages: {
       extendRoute (route) {
-        return { ...route, meta: { ...route.meta, filename: join(root, route.component) } }
+        const metaMatter = route.meta?.frontmatter as Frontmatter
+        const frontmatter = { ...metaMatter, filename: join(root, route.component) }
+        return { ...route, meta: { ...route.meta, frontmatter } }
       },
     } as AppConfig['pages'],
+    markdown: {
+      extendFrontmatter (frontmatter) {
+        // TODO: Use pages plugin to obtain the path pages.pathForFile(path)
+        const href = relative(root, frontmatter.filename).replace(/\.\w+$/, '').replace('src/pages/', '/')
+        return { href, ...frontmatter }
+      },
+    },
   },
 ]
 
@@ -103,10 +115,7 @@ function appConfigDefaults (root: string): AppConfig {
     },
     markdown: {
       jsx: true,
-      remarkPlugins: [
-        import('remark-frontmatter').then(mod => mod.default),
-        import('vite-plugin-xdm/frontmatter').then(mod => mod.default),
-      ],
+      remarkPlugins: [],
     },
     components: {
       dts: true,
@@ -115,6 +124,32 @@ function appConfigDefaults (root: string): AppConfig {
       resolvers: [IlesComponentResolver],
     },
   }
+}
+
+// Internal: Once all plugins are resolved, we can ensure frontmatter extensions
+// are also applied to routes, providing a consistent experience when importing
+// a page or using route meta.
+function withResolvedConfig (config: AppConfig) {
+  config.markdown.remarkPlugins!.unshift(...[
+    import('remark-frontmatter').then(mod => mod.default),
+    frontmatterPlugin(config),
+  ])
+  const { extendFrontmatter } = config.markdown
+  const { extendRoute } = config.pages
+  config.pages.extendRoute = (route, parent) => {
+    route = extendRoute?.(route, parent) || route
+    const { frontmatter: metaFrontmatter, ...metaRest } = route.meta || {}
+    const { frontmatter: routeFrontmatter, ...routeRest } = route as any
+    const routeMatter = { ...routeFrontmatter, ...metaFrontmatter as Frontmatter }
+    const frontmatter = extendFrontmatter?.(routeMatter) || routeMatter
+    return { ...routeRest, meta: { ...metaRest, frontmatter } }
+  }
+}
+
+async function frontmatterPlugin (config: AppConfig): Promise<FrontmatterPluggable> {
+  const { remarkFrontmatter } = await import('@islands/frontmatter')
+  const { extendFrontmatter } = config.markdown
+  return [remarkFrontmatter, { extendFrontmatter }]
 }
 
 function viteConfigDefaults (root: string): ViteOptions {

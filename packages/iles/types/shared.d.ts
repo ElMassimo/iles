@@ -7,6 +7,7 @@ import type { UserOptions as PagesOptions } from 'vite-plugin-pages'
 import type { Options as ComponentOptions } from 'unplugin-vue-components/types'
 import type VueJsxPlugin from '@vitejs/plugin-vue-jsx'
 import type { PluginOptions as XdmOptions } from 'vite-plugin-xdm'
+import type { FrontmatterOptions } from '@islands/frontmatter'
 
 import type { Router, RouteRecordRaw, RouterOptions as VueRouterOptions, RouteMeta } from 'vue-router'
 import type { HeadClient, HeadObject } from '@vueuse/head'
@@ -50,7 +51,7 @@ export interface AppPlugins {
   pages: PagesOptions
   components: ComponentOptions
   vueJsx: Parameters<typeof VueJsxPlugin>[0]
-  markdown: XdmOptions
+  markdown: XdmOptions & FrontmatterOptions
   critters?: CritterOptions | false
 }
 

@@ -8,10 +8,11 @@ const el = ref<HTMLElement | null>(null)
 const open = ref(false)
 
 const cleanPage = computed(() => {
-  const meta = { ...page.meta.value }
-  if (meta.filename) meta.filename = meta.filename.replace(config.root, '')
-  delete meta.frontmatter
-  return { ...page, meta }
+  const rawMeta = page.meta.value
+  const { frontmatter, ...meta } = rawMeta
+  if (frontmatter?.filename)
+    frontmatter.filename = frontmatter.filename.replace(config.root, '')
+  return { meta, frontmatter }
 })
 
 watch(open, (open) => {

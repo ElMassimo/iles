@@ -33,9 +33,3 @@ declare module '@islands/user-app' {
   const config: UserApp
   export default config
 }
-
-declare module 'vite-plugin-xdm/frontmatter' {
-  import type { FrontmatterPlugin } from 'vite-plugin-xdm'
-  const plugin: FrontmatterPlugin
-  export default plugin
-}
