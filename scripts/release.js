@@ -59,14 +59,14 @@ async function run (bin, args, opts = {}) {
  * @param {object} opts
  */
 async function dryRun (bin, args, opts = {}) {
-  console.log(chalk.blue(`[dryrun] ${bin} ${args.join(' ')}`), opts)
+  console.info(chalk.blue(`[dryrun] ${bin} ${args.join(' ')}`), opts)
 }
 
 /**
  * @param {string} msg
  */
 function step (msg) {
-  console.log(chalk.cyan(msg))
+  console.info(chalk.cyan(msg))
 }
 
 /**
@@ -143,7 +143,7 @@ async function main () {
 
   step(`\nBuilding ${pkg.type}...`)
   if (!skipBuild && !isDryRun) await run('pnpm', ['build'], { cwd: resolve('.') })
-  else console.log('(skipped)')
+  else console.info('(skipped)')
 
   step('\nGenerating changelog...')
   await run('pnpm', ['changelog', name])
@@ -155,7 +155,7 @@ async function main () {
     await runIfNotDry('git', ['commit', '-m', `release: ${tag}`])
   }
   else {
-    console.log('No changes to commit.')
+    console.info('No changes to commit.')
   }
 
   step(`\nPublishing ${pkg.type}...`)
@@ -164,9 +164,9 @@ async function main () {
   step('\nPushing to GitHub...')
   await runIfNotDry('git', ['push'])
 
-  if (isDryRun) console.log(`\nDry run finished - run git diff to see ${pkg.type} changes.`)
+  if (isDryRun) console.info(`\nDry run finished - run git diff to see ${pkg.type} changes.`)
 
-  console.log()
+  console.info()
 }
 
 /**
@@ -179,10 +179,10 @@ async function publishPackage (version, runIfNotDry) {
       stdio: 'inherit',
       cwd: resolve('.'),
     })
-    console.log(chalk.green(`Successfully published ${name}@${version}`))
+    console.info(chalk.green(`Successfully published ${name}@${version}`))
   }
   catch (e) {
-    if (e.stderr.match(/previously published/)) console.log(chalk.red(`Skipping already published: ${name}`))
+    if (e.stderr.match(/previously published/)) console.info(chalk.red(`Skipping already published: ${name}`))
     else throw e
   }
 }

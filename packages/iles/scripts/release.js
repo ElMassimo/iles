@@ -12,7 +12,7 @@ const inc = i => semver.inc(currentVersion, i)
 const bin = name => path.resolve(__dirname, `../node_modules/.bin/${name}`)
 const run = (bin, args, opts = {}) =>
   execa(bin, args, { stdio: 'inherit', ...opts })
-const step = msg => console.log(chalk.cyan(msg))
+const step = msg => console.info(chalk.cyan(msg))
 
 async function main () {
   let targetVersion

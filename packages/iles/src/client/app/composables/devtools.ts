@@ -50,7 +50,7 @@ const devtools = {
 
     if (appConfig?.debug) {
       const { el, slots } = event
-      console.log(`🏝 hydrated ${component}`, el, slots)
+      console.info(`🏝 hydrated ${component}`, el, slots)
     }
   },
 }

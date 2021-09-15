@@ -27,5 +27,5 @@ export async function build (root: string) {
     await fs.rm(appConfig.tempDir, { recursive: true, force: true })
   }
 
-  console.log(`build complete in ${((Date.now() - start) / 1000).toFixed(2)}s.`)
+  console.info(`build complete in ${((Date.now() - start) / 1000).toFixed(2)}s.`)
 }
