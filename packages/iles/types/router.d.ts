@@ -5,7 +5,7 @@ declare module 'vue-router' {
     filename?: string
     extension?: string
     frontmatter?: Record<string, any>
-    layout?: string
+    layout?: string | false
     state?: Record<string, any>
   }
 }

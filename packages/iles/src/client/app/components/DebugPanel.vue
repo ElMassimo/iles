@@ -9,10 +9,10 @@ const open = ref(false)
 
 const cleanPage = computed(() => {
   const rawMeta = page.meta.value
-  const { frontmatter, ...meta } = rawMeta
+  const { layout, frontmatter, ...meta } = rawMeta
   if (frontmatter?.filename)
     frontmatter.filename = frontmatter.filename.replace(config.root, '')
-  return { meta, frontmatter }
+  return { layout, frontmatter, meta }
 })
 
 watch(open, (open) => {

@@ -46,10 +46,16 @@ export async function resolveConfig (root?: string, env?: ConfigEnv): Promise<Ap
 const defaultPlugins = (root: string): Partial<AppConfig>[] => [
   {
     pages: {
-      extendRoute (route) {
-        const metaMatter = route.meta?.frontmatter as Frontmatter
-        const frontmatter = { ...metaMatter, filename: join(root, route.component) }
-        return { ...route, meta: { ...route.meta, frontmatter } }
+      // Internal: Move any frontmatter defined top-level to a nested property.
+      extendRoute ({ layout: routeLayout, meta: routeMeta, ...route }: any) {
+        const metaMatter = routeMeta?.frontmatter as Frontmatter
+        const { layout: frontmatterLayout, ...frontmatter } = {
+          ...metaMatter, filename: join(root, route.component)
+        } as any
+        const meta = { ...routeMeta, frontmatter }
+        const layout = routeLayout || frontmatterLayout
+        if (layout) meta.layout = layout
+        return { ...route, meta }
       },
     } as AppConfig['pages'],
     markdown: {

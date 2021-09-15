@@ -4,20 +4,21 @@ import type { RouteLocationNormalizedLoaded } from 'vue-router'
 const layouts = import.meta.glob('__LAYOUTS_ROOT__/**/*.vue')
 
 export function getLayout ({ path, meta }: RouteLocationNormalizedLoaded) {
+  if (meta.layout === false) return false
+
   const extIndex = path.lastIndexOf('.')
   if (extIndex > -1 && path.slice(extIndex) !== '.html') return false
 
-  const name = meta.frontmatter?.layout ?? meta.layout ?? 'default'
-  if (name === false) return false
+  const layout = meta.layout || 'default'
 
-  const layout = layouts[`__LAYOUTS_ROOT__/${name}.vue`]
-  if (layout) {
-    const component = defineAsyncComponent(layout)
-    component.name = `${name}Layout`
+  const layoutComponent = layouts[`__LAYOUTS_ROOT__/${layout}.vue`]
+  if (layoutComponent) {
+    const component = defineAsyncComponent(layoutComponent)
+    component.name = `${layout}Layout`
     return component
   }
 
-  if (name === 'default') return (props: any, { slots }: any) => slots.default && slots.default()
+  if (layout === 'default') return (props: any, { slots }: any) => slots.default && slots.default()
 
-  throw new Error(`Unknown layout '${name}'. Should be defined in __LAYOUTS_ROOT__/${name}.vue`)
+  throw new Error(`Unknown layout '${layout}'. Should be defined in __LAYOUTS_ROOT__/${layout}.vue`)
 }
