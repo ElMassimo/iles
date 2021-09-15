@@ -1,7 +1,5 @@
 <script setup lang="ts">
-import { usePage } from 'iles'
-
-const { frontmatter } = usePage()
+defineProps<{ twitter: string, gravatar: string, author: string }>()
 </script>
 
 <template>
@@ -20,22 +18,22 @@ const { frontmatter } = usePage()
       >
         <li class="flex items-center space-x-2">
           <img
-            v-if="frontmatter.gravatar"
-            :src="'https://gravatar.com/avatar/' + frontmatter.gravatar"
+            v-if="gravatar"
+            :src="'https://gravatar.com/avatar/' + gravatar"
             alt="author image"
             class="w-10 h-10 rounded-full"
           />
           <dl class="text-sm font-medium leading-5 whitespace-nowrap">
             <dt class="sr-only">Name</dt>
-            <dd class="text-gray-900">{{ frontmatter.author }}</dd>
-            <dt v-if="frontmatter.twitter" class="sr-only">Twitter</dt>
-            <dd v-if="frontmatter.twitter">
+            <dd class="text-gray-900">{{ author }}</dd>
+            <dt v-if="twitter" class="sr-only">Twitter</dt>
+            <dd v-if="twitter">
               <a
-                :href="'https://twitter.com/' + frontmatter.twitter"
+                :href="'https://twitter.com/' + twitter"
                 target="_blank"
                 rel="noopnener noreferrer"
                 class="link"
-                >{{ frontmatter.twitter }}</a
+                >{{ twitter }}</a
               >
             </dd>
           </dl>

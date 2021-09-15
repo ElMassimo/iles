@@ -1,10 +1,11 @@
 import { defineApp } from 'iles'
+import { title, description } from '~/site'
 
 export default defineApp({
   head: {
-    title: 'The Vue Point',
+    title,
     meta: [
-      { property: 'description', content: 'Updates, tips & opinions from the maintainers of Vue.js.' },
+      { property: 'description', content: description },
     ],
   },
   enhanceApp ({ app, head, router }) {

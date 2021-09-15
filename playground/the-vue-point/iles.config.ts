@@ -4,6 +4,7 @@ import iconsResolver from 'unplugin-icons/resolver'
 
 import icons from 'unplugin-icons/vite'
 import windicss from 'vite-plugin-windicss'
+import inspect from 'vite-plugin-inspect'
 
 export default defineConfig({
   components: {
@@ -19,6 +20,7 @@ export default defineConfig({
     plugins: [
       icons(),
       windicss(),
+      Boolean(process.env.DEBUG) && inspect(),
     ],
   },
 })

@@ -1,13 +1,13 @@
 <script setup lang="ts">
-import { useHead, useRoute } from 'iles'
+import { useHead, useRoute, usePage } from 'iles'
 import { usePosts } from '~/logic/posts'
 
 const posts = usePosts()
 
 const route = useRoute()
-let frontmatter = $computed(() => route.meta.frontmatter)
+const { frontmatter: post } = usePage()
 
-useHead({ title: frontmatter.title })
+useHead({ title: post.title })
 
 let currentIndex = $computed(() => posts.findIndex(p => p.href === route.path))
 let date = $computed(() => posts[currentIndex]?.date)
@@ -19,7 +19,7 @@ let prevPost = $computed(() => posts[currentIndex + 1])
   <Layout name="default">
     <article class="xl:divide-y xl:divide-gray-200">
       <header class="pt-6 xl:pb-10 space-y-1 text-center">
-        <Date :date="frontmatter.date"/>
+        <Date :date="post.date"/>
         <h1
           class="
             text-3xl
@@ -30,7 +30,7 @@ let prevPost = $computed(() => posts[currentIndex + 1])
             sm:text-4xl sm:leading-10
             md:text-5xl
           "
-        >{{ frontmatter.title }}</h1>
+        >{{ post.title }}</h1>
       </header>
 
       <div
@@ -44,7 +44,7 @@ let prevPost = $computed(() => posts[currentIndex + 1])
         "
         style="grid-template-rows: auto 1fr"
       >
-        <Author/>
+        <Author v-bind="post"/>
         <div class="divide-y divide-gray-200 xl:pb-0 xl:col-span-3 xl:row-span-2">
           <div class="prose max-w-none pt-10 pb-8">
             <slot/>

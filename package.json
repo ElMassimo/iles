@@ -20,15 +20,16 @@
     "@mussi/stylelint-config": "^0.1.1",
     "@peeky/cli": "^0.4.2",
     "@peeky/runner": "^0.4.2",
-    "conventional-changelog-cli": "^2.1.1",
     "concurrently": "^6.2.1",
+    "conventional-changelog-cli": "^2.1.1",
     "enquirer": "^2.3.6",
+    "eslint": "^7.32.0",
     "execa": "^5.1.1",
     "minimist": "^1.2.5",
-    "semver": "^7.3.5",
-    "eslint": "^7.32.0",
     "pnpm": "^6.15.0",
-    "typescript": "^4.3.5"
+    "semver": "^7.3.5",
+    "typescript": "^4.3.5",
+    "vite-plugin-inspect": "^0.3.6"
   },
   "resolutions": {
     "eslint-plugin-vue": "7.17.0"
