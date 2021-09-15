@@ -1,19 +1,21 @@
 <script setup lang="ts">
-import { watch } from 'vue'
-import { usePage } from 'iles'
+import { computed, watch, ref } from 'vue'
+import { useAppConfig, usePage } from 'iles'
 
-let page = usePage()
-let el = $ref<HTMLElement | null>(null)
-let open = $ref(false)
+const config = useAppConfig()
+const page = usePage()
+const el = ref<HTMLElement | null>(null)
+const open = ref(false)
 
-let cleanPage = $computed(() => {
+const cleanPage = computed(() => {
   const meta = { ...page.meta.value }
+  if (meta.filename) meta.filename = meta.filename.replace(config.root, '')
   delete meta.frontmatter
   return { ...page, meta }
 })
 
-watch($$(open), (open) => {
-  if (!open) el!.scrollTop = 0
+watch(open, (open) => {
+  if (!open) el.value!.scrollTop = 0
 })
 </script>
 

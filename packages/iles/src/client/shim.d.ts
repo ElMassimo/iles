@@ -18,7 +18,7 @@ declare module '@islands/routes' {
 }
 
 declare module '@islands/layouts' {
-  import type { getLayout } from './app/layouts'
+  import { getLayout } from './app/layouts'
   export { getLayout }
 }
 
