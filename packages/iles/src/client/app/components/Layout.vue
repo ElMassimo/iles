@@ -2,7 +2,7 @@
 import { computed } from 'vue'
 import { getLayout } from '@islands/layouts'
 
-const props = defineProps<{ name: string | false | undefined }>()
+const props = defineProps<{ name: string | false }>()
 
 const LayoutComponent = computed(() => getLayout(props.name))
 </script>

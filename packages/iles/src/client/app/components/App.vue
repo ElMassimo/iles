@@ -12,7 +12,7 @@ const route = useRoute()
 const layoutName = computed(() => {
   const extIndex = route.path.lastIndexOf('.')
   if (extIndex > -1 && route.path.slice(extIndex) !== '.html') return false
-  return route.meta.layout
+  return route.meta.layout ?? 'default'
 })
 
 const appConfig = useAppConfig()
