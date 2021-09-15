@@ -1,14 +1,8 @@
-<h1 align="center">
+<p align="center">
   <a href="https://vue-iles.netlify.app/">
-    <img src="https://github.com/ElMassimo/iles/blob/main/docs/public/logo.svg" width="200px"/>
+    <img src="https://github.com/ElMassimo/iles/blob/main/docs/public/banner.png"/>
   </a>
-
-  <br/>
-
-  <a href="https://vue-iles.netlify.app/">
-    <samp>îles</samp>
-  </a>
-</h1>
+</p>
 
 <p align="center">
   <small><em>îles — french word for "islands"</em></small>
