@@ -42,7 +42,7 @@
     "url": "https://github.com/ElMassimo/iles/issues"
   },
   "dependencies": {
-    "@islands/hydration": "0.0.2",
+    "@islands/hydration": "^0.0.2",
     "@nuxt/devalue": "^2.0.0",
     "@rollup/plugin-virtual": "^2.0.3",
     "@vitejs/plugin-vue": "^1.6.0",
