@@ -1,6 +1,6 @@
 /* eslint-disable no-use-before-define */
 import type { UserConfig as ViteOptions, ConfigEnv } from 'vite'
-import type { App } from 'vue'
+import type { App, Ref } from 'vue'
 import type { Options as CritterOptions } from 'critters'
 import type { Options as VueOptions } from '@vitejs/plugin-vue'
 import type { UserOptions as PagesOptions } from 'vite-plugin-pages'
@@ -8,8 +8,7 @@ import type { Options as ComponentOptions } from 'unplugin-vue-components/types'
 import type VueJsxPlugin from '@vitejs/plugin-vue-jsx'
 import type { PluginOptions as XdmOptions } from 'vite-plugin-xdm'
 import type { FrontmatterOptions } from '@islands/frontmatter'
-
-import type { Router, RouteRecordRaw, RouterOptions as VueRouterOptions, RouteMeta } from 'vue-router'
+import type { Router, RouteRecordRaw, RouterOptions as VueRouterOptions, RouteMeta, RouteLocationNormalizedLoaded } from 'vue-router'
 import type { HeadClient, HeadObject } from '@vueuse/head'
 
 export { ViteOptions, ConfigEnv }
@@ -29,9 +28,11 @@ export interface CreateAppConfig {
 
 export interface SSGContext extends Required<CreateAppConfig> {
   app: App
+  frontmatter: Ref<Record<string, any>>
+  head: HeadClient
+  route: Ref<RouteLocationNormalizedLoaded>
   router: Router
   routes: RouteRecordRaw[]
-  head: HeadClient
 }
 
 export interface SSGRoute {
@@ -66,7 +67,7 @@ export interface EnhanceAppContext {
 }
 
 export interface UserApp {
-  head?: HeadConfig
+  head?: HeadConfig | ((ctx: EnhanceAppContext) => HeadConfig)
   enhanceApp?: (ctx: EnhanceAppContext) => void | Promise<void>
 }
 

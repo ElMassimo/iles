@@ -6,7 +6,7 @@ import routes from '@islands/routes'
 import appConfig from '@islands/app-config'
 import userApp from '@islands/user-app'
 import type { CreateAppFactory, SSGContext, RouterOptions } from '../shared'
-import { App, Island } from './components'
+import App from './components/App.vue'
 import { installPageData } from './composables/pageData'
 import { installAppConfig } from './composables/appConfig'
 
@@ -40,13 +40,11 @@ export const createApp: CreateAppFactory = async (options = {}) => {
     await router.isReady()
   }
 
-  const { frontmatter } = installPageData(app, router.currentRoute)
+  const route = router.currentRoute
+  const { frontmatter } = installPageData(app, route)
   Object.defineProperty(app.config.globalProperties, '$frontmatter', {
     get: () => frontmatter.value,
   })
-
-  // Install global components
-  app.component('Island', Island)
 
   // Default meta tags
   head.addHeadObjs(ref({
@@ -59,6 +57,8 @@ export const createApp: CreateAppFactory = async (options = {}) => {
   const context: SSGContext = {
     app,
     head,
+    frontmatter,
+    route,
     router,
     routes,
     routePath,
@@ -66,7 +66,7 @@ export const createApp: CreateAppFactory = async (options = {}) => {
 
   // Apply any configuration added by the user in app.ts
   const { head: headConfig, enhanceApp } = userApp
-  if (headConfig) head.addHeadObjs(ref(headConfig))
+  if (headConfig) head.addHeadObjs(ref(typeof headConfig === 'function' ? headConfig(context) : headConfig))
   if (enhanceApp) await enhanceApp(context)
 
   return context

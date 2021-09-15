@@ -45,6 +45,8 @@ export default function IslandsPlugins (appConfig: AppConfig): PluginOption[] {
   let root: ResolvedConfig['root']
   let resolveVitePath: ResolveFn
 
+  const appPath = resolve(appConfig.srcDir, 'app.ts')
+
   return [
     {
       name: 'iles',
@@ -67,18 +69,18 @@ export default function IslandsPlugins (appConfig: AppConfig): PluginOption[] {
         }
 
         if (id === USER_APP_REQUEST_PATH) {
-          const appPath = resolve(appConfig.srcDir, 'app.ts')
           if (!fs.existsSync(appPath)) return 'export default {}'
           this.addWatchFile(appPath)
           return fs.readFileSync(appPath, 'utf-8')
         }
       },
+      handleHotUpdate ({ file, server }) {
+        if (file === appPath) return [server.moduleGraph.getModuleById(USER_APP_REQUEST_PATH)!]
+      },
       // Allows to do a glob import in 'src/client/app/layouts.ts'
       transform (code, id) {
-        if (id.includes('client/app/layouts')) {
-          code = code.replace(/__LAYOUTS_ROOT__/g, `/${relative(root, appConfig.layoutsDir)}`)
-          return code
-        }
+        if (id.includes('client/app/layouts'))
+          return code.replace(/__LAYOUTS_ROOT__/g, `/${relative(root, appConfig.layoutsDir)}`)
       },
       configureServer (server) {
         restartOnConfigChanges(appConfig, server)

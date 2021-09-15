@@ -1,15 +1,12 @@
 <script setup lang="ts">
-import { useHead, useRoute, usePage } from 'iles'
+import { useRoute, usePage } from 'iles'
 import { usePosts } from '~/logic/posts'
 
 const posts = usePosts()
 
-const route = useRoute()
-const { frontmatter: post } = usePage()
+let { frontmatter: post } = $(usePage())
 
-useHead({ title: post.title })
-
-let currentIndex = $computed(() => posts.findIndex(p => p.href === route.path))
+let currentIndex = $computed(() => posts.findIndex(p => p.href === post.href))
 let date = $computed(() => posts[currentIndex]?.date)
 let nextPost = $computed(() => posts[currentIndex - 1])
 let prevPost = $computed(() => posts[currentIndex + 1])

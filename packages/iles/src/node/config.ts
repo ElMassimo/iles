@@ -15,6 +15,7 @@ export type { AppConfig }
 export const IlesComponentResolver: ComponentResolver = (name) => {
   if (name === 'Island') return { importName: 'Island', path: 'iles' }
   if (name === 'Layout') return { importName: 'Layout', path: 'iles' }
+  if (name === 'Head') return { importName: 'Head', path: '@vueuse/head' }
 }
 
 export async function resolveConfig (root?: string, env?: ConfigEnv): Promise<AppConfig> {

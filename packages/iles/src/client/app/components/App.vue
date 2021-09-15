@@ -28,6 +28,9 @@ export default {
 </script>
 
 <template>
+  <Head>
+    <meta property="generator" content="îles"/>
+  </Head>
   <Suspense>
     <router-view v-slot="{ Component: Page }">
       <Layout :name="layoutName">
