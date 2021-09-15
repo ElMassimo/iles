@@ -172,13 +172,15 @@ function viteConfigDefaults (root: string): ViteOptions {
       cssCodeSplit: false,
     },
     optimizeDeps: {
-      exclude: [
+      include: [
         'vue',
         'vue-demi',
+        '@vue/devtools-api',
+      ],
+      exclude: [
         'iles',
         'vue-router',
         '@nuxt/devalue',
-        '@vue/devtools-api',
         '@vue/server-renderer',
         '@vueuse/head',
         '@islands/hydration',
