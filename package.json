@@ -10,6 +10,8 @@
     "preview": "npm run -C playground/the-vue-point preview",
     "build": "npm -C packages run build",
     "lint": "eslint --ignore-pattern 'node_modules'  --ignore-pattern 'dist' . --ext .ts,.js,.vue,.html",
+    "release": "node scripts/release.cjs",
+    "changelog": "node scripts/changelog",
     "test": "peeky run",
     "test:open": "peeky open"
   },
@@ -18,7 +20,12 @@
     "@mussi/stylelint-config": "^0.1.1",
     "@peeky/cli": "^0.4.2",
     "@peeky/runner": "^0.4.2",
+    "conventional-changelog-cli": "^2.1.1",
     "concurrently": "^6.2.1",
+    "enquirer": "^2.3.6",
+    "execa": "^5.1.1",
+    "minimist": "^1.2.5",
+    "semver": "^7.3.5",
     "eslint": "^7.32.0",
     "pnpm": "^6.15.0",
     "typescript": "^4.3.5"

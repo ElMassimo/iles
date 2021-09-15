@@ -38,6 +38,7 @@
 [vite-ssg]: https://github.com/antfu/vite-ssg
 [devtools1]: https://user-images.githubusercontent.com/1158253/133314267-f0ba784c-ff64-4ee8-b2bf-97ecffc2facd.jpg
 [devtools2]: https://user-images.githubusercontent.com/1158253/133314279-1edc22d1-3ffb-414e-b994-212cb316593b.jpg
+[twitter]: https://twitter.com/ilesjs
 
 __[îles]__ is a static-site generator that provides automatic [partial hydration].
 
@@ -244,6 +245,10 @@ You can use TypeScript autocompletion to discover available options.
 ## Documentation 📖
 
 A documentation website is __coming soon__.
+
+## News 🗞
+
+Follow [îles][twitter] on [Twitter].
 
 ## Acknowledgements 🙇‍♂️
 
