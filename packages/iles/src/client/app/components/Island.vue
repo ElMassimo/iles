@@ -3,7 +3,7 @@
 import { defineAsyncComponent, defineComponent, h, createCommentVNode } from 'vue'
 import { useRoute } from 'iles'
 import type { PropType, DefineComponent } from 'vue'
-import { serialize } from '../utils'
+import { asyncMapObject, mapObject, serialize } from '../utils'
 import { newHydrationId, Hydrate, hydrationFns } from '../hydration'
 import { useIslandsForPath } from '../composables/islandDefinitions'
 import { useAppConfig } from '../composables/appConfig'
@@ -56,7 +56,7 @@ export default defineComponent({
     const renderScript = async () => {
       const slots = await asyncMapObject(slotVNodes, this.renderVNodes)
 
-      return `import { ${this.importName} as ${this.componentName} } from '${this.importPath}'
+      return `import { ${this.importName} as ${this.componentName} } from '${this.importPath.replace(this.appConfig.root, '')}'
   import { ${hydrationFns[this.strategy]} as hydrate } from '${isSSR ? '' : '/@id/'}@islands/hydration'
   hydrate(${this.componentName}, '${this.id}', ${serialize(props)}, ${serialize(slots)})
   `
@@ -83,20 +83,6 @@ export default defineComponent({
     ]
   },
 })
-
-function mapObject<I, O> (obj: Record<string, I>, fn: (i: I) => O): Record<string, O> {
-  const result = Object.create(null)
-  for (let key in obj)
-    result[key] = fn(obj[key])
-  return result
-}
-
-async function asyncMapObject<I, O> (obj: Record<string, I>, fn: (i: I) => Promise<O>): Promise<Record<string, O>> {
-  const result = Object.create(null)
-  for (let key in obj)
-    result[key] = await fn(obj[key])
-  return result
-}
 </script>
 
 <style>
