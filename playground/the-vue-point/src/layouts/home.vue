@@ -1,12 +1,11 @@
 <script setup lang="ts">
-import Layout from './default.vue'
 import { usePosts } from '~/logic/posts'
 
 const posts = usePosts()
 </script>
 
 <template>
-  <Layout>
+  <Layout name="default">
     <div class="divide-y divide-gray-200">
       <div class="pt-6 pb-8 space-y-2 md:space-y-5">
         <h1

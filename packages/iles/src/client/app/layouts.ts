@@ -1,24 +1,21 @@
 import { defineAsyncComponent } from 'vue'
-import type { RouteLocationNormalizedLoaded } from 'vue-router'
 
 const layouts = import.meta.glob('__LAYOUTS_ROOT__/**/*.vue')
 
-export function getLayout ({ path, meta }: RouteLocationNormalizedLoaded) {
-  if (meta.layout === false) return false
+export function getLayout (name: string | false | undefined) {
+  if (name === false) return false
+  if (!name) name = 'default'
 
-  const extIndex = path.lastIndexOf('.')
-  if (extIndex > -1 && path.slice(extIndex) !== '.html') return false
-
-  const layout = meta.layout || 'default'
-
-  const layoutComponent = layouts[`__LAYOUTS_ROOT__/${layout}.vue`]
-  if (layoutComponent) {
-    const component = defineAsyncComponent(layoutComponent)
-    component.name = `${layout}Layout`
+  const layout = layouts[`__LAYOUTS_ROOT__/${name}.vue`]
+  if (layout) {
+    const component = defineAsyncComponent(layout)
+    component.name = `${name}Layout`
     return component
   }
 
-  if (layout === 'default') return (props: any, { slots }: any) => slots.default && slots.default()
+  // If no default layout is defined, render the page by itself.
+  if (name === 'default')
+    return (props: any, { slots }: any) => slots.default && slots.default()
 
-  throw new Error(`Unknown layout '${layout}'. Should be defined in __LAYOUTS_ROOT__/${layout}.vue`)
+  throw new Error(`Unknown layout '${name}'. Should be defined in __LAYOUTS_ROOT__/${name}.vue`)
 }

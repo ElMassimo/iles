@@ -1,13 +1,19 @@
 <script setup lang="ts">
 import { computed, defineAsyncComponent } from 'vue'
 import { useAppConfig, useRoute } from 'iles'
-import { getLayout } from '@islands/layouts'
 import { useRouterLinks } from '../composables/routerLinks'
+import Layout from './Layout.vue'
 
 useRouterLinks()
 
 const route = useRoute()
-let layout = computed(() => getLayout(route))
+
+// Internal: Skip layout by default for non-HTML pages.
+const layoutName = computed(() => {
+  const extIndex = route.path.lastIndexOf('.')
+  if (extIndex > -1 && route.path.slice(extIndex) !== '.html') return false
+  return route.meta.layout
+})
 
 const appConfig = useAppConfig()
 const DebugPanel = import.meta.env.DEV && appConfig.debug
@@ -24,10 +30,9 @@ export default {
 <template>
   <Suspense>
     <router-view v-slot="{ Component: Page }">
-      <component v-if="layout" :is="layout">
+      <Layout :name="layoutName">
         <component :is="Page"/>
-      </component>
-      <component v-else :is="Page"/>
+      </Layout>
     </router-view>
   </Suspense>
   <DebugPanel/>

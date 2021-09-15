@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { useHead, useRoute } from 'iles'
-import Layout from './default.vue'
 import { usePosts } from '~/logic/posts'
 
 const posts = usePosts()
@@ -17,7 +16,7 @@ let prevPost = $computed(() => posts[currentIndex + 1])
 </script>
 
 <template>
-  <Layout>
+  <Layout name="default">
     <article class="xl:divide-y xl:divide-gray-200">
       <header class="pt-6 xl:pb-10 space-y-1 text-center">
         <Date :date="frontmatter.date"/>
