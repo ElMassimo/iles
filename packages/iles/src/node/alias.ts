@@ -51,6 +51,12 @@ export function resolveAliases (root: string): AliasOptions {
       ),
     },
     {
+      find: /^@vue\/devtools-api$/,
+      replacement: require.resolve(
+        '@vue/devtools-api/lib/esm/index.js',
+      ),
+    },
+    {
       find: /^@islands\/hydration$/,
       replacement: require.resolve('@islands/hydration/dist/hydration.js'),
     },
