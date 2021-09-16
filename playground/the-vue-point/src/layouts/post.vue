@@ -13,7 +13,7 @@ let prevPost = $computed(() => posts[currentIndex + 1])
 </script>
 
 <template>
-  <Layout name="default">
+  <layout name="default">
     <article class="xl:divide-y xl:divide-gray-200">
       <header class="pt-6 xl:pb-10 space-y-1 text-center">
         <Date :date="post.date"/>
@@ -79,5 +79,5 @@ let prevPost = $computed(() => posts[currentIndex + 1])
         </footer>
       </div>
     </article>
-  </Layout>
+  </layout>
 </template>

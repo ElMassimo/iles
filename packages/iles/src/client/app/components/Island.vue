@@ -20,17 +20,23 @@ export default defineComponent({
     [Hydrate.WhenIdle]: { type: Boolean, default: false },
     [Hydrate.OnLoad]: { type: Boolean, default: false },
     [Hydrate.MediaQuery]: { type: [Boolean, String], default: false },
-    [Hydrate.New]: { type: Boolean, default: false },
+    [Hydrate.SkipPrerender]: { type: Boolean, default: false },
     [Hydrate.WhenVisible]: { type: Boolean, default: false },
   },
-  setup (props) {
+  setup (props, { attrs }) {
+    let strategy = Object.values(Hydrate).find(s => props[s])
+    if (!strategy) {
+      console.warn('Unknown hydration strategy, falling back to client:load. Received:', { ...attrs })
+      strategy = Hydrate.OnLoad
+    }
+
     return {
       appConfig: useAppConfig(),
       id: newHydrationId(),
       route: useRoute(),
       islandsForPath: import.meta.env.SSR ? useIslandsForPath() : undefined,
       renderVNodes: useVueRenderer(),
-      strategy: Object.values(Hydrate).find(s => props[s]) || Hydrate.OnLoad,
+      strategy,
     }
   },
   mounted () {
@@ -41,11 +47,6 @@ export default defineComponent({
   },
   render () {
     const isSSR = import.meta.env.SSR
-
-    const content = isSSR && this.$props[Hydrate.New]
-      ? []
-      : [h(this.component, this.$attrs, this.$slots)]
-    const rootNode = h('ile-root', { id: this.id }, content)
 
     const props = { ...this.$attrs }
     if (this.strategy === Hydrate.MediaQuery)
@@ -69,16 +70,20 @@ export default defineComponent({
       return placeholder
     }
 
+    const skipPrerender = (this.appConfig.debug || isSSR) && this.$props[Hydrate.SkipPrerender]
+    const ileRoot = h('ile-root', { id: this.id },
+      skipPrerender ? [] : [h(this.component, this.$attrs, this.$slots)])
+
     // Hydrate in development to debug potential problems with the script.
     if (this.appConfig.debug && !isSSR) {
       return [
-        rootNode,
+        ileRoot,
         h(defineAsyncComponent(async () => h('script', { type: 'module', innerHTML: await renderScript() }))),
       ]
     }
 
     return [
-      rootNode,
+      ileRoot,
       h(defineAsyncComponent(async () => createCommentVNode(await renderPlaceholder()))),
     ]
   },

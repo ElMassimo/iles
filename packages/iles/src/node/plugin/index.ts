@@ -103,7 +103,7 @@ export default function IslandsPlugins (appConfig: AppConfig): PluginOption[] {
       },
     },
     {
-      name: 'iles:wrap-components',
+      name: 'iles:detect-islands',
       enforce: 'pre',
       configResolved (config) {
         debug.build('minify:', config.build.minify)
