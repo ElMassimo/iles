@@ -17,11 +17,12 @@ import { APP_PATH, ROUTES_REQUEST_PATH, USER_APP_REQUEST_PATH, APP_CONFIG_REQUES
 import { createServer } from '../server'
 import { escapeRegex, pascalCase, serialize, replaceAsync } from './utils'
 import { parseId, parseImports } from './parse'
+import { unresolvedIslandKey, wrapIslandsInSFC } from './wrap'
 
 const debug = {
   config: createDebugger('iles:config'),
   mdx: createDebugger('iles:mdx'),
-  wrap: createDebugger('iles:wrap'),
+  detect: createDebugger('iles:detect'),
   resolve: createDebugger('iles:resolve'),
   build: createDebugger('iles:build'),
 }
@@ -31,9 +32,8 @@ function isMarkdown (path: string) {
 }
 
 const contextComponentRegex = new RegExp(escapeRegex('_ctx.__unplugin_components_'), 'g')
-const unresolvedIslandKey = '__viteIslandComponent'
 const viteIslandRegex = new RegExp(`"?${escapeRegex(unresolvedIslandKey)}"?:\\s*([^,]+),`, 'sg')
-const scriptTagsRegex = /<script\s*([^>]*?)>(.*?)<\/script>/sg
+const jsxComponentRegex = /<([A-Z]\w+)\s*(?:([^/]+?)\/>|([^>]+)>(.*?)<\/\1>)/sg
 
 // Public: Configures MDX, Vue, Components, and Islands plugins.
 export default function IslandsPlugins (appConfig: AppConfig): PluginOption[] {
@@ -117,26 +117,16 @@ export default function IslandsPlugins (appConfig: AppConfig): PluginOption[] {
       async transform (code, id) {
         const { path } = parseId(id)
         if (!isMarkdown(path) && !path.endsWith('.vue')) return
+        if (!code.includes('client:')) return
+        if (path.endsWith('.vue'))
+          return code.includes('<template') ? wrapIslandsInSFC(code, path, debug.detect) : undefined
 
-        const components = /<([A-Z]\w+)\s*(?:([^/]+?)\/>|([^>]+)>(.*?)<\/\1>)/sg
-
-        // Parse imports and set options as needed.
-        const scriptContent = path.endsWith('.vue') && Array.from(code.matchAll(scriptTagsRegex)).map(([,, js]) => js).join(';')
-        const imports = scriptContent
-          ? await parseImports(scriptContent)
-          : {}
-
-        return code.replace(components, (str, tagName, attrs, otherAttrs, children) => {
+        // TODO: Use vue-jsx parser instead of regexes.
+        return code.replace(jsxComponentRegex, (str, tagName, attrs, otherAttrs, children) => {
           if (otherAttrs) attrs = otherAttrs
           if (!attrs?.match(/(\s|^)client:/)) return str
-
-          debug.wrap(tagName, attrs)
-
-          const resolveComponent = imports[tagName] ? tagName : `_resolveComponent("${tagName}")`
-          const component = path.endsWith('.vue')
-            ? `:${unresolvedIslandKey}='${resolveComponent}'`
-            : `${unresolvedIslandKey}={${resolveComponent}}`
-
+          debug.detect(`<${tagName} ${attrs}>`)
+          const component = `${unresolvedIslandKey}={_resolveComponent("${tagName}")}`
           return `<Island componentName="${pascalCase(tagName)}" ${component} ${attrs}>${children || ''}</Island>`
         })
       },
@@ -217,7 +207,7 @@ export default function IslandsPlugins (appConfig: AppConfig): PluginOption[] {
     components(appConfig.components),
 
     {
-      name: 'iles:import-analysis',
+      name: 'iles:resolve-islands',
       enforce: 'post',
       async transform (code, id) {
         const { path, query } = parseId(id)
@@ -240,7 +230,7 @@ export default function IslandsPlugins (appConfig: AppConfig): PluginOption[] {
           resolvedName = resolvedName.replace(/^\$setup\./, '')
           const importMetadata = imports[resolvedName]
 
-          const componentName = resolvedName.match(/_resolveComponent\(([^)]+?)\)/)?.[1]
+          const componentName = resolvedName.match(/_resolveComponent\(([^)]+?)\)/)?.[1] || resolvedName
 
           if (!importMetadata)
             throw new Error(`Unable to infer '${componentName}' island component in ${path}`)

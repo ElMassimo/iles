@@ -1,4 +1,5 @@
 import { init as initESLexer, parse as parseESModules } from 'es-module-lexer'
+import type { Awaited } from '../shared'
 
 interface ImportMetadata {
   name: string
@@ -34,6 +35,8 @@ export async function parseImports (code: string) {
     return {}
   }
 }
+
+export type ParsedImports = Awaited<ReturnType<typeof parseImports>>
 
 const importStatementRegex = /import\s*(.*?)\s*from['"\s]+$/s
 const importVarRegex = /(?:\{\s*((?:[^,}]+[,\s]*)+)\}|([^,]+))(?:[,\s]*|\s*$)+/sg

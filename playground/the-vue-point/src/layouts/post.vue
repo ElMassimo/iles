@@ -13,10 +13,10 @@ let prevPost = $computed(() => posts[currentIndex + 1])
 </script>
 
 <template>
-  <layout name="default">
+  <Layout name="default">
     <article class="xl:divide-y xl:divide-gray-200">
       <header class="pt-6 xl:pb-10 space-y-1 text-center">
-        <Date :date="post.date"/>
+        <Date :date="post.date" client:idle v-bind="post"/>
         <h1
           class="
             text-3xl
@@ -79,5 +79,5 @@ let prevPost = $computed(() => posts[currentIndex + 1])
         </footer>
       </div>
     </article>
-  </layout>
+  </Layout>
 </template>

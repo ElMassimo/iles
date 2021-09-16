@@ -1,4 +1,7 @@
 <script setup lang="ts">
+import { usePage } from 'iles'
+import Author from './Author.vue'
+
 const props = defineProps({ date: [String, Date] })
 
 function getDateTime() {
