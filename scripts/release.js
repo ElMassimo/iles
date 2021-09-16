@@ -125,7 +125,7 @@ async function main () {
 
   if (!semver.valid(targetVersion)) throw new Error(`invalid target version: ${targetVersion}`)
 
-  const tag = `${name}@${targetVersion}`
+  const tag = name === 'iles' ? `v${targetVersion}` : `${name}@${targetVersion}`
 
   /**
    * @type {{ yes: boolean }}
@@ -162,6 +162,8 @@ async function main () {
   await publishPackage(targetVersion, runIfNotDry)
 
   step('\nPushing to GitHub...')
+  await runIfNotDry('git', ['tag', tag])
+  await runIfNotDry('git', ['push', 'origin', `refs/tags/${tag}`])
   await runIfNotDry('git', ['push'])
 
   if (isDryRun) console.info(`\nDry run finished - run git diff to see ${pkg.type} changes.`)
