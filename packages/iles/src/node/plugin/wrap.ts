@@ -16,7 +16,6 @@ export async function wrapIslandsInSFC (code: string, filename: string, debug: D
 
   const jsCode = scriptSetup?.loc?.source || script?.loc?.source
   const imports = jsCode ? await parseImports(jsCode) : {}
-  if (filename.includes('post.vue')) console.log({ imports })
 
   visitSFCNode(template.ast, s, imports, debug)
   return { code: s.toString(), map: s.generateMap({ hires: true }) }

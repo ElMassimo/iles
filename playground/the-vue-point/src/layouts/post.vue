@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useRoute, usePage } from 'iles'
+import { usePage } from 'iles'
 import { usePosts } from '~/logic/posts'
 
 const posts = usePosts()
