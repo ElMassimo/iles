@@ -28,13 +28,18 @@ export default {
 
 <template>
   <div class="debug" :class="{ open }" ref="el" @click="open = !open">
-    <p class="title">Debug</p>
-    <pre class="block">{{ cleanPage }}<br><br>Open DevTools to inspect <b>islands</b>.</pre>
+    <p class="title">Debug<span class="info">Open DevTools to inspect <b>islands</b> 🏝</span></p>
+    <pre class="block">{{ cleanPage }}</pre>
   </div>
 </template>
 
 <style scoped>
 .debug {
+  --debug-rgba: 0, 0, 0;
+  --debug-opacity: 0.75;
+  --debug-bg: rgba(var(--debug-rgba), var(--debug-opacity));
+  --debug-color: #EEE;
+
   box-sizing: border-box;
   position: fixed;
   right: 8px;
@@ -43,18 +48,28 @@ export default {
   border-radius: 4px;
   width: 74px;
   height: 32px;
-  color: #eeeeee;
+  color: var(--debug-color);
   overflow: hidden;
   cursor: pointer;
-  background-color: rgba(0, 0, 0, 0.85);
+  background-color: var(--debug-bg);
   transition: all 0.15s ease;
 }
 
-.debug:hover {
-  background-color: rgba(0, 0, 0, 0.75);
+.info {
+  display: none
+}
+
+.debug:not(.open):hover {
+  --debug-opacity: 0.7;
+}
+
+.debug.open:hover {
+  --debug-opacity: 1;
 }
 
 .debug.open {
+  --debug-rgba: 40, 40, 40;
+
   right: 0;
   bottom: 0;
   width: 100%;
@@ -62,17 +77,26 @@ export default {
   margin-top: 0;
   border-radius: 0;
   padding: 0 0;
-  overflow: scroll;
+  overflow: auto;
+}
+
+.debug.open .info {
+  display: inline;
+  float:  right;
+}
+
+@media (prefers-color-scheme: light) {
+  .debug.open {
+    --debug-rgba: 255, 255, 255;
+    --debug-color: #444;
+    border-left: 1px solid #DDD;
+  }
 }
 
 @media (min-width: 512px) {
   .debug.open {
     width: 512px;
   }
-}
-
-.debug.open:hover {
-  background-color: rgba(0, 0, 0, 0.85);
 }
 
 .title {
@@ -84,7 +108,7 @@ export default {
 
 .block {
   margin: 2px 0 0;
-  border-top: 1px solid rgba(255, 255, 255, 0.16);
+  border-top: 1px solid #DDD;
   padding: 8px 16px;
   font-family: Hack, monospace;
   font-size: 13px;
