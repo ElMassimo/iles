@@ -5,6 +5,7 @@ import virtual from '@rollup/plugin-virtual'
 import { build as viteBuild, mergeConfig as mergeViteConfig } from 'vite'
 import glob from 'fast-glob'
 import type { Manifest, UserConfig as ViteUserConfig } from 'vite'
+import type { PreRenderedChunk } from 'rollup'
 import IslandsPlugins from '../plugin'
 import type { Awaited, AppConfig, IslandsByPath, IslandDefinition, SSGRoute } from '../shared'
 import rebaseImports from './rebaseImports'
@@ -79,6 +80,7 @@ async function buildIslands (config: AppConfig, islandsByPath: IslandsByPath) {
       minify: 'esbuild',
       rollupOptions: {
         input: entryFiles,
+        output: { chunkFileNames },
       },
     },
     plugins: [
@@ -110,4 +112,10 @@ async function parseManifest (outDir: string) {
     console.error(err)
     return {}
   }
+}
+
+// Internal: Remove query strings from islands inside Vue components.
+function chunkFileNames (chunk: PreRenderedChunk) {
+  if (chunk.name.includes('.vue_vue')) return `assets/${chunk.name.split('.vue_vue')[0]}.[hash].js`
+  return `assets/[name].[hash].js`
 }
