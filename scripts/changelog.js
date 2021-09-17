@@ -24,13 +24,15 @@ const run = async (bin, args, opts = {}) => await execa(bin, args, { stdio: 'inh
  */
 const resolve = paths => path.resolve(__dirname, `../packages/${name}/${paths}`)
 
+const tagPrefix = name === 'iles' ? 'v' : `${name}@`
+
 async function main () {
   await run('npx', [
     'conventional-changelog',
     '-p', 'angular',
     '-i', resolve('CHANGELOG.md'),
     '-s',
-    '-t', `${name}@`,
+    '-t', tagPrefix,
     '--pkg', resolve('package.json'),
     '--commit-path', `./packages/${name}`,
   ])

@@ -19,10 +19,10 @@
   "author": "Máximo Mussini <maximomussini@gmail.com>",
   "repository": {
     "type": "git",
-    "url": "https://github.com/maximomussini/iles"
+    "url": "https://github.com/ElMassimo/iles"
   },
-  "homepage": "https://github.com/maximomussini/iles",
-  "bugs": "https://github.com/maximomussini/iles/issues",
+  "homepage": "https://github.com/ElMassimo/iles",
+  "bugs": "https://github.com/ElMassimo/iles/issues",
   "dependencies": {
     "js-yaml": "^4.1",
     "toml": "^3.0",
