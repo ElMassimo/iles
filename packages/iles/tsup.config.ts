@@ -9,5 +9,7 @@ export const tsup: Options = {
   external: [
     '@vue/runtime-dom/dist/runtime-dom.esm-bundler.js',
     '@islands/hydration/dist/hydration.js',
+    '@islands/hydration/dist/vue.js',
+    '@islands/hydration/dist/vanilla.js',
   ],
 }

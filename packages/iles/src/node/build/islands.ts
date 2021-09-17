@@ -68,7 +68,7 @@ async function buildIslands (config: AppConfig, islandsByPath: IslandsByPath) {
     })
   }
 
-  const entryFiles = Object.keys(entrypoints)
+  const entryFiles = Object.keys(entrypoints).sort()
   if (entryFiles.length === 0) return
 
   await viteBuild(mergeViteConfig(config.vite, {

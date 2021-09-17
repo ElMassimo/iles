@@ -21,6 +21,9 @@ export default defineConfig({
     },
   },
   vite: {
+    optimizeDeps: {
+      include: ['quicklink'],
+    },
     plugins: [
       icons(),
       windicss(),

@@ -11,7 +11,7 @@
   "main": "dist/hydration.cjs",
   "scripts": {
     "dev": "npm run build -- --watch",
-    "build": "tsup hydration.ts",
+    "build": "tsup hydration.ts vue.ts vanilla.ts",
     "prepublishOnly": "npm run build"
   },
   "engines": {

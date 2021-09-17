@@ -255,6 +255,9 @@ Follow [îles][twitter] on [Twitter].
 - [Vite.js] and [Vue]: for enabling an amazing development experience
 - [Astro](https://astro.build): for sharing a novel way to define islands
 - [xdm]: provides amazing flexibility when processing Markdown
+- [vue-router], [@vueuse/head], and [vite-plugin-pages]: the backbone of this library
 - [unplugin-vue-components]: allows you to avoid the boilerplate
-- [vite-plugin-pages]: the backbone of this library
 - [Vitepress] and [vite-ssg]: for their different ideas on SSR
+
+[vue-router]: https://next.router.vuejs.org/
+[@vueuse/head]: https://github.com/vueuse/head

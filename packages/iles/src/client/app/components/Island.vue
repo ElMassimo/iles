@@ -30,9 +30,13 @@ export default defineComponent({
       strategy = Hydrate.OnLoad
     }
 
+    const ext = props.importPath.split('.')[1]
+    const framework = ext === 'js' || ext === 'ts' ? 'vanilla' : 'vue'
+
     return {
       appConfig: useAppConfig(),
       id: newHydrationId(),
+      framework,
       route: useRoute(),
       islandsForPath: import.meta.env.SSR ? useIslandsForPath() : undefined,
       renderVNodes: useVueRenderer(),
@@ -53,13 +57,15 @@ export default defineComponent({
       props._mediaQuery = this.$props[Hydrate.MediaQuery]
 
     const slotVNodes = mapObject(this.$slots, slotFn => slotFn?.())
+    const islandsPrefix = `${isSSR ? '' : '/@id/'}@islands`
 
     const renderScript = async () => {
       const slots = await asyncMapObject(slotVNodes, this.renderVNodes)
 
       return `import { ${this.importName} as ${this.componentName} } from '${this.importPath.replace(this.appConfig.root, '')}'
-  import { ${hydrationFns[this.strategy]} as hydrate } from '${isSSR ? '' : '/@id/'}@islands/hydration'
-  hydrate(${this.componentName}, '${this.id}', ${serialize(props)}, ${serialize(slots)})
+  import { ${hydrationFns[this.strategy]} as hydrate } from '${islandsPrefix}/hydration'
+  import createIsland from '${islandsPrefix}/${this.framework}'
+  hydrate(createIsland, ${this.componentName}, '${this.id}', ${serialize(props)}, ${serialize(slots)})
   `
     }
 

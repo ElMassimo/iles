@@ -61,6 +61,14 @@ export function resolveAliases (root: string): AliasOptions {
       replacement: require.resolve('@islands/hydration/dist/hydration.js'),
     },
     {
+      find: /^@islands\/vanilla$/,
+      replacement: require.resolve('@islands/hydration/dist/vanilla.js'),
+    },
+    {
+      find: /^@islands\/vue$/,
+      replacement: require.resolve('@islands/hydration/dist/vue.js'),
+    },
+    {
       find: /^@islands\/layouts/,
       replacement: require.resolve('iles/dist/client/app/layouts.js'),
     },

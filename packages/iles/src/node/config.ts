@@ -126,7 +126,7 @@ function appConfigDefaults (root: string): AppConfig {
     },
     components: {
       dts: true,
-      extensions: ['vue', 'jsx', 'ts', 'mdx'],
+      extensions: ['vue', 'jsx', 'js', 'ts', 'mdx'],
       include: [/\.vue$/, /\.vue\?vue/, /\.mdx?/],
       resolvers: [IlesComponentResolver],
     },
