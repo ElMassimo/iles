@@ -1,3 +1,31 @@
+## 0.0.10 (2021-09-17)
+
+
+### Bug Fixes
+
+* avoid using ref sugar in internals, the syntax is experimental ([db846aa](https://github.com/ElMassimo/astrovite/commit/db846aa66f0dbfdbb8c69c6b9c91c391aa659235))
+* avoid workspace dep and add devalue ([87b62f6](https://github.com/ElMassimo/astrovite/commit/87b62f676387f7b3493e194925f9e610cd14068e))
+* frontmatter is always available and can be used to define head refs ([fad2eef](https://github.com/ElMassimo/astrovite/commit/fad2eef6aaec45689b820fdfe760cc0e6593e153))
+* move esm dependencies to exclude ([9fd7e46](https://github.com/ElMassimo/astrovite/commit/9fd7e468fabac1d86b7a3fc98c69258bbc3e1500))
+* prevent dep scan on layouts file ([170b79d](https://github.com/ElMassimo/astrovite/commit/170b79d7e9e75a2fa477433b60463e722a5c91b7))
+* prevent duplicates of vue runtime ([2de396d](https://github.com/ElMassimo/astrovite/commit/2de396db7b79d9e7b773546cf89bcacfac168271))
+* prevent vue import query string in chunk filenames ([38bfa75](https://github.com/ElMassimo/astrovite/commit/38bfa754c3e165bf117ee6e81cdd0d5e1b53b3c5))
+* use a canonical import path to prevent HMR breakage ([e6552f3](https://github.com/ElMassimo/astrovite/commit/e6552f31ec7ee2e3080568ac04fee7ac8fdaca38))
+
+
+### Features
+
+* Add Layout component to easily reference other layouts ([95fa649](https://github.com/ElMassimo/astrovite/commit/95fa649866814382de94f608cf15a605d6d79338))
+* allow 'layout' as a top-level attribute in <route> ([02cdd5b](https://github.com/ElMassimo/astrovite/commit/02cdd5b83df36fbf65261c4dd7a022a075e5244b))
+* allow to use no-runtime islands with any JS. prepare support for other frameworks ([546e8d3](https://github.com/ElMassimo/astrovite/commit/546e8d3dc686c7545d11bfdd928fd7fd0e120a9a))
+* expose route in usePageData ([d227650](https://github.com/ElMassimo/astrovite/commit/d227650ca39bb217dd3b64cd2f851284bd28f0cd))
+* extendFrontmatter hook. unified usage as route.meta.frontmatter ([31062e0](https://github.com/ElMassimo/astrovite/commit/31062e04193822cddf1ef9069bec9c448b6d3b72))
+* improve debug panel for light color preference ([3c426a6](https://github.com/ElMassimo/astrovite/commit/3c426a60cf07306c163b030fe86b7b25f4b7c605))
+* use Vue SFC parser to detect islands instead of regexes ([e4f319b](https://github.com/ElMassimo/astrovite/commit/e4f319b48514c2dabdebbf40989ad65352f8bda4))
+* warn when not selecting one of the available hydration strategies ([c7f6c79](https://github.com/ElMassimo/astrovite/commit/c7f6c7931f5ad72f5dc02a2ca3d23c15c3cfa967))
+
+
+
 ## 0.0.9 (2021-09-16)
 
 
