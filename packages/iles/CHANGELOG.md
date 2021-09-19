@@ -1,3 +1,12 @@
+## [0.0.11](https://github.com/ElMassimo/iles/compare/v0.0.10...v0.0.11) (2021-09-19)
+
+
+### Bug Fixes
+
+* simplify @islands/hydration resolution ([8ee99f3](https://github.com/ElMassimo/iles/commit/8ee99f3a94d5a43e277b3eee40bf4e9a4fe18d60))
+
+
+
 ## 0.0.10 (2021-09-17)
 
 
