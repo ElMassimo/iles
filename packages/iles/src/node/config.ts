@@ -175,7 +175,6 @@ function viteConfigDefaults (root: string): ViteOptions {
     optimizeDeps: {
       include: [
         'vue',
-        'vue-demi',
         '@vue/devtools-api',
       ],
       exclude: [

@@ -77,7 +77,7 @@ importers:
   packages/iles:
     specifiers:
       '@islands/frontmatter': ^0.0.1
-      '@islands/hydration': ^0.0.2
+      '@islands/hydration': ^0.0.3
       '@nuxt/devalue': ^2.0.0
       '@rollup/plugin-virtual': ^2.0.3
       '@types/debug': ^4.1.7
