@@ -139,9 +139,9 @@ function appConfigDefaults (root: string): AppConfig {
 // a page or using route meta.
 function withResolvedConfig (config: AppConfig) {
   config.markdown.remarkPlugins!.unshift(...[
+    remarkWrapIslands,
     import('remark-frontmatter').then(mod => mod.default),
     frontmatterPlugin(config),
-    remarkWrapIslands,
   ])
   const { extendFrontmatter } = config.markdown
   const { extendRoute } = config.pages

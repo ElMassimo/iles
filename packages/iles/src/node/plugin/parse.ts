@@ -1,10 +1,12 @@
 import { init as initESLexer, parse as parseESModules } from 'es-module-lexer'
 import type { Awaited } from '../shared'
 
-interface ImportMetadata {
+export interface ImportMetadata {
   name: string
   path: string
 }
+
+export type ImportsMetadata = Record<string, ImportMetadata>
 
 export function parseId (id: string) {
   const index = id.indexOf('?')
@@ -20,7 +22,7 @@ export async function parseImports (code: string) {
     await initESLexer
 
     const imports = parseESModules(code)[0]
-    const importMap: Record<string, ImportMetadata> = Object.create(null)
+    const importMap: ImportsMetadata = Object.create(null)
     imports.forEach(({ d: isDynamic, n: path, ss: statementStart, s: importPathStart }) => {
       if (isDynamic > -1 || !path) return
       const importFragment = code.substring(statementStart, importPathStart)

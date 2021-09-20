@@ -32,7 +32,7 @@ function isMarkdown (path: string) {
 }
 
 const contextComponentRegex = new RegExp(escapeRegex('_ctx.__unplugin_components_'), 'g')
-const viteIslandRegex = new RegExp(`"?${escapeRegex(unresolvedIslandKey)}"?:\\s*([^,]+),`, 'sg')
+const viteIslandRegex = new RegExp(`"?${escapeRegex(unresolvedIslandKey)}"?:\\s*([^,}\n]+)[,}\n]`, 'sg')
 const unresolvedComponentsRegex = /_resolveComponent\("([^)]+?)"\)/
 
 // Public: Configures MDX, Vue, Components, and Islands plugins.
