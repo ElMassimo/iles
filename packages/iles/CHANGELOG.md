@@ -1,3 +1,17 @@
+## [0.0.15](https://github.com/ElMassimo/iles/compare/v0.0.14...v0.0.15) (2021-09-20)
+
+
+### Bug Fixes
+
+* import vueuse/head explicitly in App.vue ([47b50e3](https://github.com/ElMassimo/iles/commit/47b50e38f3eb2b7b6bdf34036fe63ee98a931ac8))
+
+
+### Features
+
+* add sitemap.xml generation ([5a748e4](https://github.com/ElMassimo/iles/commit/5a748e4ff4b49981b664beb8f709b5d9f0e41f23))
+
+
+
 ## [0.0.14](https://github.com/ElMassimo/iles/compare/v0.0.13...v0.0.14) (2021-09-20)
 
 
