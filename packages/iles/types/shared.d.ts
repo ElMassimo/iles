@@ -60,11 +60,7 @@ export interface Plugin extends Partial<AppPlugins> {
   config: (config: UserConfig, env: ConfigEnv) => UserConfig | null | void | Promise<UserConfig | null | void>
 }
 
-export interface EnhanceAppContext {
-  app: App
-  router: Router
-  head: HeadClient
-}
+export type EnhanceAppContext = SSGContext
 
 export interface UserApp {
   head?: HeadConfig | ((ctx: EnhanceAppContext) => HeadConfig)
