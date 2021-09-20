@@ -84,7 +84,7 @@ export default defineComponent({
     if (this.appConfig.debug && !isSSR) {
       return [
         ileRoot,
-        h(defineAsyncComponent(async () => h('script', { type: 'module', innerHTML: await renderScript() }))),
+        h(defineAsyncComponent(async () => h('script', { async: true, type: 'module', innerHTML: await renderScript() }))),
       ]
     }
 

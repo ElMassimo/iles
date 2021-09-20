@@ -46,7 +46,7 @@ async function renderRoute (config: AppConfig, manifest: Manifest, route: SSGRou
       // Inline the script in the SSR'ed html to load the island.
       const rebasedCode = await rebaseImports(config, code)
       content = content.replace(`<!--${island.placeholder}-->`,
-        `<script type="module">${rebasedCode}</script>`)
+        `<script type="module" async>${rebasedCode}</script>`)
     }
 
     // Preload scripts for islands in the page.
