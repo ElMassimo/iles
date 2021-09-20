@@ -1,3 +1,19 @@
+## [0.0.16](https://github.com/ElMassimo/iles/compare/v0.0.15...v0.0.16) (2021-09-20)
+
+
+### Bug Fixes
+
+* router link should alway scrolls to the top in development ([a1cd7f5](https://github.com/ElMassimo/iles/commit/a1cd7f5fb923b87c16ae7f8e30c62c724a463d06))
+* smaller output for islands with empty slots ([e982e01](https://github.com/ElMassimo/iles/commit/e982e01820675f31feeb3c00f7a62b1516079454))
+* typings for EnhanceApp ([86250ce](https://github.com/ElMassimo/iles/commit/86250ce278e2fd6c359db71477f261bc81938ab5))
+
+
+### Features
+
+* output async module scripts by default, it's safe for islands ([dd88c99](https://github.com/ElMassimo/iles/commit/dd88c9944a1b27d9c2f9abcff4e1bd59f879efee))
+
+
+
 ## [0.0.15](https://github.com/ElMassimo/iles/compare/v0.0.14...v0.0.15) (2021-09-20)
 
 
