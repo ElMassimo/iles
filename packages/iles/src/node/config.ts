@@ -7,6 +7,7 @@ import type { ComponentResolver } from 'unplugin-vue-components/types'
 import type { Frontmatter, FrontmatterPluggable } from '@islands/frontmatter'
 import type { AppConfig, AppPlugins, ConfigEnv, ViteOptions, Plugin } from './shared'
 import { resolveAliases, DIST_CLIENT_PATH, HYDRATION_DIST_PATH } from './alias'
+import remarkWrapIslands from './plugin/remarkWrapIslands'
 
 const debug = creatDebugger('iles:config')
 
@@ -140,6 +141,7 @@ function withResolvedConfig (config: AppConfig) {
   config.markdown.remarkPlugins!.unshift(...[
     import('remark-frontmatter').then(mod => mod.default),
     frontmatterPlugin(config),
+    remarkWrapIslands,
   ])
   const { extendFrontmatter } = config.markdown
   const { extendRoute } = config.pages

@@ -15,7 +15,7 @@ import createDebugger from 'debug'
 import type { AppConfig, AppClientConfig } from '../shared'
 import { APP_PATH, ROUTES_REQUEST_PATH, USER_APP_REQUEST_PATH, APP_CONFIG_REQUEST_PATH } from '../alias'
 import { createServer } from '../server'
-import { escapeRegex, pascalCase, serialize, replaceAsync } from './utils'
+import { escapeRegex, serialize, replaceAsync } from './utils'
 import { parseId, parseImports } from './parse'
 import { unresolvedIslandKey, wrapIslandsInSFC } from './wrap'
 
@@ -33,7 +33,7 @@ function isMarkdown (path: string) {
 
 const contextComponentRegex = new RegExp(escapeRegex('_ctx.__unplugin_components_'), 'g')
 const viteIslandRegex = new RegExp(`"?${escapeRegex(unresolvedIslandKey)}"?:\\s*([^,]+),`, 'sg')
-const jsxComponentRegex = /<([A-Z]\w+)\s*(?:([^/]+?)\/>|([^>]+)>(.*?)<\/\1>)/sg
+const unresolvedComponentsRegex = /_resolveComponent\("([^)]+?)"\)/
 
 // Public: Configures MDX, Vue, Components, and Islands plugins.
 export default function IslandsPlugins (appConfig: AppConfig): PluginOption[] {
@@ -51,6 +51,14 @@ export default function IslandsPlugins (appConfig: AppConfig): PluginOption[] {
     {
       name: 'iles',
       enforce: 'pre',
+      configResolved (config) {
+        if (base) return
+        base = config.base
+        sourcemap = config.build.sourcemap
+        mode = config.mode
+        root = config.root
+        resolveVitePath = config.createResolver()
+      },
       resolveId (id) {
         if (id === ROUTES_REQUEST_PATH)
           return PAGES_REQUEST_PATH
@@ -103,32 +111,12 @@ export default function IslandsPlugins (appConfig: AppConfig): PluginOption[] {
       },
     },
     {
-      name: 'iles:detect-islands',
+      name: 'iles:detect-islands-in-vue',
       enforce: 'pre',
-      configResolved (config) {
-        debug.build('minify:', config.build.minify)
-        if (base) return
-        base = config.base
-        sourcemap = config.build.sourcemap
-        mode = config.mode
-        root = config.root
-        resolveVitePath = config.createResolver()
-      },
       async transform (code, id) {
         const { path } = parseId(id)
-        if (!isMarkdown(path) && !path.endsWith('.vue')) return
-        if (!code.includes('client:')) return
-        if (path.endsWith('.vue'))
-          return code.includes('<template') ? wrapIslandsInSFC(code, path, debug.detect) : undefined
-
-        // TODO: Use vue-jsx parser instead of regexes.
-        return code.replace(jsxComponentRegex, (str, tagName, attrs, otherAttrs, children) => {
-          if (otherAttrs) attrs = otherAttrs
-          if (!attrs?.match(/(\s|^)client:/)) return str
-          debug.detect(`<${tagName} ${attrs}>`)
-          const component = `${unresolvedIslandKey}={_resolveComponent("${tagName}")}`
-          return `<Island componentName="${pascalCase(tagName)}" ${component} ${attrs}>${children || ''}</Island>`
-        })
+        if (path.endsWith('.vue') && code.includes('client:') && code.includes('<template'))
+          return wrapIslandsInSFC(code, path, debug.detect)
       },
     },
 
@@ -179,22 +167,21 @@ export default function IslandsPlugins (appConfig: AppConfig): PluginOption[] {
 
         // TODO: Allow component to receive an excerpt prop.
         return code.replace('export default MDXContent', `
-          ${code.includes(' defineComponent') ? '' : 'import { defineComponent } from \'vue\''}
+${code.includes(' defineComponent') ? '' : 'import { defineComponent } from \'vue\''}
 
-          const _default = defineComponent({
-            ${mode === 'development' ? `__file: '${path}',` : ''}
-            ...frontmatter,
-            frontmatter,
-            props: {
-              components: { type: Object, default: () => ({}) },
-            },
-            render () {
-              return MDXContent({ ...this.$props, ...this.$attrs })
-            },
-          })
-          export const render = MDXContent
-          export default _default
-        `)
+const _default = defineComponent({
+  ${mode === 'development' ? `__file: '${path}',` : ''}
+  ...frontmatter,
+  frontmatter,
+  props: {
+    components: { type: Object, default: () => ({}) },
+  },
+  render () {
+    return MDXContent({ ...this.$props, ...this.$attrs })
+  },
+})
+export const render = MDXContent
+export default _default`)
       },
     },
 
@@ -226,11 +213,11 @@ export default function IslandsPlugins (appConfig: AppConfig): PluginOption[] {
         if (!code.includes(unresolvedIslandKey)) return code
 
         const imports = await parseImports(code)
+
         code = await replaceAsync(code, viteIslandRegex, async (str, resolvedName) => {
           resolvedName = resolvedName.replace(/^\$setup\./, '')
-          const importMetadata = imports[resolvedName]
-
-          const componentName = resolvedName.match(/_resolveComponent\(([^)]+?)\)/)?.[1] || resolvedName
+          const componentName = resolvedName.match(unresolvedComponentsRegex)?.[1] || resolvedName
+          const importMetadata = imports[componentName]
 
           if (!importMetadata)
             throw new Error(`Unable to infer '${componentName}' island component in ${path}`)
@@ -238,16 +225,16 @@ export default function IslandsPlugins (appConfig: AppConfig): PluginOption[] {
           debug.resolve(`${componentName} => ${importMetadata.path}`)
 
           return `
-            component: ${resolvedName},
-            importName: '${importMetadata.name}',
-            importPath: '${await resolveVitePath(importMetadata.path, path)}',
-          `
+component: ${componentName},
+importName: '${importMetadata.name}',
+importPath: '${await resolveVitePath(importMetadata.path, path)}',
+          `.replace(/\n/g, ' ')
         })
 
         if (isMarkdown(path)) {
-          const name = code.match(/_resolveComponent\(([^)]+?)\)/)?.[1]
-          if (name)
-            throw new Error(`Unable to infer '${name}' component in ${path}`)
+          const componentName = code.match(unresolvedComponentsRegex)?.[1]
+          if (componentName)
+            throw new Error(`Unable to infer '${componentName}' component in ${path}`)
         }
 
         return code

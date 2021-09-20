@@ -31,22 +31,28 @@ const plugin: FrontmatterPlugin = (options?: FrontmatterOptions) => (ast: any) =
     if (data) Object.assign(frontmatter, data)
   })
 
-  parent.children.unshift(defineConsts(...Object.entries(frontmatter).map(([key, value]) => {
-    if (!isValidIdentifierName(key))
-      throw new Error(`Frontmatter keys should be valid identifiers, got: ${JSON.stringify(key)}`)
+  parent.children.unshift(defineConsts(
+    ...Object.entries(frontmatter).map(([key, value]) => {
+      if (!isValidIdentifierName(key))
+        throw new Error(`Frontmatter keys should be valid identifiers, got: ${JSON.stringify(key)}`)
 
-    return {
+      // Example:
+      //  const title = 'Example'
+      //  const href = 'https://example.com'
+      return {
+        type: 'VariableDeclarator',
+        id: { type: 'Identifier', name: key },
+        init: valueToEstree(value),
+      } as VariableDeclarator
+    }),
+    // Example:
+    //  const frontmatter = { title, href }
+    {
       type: 'VariableDeclarator',
-      id: { type: 'Identifier', name: key },
-      init: valueToEstree(value),
-    } as VariableDeclarator
-  })))
-
-  parent.children.push(defineConsts({
-    type: 'VariableDeclarator',
-    id: { type: 'Identifier', name: 'frontmatter' },
-    init: shorthandObjectExpression(Object.keys(frontmatter)),
-  } as VariableDeclarator))
+      id: { type: 'Identifier', name: 'frontmatter' },
+      init: shorthandObjectExpression(Object.keys(frontmatter)),
+    } as VariableDeclarator,
+  ))
 }
 
 function parseFrontmatter ({ type, value }: { type: string, value: string }) {
