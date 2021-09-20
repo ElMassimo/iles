@@ -1,3 +1,12 @@
+## [0.0.13](https://github.com/ElMassimo/iles/compare/v0.0.12...v0.0.13) (2021-09-20)
+
+
+### Bug Fixes
+
+* inline JSX elements in MDX with client directives should be wrapped ([8f36e23](https://github.com/ElMassimo/iles/commit/8f36e23c93fca10721984f5133424d71c2191cd4))
+
+
+
 ## [0.0.12](https://github.com/ElMassimo/iles/compare/v0.0.11...v0.0.12) (2021-09-20)
 
 
