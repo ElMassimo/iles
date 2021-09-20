@@ -27,7 +27,7 @@ const posts = usePosts()
     <ul class="divide-y divide-gray-200">
       <li v-for="post of posts" :key="post.href" class="py-12">
         <article class="space-y-2 xl:(grid grid-cols-4 space-y-0 items-baseline)">
-          <Date :date="post.date"/>
+          <PostDate :date="post.date"/>
           <div class="space-y-5 xl:col-span-3">
             <div class="space-y-6">
               <h2 class="text-2xl leading-8 font-bold tracking-tight">
