@@ -1,3 +1,12 @@
+## [0.0.12](https://github.com/ElMassimo/iles/compare/v0.0.11...v0.0.12) (2021-09-20)
+
+
+### Features
+
+* use remark plugin to accurately wrap islands in MDX ([946240d](https://github.com/ElMassimo/iles/commit/946240d9ab0e90536b0aa6e3d6d3b4e564cecc07))
+
+
+
 ## [0.0.11](https://github.com/ElMassimo/iles/compare/v0.0.10...v0.0.11) (2021-09-19)
 
 
