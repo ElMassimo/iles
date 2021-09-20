@@ -15,6 +15,7 @@ const newApp = import.meta.env.SSR ? createSSRApp : createClientApp
 function createRouter ({ base, ...routerOptions }: Partial<RouterOptions>) {
   if (base === '/') base = undefined
   return createVueRouter({
+    scrollBehavior: () => ({ top: 0 }),
     ...routerOptions,
     routes,
     history: import.meta.env.SSR ? createMemoryHistory(base) : createWebHistory(base),
