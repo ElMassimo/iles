@@ -4,6 +4,7 @@ import { renderPages } from './render'
 import { bundle } from './bundle'
 import { bundleIslands } from './islands'
 import { withSpinner } from './utils'
+import { createSitemap } from './sitemap'
 
 export async function build (root: string) {
   const start = Date.now()
@@ -19,6 +20,8 @@ export async function build (root: string) {
 
     const pagesResult = await withSpinner('rendering pages',
       async () => await renderPages(appConfig, islandsByPath, bundleResult))
+
+    await createSitemap(appConfig, pagesResult.routesToRender)
 
     await withSpinner('building islands bundle',
       async () => await bundleIslands(appConfig, islandsByPath, pagesResult))

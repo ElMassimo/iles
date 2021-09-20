@@ -52,6 +52,9 @@ export const createApp: CreateAppFactory = async (options = {}) => {
       { charset: 'UTF-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1.0' },
     ],
+    link: [
+      appConfig.ssg.sitemap && { rel: 'sitemap', href: `${base}sitemap.xml` },
+    ].filter(x => x),
   }))
 
   const context: SSGContext = {

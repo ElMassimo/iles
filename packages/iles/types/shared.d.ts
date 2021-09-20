@@ -74,13 +74,16 @@ export interface UserApp {
 export type PluginOption = Plugin | false | null | undefined
 
 export interface RequiredConfig {
-  base: string
+  siteUrl: string
   debug: boolean
   outDir: string
   layoutsDir: string
   srcDir: string
   tempDir: string
   assetsDir: string
+  ssg: {
+    sitemap?: boolean
+  }
 }
 
 export interface UserConfig extends Partial<RequiredConfig>, Partial<Plugin> {
@@ -88,12 +91,13 @@ export interface UserConfig extends Partial<RequiredConfig>, Partial<Plugin> {
 }
 
 export interface AppConfig extends RequiredConfig, AppPlugins {
+  base: string
   root: string
   configPath: string
   plugins: Plugin[]
 }
 
-export type AppClientConfig = Pick<AppConfig, 'base' | 'router' | 'root' | 'debug'>
+export type AppClientConfig = Pick<AppConfig, 'base' | 'router' | 'root' | 'debug' | 'ssg'>
 
 export interface IslandDefinition {
   id: string

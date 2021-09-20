@@ -8,6 +8,7 @@ import inspect from 'vite-plugin-inspect'
 import rehypePrism from './src/markdown/prism'
 
 export default defineConfig({
+  siteUrl: 'https://vue-iles.netlify.app',
   components: {
     resolvers: [iconsResolver({ componentPrefix: '' })],
   },

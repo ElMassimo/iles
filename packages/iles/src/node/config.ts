@@ -88,6 +88,7 @@ async function resolveUserConfig (root: string, configEnv: ConfigEnv) {
 
   if (result?.path) config.configPath = result?.path
   const appConfig: AppConfig = { ...config, plugins: userPlugins }
+  appConfig.base = appConfig.siteUrl ? new URL(appConfig.siteUrl).pathname : '/'
   appConfig.vite.base = appConfig.base
   appConfig.vite.build!.assetsDir = appConfig.assetsDir
 
@@ -99,6 +100,10 @@ function appConfigDefaults (root: string): AppConfig {
     debug: true,
     root,
     base: '/',
+    siteUrl: '',
+    ssg: {
+      sitemap: true,
+    },
     configPath: resolve(root, 'iles.config.ts'),
     assetsDir: 'assets',
     srcDir: 'src',
