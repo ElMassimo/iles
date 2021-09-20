@@ -3,6 +3,7 @@ import { computed, defineAsyncComponent } from 'vue'
 import { useAppConfig, useRoute } from 'iles'
 import { useRouterLinks } from '../composables/routerLinks'
 import Layout from './Layout.vue'
+import { Head } from '@vueuse/head'
 
 useRouterLinks()
 
