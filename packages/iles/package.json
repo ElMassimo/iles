@@ -63,7 +63,7 @@
     "gray-matter": "^4.0.3",
     "lru-cache": "^6.0.0",
     "minimist": "^1.2.5",
-    "ora": "^5.4.0",
+    "mico-spinner": "^1.2.2",
     "unist-util-visit": "^2.0.3",
     "unplugin-vue-components": "^0.15.0",
     "vite": "^2.6.0-beta.0",

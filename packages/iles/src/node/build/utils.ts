@@ -1,21 +1,25 @@
-import ora from 'ora'
+import newSpinner from 'mico-spinner'
 
-export const okMark = '\x1B[32m✓\x1B[0m'
-export const failMark = '\x1B[31m✖\x1B[0m'
 export const warnMark = '\x1B[33m⚠\x1B[0m'
 
 export async function withSpinner<T> (message: string, fn: () => Promise<T>) {
-  const spinner = ora()
-  spinner.start(message)
+  const spinner = newSpinner(message).start()
+  const startTime = performance.now()
   try {
     const result = await fn()
-    spinner.stopAndPersist({ symbol: okMark })
+    spinner.succeed()
+    console.log(`  done in ${timeSince(startTime)}\n`)
     return result
   }
   catch (e) {
-    spinner.stopAndPersist({ symbol: failMark })
+    spinner.fail()
     throw e
   }
+}
+
+function timeSince (start: number): string {
+  const diff = performance.now() - start
+  return diff < 750 ? `${Math.round(diff)}ms` : `${(diff / 1000).toFixed(1)}s`
 }
 
 export function slash (path: string): string {
