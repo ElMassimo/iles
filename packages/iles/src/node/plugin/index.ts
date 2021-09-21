@@ -9,7 +9,6 @@ import pages, { MODULE_ID_VIRTUAL as PAGES_REQUEST_PATH } from 'vite-plugin-page
 import components from 'unplugin-vue-components/vite'
 import vueJsx from '@vitejs/plugin-vue-jsx'
 import xdm from 'vite-plugin-xdm'
-import MagicString from 'magic-string'
 
 import createDebugger from 'debug'
 import type { AppConfig, AppClientConfig } from '../shared'
@@ -40,7 +39,6 @@ export default function IslandsPlugins (appConfig: AppConfig): PluginOption[] {
   debug.config(appConfig)
 
   let base: ResolvedConfig['base']
-  let sourcemap: ResolvedConfig['build']['sourcemap']
   let mode: ResolvedConfig['mode']
   let root: ResolvedConfig['root']
   let resolveVitePath: ResolveFn
@@ -54,7 +52,6 @@ export default function IslandsPlugins (appConfig: AppConfig): PluginOption[] {
       configResolved (config) {
         if (base) return
         base = config.base
-        sourcemap = config.build.sourcemap
         mode = config.mode
         root = config.root
         resolveVitePath = config.createResolver()
@@ -121,26 +118,6 @@ export default function IslandsPlugins (appConfig: AppConfig): PluginOption[] {
     },
 
     vue(appConfig.vue),
-
-    {
-      name: 'iles:mdx:filename',
-      async transform (code, id) {
-        const { path } = parseId(id)
-        if (!isMarkdown(path)) return null
-
-        // TODO: Use pages plugin to obtain the path pages.pathForFile(path)
-        const filename = relative(root, path)
-        const s = new MagicString(code)
-
-        const marker = '---\n'
-        if (code.startsWith(marker))
-          s.appendRight(marker.length, `filename: '${filename}'\n`)
-        else
-          s.prepend(`---\nfilename: '${filename}'\n---\n`)
-
-        return { code: s.toString(), map: sourcemap ? s.generateMap({ hires: true }) : null }
-      },
-    },
 
     xdm(appConfig.markdown),
 

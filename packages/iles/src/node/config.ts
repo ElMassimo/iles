@@ -52,9 +52,7 @@ const defaultPlugins = (root: string): Partial<AppConfig>[] => [
       // Internal: Move any frontmatter defined top-level to a nested property.
       extendRoute ({ layout: routeLayout, meta: routeMeta, ...route }: any) {
         const metaMatter = routeMeta?.frontmatter as Frontmatter
-        const { layout: frontmatterLayout, ...frontmatter } = {
-          ...metaMatter, filename: join(root, route.component)
-        } as any
+        const { layout: frontmatterLayout, ...frontmatter } = metaMatter || {}
         const meta = { ...routeMeta, frontmatter }
         const layout = routeLayout || frontmatterLayout
         if (layout) meta.layout = layout
@@ -62,10 +60,11 @@ const defaultPlugins = (root: string): Partial<AppConfig>[] => [
       },
     } as AppConfig['pages'],
     markdown: {
-      extendFrontmatter (frontmatter) {
+      extendFrontmatter (frontmatter, filename) {
+        filename = relative(root, filename)
         // TODO: Use pages plugin to obtain the path pages.pathForFile(path)
-        const href = relative(root, frontmatter.filename).replace(/\.\w+$/, '').replace('src/pages/', '/')
-        return { href, ...frontmatter }
+        const href = filename.replace(/\.\w+$/, '').replace('src/pages/', '/')
+        return { filename, href, ...frontmatter }
       },
     },
   },
@@ -155,7 +154,8 @@ function withResolvedConfig (config: AppConfig) {
     const { frontmatter: metaFrontmatter, ...metaRest } = route.meta || {}
     const { frontmatter: routeFrontmatter, ...routeRest } = route as any
     const routeMatter = { ...routeFrontmatter, ...metaFrontmatter as Frontmatter }
-    const frontmatter = extendFrontmatter?.(routeMatter) || routeMatter
+    const filename = join(config.root, route.component)
+    const frontmatter = extendFrontmatter?.(routeMatter, filename) || routeMatter
     return { ...routeRest, meta: { ...metaRest, frontmatter } }
   }
 }

@@ -10,7 +10,7 @@ import visit from 'unist-util-visit'
 export type Frontmatter = Record<string, any>
 
 export interface FrontmatterOptions {
-  extendFrontmatter?: (frontmatter: Frontmatter) => Frontmatter | void;
+  extendFrontmatter?: (frontmatter: Frontmatter, filename: string) => Frontmatter | void;
 }
 
 export type FrontmatterPlugin = Plugin<[FrontmatterOptions?]>
@@ -22,12 +22,12 @@ export type FrontmatterPluggable = [FrontmatterPlugin, FrontmatterOptions?]
  * @param options - Optional options to configure the output.
  * @returns A unified transformer.
  */
-const plugin: FrontmatterPlugin = (options?: FrontmatterOptions) => (ast: any) => {
+const plugin: FrontmatterPlugin = (options?: FrontmatterOptions) => (ast, file) => {
   const parent = ast as Parent
   const frontmatter: Frontmatter = {}
   visit(parent, (node) => {
     const parsed = parseFrontmatter(node as Node<Data> & { value: string })
-    const data = parsed ? options?.extendFrontmatter?.(parsed) || parsed : parsed
+    const data = parsed ? options?.extendFrontmatter?.(parsed, file.path) || parsed : parsed
     if (data) Object.assign(frontmatter, data)
   })
 

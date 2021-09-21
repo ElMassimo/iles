@@ -1,8 +1,7 @@
 <script setup lang="ts">
 import { computed, watch, ref } from 'vue'
-import { useAppConfig, usePage } from 'iles'
+import { usePage } from 'iles'
 
-const config = useAppConfig()
 const page = usePage()
 const el = ref<HTMLElement | null>(null)
 const open = ref(false)
@@ -10,8 +9,6 @@ const open = ref(false)
 const cleanPage = computed(() => {
   const rawMeta = page.meta.value
   const { layout, frontmatter, ...meta } = rawMeta
-  if (frontmatter?.filename)
-    frontmatter.filename = frontmatter.filename.replace(config.root, '')
   return { layout, frontmatter, meta }
 })
 
@@ -27,9 +24,10 @@ export default {
 </script>
 
 <template>
-  <div class="debug" :class="{ open }" ref="el" @click="open = !open">
-    <p class="title">Debug<span class="info">Open DevTools to inspect <b>islands</b> 🏝</span></p>
+  <div class="debug" :class="{ open }" ref="el">
+    <p class="title" @click="open = !open">Debug<span class="info">Open DevTools to inspect <b>islands</b> 🏝</span></p>
     <pre class="block">{{ cleanPage }}</pre>
+    <button v-show="open" class="debug title" @click="open = false">Close</button>
   </div>
 </template>
 
