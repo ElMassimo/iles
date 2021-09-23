@@ -1,7 +1,7 @@
 /* eslint-disable no-restricted-syntax */
 import { resolve, relative } from 'path'
 import fs from 'fs'
-import chalk from 'chalk'
+import { green } from 'nanocolors'
 import type { PluginOption, ResolvedConfig, ResolveFn, ViteDevServer } from 'vite'
 
 import vue from '@vitejs/plugin-vue'
@@ -224,7 +224,7 @@ async function restartOnConfigChanges (config: AppConfig, server: ViteDevServer)
   const restartIfConfigChanged = async (path: string) => {
     if (path === config.configPath) {
       server.config.logger.info(
-        chalk.green(
+        green(
           `${relative(process.cwd(), config.configPath)} changed, restarting server...`,
         ),
         { clear: true, timestamp: true },

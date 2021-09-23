@@ -49,7 +49,6 @@ importers:
       typescript: ^4.1.3
       unified: ^10.1.0
       unist-util-visit: ^2.0.3
-      vfile: ^5.1.0
     dependencies:
       estree-util-is-identifier-name: 1.1.0
       estree-util-value-to-estree: 1.3.0
@@ -62,7 +61,6 @@ importers:
       '@types/js-yaml': 4.0.3
       tsup: 4.14.0_typescript@4.3.5
       typescript: 4.3.5
-      vfile: 5.1.0
 
   packages/hydration:
     specifiers:
@@ -93,7 +91,6 @@ importers:
       '@vue/devtools-api': ^6.0.0-beta.15
       '@vue/server-renderer': ^3.2.11
       '@vueuse/head': ^0.6.0
-      chalk: ^4.1.1
       chokidar: ^3.5.1
       conventional-changelog-cli: ^2.1.1
       critters: ^0.0.10
@@ -109,8 +106,9 @@ importers:
       lru-cache: ^6.0.0
       mdast-util-mdx-jsx: ^1.1.0
       mdast-util-mdxjs-esm: ^1.1.1
-      mico-spinner: ^1.2.2
+      mico-spinner: ^1.3.0
       minimist: ^1.2.5
+      nanocolors: ^0.1.6
       npm-run-all: ^4.1.5
       remark-frontmatter: ^4.0.0
       remark-mdx-frontmatter: ^1.0.1
@@ -137,7 +135,6 @@ importers:
       '@vue/devtools-api': 6.0.0-beta.15
       '@vue/server-renderer': 3.2.11_vue@3.2.11
       '@vueuse/head': 0.6.0_vue@3.2.11
-      chalk: 4.1.2
       critters: 0.0.10
       debug: 4.3.2
       diacritics: 1.3.0
@@ -147,8 +144,9 @@ importers:
       globby: 11.0.4
       gray-matter: 4.0.3
       lru-cache: 6.0.0
-      mico-spinner: 1.2.2
+      mico-spinner: 1.3.0
       minimist: 1.2.5
+      nanocolors: 0.1.6
       unist-util-visit: 2.0.3
       unplugin-vue-components: 0.15.0_ff4310ec3b1262afe583793d5ef6ce9b
       vite: 2.6.0-beta.0
@@ -5091,10 +5089,10 @@ packages:
     resolution: {integrity: sha512-8q7VEgMJW4J8tcfVPy8g09NcQwZdbwFEqhe/WZkoIzjn/3TGDwtOCYtXGxA3O8tPzpczCCDgv+P2P5y00ZJOOg==}
     engines: {node: '>= 8'}
 
-  /mico-spinner/1.2.2:
-    resolution: {integrity: sha512-jIsOIIk5xa+TmZJU2mPVTEk1AC7aKnrj8UJR58cTiK8msNWYvPuQxPx0ojNbtVOut/TjTgGkVLrEt1jsrceYfA==}
+  /mico-spinner/1.3.0:
+    resolution: {integrity: sha512-iwc0mhP+H/qorAKhDsDW40QOb3kKxAIwH1ImoIkFUWP3kT4gn6UZ2gdyT0uNRLrCx7fADY1F7OFBuFM1/wfflQ==}
     dependencies:
-      colorette: 1.4.0
+      nanocolors: 0.1.6
     dev: false
 
   /micromark-core-commonmark/1.0.1:
@@ -5351,6 +5349,11 @@ packages:
       object-assign: 4.1.1
       thenify-all: 1.6.0
     dev: true
+
+  /nanocolors/0.1.6:
+    resolution: {integrity: sha512-2pvTw6vYRaBLGir2xR7MxaJtyWkrn+C53EpW8yPotG+pdAwBvt0Xwk4VJ6VHLY0aLthVZPvDfm9TdZvrvAm5UQ==}
+    engines: {node: '>=8.0.0'}
+    dev: false
 
   /nanoid/3.1.25:
     resolution: {integrity: sha512-rdwtIXaXCLFAQbnfqDRnI6jaRHp9fTcYBjtFKE8eezcZ7LuLjhUaQGNeMXf1HmRoCH32CLz6XwX0TtxEOS/A3Q==}

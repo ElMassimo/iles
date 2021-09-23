@@ -1,6 +1,6 @@
 /* eslint-disable no-restricted-syntax */
 import { join, relative, resolve } from 'path'
-import chalk from 'chalk'
+import { yellow } from 'nanocolors'
 import creatDebugger from 'debug'
 import { loadConfigFromFile, mergeConfig as mergeViteConfig } from 'vite'
 import type { ComponentResolver } from 'unplugin-vue-components/types'
@@ -73,7 +73,7 @@ const defaultPlugins = (root: string): Partial<AppConfig>[] => [
 async function resolveUserConfig (root: string, configEnv: ConfigEnv) {
   const defaults = appConfigDefaults(root)
   const result = await loadConfigFromFile(configEnv, 'iles.config.ts', root)
-  debug(result ? `loaded config at ${chalk.yellow(result.path)}` : 'no iles.config.ts file found.')
+  debug(result ? `loaded config at ${yellow(result.path)}` : 'no iles.config.ts file found.')
 
   let { plugins = [], ...config } = result ? mergeConfig(defaults, result.config as any) : defaults
   const userPlugins = [...defaultPlugins(root), config, ...plugins].flat().filter(p => p) as Plugin[]

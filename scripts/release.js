@@ -8,7 +8,7 @@ const fs = require('fs')
 const execa = require('execa')
 const args = require('minimist')(process.argv.slice(2))
 const semver = require('semver')
-const chalk = require('chalk')
+const { blue, cyan, green, red } = require('nanocolors')
 const { prompt } = require('enquirer')
 
 const name = args._[0]?.trim() || 'iles'
@@ -59,14 +59,14 @@ async function run (bin, args, opts = {}) {
  * @param {object} opts
  */
 async function dryRun (bin, args, opts = {}) {
-  console.info(chalk.blue(`[dryrun] ${bin} ${args.join(' ')}`), opts)
+  console.info(blue(`[dryrun] ${bin} ${args.join(' ')}`), opts)
 }
 
 /**
  * @param {string} msg
  */
 function step (msg) {
-  console.info(chalk.cyan(msg))
+  console.info(cyan(msg))
 }
 
 /**
@@ -181,10 +181,10 @@ async function publishPackage (version, runIfNotDry) {
       stdio: 'inherit',
       cwd: resolve('.'),
     })
-    console.info(chalk.green(`Successfully published ${name}@${version}`))
+    console.info(green(`Successfully published ${name}@${version}`))
   }
   catch (e) {
-    if (e.stderr.match(/previously published/)) console.info(chalk.red(`Skipping already published: ${name}`))
+    if (e.stderr.match(/previously published/)) console.info(red(`Skipping already published: ${name}`))
     else throw e
   }
 }
