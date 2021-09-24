@@ -3,6 +3,7 @@ import { resolve, relative } from 'path'
 import fs from 'fs'
 import { green } from 'nanocolors'
 import type { PluginOption, ResolvedConfig, ResolveFn, ViteDevServer } from 'vite'
+import { transformWithEsbuild } from 'vite'
 
 import vue from '@vitejs/plugin-vue'
 import pages, { MODULE_ID_VIRTUAL as PAGES_REQUEST_PATH } from 'vite-plugin-pages'
@@ -76,7 +77,7 @@ export default function IslandsPlugins (appConfig: AppConfig): PluginOption[] {
         if (id === USER_APP_REQUEST_PATH) {
           if (!fs.existsSync(appPath)) return 'export default {}'
           this.addWatchFile(appPath)
-          return fs.readFileSync(appPath, 'utf-8')
+          return transformWithEsbuild(fs.readFileSync(appPath, 'utf-8'), appPath)
         }
       },
       handleHotUpdate ({ file, server }) {
