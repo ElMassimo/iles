@@ -1,0 +1,100 @@
+<script setup lang="ts">
+import docsearch from '@docsearch/js'
+import { onMounted } from 'vue'
+import Site from '~/site'
+
+const id = 'docsearch'
+
+onMounted(() => {
+  docsearch({ ...Site.algolia, container: `#${id}` })
+})
+
+function openSearchModal () {
+  document.getElementById('docsearch')?.querySelector('.DocSearch-Button')?.click()
+}
+</script>
+
+<template>
+  <NavBarButton aria-label="Search" @click="openSearchModal">
+    <bx:bx-search/>
+  </NavBarButton>
+  <div :id="id" class="doc-search-box"/>
+</template>
+
+<style lang="postcss">
+@import '@docsearch/css/dist/style.css';
+
+.doc-search-box {
+  display: none;
+}
+
+
+.DocSearch {
+  --docsearch-container-background: rgba(173, 181, 189, 0.7);
+  --docsearch-modal-background: var(--bg-html);
+  --docsearch-modal-shadow: var(--bg-html);
+  --docsearch-hit-color: var(--fc);
+  --docsearch-footer-background: transparent;
+  --docsearch-footer-shadow: rgba(125, 125, 125, 0.1);
+  --docsearch-hit-background: rgba(125, 125, 125, 0.1);
+  --docsearch-hit-shadow: none;
+  --docsearch-primary-color: var(--fc-primary);
+  --docsearch-highlight-color: var(--fc-primary);
+  --docsearch-searchbox-background: theme('colors['blue-gray'].100');
+  --docsearch-searchbox-focus-background: theme('colors['blue-gray'].200');
+  --docsearch-searchbox-shadow: none;
+  --docsearch-searchbox-height: 3rem;
+  --docsearch-text-color: var(--fc);
+  --docsearch-muted-color: var(--fc-soft);
+  --docsearch-key-gradient: transparent;
+  --docsearch-key-shadow: none;
+}
+
+html.dark .DocSearch {
+  --docsearch-container-background: rgba(12, 12, 12, 0.9);
+  --docsearch-searchbox-background: theme('colors.dark.400');
+  --docsearch-searchbox-focus-background: theme('colors.dark.300');
+  --docsearch-key-gradient: transparent;
+  --docsearch-key-shadow: none;
+}
+
+.DocSearch-Form,
+.DocSearch-Hit a {
+  @apply rounded-lg;
+}
+
+.DocSearch-Form {
+  @apply bg-gray-100 dark:bg-dark-500;
+}
+
+.DocSearch-Modal {
+  @apply md:rounded-lg;
+}
+
+.DocSearch-Input {
+  font-size: 1em;
+  padding-left: 1rem;
+}
+
+.DocSearch-StartScreen {
+  padding-bottom: 4rem;
+  padding-top: 4rem;
+}
+
+.DocSearch-NoResults .DocSearch-Help,
+.DocSearch-Logo {
+  display: none;
+}
+
+.DocSearch-Commands li:not(:last-of-type) {
+  margin-right: 1.6em;
+}
+
+.DocSearch-Commands-Key {
+  height: 12px;
+}
+
+body.DocSearch--active {
+  @apply 'md:!overflow-auto';
+}
+</style>

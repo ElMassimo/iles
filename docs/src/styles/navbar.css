@@ -1,0 +1,42 @@
+#navbar-actions {
+  height: 100%;
+  width: 80px;
+}
+
+.navbar {
+  @apply p-4 gap-4 grid-cols-[min-content,1fr,min-content]
+    sm:(py-8 text-lg)
+    lg:py-12;
+
+  max-width: calc(6rem + var(--w-container) + (100vw - var(--w-container)) / 2);
+}
+
+.navbar-menu {
+  @apply h-8 leading-5 place-items-center ml-auto;
+
+  & > li + li,
+  & + div,
+  & + ile-root > div {
+    @apply ml-4 lg:ml-8;
+  }
+}
+
+.navbar-menu-item {
+  @apply -mt-0.5;
+
+  & > a {
+    @apply opacity-80 pt-1 border-transparent border-bottom-2;
+
+    transition: opacity 80ms ease, border-color 80ms ease;
+
+    &:hover,
+    &:active,
+    &.active {
+      @apply border-primary opacity-100;
+    }
+  }
+}
+
+.navbar-actions {
+  @apply gap-2;
+}

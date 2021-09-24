@@ -1,0 +1,51 @@
+:root {
+  /* Colors */
+  --h-background: #fbfbfb;
+  --h-foreground: #393a34;
+
+  /* Tokens */
+  --h-boolean: #1c6b48;
+  --h-builtin: #ab5959;
+  --h-class: #795da3;
+  --h-comment: #a0ada0;
+  --h-constant: #2993a3;
+  --h-decorator: #bd8f8f;
+  --h-deleted: #a14f55;
+  --h-function: #795da3;
+  --h-keyword: #a71d5d;
+  --h-literal: #2f8a89;
+  --h-namespace: #b05a78;
+  --h-number: #296aa3;
+  --h-property: #b58451;
+  --h-punctuation: #a71d5d;
+  --h-regex: #ab5e3f;
+  --h-string: #b56959;
+  --h-operator: var(--h-punctuation);
+  --h-variable: var(--h-literal);
+  --h-symbol: var(--h-literal);
+  --h-interpolation: var(--h-literal);
+  --h-selector: var(--h-keyword);
+  --h-keyword-control: var(--h-keyword);
+}
+
+html.dark {
+  --h-foreground: #d4cfbf;
+  --h-background: #1e1e1e;
+  --h-boolean: #1c6b48;
+  --h-builtin: #e0a569;
+  --h-class: #54b1bf;
+  --h-comment: #758575;
+  --h-constant: var(--h-literal);
+  --h-decorator: #bd8f8f;
+  --h-deleted: #a14f55;
+  --h-function: #67b1b5;
+  --h-keyword: #e3428c;
+  --h-literal: #429988;
+  --h-namespace: #db889a;
+  --h-number: #6394bf;
+  --h-property: #dd8e6e;
+  --h-punctuation: #858585;
+  --h-regex: #ab5e3f;
+  --h-string: #d48372;
+  --h-variable: #c2b36e;
+}

@@ -1,0 +1,147 @@
+pre.highlight {
+  @media (min-width: 120ch) {
+    max-width: calc(80ch + 4rem);
+    width: fit-content;
+  }
+
+  background: var(--h-background);
+  color: var(--h-foreground);
+  font-size: 14px;
+  hyphens: none;
+  line-height: 1.6em;
+  overflow: auto;
+  padding-right: 0;
+  tab-size: 2;
+  white-space: pre;
+  word-break: normal;
+  word-spacing: normal;
+}
+
+/* Selection */
+* ::selection {
+  background: var(--bg-highlight);
+}
+
+.highlight {
+  background: var(--h-background);
+  color: var(--h-foreground);
+}
+
+/* --- Generics --- */
+.ge { font-style: italic; } /* emph */
+.gh, /* heading */
+.gu, /* subheading */
+.gs {
+  font-weight: bold;
+} /* strong */
+
+/* --- Operators --- */
+.o, /* Operator */
+.gu, /* subheading */
+.ow {
+  color: var(--h-operator);
+} /* Word */
+
+/* --- Comments --- */
+.c, /* Comment */
+.cm, /* Multi-line */
+.cp, /* Preproc */
+.c1, /* Single */
+.sd /* Doc */
+.cs { /* Special */
+  color: var(--h-comment);
+  font-style: italic;
+}
+
+.ss { /* Symbol */
+  color: var(--h-symbol);
+}
+
+/* --- Names --- */
+.nt { color: var(--h-builtin); } /* Tag */
+.nn,
+.nc { color: var(--h-class); } /* Class */
+.no { color: var(--h-constant); } /* Constant */
+.nd { color: var(--h-decorator); } /* Decorator */
+.n, /* Name */
+.nx, /* Other */
+.nb {
+  color: var(--h-foreground);
+} /* Builtin */
+
+/* shell commands */
+
+.bp, /* Builtin.Pseudo */
+.ni, /* Entity */
+.nl, /* Label */
+.sc, /* Char */
+.l, /* Literal */
+.p, /* Punctuation */
+.gh, /* heading */
+.w { /* Whitespace */ /* shouldn't this have a background-color instead ? */
+  color: var(--h-literal);
+}
+
+.gp,
+.na,
+.kn,
+.kt {
+  color: var(--h-namespace);
+} /* Namespace */
+.py { /* Property */
+  color: var(--h-property);
+}
+
+/* --- Keywords --- */
+.nf { color: var(--h-function); } /* Function */
+.k, /* Keyword */
+.kc, /* Constant */
+.kd, /* Declaration */
+.kp, /* Pseudo */
+.kr { /* Reserved */
+  color: var(--h-keyword);
+}
+
+/* --- Variables --- */
+.ne, /* Exception */
+.nv, /* Variable */
+.vc, /* Class */
+.vg, /* Global */
+.err, /* Error */
+.gd, /* deleted */
+.vi { /* Instance */
+  color: var(--h-variable);
+}
+
+/* --- Numerals --- */
+.m, /* Number */
+.il, /* Long */
+.mf, /* Float */
+.mh, /* Hex */
+.mi, /* Integer */
+.mo, /* Oct */
+.se, /* Escape */
+.si { /* Interpol */
+  color: var(--h-number);
+}
+
+/* --- Strings --- */
+.s { color: var(--h-selector); } /* String */
+.sr, /* Regex */
+.sb, /* Backtick */
+.s2, /* Double */
+.sh, /* Heredoc */
+.sx, /* Other */
+.s1, /* Single */
+.ld, /* Date */
+.gi { /* inserted */
+  color: var(--h-string);
+}
+
+.language-diff .gd {
+  color: var(--h-deleted);
+}
+
+.language-diff .gi {
+  color: var(--h-literal);
+}

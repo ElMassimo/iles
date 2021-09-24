@@ -1,0 +1,27 @@
+{
+  "name": "iles-docs",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "iles --open",
+    "build": "iles build",
+    "preview": "vite preview --open"
+  },
+  "devDependencies": {
+    "@iconify/json": "1.1.393",
+    "@mapbox/rehype-prism": "^0.7.0",
+    "@vueuse/core": "^6.2.0",
+    "autoprefixer": "^10.3.5",
+    "iles": "^0.0.16",
+    "postcss-nesting": "^8.0.1",
+    "sass": "^1.42.1",
+    "unplugin-icons": "^0.11",
+    "vite": "^2.5.7",
+    "vite-plugin-windicss": "^1.4.1"
+  },
+  "dependencies": {
+    "@docsearch/css": "1.0.0-alpha.28",
+    "@docsearch/js": "1.0.0-alpha.28",
+    "quicklink": "^2.2.0"
+  }
+}

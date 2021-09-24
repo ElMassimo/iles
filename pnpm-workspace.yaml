@@ -1,4 +1,5 @@
 packages:
+  - docs
   - packages/iles/
   - packages/hydration/
   - packages/frontmatter/

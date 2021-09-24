@@ -1,6 +1,6 @@
 <p align="center">
   <a href="https://vue-iles.netlify.app/">
-    <img src="https://github.com/ElMassimo/iles/blob/main/docs/public/banner.png"/>
+    <img src="https://github.com/ElMassimo/iles/blob/main/docs/images/banner.png"/>
   </a>
 </p>
 
