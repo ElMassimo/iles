@@ -26,6 +26,7 @@
 
 html.dark {
   --bg-html: theme('colors.warm-gray.900');
+  --bg-soft: rgba(195, 185, 185, 0.15);
   --fc-soft: theme('colors.warm-gray.500');
   --fc: theme('colors.warm-gray.300');
   --fc-hard: theme('colors.warm-gray.200');

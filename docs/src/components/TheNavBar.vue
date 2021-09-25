@@ -6,7 +6,7 @@ import Site from '~/site'
   <header class="nav-bar bg-html flex items-center border-b">
     <div class="flex flex-1 h-full container !max-w-screen-2xl mx-auto px-2 md:px-6">
       <div class="flex items-center lg:hidden">
-        <ToggleSidebar/>
+        <SidebarToggle/>
       </div>
       <div class="flex flex-1 items-center lg:flex-none">
         <NavBarLogo/>

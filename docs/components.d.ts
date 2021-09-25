@@ -5,15 +5,19 @@
 declare module 'vue' {
   export interface GlobalComponents {
     AlgoliaSearchBox: typeof import('./src/components/AlgoliaSearchBox.vue')['default']
+    AppButton: typeof import('./src/components/AppButton.vue')['default']
     AppLogo: typeof import('./src/components/AppLogo.vue')['default']
     Author: typeof import('./src/components/Author.vue')['default']
     'Bx:bxMoon': typeof import('~icons/bx/bx-moon')['default']
     'Bx:bxSearch': typeof import('~icons/bx/bx-search')['default']
     'Bx:bxSun': typeof import('~icons/bx/bx-sun')['default']
+    'Carbon:arrowLeft': typeof import('~icons/carbon/arrow-left')['default']
     CarbonLogoGithub: typeof import('~icons/carbon/logo-github')['default']
     CarbonWarning: typeof import('~icons/carbon/warning')['default']
     DarkModeSwitch: typeof import('./src/components/DarkModeSwitch.vue')['default']
     DocSearchBox: typeof import('./src/components/DocSearchBox.vue')['default']
+    'HeroiconsOutline:menuAlt2': typeof import('~icons/heroicons-outline/menu-alt2')['default']
+    HomeHero: typeof import('./src/components/HomeHero.vue')['default']
     IconButton: typeof import('./src/components/IconButton.vue')['default']
     'Iles:Logo': typeof import('~icons/iles/-logo')['default']
     InlineSvg: typeof import('./src/components/InlineSvg.vue')['default']
@@ -30,8 +34,13 @@ declare module 'vue' {
     OutboundLink: typeof import('./src/components/OutboundLink.vue')['default']
     PostDate: typeof import('./src/components/PostDate.vue')['default']
     Quicklink: typeof import('./src/components/Quicklink.ts')['default']
+    SidebarBackground: typeof import('./src/components/SidebarBackground.vue')['default']
+    SidebarHeader: typeof import('./src/components/SidebarHeader.vue')['default']
+    SidebarToggle: typeof import('./src/components/SidebarToggle.vue')['default']
+    TheFooter: typeof import('./src/components/TheFooter.vue')['default']
     TheHeader: typeof import('./src/components/TheHeader.ts')['default']
     TheNavBar: typeof import('./src/components/TheNavBar.vue')['default']
+    TheSidebar: typeof import('./src/components/TheSidebar.vue')['default']
   }
 }
 

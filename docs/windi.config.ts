@@ -1,6 +1,5 @@
 import { defineConfig } from 'vite-plugin-windicss'
 import lineClamp from 'windicss/plugin/line-clamp'
-import typography from 'windicss/plugin/typography'
 
 export default defineConfig({
   darkMode: 'class',
@@ -11,7 +10,6 @@ export default defineConfig({
   },
   plugins: [
     lineClamp,
-    typography(),
   ],
   theme: {
     extend: {

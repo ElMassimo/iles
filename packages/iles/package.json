@@ -65,7 +65,7 @@
     "minimist": "^1.2.5",
     "mico-spinner": "^1.3.0",
     "unist-util-visit": "^2.0.3",
-    "unplugin-vue-components": "^0.15.0",
+    "unplugin-vue-components": "^0.15.3",
     "vite": "^2.6.0-beta.0",
     "vite-plugin-pages": "npm:@mussi/vite-plugin-pages",
     "vite-plugin-xdm": "^0.1.0",
