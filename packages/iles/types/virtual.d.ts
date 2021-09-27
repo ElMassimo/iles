@@ -18,18 +18,16 @@ declare module '@islands/routes' {
 }
 
 declare module '@islands/layouts' {
-  import { getLayout } from './app/layouts'
+  const getLayout: import('./shared').LayoutFactory
   export { getLayout }
 }
 
 declare module '@islands/app-config' {
-  import type { AppClientConfig } from './shared'
-  const config: AppClientConfig
+  const config: import('./shared').AppClientConfig
   export default config
 }
 
 declare module '@islands/user-app' {
-  import type { UserApp } from './shared'
-  const config: UserApp
+  const config: import('./shared').UserApp
   export default config
 }

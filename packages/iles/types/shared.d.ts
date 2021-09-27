@@ -45,6 +45,8 @@ export interface SSGRoute {
 
 export type CreateAppFactory = (options?: CreateAppConfig) => Promise<SSGContext>
 
+export type LayoutFactory = (name: string | false) => any
+
 export interface AppPlugins {
   router: Pick<VueRouterOptions, 'linkActiveClass' | 'linkExactActiveClass'>
   vite: ViteOptions

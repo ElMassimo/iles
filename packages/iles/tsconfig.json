@@ -18,7 +18,7 @@
       "shared/*": ["src/shared/*"],
       "tests/*": ["__tests__/*"],
       "/@shared/*": ["src/client/shared/*"],
-      "iles": ["src/client/index.ts"]
+      "iles": ["types/index.d.ts"]
     }
   },
   "include": [

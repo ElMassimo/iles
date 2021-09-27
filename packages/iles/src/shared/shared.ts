@@ -11,6 +11,7 @@ export type {
   HeadConfig,
   IslandDefinition,
   IslandsByPath,
+  LayoutFactory,
   PageMeta,
   Plugin,
   PluginOption,

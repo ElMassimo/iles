@@ -12,5 +12,5 @@
       "iles": ["index.ts"]
     }
   },
-  "include": [".", "../../types/shared.d.ts", "../../types/router.d.ts"]
+  "include": [".", "../../types/shared.d.ts"]
 }

@@ -1,8 +1,9 @@
 import { defineAsyncComponent } from 'vue'
+import type { LayoutFactory } from '../shared'
 
 const layouts = import.meta.glob('__LAYOUTS_ROOT__/**/*.vue')
 
-export function getLayout (name: string | false) {
+export const getLayout: LayoutFactory = (name: string | false) => {
   if (name === false) return false
 
   const layout = layouts[`__LAYOUTS_ROOT__/${name}.vue`]
