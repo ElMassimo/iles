@@ -7,7 +7,7 @@ let isIndex = $computed(() => route.path.replace(/index.html$/, '') === '/')
 
 <template>
   <TheNavBar/>
-  <div class="container !max-w-screen-2xl lg:px-6 mx-auto pt-$navbar-height">
+  <div :class="{ content: !isIndex }" class="container !max-w-screen-2xl lg:px-6 mx-auto pt-$navbar-height">
     <TheSidebar :class="{ 'lg:hidden': isIndex }"/>
     <div class="grid px-6 md:px-8 py-8 lg:py-12 relative">
       <HomeHero v-if="isIndex"/>

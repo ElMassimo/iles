@@ -5,7 +5,7 @@ actionText: Get Started
 actionLink: /guide/
 
 altActionText: Learn More
-altActionLink: /features/
+altActionLink: /introduction
 
 heroAlt: îles logo
 ---

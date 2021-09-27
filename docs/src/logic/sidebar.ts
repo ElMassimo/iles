@@ -1,5 +1,5 @@
 import { computed, ref } from 'vue'
-import { useRoute } from 'iles'
+import { usePage } from 'iles'
 import { getSideBarConfig } from './utils'
 import type { Header, SideBarItem } from '~/logic/config'
 import site from '~/site'
@@ -11,36 +11,26 @@ export const toggleSidebar = (to?: boolean) => {
 }
 
 export function useSideBar() {
-  const route = useRoute()
+  let { route, frontmatter, page } = $(usePage())
 
   return computed(() => {
-    console.log('useSideBar', route.matched?.[0]?.components)
     // at first, we'll check if we can find the sidebar setting in frontmatter.
-    const headers: any[] = []
-    const frontSidebar = route.meta.frontmatter.sidebar
-    const sidebarDepth = route.meta.frontmatter.sidebarDepth
+    const { headers } = page
+    const sidebar = frontmatter.sidebar ?? (site.sidebar && getSideBarConfig(
+      site.sidebar,
+      route.path,
+    ))
+    const sidebarDepth = frontmatter.sidebarDepth
 
     // if it's `false`, we'll just return an empty array here.
-    if (frontSidebar === false)
+    if (sidebar === false)
       return []
 
     // if it's `auto`, render headers of the current page
-    if (frontSidebar === 'auto')
+    if (sidebar === 'auto')
       return resolveAutoSidebar(headers, sidebarDepth)
 
-    // now, there's no sidebar setting at frontmatter; let's see the configs
-    const themeSidebar = getSideBarConfig(
-      site.sidebar,
-      route.meta.frontmatter.filename,
-    )
-
-    if (themeSidebar === false)
-      return []
-
-    if (themeSidebar === 'auto')
-      return resolveAutoSidebar(headers, sidebarDepth)
-
-    return themeSidebar
+    return sidebar
   })
 }
 

@@ -38,6 +38,13 @@
     margin: 3em 0;
   }
 
+  h1 {
+    font-size: 1.75em;
+    font-weight: 700;
+    line-height: 1.3333333;
+    margin-bottom: 1.5em;
+  }
+
   h2 {
     font-size: 1.5em;
     font-weight: 700;

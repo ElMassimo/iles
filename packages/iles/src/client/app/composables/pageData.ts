@@ -14,10 +14,7 @@ export const dataSymbol: InjectionKey<PageData> = Symbol('[iles-page-data]')
 export function installPageData (app: App, route: Ref<RouteLocationNormalizedLoaded>): PageData {
   const pageData: PageData = {
     route,
-    page: computed(() => {
-      const component = route.value.matched[0]?.components?.[0]
-      return (component as any)?.default || component
-    }),
+    page: computed(() => route.value.matched[0]?.components?.default || {}),
     meta: computed(() => route.value.meta),
     frontmatter: computed(() => route.value.meta.frontmatter || {}),
   }

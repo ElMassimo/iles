@@ -4,7 +4,7 @@ import site from '~/site'
 
 let { frontmatter } = $(usePage())
 
-const url = `${site.github}/edit/main/docs/${frontmatter.filename}`
+let url = $computed(() => `${site.github}/edit/main/docs/${frontmatter.filename}`)
 </script>
 
 <template>
@@ -15,7 +15,7 @@ const url = `${site.github}/edit/main/docs/${frontmatter.filename}`
       target="_blank"
       rel="noopener noreferrer"
     >
-      <carbon:pen class="inline-block mr-1.5 text-xs" />Edit this page
+      <carbon:pen class="inline-block mr-1.5 text-xs"/>Suggest changes to this page
     </a>
   </div>
 </template>

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useRoute } from 'iles'
+import { usePage } from 'iles'
 
 import { computed } from 'vue'
 import type { Header, SideBarItem } from '~/logic/config'
@@ -8,10 +8,10 @@ interface HeaderWithChildren extends Header {
   children?: Header[]
 }
 
-const route = useRoute()
+let { page } = $(usePage())
 
 const headers = computed(() => {
-  return route.meta.headers ? resolveHeaders(route.meta.headers) : null
+  return page.headers ? resolveHeaders(page.headers) : null
 })
 
 function resolveHeaders(headers: Header[]): SideBarItem[] {

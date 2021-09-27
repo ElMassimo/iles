@@ -1,4 +1,5 @@
 /* eslint-disable no-restricted-syntax */
+import fs from 'fs'
 import { join, relative, resolve } from 'path'
 import { yellow } from 'nanocolors'
 import creatDebugger from 'debug'
@@ -61,10 +62,11 @@ const defaultPlugins = (root: string): Partial<AppConfig>[] => [
     } as AppConfig['pages'],
     markdown: {
       extendFrontmatter (frontmatter, filename) {
+        const lastUpdated = Math.round(fs.statSync(filename).mtimeMs)
         filename = relative(root, filename)
         // TODO: Use pages plugin to obtain the path pages.pathForFile(path)
         const href = filename.replace(/\.\w+$/, '').replace('src/pages/', '/')
-        return { filename, href, ...frontmatter }
+        return { filename, lastUpdated, href, ...frontmatter }
       },
     },
   },

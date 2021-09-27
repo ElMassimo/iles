@@ -150,6 +150,7 @@ ${code.includes(' defineComponent') ? '' : 'import { defineComponent } from \'vu
 const _default = defineComponent({
   ${mode === 'development' ? `__file: '${path}',` : ''}
   ...frontmatter,
+  ${code.includes('const headers') ? 'headers,' : ''}
   frontmatter,
   props: {
     components: { type: Object, default: () => ({}) },

@@ -45,6 +45,7 @@ importers:
       '@mapbox/rehype-prism': ^0.7.0
       '@vueuse/core': ^6.2.0
       autoprefixer: ^10.3.5
+      estree-util-value-to-estree: ^1.3.0
       iles: ^0.0.16
       postcss-nesting: ^8.0.1
       quicklink: ^2.2.0
@@ -61,12 +62,13 @@ importers:
       '@mapbox/rehype-prism': 0.7.0
       '@vueuse/core': 6.3.2
       autoprefixer: 10.3.5
+      estree-util-value-to-estree: 1.3.0
       iles: link:../packages/iles
       postcss-nesting: 8.0.1
       sass: 1.42.1
       unplugin-icons: 0.11.3_@iconify+json@1.1.393+vite@2.5.7
       vite: 2.5.7
-      vite-plugin-windicss: 1.4.2_typescript@4.3.5+vite@2.5.7
+      vite-plugin-windicss: 1.4.2_vite@2.5.7
 
   packages/frontmatter:
     specifiers:
@@ -2554,12 +2556,41 @@ packages:
       vue-demi: 0.11.4
     dev: true
 
+  /@windicss/config/1.4.2:
+    resolution: {integrity: sha512-wjvZH1m8Rb60zCxYQDiZmgpSsljirqBNWsKo5G7JbkHGuEgCQdC+27jtPWQoMyBJY2w76Ofa7+7jvMqgoAS+ag==}
+    dependencies:
+      debug: 4.3.2
+      jiti: 1.11.0
+      tsup: 4.14.0
+      windicss: 3.1.7
+    transitivePeerDependencies:
+      - supports-color
+      - ts-node
+      - typescript
+    dev: true
+
   /@windicss/config/1.4.2_typescript@4.3.5:
     resolution: {integrity: sha512-wjvZH1m8Rb60zCxYQDiZmgpSsljirqBNWsKo5G7JbkHGuEgCQdC+27jtPWQoMyBJY2w76Ofa7+7jvMqgoAS+ag==}
     dependencies:
       debug: 4.3.2
       jiti: 1.11.0
       tsup: 4.14.0_typescript@4.3.5
+      windicss: 3.1.7
+    transitivePeerDependencies:
+      - supports-color
+      - ts-node
+      - typescript
+    dev: true
+
+  /@windicss/plugin-utils/1.4.2:
+    resolution: {integrity: sha512-EVMclEc8lSp03ljQIviKGe9SjdJkxkhwL99H8fAVRKVDJXhTAlpRc8nqcnkf8agZ4eTY6BE3kEJaC9hDICLjBg==}
+    dependencies:
+      '@antfu/utils': 0.2.4
+      '@windicss/config': 1.4.2
+      debug: 4.3.2
+      fast-glob: 3.2.7
+      magic-string: 0.25.7
+      micromatch: 4.0.4
       windicss: 3.1.7
     transitivePeerDependencies:
       - supports-color
@@ -7200,6 +7231,33 @@ packages:
     resolution: {integrity: sha512-Xni35NKzjgMrwevysHTCArtLDpPvye8zV/0E4EyYn43P7/7qvQwPh9BGkHewbMulVntbigmcT7rdX3BNo9wRJg==}
     dev: true
 
+  /tsup/4.14.0:
+    resolution: {integrity: sha512-77rWdzhikTP9mQ34XMRzK83tw++LF6f4ox/HNERlgesB7g6g5VQ1iJlueG9O0P9HAZGVKavUwyoZv0+322p6rg==}
+    hasBin: true
+    peerDependencies:
+      typescript: ^4.2.3
+    peerDependenciesMeta:
+      typescript:
+        optional: true
+    dependencies:
+      cac: 6.7.3
+      chalk: 4.1.2
+      chokidar: 3.5.2
+      debug: 4.3.2
+      esbuild: 0.12.27
+      execa: 5.1.1
+      globby: 11.0.4
+      joycon: 3.0.1
+      postcss-load-config: 3.1.0
+      resolve-from: 5.0.0
+      rollup: 2.56.3
+      sucrase: 3.20.1
+      tree-kill: 1.2.2
+    transitivePeerDependencies:
+      - supports-color
+      - ts-node
+    dev: true
+
   /tsup/4.14.0_typescript@4.3.5:
     resolution: {integrity: sha512-77rWdzhikTP9mQ34XMRzK83tw++LF6f4ox/HNERlgesB7g6g5VQ1iJlueG9O0P9HAZGVKavUwyoZv0+322p6rg==}
     hasBin: true
@@ -7641,6 +7699,22 @@ packages:
       vite: ^2.0.1
     dependencies:
       '@windicss/plugin-utils': 1.4.2_typescript@4.3.5
+      chalk: 4.1.2
+      debug: 4.3.2
+      vite: 2.5.7
+      windicss: 3.1.7
+    transitivePeerDependencies:
+      - supports-color
+      - ts-node
+      - typescript
+    dev: true
+
+  /vite-plugin-windicss/1.4.2_vite@2.5.7:
+    resolution: {integrity: sha512-lyjyZ7q/5CiRppKH5RrSuchE7vz4N6LWT5cJOeTsh2bCFAEuBURmIJGOtLGL7uYfmXjNRZjQIS98BV0aQ7kFDw==}
+    peerDependencies:
+      vite: ^2.0.1
+    dependencies:
+      '@windicss/plugin-utils': 1.4.2
       chalk: 4.1.2
       debug: 4.3.2
       vite: 2.5.7

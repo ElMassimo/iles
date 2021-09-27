@@ -25,7 +25,7 @@ const site: SiteConfig = {
 
   nav: [
     { text: 'Guide', link: '/guide/' },
-    { text: 'Config', link: '/config/' },
+    { text: 'Config', link: '/config' },
   ],
 
   sidebar: {

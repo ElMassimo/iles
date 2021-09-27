@@ -1,4 +1,11 @@
 import type { RouteRecordRaw } from 'iles'
+import type {
+  SideBarConfig,
+  MultiSideBarConfig,
+  SideBarItem,
+  SideBarGroup,
+  SideBarLink,
+} from '~/logic/config'
 
 export const hashRE = /#.*$/
 export const extRE = /(index)?\.(md|html)$/
@@ -21,7 +28,7 @@ export function isActive(route: RouteRecordRaw, path?: string): boolean {
   if (path === undefined)
     return false
 
-  const routePath = normalize(`/${route.path}`)
+  const routePath = normalize(route.path)
   const pagePath = normalize(path)
 
   return routePath === pagePath
