@@ -2,11 +2,10 @@ import 'vue-router'
 
 declare module 'vue-router' {
   interface RouteMeta {
-    filename?: string
-    extension?: string
-    frontmatter?: Record<string, any>
-    layout?: string | false
-    state?: Record<string, any>
+    filename: string
+    extension: string
+    frontmatter: Record<string, any>
+    layout: string | false
   }
 }
 

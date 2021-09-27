@@ -16,7 +16,7 @@ watch(openSideBar, (v) =>
 <template>
   <aside class="fixed z-50 lg:z-0 lg:static">
     <div class="h-full pointer-events-none">
-      <SidebarBackground />
+      <SidebarBackground/>
       <div
         class="
           fixed top-0 left-0
@@ -30,10 +30,10 @@ watch(openSideBar, (v) =>
         <div
           class="w-auto h-full bg-$windi-bg lg:bg-transparent"
         >
-          <SidebarHeader @close="openSideBar = false" />
+          <SidebarHeader @close="openSideBar = false"/>
           <div class="sticky top-$header-height h-$full-header overflow-y-auto">
-            <TreeMenu />
-            <SidebarNav />
+            <TreeMenu/>
+            <SidebarNav/>
           </div>
         </div>
       </div>

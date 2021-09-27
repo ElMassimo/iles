@@ -3,6 +3,7 @@ import { RouteLocationNormalizedLoaded } from 'vue-router'
 import { PageMeta } from '../../shared'
 
 export interface PageData<T = any> {
+  page?: any
   route: Ref<RouteLocationNormalizedLoaded>
   meta: Ref<PageMeta>
   frontmatter: Ref<Record<string, any>>
@@ -13,6 +14,10 @@ export const dataSymbol: InjectionKey<PageData> = Symbol('[iles-page-data]')
 export function installPageData (app: App, route: Ref<RouteLocationNormalizedLoaded>): PageData {
   const pageData: PageData = {
     route,
+    page: computed(() => {
+      const component = route.value.matched[0]?.components?.[0]
+      return (component as any)?.default || component
+    }),
     meta: computed(() => route.value.meta),
     frontmatter: computed(() => route.value.meta.frontmatter || {}),
   }

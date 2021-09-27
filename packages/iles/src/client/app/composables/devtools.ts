@@ -2,7 +2,7 @@ import type { App, ComponentPublicInstance } from 'vue'
 import { reactive, computed } from 'vue'
 import type { InspectorNodeTag, DevtoolsPluginApi } from '@vue/devtools-api'
 import { setupDevtoolsPlugin } from '@vue/devtools-api'
-import type { AppConfig } from '../../shared'
+import type { AppClientConfig } from '../../shared'
 
 const ISLAND_TYPE = 'Islands 🏝'
 const componentStateTypes = [ISLAND_TYPE]
@@ -22,7 +22,7 @@ const strategyLabels: Record<string, any> = {
 }
 
 let devtoolsApi: DevtoolsPluginApi
-let appConfig: AppConfig
+let appConfig: AppClientConfig
 
 const devtools = {
   addIslandToDevtools (island: any) {
@@ -57,7 +57,7 @@ const devtools = {
 
 ;(window as any).__ILE_DEVTOOLS__ = devtools
 
-export function installDevtools (app: App, config: AppConfig) {
+export function installDevtools (app: App, config: AppClientConfig) {
   if (config) appConfig = config
 
   setupDevtoolsPlugin({

@@ -9,7 +9,7 @@ const open = ref(false)
 const cleanPage = computed(() => {
   const rawMeta = page.meta.value
   const { layout, frontmatter, ...meta } = rawMeta
-  return { layout, frontmatter, meta }
+  return { layout, frontmatter, meta, page: page.page }
 })
 
 watch(open, (open) => {

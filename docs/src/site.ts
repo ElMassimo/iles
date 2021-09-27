@@ -1,6 +1,8 @@
+import type { SiteConfig } from '~/logic/config'
+
 const twitterHandle = 'ilesjs'
 
-export default {
+const site: SiteConfig = {
   title: 'îles',
   description: 'Islands of interactivity with Vue in Vite.js',
   year: new Date().getFullYear(),
@@ -25,4 +27,21 @@ export default {
     { text: 'Guide', link: '/guide/' },
     { text: 'Config', link: '/config/' },
   ],
+
+  sidebar: {
+    '/': [
+      {
+        text: 'Guide',
+        children: [
+          { text: 'Introduction', link: '/introduction' },
+          { text: 'Getting Started', link: '/guide/' },
+          { text: 'Development', link: '/guide/development' },
+          { text: 'Deployment', link: '/guide/deployment' },
+          { text: 'Plugins', link: '/guide/plugins' },
+        ],
+      },
+    ],
+  },
 }
+
+export default site

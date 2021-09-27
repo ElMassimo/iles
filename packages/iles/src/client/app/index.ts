@@ -22,6 +22,10 @@ function createRouter ({ base, ...routerOptions }: Partial<RouterOptions>) {
   })
 }
 
+function notEmpty<T> (val: T | boolean | undefined | null): val is T {
+  return Boolean(val)
+}
+
 export const createApp: CreateAppFactory = async (options = {}) => {
   const { base, router: routerOptions } = appConfig
   const { routePath = base } = options
@@ -55,7 +59,7 @@ export const createApp: CreateAppFactory = async (options = {}) => {
     ],
     link: [
       appConfig.ssg.sitemap && { rel: 'sitemap', href: `${base}sitemap.xml` },
-    ].filter(x => x),
+    ].filter(notEmpty),
   }))
 
   const context: SSGContext = {

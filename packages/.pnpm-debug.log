@@ -1,0 +1,1078 @@
+{
+  "0 debug pnpm:scope": {
+    "selected": 3,
+    "total": 6,
+    "workspacePrefix": "/Users/maximomussini/Projects/iles"
+  },
+  "1 debug pnpm:lifecycle": {
+    "depPath": "/Users/maximomussini/Projects/iles/packages/frontmatter",
+    "optional": false,
+    "script": "npm run build -- --watch",
+    "stage": "dev",
+    "wd": "/Users/maximomussini/Projects/iles/packages/frontmatter"
+  },
+  "2 debug pnpm:lifecycle": {
+    "depPath": "/Users/maximomussini/Projects/iles/packages/hydration",
+    "optional": false,
+    "script": "npm run build -- --watch",
+    "stage": "dev",
+    "wd": "/Users/maximomussini/Projects/iles/packages/hydration"
+  },
+  "3 debug pnpm:lifecycle": {
+    "depPath": "/Users/maximomussini/Projects/iles/packages/iles",
+    "optional": false,
+    "script": "rimraf -rf dist && npm run dev-shared && npm run dev-start",
+    "stage": "dev",
+    "wd": "/Users/maximomussini/Projects/iles/packages/iles"
+  },
+  "4 debug pnpm:lifecycle": {
+    "depPath": "/Users/maximomussini/Projects/iles/packages/hydration",
+    "line": "> @islands/hydration@0.0.3 build",
+    "stage": "dev",
+    "stdio": "stdout",
+    "wd": "/Users/maximomussini/Projects/iles/packages/hydration"
+  },
+  "5 debug pnpm:lifecycle": {
+    "depPath": "/Users/maximomussini/Projects/iles/packages/hydration",
+    "line": "> tsup hydration.ts vue.ts vanilla.ts \"--watch\"",
+    "stage": "dev",
+    "stdio": "stdout",
+    "wd": "/Users/maximomussini/Projects/iles/packages/hydration"
+  },
+  "6 debug pnpm:lifecycle": {
+    "depPath": "/Users/maximomussini/Projects/iles/packages/frontmatter",
+    "line": "> @islands/frontmatter@0.0.1 build",
+    "stage": "dev",
+    "stdio": "stdout",
+    "wd": "/Users/maximomussini/Projects/iles/packages/frontmatter"
+  },
+  "7 debug pnpm:lifecycle": {
+    "depPath": "/Users/maximomussini/Projects/iles/packages/frontmatter",
+    "line": "> tsup src/frontmatter.ts \"--watch\"",
+    "stage": "dev",
+    "stdio": "stdout",
+    "wd": "/Users/maximomussini/Projects/iles/packages/frontmatter"
+  },
+  "8 debug pnpm:lifecycle": {
+    "depPath": "/Users/maximomussini/Projects/iles/packages/iles",
+    "line": "> iles@0.0.16 dev-shared",
+    "stage": "dev",
+    "stdio": "stdout",
+    "wd": "/Users/maximomussini/Projects/iles/packages/iles"
+  },
+  "9 debug pnpm:lifecycle": {
+    "depPath": "/Users/maximomussini/Projects/iles/packages/iles",
+    "line": "> node scripts/copyShared",
+    "stage": "dev",
+    "stdio": "stdout",
+    "wd": "/Users/maximomussini/Projects/iles/packages/iles"
+  },
+  "10 debug pnpm:lifecycle": {
+    "depPath": "/Users/maximomussini/Projects/iles/packages/frontmatter",
+    "line": " CLI  Building entry: src/frontmatter.ts",
+    "stage": "dev",
+    "stdio": "stdout",
+    "wd": "/Users/maximomussini/Projects/iles/packages/frontmatter"
+  },
+  "11 debug pnpm:lifecycle": {
+    "depPath": "/Users/maximomussini/Projects/iles/packages/frontmatter",
+    "line": " CLI  tsup v4.14.0",
+    "stage": "dev",
+    "stdio": "stdout",
+    "wd": "/Users/maximomussini/Projects/iles/packages/frontmatter"
+  },
+  "12 debug pnpm:lifecycle": {
+    "depPath": "/Users/maximomussini/Projects/iles/packages/frontmatter",
+    "line": " CLI  Using tsup config: /Users/maximomussini/Projects/iles/packages/frontmatter/tsup.config.ts",
+    "stage": "dev",
+    "stdio": "stdout",
+    "wd": "/Users/maximomussini/Projects/iles/packages/frontmatter"
+  },
+  "13 debug pnpm:lifecycle": {
+    "depPath": "/Users/maximomussini/Projects/iles/packages/hydration",
+    "line": " CLI  Building entry: hydration.ts, vue.ts, vanilla.ts",
+    "stage": "dev",
+    "stdio": "stdout",
+    "wd": "/Users/maximomussini/Projects/iles/packages/hydration"
+  },
+  "14 debug pnpm:lifecycle": {
+    "depPath": "/Users/maximomussini/Projects/iles/packages/hydration",
+    "line": " CLI  tsup v4.14.0",
+    "stage": "dev",
+    "stdio": "stdout",
+    "wd": "/Users/maximomussini/Projects/iles/packages/hydration"
+  },
+  "15 debug pnpm:lifecycle": {
+    "depPath": "/Users/maximomussini/Projects/iles/packages/hydration",
+    "line": " CLI  Using tsup config: /Users/maximomussini/Projects/iles/packages/hydration/tsup.config.ts",
+    "stage": "dev",
+    "stdio": "stdout",
+    "wd": "/Users/maximomussini/Projects/iles/packages/hydration"
+  },
+  "16 debug pnpm:lifecycle": {
+    "depPath": "/Users/maximomussini/Projects/iles/packages/hydration",
+    "line": " CLI  Running in watch mode",
+    "stage": "dev",
+    "stdio": "stdout",
+    "wd": "/Users/maximomussini/Projects/iles/packages/hydration"
+  },
+  "17 debug pnpm:lifecycle": {
+    "depPath": "/Users/maximomussini/Projects/iles/packages/hydration",
+    "line": " CLI  Target: es2020",
+    "stage": "dev",
+    "stdio": "stdout",
+    "wd": "/Users/maximomussini/Projects/iles/packages/hydration"
+  },
+  "18 debug pnpm:lifecycle": {
+    "depPath": "/Users/maximomussini/Projects/iles/packages/frontmatter",
+    "line": " CLI  Running in watch mode",
+    "stage": "dev",
+    "stdio": "stdout",
+    "wd": "/Users/maximomussini/Projects/iles/packages/frontmatter"
+  },
+  "19 debug pnpm:lifecycle": {
+    "depPath": "/Users/maximomussini/Projects/iles/packages/frontmatter",
+    "line": " CLI  Target: es2020",
+    "stage": "dev",
+    "stdio": "stdout",
+    "wd": "/Users/maximomussini/Projects/iles/packages/frontmatter"
+  },
+  "20 debug pnpm:lifecycle": {
+    "depPath": "/Users/maximomussini/Projects/iles/packages/frontmatter",
+    "line": " CJS  Build start",
+    "stage": "dev",
+    "stdio": "stdout",
+    "wd": "/Users/maximomussini/Projects/iles/packages/frontmatter"
+  },
+  "21 debug pnpm:lifecycle": {
+    "depPath": "/Users/maximomussini/Projects/iles/packages/hydration",
+    "line": " CJS  Build start",
+    "stage": "dev",
+    "stdio": "stdout",
+    "wd": "/Users/maximomussini/Projects/iles/packages/hydration"
+  },
+  "22 debug pnpm:lifecycle": {
+    "depPath": "/Users/maximomussini/Projects/iles/packages/hydration",
+    "line": " ESM  Build start",
+    "stage": "dev",
+    "stdio": "stdout",
+    "wd": "/Users/maximomussini/Projects/iles/packages/hydration"
+  },
+  "23 debug pnpm:lifecycle": {
+    "depPath": "/Users/maximomussini/Projects/iles/packages/frontmatter",
+    "line": " ESM  Build start",
+    "stage": "dev",
+    "stdio": "stdout",
+    "wd": "/Users/maximomussini/Projects/iles/packages/frontmatter"
+  },
+  "24 debug pnpm:lifecycle": {
+    "depPath": "/Users/maximomussini/Projects/iles/packages/hydration",
+    "line": " ESM  Build success in 20ms",
+    "stage": "dev",
+    "stdio": "stdout",
+    "wd": "/Users/maximomussini/Projects/iles/packages/hydration"
+  },
+  "25 debug pnpm:lifecycle": {
+    "depPath": "/Users/maximomussini/Projects/iles/packages/hydration",
+    "line": " CJS  Build success in 22ms",
+    "stage": "dev",
+    "stdio": "stdout",
+    "wd": "/Users/maximomussini/Projects/iles/packages/hydration"
+  },
+  "26 debug pnpm:lifecycle": {
+    "depPath": "/Users/maximomussini/Projects/iles/packages/frontmatter",
+    "line": " CJS  Build success in 37ms",
+    "stage": "dev",
+    "stdio": "stdout",
+    "wd": "/Users/maximomussini/Projects/iles/packages/frontmatter"
+  },
+  "27 debug pnpm:lifecycle": {
+    "depPath": "/Users/maximomussini/Projects/iles/packages/frontmatter",
+    "line": " ESM  Build success in 204ms",
+    "stage": "dev",
+    "stdio": "stdout",
+    "wd": "/Users/maximomussini/Projects/iles/packages/frontmatter"
+  },
+  "28 debug pnpm:lifecycle": {
+    "depPath": "/Users/maximomussini/Projects/iles/packages/hydration",
+    "line": " CLI  Watching for changes in \".\"",
+    "stage": "dev",
+    "stdio": "stdout",
+    "wd": "/Users/maximomussini/Projects/iles/packages/hydration"
+  },
+  "29 debug pnpm:lifecycle": {
+    "depPath": "/Users/maximomussini/Projects/iles/packages/hydration",
+    "line": " CLI  Ignoring changes in \"**/{.git,node_modules}/**\" | \"dist\"",
+    "stage": "dev",
+    "stdio": "stdout",
+    "wd": "/Users/maximomussini/Projects/iles/packages/hydration"
+  },
+  "30 debug pnpm:lifecycle": {
+    "depPath": "/Users/maximomussini/Projects/iles/packages/frontmatter",
+    "line": " CLI  Watching for changes in \".\"",
+    "stage": "dev",
+    "stdio": "stdout",
+    "wd": "/Users/maximomussini/Projects/iles/packages/frontmatter"
+  },
+  "31 debug pnpm:lifecycle": {
+    "depPath": "/Users/maximomussini/Projects/iles/packages/frontmatter",
+    "line": " CLI  Ignoring changes in \"**/{.git,node_modules}/**\" | \"dist\"",
+    "stage": "dev",
+    "stdio": "stdout",
+    "wd": "/Users/maximomussini/Projects/iles/packages/frontmatter"
+  },
+  "32 debug pnpm:lifecycle": {
+    "depPath": "/Users/maximomussini/Projects/iles/packages/iles",
+    "line": "> iles@0.0.16 dev-start",
+    "stage": "dev",
+    "stdio": "stdout",
+    "wd": "/Users/maximomussini/Projects/iles/packages/iles"
+  },
+  "33 debug pnpm:lifecycle": {
+    "depPath": "/Users/maximomussini/Projects/iles/packages/iles",
+    "line": "> run-p dev-client dev-node dev-watch",
+    "stage": "dev",
+    "stdio": "stdout",
+    "wd": "/Users/maximomussini/Projects/iles/packages/iles"
+  },
+  "34 debug pnpm:lifecycle": {
+    "depPath": "/Users/maximomussini/Projects/iles/packages/hydration",
+    "line": " DTS  Build start",
+    "stage": "dev",
+    "stdio": "stdout",
+    "wd": "/Users/maximomussini/Projects/iles/packages/hydration"
+  },
+  "35 debug pnpm:lifecycle": {
+    "depPath": "/Users/maximomussini/Projects/iles/packages/frontmatter",
+    "line": " DTS  Build start",
+    "stage": "dev",
+    "stdio": "stdout",
+    "wd": "/Users/maximomussini/Projects/iles/packages/frontmatter"
+  },
+  "36 debug pnpm:lifecycle": {
+    "depPath": "/Users/maximomussini/Projects/iles/packages/iles",
+    "line": "> iles@0.0.16 dev-node",
+    "stage": "dev",
+    "stdio": "stdout",
+    "wd": "/Users/maximomussini/Projects/iles/packages/iles"
+  },
+  "37 debug pnpm:lifecycle": {
+    "depPath": "/Users/maximomussini/Projects/iles/packages/iles",
+    "line": "> npm run build-node -- --watch",
+    "stage": "dev",
+    "stdio": "stdout",
+    "wd": "/Users/maximomussini/Projects/iles/packages/iles"
+  },
+  "38 debug pnpm:lifecycle": {
+    "depPath": "/Users/maximomussini/Projects/iles/packages/iles",
+    "line": "> iles@0.0.16 dev-watch",
+    "stage": "dev",
+    "stdio": "stdout",
+    "wd": "/Users/maximomussini/Projects/iles/packages/iles"
+  },
+  "39 debug pnpm:lifecycle": {
+    "depPath": "/Users/maximomussini/Projects/iles/packages/iles",
+    "line": "> node scripts/watchAndCopy",
+    "stage": "dev",
+    "stdio": "stdout",
+    "wd": "/Users/maximomussini/Projects/iles/packages/iles"
+  },
+  "40 debug pnpm:lifecycle": {
+    "depPath": "/Users/maximomussini/Projects/iles/packages/iles",
+    "line": "> iles@0.0.16 dev-client",
+    "stage": "dev",
+    "stdio": "stdout",
+    "wd": "/Users/maximomussini/Projects/iles/packages/iles"
+  },
+  "41 debug pnpm:lifecycle": {
+    "depPath": "/Users/maximomussini/Projects/iles/packages/iles",
+    "line": "> npm run build-client -- --watch",
+    "stage": "dev",
+    "stdio": "stdout",
+    "wd": "/Users/maximomussini/Projects/iles/packages/iles"
+  },
+  "42 debug pnpm:lifecycle": {
+    "depPath": "/Users/maximomussini/Projects/iles/packages/iles",
+    "line": "> iles@0.0.16 build-node",
+    "stage": "dev",
+    "stdio": "stdout",
+    "wd": "/Users/maximomussini/Projects/iles/packages/iles"
+  },
+  "43 debug pnpm:lifecycle": {
+    "depPath": "/Users/maximomussini/Projects/iles/packages/iles",
+    "line": "> tsup src/node \"--watch\"",
+    "stage": "dev",
+    "stdio": "stdout",
+    "wd": "/Users/maximomussini/Projects/iles/packages/iles"
+  },
+  "44 debug pnpm:lifecycle": {
+    "depPath": "/Users/maximomussini/Projects/iles/packages/iles",
+    "line": "> iles@0.0.16 build-client",
+    "stage": "dev",
+    "stdio": "stdout",
+    "wd": "/Users/maximomussini/Projects/iles/packages/iles"
+  },
+  "45 debug pnpm:lifecycle": {
+    "depPath": "/Users/maximomussini/Projects/iles/packages/iles",
+    "line": "> tsc -p src/client \"--watch\"",
+    "stage": "dev",
+    "stdio": "stdout",
+    "wd": "/Users/maximomussini/Projects/iles/packages/iles"
+  },
+  "46 debug pnpm:lifecycle": {
+    "depPath": "/Users/maximomussini/Projects/iles/packages/iles",
+    "line": " CLI  Building entry: src/node/alias.ts, src/node/cli.ts, src/node/config.ts, src/node/index.ts, src/node/server.ts, src/node/shared.ts, src/node/build/build.ts, src/node/build/bundle.ts, src/node/build/islands.ts, src/node/build/rebaseImports.ts, src/node/build/render.ts, src/node/build/routes.ts, src/node/build/sitemap.ts, src/node/build/utils.ts, src/node/plugin/index.ts, src/node/plugin/parse.ts, src/node/plugin/remarkWrapIslands.ts, src/node/plugin/utils.ts, src/node/plugin/wrap.ts",
+    "stage": "dev",
+    "stdio": "stdout",
+    "wd": "/Users/maximomussini/Projects/iles/packages/iles"
+  },
+  "47 debug pnpm:lifecycle": {
+    "depPath": "/Users/maximomussini/Projects/iles/packages/iles",
+    "line": " CLI  Using tsconfig: /Users/maximomussini/Projects/iles/packages/iles/tsconfig.json",
+    "stage": "dev",
+    "stdio": "stdout",
+    "wd": "/Users/maximomussini/Projects/iles/packages/iles"
+  },
+  "48 debug pnpm:lifecycle": {
+    "depPath": "/Users/maximomussini/Projects/iles/packages/iles",
+    "line": " CLI  tsup v4.14.0",
+    "stage": "dev",
+    "stdio": "stdout",
+    "wd": "/Users/maximomussini/Projects/iles/packages/iles"
+  },
+  "49 debug pnpm:lifecycle": {
+    "depPath": "/Users/maximomussini/Projects/iles/packages/iles",
+    "line": " CLI  Using tsup config: /Users/maximomussini/Projects/iles/packages/iles/tsup.config.ts",
+    "stage": "dev",
+    "stdio": "stdout",
+    "wd": "/Users/maximomussini/Projects/iles/packages/iles"
+  },
+  "50 debug pnpm:lifecycle": {
+    "depPath": "/Users/maximomussini/Projects/iles/packages/iles",
+    "line": " CLI  Running in watch mode",
+    "stage": "dev",
+    "stdio": "stdout",
+    "wd": "/Users/maximomussini/Projects/iles/packages/iles"
+  },
+  "51 debug pnpm:lifecycle": {
+    "depPath": "/Users/maximomussini/Projects/iles/packages/iles",
+    "line": " CLI  Target: es2020",
+    "stage": "dev",
+    "stdio": "stdout",
+    "wd": "/Users/maximomussini/Projects/iles/packages/iles"
+  },
+  "52 debug pnpm:lifecycle": {
+    "depPath": "/Users/maximomussini/Projects/iles/packages/iles",
+    "line": " ESM  Build start",
+    "stage": "dev",
+    "stdio": "stdout",
+    "wd": "/Users/maximomussini/Projects/iles/packages/iles"
+  },
+  "53 debug pnpm:lifecycle": {
+    "depPath": "/Users/maximomussini/Projects/iles/packages/iles",
+    "line": " CJS  Build start",
+    "stage": "dev",
+    "stdio": "stdout",
+    "wd": "/Users/maximomussini/Projects/iles/packages/iles"
+  },
+  "54 debug pnpm:lifecycle": {
+    "depPath": "/Users/maximomussini/Projects/iles/packages/iles",
+    "line": " CJS  Build success in 373ms",
+    "stage": "dev",
+    "stdio": "stdout",
+    "wd": "/Users/maximomussini/Projects/iles/packages/iles"
+  },
+  "55 debug pnpm:lifecycle": {
+    "depPath": "/Users/maximomussini/Projects/iles/packages/iles",
+    "line": " ESM  Build success in 593ms",
+    "stage": "dev",
+    "stdio": "stdout",
+    "wd": "/Users/maximomussini/Projects/iles/packages/iles"
+  },
+  "56 debug pnpm:lifecycle": {
+    "depPath": "/Users/maximomussini/Projects/iles/packages/iles",
+    "line": "\u001bc8:39:12 PM - Starting compilation in watch mode...",
+    "stage": "dev",
+    "stdio": "stdout",
+    "wd": "/Users/maximomussini/Projects/iles/packages/iles"
+  },
+  "57 debug pnpm:lifecycle": {
+    "depPath": "/Users/maximomussini/Projects/iles/packages/iles",
+    "line": " CLI  Watching for changes in \".\"",
+    "stage": "dev",
+    "stdio": "stdout",
+    "wd": "/Users/maximomussini/Projects/iles/packages/iles"
+  },
+  "58 debug pnpm:lifecycle": {
+    "depPath": "/Users/maximomussini/Projects/iles/packages/iles",
+    "line": " CLI  Ignoring changes in \"**/{.git,node_modules}/**\" | \"dist/node\"",
+    "stage": "dev",
+    "stdio": "stdout",
+    "wd": "/Users/maximomussini/Projects/iles/packages/iles"
+  },
+  "59 debug pnpm:lifecycle": {
+    "depPath": "/Users/maximomussini/Projects/iles/packages/iles",
+    "line": " DTS  Build start",
+    "stage": "dev",
+    "stdio": "stdout",
+    "wd": "/Users/maximomussini/Projects/iles/packages/iles"
+  },
+  "60 debug pnpm:lifecycle": {
+    "depPath": "/Users/maximomussini/Projects/iles/packages/frontmatter",
+    "line": " DTS  Build success in 7749ms",
+    "stage": "dev",
+    "stdio": "stdout",
+    "wd": "/Users/maximomussini/Projects/iles/packages/frontmatter"
+  },
+  "61 debug pnpm:lifecycle": {
+    "depPath": "/Users/maximomussini/Projects/iles/packages/hydration",
+    "line": " DTS  Build success in 9543ms",
+    "stage": "dev",
+    "stdio": "stdout",
+    "wd": "/Users/maximomussini/Projects/iles/packages/hydration"
+  },
+  "62 debug pnpm:lifecycle": {
+    "depPath": "/Users/maximomussini/Projects/iles/packages/iles",
+    "line": " CLI  Change detected: add dist/client/shared.js",
+    "stage": "dev",
+    "stdio": "stdout",
+    "wd": "/Users/maximomussini/Projects/iles/packages/iles"
+  },
+  "63 debug pnpm:lifecycle": {
+    "depPath": "/Users/maximomussini/Projects/iles/packages/iles",
+    "line": " CLI  Change detected: add dist/client/shared.d.ts",
+    "stage": "dev",
+    "stdio": "stdout",
+    "wd": "/Users/maximomussini/Projects/iles/packages/iles"
+  },
+  "64 debug pnpm:lifecycle": {
+    "depPath": "/Users/maximomussini/Projects/iles/packages/iles",
+    "line": " CLI  Change detected: addDir dist/client/app/composables",
+    "stage": "dev",
+    "stdio": "stdout",
+    "wd": "/Users/maximomussini/Projects/iles/packages/iles"
+  },
+  "65 debug pnpm:lifecycle": {
+    "depPath": "/Users/maximomussini/Projects/iles/packages/iles",
+    "line": " CLI  Change detected: add dist/client/app/composables/appConfig.js",
+    "stage": "dev",
+    "stdio": "stdout",
+    "wd": "/Users/maximomussini/Projects/iles/packages/iles"
+  },
+  "66 debug pnpm:lifecycle": {
+    "depPath": "/Users/maximomussini/Projects/iles/packages/iles",
+    "line": " CLI  Change detected: add dist/client/app/composables/appConfig.d.ts",
+    "stage": "dev",
+    "stdio": "stdout",
+    "wd": "/Users/maximomussini/Projects/iles/packages/iles"
+  },
+  "67 debug pnpm:lifecycle": {
+    "depPath": "/Users/maximomussini/Projects/iles/packages/iles",
+    "line": " CLI  Change detected: add dist/client/app/composables/pageData.js",
+    "stage": "dev",
+    "stdio": "stdout",
+    "wd": "/Users/maximomussini/Projects/iles/packages/iles"
+  },
+  "68 debug pnpm:lifecycle": {
+    "depPath": "/Users/maximomussini/Projects/iles/packages/iles",
+    "line": " CLI  Change detected: add dist/client/app/composables/pageData.d.ts",
+    "stage": "dev",
+    "stdio": "stdout",
+    "wd": "/Users/maximomussini/Projects/iles/packages/iles"
+  },
+  "69 debug pnpm:lifecycle": {
+    "depPath": "/Users/maximomussini/Projects/iles/packages/iles",
+    "line": " CLI  Change detected: add dist/client/app/composables/file.js",
+    "stage": "dev",
+    "stdio": "stdout",
+    "wd": "/Users/maximomussini/Projects/iles/packages/iles"
+  },
+  "70 debug pnpm:lifecycle": {
+    "depPath": "/Users/maximomussini/Projects/iles/packages/iles",
+    "line": " CLI  Change detected: add dist/client/app/composables/file.d.ts",
+    "stage": "dev",
+    "stdio": "stdout",
+    "wd": "/Users/maximomussini/Projects/iles/packages/iles"
+  },
+  "71 debug pnpm:lifecycle": {
+    "depPath": "/Users/maximomussini/Projects/iles/packages/iles",
+    "line": " CLI  Change detected: add dist/client/app/composables/vueRenderer.js",
+    "stage": "dev",
+    "stdio": "stdout",
+    "wd": "/Users/maximomussini/Projects/iles/packages/iles"
+  },
+  "72 debug pnpm:lifecycle": {
+    "depPath": "/Users/maximomussini/Projects/iles/packages/iles",
+    "line": " CLI  Change detected: add dist/client/app/composables/vueRenderer.d.ts",
+    "stage": "dev",
+    "stdio": "stdout",
+    "wd": "/Users/maximomussini/Projects/iles/packages/iles"
+  },
+  "73 debug pnpm:lifecycle": {
+    "depPath": "/Users/maximomussini/Projects/iles/packages/iles",
+    "line": " CLI  Change detected: addDir dist/client/app/renderers",
+    "stage": "dev",
+    "stdio": "stdout",
+    "wd": "/Users/maximomussini/Projects/iles/packages/iles"
+  },
+  "74 debug pnpm:lifecycle": {
+    "depPath": "/Users/maximomussini/Projects/iles/packages/iles",
+    "line": " CLI  Change detected: add dist/client/app/renderers/plainText.js",
+    "stage": "dev",
+    "stdio": "stdout",
+    "wd": "/Users/maximomussini/Projects/iles/packages/iles"
+  },
+  "75 debug pnpm:lifecycle": {
+    "depPath": "/Users/maximomussini/Projects/iles/packages/iles",
+    "line": " CLI  Change detected: add dist/client/app/renderers/plainText.d.ts",
+    "stage": "dev",
+    "stdio": "stdout",
+    "wd": "/Users/maximomussini/Projects/iles/packages/iles"
+  },
+  "76 debug pnpm:lifecycle": {
+    "depPath": "/Users/maximomussini/Projects/iles/packages/iles",
+    "line": " CLI  Change detected: add dist/client/app/utils.js",
+    "stage": "dev",
+    "stdio": "stdout",
+    "wd": "/Users/maximomussini/Projects/iles/packages/iles"
+  },
+  "77 debug pnpm:lifecycle": {
+    "depPath": "/Users/maximomussini/Projects/iles/packages/iles",
+    "line": " CLI  Change detected: add dist/client/app/utils.d.ts",
+    "stage": "dev",
+    "stdio": "stdout",
+    "wd": "/Users/maximomussini/Projects/iles/packages/iles"
+  },
+  "78 debug pnpm:lifecycle": {
+    "depPath": "/Users/maximomussini/Projects/iles/packages/iles",
+    "line": " CLI  Change detected: add dist/client/app/components/index.js",
+    "stage": "dev",
+    "stdio": "stdout",
+    "wd": "/Users/maximomussini/Projects/iles/packages/iles"
+  },
+  "79 debug pnpm:lifecycle": {
+    "depPath": "/Users/maximomussini/Projects/iles/packages/iles",
+    "line": " CLI  Change detected: add dist/client/app/components/index.d.ts",
+    "stage": "dev",
+    "stdio": "stdout",
+    "wd": "/Users/maximomussini/Projects/iles/packages/iles"
+  },
+  "80 debug pnpm:lifecycle": {
+    "depPath": "/Users/maximomussini/Projects/iles/packages/iles",
+    "line": " CLI  Change detected: add dist/client/index.js",
+    "stage": "dev",
+    "stdio": "stdout",
+    "wd": "/Users/maximomussini/Projects/iles/packages/iles"
+  },
+  "81 debug pnpm:lifecycle": {
+    "depPath": "/Users/maximomussini/Projects/iles/packages/iles",
+    "line": " CLI  Change detected: add dist/client/index.d.ts",
+    "stage": "dev",
+    "stdio": "stdout",
+    "wd": "/Users/maximomussini/Projects/iles/packages/iles"
+  },
+  "82 debug pnpm:lifecycle": {
+    "depPath": "/Users/maximomussini/Projects/iles/packages/iles",
+    "line": " CLI  Change detected: add dist/client/app/hydration.js",
+    "stage": "dev",
+    "stdio": "stdout",
+    "wd": "/Users/maximomussini/Projects/iles/packages/iles"
+  },
+  "83 debug pnpm:lifecycle": {
+    "depPath": "/Users/maximomussini/Projects/iles/packages/iles",
+    "line": " CLI  Change detected: add dist/client/app/hydration.d.ts",
+    "stage": "dev",
+    "stdio": "stdout",
+    "wd": "/Users/maximomussini/Projects/iles/packages/iles"
+  },
+  "84 debug pnpm:lifecycle": {
+    "depPath": "/Users/maximomussini/Projects/iles/packages/iles",
+    "line": " CLI  Change detected: add dist/client/app/composables/devtools.d.ts",
+    "stage": "dev",
+    "stdio": "stdout",
+    "wd": "/Users/maximomussini/Projects/iles/packages/iles"
+  },
+  "85 debug pnpm:lifecycle": {
+    "depPath": "/Users/maximomussini/Projects/iles/packages/iles",
+    "line": " CLI  Change detected: add dist/client/app/composables/devtools.js",
+    "stage": "dev",
+    "stdio": "stdout",
+    "wd": "/Users/maximomussini/Projects/iles/packages/iles"
+  },
+  "86 debug pnpm:lifecycle": {
+    "depPath": "/Users/maximomussini/Projects/iles/packages/iles",
+    "line": " CLI  Change detected: add dist/client/app/composables/islandDefinitions.d.ts",
+    "stage": "dev",
+    "stdio": "stdout",
+    "wd": "/Users/maximomussini/Projects/iles/packages/iles"
+  },
+  "87 debug pnpm:lifecycle": {
+    "depPath": "/Users/maximomussini/Projects/iles/packages/iles",
+    "line": " CLI  Change detected: add dist/client/app/composables/islandDefinitions.js",
+    "stage": "dev",
+    "stdio": "stdout",
+    "wd": "/Users/maximomussini/Projects/iles/packages/iles"
+  },
+  "88 debug pnpm:lifecycle": {
+    "depPath": "/Users/maximomussini/Projects/iles/packages/iles",
+    "line": "8:39:19 PM - Found 0 errors. Watching for file changes.",
+    "stage": "dev",
+    "stdio": "stdout",
+    "wd": "/Users/maximomussini/Projects/iles/packages/iles"
+  },
+  "89 debug pnpm:lifecycle": {
+    "depPath": "/Users/maximomussini/Projects/iles/packages/iles",
+    "line": " CLI  Change detected: change dist/client/app/composables/devtools.js",
+    "stage": "dev",
+    "stdio": "stdout",
+    "wd": "/Users/maximomussini/Projects/iles/packages/iles"
+  },
+  "90 debug pnpm:lifecycle": {
+    "depPath": "/Users/maximomussini/Projects/iles/packages/iles",
+    "line": " CLI  Change detected: change dist/client/app/composables/devtools.d.ts",
+    "stage": "dev",
+    "stdio": "stdout",
+    "wd": "/Users/maximomussini/Projects/iles/packages/iles"
+  },
+  "91 debug pnpm:lifecycle": {
+    "depPath": "/Users/maximomussini/Projects/iles/packages/iles",
+    "line": " CLI  Change detected: add dist/client/app/index.js",
+    "stage": "dev",
+    "stdio": "stdout",
+    "wd": "/Users/maximomussini/Projects/iles/packages/iles"
+  },
+  "92 debug pnpm:lifecycle": {
+    "depPath": "/Users/maximomussini/Projects/iles/packages/iles",
+    "line": " CLI  Change detected: add dist/client/app/index.d.ts",
+    "stage": "dev",
+    "stdio": "stdout",
+    "wd": "/Users/maximomussini/Projects/iles/packages/iles"
+  },
+  "93 debug pnpm:lifecycle": {
+    "depPath": "/Users/maximomussini/Projects/iles/packages/iles",
+    "line": " CLI  Change detected: add dist/client/app/layouts.js",
+    "stage": "dev",
+    "stdio": "stdout",
+    "wd": "/Users/maximomussini/Projects/iles/packages/iles"
+  },
+  "94 debug pnpm:lifecycle": {
+    "depPath": "/Users/maximomussini/Projects/iles/packages/iles",
+    "line": " CLI  Change detected: add dist/client/app/layouts.d.ts",
+    "stage": "dev",
+    "stdio": "stdout",
+    "wd": "/Users/maximomussini/Projects/iles/packages/iles"
+  },
+  "95 debug pnpm:lifecycle": {
+    "depPath": "/Users/maximomussini/Projects/iles/packages/iles",
+    "line": " CLI  Change detected: change dist/client/app/composables/islandDefinitions.js",
+    "stage": "dev",
+    "stdio": "stdout",
+    "wd": "/Users/maximomussini/Projects/iles/packages/iles"
+  },
+  "96 debug pnpm:lifecycle": {
+    "depPath": "/Users/maximomussini/Projects/iles/packages/iles",
+    "line": " CLI  Change detected: change dist/client/app/composables/islandDefinitions.d.ts",
+    "stage": "dev",
+    "stdio": "stdout",
+    "wd": "/Users/maximomussini/Projects/iles/packages/iles"
+  },
+  "97 debug pnpm:lifecycle": {
+    "depPath": "/Users/maximomussini/Projects/iles/packages/iles",
+    "line": " CLI  Change detected: add dist/client/app/composables/routerLinks.js",
+    "stage": "dev",
+    "stdio": "stdout",
+    "wd": "/Users/maximomussini/Projects/iles/packages/iles"
+  },
+  "98 debug pnpm:lifecycle": {
+    "depPath": "/Users/maximomussini/Projects/iles/packages/iles",
+    "line": " CLI  Change detected: add dist/client/app/composables/routerLinks.d.ts",
+    "stage": "dev",
+    "stdio": "stdout",
+    "wd": "/Users/maximomussini/Projects/iles/packages/iles"
+  },
+  "99 debug pnpm:lifecycle": {
+    "depPath": "/Users/maximomussini/Projects/iles/packages/iles",
+    "line": " ESM  Build start",
+    "stage": "dev",
+    "stdio": "stdout",
+    "wd": "/Users/maximomussini/Projects/iles/packages/iles"
+  },
+  "100 debug pnpm:lifecycle": {
+    "depPath": "/Users/maximomussini/Projects/iles/packages/iles",
+    "line": " CJS  Build start",
+    "stage": "dev",
+    "stdio": "stdout",
+    "wd": "/Users/maximomussini/Projects/iles/packages/iles"
+  },
+  "101 debug pnpm:lifecycle": {
+    "depPath": "/Users/maximomussini/Projects/iles/packages/iles",
+    "line": " ESM  Build success in 154ms",
+    "stage": "dev",
+    "stdio": "stdout",
+    "wd": "/Users/maximomussini/Projects/iles/packages/iles"
+  },
+  "102 debug pnpm:lifecycle": {
+    "depPath": "/Users/maximomussini/Projects/iles/packages/iles",
+    "line": " CJS  Build success in 156ms",
+    "stage": "dev",
+    "stdio": "stdout",
+    "wd": "/Users/maximomussini/Projects/iles/packages/iles"
+  },
+  "103 debug pnpm:lifecycle": {
+    "depPath": "/Users/maximomussini/Projects/iles/packages/iles",
+    "line": "\u001bc8:39:20 PM - File change detected. Starting incremental compilation...",
+    "stage": "dev",
+    "stdio": "stdout",
+    "wd": "/Users/maximomussini/Projects/iles/packages/iles"
+  },
+  "104 debug pnpm:lifecycle": {
+    "depPath": "/Users/maximomussini/Projects/iles/packages/iles",
+    "line": "8:39:20 PM - Found 0 errors. Watching for file changes.",
+    "stage": "dev",
+    "stdio": "stdout",
+    "wd": "/Users/maximomussini/Projects/iles/packages/iles"
+  },
+  "105 debug pnpm:lifecycle": {
+    "depPath": "/Users/maximomussini/Projects/iles/packages/iles",
+    "line": " DTS  Build success in 7493ms",
+    "stage": "dev",
+    "stdio": "stdout",
+    "wd": "/Users/maximomussini/Projects/iles/packages/iles"
+  },
+  "106 debug pnpm:lifecycle": {
+    "depPath": "/Users/maximomussini/Projects/iles/packages/iles",
+    "line": " CLI  Change detected: change src/client/index.ts",
+    "stage": "dev",
+    "stdio": "stdout",
+    "wd": "/Users/maximomussini/Projects/iles/packages/iles"
+  },
+  "107 debug pnpm:lifecycle": {
+    "depPath": "/Users/maximomussini/Projects/iles/packages/iles",
+    "line": " ESM  Build start",
+    "stage": "dev",
+    "stdio": "stdout",
+    "wd": "/Users/maximomussini/Projects/iles/packages/iles"
+  },
+  "108 debug pnpm:lifecycle": {
+    "depPath": "/Users/maximomussini/Projects/iles/packages/iles",
+    "line": " CJS  Build start",
+    "stage": "dev",
+    "stdio": "stdout",
+    "wd": "/Users/maximomussini/Projects/iles/packages/iles"
+  },
+  "109 debug pnpm:lifecycle": {
+    "depPath": "/Users/maximomussini/Projects/iles/packages/iles",
+    "line": "\u001bc8:42:23 PM - File change detected. Starting incremental compilation...",
+    "stage": "dev",
+    "stdio": "stdout",
+    "wd": "/Users/maximomussini/Projects/iles/packages/iles"
+  },
+  "110 debug pnpm:lifecycle": {
+    "depPath": "/Users/maximomussini/Projects/iles/packages/iles",
+    "line": "8:42:23 PM - Found 0 errors. Watching for file changes.",
+    "stage": "dev",
+    "stdio": "stdout",
+    "wd": "/Users/maximomussini/Projects/iles/packages/iles"
+  },
+  "111 debug pnpm:lifecycle": {
+    "depPath": "/Users/maximomussini/Projects/iles/packages/iles",
+    "line": " CJS  Build success in 174ms",
+    "stage": "dev",
+    "stdio": "stdout",
+    "wd": "/Users/maximomussini/Projects/iles/packages/iles"
+  },
+  "112 debug pnpm:lifecycle": {
+    "depPath": "/Users/maximomussini/Projects/iles/packages/iles",
+    "line": " ESM  Build success in 177ms",
+    "stage": "dev",
+    "stdio": "stdout",
+    "wd": "/Users/maximomussini/Projects/iles/packages/iles"
+  },
+  "113 debug pnpm:lifecycle": {
+    "depPath": "/Users/maximomussini/Projects/iles/packages/iles",
+    "line": " CLI  Change detected: change dist/client/index.js",
+    "stage": "dev",
+    "stdio": "stdout",
+    "wd": "/Users/maximomussini/Projects/iles/packages/iles"
+  },
+  "114 debug pnpm:lifecycle": {
+    "depPath": "/Users/maximomussini/Projects/iles/packages/iles",
+    "line": " CLI  Change detected: change dist/client/index.d.ts",
+    "stage": "dev",
+    "stdio": "stdout",
+    "wd": "/Users/maximomussini/Projects/iles/packages/iles"
+  },
+  "115 debug pnpm:lifecycle": {
+    "depPath": "/Users/maximomussini/Projects/iles/packages/iles",
+    "line": " ESM  Build start",
+    "stage": "dev",
+    "stdio": "stdout",
+    "wd": "/Users/maximomussini/Projects/iles/packages/iles"
+  },
+  "116 debug pnpm:lifecycle": {
+    "depPath": "/Users/maximomussini/Projects/iles/packages/iles",
+    "line": " CJS  Build start",
+    "stage": "dev",
+    "stdio": "stdout",
+    "wd": "/Users/maximomussini/Projects/iles/packages/iles"
+  },
+  "117 debug pnpm:lifecycle": {
+    "depPath": "/Users/maximomussini/Projects/iles/packages/iles",
+    "line": " ESM  Build success in 185ms",
+    "stage": "dev",
+    "stdio": "stdout",
+    "wd": "/Users/maximomussini/Projects/iles/packages/iles"
+  },
+  "118 debug pnpm:lifecycle": {
+    "depPath": "/Users/maximomussini/Projects/iles/packages/iles",
+    "line": " CJS  Build success in 185ms",
+    "stage": "dev",
+    "stdio": "stdout",
+    "wd": "/Users/maximomussini/Projects/iles/packages/iles"
+  },
+  "119 debug pnpm:lifecycle": {
+    "depPath": "/Users/maximomussini/Projects/iles/packages/iles",
+    "line": " CLI  Change detected: change dist/client/index.d.ts",
+    "stage": "dev",
+    "stdio": "stdout",
+    "wd": "/Users/maximomussini/Projects/iles/packages/iles"
+  },
+  "120 debug pnpm:lifecycle": {
+    "depPath": "/Users/maximomussini/Projects/iles/packages/iles",
+    "line": " ESM  Build start",
+    "stage": "dev",
+    "stdio": "stdout",
+    "wd": "/Users/maximomussini/Projects/iles/packages/iles"
+  },
+  "121 debug pnpm:lifecycle": {
+    "depPath": "/Users/maximomussini/Projects/iles/packages/iles",
+    "line": " CJS  Build start",
+    "stage": "dev",
+    "stdio": "stdout",
+    "wd": "/Users/maximomussini/Projects/iles/packages/iles"
+  },
+  "122 debug pnpm:lifecycle": {
+    "depPath": "/Users/maximomussini/Projects/iles/packages/iles",
+    "line": " ESM  Build success in 126ms",
+    "stage": "dev",
+    "stdio": "stdout",
+    "wd": "/Users/maximomussini/Projects/iles/packages/iles"
+  },
+  "123 debug pnpm:lifecycle": {
+    "depPath": "/Users/maximomussini/Projects/iles/packages/iles",
+    "line": " CJS  Build success in 126ms",
+    "stage": "dev",
+    "stdio": "stdout",
+    "wd": "/Users/maximomussini/Projects/iles/packages/iles"
+  },
+  "124 debug pnpm:lifecycle": {
+    "depPath": "/Users/maximomussini/Projects/iles/packages/iles",
+    "line": " CLI  Change detected: unlink src/client/router.d.ts",
+    "stage": "dev",
+    "stdio": "stdout",
+    "wd": "/Users/maximomussini/Projects/iles/packages/iles"
+  },
+  "125 debug pnpm:lifecycle": {
+    "depPath": "/Users/maximomussini/Projects/iles/packages/iles",
+    "line": " ESM  Build start",
+    "stage": "dev",
+    "stdio": "stdout",
+    "wd": "/Users/maximomussini/Projects/iles/packages/iles"
+  },
+  "126 debug pnpm:lifecycle": {
+    "depPath": "/Users/maximomussini/Projects/iles/packages/iles",
+    "line": " CJS  Build start",
+    "stage": "dev",
+    "stdio": "stdout",
+    "wd": "/Users/maximomussini/Projects/iles/packages/iles"
+  },
+  "127 debug pnpm:lifecycle": {
+    "depPath": "/Users/maximomussini/Projects/iles/packages/iles",
+    "line": "\u001bc11:02:33 AM - File change detected. Starting incremental compilation...",
+    "stage": "dev",
+    "stdio": "stdout",
+    "wd": "/Users/maximomussini/Projects/iles/packages/iles"
+  },
+  "128 debug pnpm:lifecycle": {
+    "depPath": "/Users/maximomussini/Projects/iles/packages/iles",
+    "line": " ESM  Build success in 405ms",
+    "stage": "dev",
+    "stdio": "stdout",
+    "wd": "/Users/maximomussini/Projects/iles/packages/iles"
+  },
+  "129 debug pnpm:lifecycle": {
+    "depPath": "/Users/maximomussini/Projects/iles/packages/iles",
+    "line": " CJS  Build success in 406ms",
+    "stage": "dev",
+    "stdio": "stdout",
+    "wd": "/Users/maximomussini/Projects/iles/packages/iles"
+  },
+  "130 debug pnpm:lifecycle": {
+    "depPath": "/Users/maximomussini/Projects/iles/packages/iles",
+    "line": "11:02:34 AM - Found 0 errors. Watching for file changes.",
+    "stage": "dev",
+    "stdio": "stdout",
+    "wd": "/Users/maximomussini/Projects/iles/packages/iles"
+  },
+  "131 debug pnpm:lifecycle": {
+    "depPath": "/Users/maximomussini/Projects/iles/packages/iles",
+    "line": "\u001bc11:04:17 AM - File change detected. Starting incremental compilation...",
+    "stage": "dev",
+    "stdio": "stdout",
+    "wd": "/Users/maximomussini/Projects/iles/packages/iles"
+  },
+  "132 debug pnpm:lifecycle": {
+    "depPath": "/Users/maximomussini/Projects/iles/packages/iles",
+    "line": "src/client/index.ts(7,15): error TS2306: File '/Users/maximomussini/Projects/iles/packages/iles/src/client/shim.d.ts' is not a module.",
+    "stage": "dev",
+    "stdio": "stdout",
+    "wd": "/Users/maximomussini/Projects/iles/packages/iles"
+  },
+  "133 debug pnpm:lifecycle": {
+    "depPath": "/Users/maximomussini/Projects/iles/packages/iles",
+    "line": "11:04:17 AM - Found 1 error. Watching for file changes.",
+    "stage": "dev",
+    "stdio": "stdout",
+    "wd": "/Users/maximomussini/Projects/iles/packages/iles"
+  },
+  "134 debug pnpm:lifecycle": {
+    "depPath": "/Users/maximomussini/Projects/iles/packages/iles",
+    "line": " CLI  Change detected: change src/client/index.ts",
+    "stage": "dev",
+    "stdio": "stdout",
+    "wd": "/Users/maximomussini/Projects/iles/packages/iles"
+  },
+  "135 debug pnpm:lifecycle": {
+    "depPath": "/Users/maximomussini/Projects/iles/packages/iles",
+    "line": " CLI  Change detected: change dist/client/index.js",
+    "stage": "dev",
+    "stdio": "stdout",
+    "wd": "/Users/maximomussini/Projects/iles/packages/iles"
+  },
+  "136 debug pnpm:lifecycle": {
+    "depPath": "/Users/maximomussini/Projects/iles/packages/iles",
+    "line": " CLI  Change detected: change dist/client/index.d.ts",
+    "stage": "dev",
+    "stdio": "stdout",
+    "wd": "/Users/maximomussini/Projects/iles/packages/iles"
+  },
+  "137 debug pnpm:lifecycle": {
+    "depPath": "/Users/maximomussini/Projects/iles/packages/iles",
+    "line": " ESM  Build start",
+    "stage": "dev",
+    "stdio": "stdout",
+    "wd": "/Users/maximomussini/Projects/iles/packages/iles"
+  },
+  "138 debug pnpm:lifecycle": {
+    "depPath": "/Users/maximomussini/Projects/iles/packages/iles",
+    "line": " CJS  Build start",
+    "stage": "dev",
+    "stdio": "stdout",
+    "wd": "/Users/maximomussini/Projects/iles/packages/iles"
+  },
+  "139 debug pnpm:lifecycle": {
+    "depPath": "/Users/maximomussini/Projects/iles/packages/iles",
+    "line": " ESM  Build success in 85ms",
+    "stage": "dev",
+    "stdio": "stdout",
+    "wd": "/Users/maximomussini/Projects/iles/packages/iles"
+  },
+  "140 debug pnpm:lifecycle": {
+    "depPath": "/Users/maximomussini/Projects/iles/packages/iles",
+    "line": " CJS  Build success in 99ms",
+    "stage": "dev",
+    "stdio": "stdout",
+    "wd": "/Users/maximomussini/Projects/iles/packages/iles"
+  },
+  "141 debug pnpm:lifecycle": {
+    "depPath": "/Users/maximomussini/Projects/iles/packages/iles",
+    "line": " CLI  Change detected: unlink dist/client/.DS_Store",
+    "stage": "dev",
+    "stdio": "stdout",
+    "wd": "/Users/maximomussini/Projects/iles/packages/iles"
+  },
+  "142 debug pnpm:lifecycle": {
+    "depPath": "/Users/maximomussini/Projects/iles/packages/iles",
+    "line": " CLI  Change detected: unlink dist/client/index.d.ts",
+    "stage": "dev",
+    "stdio": "stdout",
+    "wd": "/Users/maximomussini/Projects/iles/packages/iles"
+  },
+  "143 debug pnpm:lifecycle": {
+    "depPath": "/Users/maximomussini/Projects/iles/packages/iles",
+    "line": " CLI  Change detected: unlink dist/client/index.js",
+    "stage": "dev",
+    "stdio": "stdout",
+    "wd": "/Users/maximomussini/Projects/iles/packages/iles"
+  },
+  "144 debug pnpm:lifecycle": {
+    "depPath": "/Users/maximomussini/Projects/iles/packages/iles",
+    "line": " CLI  Change detected: unlink dist/client/shared.d.ts",
+    "stage": "dev",
+    "stdio": "stdout",
+    "wd": "/Users/maximomussini/Projects/iles/packages/iles"
+  },
+  "145 debug pnpm:lifecycle": {
+    "depPath": "/Users/maximomussini/Projects/iles/packages/iles",
+    "line": " CLI  Change detected: unlink dist/client/shared.js",
+    "stage": "dev",
+    "stdio": "stdout",
+    "wd": "/Users/maximomussini/Projects/iles/packages/iles"
+  },
+  "146 debug pnpm:lifecycle": {
+    "depPath": "/Users/maximomussini/Projects/iles/packages/iles",
+    "line": " CLI  Change detected: unlink dist/client/app/hydration.d.ts",
+    "stage": "dev",
+    "stdio": "stdout",
+    "wd": "/Users/maximomussini/Projects/iles/packages/iles"
+  },
+  "147 debug pnpm:lifecycle": {
+    "depPath": "/Users/maximomussini/Projects/iles/packages/iles",
+    "line": " CLI  Change detected: unlink dist/client/app/hydration.js",
+    "stage": "dev",
+    "stdio": "stdout",
+    "wd": "/Users/maximomussini/Projects/iles/packages/iles"
+  },
+  "148 debug pnpm:lifecycle": {
+    "depPath": "/Users/maximomussini/Projects/iles/packages/iles",
+    "line": " CLI  Change detected: unlink dist/client/app/index.d.ts",
+    "stage": "dev",
+    "stdio": "stdout",
+    "wd": "/Users/maximomussini/Projects/iles/packages/iles"
+  },
+  "149 debug pnpm:lifecycle": {
+    "depPath": "/Users/maximomussini/Projects/iles/packages/iles",
+    "line": " CLI  Change detected: unlink dist/client/app/index.js",
+    "stage": "dev",
+    "stdio": "stdout",
+    "wd": "/Users/maximomussini/Projects/iles/packages/iles"
+  },
+  "150 debug pnpm:lifecycle": {
+    "depPath": "/Users/maximomussini/Projects/iles/packages/iles",
+    "line": " CLI  Change detected: unlink dist/client/app/layouts.d.ts",
+    "stage": "dev",
+    "stdio": "stdout",
+    "wd": "/Users/maximomussini/Projects/iles/packages/iles"
+  },
+  "151 debug pnpm:lifecycle": {
+    "depPath": "/Users/maximomussini/Projects/iles/packages/iles",
+    "line": " CLI  Change detected: unlink dist/client/app/layouts.js",
+    "stage": "dev",
+    "stdio": "stdout",
+    "wd": "/Users/maximomussini/Projects/iles/packages/iles"
+  },
+  "152 debug pnpm:lifecycle": {
+    "depPath": "/Users/maximomussini/Projects/iles/packages/iles",
+    "line": " CLI  Change detected: unlink dist/client/app/utils.d.ts",
+    "stage": "dev",
+    "stdio": "stdout",
+    "wd": "/Users/maximomussini/Projects/iles/packages/iles"
+  },
+  "153 debug pnpm:lifecycle": {
+    "depPath": "/Users/maximomussini/Projects/iles/packages/iles",
+    "line": " CLI  Change detected: unlink dist/client/app/utils.js",
+    "stage": "dev",
+    "stdio": "stdout",
+    "wd": "/Users/maximomussini/Projects/iles/packages/iles"
+  }
+}

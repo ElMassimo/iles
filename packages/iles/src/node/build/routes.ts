@@ -14,7 +14,7 @@ export async function getRoutesForSSG (config: AppConfig, createApp: CreateAppFa
           ? `${prefix}/${route.path}`
           : route.path
 
-        const { meta = {} } = route
+        const { meta = {} as { filename: string, extension?: string } } = route
         const {
           filename,
           extension = extname(path).slice(1) || '.html',
