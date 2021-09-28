@@ -158,7 +158,8 @@ a.anchor {
   width: $size;
 
   &::after {
-    background-image: url('~/icons/link.png');
+    /* TODO: Add remark-anchor-slug plugin */
+    /*background-image: url('~/icons/link.png');*/
     background-size: $size;
     content: '';
     display: block;

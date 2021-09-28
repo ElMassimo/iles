@@ -1,16 +1,18 @@
 <script setup lang="ts">
-import docsearch from '@docsearch/js'
 import { onMounted } from 'vue'
 import Site from '~/site'
 
 const id = 'docsearch'
 
-onMounted(() => {
+onMounted(async () => {
+  const docsearch = (await import('@docsearch/js')).default
   docsearch({ ...Site.algolia, container: `#${id}` })
 })
 
 function openSearchModal () {
-  document.getElementById('docsearch')?.querySelector('.DocSearch-Button')?.click()
+  document.getElementById('docsearch')
+    ?.querySelector<HTMLButtonElement>('.DocSearch-Button')
+    ?.click()
 }
 </script>
 

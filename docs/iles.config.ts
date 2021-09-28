@@ -64,6 +64,12 @@ export default defineConfig({
     },
   },
   vite: {
+    resolve: {
+      alias: {
+        react: 'preact/compat',
+        'react-dom': 'preact/compat',
+      },
+    },
     optimizeDeps: {
       include: ['quicklink', '@vueuse/core', '@docsearch/js'],
     },

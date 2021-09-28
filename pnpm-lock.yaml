@@ -48,6 +48,7 @@ importers:
       estree-util-value-to-estree: ^1.3.0
       iles: ^0.0.16
       postcss-nesting: ^8.0.1
+      preact: ^10.5.14
       quicklink: ^2.2.0
       sass: ^1.42.1
       unplugin-icons: ^0.11
@@ -56,6 +57,7 @@ importers:
     dependencies:
       '@docsearch/css': 1.0.0-alpha.28
       '@docsearch/js': 1.0.0-alpha.28
+      preact: 10.5.14
       quicklink: 2.2.0
     devDependencies:
       '@iconify/json': 1.1.393
