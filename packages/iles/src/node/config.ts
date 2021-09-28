@@ -1,11 +1,11 @@
 /* eslint-disable no-restricted-syntax */
 import fs from 'fs'
-import { join, relative, resolve } from 'path'
+import { relative, resolve } from 'path'
 import { yellow } from 'nanocolors'
 import creatDebugger from 'debug'
 import { loadConfigFromFile, mergeConfig as mergeViteConfig } from 'vite'
 import type { ComponentResolver } from 'unplugin-vue-components/types'
-import type { Frontmatter, FrontmatterPluggable } from '@islands/frontmatter'
+import type { FrontmatterPluggable } from '@islands/frontmatter'
 import type { AppConfig, AppPlugins, ConfigEnv, ViteOptions, Plugin } from './shared'
 import { resolveAliases, DIST_CLIENT_PATH, HYDRATION_DIST_PATH } from './alias'
 import remarkWrapIslands from './plugin/remarkWrapIslands'
@@ -49,23 +49,25 @@ export async function resolveConfig (root?: string, env?: ConfigEnv): Promise<Ap
 
 const defaultPlugins = (root: string): Partial<AppConfig>[] => [
   {
-    pages: {
-      // Internal: Move any frontmatter defined top-level to a nested property.
-      extendRoute ({ layout: routeLayout, meta: routeMeta, ...route }: any) {
-        const metaMatter = routeMeta?.frontmatter as Frontmatter
-        const { layout: frontmatterLayout, ...frontmatter } = metaMatter || {}
-        const meta = { ...routeMeta, frontmatter }
-        const layout = routeLayout || frontmatterLayout
-        if (layout) meta.layout = layout
-        return { ...route, meta }
-      },
-    } as AppConfig['pages'],
+    // TODO: Parse frontmatter in Vue files and assign to default component.
+    // pages: {
+    //   // Internal: Move any frontmatter defined top-level to a nested property.
+    //   extendRoute ({ layout: routeLayout, meta: routeMeta, ...route }: any) {
+    //     const metaMatter = routeMeta?.frontmatter as Frontmatter
+    //     const { layout: frontmatterLayout, ...frontmatter } = metaMatter || {}
+    //     const meta = { ...routeMeta, frontmatter }
+    //     const layout = routeLayout || frontmatterLayout
+    //     if (layout) meta.layout = layout
+    //     return { ...route, meta }
+    //   },
+    // } as AppConfig['pages'],
     markdown: {
       extendFrontmatter (frontmatter, filename) {
-        const lastUpdated = Math.round(fs.statSync(filename).mtimeMs)
+        const lastUpdated = new Date(Math.round(fs.statSync(filename).mtimeMs))
         filename = relative(root, filename)
         // TODO: Use pages plugin to obtain the path pages.pathForFile(path)
-        const href = filename.replace(/\.\w+$/, '').replace('src/pages/', '/')
+        // TODO: Replace with pages.api.getRoutePath(path)
+        const href = filename.replace(/\.\w+$/, '').replace('src/pages/', '/').replace(/\/index$/, '/')
         return { filename, lastUpdated, href, ...frontmatter }
       },
     },
@@ -114,6 +116,7 @@ function appConfigDefaults (root: string): AppConfig {
     plugins: [] as Plugin[],
     router: {},
     pages: {
+      routeBlockLang: 'yaml',
       syncIndex: false,
       extensions: ['vue', 'md', 'mdx'],
     },
@@ -149,16 +152,16 @@ function withResolvedConfig (config: AppConfig) {
     import('remark-frontmatter').then(mod => mod.default),
     frontmatterPlugin(config),
   ])
-  const { extendFrontmatter } = config.markdown
+  // const { extendFrontmatter } = config.markdown
   const { extendRoute } = config.pages
   config.pages.extendRoute = (route, parent) => {
     route = extendRoute?.(route, parent) || route
-    const { frontmatter: metaFrontmatter, ...metaRest } = route.meta || {}
-    const { frontmatter: routeFrontmatter, ...routeRest } = route as any
-    const routeMatter = { ...routeFrontmatter, ...metaFrontmatter as Frontmatter }
-    const filename = join(config.root, route.component)
-    const frontmatter = extendFrontmatter?.(routeMatter, filename) || routeMatter
-    return { ...routeRest, meta: { ...metaRest, frontmatter } }
+    const { frontmatter: _metaFrontmatter, ...metaRest } = route.meta || {}
+    const { frontmatter: _routeFrontmatter, ...routeRest } = route as any
+    // const routeMatter = { ...routeFrontmatter, ...metaFrontmatter as Frontmatter }
+    // const filename = join(config.root, route.component)
+    // const frontmatter = extendFrontmatter?.(routeMatter, filename) || routeMatter
+    return { ...routeRest, meta: metaRest } // { ...metaRest, frontmatter } }
   }
 }
 

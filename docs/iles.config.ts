@@ -57,18 +57,12 @@ export default defineConfig({
       },
     ],
   },
-  pages: {
-    extendRoute (route) {
-      if (route.path.startsWith('/posts') && route.path !== '/posts')
-        return { ...route, meta: { ...route.meta, layout: 'post' } }
-    },
-  },
   vite: {
     resolve: {
-      alias: {
-        react: 'preact/compat',
-        'react-dom': 'preact/compat',
-      },
+      alias: [
+        { find: /^react(\/|$)/, replacement: 'preact/compat$1' },
+        { find: /^react-dom(\/|$)/, replacement: 'preact/compat$1' },
+      ],
     },
     optimizeDeps: {
       include: ['quicklink', '@vueuse/core', '@docsearch/js'],

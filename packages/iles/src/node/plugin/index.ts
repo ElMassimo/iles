@@ -179,12 +179,15 @@ export default _default`)
         const { path, query } = parseId(id)
         if (!isMarkdown(path) && !path.endsWith('.vue')) return
 
+        // TODO: Replace with pages.api.isPage(path)
         if (path.includes('src/pages/') && path.endsWith('.vue') && !query.type) {
-          // Set path to the specified page.
-          // TODO: Unify with MDX
-          const href = relative(root, path).replace(/\.\w+$/, '').replace('src/pages/', '/')
-            .replace(/\/index$/, '/')
-          code = `${code}\nexport const href = '${href}'`
+          // TODO: Replace with pages.api.getRouteMeta(path)
+          let matter = {}
+          matter = appConfig.markdown?.extendFrontmatter?.(matter, path) || matter
+
+          code = `const __sfc_frontmatter = ${serialize(matter)}
+export { __sfc_frontmatter as frontmatter }
+${code.replace('_export_sfc(_sfc_main, [', original => `${original}["frontmatter", __sfc_frontmatter], `)}`
         }
 
         code = code.replace(contextComponentRegex, '__unplugin_components_')

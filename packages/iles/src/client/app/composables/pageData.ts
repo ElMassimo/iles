@@ -11,13 +11,13 @@ export interface PageData<T = any> {
 
 export const dataSymbol: InjectionKey<PageData> = Symbol('[iles-page-data]')
 
+const last = <T>(arr: T[]) => arr[arr.length - 1]
+
 export function installPageData (app: App, route: Ref<RouteLocationNormalizedLoaded>): PageData {
-  const pageData: PageData = {
-    route,
-    page: computed(() => route.value.matched[0]?.components?.default || {}),
-    meta: computed(() => route.value.meta),
-    frontmatter: computed(() => route.value.meta.frontmatter || {}),
-  }
+  const page = computed(() => last(route.value.matched)?.components?.default || {})
+  const meta = computed(() => page.value as PageMeta || {})
+  const frontmatter = computed(() => meta.value.frontmatter || {})
+  const pageData: PageData = { route, page, meta, frontmatter }
   app.provide(dataSymbol, pageData)
   return pageData
 }

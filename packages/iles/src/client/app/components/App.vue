@@ -1,19 +1,20 @@
 <script setup lang="ts">
 import { computed, defineAsyncComponent } from 'vue'
-import { useAppConfig, useRoute } from 'iles'
+import { useAppConfig, usePage } from 'iles'
 import { useRouterLinks } from '../composables/routerLinks'
 import Layout from './Layout.vue'
 import { Head } from '@vueuse/head'
 
 useRouterLinks()
 
-const route = useRoute()
+const { route, frontmatter, page: Page } = usePage()
 
+// TODO: Set 'page.layout = import' in Vue and MDX components and use directly.
 // Internal: Skip layout by default for non-HTML pages.
 const layoutName = computed(() => {
-  const extIndex = route.path.lastIndexOf('.')
-  if (extIndex > -1 && route.path.slice(extIndex) !== '.html') return false
-  return route.meta.layout ?? 'default'
+  const extIndex = route.value.path.lastIndexOf('.')
+  if (extIndex > -1 && route.value.path.slice(extIndex) !== '.html') return false
+  return frontmatter.value.layout ?? 'default'
 })
 
 const appConfig = useAppConfig()
@@ -33,7 +34,7 @@ export default {
     <meta property="generator" content="îles"/>
   </Head>
   <Suspense>
-    <router-view v-slot="{ Component: Page }">
+    <router-view>
       <Layout :name="layoutName">
         <component :is="Page"/>
       </Layout>
