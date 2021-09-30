@@ -2,9 +2,9 @@
 import { usePage } from 'iles'
 import site from '~/site'
 
-let { frontmatter } = $(usePage())
+let { meta } = $(usePage())
 
-let url = $computed(() => `${site.github}/edit/main/docs/${frontmatter.filename}`)
+let url = $computed(() => `${site.github}/edit/main/docs/${meta.filename}`)
 </script>
 
 <template>

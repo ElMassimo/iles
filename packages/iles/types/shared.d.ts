@@ -8,14 +8,35 @@ import type { Options as ComponentOptions } from 'unplugin-vue-components/types'
 import type VueJsxPlugin from '@vitejs/plugin-vue-jsx'
 import type { PluginOptions as XdmOptions } from 'vite-plugin-xdm'
 import type { FrontmatterOptions } from '@islands/frontmatter'
-import type { Router, RouteRecordRaw, RouterOptions as VueRouterOptions, RouteMeta, RouteLocationNormalizedLoaded } from 'vue-router'
+import type { Router, RouteRecordRaw, RouteMeta, RouterOptions as VueRouterOptions, RouteComponent, RouteLocationNormalizedLoaded } from 'vue-router'
 import type { HeadClient, HeadObject } from '@vueuse/head'
 
 export { ViteOptions, ConfigEnv }
 
-export type { Router, RouteRecordRaw }
-export type PageMeta = RouteMeta
+export type { Router, RouteRecordRaw, RouteMeta }
 export type RouterOptions = VueRouterOptions & { base?: string }
+
+export interface PageFrontmatter extends Record<string, any> {
+  layout?: string | false
+}
+
+export interface PageMeta {
+  href: string
+  filename: string
+  lastUpdated: Date
+}
+
+export interface PageComponent extends RouteComponent {
+  meta: PageMeta
+  frontmatter: PageFrontmatter
+}
+
+export interface PageData<T = any> {
+  readonly page: Ref<PageComponent>
+  readonly route: Ref<RouteLocationNormalizedLoaded>
+  readonly meta: Ref<PageMeta>
+  readonly frontmatter: PageFrontmatter
+}
 
 export type HeadConfig = HeadObject
 
@@ -26,18 +47,16 @@ export interface CreateAppConfig {
   routePath?: string
 }
 
-export interface SSGContext extends Required<CreateAppConfig> {
+export interface SSGContext extends Required<CreateAppConfig>, PageData {
   app: App
-  frontmatter: Ref<Record<string, any>>
   head: HeadClient
-  route: Ref<RouteLocationNormalizedLoaded>
   router: Router
   routes: RouteRecordRaw[]
 }
 
 export interface SSGRoute {
   path: string
-  filename: string | undefined
+  filename: string
   extension: string
   outputFilename: string
   rendered?: string

@@ -47,7 +47,7 @@ export const createApp: CreateAppFactory = async (options = {}) => {
   }
 
   const route = router.currentRoute
-  const { frontmatter } = installPageData(app, route)
+  const { frontmatter, meta, page } = installPageData(app, route)
   Object.defineProperty(app.config.globalProperties, '$frontmatter', {
     get: () => frontmatter.value,
   })
@@ -67,6 +67,8 @@ export const createApp: CreateAppFactory = async (options = {}) => {
     app,
     head,
     frontmatter,
+    meta,
+    page,
     route,
     router,
     routes,

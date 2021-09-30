@@ -11,6 +11,7 @@ import components from 'unplugin-vue-components/vite'
 import vueJsx from '@vitejs/plugin-vue-jsx'
 import xdm from 'vite-plugin-xdm'
 
+import type { Frontmatter } from '@islands/frontmatter'
 import createDebugger from 'debug'
 import type { AppConfig, AppClientConfig } from '../shared'
 import { APP_PATH, ROUTES_REQUEST_PATH, USER_APP_REQUEST_PATH, APP_CONFIG_REQUEST_PATH } from '../alias'
@@ -149,9 +150,11 @@ ${code.includes(' defineComponent') ? '' : 'import { defineComponent } from \'vu
 
 const _default = defineComponent({
   ${mode === 'development' ? `__file: '${path}',` : ''}
+  ...meta,
   ...frontmatter,
   ${code.includes('const headers') ? 'headers,' : ''}
   frontmatter,
+  meta,
   props: {
     components: { type: Object, default: () => ({}) },
   },
@@ -182,12 +185,13 @@ export default _default`)
         // TODO: Replace with pages.api.isPage(path)
         if (path.includes('src/pages/') && path.endsWith('.vue') && !query.type) {
           // TODO: Replace with pages.api.getRouteMeta(path)
-          let matter = {}
-          matter = appConfig.markdown?.extendFrontmatter?.(matter, path) || matter
+          let rawMatter = {} as Frontmatter
+          const { meta, ...frontmatter } = appConfig.markdown?.extendFrontmatter?.(rawMatter, path) || rawMatter
 
-          code = `const __sfc_frontmatter = ${serialize(matter)}
-export { __sfc_frontmatter as frontmatter }
-${code.replace('_export_sfc(_sfc_main, [', original => `${original}["frontmatter", __sfc_frontmatter], `)}`
+          code = `const __sfc_iles_meta = ${serialize(meta)}
+const __sfc_iles_frontmatter = ${serialize(frontmatter)}
+export { __sfc_iles_meta as meta, __sfc_iles_frontmatter as frontmatter }
+${code.replace('_export_sfc(_sfc_main, [', original => `${original}['meta', __sfc_iles_meta], ['frontmatter', __sfc_iles_frontmatter], `)}`
         }
 
         code = code.replace(contextComponentRegex, '__unplugin_components_')

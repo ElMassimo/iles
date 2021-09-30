@@ -1,12 +1,12 @@
 <script setup lang="ts">
 import { usePage } from 'iles'
 
-let { frontmatter } = $(usePage())
+let { meta } = $(usePage())
 
-let hasLastUpdated = $computed(() => Boolean(frontmatter.lastUpdated))
+let hasLastUpdated = $computed(() => Boolean(meta.lastUpdated))
 
 // TODO: Use client:idle and RelativeTime component.
-let datetime = $computed(() => frontmatter.lastUpdated.toLocaleString?.('en-US'))
+let datetime = $computed(() => meta.lastUpdated.toLocaleString?.('en-US'))
 </script>
 
 <template>

@@ -14,11 +14,9 @@ export default defineConfig({
   },
   markdown: {
     rehypePlugins: [rehypePrism()],
-  },
-  pages: {
-    extendRoute (route) {
-      if (route.path.startsWith('/posts') && route.path !== '/posts')
-        return { ...route, meta: { ...route.meta, layout: 'post' } }
+    extendFrontmatter (frontmatter, filename) {
+      if (filename.includes('/posts/'))
+        return { layout: 'post', ...frontmatter }
     },
   },
   vite: {

@@ -1,6 +1,6 @@
 /* eslint-disable no-restricted-syntax */
 import fs from 'fs'
-import { relative, resolve } from 'path'
+import { join, relative, resolve } from 'path'
 import { yellow } from 'nanocolors'
 import creatDebugger from 'debug'
 import { loadConfigFromFile, mergeConfig as mergeViteConfig } from 'vite'
@@ -62,13 +62,17 @@ const defaultPlugins = (root: string): Partial<AppConfig>[] => [
     //   },
     // } as AppConfig['pages'],
     markdown: {
-      extendFrontmatter (frontmatter, filename) {
-        const lastUpdated = new Date(Math.round(fs.statSync(filename).mtimeMs))
-        filename = relative(root, filename)
-        // TODO: Use pages plugin to obtain the path pages.pathForFile(path)
-        // TODO: Replace with pages.api.getRoutePath(path)
-        const href = filename.replace(/\.\w+$/, '').replace('src/pages/', '/').replace(/\/index$/, '/')
-        return { filename, lastUpdated, href, ...frontmatter }
+      extendFrontmatter (frontmatter, absoluteFilename) {
+        const filename = relative(root, absoluteFilename)
+        const meta = {
+          lastUpdated: new Date(Math.round(fs.statSync(absoluteFilename).mtimeMs)),
+          ...frontmatter.meta,
+          filename,
+          // TODO: Use pages plugin to obtain the path pages.pathForFile(path)
+          // TODO: Replace with pages.api.getRoutePath(path)
+          href: filename.replace(/\.\w+$/, '').replace('src/pages/', '/').replace(/\/index$/, '/'),
+        }
+        return { ...frontmatter, meta }
       },
     },
   },
@@ -153,15 +157,17 @@ function withResolvedConfig (config: AppConfig) {
     frontmatterPlugin(config),
   ])
   // const { extendFrontmatter } = config.markdown
+  // NOTE: Removes the frontmatter information from each route.
+  // TODO: Allow skipping this information in the pages plugin.
   const { extendRoute } = config.pages
   config.pages.extendRoute = (route, parent) => {
     route = extendRoute?.(route, parent) || route
     const { frontmatter: _metaFrontmatter, ...metaRest } = route.meta || {}
     const { frontmatter: _routeFrontmatter, ...routeRest } = route as any
     // const routeMatter = { ...routeFrontmatter, ...metaFrontmatter as Frontmatter }
-    // const filename = join(config.root, route.component)
+    const filename = join(config.root, route.component)
     // const frontmatter = extendFrontmatter?.(routeMatter, filename) || routeMatter
-    return { ...routeRest, meta: metaRest } // { ...metaRest, frontmatter } }
+    return { ...routeRest, meta: { filename, ...metaRest } } // { ...metaRest, frontmatter } }
   }
 }
 
