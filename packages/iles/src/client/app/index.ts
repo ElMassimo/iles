@@ -9,6 +9,7 @@ import type { CreateAppFactory, SSGContext, RouterOptions } from '../shared'
 import App from './components/App.vue'
 import { installPageData } from './composables/pageData'
 import { installAppConfig } from './composables/appConfig'
+import { resetHydrationId } from './hydration'
 
 const newApp = import.meta.env.SSR ? createSSRApp : createClientApp
 
@@ -87,6 +88,7 @@ if (!import.meta.env.SSR) {
     const devtools = await import('./composables/devtools')
     devtools.installDevtools(app, appConfig)
 
+    router.afterEach(resetHydrationId) // reset island identifiers to match ssg.
     await router.isReady() // wait until page component is fetched before mounting
     app.mount('#app', true)
   })()

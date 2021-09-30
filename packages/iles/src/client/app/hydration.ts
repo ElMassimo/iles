@@ -9,6 +9,10 @@ import {
 
 let idNumber = 0
 
+export function resetHydrationId () {
+  idNumber = 0
+}
+
 export function newHydrationId () {
   if (import.meta.env.SSR) {
     const context = useSSRContext()
