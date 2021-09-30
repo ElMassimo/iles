@@ -2,7 +2,9 @@ import type { App, ComponentPublicInstance } from 'vue'
 import { reactive, computed } from 'vue'
 import type { InspectorNodeTag, DevtoolsPluginApi } from '@vue/devtools-api'
 import { setupDevtoolsPlugin } from '@vue/devtools-api'
-import type { AppClientConfig } from '../../shared'
+import type { AppClientConfig, PageData } from '../../shared'
+import { getComponentName } from '../utils'
+import { usePage } from 'iles'
 
 const ISLAND_TYPE = 'Islands 🏝'
 const componentStateTypes = [ISLAND_TYPE]
@@ -23,11 +25,13 @@ const strategyLabels: Record<string, any> = {
 
 let devtoolsApi: DevtoolsPluginApi
 let appConfig: AppClientConfig
+let pageData: PageData
 
 const devtools = {
   addIslandToDevtools (island: any) {
     islandsById[island.id] = island
     devtoolsApi?.sendInspectorTree(INSPECTOR_ID)
+    devtoolsApi?.selectInspectorNode(INSPECTOR_ID, pageData?.route?.value?.path)
   },
 
   removeIslandFromDevtools (island: any) {
@@ -58,7 +62,8 @@ const devtools = {
 ;(window as any).__ILE_DEVTOOLS__ = devtools
 
 export function installDevtools (app: App, config: AppClientConfig) {
-  if (config) appConfig = config
+  appConfig = config
+  pageData = usePage(app)
 
   setupDevtoolsPlugin({
     id: 'com.maximomussini.iles',
@@ -90,11 +95,11 @@ export function installDevtools (app: App, config: AppClientConfig) {
       instanceData.state.push({ type: ISLAND_TYPE, key: 'within', value: island })
     })
 
-    api.on.getInspectorTree((payload) => {
+    api.on.getInspectorTree(async (payload) => {
       if (payload.app !== app && payload.inspectorId !== INSPECTOR_ID) return
-      const filter = payload.filter?.toLowerCase() || ''
-      payload.rootNodes = islands.value
-        .filter((island: any) => island.id.includes(filter) || island.componentName.toLowerCase().includes(filter))
+      const userFilter = payload.filter?.toLowerCase() || ''
+      const islandNodes = islands.value
+        .filter((island: any) => island.id.includes(userFilter) || island.componentName.toLowerCase().includes(userFilter))
         .map((island: any) => ({
           id: island.id,
           label: island.componentName,
@@ -104,10 +109,30 @@ export function installDevtools (app: App, config: AppClientConfig) {
             getMediaQuery(island) && { label: getMediaQuery(island), textColor: 0, backgroundColor: 0xFB923C },
           ].filter(x => x) as InspectorNodeTag[],
         }))
+      payload.rootNodes = [{
+        id: pageData.route.value.path,
+        label: getComponentName(pageData.page.value),
+        children: islandNodes,
+        tags: [
+          { label: 'page', textColor: 0, backgroundColor: 0x42B983 },
+        ],
+      }]
     })
 
     api.on.getInspectorState((payload, ctx) => {
       if (payload.app !== app && payload.inspectorId !== INSPECTOR_ID) return
+
+      if (payload.nodeId === pageData.route.value.path) {
+        payload.state = {
+          props: [
+            { key: 'component', value: pageData.page.value },
+            { key: 'meta', value: pageData.meta.value },
+            { key: 'frontmatter', value: pageData.frontmatter.value },
+          ].filter(x => x),
+        }
+        return
+      }
+
       const island = islandsById[payload.nodeId] as any
       if (!island) return
       payload.state = {

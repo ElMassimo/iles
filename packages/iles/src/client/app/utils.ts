@@ -15,3 +15,12 @@ export async function asyncMapObject<I, O> (obj: Record<string, I>, fn: (i: I) =
     result[key] = await fn(obj[key])
   return result
 }
+
+export function getComponentName ({ displayName, name, _componentTag, __file }: any) {
+  return displayName || name || _componentTag || nameFromFile(__file)
+}
+
+function nameFromFile (file: string) {
+  const regex = /[\/]src(?:[\/]pages)[\/](.*?)$/
+  return file.match(regex)?.[1] || file
+}
