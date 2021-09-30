@@ -30,7 +30,7 @@ export default defineApp({
     return {
       title,
       meta: [
-        { property: 'description', content: description },
+        { name: 'description', content: description },
         { property: 'author', content: Site.author },
         { property: 'keywords', content: computed(() => (frontmatter.value.tags?.split(' ') || Site.tags).join(', ')) },
         { property: 'HandheldFriendly', content: 'True' },

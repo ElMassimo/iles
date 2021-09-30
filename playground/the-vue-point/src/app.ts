@@ -14,7 +14,7 @@ export default defineApp({
     return {
       title,
       meta: [
-        { property: 'description', content: description },
+        { name: 'description', content: description },
       ],
     }
   },
