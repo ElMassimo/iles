@@ -5,7 +5,6 @@ import { load as yaml } from 'js-yaml'
 import { parse as toml } from 'toml'
 import type { Pluggable, Plugin } from 'unified'
 import type { Node, Data, Parent } from 'unist'
-import visit from 'unist-util-visit'
 
 export type Frontmatter = Record<string, any>
 
@@ -16,6 +15,12 @@ export interface FrontmatterOptions {
 export type FrontmatterPlugin = Plugin<[FrontmatterOptions?]>
 export type FrontmatterPluggable = [FrontmatterPlugin, FrontmatterOptions?]
 
+function mapFind <T, O>(arr: T[], fn: (i: T) => O): O | undefined {
+  let result
+  let found = arr.find(item => result = fn(item))
+  return result
+}
+
 /**
  * A remark plugin to expose frontmatter data as named exports.
  *
@@ -24,21 +29,19 @@ export type FrontmatterPluggable = [FrontmatterPlugin, FrontmatterOptions?]
  */
 const plugin: FrontmatterPlugin = (options?: FrontmatterOptions) => (ast, file) => {
   const parent = ast as Parent
-  const frontmatter: Frontmatter = {}
-  visit(parent, (node) => {
-    const parsed = parseFrontmatter(node as Node<Data> & { value: string })
-    const data = parsed ? options?.extendFrontmatter?.(parsed, file.path) || parsed : parsed
-    if (data) Object.assign(frontmatter, data)
-  })
+  const nodes = parent.children as (Node<Data> & { value: string })[]
+  const rawMatter = mapFind(nodes, parseFrontmatter) || {}
+  const allMatter = options?.extendFrontmatter?.(rawMatter, file.path) || rawMatter
+  const { meta, ...frontmatter } = allMatter
 
   parent.children.unshift(defineConsts(
-    ...Object.entries(frontmatter).map(([key, value]) => {
+    ...Object.entries(allMatter).map(([key, value]) => {
       if (!isValidIdentifierName(key))
         throw new Error(`Frontmatter keys should be valid identifiers, got: ${JSON.stringify(key)}`)
 
       // Example:
       //  const title = 'Example'
-      //  const href = 'https://example.com'
+      //  const source = 'https://example.com'
       return {
         type: 'VariableDeclarator',
         id: { type: 'Identifier', name: key },
@@ -46,7 +49,7 @@ const plugin: FrontmatterPlugin = (options?: FrontmatterOptions) => (ast, file) 
       } as VariableDeclarator
     }),
     // Example:
-    //  const frontmatter = { title, href }
+    //  const frontmatter = { title, source }
     {
       type: 'VariableDeclarator',
       id: { type: 'Identifier', name: 'frontmatter' },
