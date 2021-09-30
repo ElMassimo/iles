@@ -35,7 +35,7 @@ export default {
   </Head>
   <Suspense>
     <router-view>
-      <Layout :name="layoutName">
+      <Layout :key="(Page as any).__file" :name="layoutName">
         <component :is="Page"/>
       </Layout>
     </router-view>
