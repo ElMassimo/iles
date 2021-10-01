@@ -27,7 +27,7 @@ export default {
   </Head>
   <Suspense>
     <router-view>
-      <PageWithLayout :key="(page as any).__file" :page="page"/>
+      <PageWithLayout :key="(page as any).__file"/>
     </router-view>
   </Suspense>
   <DebugPanel/>

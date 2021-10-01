@@ -10,9 +10,11 @@ const open = ref(false)
 const buttonLabel = computed(() => message.value || 'Debug')
 
 const cleanPage = computed(() => {
+  const layoutComponent = pageData.page.value.layout
+  const layout = layoutComponent ? (layoutComponent as any).name : layoutComponent
   const frontmatter = pageData.frontmatter.value
   const meta = pageData.meta.value
-  return { frontmatter, meta }
+  return { layout, frontmatter, meta }
 })
 
 let timeoutId: any

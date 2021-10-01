@@ -28,15 +28,19 @@ let appConfig: AppClientConfig
 let pageData: PageData
 
 const devtools = {
+  updateIslandsInspector () {
+    devtoolsApi?.sendInspectorTree(INSPECTOR_ID)
+  },
+
   addIslandToDevtools (island: any) {
     islandsById[island.id] = island
-    devtoolsApi?.sendInspectorTree(INSPECTOR_ID)
+    devtools.updateIslandsInspector()
     devtoolsApi?.selectInspectorNode(INSPECTOR_ID, pageData?.route?.value?.path)
   },
 
   removeIslandFromDevtools (island: any) {
     delete islandsById[island.id]
-    devtoolsApi?.sendInspectorTree(INSPECTOR_ID)
+    devtools.updateIslandsInspector()
   },
 
   onHydration ({ id, ...event }: any) {
@@ -116,7 +120,7 @@ export function installDevtools (app: App, config: AppClientConfig) {
         children: islandNodes,
         tags: [
           { label: 'page', textColor: 0, backgroundColor: 0x42B983 },
-          { label: `layout: ${getComponentName(page.layout)}`, textColor: 0, backgroundColor: 0x22D3EE },
+          { label: `layout: ${page.layout && getComponentName(page.layout)}`, textColor: 0, backgroundColor: 0x22D3EE },
         ],
       }]
     })

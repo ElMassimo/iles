@@ -2,9 +2,6 @@
 title: Development
 </route>
 
-<script setup lang="ts">
-</script>
-
-<template>
+<template layout="default">
   <h1>Development</h1>
 </template>

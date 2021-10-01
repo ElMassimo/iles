@@ -1,6 +1,6 @@
 /* eslint-disable no-restricted-syntax */
-import { resolve, relative } from 'path'
-import fs from 'fs'
+import { basename, join, resolve, relative } from 'path'
+import { promises as fs, constants as fsConstants } from 'fs'
 import { green } from 'nanocolors'
 import type { PluginOption, ResolvedConfig, ResolveFn, ViteDevServer } from 'vite'
 import { transformWithEsbuild } from 'vite'
@@ -9,13 +9,14 @@ import vue from '@vitejs/plugin-vue'
 import { MODULE_ID_VIRTUAL as PAGES_REQUEST_PATH } from 'vite-plugin-pages'
 import components from 'unplugin-vue-components/vite'
 import vueJsx from '@vitejs/plugin-vue-jsx'
+import MagicString from 'magic-string'
 
 import type { Frontmatter } from '@islands/frontmatter'
 import createDebugger from 'debug'
 import type { AppConfig, AppClientConfig } from '../shared'
 import { APP_PATH, ROUTES_REQUEST_PATH, USER_APP_REQUEST_PATH, APP_CONFIG_REQUEST_PATH } from '../alias'
 import { createServer } from '../server'
-import { escapeRegex, serialize, replaceAsync } from './utils'
+import { escapeRegex, serialize, replaceAsync, pascalCase } from './utils'
 import { parseId, parseImports } from './parse'
 import { unresolvedIslandKey, wrapIslandsInSFC } from './wrap'
 
@@ -35,6 +36,9 @@ function isSFCMain (path: string, query: Record<string, any>) {
   return path.endsWith('.vue') && query.vue === undefined
 }
 
+const exists = async (filePath: string) =>
+  await fs.access(filePath, fsConstants.F_OK).then(() => true, () => false)
+
 const contextComponentRegex = new RegExp(escapeRegex('_ctx.__unplugin_components_'), 'g')
 const viteIslandRegex = new RegExp(`"?${escapeRegex(unresolvedIslandKey)}"?:\\s*([^,}\n]+)[,}\n]`, 'sg')
 const unresolvedComponentsRegex = /_resolveComponent\("([^)]+?)"\)/
@@ -49,8 +53,13 @@ export default function IslandsPlugins (appConfig: AppConfig): PluginOption[] {
   let resolveVitePath: ResolveFn
 
   const appPath = resolve(appConfig.srcDir, 'app.ts')
+  const layoutsRoot = `/${relative(appConfig.root, appConfig.layoutsDir)}`
 
   const plugins = appConfig.namedPlugins
+
+  function isLayout (path: string) {
+    return path.includes(appConfig.layoutsDir)
+  }
 
   return [
     {
@@ -73,7 +82,7 @@ export default function IslandsPlugins (appConfig: AppConfig): PluginOption[] {
         if (id === APP_CONFIG_REQUEST_PATH)
           return APP_CONFIG_REQUEST_PATH
       },
-      load (id) {
+      async load (id) {
         if (id === APP_CONFIG_REQUEST_PATH) {
           const { base, debug, router, root, ssg } = appConfig
           const clientConfig: AppClientConfig = { base, debug, router, root, ssg }
@@ -81,9 +90,9 @@ export default function IslandsPlugins (appConfig: AppConfig): PluginOption[] {
         }
 
         if (id === USER_APP_REQUEST_PATH) {
-          if (!fs.existsSync(appPath)) return 'export default {}'
+          if (!await exists(appPath)) return 'export default {}'
           this.addWatchFile(appPath)
-          return transformWithEsbuild(fs.readFileSync(appPath, 'utf-8'), appPath)
+          return transformWithEsbuild(await fs.readFile(appPath, 'utf-8'), appPath)
         }
       },
       handleHotUpdate ({ file, server }) {
@@ -92,21 +101,7 @@ export default function IslandsPlugins (appConfig: AppConfig): PluginOption[] {
       // Allows to do a glob import in 'src/client/app/layouts.ts'
       transform (code, id) {
         if (id.includes('client/app/layouts'))
-          return code.replace(/__LAYOUTS_ROOT__/g, `/${relative(root, appConfig.layoutsDir)}`)
-
-        // TODO: Layout transformation Vue: move to separate plugin
-        // TODO: Layout from frontmatter should be used, fail if both are specified.
-        const { path } = parseId(id)
-        if (plugins.pages.api.pageForFile(path) || path.includes(appConfig.layoutsDir)) {
-          const isTypeScript = /lang=['"]ts['"]/.test(code)
-          return code.replace(/<template(.*?)layout=\s*['"](\w+)['"](.*?)>/, (_, beforeAttrs, layoutName, afterAttrs) => {
-            return `<script${isTypeScript ? ' lang="ts"' : ''}>
-${layoutName === 'false' ? 'const __iles_layout = false' : `import __iles_layout from '/${relative(root, appConfig.layoutsDir)}/${layoutName}.vue'`}
-</script>
-<template${beforeAttrs}${afterAttrs}>
-`
-          })
-        }
+          return code.replace(/__LAYOUTS_ROOT__/g, layoutsRoot)
       },
       configureServer (server) {
         restartOnConfigChanges(appConfig, server)
@@ -210,27 +205,47 @@ import.meta.hot.accept('/${relative(root, path)}', () => __ILES_ROUTE__.forceUpd
     },
 
     {
+      name: 'iles:page-vue-data',
+      enforce: 'post',
+      async transform (code, id) {
+        const { path, query } = parseId(id)
+        if (!isSFCMain(path, query)) return
+
+        const resolvedPage = plugins.pages.api.pageForFile(path)
+
+        const s = new MagicString(code)
+
+        if (resolvedPage) {
+          const { path: href, meta: blockMeta = {}, ...blockAttrs } = resolvedPage.customBlock || {} as Frontmatter
+          const rawMatter = { meta: { ...blockMeta, href }, ...blockAttrs }
+          const { meta, ...frontmatter } = appConfig.markdown?.extendFrontmatter?.(rawMatter, path) || rawMatter
+
+          s.append(`_sfc_main.meta = ${serialize(meta)}\n`)
+          s.append(`_sfc_main.frontmatter = ${serialize(frontmatter)}\n`)
+        }
+
+        if (resolvedPage || isLayout(path)) {
+          const layoutName = String(resolvedPage?.customBlock?.layout ?? 'default')
+
+          s.append(layoutName === 'false' || path.endsWith(join(layoutsRoot, 'default.vue'))
+            ? 'const __iles_layout = false'
+            : `import __iles_layout from '${layoutsRoot}/${layoutName}.vue'`)
+          s.append('\n_sfc_main.layout = __iles_layout\n')
+        }
+
+        if (isLayout(path))
+          s.append(`_sfc_main.name = '${pascalCase(basename(path).replace('.vue', 'Layout'))}'\n`)
+
+        return s.toString()
+      },
+    },
+
+    {
       name: 'iles:resolve-islands',
       enforce: 'post',
       async transform (code, id) {
         const { path, query } = parseId(id)
         if (!isMarkdown(path) && !isSFCMain(path, query)) return
-
-        if (path.endsWith('.vue')) {
-          const resolvedPage = plugins.pages.api.pageForFile(path)
-          if (resolvedPage) {
-            const { path: href, meta: blockMeta = {}, ...blockAttrs } = resolvedPage.customBlock || {} as Frontmatter
-            const rawMatter = { meta: { ...blockMeta, href }, ...blockAttrs }
-            const { meta, ...frontmatter } = appConfig.markdown?.extendFrontmatter?.(rawMatter, path) || rawMatter
-
-            code = `${code}
-_sfc_main.meta = ${serialize(meta)}
-_sfc_main.frontmatter = ${serialize(frontmatter)}
-`
-          }
-          if (code.includes('__iles_layout'))
-            code = `${code}\n_sfc_main.layout = __iles_layout\n`
-        }
 
         code = code.replace(contextComponentRegex, '__unplugin_components_')
 
