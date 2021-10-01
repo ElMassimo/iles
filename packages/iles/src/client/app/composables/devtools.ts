@@ -119,8 +119,7 @@ export function installDevtools (app: App, config: AppClientConfig) {
         label: getComponentName(page),
         children: islandNodes,
         tags: [
-          { label: 'page', textColor: 0, backgroundColor: 0x42B983 },
-          { label: `layout: ${page.layout && getComponentName(page.layout)}`, textColor: 0, backgroundColor: 0x22D3EE },
+          { label: page.layout ? getComponentName(page.layout) : 'no layout', textColor: 0, backgroundColor: 0x42B983 },
         ],
       }]
     })

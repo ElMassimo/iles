@@ -4,7 +4,7 @@ import { usePosts } from '~/logic/posts'
 
 const posts = usePosts()
 
-let { frontmatter: post } = $(usePage())
+let { page: post } = $(usePage())
 
 let currentIndex = $computed(() => posts.findIndex(p => p.href === post.href))
 let date = $computed(() => posts[currentIndex]?.date)

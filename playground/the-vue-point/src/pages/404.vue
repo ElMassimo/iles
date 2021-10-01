@@ -6,7 +6,3 @@
     <div class="mt-4">Not Found</div>
   </div>
 </template>
-
-<route lang="yaml">
-layout: default
-</route>

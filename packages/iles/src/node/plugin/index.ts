@@ -1,5 +1,5 @@
 /* eslint-disable no-restricted-syntax */
-import { basename, join, resolve, relative } from 'path'
+import { basename, resolve, relative } from 'path'
 import { promises as fs, constants as fsConstants } from 'fs'
 import { green } from 'nanocolors'
 import type { PluginOption, ResolvedConfig, ResolveFn, ViteDevServer } from 'vite'
@@ -42,6 +42,7 @@ const exists = async (filePath: string) =>
 const contextComponentRegex = new RegExp(escapeRegex('_ctx.__unplugin_components_'), 'g')
 const viteIslandRegex = new RegExp(`"?${escapeRegex(unresolvedIslandKey)}"?:\\s*([^,}\n]+)[,}\n]`, 'sg')
 const unresolvedComponentsRegex = /_resolveComponent\("([^)]+?)"\)/
+const templateLayoutRegex = /<template.*?\slayout=\s*['"](\w+)['"].*?>/
 
 // Public: Configures MDX, Vue, Components, and Islands plugins.
 export default function IslandsPlugins (appConfig: AppConfig): PluginOption[] {
@@ -59,6 +60,11 @@ export default function IslandsPlugins (appConfig: AppConfig): PluginOption[] {
 
   function isLayout (path: string) {
     return path.includes(appConfig.layoutsDir)
+  }
+
+  function frontmatterFromPage (path: string): Frontmatter | undefined {
+    if (plugins.pages.api.pageForFile(path))
+      return appConfig.markdown.extendFrontmatter?.({}, path) || {}
   }
 
   return [
@@ -140,7 +146,7 @@ export default function IslandsPlugins (appConfig: AppConfig): PluginOption[] {
     {
       name: 'iles:mdx:pos',
       async transform (code, id) {
-        const { path } = parseId(id)
+        const { path, query } = parseId(id)
         if (!isMarkdown(path) || !code.includes('MDXContent')) return null
 
         const match = code.match(/props\.components\), \{(.*?), wrapper: /)
@@ -162,11 +168,11 @@ export default function IslandsPlugins (appConfig: AppConfig): PluginOption[] {
         return code.replace('export default MDXContent', `
 ${code.includes(' defineComponent') ? '' : 'import { defineComponent } from \'vue\''}
 
-const _default = defineComponent({
+const _sfc_main = defineComponent({
   ${mode === 'development' ? `__file: '${path}',` : ''}
   ...meta,
   ...frontmatter,
-  layout,
+  layout: __iles_layout,
   meta,
   frontmatter,
   props: {
@@ -177,7 +183,8 @@ const _default = defineComponent({
   },
 })
 export const render = MDXContent
-export default _default`)
+export default _sfc_main
+`)
       },
     },
 
@@ -193,10 +200,10 @@ export default _default`)
       name: 'iles:page-hmr',
       apply: 'serve',
       enforce: 'post',
-      // HMR for frontmatter changes.
+      // Force a refresh for all page computed properties.
       async transform (code, id) {
-        const { path, query } = parseId(id)
-        if (isSFCMain(path, query) || path.endsWith('.mdx')) {
+        const { path } = parseId(id)
+        if (isLayout(path) || plugins.pages.api.pageForFile(path)) {
           return `${code}
 import.meta.hot.accept('/${relative(root, path)}', () => __ILES_ROUTE__.forceUpdate())
 `
@@ -205,36 +212,41 @@ import.meta.hot.accept('/${relative(root, path)}', () => __ILES_ROUTE__.forceUpd
     },
 
     {
-      name: 'iles:page-vue-data',
+      name: 'iles:sfc:page-data',
       enforce: 'post',
       async transform (code, id) {
         const { path, query } = parseId(id)
         if (!isSFCMain(path, query)) return
 
-        const resolvedPage = plugins.pages.api.pageForFile(path)
+        const isLayoutPath = isLayout(path)
+        const pageMatter = isLayoutPath ? undefined : frontmatterFromPage(path)
+        if (!pageMatter && !isLayoutPath) return
 
         const s = new MagicString(code)
 
-        if (resolvedPage) {
-          const { path: href, meta: blockMeta = {}, ...blockAttrs } = resolvedPage.customBlock || {} as Frontmatter
-          const rawMatter = { meta: { ...blockMeta, href }, ...blockAttrs }
-          const { meta, ...frontmatter } = appConfig.markdown?.extendFrontmatter?.(rawMatter, path) || rawMatter
+        const sfcIndex = code.indexOf('{', code.indexOf('const _sfc_main = ')) + 1
+        const appendToSfc = (key: string, value: string) => s.appendRight(sfcIndex, `${key}:${value},`)
 
-          s.append(`_sfc_main.meta = ${serialize(meta)}\n`)
-          s.append(`_sfc_main.frontmatter = ${serialize(frontmatter)}\n`)
+        if (isLayoutPath)
+          appendToSfc('name', `'${pascalCase(basename(path).replace('.vue', 'Layout'))}'`)
+
+        if (pageMatter) {
+          const { meta, layout, ...frontmatter } = pageMatter
+          appendToSfc('meta', serialize(meta))
+          appendToSfc('frontmatter', serialize(frontmatter))
         }
 
-        if (resolvedPage || isLayout(path)) {
-          const layoutName = String(resolvedPage?.customBlock?.layout ?? 'default')
+        const layoutName = isLayoutPath
+          ? (await fs.readFile(path, 'utf-8')).match(templateLayoutRegex)?.[1] || false
+          : pageMatter!.layout ?? 'default'
 
-          s.append(layoutName === 'false' || path.endsWith(join(layoutsRoot, 'default.vue'))
-            ? 'const __iles_layout = false'
-            : `import __iles_layout from '${layoutsRoot}/${layoutName}.vue'`)
-          s.append('\n_sfc_main.layout = __iles_layout\n')
+        if (String(layoutName) === 'false') {
+          appendToSfc('layout', 'false')
         }
-
-        if (isLayout(path))
-          s.append(`_sfc_main.name = '${pascalCase(basename(path).replace('.vue', 'Layout'))}'\n`)
+        else {
+          s.prepend(`import __iles_layout from '${layoutsRoot}/${layoutName}.vue';`)
+          appendToSfc('layout', '__iles_layout')
+        }
 
         return s.toString()
       },

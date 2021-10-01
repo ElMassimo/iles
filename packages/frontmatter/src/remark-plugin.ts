@@ -35,7 +35,7 @@ const plugin: FrontmatterPlugin = (options?: FrontmatterOptions) => (ast, file) 
   parent.children.unshift(defineConsts({ meta, frontmatter }))
 
   if (layout === false) {
-    parent.children.unshift(defineConsts({ layout: false }))
+    parent.children.unshift(defineConsts({ __iles_layout: false }))
   }
   else {
     // TODO: Make it dynamic, split to a different remark plugin that receives the dir?
@@ -55,7 +55,7 @@ const plugin: FrontmatterPlugin = (options?: FrontmatterOptions) => (ast, file) 
                   type: 'ImportDefaultSpecifier',
                   local: {
                     type: 'Identifier',
-                    name: 'layout',
+                    name: '__iles_layout',
                   },
                 },
               ],

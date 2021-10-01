@@ -8,7 +8,7 @@ import pages from 'vite-plugin-pages'
 import xdm from 'vite-plugin-xdm'
 
 import type { ComponentResolver } from 'unplugin-vue-components/types'
-import type { FrontmatterPluggable } from '@islands/frontmatter'
+import type { Frontmatter, FrontmatterPluggable } from '@islands/frontmatter'
 import type { AppConfig, AppPlugins, ConfigEnv, ViteOptions, Plugin } from './shared'
 import { resolveAliases, DIST_CLIENT_PATH, HYDRATION_DIST_PATH } from './alias'
 import remarkWrapIslands from './plugin/remarkWrapIslands'
@@ -50,19 +50,23 @@ export async function resolveConfig (root?: string, env?: ConfigEnv): Promise<Ap
   return config
 }
 
-const defaultPlugins = (root: string): Plugin[] => [
+const defaultPlugins = (root: string, plugins: AppConfig['namedPlugins']): Plugin[] => [
   {
     name: 'frontmatter-meta',
     markdown: {
       // Adds meta fields such as filename, lastUpdated, and href.
       extendFrontmatter (frontmatter, absoluteFilename) {
-        const filename = relative(root, absoluteFilename)
+        let resolvedPage = plugins.pages.api.pageForFile(absoluteFilename)
+        const normalizedPath = resolvedPage && `/${resolvedPage.route.replace(/(^|\/)index$/, '')}`
+        const { route: { path = normalizedPath } = {}, meta: routeMeta, templateAttrs: _t, ...routeMatter }: Frontmatter = resolvedPage?.customBlock || {}
         const meta = {
           lastUpdated: new Date(Math.round(fs.statSync(absoluteFilename).mtimeMs)),
           ...frontmatter.meta,
-          filename,
+          ...routeMeta,
+          filename: relative(root, absoluteFilename),
         }
-        return { ...frontmatter, meta }
+        if (path !== undefined) meta.href = path
+        return { ...frontmatter, ...routeMatter, meta }
       },
     },
   },
@@ -73,8 +77,9 @@ async function resolveUserConfig (root: string, configEnv: ConfigEnv) {
   const result = await loadConfigFromFile(configEnv, 'iles.config.ts', root)
   debug(result ? `loaded config at ${yellow(result.path)}` : 'no iles.config.ts file found.')
 
+  let namedPlugins = {} as AppConfig['namedPlugins']
   let { plugins = [], ...config } = result ? mergeConfig(defaults, result.config as any) : defaults
-  const userPlugins = [...defaultPlugins(root), config, ...plugins].flat().filter(p => p) as Plugin[]
+  const userPlugins = [...defaultPlugins(root, namedPlugins), config, ...plugins].flat().filter(p => p) as Plugin[]
 
   for (const plugin of userPlugins) {
     if (plugin.config) {
@@ -84,14 +89,10 @@ async function resolveUserConfig (root: string, configEnv: ConfigEnv) {
   }
 
   if (result?.path) config.configPath = result?.path
-  const appConfig: AppConfig = {
-    ...config,
-    plugins: userPlugins,
-    namedPlugins: {
-      pages: pages(config.pages),
-      markdown: xdm(config.markdown),
-    },
-  }
+  const appConfig: AppConfig = { ...config, plugins: userPlugins, namedPlugins }
+  namedPlugins.pages = pages(appConfig.pages)
+  namedPlugins.markdown = xdm(appConfig.markdown)
+
   appConfig.base = appConfig.siteUrl ? new URL(appConfig.siteUrl).pathname : '/'
   appConfig.vite.base = appConfig.base
   appConfig.vite.build!.assetsDir = appConfig.assetsDir

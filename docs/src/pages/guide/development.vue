@@ -2,6 +2,6 @@
 title: Development
 </route>
 
-<template layout="default">
+<template>
   <h1>Development</h1>
 </template>
