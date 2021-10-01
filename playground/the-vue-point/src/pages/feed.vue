@@ -1,7 +1,11 @@
+<route>
+path: /feed.rss
+layout: false
+</route>
+
 <script setup lang="ts">
 import { plainText, useVueRenderer } from 'iles'
-import { version } from 'iles/package.json'
-import { h, defineAsyncComponent } from 'vue'
+import { defineAsyncComponent } from 'vue'
 import { usePosts, Post } from '~/logic/posts'
 
 const url = 'https://blog.vuejs.org'
@@ -60,7 +64,3 @@ const RSS = defineAsyncComponent(async () => plainText(await renderRSS()))
 <template>
   <RSS/>
 </template>
-
-<route lang="yaml">
-path: /feed.rss
-</route>

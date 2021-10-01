@@ -3,10 +3,10 @@ import type { UserConfig as ViteOptions, ConfigEnv } from 'vite'
 import type { App, Ref } from 'vue'
 import type { Options as CritterOptions } from 'critters'
 import type { Options as VueOptions } from '@vitejs/plugin-vue'
-import type { UserOptions as PagesOptions } from 'vite-plugin-pages'
+import type { UserOptions as PagesOptions, default as PagesPlugin } from 'vite-plugin-pages'
 import type { Options as ComponentOptions } from 'unplugin-vue-components/types'
 import type VueJsxPlugin from '@vitejs/plugin-vue-jsx'
-import type { PluginOptions as XdmOptions } from 'vite-plugin-xdm'
+import type { PluginOptions as XdmOptions, default as XdmPlugin } from 'vite-plugin-xdm'
 import type { FrontmatterOptions } from '@islands/frontmatter'
 import type { Router, RouteRecordRaw, RouteMeta, RouterOptions as VueRouterOptions, RouteComponent, RouteLocationNormalizedLoaded } from 'vue-router'
 import type { HeadClient, HeadObject } from '@vueuse/head'
@@ -27,6 +27,7 @@ export interface PageMeta {
 }
 
 export interface PageComponent extends RouteComponent {
+  layout: false | PageComponent
   meta: PageMeta
   frontmatter: PageFrontmatter
 }
@@ -78,7 +79,8 @@ export interface AppPlugins {
 }
 
 export interface Plugin extends Partial<AppPlugins> {
-  config: (config: UserConfig, env: ConfigEnv) => UserConfig | null | void | Promise<UserConfig | null | void>
+  name: string
+  config?: (config: UserConfig, env: ConfigEnv) => UserConfig | null | void | Promise<UserConfig | null | void>
 }
 
 export type EnhanceAppContext = SSGContext
@@ -112,6 +114,10 @@ export interface AppConfig extends RequiredConfig, AppPlugins {
   root: string
   configPath: string
   plugins: Plugin[]
+  namedPlugins: {
+    pages: PagesPlugin
+    markdown: XdmPlugin
+  }
 }
 
 export type AppClientConfig = Pick<AppConfig, 'base' | 'router' | 'root' | 'debug' | 'ssg'>

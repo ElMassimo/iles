@@ -8,10 +8,10 @@ interface HeaderWithChildren extends Header {
   children?: Header[]
 }
 
-let { page } = $(usePage())
+let { meta } = $(usePage())
 
 const headers = computed(() => {
-  return page.headers ? resolveHeaders(page.headers) : null
+  return meta.headers ? resolveHeaders(meta.headers) : null
 })
 
 function resolveHeaders(headers: Header[]): SideBarItem[] {

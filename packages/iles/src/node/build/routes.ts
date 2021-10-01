@@ -14,8 +14,10 @@ export async function getRoutesForSSG (config: AppConfig, createApp: CreateAppFa
           ? `${prefix}/${route.path}`
           : route.path
 
-        const { meta } = route
-        const { filename } = meta!
+        if (!route.meta?.filename)
+          throw new Error(`meta.filename must be specified for generated routes. Found: ${JSON.stringify(route)}`)
+
+        const { filename } = route.meta
         const extension = extname(path).slice(1) || '.html'
 
         routesForSSG.set(path, {

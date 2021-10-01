@@ -8,8 +8,8 @@ import windicss from 'vite-plugin-windicss'
 import inspect from 'vite-plugin-inspect'
 // import rehypePrism from './src/markdown/prism'
 
-import type { Header } from './src/logic/config'
 import { valueToEstree } from 'estree-util-value-to-estree'
+import type { Header } from './src/logic/config'
 
 export default defineConfig({
   siteUrl: 'https://vue-iles.netlify.app',
@@ -27,7 +27,7 @@ export default defineConfig({
             const title = c.children.filter(c => c.type === 'text').map(c => c.value).join(' ')
             headers.push({ level: Number(c.tagName.slice(1)), title, slug: title.toLowerCase().replace(/\s+/, '-') })
           })
-        children.unshift({
+        children.push({
           type: 'mdxjsEsm',
           data: {
             estree: {
@@ -35,19 +35,22 @@ export default defineConfig({
               sourceType: 'module',
               body: [
                 {
-                  type: 'ExportNamedDeclaration',
-                  source: null,
-                  specifiers: [],
-                  declaration: {
-                    type: 'VariableDeclaration',
-                    kind: 'const',
-                    declarations: [
-                      {
-                        type: 'VariableDeclarator',
-                        id: { type: 'Identifier', name: 'headers' },
-                        init: valueToEstree(headers),
+                  type: 'ExpressionStatement',
+                  expression: {
+                    type: 'AssignmentExpression',
+                    operator: '=',
+                    left: {
+                      type: 'MemberExpression',
+                      object: {
+                        type: 'Identifier',
+                        name: 'meta',
                       },
-                    ],
+                      property: {
+                        type: 'Identifier',
+                        name: 'headers',
+                      },
+                    },
+                    right: valueToEstree(headers),
                   },
                 },
               ],

@@ -54,6 +54,7 @@ async function resolveEntrypoints (config: AppConfig) {
   const entrypoints: Entrypoints = {
     app: resolve(APP_PATH, 'index.js'),
   }
+  // TODO: Replace with pages.api.getPages()
   const pages = await resolvePages(resolvePageOptions(config.pages, config.root))
   pages.forEach((page) => {
     entrypoints[fileToAssetName(page.route)] = page.filepath

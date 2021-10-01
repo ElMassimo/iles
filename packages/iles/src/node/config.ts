@@ -4,6 +4,9 @@ import { join, relative, resolve } from 'path'
 import { yellow } from 'nanocolors'
 import creatDebugger from 'debug'
 import { loadConfigFromFile, mergeConfig as mergeViteConfig } from 'vite'
+import pages from 'vite-plugin-pages'
+import xdm from 'vite-plugin-xdm'
+
 import type { ComponentResolver } from 'unplugin-vue-components/types'
 import type { FrontmatterPluggable } from '@islands/frontmatter'
 import type { AppConfig, AppPlugins, ConfigEnv, ViteOptions, Plugin } from './shared'
@@ -47,30 +50,17 @@ export async function resolveConfig (root?: string, env?: ConfigEnv): Promise<Ap
   return config
 }
 
-const defaultPlugins = (root: string): Partial<AppConfig>[] => [
+const defaultPlugins = (root: string): Plugin[] => [
   {
-    // TODO: Parse frontmatter in Vue files and assign to default component.
-    // pages: {
-    //   // Internal: Move any frontmatter defined top-level to a nested property.
-    //   extendRoute ({ layout: routeLayout, meta: routeMeta, ...route }: any) {
-    //     const metaMatter = routeMeta?.frontmatter as Frontmatter
-    //     const { layout: frontmatterLayout, ...frontmatter } = metaMatter || {}
-    //     const meta = { ...routeMeta, frontmatter }
-    //     const layout = routeLayout || frontmatterLayout
-    //     if (layout) meta.layout = layout
-    //     return { ...route, meta }
-    //   },
-    // } as AppConfig['pages'],
+    name: 'frontmatter-meta',
     markdown: {
+      // Adds meta fields such as filename, lastUpdated, and href.
       extendFrontmatter (frontmatter, absoluteFilename) {
         const filename = relative(root, absoluteFilename)
         const meta = {
           lastUpdated: new Date(Math.round(fs.statSync(absoluteFilename).mtimeMs)),
           ...frontmatter.meta,
           filename,
-          // TODO: Use pages plugin to obtain the path pages.pathForFile(path)
-          // TODO: Replace with pages.api.getRoutePath(path)
-          href: filename.replace(/\.\w+$/, '').replace('src/pages/', '/').replace(/\/index$/, '/'),
         }
         return { ...frontmatter, meta }
       },
@@ -94,7 +84,14 @@ async function resolveUserConfig (root: string, configEnv: ConfigEnv) {
   }
 
   if (result?.path) config.configPath = result?.path
-  const appConfig: AppConfig = { ...config, plugins: userPlugins }
+  const appConfig: AppConfig = {
+    ...config,
+    plugins: userPlugins,
+    namedPlugins: {
+      pages: pages(config.pages),
+      markdown: xdm(config.markdown),
+    },
+  }
   appConfig.base = appConfig.siteUrl ? new URL(appConfig.siteUrl).pathname : '/'
   appConfig.vite.base = appConfig.base
   appConfig.vite.build!.assetsDir = appConfig.assetsDir
@@ -102,7 +99,7 @@ async function resolveUserConfig (root: string, configEnv: ConfigEnv) {
   return appConfig
 }
 
-function appConfigDefaults (root: string): AppConfig {
+function appConfigDefaults (root: string): Omit<AppConfig, 'namedPlugins'> {
   return {
     debug: true,
     root,
@@ -156,18 +153,13 @@ function withResolvedConfig (config: AppConfig) {
     import('remark-frontmatter').then(mod => mod.default),
     frontmatterPlugin(config),
   ])
-  // const { extendFrontmatter } = config.markdown
-  // NOTE: Removes the frontmatter information from each route.
-  // TODO: Allow skipping this information in the pages plugin.
+  // NOTE: Adds filename to the meta information in the route so that it can be
+  // used to correctly infer the file name.
   const { extendRoute } = config.pages
   config.pages.extendRoute = (route, parent) => {
     route = extendRoute?.(route, parent) || route
-    const { frontmatter: _metaFrontmatter, ...metaRest } = route.meta || {}
-    const { frontmatter: _routeFrontmatter, ...routeRest } = route as any
-    // const routeMatter = { ...routeFrontmatter, ...metaFrontmatter as Frontmatter }
     const filename = join(config.root, route.component)
-    // const frontmatter = extendFrontmatter?.(routeMatter, filename) || routeMatter
-    return { ...routeRest, meta: { filename, ...metaRest } } // { ...metaRest, frontmatter } }
+    return { ...route, meta: { ...route.meta, filename } }
   }
 }
 

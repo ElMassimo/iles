@@ -1,6 +1,5 @@
 <route>
-frontmatter:
-  title: Development
+title: Development
 </route>
 
 <script setup lang="ts">

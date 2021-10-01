@@ -109,12 +109,14 @@ export function installDevtools (app: App, config: AppClientConfig) {
             getMediaQuery(island) && { label: getMediaQuery(island), textColor: 0, backgroundColor: 0xFB923C },
           ].filter(x => x) as InspectorNodeTag[],
         }))
+      const page = pageData.page.value
       payload.rootNodes = [{
-        id: pageData.route.value.path,
-        label: getComponentName(pageData.page.value),
+        id: page.meta.href,
+        label: getComponentName(page),
         children: islandNodes,
         tags: [
           { label: 'page', textColor: 0, backgroundColor: 0x42B983 },
+          { label: `layout: ${getComponentName(page.layout)}`, textColor: 0, backgroundColor: 0x22D3EE },
         ],
       }]
     })
@@ -123,11 +125,13 @@ export function installDevtools (app: App, config: AppClientConfig) {
       if (payload.app !== app && payload.inspectorId !== INSPECTOR_ID) return
 
       if (payload.nodeId === pageData.route.value.path) {
+        const page = pageData.page.value
         payload.state = {
           props: [
-            { key: 'component', value: pageData.page.value },
-            { key: 'meta', value: pageData.meta.value },
-            { key: 'frontmatter', value: pageData.frontmatter.value },
+            { key: 'component', value: page },
+            { key: 'layout', value: page.layout },
+            { key: 'meta', value: page.meta },
+            { key: 'frontmatter', value: page.frontmatter },
           ].filter(x => x),
         }
         return

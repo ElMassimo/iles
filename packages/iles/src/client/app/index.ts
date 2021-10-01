@@ -46,8 +46,7 @@ export const createApp: CreateAppFactory = async (options = {}) => {
     await router.isReady()
   }
 
-  const route = router.currentRoute
-  const { frontmatter, meta, page } = installPageData(app, route)
+  const { frontmatter, meta, page, route } = installPageData(app, router.currentRoute)
   Object.defineProperty(app.config.globalProperties, '$frontmatter', {
     get: () => frontmatter.value,
   })
@@ -85,7 +84,7 @@ export const createApp: CreateAppFactory = async (options = {}) => {
 
 if (!import.meta.env.SSR) {
   (async () => {
-    const { app, router } = await createApp()
+    const { app, router, route } = await createApp()
 
     const devtools = await import('./composables/devtools')
     devtools.installDevtools(app, appConfig)
@@ -93,5 +92,7 @@ if (!import.meta.env.SSR) {
     router.afterEach(resetHydrationId) // reset island identifiers to match ssg.
     await router.isReady() // wait until page component is fetched before mounting
     app.mount('#app', true)
+
+    Object.assign(window, { __ILES_APP__: app, __ILES_ROUTE__: route })
   })()
 }

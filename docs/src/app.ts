@@ -14,8 +14,6 @@ import bannerSrc from '/images/banner.png'
 
 export default defineApp({
   head ({ frontmatter, route, router }) {
-    console.log('routes', router.getRoutes())
-
     const title = computed(() => frontmatter.value.title
       ? `${frontmatter.value.title} · ${Site.title}`
       : Site.title)

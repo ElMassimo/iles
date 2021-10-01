@@ -6,10 +6,9 @@ import type { PluginOption, ResolvedConfig, ResolveFn, ViteDevServer } from 'vit
 import { transformWithEsbuild } from 'vite'
 
 import vue from '@vitejs/plugin-vue'
-import pages, { MODULE_ID_VIRTUAL as PAGES_REQUEST_PATH } from 'vite-plugin-pages'
+import { MODULE_ID_VIRTUAL as PAGES_REQUEST_PATH } from 'vite-plugin-pages'
 import components from 'unplugin-vue-components/vite'
 import vueJsx from '@vitejs/plugin-vue-jsx'
-import xdm from 'vite-plugin-xdm'
 
 import type { Frontmatter } from '@islands/frontmatter'
 import createDebugger from 'debug'
@@ -32,6 +31,10 @@ function isMarkdown (path: string) {
   return path.endsWith('.mdx') || path.endsWith('.md')
 }
 
+function isSFCMain (path: string, query: Record<string, any>) {
+  return path.endsWith('.vue') && query.vue === undefined
+}
+
 const contextComponentRegex = new RegExp(escapeRegex('_ctx.__unplugin_components_'), 'g')
 const viteIslandRegex = new RegExp(`"?${escapeRegex(unresolvedIslandKey)}"?:\\s*([^,}\n]+)[,}\n]`, 'sg')
 const unresolvedComponentsRegex = /_resolveComponent\("([^)]+?)"\)/
@@ -46,6 +49,8 @@ export default function IslandsPlugins (appConfig: AppConfig): PluginOption[] {
   let resolveVitePath: ResolveFn
 
   const appPath = resolve(appConfig.srcDir, 'app.ts')
+
+  const plugins = appConfig.namedPlugins
 
   return [
     {
@@ -88,6 +93,20 @@ export default function IslandsPlugins (appConfig: AppConfig): PluginOption[] {
       transform (code, id) {
         if (id.includes('client/app/layouts'))
           return code.replace(/__LAYOUTS_ROOT__/g, `/${relative(root, appConfig.layoutsDir)}`)
+
+        // TODO: Layout transformation Vue: move to separate plugin
+        // TODO: Layout from frontmatter should be used, fail if both are specified.
+        const { path } = parseId(id)
+        if (plugins.pages.api.pageForFile(path) || path.includes(appConfig.layoutsDir)) {
+          const isTypeScript = /lang=['"]ts['"]/.test(code)
+          return code.replace(/<template(.*?)layout=\s*['"](\w+)['"](.*?)>/, (_, beforeAttrs, layoutName, afterAttrs) => {
+            return `<script${isTypeScript ? ' lang="ts"' : ''}>
+${layoutName === 'false' ? 'const __iles_layout = false' : `import __iles_layout from '/${relative(root, appConfig.layoutsDir)}/${layoutName}.vue'`}
+</script>
+<template${beforeAttrs}${afterAttrs}>
+`
+          })
+        }
       },
       configureServer (server) {
         restartOnConfigChanges(appConfig, server)
@@ -121,7 +140,7 @@ export default function IslandsPlugins (appConfig: AppConfig): PluginOption[] {
 
     vue(appConfig.vue),
 
-    xdm(appConfig.markdown),
+    plugins.markdown,
 
     {
       name: 'iles:mdx:pos',
@@ -152,9 +171,9 @@ const _default = defineComponent({
   ${mode === 'development' ? `__file: '${path}',` : ''}
   ...meta,
   ...frontmatter,
-  ${code.includes('const headers') ? 'headers,' : ''}
-  frontmatter,
+  layout,
   meta,
+  frontmatter,
   props: {
     components: { type: Object, default: () => ({}) },
   },
@@ -170,28 +189,47 @@ export default _default`)
     vueJsx(appConfig.vueJsx),
 
     // https://github.com/hannoeru/vite-plugin-pages
-    pages(appConfig.pages),
+    plugins.pages,
 
     // https://github.com/antfu/unplugin-vue-components
     components(appConfig.components),
+
+    {
+      name: 'iles:page-hmr',
+      apply: 'serve',
+      enforce: 'post',
+      // HMR for frontmatter changes.
+      async transform (code, id) {
+        const { path, query } = parseId(id)
+        if (isSFCMain(path, query) || path.endsWith('.mdx')) {
+          return `${code}
+import.meta.hot.accept('/${relative(root, path)}', () => __ILES_ROUTE__.forceUpdate())
+`
+        }
+      },
+    },
 
     {
       name: 'iles:resolve-islands',
       enforce: 'post',
       async transform (code, id) {
         const { path, query } = parseId(id)
-        if (!isMarkdown(path) && !path.endsWith('.vue')) return
+        if (!isMarkdown(path) && !isSFCMain(path, query)) return
 
-        // TODO: Replace with pages.api.isPage(path)
-        if (path.includes('src/pages/') && path.endsWith('.vue') && !query.type) {
-          // TODO: Replace with pages.api.getRouteMeta(path)
-          let rawMatter = {} as Frontmatter
-          const { meta, ...frontmatter } = appConfig.markdown?.extendFrontmatter?.(rawMatter, path) || rawMatter
+        if (path.endsWith('.vue')) {
+          const resolvedPage = plugins.pages.api.pageForFile(path)
+          if (resolvedPage) {
+            const { path: href, meta: blockMeta = {}, ...blockAttrs } = resolvedPage.customBlock || {} as Frontmatter
+            const rawMatter = { meta: { ...blockMeta, href }, ...blockAttrs }
+            const { meta, ...frontmatter } = appConfig.markdown?.extendFrontmatter?.(rawMatter, path) || rawMatter
 
-          code = `const __sfc_iles_meta = ${serialize(meta)}
-const __sfc_iles_frontmatter = ${serialize(frontmatter)}
-export { __sfc_iles_meta as meta, __sfc_iles_frontmatter as frontmatter }
-${code.replace('_export_sfc(_sfc_main, [', original => `${original}['meta', __sfc_iles_meta], ['frontmatter', __sfc_iles_frontmatter], `)}`
+            code = `${code}
+_sfc_main.meta = ${serialize(meta)}
+_sfc_main.frontmatter = ${serialize(frontmatter)}
+`
+          }
+          if (code.includes('__iles_layout'))
+            code = `${code}\n_sfc_main.layout = __iles_layout\n`
         }
 
         code = code.replace(contextComponentRegex, '__unplugin_components_')

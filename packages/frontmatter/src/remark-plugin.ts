@@ -1,5 +1,4 @@
 import type { Program, VariableDeclarator } from 'estree'
-import { name as isValidIdentifierName } from 'estree-util-is-identifier-name'
 import { valueToEstree } from 'estree-util-value-to-estree'
 import { load as yaml } from 'js-yaml'
 import { parse as toml } from 'toml'
@@ -9,13 +8,13 @@ import type { Node, Data, Parent } from 'unist'
 export type Frontmatter = Record<string, any>
 
 export interface FrontmatterOptions {
-  extendFrontmatter?: (frontmatter: Frontmatter, filename: string) => Frontmatter | void;
+  extendFrontmatter?: (frontmatter: Frontmatter, filename: string) => Frontmatter | void
 }
 
 export type FrontmatterPlugin = Plugin<[FrontmatterOptions?]>
 export type FrontmatterPluggable = [FrontmatterPlugin, FrontmatterOptions?]
 
-function mapFind <T, O>(arr: T[], fn: (i: T) => O): O | undefined {
+function mapFind <T, O> (arr: T[], fn: (i: T) => O): O | undefined {
   let result
   let found = arr.find(item => result = fn(item))
   return result
@@ -31,56 +30,56 @@ const plugin: FrontmatterPlugin = (options?: FrontmatterOptions) => (ast, file) 
   const parent = ast as Parent
   const nodes = parent.children as (Node<Data> & { value: string })[]
   const rawMatter = mapFind(nodes, parseFrontmatter) || {}
-  const allMatter = options?.extendFrontmatter?.(rawMatter, file.path) || rawMatter
-  const { meta, ...frontmatter } = allMatter
+  const { layout = 'default', ...matterVariables } = options?.extendFrontmatter?.(rawMatter, file.path) || rawMatter
+  const { meta, ...frontmatter } = matterVariables
+  parent.children.unshift(defineConsts({ meta, frontmatter }))
 
-  parent.children.unshift(defineConsts(
-    ...Object.entries(allMatter).map(([key, value]) => {
-      if (!isValidIdentifierName(key))
-        throw new Error(`Frontmatter keys should be valid identifiers, got: ${JSON.stringify(key)}`)
-
-      // Example:
-      //  const title = 'Example'
-      //  const source = 'https://example.com'
-      return {
-        type: 'VariableDeclarator',
-        id: { type: 'Identifier', name: key },
-        init: valueToEstree(value),
-      } as VariableDeclarator
-    }),
-    // Example:
-    //  const frontmatter = { title, source }
-    {
-      type: 'VariableDeclarator',
-      id: { type: 'Identifier', name: 'frontmatter' },
-      init: shorthandObjectExpression(Object.keys(frontmatter)),
-    } as VariableDeclarator,
-  ))
+  if (layout === false) {
+    parent.children.unshift(defineConsts({ layout: false }))
+  }
+  else {
+    // TODO: Make it dynamic, split to a different remark plugin that receives the dir?
+    // TODO: Handle missing default layout with middleware.
+    const layoutPath = `/src/layouts/${layout}.vue`
+    parent.children.unshift({
+      type: 'mdxjsEsm',
+      data: {
+        estree: {
+          type: 'Program',
+          sourceType: 'module',
+          body: [
+            {
+              type: 'ImportDeclaration',
+              specifiers: [
+                {
+                  type: 'ImportDefaultSpecifier',
+                  local: {
+                    type: 'Identifier',
+                    name: 'layout',
+                  },
+                },
+              ],
+              source: {
+                type: 'Literal',
+                value: layoutPath,
+                raw: `'${layoutPath}'`,
+              },
+            },
+          ],
+        },
+      },
+    })
+  }
 }
 
-function parseFrontmatter ({ type, value }: { type: string, value: string }) {
+function parseFrontmatter ({ type, value }: { type: string; value: string }) {
   const data = type === 'yaml' ? yaml(value) : type === 'toml' ? toml(value) : undefined
   if (data && typeof data !== 'object')
     throw new Error(`Expected frontmatter data to be an object, got:\n${value}`)
   return data
 }
 
-function shorthandObjectExpression (variables: string[]) {
-  return {
-    type: 'ObjectExpression',
-    properties: variables.map(id => ({
-      type: 'Property',
-      key: { type: 'Identifier', name: id },
-      value: { type: 'Identifier', name: id },
-      kind: 'init',
-      shorthand: true,
-      method: false,
-      computed: false,
-    })),
-  }
-}
-
-function defineConsts (...declarations: VariableDeclarator[]) {
+function defineConsts (values: Record<string, any>) {
   return {
     type: 'mdxjsEsm',
     data: {
@@ -89,14 +88,13 @@ function defineConsts (...declarations: VariableDeclarator[]) {
         sourceType: 'module',
         body: [
           {
-            type: 'ExportNamedDeclaration',
-            source: null,
-            specifiers: [],
-            declaration: {
-              type: 'VariableDeclaration',
-              kind: 'const',
-              declarations,
-            },
+            type: 'VariableDeclaration',
+            kind: 'const',
+            declarations: Object.entries(values).map(([key, value]) => ({
+              type: 'VariableDeclarator',
+              id: { type: 'Identifier', name: key },
+              init: valueToEstree(value),
+            } as VariableDeclarator)),
           },
         ],
       } as Program,

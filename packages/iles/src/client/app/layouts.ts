@@ -8,7 +8,7 @@ export const getLayout: LayoutFactory = (name: string | false) => {
 
   const layout = layouts[`__LAYOUTS_ROOT__/${name}.vue`]
   if (layout) {
-   return defineAsyncComponent(() => layout().then(({ default: component, ...other }) => {
+    return defineAsyncComponent(() => layout().then(({ default: component, ...other }) => {
       component.name = `${name}Layout`
       return component
     }))

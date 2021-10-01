@@ -1,4 +1,4 @@
-import { App, InjectionKey, Ref, computed, inject } from 'vue'
+import { App, InjectionKey, Ref, computed, ref, inject } from 'vue'
 import { RouteLocationNormalizedLoaded } from 'vue-router'
 import { PageData, PageComponent } from '../../shared'
 
@@ -8,7 +8,15 @@ function last <T>(arr: T[]) {
   return arr[arr.length - 1]
 }
 
-export function installPageData (app: App, route: Ref<RouteLocationNormalizedLoaded>): PageData {
+export function installPageData (app: App, currentRoute: Ref<RouteLocationNormalizedLoaded>): PageData {
+  const _lastPageChange = ref(new Date())
+  const route = computed(() => {
+    // eslint-disable-next-line no-unused-expressions
+    _lastPageChange.value // track dependency to recompute as needed.
+    return currentRoute.value
+  })
+  Object.assign(route, { forceUpdate: () => _lastPageChange.value = new Date() })
+
   const page = computed(() => last(route.value.matched)?.components?.default as PageComponent || {})
   const meta = computed(() => page.value.meta || {})
   const frontmatter = computed(() => page.value.frontmatter || {})

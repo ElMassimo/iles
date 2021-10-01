@@ -6,6 +6,7 @@ declare module 'vue' {
   export interface GlobalComponents {
     Author: typeof import('./src/components/Author.vue')['default']
     Island: typeof import('iles')['Island']
+    Layout: typeof import('iles')['Layout']
     PostDate: typeof import('./src/components/PostDate.vue')['default']
     Quicklink: typeof import('./src/components/Quicklink.ts')['default']
   }
