@@ -162,6 +162,11 @@ function withResolvedConfig (config: AppConfig) {
     const filename = join(config.root, route.component)
     return { ...route, meta: { ...route.meta, filename } }
   }
+
+  (config.components!.resolvers! as ComponentResolver[]).push((name: string) => {
+    const [layoutName, isLayout] = name.split('Layout', 2)
+    if (isLayout) return { importName: 'default', path: join(config.layoutsDir, `${layoutName.toLowerCase()}.vue`) }
+  })
 }
 
 async function frontmatterPlugin (config: AppConfig): Promise<FrontmatterPluggable> {

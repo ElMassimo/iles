@@ -1,20 +1,29 @@
 <script lang="ts">
-import { h, defineComponent } from 'vue'
+import { watchEffect, shallowRef, h, defineComponent } from 'vue'
 import { usePage } from 'iles'
 
 export default defineComponent({
-  setup () {
-    return usePage()
+  async setup () {
+    const { page } = usePage()
+    const resolvedLayout = shallowRef(undefined)
+
+    watchEffect(() => {
+      resolvedLayout.value = undefined
+      const layoutPromise = page.value.layout
+      if (layoutPromise === false)
+        resolvedLayout.value = false
+      else
+        layoutPromise.then(m => resolvedLayout.value = m.default || m)
+    })
+    return {
+      page,
+      resolvedLayout,
+    }
   },
   render () {
-    let vNode = h(this.page)
-    let layout = this.page.layout
-    while (layout) {
-      const children = vNode
-      vNode = h(layout, null, { default: () => children })
-      layout = layout.layout
-    }
-    return vNode
+    if (this.resolvedLayout === false) return h(this.page)
+    if (this.resolvedLayout === undefined) return undefined
+    return h(this.resolvedLayout, null, { default: () => h(this.page) })
   },
 })
 </script>

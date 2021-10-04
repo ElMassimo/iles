@@ -1,5 +1,9 @@
 export { default as serialize } from '@nuxt/devalue'
 
+export function isString (val: any): val is string {
+  return typeof val === 'string'
+}
+
 export function uniq<T> (arr: Array<T>) {
   return [...new Set(arr.filter(x => x))]
 }

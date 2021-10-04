@@ -5,6 +5,7 @@ import type { MDXJSEsm } from 'mdast-util-mdxjs-esm'
 import type { ImportDeclaration } from 'estree'
 import { unresolvedIslandKey } from './wrap'
 import type { ImportsMetadata } from './parse'
+import { isString } from './utils'
 
 export default () => (ast: any) => {
   let imports: ImportsMetadata
@@ -49,10 +50,6 @@ function wrapWithIsland (node: MDXJsxFlowElement | MDXJsxTextElement, imports: I
       value: imports[name] ? identifierExpression(name) : resolveComponentExpression(name),
     } as MDXJsxAttribute,
   )
-}
-
-function isString (val: any): val is string {
-  return typeof val === 'string'
 }
 
 function extractImports (nodes: MDXJSEsm[]) {

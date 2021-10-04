@@ -30,46 +30,8 @@ const plugin: FrontmatterPlugin = (options?: FrontmatterOptions) => (ast, file) 
   const parent = ast as Parent
   const nodes = parent.children as (Node<Data> & { value: string })[]
   const rawMatter = mapFind(nodes, parseFrontmatter) || {}
-  const { layout = 'default', ...matterVariables } = options?.extendFrontmatter?.(rawMatter, file.path) || rawMatter
-  const { meta, ...frontmatter } = matterVariables
+  const { meta, layout: _, ...frontmatter } = options?.extendFrontmatter?.(rawMatter, file.path) || rawMatter
   parent.children.unshift(defineConsts({ meta, frontmatter }))
-
-  if (layout === false) {
-    parent.children.unshift(defineConsts({ __iles_layout: false }))
-  }
-  else {
-    // TODO: Make it dynamic, split to a different remark plugin that receives the dir?
-    // TODO: Handle missing default layout with middleware.
-    const layoutPath = `/src/layouts/${layout}.vue`
-    parent.children.unshift({
-      type: 'mdxjsEsm',
-      data: {
-        estree: {
-          type: 'Program',
-          sourceType: 'module',
-          body: [
-            {
-              type: 'ImportDeclaration',
-              specifiers: [
-                {
-                  type: 'ImportDefaultSpecifier',
-                  local: {
-                    type: 'Identifier',
-                    name: '__iles_layout',
-                  },
-                },
-              ],
-              source: {
-                type: 'Literal',
-                value: layoutPath,
-                raw: `'${layoutPath}'`,
-              },
-            },
-          ],
-        },
-      },
-    })
-  }
 }
 
 function parseFrontmatter ({ type, value }: { type: string; value: string }) {

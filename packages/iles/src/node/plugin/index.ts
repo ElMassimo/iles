@@ -18,11 +18,12 @@ import { APP_PATH, ROUTES_REQUEST_PATH, USER_APP_REQUEST_PATH, APP_CONFIG_REQUES
 import { createServer } from '../server'
 import { escapeRegex, serialize, replaceAsync, pascalCase } from './utils'
 import { parseId, parseImports } from './parse'
-import { unresolvedIslandKey, wrapIslandsInSFC } from './wrap'
+import { unresolvedIslandKey, wrapIslandsInSFC, wrapLayout } from './wrap'
 
 const debug = {
   config: createDebugger('iles:config'),
   mdx: createDebugger('iles:mdx'),
+  layout: createDebugger('iles:layout'),
   detect: createDebugger('iles:detect'),
   resolve: createDebugger('iles:resolve'),
   build: createDebugger('iles:build'),
@@ -138,6 +139,17 @@ export default function IslandsPlugins (appConfig: AppConfig): PluginOption[] {
           return wrapIslandsInSFC(code, path, debug.detect)
       },
     },
+    {
+      name: 'iles:layouts',
+      enforce: 'pre',
+      transform (code, id) {
+        const { path, query } = parseId(id)
+        if (!isSFCMain(path, query) || !isLayout(path)) return
+        const layoutName = code.match(templateLayoutRegex)?.[1] || false
+        if (String(layoutName) === 'false') return
+        return wrapLayout(code, path, debug.layout)
+      },
+    },
 
     vue(appConfig.vue),
 
@@ -146,7 +158,7 @@ export default function IslandsPlugins (appConfig: AppConfig): PluginOption[] {
     {
       name: 'iles:mdx:pos',
       async transform (code, id) {
-        const { path, query } = parseId(id)
+        const { path } = parseId(id)
         if (!isMarkdown(path) || !code.includes('MDXContent')) return null
 
         const match = code.match(/props\.components\), \{(.*?), wrapper: /)
@@ -170,11 +182,6 @@ ${code.includes(' defineComponent') ? '' : 'import { defineComponent } from \'vu
 
 const _sfc_main = defineComponent({
   ${mode === 'development' ? `__file: '${path}',` : ''}
-  ...meta,
-  ...frontmatter,
-  layout: __iles_layout,
-  meta,
-  frontmatter,
   props: {
     components: { type: Object, default: () => ({}) },
   },
@@ -216,37 +223,34 @@ import.meta.hot.accept('/${relative(root, path)}', () => __ILES_ROUTE__.forceUpd
       enforce: 'post',
       async transform (code, id) {
         const { path, query } = parseId(id)
-        if (!isSFCMain(path, query)) return
+        const isMarkdownPath = isMarkdown(path)
+        if (!isMarkdownPath && !isSFCMain(path, query)) return
 
-        const isLayoutPath = isLayout(path)
-        const pageMatter = isLayoutPath ? undefined : frontmatterFromPage(path)
-        if (!pageMatter && !isLayoutPath) return
+        const pageMatter = frontmatterFromPage(path)
+        if (!pageMatter) return
 
         const s = new MagicString(code)
 
         const sfcIndex = code.indexOf('{', code.indexOf('const _sfc_main = ')) + 1
         const appendToSfc = (key: string, value: string) => s.appendRight(sfcIndex, `${key}:${value},`)
 
-        if (isLayoutPath)
-          appendToSfc('name', `'${pascalCase(basename(path).replace('.vue', 'Layout'))}'`)
+        // if (isLayoutPath)
+        //   appendToSfc('name', `'${pascalCase(basename(path).replace('.vue', 'Layout'))}'`)
 
-        if (pageMatter) {
+        if (isMarkdownPath) {
+          s.appendRight(sfcIndex, '...meta,...frontmatter,meta,frontmatter,')
+        }
+        else {
           const { meta, layout, ...frontmatter } = pageMatter
           appendToSfc('meta', serialize(meta))
           appendToSfc('frontmatter', serialize(frontmatter))
         }
 
-        const layoutName = isLayoutPath
-          ? (await fs.readFile(path, 'utf-8')).match(templateLayoutRegex)?.[1] || false
-          : pageMatter!.layout ?? 'default'
+        const layoutName = pageMatter.layout ?? 'default'
 
-        if (String(layoutName) === 'false') {
-          appendToSfc('layout', 'false')
-        }
-        else {
-          s.prepend(`import __iles_layout from '${layoutsRoot}/${layoutName}.vue';`)
-          appendToSfc('layout', '__iles_layout')
-        }
+        appendToSfc('layout', String(layoutName) === 'false'
+          ? 'false'
+          : `import('${layoutsRoot}/${layoutName}.vue')`)
 
         return s.toString()
       },

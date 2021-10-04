@@ -7,12 +7,8 @@ export const getLayout: LayoutFactory = (name: string | false) => {
   if (name === false) return false
 
   const layout = layouts[`__LAYOUTS_ROOT__/${name}.vue`]
-  if (layout) {
-    return defineAsyncComponent(() => layout().then(({ default: component, ...other }) => {
-      component.name = `${name}Layout`
-      return component
-    }))
-  }
+  if (layout)
+    return defineAsyncComponent(() => layout().then(m => m.default))
 
   // If no default layout is defined, render the page by itself.
   if (name === 'default')
