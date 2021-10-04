@@ -60,10 +60,6 @@ export function resolveAliases (root: string): AliasOptions {
       find: /^@islands\/(hydration|vanilla|vue)$/,
       replacement: `${HYDRATION_DIST_PATH}/$1.js`,
     },
-    {
-      find: /^@islands\/layouts/,
-      replacement: require.resolve('../client/app/layouts.js'),
-    },
   ]
 
   return aliases

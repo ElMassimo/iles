@@ -1,7 +1,8 @@
 <script setup lang="ts">
-import { title, description } from '~/site'
+import site from '~/site'
 import { usePosts } from '~/logic/posts'
 
+const { title, description } = site
 const posts = usePosts()
 </script>
 

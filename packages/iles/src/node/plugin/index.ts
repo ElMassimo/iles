@@ -226,16 +226,17 @@ import.meta.hot.accept('/${relative(root, path)}', () => __ILES_ROUTE__.forceUpd
         const isMarkdownPath = isMarkdown(path)
         if (!isMarkdownPath && !isSFCMain(path, query)) return
 
-        const pageMatter = frontmatterFromPage(path)
-        if (!pageMatter) return
-
         const s = new MagicString(code)
-
         const sfcIndex = code.indexOf('{', code.indexOf('const _sfc_main = ')) + 1
         const appendToSfc = (key: string, value: string) => s.appendRight(sfcIndex, `${key}:${value},`)
 
-        // if (isLayoutPath)
-        //   appendToSfc('name', `'${pascalCase(basename(path).replace('.vue', 'Layout'))}'`)
+        if (isLayout(path)) {
+          appendToSfc('name', `'${pascalCase(basename(path).replace('.vue', 'Layout'))}'`)
+          return s.toString()
+        }
+
+        const pageMatter = frontmatterFromPage(path)
+        if (!pageMatter) return
 
         if (isMarkdownPath) {
           s.appendRight(sfcIndex, '...meta,...frontmatter,meta,frontmatter,')
@@ -247,10 +248,10 @@ import.meta.hot.accept('/${relative(root, path)}', () => __ILES_ROUTE__.forceUpd
         }
 
         const layoutName = pageMatter.layout ?? 'default'
-
-        appendToSfc('layout', String(layoutName) === 'false'
+        appendToSfc('layoutName', serialize(layoutName))
+        appendToSfc('layoutFn', String(layoutName) === 'false'
           ? 'false'
-          : `import('${layoutsRoot}/${layoutName}.vue')`)
+          : `() => import('${layoutsRoot}/${layoutName}.vue').then(m => m.default)`)
 
         return s.toString()
       },

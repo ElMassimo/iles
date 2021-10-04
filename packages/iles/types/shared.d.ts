@@ -27,9 +27,10 @@ export interface PageMeta {
 }
 
 export interface PageComponent extends RouteComponent {
-  layout: false | PageComponent
-  meta: PageMeta
   frontmatter: PageFrontmatter
+  meta: PageMeta
+  layoutName: string
+  layoutFn: false | (() => Promise<RouteComponent>)
 }
 
 export interface PageData<T = any> {

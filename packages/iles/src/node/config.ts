@@ -10,6 +10,7 @@ import xdm from 'vite-plugin-xdm'
 import type { ComponentResolver } from 'unplugin-vue-components/types'
 import type { Frontmatter, FrontmatterPluggable } from '@islands/frontmatter'
 import type { AppConfig, AppPlugins, ConfigEnv, ViteOptions, Plugin } from './shared'
+import { camelCase, uncapitalize } from './plugin/utils'
 import { resolveAliases, DIST_CLIENT_PATH, HYDRATION_DIST_PATH } from './alias'
 import remarkWrapIslands from './plugin/remarkWrapIslands'
 
@@ -19,7 +20,6 @@ export type { AppConfig }
 
 export const IlesComponentResolver: ComponentResolver = (name) => {
   if (name === 'Island') return { importName: 'Island', path: 'iles' }
-  if (name === 'Layout') return { importName: 'Layout', path: 'iles' }
   if (name === 'Head') return { importName: 'Head', path: '@vueuse/head' }
 }
 
@@ -163,9 +163,9 @@ function withResolvedConfig (config: AppConfig) {
     return { ...route, meta: { ...route.meta, filename } }
   }
 
-  (config.components!.resolvers! as ComponentResolver[]).push((name: string) => {
+  (config.components!.resolvers as ComponentResolver[]).push((name: string) => {
     const [layoutName, isLayout] = name.split('Layout', 2)
-    if (isLayout) return { importName: 'default', path: join(config.layoutsDir, `${layoutName.toLowerCase()}.vue`) }
+    if (isLayout === '') return { importName: 'default', path: join(config.layoutsDir, `${uncapitalize(camelCase(layoutName))}.vue`) }
   })
 }
 
@@ -200,7 +200,6 @@ function viteConfigDefaults (root: string): ViteOptions {
         '@vue/server-renderer',
         '@vueuse/head',
         '@islands/hydration',
-        '@islands/layouts',
       ],
     },
   }

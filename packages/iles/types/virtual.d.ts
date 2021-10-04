@@ -17,11 +17,6 @@ declare module '@islands/routes' {
   export default routes
 }
 
-declare module '@islands/layouts' {
-  const getLayout: import('./shared').LayoutFactory
-  export { getLayout }
-}
-
 declare module '@islands/app-config' {
   const config: import('./shared').AppClientConfig
   export default config

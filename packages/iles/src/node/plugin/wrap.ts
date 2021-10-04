@@ -14,7 +14,7 @@ export async function wrapLayout (code: string, filename: string, debug: Debugge
 
   const s = new MagicString(code)
   const nodes = template.ast.children
-  const Layout = `${pascalCase(template.attrs.layout as string)}Layout}`
+  const Layout = `${pascalCase(template.attrs.layout as string)}Layout`
 
   s.appendLeft(nodes[0].loc.start.offset, `<${Layout}>`)
   s.appendRight(nodes[nodes.length - 1].loc.end.offset, `</${Layout}>`)

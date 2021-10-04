@@ -1,8 +1,4 @@
 <script setup lang="ts">
-import 'virtual:windi.css'
-import 'virtual:windi-devtools'
-import '~/style.css'
-
 import { useRoute } from 'iles'
 
 const route = useRoute()

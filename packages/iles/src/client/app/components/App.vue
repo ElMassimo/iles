@@ -1,18 +1,37 @@
 <script setup lang="ts">
-import { defineAsyncComponent } from 'vue'
+import { computed, watchEffect, shallowRef, h, defineComponent, defineAsyncComponent } from 'vue'
 import { useAppConfig, usePage } from 'iles'
 import { Head } from '@vueuse/head'
-
 import { useRouterLinks } from '../composables/routerLinks'
-import PageWithLayout from './PageWithLayout.vue'
 
-useRouterLinks()
 const { page } = usePage()
-
 const appConfig = useAppConfig()
+useRouterLinks()
+
 const DebugPanel = import.meta.env.DEV && appConfig.debug
   ? defineAsyncComponent(() => import('./DebugPanel.vue'))
   : () => null
+
+const PageWithLayout = defineComponent({
+  async setup () {
+    const { page } = usePage()
+    const layoutFn = computed(() => page.value.layoutFn)
+
+    const resolvedLayout = shallowRef(undefined)
+    watchEffect(async () => {
+      const fn = layoutFn.value
+      resolvedLayout.value = fn === false ? fn : await fn()
+    })
+
+    return { page, resolvedLayout }
+  },
+  render () {
+    const layout = this.resolvedLayout
+    if (layout === undefined) return undefined
+    if (layout === false) return h(this.page)
+    return h(layout, null, { default: () => h(this.page) })
+  },
+})
 </script>
 
 <script lang="ts">

@@ -10,8 +10,7 @@ const open = ref(false)
 const buttonLabel = computed(() => message.value || 'Debug')
 
 const cleanPage = computed(() => {
-  const layoutComponent = pageData.page.value.layout
-  const layout = layoutComponent ? (layoutComponent as any).name : layoutComponent
+  const layout = pageData.page.value.layoutName || 'no layout'
   const frontmatter = pageData.frontmatter.value
   const meta = pageData.meta.value
   return { layout, frontmatter, meta }

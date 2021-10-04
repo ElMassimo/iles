@@ -20,6 +20,10 @@ export function camelCase (str: string) {
   return str.replace(/[^\w_]+(\w)/g, (_, c) => c ? c.toUpperCase() : '')
 }
 
+export function uncapitalize (str: string) {
+  return str.charAt(0).toLowerCase() + str.slice(1)
+}
+
 export function capitalize (str: string) {
   return str.charAt(0).toUpperCase() + str.slice(1)
 }

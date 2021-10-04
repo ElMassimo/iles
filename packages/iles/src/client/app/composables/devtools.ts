@@ -119,7 +119,7 @@ export function installDevtools (app: App, config: AppClientConfig) {
         label: getComponentName(page),
         children: islandNodes,
         tags: [
-          { label: page.layout ? getComponentName(page.layout) : 'no layout', textColor: 0, backgroundColor: 0x42B983 },
+          { label: page.layoutName ?? 'no layout', textColor: 0, backgroundColor: 0x42B983 },
         ],
       }]
     })
@@ -132,7 +132,7 @@ export function installDevtools (app: App, config: AppClientConfig) {
         payload.state = {
           props: [
             { key: 'component', value: page },
-            { key: 'layout', value: page.layout },
+            { key: 'layout', value: page.layoutName },
             { key: 'meta', value: page.meta },
             { key: 'frontmatter', value: page.frontmatter },
           ].filter(x => x),
