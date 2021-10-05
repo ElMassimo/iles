@@ -56,6 +56,7 @@ export default function IslandsPlugins (appConfig: AppConfig): PluginOption[] {
 
   const appPath = resolve(appConfig.srcDir, 'app.ts')
   const layoutsRoot = `/${relative(appConfig.root, appConfig.layoutsDir)}`
+  const defaultLayoutPath = `${layoutsRoot}/default.vue`
 
   const plugins = appConfig.namedPlugins
 
@@ -96,6 +97,9 @@ export default function IslandsPlugins (appConfig: AppConfig): PluginOption[] {
           }
           return NOT_FOUND_COMPONENT_PATH
         }
+
+        // Prevent import analysis failure if the default layout doesn't exist.
+        if (id === defaultLayoutPath) return resolve(root, id.slice(1))
       },
       async load (id) {
         if (id === APP_CONFIG_REQUEST_PATH) {
@@ -113,20 +117,24 @@ export default function IslandsPlugins (appConfig: AppConfig): PluginOption[] {
       handleHotUpdate ({ file, server }) {
         if (file === appPath) return [server.moduleGraph.getModuleById(USER_APP_REQUEST_PATH)!]
       },
-      // Allows to do a glob import in 'src/client/app/layouts.ts'
-      transform (code, id) {
-        if (id.includes('client/app/layouts'))
-          return code.replace(/__LAYOUTS_ROOT__/g, layoutsRoot)
-      },
       configureServer (server) {
         restartOnConfigChanges(appConfig, server)
+
+        const supportedExtensions = ['.html', '.xml', '.json', '.rss', '.atom']
 
         // serve our index.html after vite history fallback
         return () => {
           server.middlewares.use((req, res, next) => {
-            // if (req.url!.endsWith('.html')) {
-            res.statusCode = 200
-            res.end(`
+            // Fallback when the user has not created a default layout.
+            if (req.url?.includes(defaultLayoutPath)) {
+              res.statusCode = 200
+              res.setHeader('content-type', 'text/javascript')
+              res.end('export default false')
+            }
+            else if (supportedExtensions.some(ext => req.url!.endsWith(ext))) {
+              res.statusCode = 200
+              res.setHeader('content-type', 'text/html')
+              res.end(`
 <!DOCTYPE html>
 <html>
   <body>
@@ -134,6 +142,7 @@ export default function IslandsPlugins (appConfig: AppConfig): PluginOption[] {
     <script type="module" src="/@fs/${APP_PATH}/index.js"></script>
   </body>
 </html>`)
+            }
           })
         }
       },
