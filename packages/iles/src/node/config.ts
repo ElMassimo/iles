@@ -32,6 +32,7 @@ export async function resolveConfig (root?: string, env?: ConfigEnv): Promise<Ap
   const srcDir = resolve(root, appConfig.srcDir)
   Object.assign(appConfig, {
     srcDir,
+    pagesDir: resolve(srcDir, appConfig.pagesDir),
     outDir: resolve(root, appConfig.outDir),
     tempDir: resolve(root, appConfig.tempDir),
     layoutsDir: resolve(srcDir, appConfig.layoutsDir),
@@ -59,6 +60,7 @@ async function resolveUserConfig (root: string, configEnv: ConfigEnv) {
   ].flat().filter(p => p) as Plugin[]
 
   Object.assign(config, await applyPlugins(config, configEnv))
+  config.pages.pagesDir = join(config.srcDir, config.pagesDir)
   config.namedPlugins.pages = pages(config.pages)
   config.namedPlugins.markdown = xdm(config.markdown)
 
@@ -108,6 +110,7 @@ function appConfigDefaults (appConfig: AppConfig): Omit<AppConfig, 'namedPlugins
     },
     configPath: resolve(root, 'iles.config.ts'),
     assetsDir: 'assets',
+    pagesDir: 'pages',
     srcDir: 'src',
     outDir: 'dist',
     layoutsDir: 'layouts',
@@ -123,11 +126,6 @@ function appConfigDefaults (appConfig: AppConfig): Omit<AppConfig, 'namedPlugins
       extendRoute (route) {
         const filename = join(root, route.component)
         return { ...route, meta: { ...route.meta, filename } }
-      },
-      onRoutesGenerated (routes) {
-        const notFoundPath = join(appConfig.srcDir, 'pages/404.vue')
-        if (fs.existsSync(notFoundPath))
-          return [...routes, { path: '/:pathMatch(.*)*', component: notFoundPath }]
       },
     },
     vite: viteConfigDefaults(root),

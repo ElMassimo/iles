@@ -72,7 +72,7 @@ export interface AppPlugins {
   router: Pick<VueRouterOptions, 'linkActiveClass' | 'linkExactActiveClass'>
   vite: ViteOptions
   vue: VueOptions
-  pages: PagesOptions
+  pages: Omit<PagesOptions, 'pagesDir' | 'react'>
   components: ComponentOptions
   vueJsx: Parameters<typeof VueJsxPlugin>[0]
   markdown: XdmOptions & FrontmatterOptions
@@ -98,6 +98,7 @@ export interface RequiredConfig {
   debug: boolean
   outDir: string
   layoutsDir: string
+  pagesDir: string
   srcDir: string
   tempDir: string
   assetsDir: string
@@ -114,6 +115,7 @@ export interface AppConfig extends RequiredConfig, AppPlugins {
   base: string
   root: string
   configPath: string
+  pages: PagesOptions
   plugins: Plugin[]
   namedPlugins: {
     pages: PagesPlugin

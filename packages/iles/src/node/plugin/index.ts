@@ -14,7 +14,7 @@ import MagicString from 'magic-string'
 import type { Frontmatter } from '@islands/frontmatter'
 import createDebugger from 'debug'
 import type { AppConfig, AppClientConfig } from '../shared'
-import { APP_PATH, ROUTES_REQUEST_PATH, USER_APP_REQUEST_PATH, APP_CONFIG_REQUEST_PATH } from '../alias'
+import { APP_PATH, ROUTES_REQUEST_PATH, USER_APP_REQUEST_PATH, APP_CONFIG_REQUEST_PATH, NOT_FOUND_COMPONENT_PATH, NOT_FOUND_REQUEST_PATH } from '../alias'
 import { createServer } from '../server'
 import { escapeRegex, serialize, replaceAsync, pascalCase } from './utils'
 import { parseId, parseImports } from './parse'
@@ -79,7 +79,7 @@ export default function IslandsPlugins (appConfig: AppConfig): PluginOption[] {
         root = config.root
         resolveVitePath = config.createResolver()
       },
-      resolveId (id) {
+      async resolveId (id) {
         if (id === ROUTES_REQUEST_PATH)
           return PAGES_REQUEST_PATH
 
@@ -88,6 +88,14 @@ export default function IslandsPlugins (appConfig: AppConfig): PluginOption[] {
 
         if (id === APP_CONFIG_REQUEST_PATH)
           return APP_CONFIG_REQUEST_PATH
+
+        if (id === NOT_FOUND_REQUEST_PATH) {
+          for (const extension of ['vue', 'mdx', 'md', 'jsx']) {
+            const path = resolve(appConfig.pagesDir, `404.${extension}`)
+            if (await exists(path)) return path
+          }
+          return NOT_FOUND_COMPONENT_PATH
+        }
       },
       async load (id) {
         if (id === APP_CONFIG_REQUEST_PATH) {

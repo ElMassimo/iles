@@ -4,6 +4,7 @@ import { Alias, AliasOptions } from 'vite'
 const PKG_ROOT = path.join(__dirname, '../../')
 export const DIST_CLIENT_PATH = path.join(__dirname, '../client')
 export const APP_PATH = path.join(DIST_CLIENT_PATH, 'app')
+export const NOT_FOUND_COMPONENT_PATH = path.join(DIST_CLIENT_PATH, 'app/components/NotFound.vue')
 export const SHARED_PATH = path.join(DIST_CLIENT_PATH, 'shared')
 export const HYDRATION_DIST_PATH = path.join(path.dirname(require.resolve('@islands/hydration/package.json')), 'dist')
 
@@ -19,6 +20,8 @@ export const APP_CONFIG_REQUEST_PATH = `/${APP_CONFIG_ID}`
 
 export const USER_APP_ID = '@islands/user-app'
 export const USER_APP_REQUEST_PATH = `/${USER_APP_ID}`
+
+export const NOT_FOUND_REQUEST_PATH = '@islands/components/NotFound'
 
 export function resolveAliases (root: string): AliasOptions {
   const paths: Record<string, string> = {

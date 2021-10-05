@@ -15,6 +15,12 @@ const newApp = import.meta.env.SSR ? createSSRApp : createClientApp
 
 function createRouter ({ base, ...routerOptions }: Partial<RouterOptions>) {
   if (base === '/') base = undefined
+
+  // Handle 404s in development.
+  if (import.meta.env.DEV)
+    // @ts-ignore
+    routes.push({ path: '/:pathMatch(.*)*', name: 'NotFound', component: () => import('@islands/components/NotFound') })
+
   return createVueRouter({
     scrollBehavior: () => ({ top: 0 }),
     ...routerOptions,
