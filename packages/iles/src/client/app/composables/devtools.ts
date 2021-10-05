@@ -100,7 +100,7 @@ export function installDevtools (app: App, config: AppClientConfig) {
     })
 
     api.on.getInspectorTree(async (payload) => {
-      if (payload.app !== app && payload.inspectorId !== INSPECTOR_ID) return
+      if (payload.app !== app || payload.inspectorId !== INSPECTOR_ID) return
       const userFilter = payload.filter?.toLowerCase() || ''
       const islandNodes = islands.value
         .filter((island: any) => island.id.includes(userFilter) || island.componentName.toLowerCase().includes(userFilter))
@@ -125,7 +125,7 @@ export function installDevtools (app: App, config: AppClientConfig) {
     })
 
     api.on.getInspectorState((payload, ctx) => {
-      if (payload.app !== app && payload.inspectorId !== INSPECTOR_ID) return
+      if (payload.app !== app || payload.inspectorId !== INSPECTOR_ID) return
 
       if (payload.nodeId === pageData.route.value.path) {
         const page = pageData.page.value
