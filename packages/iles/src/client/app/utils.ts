@@ -22,5 +22,5 @@ export function getComponentName ({ displayName, name, _componentTag, __file }: 
 
 function nameFromFile (file: string) {
   const regex = /[\\/]src(?:[\\/](?:pages|layouts))?[\\/](.*?)(?:\.vue)?$/
-  return file.match(regex)?.[1] || file
+  return file?.match(regex)?.[1] || file
 }

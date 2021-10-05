@@ -1,3 +1,7 @@
+<route>
+alias: ['/posts']
+</route>
+
 <script setup lang="ts">
 import site from '~/site'
 import { usePosts } from '~/logic/posts'

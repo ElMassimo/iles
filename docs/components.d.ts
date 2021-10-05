@@ -8,6 +8,7 @@ declare module 'vue' {
     AppButton: typeof import('./src/components/AppButton.vue')['default']
     AppLogo: typeof import('./src/components/AppLogo.vue')['default']
     Author: typeof import('./src/components/Author.vue')['default']
+    BaseLayout: typeof import('./src/layouts/base.vue')['default']
     'Bx:bxMoon': typeof import('~icons/bx/bx-moon')['default']
     'Bx:bxSearch': typeof import('~icons/bx/bx-search')['default']
     'Bx:bxSun': typeof import('~icons/bx/bx-sun')['default']

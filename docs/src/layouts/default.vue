@@ -2,23 +2,24 @@
 import { useRoute } from 'iles'
 
 const route = useRoute()
-let isIndex = $computed(() => route.path.replace(/index.html$/, '') === '/')
+let isHome = $computed(() => route.name === 'index')
+let isDocs = $computed(() => !isHome)
 </script>
 
 <template>
   <TheNavBar/>
-  <div :class="{ content: !isIndex }" class="container !max-w-screen-2xl lg:px-6 mx-auto pt-$navbar-height">
-    <TheSidebar :class="{ 'lg:hidden': isIndex }"/>
+  <div :class="{ content: isDocs }" class="container !max-w-screen-2xl lg:px-6 mx-auto pt-$navbar-height">
+    <TheSidebar :class="{ 'lg:hidden': isHome }"/>
     <div class="grid px-6 md:px-8 py-8 lg:py-12 relative">
-      <HomeHero v-if="isIndex"/>
+      <HomeHero v-if="isHome"/>
       <div class="prose min-w-0">
         <slot/>
       </div>
-      <PageFooter v-if="!isIndex"/>
+      <PageFooter v-if="isDocs"/>
     </div>
-    <TheRightSidebar v-if="!isIndex"/>
+    <TheRightSidebar v-if="isDocs"/>
   </div>
-  <TheFooter v-if="isIndex"/>
+  <TheFooter v-if="isHome"/>
   <Quicklink client:only/>
 </template>
 

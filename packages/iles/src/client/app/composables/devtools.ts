@@ -115,7 +115,7 @@ export function installDevtools (app: App, config: AppClientConfig) {
         }))
       const page = pageData.page.value
       payload.rootNodes = [{
-        id: page.meta.href,
+        id: page.meta?.href,
         label: getComponentName(page),
         children: islandNodes,
         tags: [

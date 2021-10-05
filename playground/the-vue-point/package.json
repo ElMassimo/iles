@@ -9,7 +9,7 @@
   },
   "devDependencies": {
     "@iconify/json": "1.1.393",
-    "@mapbox/rehype-prism": "^0.7.0",
+    "@mapbox/rehype-prism": "^0.8.0",
     "@vueuse/core": "^6.2.0",
     "feed": "^4.2.1",
     "iles": "workspace:*",

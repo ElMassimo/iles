@@ -2,7 +2,7 @@
 import { useRoute } from 'iles'
 
 const route = useRoute()
-let isIndex = $computed(() => route.path.replace(/index.html$/, '') === '/')
+let isIndex = $computed(() => route.name === 'index')
 </script>
 
 <template>

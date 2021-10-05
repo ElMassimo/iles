@@ -36,7 +36,6 @@ function wrapWithIsland (node: MDXJsxFlowElement | MDXJsxTextElement, imports: I
   const { name } = node
   if (!name) return
 
-
   node.name = 'Island'
   node.attributes.unshift(
     {
