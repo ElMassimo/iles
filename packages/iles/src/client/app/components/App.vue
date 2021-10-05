@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import { computed, watchEffect, shallowRef, h, defineComponent, defineAsyncComponent } from 'vue'
 import { useAppConfig, usePage } from 'iles'
+import type { RouteComponent } from 'vue-router'
 import { Head } from '@vueuse/head'
 import { useRouterLinks } from '../composables/routerLinks'
 
-const { page } = usePage()
 const appConfig = useAppConfig()
 useRouterLinks()
 
@@ -13,23 +13,26 @@ const DebugPanel = import.meta.env.DEV && appConfig.debug
   : () => null
 
 const PageWithLayout = defineComponent({
+  name: 'PageWithLayout',
   async setup () {
     const { page } = usePage()
     const layoutFn = computed(() => page.value.layoutFn)
 
-    const resolvedLayout = shallowRef(undefined)
+    const resolvedLayout = shallowRef<undefined | false | RouteComponent>(undefined)
     watchEffect(async () => {
       const fn = layoutFn.value
-      resolvedLayout.value = fn === false ? fn : await fn()
+      resolvedLayout.value = typeof fn === 'function' ? await fn() : fn
     })
-
     return { page, resolvedLayout }
   },
   render () {
     const layout = this.resolvedLayout
+
     if (layout === undefined) return undefined
-    if (layout === false) return h(this.page)
-    return h(layout, null, { default: () => h(this.page) })
+    if (!layout) return h(this.page)
+
+    const key = (this.page as any).__file
+    return h(layout, { key }, { default: () => h(this.page) })
   },
 })
 </script>
@@ -46,7 +49,7 @@ export default {
   </Head>
   <Suspense>
     <router-view>
-      <PageWithLayout :key="(page as any).__file"/>
+      <PageWithLayout/>
     </router-view>
   </Suspense>
   <DebugPanel/>

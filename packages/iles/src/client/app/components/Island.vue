@@ -1,7 +1,6 @@
 <script lang="ts">
 /* eslint-disable no-restricted-syntax */
 import { defineAsyncComponent, defineComponent, h, createCommentVNode } from 'vue'
-import { useRoute } from 'iles'
 import type { PropType, DefineComponent } from 'vue'
 import { asyncMapObject, mapObject, serialize } from '../utils'
 import { newHydrationId, Hydrate, hydrationFns } from '../hydration'
@@ -34,13 +33,12 @@ export default defineComponent({
     const framework = ext === 'js' || ext === 'ts' ? 'vanilla' : 'vue'
 
     return {
-      appConfig: useAppConfig(),
       id: newHydrationId(),
+      strategy,
       framework,
-      route: useRoute(),
+      appConfig: useAppConfig(),
       islandsForPath: import.meta.env.SSR ? useIslandsForPath() : undefined,
       renderVNodes: useVueRenderer(),
-      strategy,
     }
   },
   mounted () {
