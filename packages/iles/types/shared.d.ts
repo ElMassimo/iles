@@ -1,6 +1,6 @@
 /* eslint-disable no-use-before-define */
 import type { UserConfig as ViteOptions, ConfigEnv } from 'vite'
-import type { App, Ref } from 'vue'
+import type { App, Ref, DefineComponent } from 'vue'
 import type { Options as CritterOptions } from 'critters'
 import type { Options as VueOptions } from '@vitejs/plugin-vue'
 import type PagesPlugin, { UserOptions as PagesOptions } from 'vite-plugin-pages'
@@ -30,7 +30,7 @@ export interface PageComponent extends RouteComponent {
   frontmatter: PageFrontmatter
   meta: PageMeta
   layoutName: string
-  layoutFn: false | (() => Promise<RouteComponent>)
+  layoutFn: false | (() => Promise<DefineComponent>)
 }
 
 export interface PageData<T = any> {
