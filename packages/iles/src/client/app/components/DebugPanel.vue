@@ -10,7 +10,7 @@ const open = ref(false)
 const buttonLabel = computed(() => message.value || 'Debug')
 
 const cleanPage = computed(() => {
-  const layout = pageData.page.value.layoutName || 'no layout'
+  const layout = pageData.page.value.layoutName || 'false'
   const frontmatter = pageData.frontmatter.value
   const meta = pageData.meta.value
   return { layout, frontmatter, meta }
@@ -45,7 +45,7 @@ watch(open, (open) => {
 
 <script lang="ts">
 export default {
-  name: 'DebugIslands',
+  name: 'DebugPanel',
 }
 </script>
 

@@ -10,6 +10,7 @@ import App from './components/App.vue'
 import { installPageData } from './composables/pageData'
 import { installAppConfig } from './composables/appConfig'
 import { resetHydrationId } from './hydration'
+import { resolveLayout } from './layout'
 
 const newApp = import.meta.env.SSR ? createSSRApp : createClientApp
 
@@ -46,6 +47,8 @@ export const createApp: CreateAppFactory = async (options = {}) => {
 
   const router = createRouter({ base, ...routerOptions })
   app.use(router)
+  router.beforeResolve(resolveLayout)
+
   // Set the path that should be rendered.
   if (import.meta.env.SSR) {
     router.push(routePath)

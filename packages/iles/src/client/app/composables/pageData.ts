@@ -20,9 +20,13 @@ const computedInPage = <T>(fn: () => T) => {
 }
 const forceUpdate = () => { _lastPageChange.value = new Date() }
 
+export function pageFromRoute (route: RouteLocationNormalizedLoaded) {
+  return (last(route.matched)?.components?.default || {}) as PageComponent
+}
+
 export function installPageData (app: App, currentRoute: Ref<RouteLocationNormalizedLoaded>): PageData {
   const route = computedInPage(() => currentRoute.value)
-  const page = computedInPage(() => last(route.value.matched)?.components?.default as PageComponent || {})
+  const page = computedInPage(() => pageFromRoute(route.value))
   const meta = computedInPage(() => page.value.meta || {})
   const frontmatter = computedInPage(() => page.value.frontmatter || {})
 

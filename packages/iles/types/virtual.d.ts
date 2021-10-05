@@ -6,6 +6,12 @@ declare module '*.vue' {
   export default comp
 }
 
+declare module '@vue/runtime-core' {
+  export interface ComponentCustomProperties {
+    $frontmatter: import('./shared').PageFrontmatter
+  }
+}
+
 declare module '@siteData' {
   const data: string
   export default data

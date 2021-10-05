@@ -1,8 +1,11 @@
 import 'vue-router'
+import type { DefineComponent, Ref } from 'vue'
 
 declare module 'vue-router' {
+
   interface RouteMeta {
     filename: string
+    layout?: Ref<DefineComponent | false>
   }
 }
 
