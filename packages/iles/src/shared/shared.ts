@@ -25,6 +25,7 @@ export type {
   SSGContext,
   SSGRoute,
   UserApp,
+  UserSite,
   UserConfig,
   ViteOptions,
 } from '../../types/shared'

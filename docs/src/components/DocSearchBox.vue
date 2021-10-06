@@ -1,12 +1,16 @@
 <script setup lang="ts">
 import { onMounted } from 'vue'
-import Site from '~/site'
 
 const id = 'docsearch'
 
 onMounted(async () => {
   const docsearch = (await import('@docsearch/js')).default
-  docsearch({ ...Site.algolia, container: `#${id}` })
+  docsearch({
+    appId: 'GERZE019PN',
+    apiKey: 'cdb4a3df8ecf73fadf6bde873fc1b0d2',
+    indexName: 'iles',
+    container: `#${id}`,
+  })
 })
 
 function openSearchModal () {

@@ -1,7 +1,3 @@
-<script setup lang="ts">
-import Site from '~/site'
-</script>
-
 <template>
   <header class="nav-bar bg-html flex items-center border-b">
     <div class="flex flex-1 h-full container !max-w-screen-2xl mx-auto px-2 md:px-6">

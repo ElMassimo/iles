@@ -1,8 +1,7 @@
 <script setup lang="ts">
 import { usePage } from 'iles'
-import site from '~/site'
 
-let { meta } = $(usePage())
+let { meta, site } = $(usePage())
 
 let url = $computed(() => `${site.github}/edit/main/docs/${meta.filename}`)
 </script>

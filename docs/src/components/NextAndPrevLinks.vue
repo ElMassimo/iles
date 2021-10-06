@@ -1,19 +1,16 @@
 <script setup lang="ts">
 import { usePage } from 'iles'
 import { isArray, getSideBarConfig, getFlatSideBarLinks } from '~/logic/utils'
-import site from '~/site'
 
-const { route } = usePage()
-
-let path = $computed(() => route.value.path)
+let { route, site } = $(usePage())
 
 let candidates = $computed(() => {
-  const config = getSideBarConfig(site.sidebar, path)
+  const config = getSideBarConfig(site.sidebar, route.path)
 
   return isArray(config) ? getFlatSideBarLinks(config) : []
 })
 
-let index = $computed(() => candidates.findIndex(item => item.link === path))
+let index = $computed(() => candidates.findIndex(item => item.link === route.path))
 let next = $computed(() => index > -1 && candidates[index + 1])
 let prev = $computed(() => index > -1 && candidates[index - 1])
 let hasLinks = $computed(() => next || prev)

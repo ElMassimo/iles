@@ -6,7 +6,6 @@ import { FileSystemIconLoader } from 'unplugin-icons/loaders'
 import icons from 'unplugin-icons/vite'
 import windicss from 'vite-plugin-windicss'
 import inspect from 'vite-plugin-inspect'
-// import rehypePrism from './src/markdown/prism'
 
 import { valueToEstree } from 'estree-util-value-to-estree'
 import type { Header } from './src/logic/config'
@@ -19,7 +18,7 @@ export default defineConfig({
   },
   markdown: {
     rehypePlugins: [
-      // rehypePrism(),
+      ['@mapbox/rehype-prism', { alias: { markup: ['html', 'vue'] } }],
       () => ({ children }) => {
         const headers: Header[] = []
         children

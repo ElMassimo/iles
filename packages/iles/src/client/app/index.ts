@@ -5,6 +5,7 @@ import { createHead } from '@vueuse/head'
 import routes from '@islands/routes'
 import appConfig from '@islands/app-config'
 import userApp from '@islands/user-app'
+import site from '@islands/user-site'
 import type { CreateAppFactory, SSGContext, RouterOptions } from '../shared'
 import App from './components/App.vue'
 import { installPageData } from './composables/pageData'
@@ -55,9 +56,10 @@ export const createApp: CreateAppFactory = async (options = {}) => {
     await router.isReady()
   }
 
-  const { frontmatter, meta, page, route } = installPageData(app, router.currentRoute)
+  const { frontmatter, meta, page, route } = installPageData(app, site, router.currentRoute)
   Object.defineProperty(app.config.globalProperties, '$frontmatter', { get: () => frontmatter.value })
   Object.defineProperty(app.config.globalProperties, '$meta', { get: () => meta.value })
+  Object.defineProperty(app.config.globalProperties, '$site', { get: () => site })
 
   // Default meta tags
   head.addHeadObjs(ref({
@@ -75,6 +77,7 @@ export const createApp: CreateAppFactory = async (options = {}) => {
     head,
     frontmatter,
     meta,
+    site,
     page,
     route,
     router,

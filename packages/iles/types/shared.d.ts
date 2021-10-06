@@ -38,6 +38,7 @@ export interface PageData<T = any> {
   readonly route: Ref<RouteLocationNormalizedLoaded>
   readonly meta: Ref<PageMeta>
   readonly frontmatter: PageFrontmatter
+  readonly site: UserSite
 }
 
 export type HeadConfig = HeadObject
@@ -90,6 +91,8 @@ export interface UserApp {
   head?: HeadConfig | ((ctx: EnhanceAppContext) => HeadConfig)
   enhanceApp?: (ctx: EnhanceAppContext) => void | Promise<void>
 }
+
+export type UserSite = typeof import('~/site').default
 
 export type PluginOption = Plugin | false | null | undefined
 

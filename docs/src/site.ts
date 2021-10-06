@@ -1,8 +1,6 @@
-import type { SiteConfig } from '~/logic/config'
-
 const twitterHandle = 'ilesjs'
 
-const site: SiteConfig = {
+const site = {
   title: 'îles',
   description: 'Islands of interactivity with Vue in Vite.js',
   year: new Date().getFullYear(),
@@ -16,12 +14,6 @@ const site: SiteConfig = {
   github: 'https://github.com/ElMassimo/iles',
   twitterHandle,
   twitter: `https://twitter.com/${twitterHandle}`,
-
-  algolia: {
-    appId: 'GERZE019PN',
-    apiKey: 'cdb4a3df8ecf73fadf6bde873fc1b0d2',
-    indexName: 'iles',
-  },
 
   nav: [
     { text: 'Guide', link: '/guide' },

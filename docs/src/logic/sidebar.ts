@@ -2,7 +2,6 @@ import { computed, ref } from 'vue'
 import { usePage } from 'iles'
 import { getSideBarConfig } from './utils'
 import type { Header, SideBarItem } from '~/logic/config'
-import site from '~/site'
 
 export const openSideBar = ref(false)
 
@@ -11,7 +10,7 @@ export const toggleSidebar = (to?: boolean) => {
 }
 
 export function useSideBar() {
-  let { route, frontmatter, page } = $(usePage())
+  let { route, frontmatter, page, site } = $(usePage())
 
   return computed(() => {
     // at first, we'll check if we can find the sidebar setting in frontmatter.

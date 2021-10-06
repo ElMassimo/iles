@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import Site from '~/site'
-
 defineEmits(['close'])
 </script>
 
@@ -10,7 +8,7 @@ defineEmits(['close'])
       <carbon:arrow-left/>
     </NavBarLink>
     <div class="flex items-center">
-      <NavBarLink class="text-xl hover:text-primary-soft ml-6" :href="Site.github" external>
+      <NavBarLink class="text-xl hover:text-primary-soft ml-6" :href="$site.github" external>
         <carbon-logo-github/>
       </NavBarLink>
       <DarkModeSwitch/>

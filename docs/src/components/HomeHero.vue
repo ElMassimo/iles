@@ -1,9 +1,8 @@
 <script setup lang="ts">
 import { usePage } from 'iles'
-import site from '~/site'
 import heroImage from '/images/banner.png'
 
-const { frontmatter } = usePage()
+const { frontmatter, site } = usePage()
 </script>
 
 <template>

@@ -14,7 +14,7 @@ import MagicString from 'magic-string'
 import type { Frontmatter } from '@islands/frontmatter'
 import createDebugger from 'debug'
 import type { AppConfig, AppClientConfig } from '../shared'
-import { APP_PATH, ROUTES_REQUEST_PATH, USER_APP_REQUEST_PATH, APP_CONFIG_REQUEST_PATH, NOT_FOUND_COMPONENT_PATH, NOT_FOUND_REQUEST_PATH } from '../alias'
+import { APP_PATH, ROUTES_REQUEST_PATH, USER_APP_REQUEST_PATH, USER_SITE_REQUEST_PATH, APP_CONFIG_REQUEST_PATH, NOT_FOUND_COMPONENT_PATH, NOT_FOUND_REQUEST_PATH } from '../alias'
 import { createServer } from '../server'
 import { escapeRegex, serialize, replaceAsync, pascalCase } from './utils'
 import { parseId, parseImports } from './parse'
@@ -55,6 +55,7 @@ export default function IslandsPlugins (appConfig: AppConfig): PluginOption[] {
   let resolveVitePath: ResolveFn
 
   const appPath = resolve(appConfig.srcDir, 'app.ts')
+  const sitePath = resolve(appConfig.srcDir, 'site.ts')
   const layoutsRoot = `/${relative(appConfig.root, appConfig.layoutsDir)}`
   const defaultLayoutPath = `${layoutsRoot}/default.vue`
 
@@ -84,11 +85,8 @@ export default function IslandsPlugins (appConfig: AppConfig): PluginOption[] {
         if (id === ROUTES_REQUEST_PATH)
           return PAGES_REQUEST_PATH
 
-        if (id === USER_APP_REQUEST_PATH)
-          return USER_APP_REQUEST_PATH
-
-        if (id === APP_CONFIG_REQUEST_PATH)
-          return APP_CONFIG_REQUEST_PATH
+        if (id === APP_CONFIG_REQUEST_PATH || id === USER_APP_REQUEST_PATH || id === USER_SITE_REQUEST_PATH)
+          return id
 
         if (id === NOT_FOUND_REQUEST_PATH) {
           for (const extension of ['vue', 'mdx', 'md', 'jsx']) {
@@ -108,14 +106,17 @@ export default function IslandsPlugins (appConfig: AppConfig): PluginOption[] {
           return `export default ${serialize(clientConfig)}`
         }
 
-        if (id === USER_APP_REQUEST_PATH) {
-          if (!await exists(appPath)) return 'export default {}'
-          this.addWatchFile(appPath)
-          return transformWithEsbuild(await fs.readFile(appPath, 'utf-8'), appPath)
+        const userFilename = (id === USER_APP_REQUEST_PATH && appPath)
+          || (id === USER_SITE_REQUEST_PATH && sitePath)
+        if (userFilename) {
+          this.addWatchFile(userFilename)
+          if (!await exists(userFilename)) return 'export default {}'
+          return transformWithEsbuild(await fs.readFile(userFilename, 'utf-8'), userFilename)
         }
       },
       handleHotUpdate ({ file, server }) {
         if (file === appPath) return [server.moduleGraph.getModuleById(USER_APP_REQUEST_PATH)!]
+        if (file === sitePath) return [server.moduleGraph.getModuleById(USER_SITE_REQUEST_PATH)!]
       },
       configureServer (server) {
         restartOnConfigChanges(appConfig, server)

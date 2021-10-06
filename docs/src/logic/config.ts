@@ -1,4 +1,4 @@
-export interface SiteConfig extends Record<string, any> {
+export interface SiteConfig {
   nav?: NavItem[] | false
   sidebar?: SideBarConfig | MultiSideBarConfig
 }

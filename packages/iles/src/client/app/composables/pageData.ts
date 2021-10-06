@@ -1,6 +1,6 @@
 import { App, InjectionKey, Ref, computed, ref, inject } from 'vue'
 import { RouteLocationNormalizedLoaded } from 'vue-router'
-import { PageData, PageComponent } from '../../shared'
+import type { PageData, PageComponent, UserSite } from '../../shared'
 
 export const dataSymbol: InjectionKey<PageData> = Symbol('[iles-page-data]')
 
@@ -24,13 +24,13 @@ export function pageFromRoute (route: RouteLocationNormalizedLoaded) {
   return (last(route.matched)?.components?.default || {}) as PageComponent
 }
 
-export function installPageData (app: App, currentRoute: Ref<RouteLocationNormalizedLoaded>): PageData {
+export function installPageData (app: App, site: UserSite, currentRoute: Ref<RouteLocationNormalizedLoaded>): PageData {
   const route = computedInPage(() => currentRoute.value)
   const page = computedInPage(() => pageFromRoute(route.value))
   const meta = computedInPage(() => page.value.meta || {})
   const frontmatter = computedInPage(() => page.value.frontmatter || {})
 
-  const pageData: PageData = { route, page, meta, frontmatter }
+  const pageData: PageData = { route, page, meta, frontmatter, site }
   app.provide(dataSymbol, pageData)
   return pageData
 }

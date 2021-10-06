@@ -26,3 +26,8 @@ declare module '@islands/user-app' {
   const config: import('./shared').UserApp
   export default config
 }
+
+declare module '@islands/user-site' {
+  const config: import('./shared').UserSite
+  export default config
+}

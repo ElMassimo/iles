@@ -135,6 +135,7 @@ export function installDevtools (app: App, config: AppClientConfig) {
             { key: 'layout', value: page.layoutName },
             { key: 'meta', value: page.meta },
             { key: 'frontmatter', value: page.frontmatter },
+            { key: 'site', value: pageData.site },
           ].filter(x => x),
         }
         return

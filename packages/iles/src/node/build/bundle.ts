@@ -3,11 +3,9 @@ import { resolve } from 'path'
 import type { RollupOutput } from 'rollup'
 import type { Plugin } from 'vite'
 import { build, BuildOptions, mergeConfig as mergeViteConfig, UserConfig as ViteUserConfig } from 'vite'
-import { resolvePages, resolveOptions as resolvePageOptions } from 'vite-plugin-pages'
 import { APP_PATH } from '../alias'
 import { AppConfig } from '../shared'
 import IslandsPlugins from '../plugin'
-import { fileToAssetName } from './utils'
 
 type Entrypoints = Record<string, string>
 
@@ -15,7 +13,7 @@ type Entrypoints = Record<string, string>
 //
 // Multi-entry build: every page is considered an entry chunk.
 export async function bundle (config: AppConfig) {
-  const entrypoints = await resolveEntrypoints(config)
+  const entrypoints = resolveEntrypoints(config)
 
   const [clientResult, serverResult] = await Promise.all([
     bundleWithVite(config, entrypoints, { ssr: false }),
@@ -48,18 +46,11 @@ async function bundleWithVite (config: AppConfig, entrypoints: Entrypoints, { ss
   } as ViteUserConfig)) as RollupOutput
 }
 
-// Internal: Each page is treated as an entrypoint, so that stylesheets can be
-// added separately as needed.
-async function resolveEntrypoints (config: AppConfig) {
-  const entrypoints: Entrypoints = {
+// Internal: Currently SSG supports a single stylesheet for all pages.
+function resolveEntrypoints (config: AppConfig): Entrypoints {
+  return {
     app: resolve(APP_PATH, 'index.js'),
   }
-  // TODO: Replace with pages.api.getPages()
-  const pages = await resolvePages(resolvePageOptions(config.pages, config.root))
-  pages.forEach((page) => {
-    entrypoints[fileToAssetName(page.route)] = page.filepath
-  })
-  return entrypoints
 }
 
 // Internal: Removes any client JS files from the bundle, islands will be used

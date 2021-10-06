@@ -1,3 +1,9 @@
+<!-- <script client:idle lang="ts">
+import { listen } from 'quicklink'
+if (import.meta.env.PROD) listen()
+</script>
+ -->
+
 <script setup lang="ts">
 import { useRoute } from 'iles'
 
@@ -28,5 +34,4 @@ let isIndex = $computed(() => route.name === 'index')
       <slot/>
     </main>
   </div>
-  <Quicklink client:only/>
 </template>

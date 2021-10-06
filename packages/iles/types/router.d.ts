@@ -5,6 +5,7 @@ declare module '@vue/runtime-core' {
   export interface ComponentCustomProperties {
     $frontmatter: import('./shared').PageFrontmatter
     $meta: import('./shared').PageMeta
+    $site: import('./shared').UserSite
   }
 }
 

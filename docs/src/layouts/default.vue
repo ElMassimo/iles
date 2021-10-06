@@ -1,3 +1,8 @@
+<!-- <script client:idle lang="ts">
+import { listen } from 'quicklink'
+if (import.meta.env.PROD) listen()
+</script> -->
+
 <script setup lang="ts">
 import { useRoute } from 'iles'
 
@@ -20,7 +25,6 @@ let isDocs = $computed(() => !isHome)
     <TheRightSidebar v-if="isDocs"/>
   </div>
   <TheFooter v-if="isHome"/>
-  <Quicklink client:only/>
 </template>
 
 <style scoped lang="postcss">

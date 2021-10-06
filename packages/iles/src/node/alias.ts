@@ -21,6 +21,9 @@ export const APP_CONFIG_REQUEST_PATH = `/${APP_CONFIG_ID}`
 export const USER_APP_ID = '@islands/user-app'
 export const USER_APP_REQUEST_PATH = `/${USER_APP_ID}`
 
+export const USER_SITE_ID = '@islands/user-site'
+export const USER_SITE_REQUEST_PATH = `/${USER_SITE_ID}`
+
 export const NOT_FOUND_REQUEST_PATH = '@islands/components/NotFound'
 
 export function resolveAliases (root: string): AliasOptions {
@@ -28,6 +31,7 @@ export function resolveAliases (root: string): AliasOptions {
     '/@shared': SHARED_PATH,
     [ROUTES_ID]: ROUTES_REQUEST_PATH,
     [USER_APP_ID]: USER_APP_REQUEST_PATH,
+    [USER_SITE_ID]: USER_SITE_REQUEST_PATH,
     [APP_CONFIG_ID]: APP_CONFIG_REQUEST_PATH,
   }
 
