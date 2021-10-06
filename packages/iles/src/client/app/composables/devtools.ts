@@ -56,7 +56,7 @@ const devtools = {
       event: { time, title: component, subtitle: hydrated, data },
     })
 
-    if (appConfig?.debug) {
+    if (appConfig?.debug === 'log') {
       const { el, slots } = event
       console.info(`🏝 hydrated ${component}`, el, slots)
     }

@@ -12,6 +12,7 @@ import { valueToEstree } from 'estree-util-value-to-estree'
 import type { Header } from './src/logic/config'
 
 export default defineConfig({
+  debug: 'log',
   siteUrl: 'https://vue-iles.netlify.app',
   components: {
     resolvers: [iconsResolver({ componentPrefix: '', customCollections: ['iles'] })],

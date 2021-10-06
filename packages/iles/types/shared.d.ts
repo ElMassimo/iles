@@ -95,7 +95,7 @@ export type PluginOption = Plugin | false | null | undefined
 
 export interface RequiredConfig {
   siteUrl: string
-  debug: boolean
+  debug: boolean | 'log'
   outDir: string
   layoutsDir: string
   pagesDir: string
