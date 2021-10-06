@@ -6,6 +6,5 @@ export const tsup: Options = {
   format: ['esm', 'cjs'],
   external: [
     'vue',
-    'iles/dist/client/app/composables/devtools',
   ],
 }

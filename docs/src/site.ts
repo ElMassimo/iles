@@ -24,7 +24,7 @@ const site: SiteConfig = {
   },
 
   nav: [
-    { text: 'Guide', link: '/guide/' },
+    { text: 'Guide', link: '/guide' },
     { text: 'Config', link: '/config' },
   ],
 
@@ -34,7 +34,7 @@ const site: SiteConfig = {
         text: 'Guide',
         children: [
           { text: 'Introduction', link: '/introduction' },
-          { text: 'Getting Started', link: '/guide/' },
+          { text: 'Getting Started', link: '/guide' },
           { text: 'Development', link: '/guide/development' },
           { text: 'Deployment', link: '/guide/deployment' },
           { text: 'Plugins', link: '/guide/plugins' },

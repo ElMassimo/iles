@@ -3,7 +3,7 @@ import { h, DefineComponent, FunctionalComponent } from 'vue'
 export interface Post extends Record<string, any> {
   title: string
   href: string
-  date: Date | number
+  date: Date
   content: DefineComponent
 }
 

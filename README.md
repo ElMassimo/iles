@@ -206,7 +206,7 @@ import windicss from 'vite-plugin-windicss'
 export default defineConfig({
   vite: {
     plugins: [
-      icons(),
+      icons({ autoInstall: true }),
       windicss(),
     ],
   },

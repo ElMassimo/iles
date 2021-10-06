@@ -24,11 +24,11 @@ export function isExternal(path: string): boolean {
   return outboundRE.test(path)
 }
 
-export function isActive(route: RouteRecordRaw, path?: string): boolean {
+export function isActive(currentPath: string, path?: string): boolean {
   if (path === undefined)
     return false
 
-  const routePath = normalize(route.path)
+  const routePath = normalize(currentPath)
   const pagePath = normalize(path)
 
   return routePath === pagePath

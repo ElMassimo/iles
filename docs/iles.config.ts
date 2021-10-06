@@ -72,6 +72,7 @@ export default defineConfig({
     },
     plugins: [
       icons({
+        autoInstall: true,
         customCollections: {
           iles: FileSystemIconLoader('./images'),
         },

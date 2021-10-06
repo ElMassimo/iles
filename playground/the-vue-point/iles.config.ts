@@ -25,7 +25,7 @@ export default defineConfig({
       include: ['quicklink'],
     },
     plugins: [
-      icons(),
+      icons({ autoInstall: true }),
       windicss(),
       Boolean(process.env.DEBUG) && inspect(),
     ],

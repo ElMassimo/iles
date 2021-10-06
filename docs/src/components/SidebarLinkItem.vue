@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { computed } from 'vue'
 import { useRoute } from 'iles'
 import appConfig from '@islands/app-config'
 
@@ -36,10 +35,10 @@ function resolveLink(base: string, path?: string): string | undefined {
   return joinUrl(base, path)
 }
 
-const active = computed(() => isActive(route, props.item.link))
+let active = $computed(() => isActive(route.path, props.item.link))
 const link = resolveLink(appConfig.base, props.item.link)
 
-const style = computed(() => ([
+let style = $computed(() => ([
   'transition duration-100',
   props.header
     ? 'font-bold py-2'
@@ -61,7 +60,7 @@ const style = computed(() => ([
       dark:text-gray-400
       hover:(text-primary dark:text-primary)`,
   {
-    '!border-primary dark:border-primary !text-primary dark:text-primary': active.value,
+    '!border-primary dark:border-primary !text-primary dark:text-primary': active,
   },
 ]))
 
