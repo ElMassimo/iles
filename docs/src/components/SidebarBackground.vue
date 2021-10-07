@@ -15,7 +15,7 @@ import { openSideBar } from '~/logic/sidebar'
         backdrop-filter backdrop-blur-sm
         dark:bg-dark-800 dark:bg-opacity-80
         bg-opacity-50
-        lg:hidden
+        md:hidden
       "
       @click="openSideBar = false"
     />

@@ -1,10 +1,7 @@
-pre.highlight {
-  @media (min-width: 120ch) {
-    max-width: calc(80ch + 4rem);
-    width: fit-content;
-  }
-
+pre[class*='language-'],
+.prose pre {
   background: var(--h-background);
+  border-radius: 0.2rem;
   color: var(--h-foreground);
   font-size: 14px;
   hyphens: none;
@@ -17,131 +14,146 @@ pre.highlight {
   word-spacing: normal;
 }
 
+.prose pre:not([class*='language-']) {
+  line-height: 1.3em;
+}
+
 /* Selection */
 * ::selection {
   background: var(--bg-highlight);
 }
 
-.highlight {
-  background: var(--h-background);
-  color: var(--h-foreground);
-}
-
-/* --- Generics --- */
-.ge { font-style: italic; } /* emph */
-.gh, /* heading */
-.gu, /* subheading */
-.gs {
-  font-weight: bold;
-} /* strong */
-
-/* --- Operators --- */
-.o, /* Operator */
-.gu, /* subheading */
-.ow {
-  color: var(--h-operator);
-} /* Word */
-
-/* --- Comments --- */
-.c, /* Comment */
-.cm, /* Multi-line */
-.cp, /* Preproc */
-.c1, /* Single */
-.sd /* Doc */
-.cs { /* Special */
+/* Tokens */
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
   color: var(--h-comment);
-  font-style: italic;
+  font-style: var(--h-comment-style);
 }
 
-.ss { /* Symbol */
-  color: var(--h-symbol);
-}
-
-/* --- Names --- */
-.nt { color: var(--h-builtin); } /* Tag */
-.nn,
-.nc { color: var(--h-class); } /* Class */
-.no { color: var(--h-constant); } /* Constant */
-.nd { color: var(--h-decorator); } /* Decorator */
-.n, /* Name */
-.nx, /* Other */
-.nb {
-  color: var(--h-foreground);
-} /* Builtin */
-
-/* shell commands */
-
-.bp, /* Builtin.Pseudo */
-.ni, /* Entity */
-.nl, /* Label */
-.sc, /* Char */
-.l, /* Literal */
-.p, /* Punctuation */
-.gh, /* heading */
-.w { /* Whitespace */ /* shouldn't this have a background-color instead ? */
-  color: var(--h-literal);
-}
-
-.gp,
-.na,
-.kn,
-.kt {
+.token.namespace {
   color: var(--h-namespace);
-} /* Namespace */
-.py { /* Property */
-  color: var(--h-property);
 }
 
-/* --- Keywords --- */
-.nf { color: var(--h-function); } /* Function */
-.k, /* Keyword */
-.kc, /* Constant */
-.kd, /* Declaration */
-.kp, /* Pseudo */
-.kr { /* Reserved */
-  color: var(--h-keyword);
+.token.interpolation {
+  color: var(--h-interpolation);
 }
 
-/* --- Variables --- */
-.ne, /* Exception */
-.nv, /* Variable */
-.vc, /* Class */
-.vg, /* Global */
-.err, /* Error */
-.gd, /* deleted */
-.vi { /* Instance */
-  color: var(--h-variable);
-}
-
-/* --- Numerals --- */
-.m, /* Number */
-.il, /* Long */
-.mf, /* Float */
-.mh, /* Hex */
-.mi, /* Integer */
-.mo, /* Oct */
-.se, /* Escape */
-.si { /* Interpol */
-  color: var(--h-number);
-}
-
-/* --- Strings --- */
-.s { color: var(--h-selector); } /* String */
-.sr, /* Regex */
-.sb, /* Backtick */
-.s2, /* Double */
-.sh, /* Heredoc */
-.sx, /* Other */
-.s1, /* Single */
-.ld, /* Date */
-.gi { /* inserted */
+.token.string {
   color: var(--h-string);
 }
 
-.language-diff .gd {
+.token.punctuation {
+  color: var(--h-punctuation);
+}
+
+.token.operator {
+  color: var(--h-operator);
+}
+
+.token.keyword.module,
+.token.keyword.control-flow {
+  color: var(--h-keyword-control);
+}
+
+.token.url,
+.token.symbol,
+.token.inserted {
+  color: var(--h-symbol);
+}
+
+.token.constant {
+  color: var(--h-constant);
+}
+
+.token.string.url {
+  text-decoration: var(--h-url-decoration);
+}
+
+.token.boolean,
+.language-json .token.boolean {
+  color: var(--h-boolean);
+}
+
+.token.number,
+.language-json .token.number {
+  color: var(--h-number);
+}
+
+.token.variable {
+  color: var(--h-variable);
+}
+
+.token.keyword {
+  color: var(--h-keyword);
+}
+
+.token.atrule,
+.token.attr-value,
+.token.selector {
+  color: var(--h-selector);
+}
+
+.token.function {
+  color: var(--h-function);
+}
+
+.token.deleted {
   color: var(--h-deleted);
 }
 
-.language-diff .gi {
-  color: var(--h-literal);
+.token.important,
+.token.bold {
+  font-weight: bold;
+}
+
+.token.italic {
+  font-style: italic;
+}
+
+.token.class-name {
+  color: var(--h-class);
+}
+
+.token.tag,
+.token.builtin {
+  color: var(--h-builtin);
+}
+
+.token.attr-name,
+.token.property,
+.token.entity {
+  color: var(--h-property);
+}
+
+.language-json .token.property {
+  color: var(--h-json-property);
+}
+
+.token.regex {
+  color: var(--h-regex);
+}
+
+.token.decorator,
+.token.annotation {
+  color: var(--h-decorator);
+}
+
+/* overrides color-values for the Line Numbers plugin
+ * http://prismjs.com/plugins/line-numbers/
+ */
+.line-numbers .line-numbers-rows {
+  border-right-color: var(--h-line-number);
+}
+
+.line-numbers-rows > span:before {
+  color: var(--h-line-number-gutter);
+}
+
+/* overrides color-values for the Line Highlight plugin
+  * http://prismjs.com/plugins/line-highlight/
+  */
+.line-highlight {
+  background: var(--h-line-highlight-background);
 }

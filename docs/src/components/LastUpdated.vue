@@ -1,17 +1,8 @@
-<script setup lang="ts">
-import { usePage } from 'iles'
-
-let { meta } = $(usePage())
-
-let hasLastUpdated = $computed(() => Boolean(meta.lastUpdated))
-
-// TODO: Use client:idle and RelativeTime component.
-let datetime = $computed(() => meta.lastUpdated.toLocaleString?.('en-US'))
-</script>
-
 <template>
-  <p v-if="hasLastUpdated && datetime" class="inline-block">
+  <p v-if="$meta.lastUpdated" class="text-sm">
     <span class="inline-block font-medium">Last Updated:</span>
-    <span class="inline-block ml-1.5 font-normal">{{ datetime }}</span>
+    <span class="inline-block ml-1.5 font-normal">
+      <TimeAgo :date="$meta.lastUpdated" client:idle/>
+    </span>
   </p>
 </template>

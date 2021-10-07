@@ -10,9 +10,7 @@ interface HeaderWithChildren extends Header {
 
 let { meta } = $(usePage())
 
-const headers = computed(() => {
-  return meta.headers ? resolveHeaders(meta.headers) : null
-})
+const headers = computed(() => resolveHeaders(meta.headers || []))
 
 function resolveHeaders(headers: Header[]): SideBarItem[] {
   return mapHeaders(groupHeaders(headers))
@@ -38,26 +36,15 @@ function mapHeaders(headers: HeaderWithChildren[]): SideBarItem[] {
     children: header.children ? mapHeaders(header.children) : undefined,
   }))
 }
-
-const hasHeaders = computed(() => headers.value && headers.value?.length > 0)
-
 </script>
 
 <template>
-  <ul v-if="hasHeaders" class="py-4 pl-4 lg:pt-10">
-    <li>
-      <SidebarLinkItem
-        :item="{
-          text: 'Table of Content',
-        }"
-        class="px-2"
-        :header="true"
-      />
-      <ul class="mb-2">
-        <li v-for="child in headers" :key="child.text">
-          <SidebarLinkItem :item="child" :table="true" />
-        </li>
-      </ul>
-    </li>
-  </ul>
+  <div v-if="headers.length > 0" class="py-4 pl-4 lg:pt-10">
+    <SidebarLinkItem class="px-2" header :item="{ text: 'Table of Contents' }"/>
+    <ul class="mb-2">
+      <li v-for="child in headers" :key="child.text">
+        <SidebarLinkItem :item="child" :table="true" />
+      </li>
+    </ul>
+  </div>
 </template>

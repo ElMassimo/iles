@@ -156,7 +156,7 @@ function appConfigDefaults (appConfig: AppConfig): Omit<AppConfig, 'namedPlugins
           ...routeMeta,
           filename: relative(root, absoluteFilename),
         }
-        if (path !== undefined) meta.href = path
+        if (path !== undefined) meta.href = `${appConfig.base}${path.slice(1)}`
         return { ...frontmatter, ...routeMatter, meta }
       },
     },

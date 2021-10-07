@@ -14,8 +14,8 @@ let isDocs = $computed(() => !isHome)
 <template>
   <TheNavBar/>
   <div :class="{ content: isDocs }" class="container !max-w-screen-2xl lg:px-6 mx-auto pt-$navbar-height">
-    <TheSidebar :class="{ 'lg:hidden': isHome }"/>
-    <div class="grid px-6 md:px-8 py-8 lg:py-12 relative">
+    <TheSidebar :class="{ 'md:hidden': isHome }"/>
+    <div class="grid px-6 md:px-8 relative" :class="{ 'py-8 lg:py-12': isDocs }">
       <HomeHero v-if="isHome"/>
       <div class="prose min-w-0">
         <slot/>
@@ -35,7 +35,19 @@ let isDocs = $computed(() => !isHome)
   gap: 0px 12px;
 }
 
+@screen md {
+  .content {
+    grid-template-columns: 150px 1fr;
+  }
+}
+
 @screen lg {
+  .content {
+    grid-template-columns: 250px 1fr;
+  }
+}
+
+@screen xl {
   .content {
     grid-template-columns: 250px 1fr 250px;
   }

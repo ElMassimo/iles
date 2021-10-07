@@ -18,7 +18,7 @@ export default defineConfig({
   },
   markdown: {
     rehypePlugins: [
-      ['@mapbox/rehype-prism', { alias: { markup: ['html', 'vue'] } }],
+      ['@mapbox/rehype-prism', { alias: { markup: ['html', 'vue'], markdown: ['mdx'] } }],
       () => ({ children }) => {
         const headers: Header[] = []
         children

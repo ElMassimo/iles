@@ -25,11 +25,13 @@ const site = {
       {
         text: 'Guide',
         children: [
-          { text: 'Introduction', link: '/introduction' },
+          { text: 'Introduction', link: '/guide/introduction' },
           { text: 'Getting Started', link: '/guide' },
           { text: 'Development', link: '/guide/development' },
+          { text: 'Hydration', link: '/guide/hydration' },
           { text: 'Deployment', link: '/guide/deployment' },
           { text: 'Plugins', link: '/guide/plugins' },
+          { text: 'Comparisons', link: '/guide/comparisons' },
         ],
       },
     ],

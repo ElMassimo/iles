@@ -18,7 +18,7 @@ let hasLinks = $computed(() => next || prev)
 
 <template>
   <div v-if="hasLinks">
-    <div class="flex border-t border-$windi-bc pt-6 justify-between items-center">
+    <div class="flex border-t pt-6 justify-between items-center">
       <div class="max-w-1/2 flex items-center">
         <a v-if="prev" class="nav-link" :href="prev.link">
           <carbon-arrow-left class="mr-3" />

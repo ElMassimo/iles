@@ -39,18 +39,16 @@ let active = $computed(() => isActive(route.path, props.item.link))
 const link = resolveLink(appConfig.base, props.item.link)
 
 let style = $computed(() => ([
-  'transition duration-100',
+  'transition duration-100 inline-flex',
   props.header
     ? 'font-bold py-2'
     : props.table
-      ? `inline-flex
-      items-center
+      ? `items-center
       justify-between py-2 px-3 w-full rounded-md
       text-sm text-gray-700
       dark:text-gray-400
-      hover:(text-primary dark:text-primary bg-$windi-hover-bg)`
+      hover:(text-primary dark:text-primary bg-$bg-highlight)`
       : `relative
-      inline-flex
       items-center
       justify-between
       pl-3 py-1

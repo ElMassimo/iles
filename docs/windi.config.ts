@@ -14,7 +14,7 @@ export default defineConfig({
   theme: {
     extend: {
       borderColor: theme => ({
-        DEFAULT: 'var(--bg-soft)',
+        DEFAULT: 'var(--br-normal)',
       }),
       colors: {
         html: 'var(--bg-html)',

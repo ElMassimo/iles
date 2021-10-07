@@ -28,7 +28,7 @@ export function useRouterLinks () {
           && hostname === currentUrl.hostname
           && !(extMatch && extMatch[0] !== '.html')
         ) {
-          e.preventDefault()
+          if (pathname !== currentUrl.pathname || !hash) e.preventDefault()
           if (pathname !== currentUrl.pathname) router.push({ path: pathname, hash })
         }
       }

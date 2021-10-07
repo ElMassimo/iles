@@ -1,12 +1,67 @@
 ---
-title: Config
+title: Configuration
 sidebar: auto
 ---
 
-# Configuration
+[config reference]: https://vitejs.dev/config/
 
-## Build Options
+# { title }
 
-### siteUrl
+The following section is an overview of basic configuration for <iles/>
 
-## App Config
+Most of the options discussed are specific to <iles/>, for the rest of the available configuration options please check Vite's [config reference].
+
+## Configuring Vite <ViteLogo/>
+
+You can configure Vite.js as [usual](https://vitejs.dev/config/).
+
+Alternatively, you can configure <iles/> using an `iles.config.ts` file.
+
+Example:
+
+```ts
+import { defineConfig } from 'iles'
+
+import iconsResolver from 'unplugin-icons/resolver'
+
+import icons from 'unplugin-icons/vite'
+import windicss from 'vite-plugin-windicss'
+
+export default defineConfig({
+  vite: {
+    plugins: [
+      icons({ autoInstall: true }),
+      windicss(),
+    ],
+  },
+  components: {
+    resolvers: [iconsResolver({ componentPrefix: '' })],
+  },
+  markdown: {
+    extendFrontmatter (frontmatter, filename) {
+      if (filename.includes('/posts/'))
+        return { ...frontmatter, layout: 'post' }
+    },
+  },
+})
+```
+
+To configure the app, you may use `src/app.ts`:
+
+```ts
+import { defineApp } from 'iles'
+
+export default defineApp({
+  head: {
+    title: 'Site Title',
+    meta: [
+      { name: 'description', content: 'Site Description.' },
+    ],
+  },
+  enhanceApp ({ app, head, router }) {
+    // Configure the app to add plugins.
+  },
+})
+```
+
+You can use TypeScript autocompletion to discover available options.

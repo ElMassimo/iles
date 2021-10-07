@@ -4,7 +4,7 @@
     href="/"
     :aria-label="`${$site.title}, back to the main page`"
   >
-    <iles:Logo class="inline-flex mr-2 lg:mr-3 h-6 lg:h-8" alt="Logo"/>
-    {{ $site.title }}
+    <iles:Logo class="inline-flex mr-2 h-7 md:h-8" alt="Logo"/>
+    <iles:Text class="inline-flex fill-intense stroke-intense stroke-2 h-9 md:h-10 mb-1" alt="îles"/>
   </a>
 </template>

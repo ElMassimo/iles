@@ -1,0 +1,57 @@
+---
+title: Development
+---
+
+# {title}
+
+In this section, we'll cover the basics to start building an <iles/> application.
+
+## Usage 🚀
+
+The `iles` executable provides two commands, `serve` and `build`.
+
+- <kbd>iles serve</kbd>: Starts the development server
+- <kbd>iles build</kbd>: Creates a production build of the site
+
+It's highly recommended to add the following shortcuts to your `package.json`:
+
+```json
+  "scripts": {
+    "dev": "iles --open",
+    "build": "iles build",
+    "preview": "vite preview --open"
+  },
+```
+
+- <kbd>npm run dev</kbd>: Starts the development server
+- <kbd>npm run build</kbd>: Creates a production build of the site
+
+### Default App Structure 📂
+
+```
+src/
+ ├── components/
+ │    ├── ReadingTime.vue
+ │    └── Author.vue
+ │
+ ├── layouts/
+ │    ├── default.vue
+ │    └── posts.vue
+ │
+ ├── pages/
+ │    ├── posts/
+ │    │    ├── intro.mdx
+ │    │    └── goodbye.mdx
+ │    ├── about.vue
+ │    └── index.mdx
+ │
+ ├── app.ts
+ └── site.ts
+```
+
+Components are auto-imported, but if you decide to add helpers or logic, you can
+use `~/` which is aliased to the `src` dir. For example:
+
+```ts
+import { useDark } from '~/logic/dark'
+```

@@ -2,6 +2,7 @@ import type { Program, VariableDeclarator } from 'estree'
 import { valueToEstree } from 'estree-util-value-to-estree'
 import { load as yaml } from 'js-yaml'
 import { parse as toml } from 'toml'
+import { name as isValidIdentifierName } from 'estree-util-is-identifier-name'
 import type { Pluggable, Plugin } from 'unified'
 import type { Node, Data, Parent } from 'unist'
 
@@ -31,7 +32,7 @@ const plugin: FrontmatterPlugin = (options?: FrontmatterOptions) => (ast, file) 
   const nodes = parent.children as (Node<Data> & { value: string })[]
   const rawMatter = mapFind(nodes, parseFrontmatter) || {}
   const { meta, layout: _, ...frontmatter } = options?.extendFrontmatter?.(rawMatter, file.path) || rawMatter
-  parent.children.unshift(defineConsts({ meta, frontmatter }))
+  parent.children.unshift(defineConsts({ ...frontmatter, meta, frontmatter }))
 }
 
 function parseFrontmatter ({ type, value }: { type: string; value: string }) {
@@ -52,15 +53,37 @@ function defineConsts (values: Record<string, any>) {
           {
             type: 'VariableDeclaration',
             kind: 'const',
-            declarations: Object.entries(values).map(([key, value]) => ({
-              type: 'VariableDeclarator',
-              id: { type: 'Identifier', name: key },
-              init: valueToEstree(value),
-            } as VariableDeclarator)),
+            declarations: Object.entries(values).map(([key, value]) => {
+              if (!isValidIdentifierName(key))
+                throw new Error(`Frontmatter keys should be valid identifiers, got: ${JSON.stringify(key)}`)
+
+              return {
+                type: 'VariableDeclarator',
+                id: { type: 'Identifier', name: key },
+                init: key === 'frontmatter'
+                  ? shorthandObjectExpression(value)
+                  : valueToEstree(value),
+              } as VariableDeclarator
+            }),
           },
         ],
       } as Program,
     },
+  }
+}
+
+// Example:
+//  const frontmatter = { title, source }
+function shorthandObjectExpression (value: Record<string, any>) {
+  return {
+    type: 'ObjectExpression',
+    properties: Object.keys(value).map(id => ({
+      type: 'Property',
+      key: { type: 'Identifier', name: id },
+      value: { type: 'Identifier', name: id },
+      kind: 'init',
+      shorthand: true,
+    })),
   }
 }
 

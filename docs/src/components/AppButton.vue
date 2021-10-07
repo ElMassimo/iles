@@ -24,7 +24,7 @@ const linkClass = computed(() => ([
   px-3 py-2
   border border-transparent rounded-md
   bg-primary
-  hover:bg-primary-600
+  hover:bg-primary-intense
   shadow-sm
   text-base text-white font-medium
   transition duration-50

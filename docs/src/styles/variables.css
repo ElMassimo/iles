@@ -1,6 +1,7 @@
 :root {
   --navbar-height: 3.5rem;
   --full-viewport: calc(100vh - var(--navbar-height));
+  --br-normal: rgba(126, 135, 160, 0.15);
   --bg-html: theme('colors.white');
   --bg-scrollbar-track: var(--bg-highlight);
   --bg-scrollbar-thumb: var(--bg-soft);
@@ -26,6 +27,7 @@
 
 html.dark {
   --bg-html: theme('colors.warm-gray.900');
+  --br-normal: rgba(226, 235, 255, 0.15);
   --bg-soft: rgba(195, 185, 185, 0.15);
   --fc-soft: theme('colors.warm-gray.500');
   --fc: theme('colors.warm-gray.300');
