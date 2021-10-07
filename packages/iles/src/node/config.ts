@@ -185,6 +185,7 @@ function viteConfigDefaults (root: string): ViteOptions {
     root,
     resolve: {
       alias: resolveAliases(root),
+      dedupe: ['vue', 'vue-router', '@vueuse/head', '@vue/devtools-api'],
     },
     server: {
       fs: { allow: [root, DIST_CLIENT_PATH, HYDRATION_DIST_PATH] },

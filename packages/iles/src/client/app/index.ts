@@ -6,9 +6,9 @@ import routes from '@islands/routes'
 import appConfig from '@islands/app-config'
 import userApp from '@islands/user-app'
 import site from '@islands/user-site'
-import type { CreateAppFactory, SSGContext, RouterOptions } from '../shared'
+import type { CreateAppFactory, AppContext, RouterOptions } from '../shared'
 import App from './components/App.vue'
-import { installPageData } from './composables/pageData'
+import { installPageData, forcePageUpdate } from './composables/pageData'
 import { installAppConfig } from './composables/appConfig'
 import { resetHydrationId } from './hydration'
 import { resolveLayout } from './layout'
@@ -24,8 +24,8 @@ function createRouter ({ base, ...routerOptions }: Partial<RouterOptions>) {
     routes.push({ path: '/:pathMatch(.*)*', name: 'NotFound', component: () => import('@islands/components/NotFound') })
 
   return createVueRouter({
-    scrollBehavior: (current, previous) => {
-      return current.path !== previous.path ? { top: 0 } : {}
+    scrollBehavior: (current, previous, savedPosition) => {
+      return savedPosition ?? (current.path !== previous.path && !current.hash ? { top: 0 } : {})
     },
     ...routerOptions,
     routes,
@@ -75,7 +75,7 @@ export const createApp: CreateAppFactory = async (options = {}) => {
     ].filter(notEmpty),
   }))
 
-  const context: SSGContext = {
+  const context: AppContext = {
     app,
     head,
     frontmatter,
@@ -97,7 +97,7 @@ export const createApp: CreateAppFactory = async (options = {}) => {
 
 if (!import.meta.env.SSR) {
   (async () => {
-    const { app, router, route } = await createApp()
+    const { app, router } = await createApp()
 
     const devtools = await import('./composables/devtools')
     devtools.installDevtools(app, appConfig)
@@ -106,6 +106,6 @@ if (!import.meta.env.SSR) {
     await router.isReady() // wait until page component is fetched before mounting
     app.mount('#app', true)
 
-    Object.assign(window, { __ILES_APP__: app, __ILES_ROUTE__: route })
+    Object.assign(window, { __ILES_PAGE_UPDATE__: forcePageUpdate })
   })()
 }

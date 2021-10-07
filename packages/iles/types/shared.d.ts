@@ -50,7 +50,7 @@ export interface CreateAppConfig {
   routePath?: string
 }
 
-export interface SSGContext extends Required<CreateAppConfig>, PageData {
+export interface AppContext extends Required<CreateAppConfig>, PageData {
   app: App
   head: HeadClient
   router: Router
@@ -65,7 +65,7 @@ export interface SSGRoute {
   rendered?: string
 }
 
-export type CreateAppFactory = (options?: CreateAppConfig) => Promise<SSGContext>
+export type CreateAppFactory = (options?: CreateAppConfig) => Promise<AppContext>
 
 export type LayoutFactory = (name: string | false) => any
 
@@ -84,7 +84,7 @@ export interface Plugin extends Partial<AppPlugins> {
   config?: (config: UserConfig, env: ConfigEnv) => UserConfig | null | void | Promise<UserConfig | null | void>
 }
 
-export type EnhanceAppContext = SSGContext
+export type EnhanceAppContext = AppContext
 
 export interface UserApp {
   head?: HeadConfig | ((ctx: EnhanceAppContext) => HeadConfig)

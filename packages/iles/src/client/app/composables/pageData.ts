@@ -9,16 +9,15 @@ function last <T>(arr: T[]) {
 }
 
 const _lastPageChange = ref(new Date())
+export const forcePageUpdate = () => { _lastPageChange.value = new Date() }
+
 const computedInPage = <T>(fn: () => T) => {
-  const computedRef = computed<T>(() => {
+  return computed<T>(() => {
     // eslint-disable-next-line no-unused-expressions
     _lastPageChange.value // track dependency to recompute as needed.
     return fn()
   })
-  ;(computedRef as any).forceUpdate = forceUpdate
-  return computedRef
 }
-const forceUpdate = () => { _lastPageChange.value = new Date() }
 
 export function pageFromRoute (route: RouteLocationNormalizedLoaded) {
   return (last(route.matched)?.components?.default || {}) as PageComponent
@@ -26,9 +25,9 @@ export function pageFromRoute (route: RouteLocationNormalizedLoaded) {
 
 export function installPageData (app: App, site: UserSite, currentRoute: Ref<RouteLocationNormalizedLoaded>): PageData {
   const route = computedInPage(() => currentRoute.value)
-  const page = computedInPage(() => pageFromRoute(route.value))
-  const meta = computedInPage(() => page.value.meta || {})
-  const frontmatter = computedInPage(() => page.value.frontmatter || {})
+  const page = computed(() => pageFromRoute(route.value))
+  const meta = computed(() => page.value.meta || {})
+  const frontmatter = computed(() => page.value.frontmatter || {})
 
   const pageData: PageData = { route, page, meta, frontmatter, site }
   app.provide(dataSymbol, pageData)

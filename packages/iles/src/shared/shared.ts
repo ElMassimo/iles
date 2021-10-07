@@ -22,7 +22,7 @@ export type {
   Router,
   RouteRecordRaw,
   RouterOptions,
-  SSGContext,
+  AppContext,
   SSGRoute,
   UserApp,
   UserSite,

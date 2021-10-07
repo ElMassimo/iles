@@ -230,7 +230,7 @@ export default _sfc_main
         const { path } = parseId(id)
         if (isLayout(path) || plugins.pages.api.pageForFile(path)) {
           return `${code}
-import.meta.hot.accept('/${relative(root, path)}', () => __ILES_ROUTE__.forceUpdate())
+import.meta.hot.accept('/${relative(root, path)}', (...args) => __ILES_PAGE_UPDATE__(args))
 `
         }
       },

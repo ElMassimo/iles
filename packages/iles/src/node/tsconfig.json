@@ -1,0 +1,14 @@
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "outDir": "../../dist/node",
+    "target": "esnext",
+    "module": "esnext",
+    "lib": ["ESNext"],
+    "paths": {
+      "iles": ["index.ts"]
+    }
+  },
+  "include": [".", "../../types/shared.d.ts", "../../types/router.d.ts"]
+}
