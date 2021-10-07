@@ -1,0 +1,83 @@
+{
+  "index_name": "iles",
+  "start_urls": [
+    {
+      "url": "https://iles-docs.netlify.app/config/",
+      "selectors_key": "config",
+      "tags": ["config"],
+      "page_rank": 5
+    },
+    {
+      "url": "https://iles-docs.netlify.app/guide/overview",
+      "selectors_key": "faqs",
+      "tags": ["faqs"],
+      "page_rank": 1
+    },
+    {
+      "url": "https://iles-docs.netlify.app/guide/comparisons",
+      "selectors_key": "faqs",
+      "tags": ["faqs"],
+      "page_rank": 1
+    },
+    {
+      "url": "https://iles-docs.netlify.app/guide/",
+      "tags": ["guide"],
+      "page_rank": 4
+    }
+  ],
+  "stop_urls": [
+    ".html$"
+  ],
+  "selectors": {
+    "default": {
+      "lvl0": {
+        "selector": "p.sidebar-heading.open",
+        "global": true,
+        "default_value": "Guide"
+      },
+      "lvl1": ".content h1",
+      "lvl2": ".content h2",
+      "lvl3": ".content h3, .content li kbd",
+      "lvl4": ".content h4",
+      "lvl5": ".content h5",
+      "text": ".content p, .content li",
+      "lang": {
+        "selector": "/html/@lang",
+        "type": "xpath",
+        "global": true
+      }
+    },
+    "faqs": {
+      "lvl0": {
+        "selector": ".sidebar-link-item.active",
+        "global": true,
+        "default_value": "FAQs"
+      },
+      "lvl1": ".content h1",
+      "lvl2": ".content h2",
+      "text": ".content p, .content li"
+    },
+    "config": {
+      "lvl0": {
+        "selector": "p.sidebar-heading.open",
+        "global": true,
+        "default_value": "Configuration Options"
+      },
+      "lvl1": ".content h2",
+      "lvl2": ".content h3",
+      "text": ".content p, .content li",
+      "lang": {
+        "selector": "/html/@lang",
+        "type": "xpath",
+        "global": true
+      }
+    }
+  },
+  "scrape_start_urls": true,
+  "strip_chars": " .,;:#",
+  "custom_settings": {
+    "attributesForFaceting": [
+      "lang"
+    ]
+  }
+}

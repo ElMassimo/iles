@@ -9,7 +9,7 @@ import inspect from 'vite-plugin-inspect'
 
 export default defineConfig({
   debug: 'log',
-  siteUrl: 'https://vue-iles.netlify.app',
+  siteUrl: 'https://iles-docs.netlify.app',
   components: {
     resolvers: [iconsResolver({ componentPrefix: '', customCollections: ['iles'] })],
   },

@@ -1,16 +1,17 @@
 <script setup lang="ts">
 import { usePage } from 'iles'
 
-import { computed } from 'vue'
-import type { Header, SideBarItem } from '~/logic/config'
+import type { Header } from '@islands/headers'
+import type { SideBarItem } from '~/logic/config'
 
 interface HeaderWithChildren extends Header {
   children?: Header[]
 }
 
-let { meta } = $(usePage())
+let { meta, frontmatter } = $(usePage())
+let level = $computed(() => frontmatter.tocLevel || 2)
 
-const headers = computed(() => resolveHeaders(meta.headers || []))
+let headers = $computed(() => resolveHeaders(meta.headers || []))
 
 function resolveHeaders(headers: Header[]): SideBarItem[] {
   return mapHeaders(groupHeaders(headers))
@@ -18,15 +19,14 @@ function resolveHeaders(headers: Header[]): SideBarItem[] {
 
 function groupHeaders(headers: Header[]): HeaderWithChildren[] {
   headers = headers.map(h => Object.assign({}, h))
-  let lastH2: HeaderWithChildren
+  let lastHeading: HeaderWithChildren
   headers.forEach((h) => {
-    if (h.level === 2)
-      lastH2 = h
-
-    else if (lastH2)
-      (lastH2.children || (lastH2.children = [])).push(h)
+    if (h.level === level)
+      lastHeading = h
+    else if (lastHeading)
+      (lastHeading.children || (lastHeading.children = [])).push(h)
   })
-  return headers.filter(h => h.level === 2)
+  return headers.filter(h => h.level === level)
 }
 
 function mapHeaders(headers: HeaderWithChildren[]): SideBarItem[] {

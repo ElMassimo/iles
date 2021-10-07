@@ -116,7 +116,6 @@ function appConfigDefaults (appConfig: AppConfig): Omit<AppConfig, 'namedPlugins
     layoutsDir: 'layouts',
     tempDir: '.iles-ssg-temp',
     plugins: [] as Plugin[],
-    router: {},
     pages: {
       routeBlockLang: 'yaml',
       syncIndex: false,

@@ -37,12 +37,6 @@
   },
   "eslintConfig": {
     "extends": "@mussi/eslint-config",
-    "globals": {
-      "$ref": "readonly",
-      "$computed": "readonly",
-      "$$": "readonly",
-      "$": "readonly"
-    },
     "rules": {
       "prefer-const": "off",
       "no-unused-vars": "off",
