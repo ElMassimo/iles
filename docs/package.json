@@ -24,5 +24,13 @@
     "@docsearch/js": "1.0.0-alpha.28",
     "preact": "^10.5.14",
     "quicklink": "^2.2.0"
+  },
+  "eslintConfig": {
+    "globals": {
+      "$ref": "readonly",
+      "$computed": "readonly",
+      "$$": "readonly",
+      "$": "readonly"
+    }
   }
 }

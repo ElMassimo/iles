@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const props = withDefaults(defineProps<{ heading: boolean }>(), { heading: false })
+const props = defineProps({ heading: { type: Boolean, default: false } })
 const marginTop = props.heading ? '-mt-3 mx-1' : '-mt-4.8'
 </script>
 

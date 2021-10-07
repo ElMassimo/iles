@@ -5,10 +5,10 @@
     "outDir": "../../dist/node",
     "target": "esnext",
     "module": "esnext",
-    "lib": ["ESNext"],
+    "lib": ["ESNext", "DOM"],
     "paths": {
       "iles": ["index.ts"]
     }
   },
-  "include": [".", "../../types/shared.d.ts", "../../types/router.d.ts"]
+  "include": ["*.ts", "**/*.ts", "../../types/shared.d.ts", "../../types/router.d.ts"]
 }

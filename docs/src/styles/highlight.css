@@ -1,5 +1,5 @@
 pre[class*='language-'],
-.prose pre {
+pre.code {
   background: var(--h-background);
   border-radius: 0.2rem;
   color: var(--h-foreground);
@@ -12,10 +12,6 @@ pre[class*='language-'],
   white-space: pre;
   word-break: normal;
   word-spacing: normal;
-}
-
-.prose pre:not([class*='language-']) {
-  line-height: 1.3em;
 }
 
 /* Selection */

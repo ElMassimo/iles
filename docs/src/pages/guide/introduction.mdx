@@ -13,6 +13,8 @@
 [devtools1]: https://user-images.githubusercontent.com/1158253/133314267-f0ba784c-ff64-4ee8-b2bf-97ecffc2facd.jpg
 [devtools2]: https://user-images.githubusercontent.com/1158253/133314279-1edc22d1-3ffb-414e-b994-212cb316593b.jpg
 
+[hydration]: /guide/hydration
+
 # Introduction
 
 <Iles/> is a static-site generator that provides automatic [partial hydration].
@@ -20,8 +22,7 @@
 Use [Vue] and [MDX] to build your website, while enjoying the smooth development
 experience provided by [Vite.js].
 
-When building for production, use directives to specify which components are
-interactive, and <Iles/> will take care of shipping the minimal amount of JS needed.
+When building for production, use [`client` directives][hydration] to specify which components are interactive, and automatically ship the minimal amount of JS needed.
 
 __[Live Demo]__
 

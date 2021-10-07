@@ -1,7 +1,9 @@
 import { computed, ref } from 'vue'
 import { usePage } from 'iles'
+import type { Header } from '@islands/headers'
+
 import { getSideBarConfig } from './utils'
-import type { Header, SideBarItem } from '~/logic/config'
+import type { SideBarItem } from '~/logic/config'
 
 export const openSideBar = ref(false)
 
@@ -9,40 +11,36 @@ export const toggleSidebar = (to?: boolean) => {
   openSideBar.value = typeof to === 'boolean' ? to : !openSideBar.value
 }
 
-export function useSideBar() {
-  let { route, frontmatter, page, site } = $(usePage())
+export function useSideBar () {
+  let { route, frontmatter, meta, site } = $(usePage())
 
   return computed(() => {
     // at first, we'll check if we can find the sidebar setting in frontmatter.
-    const { headers } = page
+    const { headers } = meta
     const sidebar = frontmatter.sidebar ?? (site.sidebar && getSideBarConfig(
       site.sidebar,
       route.path,
     ))
-    const sidebarDepth = frontmatter.sidebarDepth
 
     // if it's `false`, we'll just return an empty array here.
-    if (sidebar === false)
+    if (!headers || sidebar === false)
       return []
 
     // if it's `auto`, render headers of the current page
     if (sidebar === 'auto')
-      return resolveAutoSidebar(headers, sidebarDepth)
+      return resolveAutoSidebar(headers, frontmatter.sidebarLevel || 1, frontmatter.sidebarDepth || 1)
 
     return sidebar
   })
 }
 
-function resolveAutoSidebar(
-  headers: Header[],
-  depth: number,
-): SideBarItem[] {
+function resolveAutoSidebar (headers: Header[], topLevel: number, depth: number): SideBarItem[] {
   const ret: SideBarItem[] = []
 
   if (headers === undefined)
     return []
 
-  let lastH2: SideBarItem | undefined
+  let lastTopHeading: SideBarItem | undefined
   headers.forEach(({ level, title, slug }) => {
     if (level - 1 > depth)
       return
@@ -51,11 +49,13 @@ function resolveAutoSidebar(
       text: title,
       link: `#${slug}`,
     }
-    if (level === 2) {
-      lastH2 = item
+
+    if (level === topLevel) {
+      lastTopHeading = item
       ret.push(item)
-    } else if (lastH2) {
-      ((lastH2 as any).children || ((lastH2 as any).children = [])).push(item)
+    }
+    else if (lastTopHeading) {
+      ((lastTopHeading as any).children || ((lastTopHeading as any).children = [])).push(item)
     }
   })
 

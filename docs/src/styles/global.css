@@ -51,11 +51,6 @@ kbd {
   vertical-align: middle;
 }
 
-code kbd {
-  font-size: 0.7rem;
-  padding: 2px 5px;
-}
-
 iframe {
   border-radius: inherit;
 }

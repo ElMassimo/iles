@@ -1,6 +1,5 @@
 ---
 sidebar: auto
-tocLevel: 3
 ---
 
 [pages]: /guide/pages
@@ -34,14 +33,15 @@ export default defineConfig({
 })
 ```
 
-## Configuring your App
+## The App
 
 <Iles/> will pre-configure a Vue 3 app that will load any [pages] defined in the
 site.
 
-To configure the app, you may use `src/app.ts`.
+You may provide additional configuration in `src/app.ts`, and leverage
+intellisense by using the `defineApp` helper.
 
-Example:
+### app.ts example
 
 ```ts
 import { defineApp } from 'iles'
@@ -58,12 +58,17 @@ export default defineApp({
   },
   router: {
     scrollBehavior (current, previous, savedPosition) {
-      // Configure the scroll behavior. Example:
-      return current.path !== previous.path ? { top: 0 } : {}
+      // Configure the scroll behavior
     }, 
   },
 })
 ```
+
+### `head`
+
+- **Type:** `HeadObject | (context: AppContext) => HeadObject`
+
+Set the page title, meta tags, additional CSS, or scripts using [`@vueuse/head`][@vueuse/head].
 
 ## Full Example
 
@@ -96,3 +101,7 @@ export default defineConfig({
   },
 })
 ```
+
+
+[vue-router]: https://next.router.vuejs.org/
+[@vueuse/head]: https://github.com/vueuse/head

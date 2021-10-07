@@ -9,7 +9,7 @@ interface HeaderWithChildren extends Header {
 }
 
 let { meta, frontmatter } = $(usePage())
-let level = $computed(() => frontmatter.tocLevel || 2)
+let level = $computed(() => frontmatter.sidebar === 'auto' ? (frontmatter.sidebarLevel || 1) + 2 : 2)
 
 let headers = $computed(() => resolveHeaders(meta.headers || []))
 
@@ -43,7 +43,7 @@ function mapHeaders(headers: HeaderWithChildren[]): SideBarItem[] {
     <SidebarLinkItem class="px-2" header :item="{ text: 'Table of Contents' }"/>
     <ul class="mb-2">
       <li v-for="child in headers" :key="child.text">
-        <SidebarLinkItem :item="child" :table="true" />
+        <SidebarLinkItem :item="child" :table="true"/>
       </li>
     </ul>
   </div>

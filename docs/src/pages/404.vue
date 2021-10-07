@@ -1,12 +1,13 @@
+<route>
+skipFooter: true
+</route>
+
+<script setup lang="ts">
+import soonSrc from '/images/soon.jpg'
+</script>
+
 <template>
-  <div class="text-center">
-    <p class="text-4xl">
-      <carbon-warning class="inline-block"/>
-    </p>
-    <div class="mt-4">Not Found</div>
+  <div class="flex flex-col items-center">
+    <img :src="soonSrc" alt="Coming Soon" title="Coming Soon">
   </div>
 </template>
-
-<route lang="yaml">
-layout: default
-</route>

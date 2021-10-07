@@ -8,7 +8,6 @@ import windicss from 'vite-plugin-windicss'
 import inspect from 'vite-plugin-inspect'
 
 export default defineConfig({
-  debug: 'log',
   siteUrl: 'https://iles-docs.netlify.app',
   components: {
     resolvers: [iconsResolver({ componentPrefix: '', customCollections: ['iles'] })],
