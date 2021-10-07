@@ -7,9 +7,6 @@ import icons from 'unplugin-icons/vite'
 import windicss from 'vite-plugin-windicss'
 import inspect from 'vite-plugin-inspect'
 
-import { valueToEstree } from 'estree-util-value-to-estree'
-import type { Header } from './src/logic/config'
-
 export default defineConfig({
   debug: 'log',
   siteUrl: 'https://vue-iles.netlify.app',
@@ -18,46 +15,8 @@ export default defineConfig({
   },
   markdown: {
     rehypePlugins: [
+      import('@islands/headers').then(m => m.default),
       ['@mapbox/rehype-prism', { alias: { markup: ['html', 'vue'], markdown: ['mdx'] } }],
-      () => ({ children }) => {
-        const headers: Header[] = []
-        children
-          .filter(c => c.type === 'element' && c.tagName.length === 2 && c.tagName.startsWith('h') && !c.tagName.endsWith('r'))
-          .forEach(c => {
-            const title = c.children.filter(c => c.type === 'text').map(c => c.value).join(' ')
-            headers.push({ level: Number(c.tagName.slice(1)), title, slug: title.toLowerCase().replace(/\s+/, '-') })
-          })
-        children.push({
-          type: 'mdxjsEsm',
-          data: {
-            estree: {
-              type: 'Program',
-              sourceType: 'module',
-              body: [
-                {
-                  type: 'ExpressionStatement',
-                  expression: {
-                    type: 'AssignmentExpression',
-                    operator: '=',
-                    left: {
-                      type: 'MemberExpression',
-                      object: {
-                        type: 'Identifier',
-                        name: 'meta',
-                      },
-                      property: {
-                        type: 'Identifier',
-                        name: 'headers',
-                      },
-                    },
-                    right: valueToEstree(headers),
-                  },
-                },
-              ],
-            },
-          },
-        })
-      },
     ],
   },
   vite: {

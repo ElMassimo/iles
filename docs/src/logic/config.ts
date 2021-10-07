@@ -49,10 +49,3 @@ export interface SideBarGroup {
 
   children: SideBarItem[]
 }
-
-// other ---------------------------------------------------------------------
-export interface Header {
-  level: number
-  title: string
-  slug: string
-}

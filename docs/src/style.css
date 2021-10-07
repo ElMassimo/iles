@@ -27,10 +27,6 @@ p img {
   color: var(--c-brand-light);
 }
 
-.header-anchor {
-  display: none;
-}
-
 /**
  * prism.js tomorrow night eighties for JavaScript, CoffeeScript, CSS and HTML.
  * Based on https://github.com/chriskempson/tomorrow-theme

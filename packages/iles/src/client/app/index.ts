@@ -24,7 +24,9 @@ function createRouter ({ base, ...routerOptions }: Partial<RouterOptions>) {
     routes.push({ path: '/:pathMatch(.*)*', name: 'NotFound', component: () => import('@islands/components/NotFound') })
 
   return createVueRouter({
-    scrollBehavior: () => ({ top: 0 }),
+    scrollBehavior: (current, previous) => {
+      return current.path !== previous.path ? { top: 0 } : {}
+    },
     ...routerOptions,
     routes,
     history: import.meta.env.SSR ? createMemoryHistory(base) : createWebHistory(base),
@@ -36,7 +38,8 @@ function notEmpty<T> (val: T | boolean | undefined | null): val is T {
 }
 
 export const createApp: CreateAppFactory = async (options = {}) => {
-  const { base, router: routerOptions } = appConfig
+  const { base } = appConfig
+  const { head: headConfig, enhanceApp, router: routerOptions } = userApp
   const { routePath = base } = options
 
   const app = newApp(App)
@@ -86,7 +89,6 @@ export const createApp: CreateAppFactory = async (options = {}) => {
   }
 
   // Apply any configuration added by the user in app.ts
-  const { head: headConfig, enhanceApp } = userApp
   if (headConfig) head.addHeadObjs(ref(typeof headConfig === 'function' ? headConfig(context) : headConfig))
   if (enhanceApp) await enhanceApp(context)
 

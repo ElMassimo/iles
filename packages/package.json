@@ -1,7 +1,7 @@
 {
   "private": true,
   "scripts": {
-    "build": "npm -C hydration run 'build' && npm -C frontmatter run 'build' && npm -C iles run 'build'",
+    "build": "npm -C hydration run 'build' && npm -C frontmatter run 'build' && npm -C headers run 'build' && npm -C iles run 'build'",
     "dev": "pnpm -r --parallel --filter . run dev"
   }
 }

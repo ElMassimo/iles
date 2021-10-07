@@ -42,7 +42,7 @@
     font-size: 1.75em;
     font-weight: 700;
     line-height: 1.3333333;
-    margin-bottom: 1.5em;
+    margin-bottom: 1.25em;
   }
 
   h2 {
@@ -87,12 +87,8 @@
     padding: 0.1em 0.3em 0.2em;
   }
 
-  h2,
-  h3,
-  h4 {
-    & + p {
-      margin-top: 0;
-    }
+  .heading + :not(.heading) {
+    margin-top: 0;
   }
 
   iframe.example {
@@ -193,6 +189,39 @@ a.anchor {
       --width: clamp(var(--w-container), 70vw, 940px);
       margin-left: calc((var(--width) - var(--w-container)) / -2);
       width: var(--width);
+    }
+  }
+}
+
+a.heading-anchor {
+  @apply text-primary;
+  float: left;
+  margin-top: .125em;
+  margin-left: -.87em;
+  padding-right: .23em;
+  font-size: .85em;
+  opacity: 0;
+  text-decoration: none!important;
+
+  &::before {
+    content: '#';
+  }
+}
+
+.heading {
+  &::before {
+    --offset: calc(var(--navbar-height) + 1rem);
+    display: block;
+    content: " ";
+    margin-top: calc(var(--offset) * -1);
+    height: var(--offset);
+    visibility: hidden;
+    pointer-events: none;
+  }
+
+  &:focus, &:hover {
+    a.heading-anchor {
+      opacity: 1;
     }
   }
 }

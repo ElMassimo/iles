@@ -70,7 +70,6 @@ export type CreateAppFactory = (options?: CreateAppConfig) => Promise<SSGContext
 export type LayoutFactory = (name: string | false) => any
 
 export interface AppPlugins {
-  router: Pick<VueRouterOptions, 'linkActiveClass' | 'linkExactActiveClass'>
   vite: ViteOptions
   vue: VueOptions
   pages: Omit<PagesOptions, 'pagesDir' | 'react'>
@@ -90,6 +89,7 @@ export type EnhanceAppContext = SSGContext
 export interface UserApp {
   head?: HeadConfig | ((ctx: EnhanceAppContext) => HeadConfig)
   enhanceApp?: (ctx: EnhanceAppContext) => void | Promise<void>
+  router?: Omit<VueRouterOptions, 'history', 'routes'>
 }
 
 export type UserSite = typeof import('~/site').default
@@ -126,7 +126,7 @@ export interface AppConfig extends RequiredConfig, AppPlugins {
   }
 }
 
-export type AppClientConfig = Pick<AppConfig, 'base' | 'router' | 'root' | 'debug' | 'ssg'>
+export type AppClientConfig = Pick<AppConfig, 'base' | 'root' | 'debug' | 'ssg'>
 
 export interface IslandDefinition {
   id: string
