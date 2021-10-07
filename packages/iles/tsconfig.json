@@ -21,8 +21,5 @@
       "iles": ["types/index.d.ts"]
     }
   },
-  "include": [
-    "src",
-    "__tests__"
-  ]
+  "include": ["src", "tests", "types"]
 }
