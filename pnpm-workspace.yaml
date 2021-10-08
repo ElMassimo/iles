@@ -1,7 +1,7 @@
 packages:
   - docs
-  - packages/iles/
   - packages/hydration/
   - packages/frontmatter/
   - packages/headers/
+  - packages/iles/
   - playground/the-vue-point/

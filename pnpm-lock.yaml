@@ -41,8 +41,7 @@ importers:
     specifiers:
       '@docsearch/css': 1.0.0-alpha.28
       '@docsearch/js': 1.0.0-alpha.28
-      '@iconify/json': 1.1.393
-      '@islands/headers': file:../packages/headers
+      '@islands/headers': ^0.0.1
       '@mapbox/rehype-prism': ^0.8.0
       '@vueuse/core': ^6.5.3
       autoprefixer: ^10.3.5
@@ -59,7 +58,6 @@ importers:
       preact: 10.5.14
       quicklink: 2.2.0
     devDependencies:
-      '@iconify/json': 1.1.393
       '@islands/headers': link:../packages/headers
       '@mapbox/rehype-prism': 0.8.0
       '@vueuse/core': 6.5.3
@@ -128,8 +126,8 @@ importers:
 
   packages/iles:
     specifiers:
-      '@islands/frontmatter': ^0.0.1
-      '@islands/hydration': ^0.0.3
+      '@islands/frontmatter': ^0.0.2
+      '@islands/hydration': ^0.0.4
       '@nuxt/devalue': ^2.0.0
       '@rollup/plugin-virtual': ^2.0.3
       '@types/debug': ^4.1.7

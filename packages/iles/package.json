@@ -1,7 +1,7 @@
 {
   "name": "iles",
   "description": "Vite & Vue powered static site generator with partial hydration",
-  "version": "0.0.16",
+  "version": "0.1.0",
   "main": "dist/node/index.js",
   "module": "dist/node/index.mjs",
   "typings": "types/index.d.ts",
@@ -42,8 +42,8 @@
     "url": "https://github.com/ElMassimo/iles/issues"
   },
   "dependencies": {
-    "@islands/frontmatter": "^0.0.1",
-    "@islands/hydration": "^0.0.3",
+    "@islands/frontmatter": "^0.0.2",
+    "@islands/hydration": "^0.0.4",
     "@nuxt/devalue": "^2.0.0",
     "@rollup/plugin-virtual": "^2.0.3",
     "@vitejs/plugin-vue": "^1.8.1",

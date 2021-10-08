@@ -1,3 +1,19 @@
+# [0.1.0](https://github.com/ElMassimo/iles/compare/v0.0.16...v0.1.0) (2021-10-08)
+
+
+### Bug Fixes
+
+* allow typescript in app.ts by using the new transformWithEsbuild API ([8990571](https://github.com/ElMassimo/iles/commit/8990571eba6212e645577c9bd301b845ef9b2f5f))
+* use default layout when no name is specified in <Layout> ([5afd159](https://github.com/ElMassimo/iles/commit/5afd159dbf9f5174c9f475d1fa1bfd7a833dc19d))
+
+
+### Features
+
+* Docs + Layout Shortcuts + Meta + Site + SEO Tags ([#3](https://github.com/ElMassimo/iles/issues/3)) ([4ed90b7](https://github.com/ElMassimo/iles/commit/4ed90b72cf354823f023dd09f6797b8b71cff35b))
+* provide filename in extendFrontmatter hook ([35b55c6](https://github.com/ElMassimo/iles/commit/35b55c6505561c0151960697a7bcebc4953ad968))
+
+
+
 ## [0.0.16](https://github.com/ElMassimo/iles/compare/v0.0.15...v0.0.16) (2021-09-20)
 
 

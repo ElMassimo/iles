@@ -8,10 +8,9 @@
     "preview": "vite preview --open"
   },
   "devDependencies": {
-    "@iconify/json": "1.1.393",
+    "@islands/headers": "^0.0.1",
     "@mapbox/rehype-prism": "^0.8.0",
     "@vueuse/core": "^6.5.3",
-    "@islands/headers": "file:../packages/headers",
     "autoprefixer": "^10.3.5",
     "iles": "^0.0.16",
     "postcss-nesting": "^8.0.1",
