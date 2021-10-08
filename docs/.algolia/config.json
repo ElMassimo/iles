@@ -2,7 +2,7 @@
   "index_name": "iles",
   "start_urls": [
     {
-      "url": "https://iles-docs.netlify.app/config/",
+      "url": "https://iles-docs.netlify.app/config",
       "selectors_key": "config",
       "tags": ["config"],
       "page_rank": 5
@@ -20,7 +20,7 @@
       "page_rank": 1
     },
     {
-      "url": "https://iles-docs.netlify.app/guide/",
+      "url": "https://iles-docs.netlify.app/guide",
       "tags": ["guide"],
       "page_rank": 4
     }
@@ -35,12 +35,12 @@
         "global": true,
         "default_value": "Guide"
       },
-      "lvl1": ".content h1",
-      "lvl2": ".content h2",
-      "lvl3": ".content h3, .content li kbd",
-      "lvl4": ".content h4",
-      "lvl5": ".content h5",
-      "text": ".content p, .content li",
+      "lvl1": ".prose h1",
+      "lvl2": ".prose h2",
+      "lvl3": ".prose h3, .prose li kbd",
+      "lvl4": ".prose h4",
+      "lvl5": ".prose h5",
+      "text": ".prose p, .prose li",
       "lang": {
         "selector": "/html/@lang",
         "type": "xpath",
@@ -53,9 +53,9 @@
         "global": true,
         "default_value": "FAQs"
       },
-      "lvl1": ".content h1",
-      "lvl2": ".content h2",
-      "text": ".content p, .content li"
+      "lvl1": ".prose h1",
+      "lvl2": ".prose h2",
+      "text": ".prose p, .prose li"
     },
     "config": {
       "lvl0": {
@@ -63,9 +63,9 @@
         "global": true,
         "default_value": "Configuration Options"
       },
-      "lvl1": ".content h2",
-      "lvl2": ".content h3",
-      "text": ".content p, .content li",
+      "lvl1": ".prose h2",
+      "lvl2": ".prose h3",
+      "text": ".prose p, .prose li",
       "lang": {
         "selector": "/html/@lang",
         "type": "xpath",

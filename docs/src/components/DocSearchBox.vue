@@ -2,6 +2,7 @@
 import { onMounted } from 'vue'
 
 const id = 'docsearch'
+const title = !import.meta.env.SSR && navigator.platform.includes('Mac') ? '⌘ + K' : 'ctrl + K'
 
 onMounted(async () => {
   const docsearch = (await import('@docsearch/js')).default
@@ -21,7 +22,7 @@ function openSearchModal () {
 </script>
 
 <template>
-  <NavBarButton aria-label="Search" @click="openSearchModal">
+  <NavBarButton aria-label="Search" :title="title" @click="openSearchModal">
     <BxBxSearch/>
   </NavBarButton>
   <div :id="id" class="doc-search-box"/>
