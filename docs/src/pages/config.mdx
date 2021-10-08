@@ -41,17 +41,17 @@ site.
 You may provide additional configuration in `src/app.ts`, and leverage
 intellisense by using the `defineApp` helper.
 
-### app.ts example
-
 ```ts
 import { defineApp } from 'iles'
 
 export default defineApp({
-  head: {
-    title: 'Site Title',
-    meta: [
-      { name: 'description', content: 'Site Description.' },
-    ],
+  head ({ frontmatter, site }) {
+    return {
+      meta: [
+        { property: 'author', content: site.author },
+        { property: 'keywords', content: computed(() => frontmatter.tags) },
+      ]
+    }
   },
   enhanceApp ({ app, head, router }) {
     // Configure the app to add plugins.
@@ -70,7 +70,29 @@ export default defineApp({
 
 Set the page title, meta tags, additional CSS, or scripts using [`@vueuse/head`][@vueuse/head].
 
-## Full Example
+### `enhanceApp`
+
+- **Type:** `(context: AppContext) => Promise<void>`
+
+A hook where you can add plugins to the Vue app, or do anything else prior to
+the app being mounted.
+
+### `router`
+
+- **Type:** `RouterOptions`
+
+Configure [`vue-router`][vue-router] by providing options such as `scrollBehavior` and `linkActiveClass`.
+
+### `socialTags`
+
+- **Type:** `boolean`
+- **Default:** `true`
+
+Some social tags can be inferred from the <kbd>[site]</kbd>.
+
+Set it to `false` to avoid adding social tags such as `og:title` and `twitter:description`.
+
+## `iles.config.ts` Example
 
 ```ts
 import { defineConfig } from 'iles'
@@ -105,3 +127,4 @@ export default defineConfig({
 
 [vue-router]: https://next.router.vuejs.org/
 [@vueuse/head]: https://github.com/vueuse/head
+[site]: #the-site

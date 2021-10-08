@@ -34,6 +34,7 @@ const site = {
           // { text: 'Comparisons', link: '/guide/comparisons' },
         ],
       },
+      { text: 'Config', link: '/config' },
     ],
   },
 }

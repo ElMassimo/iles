@@ -64,7 +64,12 @@ async function resolveUserConfig (root: string, configEnv: ConfigEnv) {
   config.namedPlugins.pages = pages(config.pages)
   config.namedPlugins.markdown = xdm(config.markdown)
 
-  config.base = config.siteUrl ? new URL(config.siteUrl).pathname : '/'
+  const siteUrl = config.siteUrl || ''
+  const protocolIndex = siteUrl.indexOf('//')
+  const baseIndex = siteUrl.indexOf('/', protocolIndex > -1 ? protocolIndex + 2 : 0)
+  config.siteUrl = baseIndex > -1 ? siteUrl.slice(0, baseIndex) : siteUrl
+  config.base = baseIndex > -1 ? siteUrl.slice(baseIndex) : '/'
+  if (!config.base.endsWith('/')) config.base = `${config.base}/`
   config.vite.base = config.base
   config.vite.build!.assetsDir = config.assetsDir
 
@@ -141,7 +146,7 @@ function appConfigDefaults (appConfig: AppConfig): Omit<AppConfig, 'namedPlugins
       jsx: true,
       remarkPlugins: [
         remarkWrapIslands,
-        import('remark-frontmatter').then(mod => mod.default),
+        'remark-frontmatter',
         frontmatterPlugin(appConfig),
       ],
       // Adds meta fields such as filename, lastUpdated, and href.

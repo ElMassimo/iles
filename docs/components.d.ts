@@ -14,7 +14,6 @@ declare module 'vue' {
     CarbonArrowRight: typeof import('~icons/carbon/arrow-right')['default']
     CarbonLogoGithub: typeof import('~icons/carbon/logo-github')['default']
     CarbonLogoTwitter: typeof import('~icons/carbon/logo-twitter')['default']
-    CarbonWarning: typeof import('~icons/carbon/warning')['default']
     DarkModeSwitch: typeof import('./src/components/DarkModeSwitch.vue')['default']
     DocSearchBox: typeof import('./src/components/DocSearchBox.vue')['default']
     EditLink: typeof import('./src/components/EditLink.vue')['default']
@@ -47,7 +46,6 @@ declare module 'vue' {
     TheSidebar: typeof import('./src/components/TheSidebar.vue')['default']
     TimeAgo: typeof import('./src/components/TimeAgo.vue')['default']
     Tip: typeof import('./src/components/Tip.vue')['default']
-    TreeMenu: typeof import('./src/components/TreeMenu.vue')['default']
     ViteLogo: typeof import('./src/components/ViteLogo.vue')['default']
   }
 }

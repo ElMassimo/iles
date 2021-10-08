@@ -52,6 +52,7 @@ export interface CreateAppConfig {
 
 export interface AppContext extends Required<CreateAppConfig>, PageData {
   app: App
+  config: AppClientConfig
   head: HeadClient
   router: Router
   routes: RouteRecordRaw[]
@@ -90,9 +91,13 @@ export interface UserApp {
   head?: HeadConfig | ((ctx: EnhanceAppContext) => HeadConfig)
   enhanceApp?: (ctx: EnhanceAppContext) => void | Promise<void>
   router?: Omit<VueRouterOptions, 'history', 'routes'>
+  socialTags?: boolean
 }
 
-export type UserSite = typeof import('~/site').default
+export type UserSite = typeof import('~/site').default & {
+  url: string
+  canonical: string
+}
 
 export type PluginOption = Plugin | false | null | undefined
 
@@ -126,7 +131,7 @@ export interface AppConfig extends RequiredConfig, AppPlugins {
   }
 }
 
-export type AppClientConfig = Pick<AppConfig, 'base' | 'root' | 'debug' | 'ssg'>
+export type AppClientConfig = Pick<AppConfig, 'base' | 'root' | 'debug' | 'ssg' | 'siteUrl'>
 
 export interface IslandDefinition {
   id: string

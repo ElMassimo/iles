@@ -3,7 +3,7 @@ import { createMemoryHistory, createRouter as createVueRouter, createWebHistory 
 import { createHead } from '@vueuse/head'
 
 import routes from '@islands/routes'
-import appConfig from '@islands/app-config'
+import config from '@islands/app-config'
 import userApp from '@islands/user-app'
 import site from '@islands/user-site'
 import type { CreateAppFactory, AppContext, RouterOptions } from '../shared'
@@ -11,11 +11,15 @@ import App from './components/App.vue'
 import { installPageData, forcePageUpdate } from './composables/pageData'
 import { installAppConfig } from './composables/appConfig'
 import { resetHydrationId } from './hydration'
+import { defaultHead } from './head'
 import { resolveLayout } from './layout'
 
 const newApp = import.meta.env.SSR ? createSSRApp : createClientApp
 
-function createRouter ({ base, ...routerOptions }: Partial<RouterOptions>) {
+site.url = `${config.siteUrl}${config.base.slice(0, config.base.length - 2)}`
+site.canonical = config.siteUrl.split('//', 2)[1] ?? ''
+
+function createRouter (base: string | undefined, routerOptions: Partial<RouterOptions>) {
   if (base === '/') base = undefined
 
   // Handle 404s in development.
@@ -33,23 +37,18 @@ function createRouter ({ base, ...routerOptions }: Partial<RouterOptions>) {
   })
 }
 
-function notEmpty<T> (val: T | boolean | undefined | null): val is T {
-  return Boolean(val)
-}
-
 export const createApp: CreateAppFactory = async (options = {}) => {
-  const { base } = appConfig
   const { head: headConfig, enhanceApp, router: routerOptions } = userApp
-  const { routePath = base } = options
+  const { routePath = config.base } = options
 
   const app = newApp(App)
 
-  installAppConfig(app, appConfig)
+  installAppConfig(app, config)
 
   const head = createHead()
   app.use(head)
 
-  const router = createRouter({ base, ...routerOptions })
+  const router = createRouter(config.base, routerOptions)
   app.use(router)
   router.beforeResolve(resolveLayout)
 
@@ -64,19 +63,9 @@ export const createApp: CreateAppFactory = async (options = {}) => {
   Object.defineProperty(app.config.globalProperties, '$meta', { get: () => meta.value })
   Object.defineProperty(app.config.globalProperties, '$site', { get: () => site })
 
-  // Default meta tags
-  head.addHeadObjs(ref({
-    meta: [
-      { charset: 'UTF-8' },
-      { name: 'viewport', content: 'width=device-width, initial-scale=1.0' },
-    ],
-    link: [
-      appConfig.ssg.sitemap && { rel: 'sitemap', href: `${base}sitemap.xml` },
-    ].filter(notEmpty),
-  }))
-
   const context: AppContext = {
     app,
+    config,
     head,
     frontmatter,
     meta,
@@ -87,6 +76,7 @@ export const createApp: CreateAppFactory = async (options = {}) => {
     routes,
     routePath,
   }
+  head.addHeadObjs(ref(defaultHead(context, userApp.socialTags)))
 
   // Apply any configuration added by the user in app.ts
   if (headConfig) head.addHeadObjs(ref(typeof headConfig === 'function' ? headConfig(context) : headConfig))
@@ -100,7 +90,7 @@ if (!import.meta.env.SSR) {
     const { app, router } = await createApp()
 
     const devtools = await import('./composables/devtools')
-    devtools.installDevtools(app, appConfig)
+    devtools.installDevtools(app, config)
 
     router.afterEach(resetHydrationId) // reset island identifiers to match ssg.
     await router.isReady() // wait until page component is fetched before mounting
