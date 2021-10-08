@@ -23,6 +23,6 @@ declare module '@islands/user-app' {
 }
 
 declare module '@islands/user-site' {
-  const config: import('./shared').UserSite
+  const config: import('vue').Ref<import('./shared').UserSite>
   export default config
 }

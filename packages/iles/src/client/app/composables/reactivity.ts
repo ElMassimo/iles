@@ -5,25 +5,25 @@ import { Ref, reactive } from 'vue'
  *
  * @see https://vueuse.org/toReactive
  */
-export function toReactive<T extends object>(objectRef: Ref<T>): T {
+export function toReactive<T extends object> (objectRef: Ref<T>): T {
   const proxy = new Proxy({}, {
-    get(_, p, receiver) {
+    get (_, p, receiver) {
       return Reflect.get(objectRef.value, p, receiver)
     },
-    set(_, p, value) {
+    set (_, p, value) {
       (objectRef.value as any)[p] = value
       return true
     },
-    deleteProperty(_, p) {
+    deleteProperty (_, p) {
       return Reflect.deleteProperty(objectRef.value, p)
     },
-    has(_, p) {
+    has (_, p) {
       return Reflect.has(objectRef.value, p)
     },
-    ownKeys() {
+    ownKeys () {
       return Object.keys(objectRef.value)
     },
-    getOwnPropertyDescriptor() {
+    getOwnPropertyDescriptor () {
       return {
         enumerable: true,
         configurable: true,

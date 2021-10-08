@@ -19,6 +19,7 @@ import { createServer } from '../server'
 import { escapeRegex, serialize, replaceAsync, pascalCase } from './utils'
 import { parseId, parseImports } from './parse'
 import { unresolvedIslandKey, wrapIslandsInSFC, wrapLayout } from './wrap'
+import { extendSite } from './site'
 
 const debug = {
   config: createDebugger('iles:config'),
@@ -110,8 +111,10 @@ export default function IslandsPlugins (appConfig: AppConfig): PluginOption[] {
           || (id === USER_SITE_REQUEST_PATH && sitePath)
         if (userFilename) {
           this.addWatchFile(userFilename)
-          if (!await exists(userFilename)) return 'export default {}'
-          return transformWithEsbuild(await fs.readFile(userFilename, 'utf-8'), userFilename)
+          const result = await exists(userFilename)
+            ? await transformWithEsbuild(await fs.readFile(userFilename, 'utf-8'), userFilename, { sourcemap: false })
+            : { code: 'export default {}' }
+          return id === USER_SITE_REQUEST_PATH ? extendSite(result.code, appConfig) : result
         }
       },
       handleHotUpdate ({ file, server }) {

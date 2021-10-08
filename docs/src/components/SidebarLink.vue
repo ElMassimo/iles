@@ -9,8 +9,7 @@ const props = defineProps({
   },
 })
 
-const children = (props.item as SideBarGroup).children
-
+let children = $computed(() => (props.item as SideBarGroup).children)
 </script>
 
 <template>

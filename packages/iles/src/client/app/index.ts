@@ -5,7 +5,7 @@ import { createHead } from '@vueuse/head'
 import routes from '@islands/routes'
 import config from '@islands/app-config'
 import userApp from '@islands/user-app'
-import site from '@islands/user-site'
+import siteRef from '@islands/user-site'
 import type { CreateAppFactory, AppContext, RouterOptions } from '../shared'
 import App from './components/App.vue'
 import { installPageData, forcePageUpdate } from './composables/pageData'
@@ -15,9 +15,6 @@ import { defaultHead } from './head'
 import { resolveLayout } from './layout'
 
 const newApp = import.meta.env.SSR ? createSSRApp : createClientApp
-
-site.url = `${config.siteUrl}${config.base.slice(0, config.base.length - 2)}`
-site.canonical = config.siteUrl.split('//', 2)[1] ?? ''
 
 function createRouter (base: string | undefined, routerOptions: Partial<RouterOptions>) {
   if (base === '/') base = undefined
@@ -58,7 +55,7 @@ export const createApp: CreateAppFactory = async (options = {}) => {
     await router.isReady()
   }
 
-  const { frontmatter, meta, page, route } = installPageData(app, site)
+  const { frontmatter, meta, page, route, site } = installPageData(app, siteRef)
   Object.defineProperty(app.config.globalProperties, '$frontmatter', { get: () => frontmatter })
   Object.defineProperty(app.config.globalProperties, '$meta', { get: () => meta })
   Object.defineProperty(app.config.globalProperties, '$site', { get: () => site })

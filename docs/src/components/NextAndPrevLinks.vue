@@ -2,7 +2,7 @@
 import { usePage } from 'iles'
 import { isArray, getSideBarConfig, getFlatSideBarLinks } from '~/logic/utils'
 
-let { route, site } = $(usePage())
+let { route, site } = usePage()
 
 let candidates = $computed(() => {
   const config = getSideBarConfig(site.sidebar, route.path)

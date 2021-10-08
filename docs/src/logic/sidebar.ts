@@ -12,34 +12,31 @@ export const toggleSidebar = (to?: boolean) => {
 }
 
 export function useSideBar () {
-  let { route, frontmatter, meta, site } = $(usePage())
+  let { route, frontmatter, meta, site } = usePage()
 
   return computed(() => {
     // at first, we'll check if we can find the sidebar setting in frontmatter.
-    const { headers } = meta
     const sidebar = frontmatter.sidebar ?? (site.sidebar && getSideBarConfig(
       site.sidebar,
       route.path,
     ))
 
     // if it's `false`, we'll just return an empty array here.
-    if (!headers || sidebar === false)
+    if (sidebar === false)
       return []
 
     // if it's `auto`, render headers of the current page
     if (sidebar === 'auto')
-      return resolveAutoSidebar(headers, frontmatter.sidebarLevel || 1, frontmatter.sidebarDepth || 1)
+      return resolveAutoSidebar(meta.headers, frontmatter.sidebarLevel || 1, frontmatter.sidebarDepth || 1)
 
     return sidebar
   })
 }
 
-function resolveAutoSidebar (headers: Header[], topLevel: number, depth: number): SideBarItem[] {
+function resolveAutoSidebar (headers: undefined | Header[], topLevel: number, depth: number): SideBarItem[] {
+  if (headers === undefined) return []
+
   const ret: SideBarItem[] = []
-
-  if (headers === undefined)
-    return []
-
   let lastTopHeading: SideBarItem | undefined
   headers.forEach(({ level, title, slug }) => {
     if (level - 1 > depth)

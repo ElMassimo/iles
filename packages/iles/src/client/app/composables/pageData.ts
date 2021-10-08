@@ -1,5 +1,5 @@
 /* eslint-disable no-restricted-syntax */
-import type { App, InjectionKey } from 'vue'
+import type { App, Ref, InjectionKey } from 'vue'
 import { computed, ref, inject } from 'vue'
 import { RouteLocationNormalizedLoaded, routeLocationKey } from 'vue-router'
 import type { PageData, PageComponent, UserSite } from '../../shared'
@@ -36,11 +36,12 @@ function reactiveFromFn <T extends object>(fn: () => T): T {
   return toReactive<T>(computed(fn))
 }
 
-export function installPageData (app: App, site: UserSite): PageData {
+export function installPageData (app: App, siteRef: Ref<UserSite>): PageData {
   const route = injectFromApp(routeLocationKey, app)
   const page = computedInPage(() => pageFromRoute(route))
   const meta = reactiveFromFn(() => page.value.meta || {})
   const frontmatter = reactiveFromFn(() => page.value.frontmatter || {})
+  const site = toReactive(siteRef)
 
   const pageData: PageData = { route, page, meta, frontmatter, site }
   app.provide(pageDataKey, pageData)
