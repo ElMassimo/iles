@@ -2,7 +2,7 @@
 import { computed, watch, ref } from 'vue'
 import { usePage } from 'iles'
 
-const pageData = usePage()
+const { page, meta, frontmatter } = usePage()
 const message = ref<string | undefined>(undefined)
 const el = ref<HTMLElement | null>(null)
 const content = ref<HTMLElement | null>(null)
@@ -10,9 +10,7 @@ const open = ref(false)
 const buttonLabel = computed(() => message.value || 'Debug')
 
 const cleanPage = computed(() => {
-  const layout = pageData.page.value.layoutName || 'false'
-  const frontmatter = pageData.frontmatter.value
-  const meta = pageData.meta.value
+  const layout = page.value.layoutName || 'false'
   return { layout, frontmatter, meta }
 })
 

@@ -11,10 +11,10 @@ useRouterLinks()
 const { page, route } = usePage()
 
 const layoutName = computed(() => page.value.layoutName)
-const layout = computed(() => route.value.meta.layout?.value)
+const layout = computed(() => route.meta.layout?.value)
 if (import.meta.env.DEV) // HMR for layout changes
   watch([page, layoutName], async ([page], [oldPage]) => {
-    if (page === oldPage) await resolveLayout(route.value)
+    if (page === oldPage) await resolveLayout(route)
   })
 
 const DebugPanel = shallowRef<null | typeof import('./DebugPanel.vue').default>(null)

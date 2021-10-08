@@ -6,14 +6,14 @@ function notEmpty<T> (val: T | boolean | undefined | null): val is T {
 }
 
 export function defaultHead ({ frontmatter, route, config, site }: AppContext, includeSocialTags: boolean | undefined): HeadConfig {
-  const title = computed(() => frontmatter.value.title
-    ? `${frontmatter.value.title} · ${site.title}`
+  const title = computed(() => frontmatter.title
+    ? `${frontmatter.title} · ${site.title}`
     : site.title)
 
   const description = computed(() =>
-    frontmatter.value.description || site.description)
+    frontmatter.description || site.description)
 
-  const currentUrl = computed(() => `${site.url}${route.value.path}`)
+  const currentUrl = computed(() => `${site.url}${route.path}`)
 
   const meta: HeadConfig['meta'] = [
     { charset: 'UTF-8' },

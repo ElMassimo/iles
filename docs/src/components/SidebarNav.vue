@@ -1,9 +1,8 @@
 <script setup lang="ts">
-import { computed } from 'vue'
 import { useSideBar } from '~/logic/sidebar'
 
-const items = useSideBar()
-const hasItem = computed(() => items.value.length > 0)
+let items = $(useSideBar())
+let hasItem = $computed(() => items.length > 0)
 </script>
 
 <template>

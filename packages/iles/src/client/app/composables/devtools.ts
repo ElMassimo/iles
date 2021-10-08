@@ -2,9 +2,9 @@ import type { App, ComponentPublicInstance } from 'vue'
 import { reactive, computed } from 'vue'
 import type { InspectorNodeTag, DevtoolsPluginApi } from '@vue/devtools-api'
 import { setupDevtoolsPlugin } from '@vue/devtools-api'
+import { usePage } from 'iles'
 import type { AppClientConfig, PageData } from '../../shared'
 import { getComponentName } from '../utils'
-import { usePage } from 'iles'
 
 const ISLAND_TYPE = 'Islands 🏝'
 const componentStateTypes = [ISLAND_TYPE]
@@ -25,7 +25,12 @@ const strategyLabels: Record<string, any> = {
 
 let devtoolsApi: DevtoolsPluginApi
 let appConfig: AppClientConfig
-let pageData: PageData
+
+let page = {} as PageData['page']
+let route = {} as PageData['route']
+let meta = {} as PageData['meta']
+let frontmatter = {} as PageData['frontmatter']
+let site = {} as PageData['site']
 
 const devtools = {
   updateIslandsInspector () {
@@ -35,7 +40,7 @@ const devtools = {
   addIslandToDevtools (island: any) {
     islandsById[island.id] = island
     devtools.updateIslandsInspector()
-    devtoolsApi?.selectInspectorNode(INSPECTOR_ID, pageData?.route?.value?.path)
+    devtoolsApi?.selectInspectorNode(INSPECTOR_ID, route?.path)
   },
 
   removeIslandFromDevtools (island: any) {
@@ -67,7 +72,12 @@ const devtools = {
 
 export function installDevtools (app: App, config: AppClientConfig) {
   appConfig = config
-  pageData = usePage(app)
+  const pageData = usePage(app)
+  route = pageData.route
+  page = pageData.page
+  frontmatter = pageData.frontmatter
+  meta = pageData.meta
+  site = pageData.site
 
   setupDevtoolsPlugin({
     id: 'com.maximomussini.iles',
@@ -113,13 +123,12 @@ export function installDevtools (app: App, config: AppClientConfig) {
             getMediaQuery(island) && { label: getMediaQuery(island), textColor: 0, backgroundColor: 0xFB923C },
           ].filter(x => x) as InspectorNodeTag[],
         }))
-      const page = pageData.page.value
       payload.rootNodes = [{
-        id: page.meta?.href,
-        label: getComponentName(page),
+        id: meta.href,
+        label: getComponentName(page.value),
         children: islandNodes,
         tags: [
-          { label: page.layoutName ?? 'no layout', textColor: 0, backgroundColor: 0x42B983 },
+          { label: page.value.layoutName ?? 'no layout', textColor: 0, backgroundColor: 0x42B983 },
         ],
       }]
     })
@@ -127,15 +136,14 @@ export function installDevtools (app: App, config: AppClientConfig) {
     api.on.getInspectorState((payload, ctx) => {
       if (payload.app !== app || payload.inspectorId !== INSPECTOR_ID) return
 
-      if (payload.nodeId === pageData.route.value.path) {
-        const page = pageData.page.value
+      if (payload.nodeId === route.path) {
         payload.state = {
           props: [
-            { key: 'component', value: page },
-            { key: 'layout', value: page.layoutName },
-            { key: 'meta', value: page.meta },
-            { key: 'frontmatter', value: page.frontmatter },
-            { key: 'site', value: pageData.site },
+            { key: 'component', value: page.value },
+            { key: 'layout', value: page.value.layoutName },
+            { key: 'meta', value: meta },
+            { key: 'frontmatter', value: frontmatter },
+            { key: 'site', value: site },
           ].filter(x => x),
         }
         return

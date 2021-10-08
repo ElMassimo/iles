@@ -35,8 +35,8 @@ export interface PageComponent extends RouteComponent {
 
 export interface PageData<T = any> {
   readonly page: Ref<PageComponent>
-  readonly route: Ref<RouteLocationNormalizedLoaded>
-  readonly meta: Ref<PageMeta>
+  readonly route: RouteLocationNormalizedLoaded
+  readonly meta: PageMeta
   readonly frontmatter: PageFrontmatter
   readonly site: UserSite
 }
