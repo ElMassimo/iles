@@ -22,7 +22,7 @@ function openSearchModal () {
 
 <template>
   <NavBarButton aria-label="Search" @click="openSearchModal">
-    <bx:bx-search/>
+    <BxBxSearch/>
   </NavBarButton>
   <div :id="id" class="doc-search-box"/>
 </template>

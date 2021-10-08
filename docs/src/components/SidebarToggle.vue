@@ -4,6 +4,6 @@ import { openSideBar } from '~/logic/sidebar'
 
 <template>
   <NavBarButton @click="openSideBar = true">
-    <heroicons-outline:menu-alt-2 />
+    <HeroiconsOutlineMenuAlt2 />
   </NavBarButton>
 </template>

@@ -5,9 +5,9 @@
 declare module 'vue' {
   export interface GlobalComponents {
     AppButton: typeof import('./src/components/AppButton.vue')['default']
-    'Bx:bxMoon': typeof import('~icons/bx/bx-moon')['default']
-    'Bx:bxSearch': typeof import('~icons/bx/bx-search')['default']
-    'Bx:bxSun': typeof import('~icons/bx/bx-sun')['default']
+    BxBxMoon: typeof import('~icons/bx/bx-moon')['default']
+    BxBxSearch: typeof import('~icons/bx/bx-search')['default']
+    BxBxSun: typeof import('~icons/bx/bx-sun')['default']
     CarbonArrowLeft: typeof import('~icons/carbon/arrow-left')['default']
     CarbonArrowRight: typeof import('~icons/carbon/arrow-right')['default']
     CarbonLogoGithub: typeof import('~icons/carbon/logo-github')['default']
@@ -16,6 +16,7 @@ declare module 'vue' {
     DarkModeSwitch: typeof import('./src/components/DarkModeSwitch.vue')['default']
     DocSearchBox: typeof import('./src/components/DocSearchBox.vue')['default']
     EditLink: typeof import('./src/components/EditLink.vue')['default']
+    HeroiconsOutlineMenuAlt2: typeof import('~icons/heroicons-outline/menu-alt2')['default']
     HomeHero: typeof import('./src/components/HomeHero.vue')['default']
     Iles: typeof import('./src/components/Iles.vue')['default']
     IlesLogo: typeof import('~icons/iles/logo')['default']
