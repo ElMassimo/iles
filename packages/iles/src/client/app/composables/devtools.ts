@@ -82,7 +82,7 @@ export function installDevtools (app: App, config: AppClientConfig) {
   setupDevtoolsPlugin({
     id: 'com.maximomussini.iles',
     label: ISLAND_TYPE,
-    logo: 'https://vue-iles.netlify.app/favicon.svg',
+    logo: 'https://iles-docs.netlify.app/favicon.svg',
     packageName: 'iles',
     homepage: 'https://github.com/ElMassimo/iles',
     componentStateTypes,

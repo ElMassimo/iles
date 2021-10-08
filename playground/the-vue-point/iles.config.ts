@@ -7,7 +7,7 @@ import windicss from 'vite-plugin-windicss'
 import inspect from 'vite-plugin-inspect'
 
 export default defineConfig({
-  siteUrl: 'https://vue-iles.netlify.app',
+  siteUrl: 'https://the-vue-point-with-iles.netlify.app/',
   components: {
     resolvers: [iconsResolver({ componentPrefix: '' })],
   },
