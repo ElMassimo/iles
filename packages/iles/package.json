@@ -48,9 +48,9 @@
     "@rollup/plugin-virtual": "^2.0.3",
     "@vitejs/plugin-vue": "^1.8.1",
     "@vitejs/plugin-vue-jsx": "^1.1.8",
-    "@vue/compiler-sfc": "3.2.10",
+    "@vue/compiler-sfc": "3.2.20",
     "@vue/devtools-api": "^6.0.0-beta.15",
-    "@vue/server-renderer": "3.2.10",
+    "@vue/server-renderer": "3.2.20",
     "@vueuse/head": "^0.6.0",
     "nanocolors": "^0.1.6",
     "critters": "^0.0.10",
@@ -72,7 +72,7 @@
     "vite": "^2.6.3",
     "vite-plugin-pages": "npm:@mussi/vite-plugin-pages@0.18.3-beta.1",
     "vite-plugin-xdm": "^0.2.0",
-    "vue": "3.2.10",
+    "vue": "3.2.20",
     "vue-router": "^4.0.11"
   },
   "devDependencies": {
