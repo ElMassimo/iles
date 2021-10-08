@@ -8,9 +8,8 @@
     "lib": ["ESNext", "DOM"],
     "types": ["vite/client"],
     "paths": {
-      "/@theme/*": ["theme-default/*"],
       "iles": ["index.ts"]
     }
   },
-  "include": [".", "../../types/shared.d.ts", "../../types/router.d.ts"]
+  "include": [".", "../../types/shared.d.ts", "../../types/router.d.ts", "../../types/client.d.ts"]
 }

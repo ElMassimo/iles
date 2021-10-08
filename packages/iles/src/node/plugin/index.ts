@@ -1,27 +1,30 @@
 /* eslint-disable no-restricted-syntax */
-import { resolve, relative } from 'path'
-import fs from 'fs'
+import { basename, resolve, relative } from 'path'
+import { promises as fs, constants as fsConstants } from 'fs'
 import { green } from 'nanocolors'
 import type { PluginOption, ResolvedConfig, ResolveFn, ViteDevServer } from 'vite'
 import { transformWithEsbuild } from 'vite'
 
 import vue from '@vitejs/plugin-vue'
-import pages, { MODULE_ID_VIRTUAL as PAGES_REQUEST_PATH } from 'vite-plugin-pages'
+import { MODULE_ID_VIRTUAL as PAGES_REQUEST_PATH } from 'vite-plugin-pages'
 import components from 'unplugin-vue-components/vite'
 import vueJsx from '@vitejs/plugin-vue-jsx'
-import xdm from 'vite-plugin-xdm'
+import MagicString from 'magic-string'
 
+import type { Frontmatter } from '@islands/frontmatter'
 import createDebugger from 'debug'
 import type { AppConfig, AppClientConfig } from '../shared'
-import { APP_PATH, ROUTES_REQUEST_PATH, USER_APP_REQUEST_PATH, APP_CONFIG_REQUEST_PATH } from '../alias'
+import { APP_PATH, ROUTES_REQUEST_PATH, USER_APP_REQUEST_PATH, USER_SITE_REQUEST_PATH, APP_CONFIG_REQUEST_PATH, NOT_FOUND_COMPONENT_PATH, NOT_FOUND_REQUEST_PATH } from '../alias'
 import { createServer } from '../server'
-import { escapeRegex, serialize, replaceAsync } from './utils'
+import { escapeRegex, serialize, replaceAsync, pascalCase } from './utils'
 import { parseId, parseImports } from './parse'
-import { unresolvedIslandKey, wrapIslandsInSFC } from './wrap'
+import { unresolvedIslandKey, wrapIslandsInSFC, wrapLayout } from './wrap'
+import { extendSite } from './site'
 
 const debug = {
   config: createDebugger('iles:config'),
   mdx: createDebugger('iles:mdx'),
+  layout: createDebugger('iles:layout'),
   detect: createDebugger('iles:detect'),
   resolve: createDebugger('iles:resolve'),
   build: createDebugger('iles:build'),
@@ -31,9 +34,17 @@ function isMarkdown (path: string) {
   return path.endsWith('.mdx') || path.endsWith('.md')
 }
 
+function isSFCMain (path: string, query: Record<string, any>) {
+  return path.endsWith('.vue') && query.vue === undefined
+}
+
+const exists = async (filePath: string) =>
+  await fs.access(filePath, fsConstants.F_OK).then(() => true, () => false)
+
 const contextComponentRegex = new RegExp(escapeRegex('_ctx.__unplugin_components_'), 'g')
 const viteIslandRegex = new RegExp(`"?${escapeRegex(unresolvedIslandKey)}"?:\\s*([^,}\n]+)[,}\n]`, 'sg')
 const unresolvedComponentsRegex = /_resolveComponent\("([^)]+?)"\)/
+const templateLayoutRegex = /<template.*?\slayout=\s*['"](\w+)['"].*?>/
 
 // Public: Configures MDX, Vue, Components, and Islands plugins.
 export default function IslandsPlugins (appConfig: AppConfig): PluginOption[] {
@@ -45,6 +56,20 @@ export default function IslandsPlugins (appConfig: AppConfig): PluginOption[] {
   let resolveVitePath: ResolveFn
 
   const appPath = resolve(appConfig.srcDir, 'app.ts')
+  const sitePath = resolve(appConfig.srcDir, 'site.ts')
+  const layoutsRoot = `/${relative(appConfig.root, appConfig.layoutsDir)}`
+  const defaultLayoutPath = `${layoutsRoot}/default.vue`
+
+  const plugins = appConfig.namedPlugins
+
+  function isLayout (path: string) {
+    return path.includes(appConfig.layoutsDir)
+  }
+
+  function frontmatterFromPage (path: string): Frontmatter | undefined {
+    if (plugins.pages.api.pageForFile(path))
+      return appConfig.markdown.extendFrontmatter?.({}, path) || {}
+  }
 
   return [
     {
@@ -57,46 +82,63 @@ export default function IslandsPlugins (appConfig: AppConfig): PluginOption[] {
         root = config.root
         resolveVitePath = config.createResolver()
       },
-      resolveId (id) {
+      async resolveId (id) {
         if (id === ROUTES_REQUEST_PATH)
           return PAGES_REQUEST_PATH
 
-        if (id === USER_APP_REQUEST_PATH)
-          return USER_APP_REQUEST_PATH
+        if (id === APP_CONFIG_REQUEST_PATH || id === USER_APP_REQUEST_PATH || id === USER_SITE_REQUEST_PATH)
+          return id
 
-        if (id === APP_CONFIG_REQUEST_PATH)
-          return APP_CONFIG_REQUEST_PATH
+        if (id === NOT_FOUND_REQUEST_PATH) {
+          for (const extension of ['vue', 'mdx', 'md', 'jsx']) {
+            const path = resolve(appConfig.pagesDir, `404.${extension}`)
+            if (await exists(path)) return path
+          }
+          return NOT_FOUND_COMPONENT_PATH
+        }
+
+        // Prevent import analysis failure if the default layout doesn't exist.
+        if (id === defaultLayoutPath) return resolve(root, id.slice(1))
       },
-      load (id) {
+      async load (id) {
         if (id === APP_CONFIG_REQUEST_PATH) {
-          const { base, debug, router, root, ssg } = appConfig
-          const clientConfig: AppClientConfig = { base, debug, router, root, ssg }
+          const { base, debug, root, ssg, siteUrl } = appConfig
+          const clientConfig: AppClientConfig = { base, debug, root, ssg, siteUrl }
           return `export default ${serialize(clientConfig)}`
         }
 
-        if (id === USER_APP_REQUEST_PATH) {
-          if (!fs.existsSync(appPath)) return 'export default {}'
-          this.addWatchFile(appPath)
-          return transformWithEsbuild(fs.readFileSync(appPath, 'utf-8'), appPath)
+        const userFilename = (id === USER_APP_REQUEST_PATH && appPath)
+          || (id === USER_SITE_REQUEST_PATH && sitePath)
+        if (userFilename) {
+          this.addWatchFile(userFilename)
+          const result = await exists(userFilename)
+            ? await transformWithEsbuild(await fs.readFile(userFilename, 'utf-8'), userFilename, { sourcemap: false })
+            : { code: 'export default {}' }
+          return id === USER_SITE_REQUEST_PATH ? extendSite(result.code, appConfig) : result
         }
       },
       handleHotUpdate ({ file, server }) {
         if (file === appPath) return [server.moduleGraph.getModuleById(USER_APP_REQUEST_PATH)!]
-      },
-      // Allows to do a glob import in 'src/client/app/layouts.ts'
-      transform (code, id) {
-        if (id.includes('client/app/layouts'))
-          return code.replace(/__LAYOUTS_ROOT__/g, `/${relative(root, appConfig.layoutsDir)}`)
+        if (file === sitePath) return [server.moduleGraph.getModuleById(USER_SITE_REQUEST_PATH)!]
       },
       configureServer (server) {
         restartOnConfigChanges(appConfig, server)
 
+        const supportedExtensions = ['.html', '.xml', '.json', '.rss', '.atom']
+
         // serve our index.html after vite history fallback
         return () => {
           server.middlewares.use((req, res, next) => {
-            // if (req.url!.endsWith('.html')) {
-            res.statusCode = 200
-            res.end(`
+            // Fallback when the user has not created a default layout.
+            if (req.url?.includes(defaultLayoutPath)) {
+              res.statusCode = 200
+              res.setHeader('content-type', 'text/javascript')
+              res.end('export default false')
+            }
+            else if (supportedExtensions.some(ext => req.url!.endsWith(ext))) {
+              res.statusCode = 200
+              res.setHeader('content-type', 'text/html')
+              res.end(`
 <!DOCTYPE html>
 <html>
   <body>
@@ -104,6 +146,7 @@ export default function IslandsPlugins (appConfig: AppConfig): PluginOption[] {
     <script type="module" src="/@fs/${APP_PATH}/index.js"></script>
   </body>
 </html>`)
+            }
           })
         }
       },
@@ -117,10 +160,21 @@ export default function IslandsPlugins (appConfig: AppConfig): PluginOption[] {
           return wrapIslandsInSFC(code, path, debug.detect)
       },
     },
+    {
+      name: 'iles:layouts',
+      enforce: 'pre',
+      transform (code, id) {
+        const { path, query } = parseId(id)
+        if (!isSFCMain(path, query) || !isLayout(path)) return
+        const layoutName = code.match(templateLayoutRegex)?.[1] || false
+        if (String(layoutName) === 'false') return
+        return wrapLayout(code, path, debug.layout)
+      },
+    },
 
     vue(appConfig.vue),
 
-    xdm(appConfig.markdown),
+    plugins.markdown,
 
     {
       name: 'iles:mdx:pos',
@@ -147,10 +201,8 @@ export default function IslandsPlugins (appConfig: AppConfig): PluginOption[] {
         return code.replace('export default MDXContent', `
 ${code.includes(' defineComponent') ? '' : 'import { defineComponent } from \'vue\''}
 
-const _default = defineComponent({
+const _sfc_main = defineComponent({
   ${mode === 'development' ? `__file: '${path}',` : ''}
-  ...frontmatter,
-  frontmatter,
   props: {
     components: { type: Object, default: () => ({}) },
   },
@@ -159,32 +211,79 @@ const _default = defineComponent({
   },
 })
 export const render = MDXContent
-export default _default`)
+export default _sfc_main
+`)
       },
     },
 
     vueJsx(appConfig.vueJsx),
 
     // https://github.com/hannoeru/vite-plugin-pages
-    pages(appConfig.pages),
+    plugins.pages,
 
     // https://github.com/antfu/unplugin-vue-components
     components(appConfig.components),
+
+    {
+      name: 'iles:page-hmr',
+      apply: 'serve',
+      enforce: 'post',
+      // Force a refresh for all page computed properties.
+      async transform (code, id) {
+        const { path } = parseId(id)
+        if (isLayout(path) || plugins.pages.api.pageForFile(path)) {
+          return `${code}
+import.meta.hot.accept('/${relative(root, path)}', (...args) => __ILES_PAGE_UPDATE__(args))
+`
+        }
+      },
+    },
+
+    {
+      name: 'iles:sfc:page-data',
+      enforce: 'post',
+      async transform (code, id) {
+        const { path, query } = parseId(id)
+        const isMarkdownPath = isMarkdown(path)
+        if (!isMarkdownPath && !isSFCMain(path, query)) return
+
+        const s = new MagicString(code)
+        const sfcIndex = code.indexOf('{', code.indexOf('const _sfc_main = ')) + 1
+        const appendToSfc = (key: string, value: string) => s.appendRight(sfcIndex, `${key}:${value},`)
+
+        if (isLayout(path)) {
+          appendToSfc('name', `'${pascalCase(basename(path).replace('.vue', 'Layout'))}'`)
+          return s.toString()
+        }
+
+        const pageMatter = frontmatterFromPage(path)
+        if (!pageMatter) return
+
+        if (isMarkdownPath) {
+          s.appendRight(sfcIndex, '...meta,...frontmatter,meta,frontmatter,')
+        }
+        else {
+          const { meta, layout, ...frontmatter } = pageMatter
+          appendToSfc('meta', serialize(meta))
+          appendToSfc('frontmatter', serialize(frontmatter))
+        }
+
+        const layoutName = pageMatter.layout ?? 'default'
+        appendToSfc('layoutName', serialize(layoutName))
+        appendToSfc('layoutFn', String(layoutName) === 'false'
+          ? 'false'
+          : `() => import('${layoutsRoot}/${layoutName}.vue').then(m => m.default)`)
+
+        return s.toString()
+      },
+    },
 
     {
       name: 'iles:resolve-islands',
       enforce: 'post',
       async transform (code, id) {
         const { path, query } = parseId(id)
-        if (!isMarkdown(path) && !path.endsWith('.vue')) return
-
-        if (path.includes('src/pages/') && path.endsWith('.vue') && !query.type) {
-          // Set path to the specified page.
-          // TODO: Unify with MDX
-          const href = relative(root, path).replace(/\.\w+$/, '').replace('src/pages/', '/')
-            .replace(/\/index$/, '/')
-          code = `${code}\nexport const href = '${href}'`
-        }
+        if (!isMarkdown(path) && !isSFCMain(path, query)) return
 
         code = code.replace(contextComponentRegex, '__unplugin_components_')
 

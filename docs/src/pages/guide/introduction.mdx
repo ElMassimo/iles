@@ -1,0 +1,53 @@
+[îles]: https://github.com/ElMassimo/iles
+[Partial Hydration]: https://jasonformat.com/islands-architecture/
+[Vite.js]: https://vitejs.dev/
+[Vue]: https://v3.vuejs.org/
+[MDX]: https://mdxjs.com/
+[xdm]: https://github.com/wooorm/xdm
+[Astro]: https://docs.astro.build/core-concepts/component-hydration
+[Vitepress]: https://vitepress.vuejs.org/
+[vite-ssg]: https://github.com/antfu/vite-ssg
+[vite-plugin-pages]: https://github.com/hannoeru/vite-plugin-pages
+[unplugin-vue-components]: https://github.com/antfu/unplugin-vue-components
+[Live Demo]: https://vue-iles.netlify.app/
+[devtools1]: https://user-images.githubusercontent.com/1158253/133314267-f0ba784c-ff64-4ee8-b2bf-97ecffc2facd.jpg
+[devtools2]: https://user-images.githubusercontent.com/1158253/133314279-1edc22d1-3ffb-414e-b994-212cb316593b.jpg
+
+[hydration]: /guide/hydration
+
+# Introduction
+
+<Iles/> is a static-site generator that provides automatic [partial hydration].
+
+Use [Vue] and [MDX] to build your website, while enjoying the smooth development
+experience provided by [Vite.js].
+
+When building for production, use [`client` directives][hydration] to specify which components are interactive, and automatically ship the minimal amount of JS needed.
+
+__[Live Demo]__
+
+<Tip title="Project Status: Alpha" warn>
+APIs may change on patch releases. Lock the version to avoid breakage.
+</Tip>
+
+## Features ✨
+
+### 🏝 Automatic [Partial Hydration]
+  
+  Ship JS only for the interactive bits, by default that's zero.
+
+### ⚡️ Powered by [Vite.js]
+
+  That means the server starts fast, and HMR feels instant.
+
+### 📖 Great [MDX] Support
+  
+  Use components inside markdown. With HMR, the browser becomes a live preview.
+
+### 🧱 Layouts and [Components][unplugin-vue-components]
+  
+  Use Vue components as layouts for Markdown or Vue pages.
+
+### 🛣 [File-system Based Routing][vite-plugin-pages]
+
+### 🛠 Vue [Devtools][devtools1] [Support][devtools2]

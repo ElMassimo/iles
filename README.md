@@ -1,6 +1,6 @@
 <p align="center">
   <a href="https://vue-iles.netlify.app/">
-    <img src="https://github.com/ElMassimo/iles/blob/main/docs/public/banner.png"/>
+    <img src="https://github.com/ElMassimo/iles/blob/main/docs/images/banner.png"/>
   </a>
 </p>
 
@@ -206,17 +206,17 @@ import windicss from 'vite-plugin-windicss'
 export default defineConfig({
   vite: {
     plugins: [
-      icons(),
+      icons({ autoInstall: true }),
       windicss(),
     ],
   },
   components: {
     resolvers: [iconsResolver({ componentPrefix: '' })],
   },
-  pages: {
-    extendRoute (route) {
-      if (route.path.startsWith('/posts'))
-        return { ...route, meta: { layout: 'post', ...route.meta } }
+  markdown: {
+    extendFrontmatter (frontmatter, filename) {
+      if (filename.includes('/posts/'))
+        return { ...frontmatter, layout: 'post' }
     },
   },
 })
@@ -231,7 +231,7 @@ export default defineApp({
   head: {
     title: 'Site Title',
     meta: [
-      { property: 'description', content: 'Site Description.' },
+      { name: 'description', content: 'Site Description.' },
     ],
   },
   enhanceApp ({ app, head, router }) {

@@ -1,0 +1,155 @@
+pre[class*='language-'],
+pre.code {
+  background: var(--h-background);
+  border-radius: 0.2rem;
+  color: var(--h-foreground);
+  font-size: 14px;
+  hyphens: none;
+  line-height: 1.6em;
+  overflow: auto;
+  padding-right: 0;
+  tab-size: 2;
+  white-space: pre;
+  word-break: normal;
+  word-spacing: normal;
+}
+
+/* Selection */
+* ::selection {
+  background: var(--bg-highlight);
+}
+
+/* Tokens */
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+  color: var(--h-comment);
+  font-style: var(--h-comment-style);
+}
+
+.token.namespace {
+  color: var(--h-namespace);
+}
+
+.token.interpolation {
+  color: var(--h-interpolation);
+}
+
+.token.string {
+  color: var(--h-string);
+}
+
+.token.punctuation {
+  color: var(--h-punctuation);
+}
+
+.token.operator {
+  color: var(--h-operator);
+}
+
+.token.keyword.module,
+.token.keyword.control-flow {
+  color: var(--h-keyword-control);
+}
+
+.token.url,
+.token.symbol,
+.token.inserted {
+  color: var(--h-symbol);
+}
+
+.token.constant {
+  color: var(--h-constant);
+}
+
+.token.string.url {
+  text-decoration: var(--h-url-decoration);
+}
+
+.token.boolean,
+.language-json .token.boolean {
+  color: var(--h-boolean);
+}
+
+.token.number,
+.language-json .token.number {
+  color: var(--h-number);
+}
+
+.token.variable {
+  color: var(--h-variable);
+}
+
+.token.keyword {
+  color: var(--h-keyword);
+}
+
+.token.atrule,
+.token.attr-value,
+.token.selector {
+  color: var(--h-selector);
+}
+
+.token.function {
+  color: var(--h-function);
+}
+
+.token.deleted {
+  color: var(--h-deleted);
+}
+
+.token.important,
+.token.bold {
+  font-weight: bold;
+}
+
+.token.italic {
+  font-style: italic;
+}
+
+.token.class-name {
+  color: var(--h-class);
+}
+
+.token.tag,
+.token.builtin {
+  color: var(--h-builtin);
+}
+
+.token.attr-name,
+.token.property,
+.token.entity {
+  color: var(--h-property);
+}
+
+.language-json .token.property {
+  color: var(--h-json-property);
+}
+
+.token.regex {
+  color: var(--h-regex);
+}
+
+.token.decorator,
+.token.annotation {
+  color: var(--h-decorator);
+}
+
+/* overrides color-values for the Line Numbers plugin
+ * http://prismjs.com/plugins/line-numbers/
+ */
+.line-numbers .line-numbers-rows {
+  border-right-color: var(--h-line-number);
+}
+
+.line-numbers-rows > span:before {
+  color: var(--h-line-number-gutter);
+}
+
+/* overrides color-values for the Line Highlight plugin
+  * http://prismjs.com/plugins/line-highlight/
+  */
+.line-highlight {
+  background: var(--h-line-highlight-background);
+}

@@ -1,0 +1,38 @@
+:root {
+  --navbar-height: 3.5rem;
+  --full-viewport: calc(100vh - var(--navbar-height));
+  --br-normal: rgba(126, 135, 160, 0.15);
+  --bg-html: theme('colors.white');
+  --bg-scrollbar-track: var(--bg-highlight);
+  --bg-scrollbar-thumb: var(--bg-soft);
+  --bg-scrollbar-thumb-hover: var(--bg-primary);
+  --bg-highlight: rgba(126, 185, 220, 0.15);
+  --bg-primary: var(--fc-primary-soft);
+  --bg-soft: rgba(126, 185, 220, 0.35);
+  --fc-soft: theme('colors.gray.500');
+  --fc: theme('colors.gray.700');
+  --fc-hard: theme('colors.gray.800');
+  --fc-intense: theme('colors.gray.900');
+  --fc-primary-soft: theme('colors.light-blue.500');
+  --fc-primary: theme('colors.light-blue.600');
+  --fc-primary-intense: theme('colors.light-blue.700');
+  --w-container: 65ch;
+}
+
+@screen md {
+  :root {
+    --navbar-height: 3.75rem;
+  }
+}
+
+html.dark {
+  --bg-html: theme('colors.warm-gray.900');
+  --br-normal: rgba(226, 235, 255, 0.15);
+  --bg-soft: rgba(195, 185, 185, 0.15);
+  --fc-soft: theme('colors.warm-gray.500');
+  --fc: theme('colors.warm-gray.300');
+  --fc-hard: theme('colors.warm-gray.200');
+  --fc-intense: theme('colors.warm-gray.100');
+  --fc-primary-soft: theme('colors.light-blue.500');
+  --fc-primary-intense: theme('colors.light-blue.500');
+}

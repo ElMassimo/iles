@@ -28,10 +28,8 @@ export function useRouterLinks () {
           && hostname === currentUrl.hostname
           && !(extMatch && extMatch[0] !== '.html')
         ) {
-          if (pathname !== currentUrl.pathname) {
-            e.preventDefault()
-            router.push({ path: pathname, hash })
-          }
+          if (pathname !== currentUrl.pathname || !hash) e.preventDefault()
+          if (pathname !== currentUrl.pathname) router.push({ path: pathname, hash })
         }
       }
     },

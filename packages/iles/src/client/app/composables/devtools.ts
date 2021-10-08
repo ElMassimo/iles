@@ -2,7 +2,9 @@ import type { App, ComponentPublicInstance } from 'vue'
 import { reactive, computed } from 'vue'
 import type { InspectorNodeTag, DevtoolsPluginApi } from '@vue/devtools-api'
 import { setupDevtoolsPlugin } from '@vue/devtools-api'
-import type { AppConfig } from '../../shared'
+import { usePage } from 'iles'
+import type { AppClientConfig, PageData } from '../../shared'
+import { getComponentName } from '../utils'
 
 const ISLAND_TYPE = 'Islands 🏝'
 const componentStateTypes = [ISLAND_TYPE]
@@ -22,17 +24,28 @@ const strategyLabels: Record<string, any> = {
 }
 
 let devtoolsApi: DevtoolsPluginApi
-let appConfig: AppConfig
+let appConfig: AppClientConfig
+
+let page = {} as PageData['page']
+let route = {} as PageData['route']
+let meta = {} as PageData['meta']
+let frontmatter = {} as PageData['frontmatter']
+let site = {} as PageData['site']
 
 const devtools = {
+  updateIslandsInspector () {
+    devtoolsApi?.sendInspectorTree(INSPECTOR_ID)
+  },
+
   addIslandToDevtools (island: any) {
     islandsById[island.id] = island
-    devtoolsApi?.sendInspectorTree(INSPECTOR_ID)
+    devtools.updateIslandsInspector()
+    devtoolsApi?.selectInspectorNode(INSPECTOR_ID, route?.path)
   },
 
   removeIslandFromDevtools (island: any) {
     delete islandsById[island.id]
-    devtoolsApi?.sendInspectorTree(INSPECTOR_ID)
+    devtools.updateIslandsInspector()
   },
 
   onHydration ({ id, ...event }: any) {
@@ -48,7 +61,7 @@ const devtools = {
       event: { time, title: component, subtitle: hydrated, data },
     })
 
-    if (appConfig?.debug) {
+    if (appConfig?.debug === 'log') {
       const { el, slots } = event
       console.info(`🏝 hydrated ${component}`, el, slots)
     }
@@ -57,8 +70,14 @@ const devtools = {
 
 ;(window as any).__ILE_DEVTOOLS__ = devtools
 
-export function installDevtools (app: App, config: AppConfig) {
-  if (config) appConfig = config
+export function installDevtools (app: App, config: AppClientConfig) {
+  appConfig = config
+  const pageData = usePage(app)
+  route = pageData.route
+  page = pageData.page
+  frontmatter = pageData.frontmatter
+  meta = pageData.meta
+  site = pageData.site
 
   setupDevtoolsPlugin({
     id: 'com.maximomussini.iles',
@@ -90,11 +109,11 @@ export function installDevtools (app: App, config: AppConfig) {
       instanceData.state.push({ type: ISLAND_TYPE, key: 'within', value: island })
     })
 
-    api.on.getInspectorTree((payload) => {
-      if (payload.app !== app && payload.inspectorId !== INSPECTOR_ID) return
-      const filter = payload.filter?.toLowerCase() || ''
-      payload.rootNodes = islands.value
-        .filter((island: any) => island.id.includes(filter) || island.componentName.toLowerCase().includes(filter))
+    api.on.getInspectorTree(async (payload) => {
+      if (payload.app !== app || payload.inspectorId !== INSPECTOR_ID) return
+      const userFilter = payload.filter?.toLowerCase() || ''
+      const islandNodes = islands.value
+        .filter((island: any) => island.id.includes(userFilter) || island.componentName.toLowerCase().includes(userFilter))
         .map((island: any) => ({
           id: island.id,
           label: island.componentName,
@@ -104,10 +123,32 @@ export function installDevtools (app: App, config: AppConfig) {
             getMediaQuery(island) && { label: getMediaQuery(island), textColor: 0, backgroundColor: 0xFB923C },
           ].filter(x => x) as InspectorNodeTag[],
         }))
+      payload.rootNodes = [{
+        id: meta.href,
+        label: getComponentName(page.value),
+        children: islandNodes,
+        tags: [
+          { label: page.value.layoutName ?? 'no layout', textColor: 0, backgroundColor: 0x42B983 },
+        ],
+      }]
     })
 
     api.on.getInspectorState((payload, ctx) => {
-      if (payload.app !== app && payload.inspectorId !== INSPECTOR_ID) return
+      if (payload.app !== app || payload.inspectorId !== INSPECTOR_ID) return
+
+      if (payload.nodeId === route.path) {
+        payload.state = {
+          props: [
+            { key: 'component', value: page.value },
+            { key: 'layout', value: page.value.layoutName },
+            { key: 'meta', value: meta },
+            { key: 'frontmatter', value: frontmatter },
+            { key: 'site', value: site },
+          ].filter(x => x),
+        }
+        return
+      }
+
       const island = islandsById[payload.nodeId] as any
       if (!island) return
       payload.state = {

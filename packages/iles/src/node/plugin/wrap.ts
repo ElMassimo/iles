@@ -2,11 +2,25 @@ import MagicString from 'magic-string'
 import { parse } from '@vue/compiler-sfc'
 import type { Debugger } from 'debug'
 import type { ElementNode, TemplateChildNode } from '@vue/compiler-core'
-import { pascalCase } from './utils'
+import { pascalCase, isString } from './utils'
 import { parseImports } from './parse'
 import type { ParsedImports } from './parse'
 
 export const unresolvedIslandKey = '__viteIslandComponent'
+
+export async function wrapLayout (code: string, filename: string, debug: Debugger) {
+  const { descriptor: { template }, errors } = parse(code, { filename })
+  if (errors.length > 0 || !template || !isString(template.attrs.layout)) return
+
+  const s = new MagicString(code)
+  const nodes = template.ast.children
+  const Layout = `${pascalCase(template.attrs.layout as string)}Layout`
+
+  s.appendLeft(nodes[0].loc.start.offset, `<${Layout}>`)
+  s.appendRight(nodes[nodes.length - 1].loc.end.offset, `</${Layout}>`)
+
+  return { code: s.toString(), map: s.generateMap({ hires: true }) }
+}
 
 export async function wrapIslandsInSFC (code: string, filename: string, debug: Debugger) {
   const { descriptor: { template, script, scriptSetup }, errors } = parse(code, { filename })

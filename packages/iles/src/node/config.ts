@@ -1,11 +1,16 @@
 /* eslint-disable no-restricted-syntax */
+import fs from 'fs'
 import { join, relative, resolve } from 'path'
 import { yellow } from 'nanocolors'
 import creatDebugger from 'debug'
 import { loadConfigFromFile, mergeConfig as mergeViteConfig } from 'vite'
+import pages from 'vite-plugin-pages'
+import xdm from 'vite-plugin-xdm'
+
 import type { ComponentResolver } from 'unplugin-vue-components/types'
 import type { Frontmatter, FrontmatterPluggable } from '@islands/frontmatter'
 import type { AppConfig, AppPlugins, ConfigEnv, ViteOptions, Plugin } from './shared'
+import { camelCase, uncapitalize } from './plugin/utils'
 import { resolveAliases, DIST_CLIENT_PATH, HYDRATION_DIST_PATH } from './alias'
 import remarkWrapIslands from './plugin/remarkWrapIslands'
 
@@ -15,7 +20,6 @@ export type { AppConfig }
 
 export const IlesComponentResolver: ComponentResolver = (name) => {
   if (name === 'Island') return { importName: 'Island', path: 'iles' }
-  if (name === 'Layout') return { importName: 'Layout', path: 'iles' }
   if (name === 'Head') return { importName: 'Head', path: '@vueuse/head' }
 }
 
@@ -26,75 +30,81 @@ export async function resolveConfig (root?: string, env?: ConfigEnv): Promise<Ap
   const appConfig = await resolveUserConfig(root, env)
 
   const srcDir = resolve(root, appConfig.srcDir)
-
-  const config = Object.assign(appConfig, {
+  Object.assign(appConfig, {
     srcDir,
+    pagesDir: resolve(srcDir, appConfig.pagesDir),
     outDir: resolve(root, appConfig.outDir),
     tempDir: resolve(root, appConfig.tempDir),
     layoutsDir: resolve(srcDir, appConfig.layoutsDir),
   })
 
-  chainPluginCallbacks(config, 'pages', ['onRoutesGenerated', 'onClientGenerated'], true)
-  chainPluginCallbacks(config, 'pages', ['extendRoute'], false)
-  chainPluginCallbacks(config, 'markdown', ['extendFrontmatter'], false)
-
-  const ceChecks = config.plugins.map(plugin => plugin.vue?.template?.compilerOptions?.isCustomElement).filter(x => x)
-  config.vue.template!.compilerOptions!.isCustomElement = (tagName: string) =>
+  const ceChecks = appConfig.plugins.map(plugin => plugin.vue?.template?.compilerOptions?.isCustomElement).filter(x => x)
+  appConfig.vue.template!.compilerOptions!.isCustomElement = (tagName: string) =>
     tagName.startsWith('ile-') || ceChecks.some(fn => fn!(tagName))
-
-  withResolvedConfig(config)
-  return config
-}
-
-const defaultPlugins = (root: string): Partial<AppConfig>[] => [
-  {
-    pages: {
-      // Internal: Move any frontmatter defined top-level to a nested property.
-      extendRoute ({ layout: routeLayout, meta: routeMeta, ...route }: any) {
-        const metaMatter = routeMeta?.frontmatter as Frontmatter
-        const { layout: frontmatterLayout, ...frontmatter } = metaMatter || {}
-        const meta = { ...routeMeta, frontmatter }
-        const layout = routeLayout || frontmatterLayout
-        if (layout) meta.layout = layout
-        return { ...route, meta }
-      },
-    } as AppConfig['pages'],
-    markdown: {
-      extendFrontmatter (frontmatter, filename) {
-        filename = relative(root, filename)
-        // TODO: Use pages plugin to obtain the path pages.pathForFile(path)
-        const href = filename.replace(/\.\w+$/, '').replace('src/pages/', '/')
-        return { filename, href, ...frontmatter }
-      },
-    },
-  },
-]
-
-async function resolveUserConfig (root: string, configEnv: ConfigEnv) {
-  const defaults = appConfigDefaults(root)
-  const result = await loadConfigFromFile(configEnv, 'iles.config.ts', root)
-  debug(result ? `loaded config at ${yellow(result.path)}` : 'no iles.config.ts file found.')
-
-  let { plugins = [], ...config } = result ? mergeConfig(defaults, result.config as any) : defaults
-  const userPlugins = [...defaultPlugins(root), config, ...plugins].flat().filter(p => p) as Plugin[]
-
-  for (const plugin of userPlugins) {
-    if (plugin.config) {
-      const partialConfig = await plugin.config(config, configEnv)
-      if (partialConfig) config = mergeConfig(config, partialConfig as any)
-    }
-  }
-
-  if (result?.path) config.configPath = result?.path
-  const appConfig: AppConfig = { ...config, plugins: userPlugins }
-  appConfig.base = appConfig.siteUrl ? new URL(appConfig.siteUrl).pathname : '/'
-  appConfig.vite.base = appConfig.base
-  appConfig.vite.build!.assetsDir = appConfig.assetsDir
 
   return appConfig
 }
 
-function appConfigDefaults (root: string): AppConfig {
+async function resolveUserConfig (root: string, configEnv: ConfigEnv) {
+  const config = { root, namedPlugins: {} } as AppConfig
+
+  const { path, config: { plugins = [], ...userConfig } = {} }
+    = await loadConfigFromFile(configEnv, 'iles.config.ts', root) || {}
+  if (path) config.configPath = path
+  debug(path ? `loaded config at ${yellow(path)}` : 'no iles.config.ts file found.')
+
+  config.plugins = [
+    appConfigDefaults(config),
+    userConfig,
+    ...plugins,
+  ].flat().filter(p => p) as Plugin[]
+
+  Object.assign(config, await applyPlugins(config, configEnv))
+  config.pages.pagesDir = join(config.srcDir, config.pagesDir)
+  config.namedPlugins.pages = pages(config.pages)
+  config.namedPlugins.markdown = xdm(config.markdown)
+
+  const siteUrl = config.siteUrl || ''
+  const protocolIndex = siteUrl.indexOf('//')
+  const baseIndex = siteUrl.indexOf('/', protocolIndex > -1 ? protocolIndex + 2 : 0)
+  config.siteUrl = baseIndex > -1 ? siteUrl.slice(0, baseIndex) : siteUrl
+  config.base = baseIndex > -1 ? siteUrl.slice(baseIndex) : '/'
+  if (!config.base.endsWith('/')) config.base = `${config.base}/`
+  config.vite.base = config.base
+  config.vite.build!.assetsDir = config.assetsDir
+
+  return config
+}
+
+async function applyPlugins (config: AppConfig, configEnv: ConfigEnv) {
+  for (const plugin of config.plugins) {
+    // @ts-ignore
+    const { name, config: configFn, plugins, ...pluginOptions } = plugin
+    if (plugins && plugins.length > 0) throw new Error(`Plugins in îles can't specify the 'plugins' option. Found in ${name}: ${JSON.stringify(pluginOptions)}`)
+
+    config = mergeConfig(config, pluginOptions)
+    if (configFn) {
+      const partialConfig = await configFn(config, configEnv)
+      if (partialConfig) config = mergeConfig(config, partialConfig as any)
+    }
+  }
+  chainPluginCallbacks(config, 'pages', ['onRoutesGenerated', 'onClientGenerated'], true)
+  chainPluginCallbacks(config, 'pages', ['extendRoute'], false)
+  chainPluginCallbacks(config, 'markdown', ['extendFrontmatter'], false)
+  return config
+}
+
+function appConfigDefaults (appConfig: AppConfig): Omit<AppConfig, 'namedPlugins'> {
+  const { root } = appConfig
+
+  function IlesLayoutResolver (name: string) {
+    const [layoutName, isLayout] = name.split('Layout', 2)
+    if (isLayout === '') {
+      const layoutFile = `${uncapitalize(camelCase(layoutName))}.vue`
+      return { importName: 'default', path: join(appConfig.layoutsDir, layoutFile) }
+    }
+  }
+
   return {
     debug: true,
     root,
@@ -105,15 +115,22 @@ function appConfigDefaults (root: string): AppConfig {
     },
     configPath: resolve(root, 'iles.config.ts'),
     assetsDir: 'assets',
+    pagesDir: 'pages',
     srcDir: 'src',
     outDir: 'dist',
     layoutsDir: 'layouts',
     tempDir: '.iles-ssg-temp',
     plugins: [] as Plugin[],
-    router: {},
     pages: {
+      routeBlockLang: 'yaml',
       syncIndex: false,
       extensions: ['vue', 'md', 'mdx'],
+      // NOTE: Adds filename to the meta information in the route so that it can
+      // be used to correctly infer the file name during SSG.
+      extendRoute (route) {
+        const filename = join(root, route.component)
+        return { ...route, meta: { ...route.meta, filename } }
+      },
     },
     vite: viteConfigDefaults(root),
     vue: {
@@ -127,43 +144,45 @@ function appConfigDefaults (root: string): AppConfig {
     },
     markdown: {
       jsx: true,
-      remarkPlugins: [],
+      remarkPlugins: [
+        remarkWrapIslands,
+        'remark-frontmatter',
+        frontmatterPlugin(appConfig),
+      ],
+      // Adds meta fields such as filename, lastUpdated, and href.
+      extendFrontmatter (frontmatter, absoluteFilename) {
+        let resolvedPage = appConfig.namedPlugins.pages.api.pageForFile(absoluteFilename)
+        const normalizedPath = resolvedPage && `/${resolvedPage.route.replace(/(^|\/)index$/, '')}`
+        const { route: { path = normalizedPath } = {}, meta: routeMeta, templateAttrs: _t, ...routeMatter }: Frontmatter = resolvedPage?.customBlock || {}
+        const meta = {
+          lastUpdated: new Date(Math.round(fs.statSync(absoluteFilename).mtimeMs)),
+          ...frontmatter.meta,
+          ...routeMeta,
+          filename: relative(root, absoluteFilename),
+        }
+        if (path !== undefined) meta.href = `${appConfig.base}${path.slice(1)}`
+        return { ...frontmatter, ...routeMatter, meta }
+      },
     },
     components: {
       dts: true,
       extensions: ['vue', 'jsx', 'js', 'ts', 'mdx'],
       include: [/\.vue$/, /\.vue\?vue/, /\.mdx?/],
-      resolvers: [IlesComponentResolver],
+      resolvers: [
+        IlesComponentResolver,
+        IlesLayoutResolver,
+      ],
     },
-  }
-}
-
-// Internal: Once all plugins are resolved, we can ensure frontmatter extensions
-// are also applied to routes, providing a consistent experience when importing
-// a page or using route meta.
-function withResolvedConfig (config: AppConfig) {
-  config.markdown.remarkPlugins!.unshift(...[
-    remarkWrapIslands,
-    import('remark-frontmatter').then(mod => mod.default),
-    frontmatterPlugin(config),
-  ])
-  const { extendFrontmatter } = config.markdown
-  const { extendRoute } = config.pages
-  config.pages.extendRoute = (route, parent) => {
-    route = extendRoute?.(route, parent) || route
-    const { frontmatter: metaFrontmatter, ...metaRest } = route.meta || {}
-    const { frontmatter: routeFrontmatter, ...routeRest } = route as any
-    const routeMatter = { ...routeFrontmatter, ...metaFrontmatter as Frontmatter }
-    const filename = join(config.root, route.component)
-    const frontmatter = extendFrontmatter?.(routeMatter, filename) || routeMatter
-    return { ...routeRest, meta: { ...metaRest, frontmatter } }
   }
 }
 
 async function frontmatterPlugin (config: AppConfig): Promise<FrontmatterPluggable> {
   const { remarkFrontmatter } = await import('@islands/frontmatter')
-  const { extendFrontmatter } = config.markdown
-  return [remarkFrontmatter, { extendFrontmatter }]
+  return [remarkFrontmatter, {
+    get extendFrontmatter () {
+      return config.markdown.extendFrontmatter
+    },
+  }]
 }
 
 function viteConfigDefaults (root: string): ViteOptions {
@@ -171,6 +190,7 @@ function viteConfigDefaults (root: string): ViteOptions {
     root,
     resolve: {
       alias: resolveAliases(root),
+      dedupe: ['vue', 'vue-router', '@vueuse/head', '@vue/devtools-api'],
     },
     server: {
       fs: { allow: [root, DIST_CLIENT_PATH, HYDRATION_DIST_PATH] },
@@ -191,7 +211,6 @@ function viteConfigDefaults (root: string): ViteOptions {
         '@vue/server-renderer',
         '@vueuse/head',
         '@islands/hydration',
-        '@islands/layouts',
       ],
     },
   }

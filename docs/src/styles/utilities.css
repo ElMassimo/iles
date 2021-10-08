@@ -1,0 +1,31 @@
+.website-logo {
+  @apply transition-transform duration-400 hover:scale-110;
+}
+
+.section-title {
+  @apply text-3xl sm:text-4xl md:text-5xl leading-tight font-extrabold text-hard my-8;
+}
+
+.layout {
+  @apply mx-auto px-8 my-8;
+
+  max-width: calc(var(--w-container) + 15vw);
+}
+
+.container {
+  margin: 0 auto;
+  max-width: var(--w-container);
+}
+
+.hoverable {
+  transition: background 80ms ease;
+
+  &.active,
+  &:hover {
+    background: var(--bg-highlight);
+  }
+}
+
+.transition-bg {
+  transition: background 0.3s ease;
+}

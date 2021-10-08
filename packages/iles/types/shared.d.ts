@@ -1,21 +1,45 @@
 /* eslint-disable no-use-before-define */
 import type { UserConfig as ViteOptions, ConfigEnv } from 'vite'
-import type { App, Ref } from 'vue'
+import type { App, Ref, DefineComponent } from 'vue'
 import type { Options as CritterOptions } from 'critters'
 import type { Options as VueOptions } from '@vitejs/plugin-vue'
-import type { UserOptions as PagesOptions } from 'vite-plugin-pages'
+import type PagesPlugin, { UserOptions as PagesOptions } from 'vite-plugin-pages'
 import type { Options as ComponentOptions } from 'unplugin-vue-components/types'
 import type VueJsxPlugin from '@vitejs/plugin-vue-jsx'
-import type { PluginOptions as XdmOptions } from 'vite-plugin-xdm'
+import type XdmPlugin, { PluginOptions as XdmOptions } from 'vite-plugin-xdm'
 import type { FrontmatterOptions } from '@islands/frontmatter'
-import type { Router, RouteRecordRaw, RouterOptions as VueRouterOptions, RouteMeta, RouteLocationNormalizedLoaded } from 'vue-router'
+import type { Router, RouteRecordRaw, RouteMeta, RouterOptions as VueRouterOptions, RouteComponent, RouteLocationNormalizedLoaded } from 'vue-router'
 import type { HeadClient, HeadObject } from '@vueuse/head'
 
 export { ViteOptions, ConfigEnv }
 
-export type { Router, RouteRecordRaw }
-export type PageMeta = RouteMeta
+export type { Router, RouteRecordRaw, RouteMeta }
 export type RouterOptions = VueRouterOptions & { base?: string }
+
+export interface PageFrontmatter extends Record<string, any> {
+  layout?: string | false
+}
+
+export interface PageMeta {
+  href: string
+  filename: string
+  lastUpdated: Date
+}
+
+export interface PageComponent extends RouteComponent {
+  frontmatter: PageFrontmatter
+  meta: PageMeta
+  layoutName: string
+  layoutFn: false | (() => Promise<DefineComponent>)
+}
+
+export interface PageData<T = any> {
+  readonly page: Ref<PageComponent>
+  readonly route: RouteLocationNormalizedLoaded
+  readonly meta: PageMeta
+  readonly frontmatter: PageFrontmatter
+  readonly site: UserSite
+}
 
 export type HeadConfig = HeadObject
 
@@ -26,30 +50,30 @@ export interface CreateAppConfig {
   routePath?: string
 }
 
-export interface SSGContext extends Required<CreateAppConfig> {
+export interface AppContext extends Required<CreateAppConfig>, PageData {
   app: App
-  frontmatter: Ref<Record<string, any>>
+  config: AppClientConfig
   head: HeadClient
-  route: Ref<RouteLocationNormalizedLoaded>
   router: Router
   routes: RouteRecordRaw[]
 }
 
 export interface SSGRoute {
   path: string
-  filename: string | undefined
+  filename: string
   extension: string
   outputFilename: string
   rendered?: string
 }
 
-export type CreateAppFactory = (options?: CreateAppConfig) => Promise<SSGContext>
+export type CreateAppFactory = (options?: CreateAppConfig) => Promise<AppContext>
+
+export type LayoutFactory = (name: string | false) => any
 
 export interface AppPlugins {
-  router: Pick<VueRouterOptions, 'linkActiveClass' | 'linkExactActiveClass'>
   vite: ViteOptions
   vue: VueOptions
-  pages: PagesOptions
+  pages: Omit<PagesOptions, 'pagesDir' | 'react'>
   components: ComponentOptions
   vueJsx: Parameters<typeof VueJsxPlugin>[0]
   markdown: XdmOptions & FrontmatterOptions
@@ -57,23 +81,32 @@ export interface AppPlugins {
 }
 
 export interface Plugin extends Partial<AppPlugins> {
-  config: (config: UserConfig, env: ConfigEnv) => UserConfig | null | void | Promise<UserConfig | null | void>
+  name: string
+  config?: (config: UserConfig, env: ConfigEnv) => UserConfig | null | void | Promise<UserConfig | null | void>
 }
 
-export type EnhanceAppContext = SSGContext
+export type EnhanceAppContext = AppContext
 
 export interface UserApp {
   head?: HeadConfig | ((ctx: EnhanceAppContext) => HeadConfig)
   enhanceApp?: (ctx: EnhanceAppContext) => void | Promise<void>
+  router?: Omit<VueRouterOptions, 'history', 'routes'>
+  socialTags?: boolean
+}
+
+export type UserSite = typeof import('~/site').default & {
+  url: string
+  canonical: string
 }
 
 export type PluginOption = Plugin | false | null | undefined
 
 export interface RequiredConfig {
   siteUrl: string
-  debug: boolean
+  debug: boolean | 'log'
   outDir: string
   layoutsDir: string
+  pagesDir: string
   srcDir: string
   tempDir: string
   assetsDir: string
@@ -90,10 +123,15 @@ export interface AppConfig extends RequiredConfig, AppPlugins {
   base: string
   root: string
   configPath: string
+  pages: PagesOptions
   plugins: Plugin[]
+  namedPlugins: {
+    pages: PagesPlugin
+    markdown: XdmPlugin
+  }
 }
 
-export type AppClientConfig = Pick<AppConfig, 'base' | 'router' | 'root' | 'debug' | 'ssg'>
+export type AppClientConfig = Pick<AppConfig, 'base' | 'root' | 'debug' | 'ssg' | 'siteUrl'>
 
 export interface IslandDefinition {
   id: string

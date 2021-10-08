@@ -1,0 +1,87 @@
+[Partial Hydration]: https://jasonformat.com/islands-architecture/
+[Astro]: https://docs.astro.build/core-concepts/component-hydration
+[requestIdleCallback]: https://developer.mozilla.org/en-US/docs/Web/API/Window/requestIdleCallback
+[intersectionobserver]: https://developer.mozilla.org/en-US/docs/Web/API/Intersection_Observer_API
+[matchMedia]: https://developer.mozilla.org/en-US/docs/Web/API/Window/matchMedia
+
+# Hydration Directives <IlesLogo class="inline -mt-4"/>
+
+You can define which components should remain interactive in the production
+build by using `client:` directives in your components (borrowed from [Astro]).
+
+Any JS required for these components will be automatically inferred and optimized to perform partial hydration in the final build.
+
+> No JS is shipped for components without a hydration directive! 🏝
+
+Here's an example with MDX, an interactive audio player in a mostly static page:
+
+```mdx
+---
+title: Song for You
+audio: /song-for-you.mp3
+---
+
+I've recently recorded a song, listen:
+
+<AudioPlayer {...frontmatter} client:visible/>
+```
+
+You can also use these directives inside your Vue components. In the following
+example, the _Download_ link is rendered statically, while the `<Audio>`
+component is interactive and will be hydrated when visible.
+
+```vue
+<template>
+  <div class="audio-player">
+    <Audio client:visible :src="audio" :initialDuration="initialDuration"/>
+    <div>
+      <a :href="audio" :download="`${title}.mp3`">
+        Download the Song
+      </a>
+    </div>
+  </div>
+</template>
+```
+
+The following hydration strategies are available.
+
+## 🏝 client:load
+Hydrates the component immediately as the page loads.
+
+```vue
+<DarkModeSwitch client:load/>
+```
+
+## 🏝 client:idle
+Hydrate the component as soon as the main thread is [free][requestIdleCallback].
+
+```vue
+<TimeAgo :date="date" client:idle/>
+```
+
+## 🏝 client:visible
+Hydrates the component as soon as the element [enters the viewport][intersectionobserver].
+
+```vue
+<AudioPlayer :src="/example.mp3" client:visible/>
+```
+
+## 🏝 client:media
+Hydrates the component as soon as the browser [matches the given media query][matchMedia].
+
+Useful to avoid unnecessary work depending on the available viewport, such as in mobile devices.
+
+```vue
+<Sidebar client:media="min-width: 600px"/>
+```
+
+## 🏝 client:only
+Does not prerender the component during build.
+
+<Tip warn>
+Because it's not pre-rendered it could cause [layout shift] and affect the user experience.
+
+Prefer one of the previous strategies whenever possible.
+</Tip>
+
+[layout shift]: https://web.dev/cls/

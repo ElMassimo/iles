@@ -1,0 +1,36 @@
+{
+  "name": "iles-docs",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "iles --open",
+    "build": "iles build",
+    "preview": "vite preview --open"
+  },
+  "devDependencies": {
+    "@iconify/json": "1.1.393",
+    "@mapbox/rehype-prism": "^0.8.0",
+    "@vueuse/core": "^6.5.3",
+    "@islands/headers": "file:../packages/headers",
+    "autoprefixer": "^10.3.5",
+    "iles": "^0.0.16",
+    "postcss-nesting": "^8.0.1",
+    "unplugin-icons": "^0.12.9",
+    "vite": "^2.6.3",
+    "vite-plugin-windicss": "^1.4.1"
+  },
+  "dependencies": {
+    "@docsearch/css": "1.0.0-alpha.28",
+    "@docsearch/js": "1.0.0-alpha.28",
+    "preact": "^10.5.14",
+    "quicklink": "^2.2.0"
+  },
+  "eslintConfig": {
+    "globals": {
+      "$ref": "readonly",
+      "$computed": "readonly",
+      "$$": "readonly",
+      "$": "readonly"
+    }
+  }
+}

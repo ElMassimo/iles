@@ -1,2 +1,4 @@
-export const title = 'The Vue Point'
-export const description = 'Updates, tips & opinions from the maintainers of Vue.js.'
+export default {
+  title: 'The Vue Point',
+  description: 'Updates, tips & opinions from the maintainers of Vue.js.',
+}

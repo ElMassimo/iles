@@ -5,7 +5,6 @@ import iconsResolver from 'unplugin-icons/resolver'
 import icons from 'unplugin-icons/vite'
 import windicss from 'vite-plugin-windicss'
 import inspect from 'vite-plugin-inspect'
-import rehypePrism from './src/markdown/prism'
 
 export default defineConfig({
   siteUrl: 'https://vue-iles.netlify.app',
@@ -13,12 +12,12 @@ export default defineConfig({
     resolvers: [iconsResolver({ componentPrefix: '' })],
   },
   markdown: {
-    rehypePlugins: [rehypePrism()],
-  },
-  pages: {
-    extendRoute (route) {
-      if (route.path.startsWith('/posts') && route.path !== '/posts')
-        return { ...route, meta: { ...route.meta, layout: 'post' } }
+    rehypePlugins: [
+      ['@mapbox/rehype-prism', { alias: { markup: ['html', 'vue'] } }],
+    ],
+    extendFrontmatter (frontmatter, filename) {
+      if (filename.includes('/posts/'))
+        return { layout: 'post', ...frontmatter }
     },
   },
   vite: {
@@ -26,7 +25,7 @@ export default defineConfig({
       include: ['quicklink'],
     },
     plugins: [
-      icons(),
+      icons({ autoInstall: true }),
       windicss(),
       Boolean(process.env.DEBUG) && inspect(),
     ],

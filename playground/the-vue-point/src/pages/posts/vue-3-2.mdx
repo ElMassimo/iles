@@ -64,7 +64,7 @@ const MyVueElement = defineCustomElement({
 customElements.define('my-vue-element', MyVueElement)
 ```
 
-This API allows develpers to create Vue-powered UI component libraries that can be used with any framework, or no framework at all. We have also added a new section in our docs on [consuming and creating Web Components in Vue](https://v3.vuejs.org/guide/web-components.html).
+This API allows developers to create Vue-powered UI component libraries that can be used with any framework, or no framework at all. We have also added a new section in our docs on [consuming and creating Web Components in Vue](https://v3.vuejs.org/guide/web-components.html).
 
 ## Performance Improvements
 

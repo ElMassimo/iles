@@ -1,5 +1,9 @@
 export { default as serialize } from '@nuxt/devalue'
 
+export function isString (val: any): val is string {
+  return typeof val === 'string'
+}
+
 export function uniq<T> (arr: Array<T>) {
   return [...new Set(arr.filter(x => x))]
 }
@@ -14,6 +18,10 @@ export function pascalCase (str: string) {
 
 export function camelCase (str: string) {
   return str.replace(/[^\w_]+(\w)/g, (_, c) => c ? c.toUpperCase() : '')
+}
+
+export function uncapitalize (str: string) {
+  return str.charAt(0).toLowerCase() + str.slice(1)
 }
 
 export function capitalize (str: string) {

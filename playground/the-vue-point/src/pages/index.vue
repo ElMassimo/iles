@@ -1,5 +1,8 @@
+<route>
+alias: ['/posts']
+</route>
+
 <script setup lang="ts">
-import { title, description } from '~/site'
 import { usePosts } from '~/logic/posts'
 
 const posts = usePosts()
@@ -19,9 +22,9 @@ const posts = usePosts()
           md:text-6xl
         "
       >
-        {{ title }}
+        {{ $site.title }}
       </h1>
-      <p class="text-lg leading-7 text-gray-500">{{ description }}</p>
+      <p class="text-lg leading-7 text-gray-500">{{ $site.description }}</p>
       <slot/>
     </div>
     <ul class="divide-y divide-gray-200">

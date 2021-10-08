@@ -4,11 +4,11 @@ import type { AppConfig, SSGRoute } from '../shared'
 import { withSpinner, warnMark } from './utils'
 
 export async function createSitemap (config: AppConfig, routesToRender: SSGRoute[]) {
-  const { outDir, siteUrl, ssg: { sitemap } } = config
+  const { outDir, base, siteUrl, ssg: { sitemap } } = config
   if (!sitemap) return
   if (!siteUrl) return console.warn(warnMark, 'Skipping sitemap. Configure `siteUrl` to enable sitemap generation.')
   withSpinner('rendering sitemap', async () => {
-    const sitemap = sitemapFor(siteUrl, routesToRender)
+    const sitemap = sitemapFor(`${siteUrl}${base}`, routesToRender)
     await fs.mkdir(outDir, { recursive: true })
     await fs.writeFile(join(outDir, 'sitemap.xml'), sitemap, 'utf8')
   })

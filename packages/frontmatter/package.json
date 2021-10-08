@@ -4,7 +4,6 @@
   "scripts": {
     "dev": "npm run build -- --watch",
     "build": "tsup src/frontmatter.ts",
-    "release": "node scripts/release.cjs",
     "prepublishOnly": "npm run build"
   },
   "type": "module",
@@ -27,13 +26,12 @@
     "estree-util-is-identifier-name": "^1.1.0",
     "estree-util-value-to-estree": "^1.0.0",
     "js-yaml": "^4.1",
-    "toml": "^3.0",
-    "unified": "^10.1.0",
-    "unist-util-visit": "^2.0.3"
+    "toml": "^3.0"
   },
   "devDependencies": {
     "@types/estree": "^0.0.46",
     "@types/js-yaml": "^4.0.0",
+    "unified": "^10.1.0",
     "tsup": "^4.14.0",
     "typescript": "^4.1.3"
   }

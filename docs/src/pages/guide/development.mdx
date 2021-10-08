@@ -1,0 +1,34 @@
+# Development 💻
+
+In this section, we'll cover the basics to start building an <Iles/> application.
+
+## Default App Structure 📂
+
+<pre class="code">
+<code><kbd class="-ml-2"><a href="/config#srcDir">src/</a></kbd>
+├── <kbd><a href="/guide/components">components/</a></kbd>
+│    ├── ReadingTime.vue
+│    └── Author.vue
+│
+├── <kbd><a href="/config#layoutsDir">layouts/</a></kbd>
+│    ├── default.vue
+│    └── post.vue
+│
+├── <kbd><a href="/config#pagesDir">pages/</a></kbd>
+│    ├── posts/
+│    │    ├── intro.mdx
+│    │    └── goodbye.mdx
+│    ├── about.vue
+│    └── index.mdx
+│
+├── <kbd><a href="/config#your-app">app.ts</a></kbd>
+└── <kbd><a href="/guide/site">site.ts</a></kbd></code>
+</pre>
+
+A default `~/` alias to the <kbd>[srcDir]</kbd> is provided. For example:
+
+```ts
+import { useDark } from '~/logic/dark' // from '/src/logic/dark'
+```
+
+[srcDir]: /config#srcDir

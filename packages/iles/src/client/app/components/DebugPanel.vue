@@ -2,32 +2,56 @@
 import { computed, watch, ref } from 'vue'
 import { usePage } from 'iles'
 
-const page = usePage()
+const { page, meta, frontmatter } = usePage()
+const message = ref<string | undefined>(undefined)
 const el = ref<HTMLElement | null>(null)
+const content = ref<HTMLElement | null>(null)
 const open = ref(false)
+const buttonLabel = computed(() => message.value || 'Debug')
 
 const cleanPage = computed(() => {
-  const rawMeta = page.meta.value
-  const { layout, frontmatter, ...meta } = rawMeta
+  const layout = page.value.layoutName || 'false'
   return { layout, frontmatter, meta }
 })
 
+let timeoutId: any
+function copyIfSelected () {
+  if (!getSelection()?.toString()) return
+  document.execCommand('copy')
+  message.value = 'Copied!'
+  timeoutId = setTimeout(() => { message.value = undefined }, 3000)
+}
+
+function copyAll (el: HTMLElement) {
+  const selection = getSelection()
+  if (!selection || !el) return
+  const range = document.createRange()
+  range.selectNode(el)
+  selection.removeAllRanges()
+  selection.addRange(range)
+  copyIfSelected()
+}
+
 watch(open, (open) => {
+  if (open && message.value) {
+    clearTimeout(timeoutId)
+    message.value = undefined
+  }
   if (!open) el.value!.scrollTop = 0
 })
 </script>
 
 <script lang="ts">
 export default {
-  name: 'DebugIslands',
+  name: 'DebugPanel',
 }
 </script>
 
 <template>
-  <div class="debug" :class="{ open }" ref="el">
-    <p class="title" @click="open = !open">Debug<span class="info">Open DevTools to inspect <b>islands</b> 🏝</span></p>
-    <pre class="block">{{ cleanPage }}</pre>
-    <button v-show="open" class="debug title" @click="open = false">Close</button>
+  <div class="debug" :class="{ open }" ref="el" @click="open = !open" @mouseup="copyIfSelected">
+    <p class="title">{{ buttonLabel }}<span class="info">Open DevTools to inspect <b>islands</b> 🏝</span></p>
+    <pre ref="content" class="block">{{ cleanPage }}</pre>
+    <button v-show="open" class="debug title" @click="copyAll(content)">Copy to Clipboard</button>
   </div>
 </template>
 
@@ -99,9 +123,18 @@ export default {
 
 .title {
   margin: 0;
-  padding: 6px 16px 6px;
+  padding: 6px 16px;
   line-height: 20px;
   font-size: 13px;
+}
+
+.debug:not(.open) .title {
+  padding: 6px 0;
+  text-align: center;
+}
+
+.debug.title {
+  width: max-content;
 }
 
 .block {

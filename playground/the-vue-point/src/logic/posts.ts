@@ -1,9 +1,9 @@
 import { h, DefineComponent, FunctionalComponent } from 'vue'
 
-interface Post extends Record<string, any> {
+export interface Post extends Record<string, any> {
   title: string
   href: string
-  date: Date | number
+  date: Date
   content: DefineComponent
 }
 
@@ -28,11 +28,12 @@ const ExcerptOnly: FunctionalComponent = (_props, { slots }) => {
 
 function withExcerpt (post: Post) {
   const excerpt: FunctionalComponent = (props, ctx) =>
-    h(post.default || post, { components: { wrapper: ExcerptOnly } })
+    h(post, { components: { wrapper: ExcerptOnly } })
   return { ...post, excerpt }
 }
 
 export function usePosts () {
-  const posts = Object.values(import.meta.globEager('../pages/posts/**/*.{md,mdx}')) as Post[]
+  // @ts-ignore
+  const posts = Object.values(import.meta.globEagerDefault('../pages/posts/**/*.{md,mdx}')) as Post[]
   return posts.sort(byDate).map(withExcerpt)
 }

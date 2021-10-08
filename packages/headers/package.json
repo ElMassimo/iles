@@ -1,0 +1,36 @@
+{
+  "name": "@islands/headers",
+  "version": "0.0.1",
+  "scripts": {
+    "dev": "npm run build -- --watch",
+    "build": "tsup src/headers.ts",
+    "prepublishOnly": "npm run build"
+  },
+  "type": "module",
+  "files": [
+    "dist",
+    "src"
+  ],
+  "types": "dist/headers.d.ts",
+  "main": "dist/headers.js",
+  "funding": "https://github.com/sponsors/ElMassimo",
+  "author": "Máximo Mussini <maximomussini@gmail.com>",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ElMassimo/iles"
+  },
+  "homepage": "https://github.com/ElMassimo/iles",
+  "bugs": "https://github.com/ElMassimo/iles/issues",
+  "dependencies": {
+    "estree-util-value-to-estree": "^1.0.0",
+    "hast-util-heading-rank": "^2.1.0",
+    "hast-util-to-string": "^2.0.0"
+  },
+  "devDependencies": {
+    "@types/estree": "^0.0.46",
+    "slugo": "^0.4.0",
+    "tsup": "^4.14.0",
+    "typescript": "^4.1.3",
+    "unified": "^10.1.0"
+  }
+}

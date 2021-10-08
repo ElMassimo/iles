@@ -1,0 +1,17 @@
+name: the-vue-point
+
+on:
+  push:
+    branches:
+      - main
+      - docs
+
+jobs:
+  build:
+    if: ${{ startsWith(github.event.head_commit.message, 'blog') }}
+    name: the-vue-point
+    env:
+      BUILD_HOOK: ${{secrets.NETLIFY_VUE_POINT_BUILD_HOOK}}
+    runs-on: ubuntu-latest
+    steps:
+      - run: 'curl -X POST -d {} $BUILD_HOOK'

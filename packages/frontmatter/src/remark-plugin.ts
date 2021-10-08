@@ -1,20 +1,25 @@
 import type { Program, VariableDeclarator } from 'estree'
-import { name as isValidIdentifierName } from 'estree-util-is-identifier-name'
 import { valueToEstree } from 'estree-util-value-to-estree'
 import { load as yaml } from 'js-yaml'
 import { parse as toml } from 'toml'
+import { name as isValidIdentifierName } from 'estree-util-is-identifier-name'
 import type { Pluggable, Plugin } from 'unified'
 import type { Node, Data, Parent } from 'unist'
-import visit from 'unist-util-visit'
 
 export type Frontmatter = Record<string, any>
 
 export interface FrontmatterOptions {
-  extendFrontmatter?: (frontmatter: Frontmatter, filename: string) => Frontmatter | void;
+  extendFrontmatter?: (frontmatter: Frontmatter, filename: string) => Frontmatter | void
 }
 
 export type FrontmatterPlugin = Plugin<[FrontmatterOptions?]>
 export type FrontmatterPluggable = [FrontmatterPlugin, FrontmatterOptions?]
+
+function mapFind <T, O> (arr: T[], fn: (i: T) => O): O | undefined {
+  let result
+  let found = arr.find(item => result = fn(item))
+  return result
+}
 
 /**
  * A remark plugin to expose frontmatter data as named exports.
@@ -24,60 +29,20 @@ export type FrontmatterPluggable = [FrontmatterPlugin, FrontmatterOptions?]
  */
 const plugin: FrontmatterPlugin = (options?: FrontmatterOptions) => (ast, file) => {
   const parent = ast as Parent
-  const frontmatter: Frontmatter = {}
-  visit(parent, (node) => {
-    const parsed = parseFrontmatter(node as Node<Data> & { value: string })
-    const data = parsed ? options?.extendFrontmatter?.(parsed, file.path) || parsed : parsed
-    if (data) Object.assign(frontmatter, data)
-  })
-
-  parent.children.unshift(defineConsts(
-    ...Object.entries(frontmatter).map(([key, value]) => {
-      if (!isValidIdentifierName(key))
-        throw new Error(`Frontmatter keys should be valid identifiers, got: ${JSON.stringify(key)}`)
-
-      // Example:
-      //  const title = 'Example'
-      //  const href = 'https://example.com'
-      return {
-        type: 'VariableDeclarator',
-        id: { type: 'Identifier', name: key },
-        init: valueToEstree(value),
-      } as VariableDeclarator
-    }),
-    // Example:
-    //  const frontmatter = { title, href }
-    {
-      type: 'VariableDeclarator',
-      id: { type: 'Identifier', name: 'frontmatter' },
-      init: shorthandObjectExpression(Object.keys(frontmatter)),
-    } as VariableDeclarator,
-  ))
+  const nodes = parent.children as (Node<Data> & { value: string })[]
+  const rawMatter = mapFind(nodes, parseFrontmatter) || {}
+  const { meta, layout: _, ...frontmatter } = options?.extendFrontmatter?.(rawMatter, file.path) || rawMatter
+  parent.children.unshift(defineConsts({ ...frontmatter, meta, frontmatter }))
 }
 
-function parseFrontmatter ({ type, value }: { type: string, value: string }) {
+function parseFrontmatter ({ type, value }: { type: string; value: string }) {
   const data = type === 'yaml' ? yaml(value) : type === 'toml' ? toml(value) : undefined
   if (data && typeof data !== 'object')
     throw new Error(`Expected frontmatter data to be an object, got:\n${value}`)
   return data
 }
 
-function shorthandObjectExpression (variables: string[]) {
-  return {
-    type: 'ObjectExpression',
-    properties: variables.map(id => ({
-      type: 'Property',
-      key: { type: 'Identifier', name: id },
-      value: { type: 'Identifier', name: id },
-      kind: 'init',
-      shorthand: true,
-      method: false,
-      computed: false,
-    })),
-  }
-}
-
-function defineConsts (...declarations: VariableDeclarator[]) {
+function defineConsts (values: Record<string, any>) {
   return {
     type: 'mdxjsEsm',
     data: {
@@ -86,18 +51,39 @@ function defineConsts (...declarations: VariableDeclarator[]) {
         sourceType: 'module',
         body: [
           {
-            type: 'ExportNamedDeclaration',
-            source: null,
-            specifiers: [],
-            declaration: {
-              type: 'VariableDeclaration',
-              kind: 'const',
-              declarations,
-            },
+            type: 'VariableDeclaration',
+            kind: 'const',
+            declarations: Object.entries(values).map(([key, value]) => {
+              if (!isValidIdentifierName(key))
+                throw new Error(`Frontmatter keys should be valid identifiers, got: ${JSON.stringify(key)}`)
+
+              return {
+                type: 'VariableDeclarator',
+                id: { type: 'Identifier', name: key },
+                init: key === 'frontmatter'
+                  ? shorthandObjectExpression(value)
+                  : valueToEstree(value),
+              } as VariableDeclarator
+            }),
           },
         ],
       } as Program,
     },
+  }
+}
+
+// Example:
+//  const frontmatter = { title, source }
+function shorthandObjectExpression (value: Record<string, any>) {
+  return {
+    type: 'ObjectExpression',
+    properties: Object.keys(value).map(id => ({
+      type: 'Property',
+      key: { type: 'Identifier', name: id },
+      value: { type: 'Identifier', name: id },
+      kind: 'init',
+      shorthand: true,
+    })),
   }
 }
 

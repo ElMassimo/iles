@@ -1,0 +1,40 @@
+[introduction]: /guide/introduction
+[configuration reference]: /config
+
+# Getting Started
+
+If you are interested in learning more about <Iles/> before trying it, check out the [Introduction].
+
+If you are looking for configuration options, visit the [configuration reference].
+
+## Installation 💿
+
+Run the following command to add îles to your `package.json`.
+
+```bash
+npm install iles # or yarn add iles
+```
+
+<Tip title="Project Status: Alpha" warn>
+APIs may change on patch releases. Lock the version to avoid breakage.
+</Tip>
+
+## Usage 🚀
+
+The `iles` executable provides two commands, `serve` and `build`.
+
+- <kbd>iles serve</kbd>: Starts the development server
+- <kbd>iles build</kbd>: Creates a production build of the site
+
+It's highly recommended to add the following shortcuts to your `package.json`:
+
+```json
+  "scripts": {
+    "dev": "iles --open",
+    "build": "iles build",
+    "preview": "vite preview --open"
+  },
+```
+
+- <kbd>npm run dev</kbd>: Starts the development server
+- <kbd>npm run build</kbd>: Creates a production build of the site
