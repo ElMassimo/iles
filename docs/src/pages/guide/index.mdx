@@ -1,5 +1,6 @@
 [introduction]: /guide/introduction
 [configuration reference]: /config
+[starter]: https://github.com/ElMassimo/create-iles
 
 # Getting Started
 
@@ -9,11 +10,13 @@ If you are looking for configuration options, visit the [configuration reference
 
 ## Installation 💿
 
-Run the following command to add îles to your `package.json`.
+Run the following command to create a new îles project.
 
 ```bash
-npm install iles # or yarn add iles
+pnpm init iles@next # or npm or yarn
 ```
+
+Alternatively, add `iles` to your `package.json` in an existing project.
 
 <Tip title="Project Status: Alpha" warn>
 APIs may change on patch releases. Lock the version to avoid breakage.
@@ -26,7 +29,7 @@ The `iles` executable provides two commands, `serve` and `build`.
 - <kbd>iles serve</kbd>: Starts the development server
 - <kbd>iles build</kbd>: Creates a production build of the site
 
-It's highly recommended to add the following shortcuts to your `package.json`:
+The following shortcuts are added by default when using the [starter]:
 
 ```json
   "scripts": {

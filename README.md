@@ -80,7 +80,7 @@ __[Live Demo]__
 ## Installation 💿
 
 ```bash
-npm install iles # OR yarn add iles
+pnpm init iles@next # or npm or yarn
 ```
 
 ## Documentation 📖
