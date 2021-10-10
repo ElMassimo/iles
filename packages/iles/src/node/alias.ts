@@ -41,7 +41,7 @@ export function resolveAliases (root: string): AliasOptions {
       replacement: paths[p],
     })),
     {
-      find: /^~\//,
+      find: /^[~@]\//,
       replacement: `${path.resolve(root, 'src')}/`,
     },
     {
