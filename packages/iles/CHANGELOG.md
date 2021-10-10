@@ -1,3 +1,12 @@
+## [0.1.1](https://github.com/ElMassimo/iles/compare/v0.1.0...v0.1.1) (2021-10-10)
+
+
+### Features
+
+* add `@/` alias that can be used in vue template image src ([17cced3](https://github.com/ElMassimo/iles/commit/17cced308a11d5f3805dc57f02149538141e977a))
+
+
+
 # [0.1.0](https://github.com/ElMassimo/iles/compare/v0.0.16...v0.1.0) (2021-10-08)
 
 
