@@ -1,3 +1,7 @@
+[srcDir]: /config#srcDir
+[devtools1]: https://user-images.githubusercontent.com/1158253/133314267-f0ba784c-ff64-4ee8-b2bf-97ecffc2facd.jpg
+[devtools2]: https://user-images.githubusercontent.com/1158253/133314279-1edc22d1-3ffb-414e-b994-212cb316593b.jpg
+
 # Development 💻
 
 In this section, we'll cover the basics to start building an <Iles/> application.
@@ -6,15 +10,15 @@ In this section, we'll cover the basics to start building an <Iles/> application
 
 <pre class="code">
 <code><kbd class="-ml-2"><a href="/config#srcDir">src/</a></kbd>
-├── <kbd><a href="/guide/components">components/</a></kbd>
+├── <kbd><a href="#components">components/</a></kbd>
 │    ├── ReadingTime.vue
 │    └── Author.vue
 │
-├── <kbd><a href="/config#layoutsDir">layouts/</a></kbd>
+├── <kbd><a href="#layouts">layouts/</a></kbd>
 │    ├── default.vue
 │    └── post.vue
 │
-├── <kbd><a href="/config#pagesDir">pages/</a></kbd>
+├── <kbd><a href="#pages">pages/</a></kbd>
 │    ├── posts/
 │    │    ├── intro.mdx
 │    │    └── goodbye.mdx
@@ -22,13 +26,92 @@ In this section, we'll cover the basics to start building an <Iles/> application
 │    └── index.mdx
 │
 ├── <kbd><a href="/config#your-app">app.ts</a></kbd>
-└── <kbd><a href="/guide/site">site.ts</a></kbd></code>
+└── <kbd><a href="#site">site.ts</a></kbd></code>
 </pre>
 
-A default `~/` alias to the <kbd>[srcDir]</kbd> is provided. For example:
+By default, <kbd>[srcDir]</kbd> is aliased as `~/` or `@/`. For example:
 
 ```ts
-import { useDark } from '~/logic/dark' // from '/src/logic/dark'
+import { useDark } from '~/logic/dark'
 ```
 
-[srcDir]: /config#srcDir
+```vue
+<img src="@/assets/logo.svg"/>
+```
+
+## Components 🧱
+
+Components in the <kbd>src/components</kbd> dir will be auto-imported on-demand, powered by [`unplugin-vue-components`](https://github.com/antfu/unplugin-vue-components).
+
+<Iles/> extends this so that you don't need to import components in MDX files.
+
+## Pages 🛣
+
+Routes will be auto-generated for MDX files and Vue components in the <kbd>src/pages</kbd> dir with the same file structure.
+Check out [`vite-plugin-pages`](https://github.com/hannoeru/vite-plugin-pages) for more details.
+
+MDX files can include frontmatter, and Vue single-file components may specify it as well using a `<route>` block.
+
+```vue
+<route>
+title: About
+</route>
+```
+
+### Using Page Data
+
+You may access information about the current page using the `usePage` composition API helper, or by using the  `$frontmatter` or `$meta` global properties.
+
+- `frontmatter`: The frontmatter defined in an MDX document, or in a `<route>` block for Vue components
+- `meta`: Information about the page, including `href`, `filename`, and `lastUpdated`
+
+```ts
+import { usePage } from 'iles'
+
+const { frontmatter, meta } = usePage()
+```
+
+## Layouts 📐
+
+Components in the <kbd>src/layouts</kbd> dir will be available as layouts, and they should provide a default `<slot/>`.
+
+By default, `default.vue` will be used unless an alternative is specified in the page.
+
+In MDX components, you can use the `layout` property in frontmatter:
+
+```md
+---
+layout: post
+---
+```
+
+In Vue components, you may use a `<route>` block:
+
+```vue
+<route>
+layout: home
+</route>
+```
+
+Layouts and Vue pages may also specify a parent layout using the `template`:
+
+```vue
+<template layout="post">
+```
+
+## Site 🌐
+
+`src/site.ts` can be used to provide site-wide information such as `title`, `description`, etc.
+
+It can be accessed as `$site` in component instances, or by using `usePage`.
+
+It's also displayed in the page information in _Islands_ devtools.
+
+## Devtools 🛠
+
+Page information is available in a debug panel, similar to Vitepress, but you may also access an _Islands_ inspector in Vue devtools.
+
+This can be useful when debugging islands hydration, which we'll cover in the next section.
+
+![devtools1]
+![devtools2]
