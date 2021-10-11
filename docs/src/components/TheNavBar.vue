@@ -1,7 +1,7 @@
 <template>
   <header class="nav-bar bg-html flex items-center border-b">
     <div class="flex flex-1 h-full container !max-w-screen-2xl mx-auto px-2 md:px-6">
-      <div class="flex items-center md:hidden">
+      <div class="flex items-center hidden">
         <SidebarToggle/>
       </div>
       <div class="flex flex-1 items-center md:flex-none">
