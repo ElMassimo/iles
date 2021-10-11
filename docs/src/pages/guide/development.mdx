@@ -100,9 +100,7 @@ const { frontmatter, meta } = usePage()
 
 Components in the <kbd>src/layouts</kbd> dir will be available as layouts, and they should provide a default `<slot/>`.
 
-By default, `default.vue` will be used unless an alternative is specified in the page.
-
-In MDX components, you can use the `layout` property in frontmatter:
+Pages may specify a layout using the `layout` property in frontmatter:
 
 ```md
 ---
@@ -110,19 +108,15 @@ layout: post
 ---
 ```
 
-In Vue components, you may use a `<route>` block:
-
-```vue
-<route>
-layout: home
-</route>
-```
-
-Layouts and Vue pages may also specify a parent layout using the `template`:
+Layouts and Vue pages can also specify a parent layout using a `layout` attribute in the `template`:
 
 ```vue
 <template layout="post">
 ```
+
+> The `default` layout will be used for all pages unless specified.
+>
+> Pages may opt-out by specifying `layout: false`
 
 ## Site 🌐
 
