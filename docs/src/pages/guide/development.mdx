@@ -1,6 +1,7 @@
 [srcDir]: /config#srcDir
 [devtools1]: https://user-images.githubusercontent.com/1158253/133314267-f0ba784c-ff64-4ee8-b2bf-97ecffc2facd.jpg
 [devtools2]: https://user-images.githubusercontent.com/1158253/133314279-1edc22d1-3ffb-414e-b994-212cb316593b.jpg
+[MDX]: https://mdxjs.com/
 
 # Development 💻
 
@@ -43,19 +44,41 @@ import { useDark } from '~/logic/dark'
 
 Components in the <kbd>src/components</kbd> dir will be auto-imported on-demand, powered by [`unplugin-vue-components`](https://github.com/antfu/unplugin-vue-components).
 
-<Iles/> extends this so that you don't need to import components in MDX files.
+<Iles/> extends this so that you don't need to import components in [MDX] files.
 
 ## Pages 🛣
 
-Routes will be auto-generated for MDX files and Vue components in the <kbd>src/pages</kbd> dir with the same file structure.
+Routes will be auto-generated for files in the <kbd>src/pages</kbd> dir with the same file structure.
 Check out [`vite-plugin-pages`](https://github.com/hannoeru/vite-plugin-pages) for more details.
 
-MDX files can include frontmatter, and Vue single-file components may specify it as well using a `<route>` block.
+Pages can be Vue components or [MDX] files, and may specify frontmatter and route metadata.
+
+You may use Vue components inside [MDX], and access any properties defined in frontmatter:
+
+```mdx
+---
+title: Song for You
+audio: /song-for-you.mp3
+---
+
+I've recently recorded a song, listen:
+
+<Song title={title} src={audio}/>
+```
+
+In Vue single-file components you can use a `<route>` block to define frontmatter:
 
 ```vue
 <route>
-title: About
+title: Song for You
+audio: /song-for-you.mp3
 </route>
+
+<template>
+  <p>I've recently recorded a song, listen:</p>
+
+  <Song :title="$frontmatter.title" :src="$frontmatter.audio"/>
+</template>
 ```
 
 ### Using Page Data
@@ -66,9 +89,11 @@ You may access information about the current page using the `usePage` compositio
 - `meta`: Information about the page, including `href`, `filename`, and `lastUpdated`
 
 ```ts
+<script setup>
 import { usePage } from 'iles'
 
 const { frontmatter, meta } = usePage()
+</script>
 ```
 
 ## Layouts 📐
@@ -112,6 +137,3 @@ It's also displayed in the page information in _Islands_ devtools.
 Page information is available in a debug panel, similar to Vitepress, but you may also access an _Islands_ inspector in Vue devtools.
 
 This can be useful when debugging islands hydration, which we'll cover in the next section.
-
-![devtools1]
-![devtools2]
