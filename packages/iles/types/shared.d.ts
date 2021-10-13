@@ -10,6 +10,7 @@ import type XdmPlugin, { PluginOptions as XdmOptions } from 'vite-plugin-xdm'
 import type { FrontmatterOptions } from '@islands/frontmatter'
 import type { Router, RouteRecordRaw, RouteMeta, RouterOptions as VueRouterOptions, RouteComponent, RouteLocationNormalizedLoaded } from 'vue-router'
 import type { HeadClient, HeadObject } from '@vueuse/head'
+export type { OnLoadFn } from '@islands/hydration/dist/vanilla'
 
 export { ViteOptions, ConfigEnv }
 

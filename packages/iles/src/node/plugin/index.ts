@@ -158,7 +158,7 @@ export default function IslandsPlugins (appConfig: AppConfig): PluginOption[] {
         const { path, query } = parseId(id)
 
         if (query.vue !== undefined && query.type === 'scriptClient')
-          return { code: 'export default {};', map: null }
+          return 'export default {}; if (import.meta.hot) import.meta.hot.accept()'
 
         if (isSFCMain(path, query) && code.includes('client:') && code.includes('<template'))
           return wrapIslandsInSFC(code, path, debug.detect)
