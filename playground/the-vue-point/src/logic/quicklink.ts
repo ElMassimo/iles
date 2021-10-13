@@ -1,2 +1,2 @@
-import { listen } from 'quicklink'
-if (import.meta.env.PROD) listen()
+if (import.meta.env.PROD && !import.meta.env.SSR)
+  import('quicklink').then(mod => mod.listen())
