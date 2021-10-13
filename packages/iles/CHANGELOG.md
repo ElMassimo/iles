@@ -1,3 +1,19 @@
+# [0.2.0](https://github.com/ElMassimo/iles/compare/v0.1.1...v0.2.0) (2021-10-13)
+
+
+### Bug Fixes
+
+* ensure iles dependencies are resolved without shamefully hoisting ([1cf863b](https://github.com/ElMassimo/iles/commit/1cf863b9d8310c89f4c289d07153e5720e84585d))
+
+
+### Features
+
+* defineOnLoad helper to strongly type parameters ([4f93671](https://github.com/ElMassimo/iles/commit/4f93671c40412c1135a7d326f8610bea3524b005))
+* implement <script client:...> in Vue components ([03e5abc](https://github.com/ElMassimo/iles/commit/03e5abca90f25689d9c3dcfbbecfb18be9f7a8d5))
+* warn about missing parenthesis in media query expressions ([aea3b72](https://github.com/ElMassimo/iles/commit/aea3b72f1f0ccfd28f285a55e54d34d7f0bdf844))
+
+
+
 ## [0.1.1](https://github.com/ElMassimo/iles/compare/v0.1.0...v0.1.1) (2021-10-10)
 
 
