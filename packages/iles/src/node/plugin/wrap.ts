@@ -1,9 +1,9 @@
 import MagicString from 'magic-string'
-import { parse } from '@vue/compiler-sfc'
+import { parse, SFCBlock } from 'vue/compiler-sfc'
 import type { Debugger } from 'debug'
 import type { ElementNode, TemplateChildNode } from '@vue/compiler-core'
 import { pascalCase, isString } from './utils'
-import { parseImports } from './parse'
+import { parseImports, parseExports } from './parse'
 import type { ParsedImports } from './parse'
 
 export const unresolvedIslandKey = '__viteIslandComponent'
@@ -22,11 +22,24 @@ export async function wrapLayout (code: string, filename: string, debug: Debugge
   return { code: s.toString(), map: s.generateMap({ hires: true }) }
 }
 
+const scriptClientRE = /<script\b([^>]*\bclient:[^>]*)>([^]*?)<\/script>/
+
 export async function wrapIslandsInSFC (code: string, filename: string, debug: Debugger) {
-  const { descriptor: { template, script, scriptSetup }, errors } = parse(code, { filename })
-  if (errors.length > 0 || !template) return
+  code = code.replace(scriptClientRE, (_, attrs, content) =>
+    `<scriptClient${attrs}>${content}</scriptClient>`)
+
+  const { descriptor: { template, script, scriptSetup, customBlocks }, errors } = parse(code, { filename })
+  const scriptClientIndex = customBlocks.findIndex(b => b.type === 'scriptClient')
+  const scriptClient = scriptClientIndex > -1 && customBlocks[scriptClientIndex]
+  if (errors.length > 0) return
+  if (!template) {
+    if (scriptClient) throw new Error(`Vue components with <script client:...> must define a template. No template found in ${filename}`)
+    return
+  }
 
   const s = new MagicString(code)
+
+  if (scriptClient) await injectClientScript(template.ast, s, filename, scriptClientIndex, scriptClient, debug)
 
   const jsCode = scriptSetup?.loc?.source || script?.loc?.source
   const imports = jsCode ? await parseImports(jsCode) : {}
@@ -53,4 +66,40 @@ function visitSFCNode (node: ElementNode | TemplateChildNode, s: MagicString, im
   }
   if ('children' in node)
     node.children.forEach(node => visitSFCNode(node as any, s, imports, debug))
+}
+
+async function injectClientScript (node: ElementNode, s: MagicString, filename: string, index: number, block: SFCBlock, debug: Debugger) {
+  const { attrs, content, loc: { end } } = block
+  const { lang = 'ts', ...props } = attrs
+
+  const importPath = `${filename}?vue&index=${index}&clientScript=true&lang=${lang}`
+
+  const exported = await parseExports(content)
+  if (!exported.includes('onLoad')) {
+    if (attrs['client:load'] || attrs['client:only']) {
+      s.appendLeft(end.offset, '\nexport const onLoad = undefined\n')
+    }
+    else {
+      const prettyFilename = filename.slice(Math.max(0, filename.indexOf('src/')))
+      throw new Error(`Client script in ${prettyFilename} does not export 'onLoad'. Should be a function to execute when the strategy condition is met.`)
+    }
+  }
+
+  // Automatically add v-bind="$attrs" if template has a single element.
+  const elements = node.children.filter((n: any) => n.tag) as ElementNode[]
+  if (elements.length === 1) {
+    const el = elements[0]
+    if (!el.props.some(prop => prop.name === 'bind' && prop.loc.source.includes('$attrs')))
+      s.appendRight(el.loc.start.offset + 1 + el.tag.length, ' v-bind="$attrs"')
+  }
+
+  s.appendLeft(node.loc.end.offset - 3 - node.tag.length,
+    `  <Island v-bind='${JSON.stringify({
+      ...props,
+      component: {},
+      componentName: 'clientScript',
+      importName: 'onLoad',
+      using: 'vanilla',
+      importPath,
+    })}'/>\n`)
 }

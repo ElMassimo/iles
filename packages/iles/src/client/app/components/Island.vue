@@ -16,6 +16,7 @@ export default defineComponent({
     componentName: { type: String, required: true },
     importName: { type: String, required: true },
     importPath: { type: String, required: true },
+    using: { type: String, default: undefined },
     [Hydrate.WhenIdle]: { type: Boolean, default: false },
     [Hydrate.OnLoad]: { type: Boolean, default: false },
     [Hydrate.MediaQuery]: { type: [Boolean, String], default: false },
@@ -30,7 +31,7 @@ export default defineComponent({
     }
 
     const ext = props.importPath.split('.')[1]
-    const framework = ext === 'js' || ext === 'ts' ? 'vanilla' : 'vue'
+    const framework = props.using || (ext === 'js' || ext === 'ts' ? 'vanilla' : 'vue')
 
     return {
       id: newHydrationId(),
@@ -74,7 +75,7 @@ export default defineComponent({
       return placeholder
     }
 
-    const skipPrerender = (this.appConfig.debug || isSSR) && this.$props[Hydrate.SkipPrerender]
+    const skipPrerender = this.framework !== 'vue' || ((this.appConfig.debug || isSSR) && this.$props[Hydrate.SkipPrerender])
     const ileRoot = h('ile-root', { id: this.id },
       skipPrerender ? [] : [h(this.component, this.$attrs, this.$slots)])
 

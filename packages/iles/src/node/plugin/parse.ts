@@ -17,6 +17,17 @@ export function parseId (id: string) {
   return { path: id.slice(0, index), query }
 }
 
+export async function parseExports (code: string) {
+  try {
+    await initESLexer
+    return parseESModules(code)[1]
+  }
+  catch (error) {
+    console.error(error)
+    return []
+  }
+}
+
 export async function parseImports (code: string) {
   try {
     await initESLexer

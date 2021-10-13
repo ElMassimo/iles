@@ -155,8 +155,12 @@ export default function IslandsPlugins (appConfig: AppConfig): PluginOption[] {
       name: 'iles:detect-islands-in-vue',
       enforce: 'pre',
       async transform (code, id) {
-        const { path } = parseId(id)
-        if (path.endsWith('.vue') && code.includes('client:') && code.includes('<template'))
+        const { path, query } = parseId(id)
+
+        if (query.vue !== undefined && query.type === 'scriptClient')
+          return { code: 'export default {};', map: null }
+
+        if (isSFCMain(path, query) && code.includes('client:') && code.includes('<template'))
           return wrapIslandsInSFC(code, path, debug.detect)
       },
     },
@@ -275,6 +279,17 @@ import.meta.hot.accept('/${relative(root, path)}', (...args) => __ILES_PAGE_UPDA
           : `() => import('${layoutsRoot}/${layoutName}.vue').then(m => m.default)`)
 
         return s.toString()
+      },
+    },
+
+    {
+      name: 'iles:client-scripts',
+      enforce: 'post',
+      async transform (code, id) {
+        const { path, query } = parseId(id)
+
+        if (query.clientScript)
+          return await transformWithEsbuild(code, path, { loader: query.lang })
       },
     },
 

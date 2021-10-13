@@ -1,23 +1,31 @@
-<script setup lang="ts">
-import { watch } from 'vue'
-import { useRoute } from 'iles'
-import { openSideBar } from '~/logic/sidebar'
+<script client:idle lang="ts">
+import { ref, watch } from 'vue'
 
-const route = useRoute()
+export function onLoad () {
+  let openSideBar = ref(false)
 
-watch(() => route.path, () => openSideBar.value = false)
+  const within = (el: null | HTMLElement, fn: (el: HTMLElement) => boolean): boolean =>
+    el ? fn(el) || within(el.parentElement, fn) : false
 
-watch(openSideBar, (v) =>
-  document.documentElement.classList.toggle('overflow-hidden', v)
-)
+  watch(openSideBar, (v) => {
+    document.documentElement.classList.toggle('overflow-hidden', v)
+    document.getElementById('sidebar-background')?.classList.toggle('hidden', !v)
+    document.getElementById('sidebar-panel')?.classList.toggle('!-translate-x-0', v)
+  })
 
+  window.addEventListener('click', ({ target }) => {
+    if (within(target as HTMLElement, el => el.dataset?.toggle === 'sidebar' || el.id === 'sidebar'))
+      openSideBar.value = !openSideBar.value
+  })
+}
 </script>
 
 <template>
-  <aside class="fixed z-50 md:z-0 md:static">
+  <aside id="sidebar" class="fixed z-50 md:z-0 md:static">
     <div class="h-full pointer-events-none">
       <SidebarBackground/>
       <div
+        id="sidebar-panel"
         class="
           fixed top-0 left-0
           w-auto h-full pointer-events-auto
@@ -25,12 +33,11 @@ watch(openSideBar, (v) =>
           min-w-62
           md:(h-$full-viewport sticky top-$navbar-height)
         "
-        :class="{ '-translate-x-0': openSideBar }"
       >
         <div
           class="w-auto h-full bg-html md:bg-transparent"
         >
-          <SidebarHeader @close="openSideBar = false"/>
+          <SidebarHeader data-toggle="sidebar"/>
           <div class="sticky top-$navbar-height h-$full-viewport overflow-y-auto">
             <SidebarNav/>
           </div>

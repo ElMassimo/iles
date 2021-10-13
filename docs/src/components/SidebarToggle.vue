@@ -1,9 +1,5 @@
-<script setup lang="ts">
-import { openSideBar } from '~/logic/sidebar'
-</script>
-
 <template>
-  <NavBarButton @click="openSideBar = true">
+  <NavBarButton data-toggle="sidebar">
     <HeroiconsOutlineMenuAlt2 />
   </NavBarButton>
 </template>

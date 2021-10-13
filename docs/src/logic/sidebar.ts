@@ -1,15 +1,9 @@
-import { computed, ref } from 'vue'
+import { computed } from 'vue'
 import { usePage } from 'iles'
 import type { Header } from '@islands/headers'
 
 import { getSideBarConfig } from './utils'
 import type { SideBarItem } from '~/logic/config'
-
-export const openSideBar = ref(false)
-
-export const toggleSidebar = (to?: boolean) => {
-  openSideBar.value = typeof to === 'boolean' ? to : !openSideBar.value
-}
 
 export function useSideBar () {
   let { route, frontmatter, meta, site } = usePage()

@@ -1,14 +1,15 @@
-<!-- <script client:idle lang="ts">
-import { listen } from 'quicklink'
-if (import.meta.env.PROD) listen()
-</script> -->
-
 <script setup lang="ts">
 import { useRoute } from 'iles'
 
 const route = useRoute()
 let isHome = $computed(() => route.name === 'index')
 let isDocs = $computed(() => !isHome)
+</script>
+
+<script client:idle lang="ts">
+export async function onLoad () {
+  if (import.meta.env.PROD) (await import('quicklink')).listen()
+}
 </script>
 
 <template>

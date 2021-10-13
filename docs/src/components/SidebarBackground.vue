@@ -1,13 +1,10 @@
-<script setup lang="ts">
-import { openSideBar } from '~/logic/sidebar'
-
-</script>
-
 <template>
   <transition name="fade">
     <div
-      v-if="openSideBar"
+      id="sidebar-background"
+      data-toggle="sidebar"
       class="
+        hidden
         fixed top-0 left-0 z-0
         w-full h-full
         bg-cool-gray-200
@@ -17,7 +14,6 @@ import { openSideBar } from '~/logic/sidebar'
         bg-opacity-50
         md:hidden
       "
-      @click="openSideBar = false"
     />
   </transition>
 </template>
