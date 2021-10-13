@@ -5,6 +5,7 @@
 declare module 'vue' {
   export interface GlobalComponents {
     AppButton: typeof import('./src/components/AppButton.vue')['default']
+    BaseLayout: typeof import('./src/layouts/base.vue')['default']
     BxBxMoon: typeof import('~icons/bx/bx-moon')['default']
     BxBxSearch: typeof import('~icons/bx/bx-search')['default']
     BxBxSun: typeof import('~icons/bx/bx-sun')['default']
@@ -16,6 +17,7 @@ declare module 'vue' {
     DarkModeSwitch: typeof import('./src/components/DarkModeSwitch.vue')['default']
     DocSearchBox: typeof import('./src/components/DocSearchBox.vue')['default']
     EditLink: typeof import('./src/components/EditLink.vue')['default']
+    Head: typeof import('@vueuse/head')['Head']
     HeroiconsOutlineMenuAlt2: typeof import('~icons/heroicons-outline/menu-alt2')['default']
     HomeHero: typeof import('./src/components/HomeHero.vue')['default']
     Iles: typeof import('./src/components/Iles.vue')['default']

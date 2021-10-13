@@ -1,3 +1,12 @@
+## [0.0.5](https://github.com/ElMassimo/iles/compare/hydration@0.0.4...hydration@0.0.5) (2021-10-13)
+
+
+### Features
+
+* defineOnLoad helper to strongly type parameters ([4f93671](https://github.com/ElMassimo/iles/commit/4f93671c40412c1135a7d326f8610bea3524b005))
+
+
+
 ## [0.0.4](https://github.com/ElMassimo/iles/compare/hydration@0.0.3...hydration@0.0.4) (2021-10-08)
 
 
