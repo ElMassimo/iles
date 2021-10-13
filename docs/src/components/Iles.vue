@@ -6,6 +6,6 @@ const marginTop = props.heading ? '-mt-3 mx-1' : '-mt-4.8'
 <template>
   <a :href="$site.github" target="_blank" rel="noreferrer" aria-label="îles">
     <IlesText class="inline-block text-intense hover:text-primary-soft fill-current stroke-current stroke-2 h-10" :class="marginTop"/>
-    <slot/>
+    <slot><IlesLogo v-if="heading" class="inline-block -mt-2"/></slot>
   </a>
 </template>

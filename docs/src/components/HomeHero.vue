@@ -3,7 +3,7 @@ import heroImage from '/images/banner.jpg'
 </script>
 
 <template>
-  <header class="flex items-center justify-center min-h-$full-viewport pb-16 md:px-6">
+  <header class="flex items-center justify-center pt-8vh md:px-6">
     <div>
       <div class="space-y-2 mb-12 md:mb-14">
         <figure class="grid place-items-center">
@@ -19,15 +19,15 @@ import heroImage from '/images/banner.jpg'
           <h1 id="main-title" class="hidden text-3xl leading-10 font-semibold sm:(text-5xl leading-16)">
             {{ $site.title }}
           </h1>
-          <p class="my-6 text-lg opacity-75 leading-6 px-16 sm:(text-xl)">
+          <p class="my-6 text-xl md:text-2xl md:font-light opacity-75 px-16">
             {{ $frontmatter.tagline || $site.description }}
           </p>
 
-          <div class="flex space-x-4 mt-8 justify-center">
+          <div class="flex mt-8 justify-center">
             <AppButton size="lg" :href="$frontmatter.actionLink">
               {{ $frontmatter.actionText }}
             </AppButton>
-            <AppButton size="lg" :href="$frontmatter.altActionLink" outline>
+            <AppButton class="ml-6" size="lg" :href="$frontmatter.altActionLink" outline>
               {{ $frontmatter.altActionText }}
             </AppButton>
           </div>

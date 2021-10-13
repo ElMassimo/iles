@@ -2,6 +2,7 @@
 [devtools1]: https://user-images.githubusercontent.com/1158253/133314267-f0ba784c-ff64-4ee8-b2bf-97ecffc2facd.jpg
 [devtools2]: https://user-images.githubusercontent.com/1158253/133314279-1edc22d1-3ffb-414e-b994-212cb316593b.jpg
 [MDX]: https://mdxjs.com/
+[glob]: https://vitejs.dev/guide/features.html#glob-import
 
 # Development 💻
 
@@ -94,6 +95,41 @@ import { usePage } from 'iles'
 
 const { frontmatter, meta } = usePage()
 </script>
+```
+
+### Glob Imports
+
+You can leverage [`import.meta.glob`][glob] to import page components, which is
+very convenient when rendering collections or index pages.
+
+```ts
+export function usePosts () {
+  const posts = Object.values(
+    import.meta.globEagerDefault('../pages/posts/**/*.mdx')
+  )
+  return posts.sort(byDate)
+}
+```
+
+Page data is available directly in the component modules:
+
+```vue
+<script setup lang="ts">
+import { usePosts } from '~/logic/posts'
+
+const posts = usePosts()
+</script>
+
+<template>
+  <h1>Posts</h1>
+  <article v-for="post of posts" :key="post.href">
+    <time :datetime="post.date.toISOString()">{{ formatDate(post.date) }}</time>
+    <h2>
+      <a :href="post.href">{{ post.title }}</a>
+    </h2>
+    <component :is="post"/>
+  </article>
+</template>
 ```
 
 ## Layouts 📐

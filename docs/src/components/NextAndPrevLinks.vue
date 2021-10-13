@@ -1,14 +1,10 @@
 <script setup lang="ts">
 import { usePage } from 'iles'
-import { isArray, getSideBarConfig, getFlatSideBarLinks } from '~/logic/utils'
+import { getSideBarLinks } from '~/logic/sidebar'
 
 let { route, site } = usePage()
 
-let candidates = $computed(() => {
-  const config = getSideBarConfig(site.sidebar, route.path)
-
-  return isArray(config) ? getFlatSideBarLinks(config) : []
-})
+let candidates = $computed(() => getSideBarLinks(site.sidebar, route.path))
 
 let index = $computed(() => candidates.findIndex(item => item.link === route.path))
 let next = $computed(() => index > -1 && candidates[index + 1])

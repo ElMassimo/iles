@@ -1,9 +1,16 @@
 import { computed } from 'vue'
 import { usePage } from 'iles'
-import type { Header } from '@islands/headers'
 
-import { getSideBarConfig } from './utils'
-import type { SideBarItem } from '~/logic/config'
+import type { Header } from '@islands/headers'
+import type {
+  SideBarConfig,
+  MultiSideBarConfig,
+  SideBarItem,
+  SideBarGroup,
+  SideBarLink,
+} from '~/logic/config'
+
+import { ensureStartingSlash, normalize, isArray } from '~/logic/utils'
 
 export function useSideBar () {
   let { route, frontmatter, meta, site } = usePage()
@@ -51,4 +58,62 @@ function resolveAutoSidebar (headers: undefined | Header[], topLevel: number, de
   })
 
   return ret
+}
+
+/**
+ * Utils
+ */
+function isSideBarConfig(
+  sidebar: SideBarConfig | MultiSideBarConfig,
+): sidebar is SideBarConfig {
+  return sidebar === false || sidebar === 'auto' || isArray(sidebar)
+}
+
+export function isSideBarGroup(
+  item: SideBarItem,
+): item is SideBarGroup {
+  return (item as SideBarGroup).children !== undefined
+}
+
+/**
+ * Get the `SideBarConfig` from sidebar option. This method will ensure to get
+ * correct sidebar config from `MultiSideBarConfig` with various path
+ * combinations such as matching `guide/` and `/guide/`. If no matching config
+ * was found, it will return `auto` as a fallback.
+ */
+export function getSideBarConfig(
+  sidebar: SideBarConfig | MultiSideBarConfig,
+  path: string,
+): SideBarConfig {
+  if (isSideBarConfig(sidebar))
+    return sidebar
+
+  path = ensureStartingSlash(path)
+
+  for (const dir of Object.keys(sidebar)) {
+    // make sure the multi sidebar key starts with slash too
+    if (path.startsWith(ensureStartingSlash(dir)))
+      return sidebar[dir]
+  }
+
+  return 'auto'
+}
+
+/**
+ * Get flat sidebar links from the sidebar items. This method is useful for
+ * creating the "next and prev link" feature. It will ignore any items that
+ * don't have `link` property and removes `.md` or `.html` extension if a
+ * link contains it.
+ */
+export function getSideBarLinks (sidebar: SideBarConfig | MultiSideBarConfig, path: string) {
+  const sidebarItems = getSideBarConfig(sidebar, path)
+  const links: SideBarLink[] = []
+  if (!isArray(sidebarItems)) return links
+
+  const addLinks = (item: SideBarItem) => {
+    if (item.link) links.push({ text: item.text, link: normalize(item.link) })
+    if (isSideBarGroup(item)) item.children.forEach(addLinks)
+  }
+  sidebarItems.forEach?.(addLinks)
+  return links
 }

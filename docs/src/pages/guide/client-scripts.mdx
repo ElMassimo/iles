@@ -1,0 +1,98 @@
+[previous section]: /guide/hydration
+[strategies]: /guide/hydration#clientload
+[strategy]: /guide/hydration#clientload
+[layout]: /guide/development#layouts
+[components]: /guide/development#components
+
+# Client Scripts
+
+Sometimes you need client-side code that does not map to a component.
+
+There are two main ways to achieve this in <Iles/>.
+
+## Client Script Block <VueLogo/>
+
+<Iles/> provides support for a `script client` block in Vue single-file components.
+
+```vue
+<script client:load lang="ts">
+console.log('Powered by îles 🏝', 'https://iles-docs/netlify.app')
+</script>
+```
+
+The script will be injected every time the component is rendered, and it's
+guaranteed to execute after all elements rendered by the component are in the DOM.
+
+```vue
+<script client:load lang="ts">
+document.getElementById('sidebar').classList.toggle('live') // always works
+</script>
+
+<template>
+  <div id="sidebar"/>
+</template>
+```
+
+> If you need code to execute once, use `script client` in a [layout].
+
+### Execution Strategies <Logo/>
+
+Other [strategies] that we saw in the [previous section] are supported,
+but you must export `onLoad`.
+
+This function will be called when the condition for the selected strategy is met—when the element becomes visible if using `client:visible`, when the media query matches if using `client:media`, etc.
+
+```vue
+<script client:visible" lang="ts">
+console.log('Not necessarily visible')
+
+export function onLoad () {
+  console.log('Now visible')
+}
+</script>
+```
+
+## Vanilla Components 🍦
+
+`.js` and `.ts` files can also be used as client scripts in <Iles/>, and you can
+choose where to place them by rendering them as islands.
+
+```vue
+<script setup lang="ts">
+import GalleryPreloader from '~/logic/imagePreloader' // .ts
+</script>
+
+<template>
+  <GalleryPreloader client:visible/>
+  ...
+</template>
+```
+
+<Tip warn>
+You must provide a `client:` [strategy] when using vanilla components.
+</Tip>
+
+Vanilla components should export a function to call when the selected
+[hydration strategy][strategy] is fulfilled.
+
+```ts
+export default () => fetch('/images').then(...)
+```
+
+The <kbd>defineClientComponent</kbd> helper provides typings for the provided
+parameters if you need them.
+
+```ts
+import { defineClientComponent } from 'iles'
+
+export default defineClientComponent((el, props, slots) => {
+  // Do whatever you need with the element.
+})
+```
+
+<Tip title="Why not use a renderless Vue component?">
+The benefit is that vanilla components don't require the Vue runtime, so the final
+amount of JS in the build will be smaller.
+
+If your app already includes Vue islands, then use whatever you find more natural.
+</Tip>

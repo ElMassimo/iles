@@ -1,11 +1,8 @@
-<script client:idle lang="ts">
+<script client:media="(max-width: 767px)" lang="ts">
 import { ref, watch } from 'vue'
 
 export function onLoad () {
   let openSideBar = ref(false)
-
-  const within = (el: null | HTMLElement, fn: (el: HTMLElement) => boolean): boolean =>
-    el ? fn(el) || within(el.parentElement, fn) : false
 
   watch(openSideBar, (v) => {
     document.documentElement.classList.toggle('overflow-hidden', v)
@@ -13,31 +10,31 @@ export function onLoad () {
     document.getElementById('sidebar-panel')?.classList.toggle('!-translate-x-0', v)
   })
 
-  window.addEventListener('click', ({ target }) => {
-    if (within(target as HTMLElement, el => el.dataset?.toggle === 'sidebar' || el.id === 'sidebar'))
-      openSideBar.value = !openSideBar.value
+  document.querySelectorAll<HTMLElement>('[data-sidebar]').forEach(el => {
+    el.addEventListener('click', () => { openSideBar.value = el.dataset.sidebar === 'open' })
   })
 }
 </script>
 
 <template>
-  <aside id="sidebar" class="fixed z-50 md:z-0 md:static">
+  <aside class="fixed z-50 md:z-0 md:static">
     <div class="h-full pointer-events-none">
-      <SidebarBackground/>
+      <SidebarBackground id="sidebar-background" data-sidebar="close"/>
       <div
         id="sidebar-panel"
+        data-sidebar="close"
         class="
           fixed top-0 left-0
           w-auto h-full pointer-events-auto
           transform -translate-x-full md:transform-none transition-transform duration-200 ease-linear
-          min-w-62
+          lg:min-w-62
           md:(h-$full-viewport sticky top-$navbar-height)
         "
       >
         <div
           class="w-auto h-full bg-html md:bg-transparent"
         >
-          <SidebarHeader data-toggle="sidebar"/>
+          <SidebarHeader/>
           <div class="sticky top-$navbar-height h-$full-viewport overflow-y-auto">
             <SidebarNav/>
           </div>
@@ -46,15 +43,3 @@ export function onLoad () {
     </div>
   </aside>
 </template>
-
-<style scoped>
-.fade-enter-active,
-.fade-leave-active {
-  transition: opacity 0.5s ease;
-}
-
-.fade-enter-from,
-.fade-leave-to {
-  opacity: 0;
-}
-</style>

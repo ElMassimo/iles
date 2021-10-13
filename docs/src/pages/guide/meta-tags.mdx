@@ -1,0 +1,78 @@
+[@vueuse/head]: https://github.com/vueuse/head
+[app]: /config#your-app
+[useHead]: https://github.com/vueuse/head#api
+
+# Head and Meta Tags
+
+There are several ways to customize `title` and `meta` tags in <Iles/>, powered by <kbd>[@vueuse/head]</kbd>.
+
+## [`useHead` Composable][useHead]
+
+This helper can be used in the `setup` function or `<script setup>` of any Vue component.
+
+```vue
+<script setup lang="ts">
+import { useHead, usePage } from 'iles'
+import { computed } from 'vue' 
+  
+const { frontmatter } = usePage()
+
+useHead({
+  meta: [
+    { property: 'og:type', content: 'website' },
+    { property: 'keywords', content: computed(() => frontmatter.tags) },
+  ],
+})
+</script>
+```
+
+Notice that values can be static or computed.
+
+## [`<Head>` Component](https://github.com/vueuse/head#head)
+
+Besides <kbd>[useHead]</kbd>, you can also manipulate head tags using the `<Head>` component:
+
+```vue
+<template>
+  <Head>
+    <title>Hello World</title>
+    <meta property="author" :content="$site.author">
+    <meta property="keywords" :content="$frontmatter.tags">
+    <html lang="en-US" class="theme-dark" />
+  </Head>
+</template>
+```
+
+This is often more intuitive, specially for dynamic values.
+
+## [App Meta Tags][app]
+
+Finally, you can use `head` in <kbd>[src/app.ts][app]</kbd>, which supports the
+same format as <kbd>[useHead]</kbd>.
+
+```ts
+import { defineApp } from 'iles'
+
+export default defineApp({
+  head: {
+    htmlAttrs: { lang: 'en-US' },
+  },
+})
+```
+
+If you need access to the site or page, you can provide a function instead:
+
+```ts
+import { defineApp } from 'iles'
+
+export default defineApp({
+  head ({ frontmatter, site }) {
+    return {
+      meta: [
+        { property: 'author', content: site.author },
+        { property: 'keywords', content: computed(() => frontmatter.tags) },
+      ]
+    }
+  },
+})
+```

@@ -33,7 +33,7 @@ const linkClass = computed(() => ([
     'bg-transparent border border-primary text-primary hover:text-gray-100': props.outline,
     'text-sm underline': props.inline,
     'text-sm px-2.5 py-2': props.size === 'sm',
-    'text-base px-3 py-2.5 md:(text-lg px-4 py-3) border-2': props.size === 'lg',
+    'text-base px-3 py-2.5 md:(text-lg px-6 py-3) border-2': props.size === 'lg',
   },
 ]))
 

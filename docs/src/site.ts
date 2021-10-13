@@ -29,6 +29,8 @@ const site = {
           { text: 'Getting Started', link: '/guide' },
           { text: 'Development', link: '/guide/development' },
           { text: 'Hydration', link: '/guide/hydration' },
+          { text: 'Client Scripts', link: '/guide/client-scripts' },
+          { text: 'Meta Tags', link: '/guide/meta-tags' },
           // { text: 'Deployment', link: '/guide/deployment' },
           // // { text: 'Plugins', link: '/guide/plugins' },
           // { text: 'Comparisons', link: '/guide/comparisons' },

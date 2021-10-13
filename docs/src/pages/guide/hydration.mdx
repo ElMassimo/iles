@@ -4,7 +4,7 @@
 [intersectionobserver]: https://developer.mozilla.org/en-US/docs/Web/API/Intersection_Observer_API
 [matchMedia]: https://developer.mozilla.org/en-US/docs/Web/API/Window/matchMedia
 
-# Hydration Directives <IlesLogo class="inline -mt-4"/>
+# Hydration Directives <Logo/>
 
 You can define which components should remain interactive in the production
 build by using `client:` directives in your components (borrowed from [Astro]).
@@ -72,7 +72,7 @@ Hydrates the component as soon as the browser [matches the given media query][ma
 Useful to avoid unnecessary work depending on the available viewport, such as in mobile devices.
 
 ```vue
-<Sidebar client:media="min-width: 600px"/>
+<Sidebar client:media="screen and (min-width: 600px)"/>
 ```
 
 ## 🏝 client:only

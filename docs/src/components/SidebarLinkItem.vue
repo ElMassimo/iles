@@ -24,19 +24,8 @@ const props = defineProps({
 
 const route = useRoute()
 
-function resolveLink(base: string, path?: string): string | undefined {
-  if (path === undefined)
-    return path
-
-  // keep relative hash to the same page
-  if (path.startsWith('#'))
-    return path
-
-  return joinUrl(base, path)
-}
-
 let active = $computed(() => isActive(route.path, props.item.link))
-const link = resolveLink(appConfig.base, props.item.link)
+let link = $computed(() => props.item.link && joinUrl(appConfig.base, props.item.link))
 
 let style = $computed(() => ([
   'transition duration-100 inline-flex',
