@@ -58,6 +58,18 @@ export function resolveAliases (root: string): AliasOptions {
       ),
     },
     {
+      find: /^vue-router$/,
+      replacement: require.resolve(
+        'vue-router/dist/vue-router.esm-bundler.js',
+      ),
+    },
+    {
+      find: /^@vueuse\/head$/,
+      replacement: require.resolve(
+        '@vueuse/head/dist/index.mjs',
+      ),
+    },
+    {
       find: /^@vue\/devtools-api$/,
       replacement: require.resolve(
         '@vue/devtools-api/lib/esm/index.js',
