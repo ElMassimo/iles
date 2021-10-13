@@ -8,6 +8,12 @@ import { useIslandsForPath } from '../composables/islandDefinitions'
 import { useAppConfig } from '../composables/appConfig'
 import { useVueRenderer } from '../composables/vueRenderer'
 
+function inspectMediaQuery (query: string) {
+  if (!query.includes('(') && query.includes(': '))
+    console.warn('You might need to add parenthesis to the following media query.\n\t', query, '\n', 'https://developer.mozilla.org/en-US/docs/Web/CSS/Media_Queries/Using_media_queries#targeting_media_features')
+  return query
+}
+
 export default defineComponent({
   name: 'Island',
   inheritAttrs: false,
@@ -53,7 +59,7 @@ export default defineComponent({
 
     const props = { ...this.$attrs }
     if (this.strategy === Hydrate.MediaQuery)
-      props._mediaQuery = this.$props[Hydrate.MediaQuery]
+      props._mediaQuery = inspectMediaQuery(this.$props[Hydrate.MediaQuery] as string)
 
     const slotVNodes = mapObject(this.$slots, slotFn => slotFn?.())
     const islandsPrefix = `${isSSR ? '' : '/@id/'}@islands`
