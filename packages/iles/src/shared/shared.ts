@@ -43,6 +43,6 @@ export function defineApp (app: UserApp) {
   return app
 }
 
-export function defineOnLoad (fn: OnLoadFn) {
+export function defineClientComponent (fn: OnLoadFn) {
   return fn
 }
