@@ -1,5 +1,5 @@
 /* eslint-disable no-restricted-syntax */
-import path from 'path'
+import { join, relative, resolve, dirname } from 'pathe'
 import { promises as fs } from 'fs'
 import virtual from '@rollup/plugin-virtual'
 import { build as viteBuild, mergeConfig as mergeViteConfig } from 'vite'
@@ -24,7 +24,7 @@ export async function bundleIslands (
     await renderRoute(config, manifest, route, islandsByPath[route.path])))
 
   // Remove temporary island script files.
-  const tempIslandFiles = await glob(path.join(config.outDir, '**/_virtual_*.js'))
+  const tempIslandFiles = await glob(join(config.outDir, '**/_virtual_*.js'))
   for (const temp of tempIslandFiles) await fs.rm(temp)
 }
 
@@ -36,11 +36,11 @@ async function renderRoute (config: AppConfig, manifest: Manifest, route: SSGRou
 
     for (const island of islands) {
       // Find the corresponding entrypoint for the island.
-      const entry = manifest[`\x00virtual:${path.relative(config.root, island.entryFilename!)}`]
+      const entry = manifest[`\x00virtual:${relative(config.root, island.entryFilename!)}`]
       if (entry.imports) preloadScripts.push(...entry.imports)
 
       // Read the compiled code for the island.
-      const filename = path.resolve(config.outDir, entry.file)
+      const filename = resolve(config.outDir, entry.file)
       const code = await fs.readFile(filename, 'utf-8')
 
       // Inline the script in the SSR'ed html to load the island.
@@ -53,8 +53,8 @@ async function renderRoute (config: AppConfig, manifest: Manifest, route: SSGRou
     content = content.replace('</head>', `${stringifyPreload(config.base, manifest, preloadScripts)}</head>`)
   }
 
-  const filename = path.resolve(config.outDir, route.outputFilename)
-  await fs.mkdir(path.dirname(filename), { recursive: true })
+  const filename = resolve(config.outDir, route.outputFilename)
+  await fs.mkdir(dirname(filename), { recursive: true })
   await fs.writeFile(filename, content, 'utf-8')
 }
 
@@ -92,7 +92,7 @@ async function buildIslands (config: AppConfig, islandsByPath: IslandsByPath) {
 
 function stringifyPreload (base: string, manifest: Manifest, hrefs: string[]) {
   return uniq(resolveManifestEntries(manifest, hrefs))
-    .map(href => `<link rel="modulepreload" href="${path.join(base, href)}" crossorigin/>`)
+    .map(href => `<link rel="modulepreload" href="${base}${href}" crossorigin/>`)
     .join('')
 }
 
@@ -104,7 +104,7 @@ function resolveManifestEntries (manifest: Manifest, entryNames: string[]): stri
 }
 
 async function parseManifest (outDir: string) {
-  const manifestPath = path.join(outDir, 'manifest.json')
+  const manifestPath = join(outDir, 'manifest.json')
   try {
     return JSON.parse(await fs.readFile(manifestPath, 'utf-8'))
   }

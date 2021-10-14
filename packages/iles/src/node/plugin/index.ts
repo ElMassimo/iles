@@ -1,5 +1,5 @@
 /* eslint-disable no-restricted-syntax */
-import { basename, resolve, relative } from 'path'
+import { basename, resolve, relative } from 'pathe'
 import { promises as fs, constants as fsConstants } from 'fs'
 import { green } from 'nanocolors'
 import type { PluginOption, ResolvedConfig, ResolveFn, ViteDevServer } from 'vite'

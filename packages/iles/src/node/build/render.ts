@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
-import { join } from 'path'
+import { join } from 'pathe'
 import { renderHeadToString } from '@vueuse/head'
 import type { RollupOutput } from 'rollup'
 import type { Awaited, AppConfig, CreateAppFactory, IslandsByPath, SSGRoute } from '../shared'

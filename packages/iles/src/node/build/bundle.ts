@@ -1,5 +1,5 @@
 /* eslint-disable no-restricted-syntax */
-import { resolve } from 'path'
+import { resolve } from 'pathe'
 import type { RollupOutput } from 'rollup'
 import type { Plugin } from 'vite'
 import { build, BuildOptions, mergeConfig as mergeViteConfig, UserConfig as ViteUserConfig } from 'vite'

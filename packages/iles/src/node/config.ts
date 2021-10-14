@@ -1,6 +1,6 @@
 /* eslint-disable no-restricted-syntax */
 import fs from 'fs'
-import { join, relative, resolve } from 'path'
+import { join, relative, resolve } from 'pathe'
 import { yellow } from 'nanocolors'
 import creatDebugger from 'debug'
 import { loadConfigFromFile, mergeConfig as mergeViteConfig } from 'vite'

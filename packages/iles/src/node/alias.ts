@@ -1,12 +1,12 @@
-import path from 'path'
+import { join, dirname, resolve } from 'pathe'
 import { Alias, AliasOptions } from 'vite'
 
-const PKG_ROOT = path.join(__dirname, '../../')
-export const DIST_CLIENT_PATH = path.join(__dirname, '../client')
-export const APP_PATH = path.join(DIST_CLIENT_PATH, 'app')
-export const NOT_FOUND_COMPONENT_PATH = path.join(DIST_CLIENT_PATH, 'app/components/NotFound.vue')
-export const SHARED_PATH = path.join(DIST_CLIENT_PATH, 'shared')
-export const HYDRATION_DIST_PATH = path.join(path.dirname(require.resolve('@islands/hydration/package.json')), 'dist')
+const PKG_ROOT = join(__dirname, '../../')
+export const DIST_CLIENT_PATH = join(__dirname, '../client')
+export const APP_PATH = join(DIST_CLIENT_PATH, 'app')
+export const NOT_FOUND_COMPONENT_PATH = join(DIST_CLIENT_PATH, 'app/components/NotFound.vue')
+export const SHARED_PATH = join(DIST_CLIENT_PATH, 'shared')
+export const HYDRATION_DIST_PATH = join(dirname(require.resolve('@islands/hydration/package.json')), 'dist')
 
 // special virtual file
 // we can't directly import '/@islands' because
@@ -42,11 +42,11 @@ export function resolveAliases (root: string): AliasOptions {
     })),
     {
       find: /^[~@]\//,
-      replacement: `${path.resolve(root, 'src')}/`,
+      replacement: `${resolve(root, 'src')}/`,
     },
     {
       find: /^iles$/,
-      replacement: path.join(__dirname, '../client/index'),
+      replacement: join(__dirname, '../client/index'),
     },
     { find: /^iles\//, replacement: `${PKG_ROOT}/` },
     // make sure it always use the same vue dependency that comes with

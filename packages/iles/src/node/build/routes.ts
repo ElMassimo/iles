@@ -1,4 +1,4 @@
-import { extname } from 'path'
+import { extname } from 'pathe'
 import type { AppConfig, CreateAppFactory, RouteRecordRaw, SSGRoute } from '../shared'
 import { pathToFilename } from './utils'
 
