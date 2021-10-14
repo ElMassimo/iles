@@ -1,1 +1,40 @@
-# Deployment
+[Vite.js]: https://vitejs.dev/
+[starter]: /guide
+
+# Deployment 🚀
+
+This section contains useful information for building and deploying an <Iles/> application.
+
+> Pull requests to add other providers are welcome!
+
+## Build 📦
+
+To build your site, run <kbd>npm run build</kbd> if you used the [starter], or
+manually add a `"build": "iles build",` script to your `package.json`.
+
+Like [Vite.js], the default output dir is <kbd>/dist</kbd>.
+
+## Netlify <NetlifyLogo/>
+
+Add a `netlify.toml` file to your project:
+
+```toml
+[build]
+  publish = "dist"
+  command = "npm run build"
+``` 
+
+Then, push to your git repository [as usual](https://docs.netlify.com/configure-builds/get-started/).
+
+<Tip title="pnpm">
+If using `pnpm`, make sure to install dependencies:
+
+```toml
+[build.environment]
+  NPM_FLAGS = "--version"
+
+[build]
+  publish = "dist"
+  command = "npx pnpm i --store=node_modules/.pnpm-store && npx pnpm run build"
+``` 
+</Tip>

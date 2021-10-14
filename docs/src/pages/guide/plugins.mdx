@@ -1,1 +1,112 @@
-# Plugins
+[pages]: /guide/development#pages
+[mdx]: /guide/markdown
+[configuring them as usual]: /config#configuring-vite
+[config]: /config#configuring-%C3%AEles
+
+[@vitejs/plugin-vue]: https://www.npmjs.com/package/@vitejs/plugin-vue
+[@vitejs/plugin-vue-jsx]: https://www.npmjs.com/package/@vitejs/plugin-vue-jsx
+[vite-plugin-pages]: https://github.com/ElMassimo/vite-plugin-pages
+[unplugin-vue-components]: https://github.com/antfu/unplugin-vue-components
+[vite-plugin-xdm]: https://github.com/ElMassimo/vite-plugin-xdm
+
+[remark]: https://github.com/remarkjs/remark
+[rehype]: https://github.com/rehypejs/rehype
+
+# Plugins 🔌
+
+<Iles/> has an extensible plugin system, which is used internally to provide
+features such as `frontmatter` and `meta` information for [pages].
+
+## Vite Plugins <ViteLogo/>
+
+You can use any Vite.js plugins by [configuring them as usual], but note that
+the following plugins are already included and pre-configured for you.
+
+The examples list some of the defaults for each plugin.
+
+> You can [provide additional options][config] for each of them using [iles.config.ts][config].
+
+### <kbd>[@vitejs/plugin-vue]</kbd>
+
+Provides Vue 3 Single File Components support.
+
+```ts
+// iles.config.ts
+import { defineConfig } from 'iles'
+
+export default defineConfig({
+  vue: {
+    refTransform: true,
+  },
+})
+```
+
+### <kbd>[@vitejs/plugin-vue-jsx]</kbd>
+
+Provides Vue 3 JSX support, and is leveraged internally to support Vue in [MDX].
+
+```ts
+  vueJsx: {
+    include: /\.[jt]sx|mdx?$/,
+  },
+```
+
+### <kbd>[vite-plugin-pages]</kbd>
+
+Provides file-based routing and `<route>` block support in single-file components.
+
+```ts
+  pages: {
+    routeBlockLang: 'yaml',
+    extensions: ['vue', 'md', 'mdx'],
+  },
+```
+
+### <kbd>[unplugin-vue-components]</kbd>
+
+Enables auto-importing Vue components, and is leveraged internally to support
+automatic component resolution in [MDX files][mdx].
+
+```ts
+  // Example config from "The Vue Point in îles"
+  components: {
+    resolvers: [iconsResolver({ componentPrefix: '' })],
+  },
+```
+
+### <kbd>[vite-plugin-xdm]</kbd>
+
+Provides excellent MDX support, and allows to tap into the [remark] and [rehype] ecosystems.
+
+```ts
+  // Example config from "The Vue Point in îles"
+  markdown: {
+    rehypePlugins: [
+      ['@mapbox/rehype-prism', { alias: { markup: ['html', 'vue'] } }],
+    ],
+    extendFrontmatter (frontmatter, filename) {
+      if (filename.includes('/posts/'))
+        return { layout: 'post', ...frontmatter }
+    },
+  },
+```
+
+## Official Plugins <Iles heading/>
+
+### <kbd>@islands/headers</kbd>
+
+A [rehype] plugin to add anchor links to headings in markdown files, add a slug
+id to reference them, and expose them in `meta.headers`.
+
+```ts
+  markdown: {
+    rehypePlugins: [
+      import('@islands/headers').then(m => m.default),
+    ],
+  },
+```
+
+<Tip title="Automatic Title!">
+The plugin will also extract an `h1` heading in the page and use it as the page
+title if none is set in the [frontmatter][mdx].
+</Tip>

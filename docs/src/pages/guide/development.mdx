@@ -1,7 +1,7 @@
 [srcDir]: /config#srcDir
 [devtools1]: https://user-images.githubusercontent.com/1158253/133314267-f0ba784c-ff64-4ee8-b2bf-97ecffc2facd.jpg
 [devtools2]: https://user-images.githubusercontent.com/1158253/133314279-1edc22d1-3ffb-414e-b994-212cb316593b.jpg
-[MDX]: https://mdxjs.com/
+[MDX]: /guide/markdown
 [glob]: https://vitejs.dev/guide/features.html#glob-import
 
 # Development 💻
@@ -45,14 +45,14 @@ import { useDark } from '~/logic/dark'
 
 Components in the <kbd>src/components</kbd> dir will be auto-imported on-demand, powered by [`unplugin-vue-components`](https://github.com/antfu/unplugin-vue-components).
 
-<Iles/> extends this so that you don't need to import components in [MDX] files.
+<Iles/> extends this so that you don't need to import components in [MDX files][mdx].
 
 ## Pages 🛣
 
 Routes will be auto-generated for files in the <kbd>src/pages</kbd> dir with the same file structure.
 Check out [`vite-plugin-pages`](https://github.com/hannoeru/vite-plugin-pages) for more details.
 
-Pages can be Vue components or [MDX] files, and may specify frontmatter and route metadata.
+Pages can be Vue components or [MDX files][mdx], and may specify frontmatter and route metadata.
 
 You may use Vue components inside [MDX], and access any properties defined in frontmatter:
 
@@ -86,7 +86,7 @@ audio: /song-for-you.mp3
 
 You may access information about the current page using the `usePage` composition API helper, or by using the  `$frontmatter` or `$meta` global properties.
 
-- `frontmatter`: The frontmatter defined in an MDX document, or in a `<route>` block for Vue components
+- `frontmatter`: The frontmatter defined in an [MDX] document, or in a `<route>` block for Vue components
 - `meta`: Information about the page, including `href`, `filename`, and `lastUpdated`
 
 ```ts
