@@ -1,3 +1,12 @@
+## [0.2.2](https://github.com/ElMassimo/iles/compare/v0.2.1...v0.2.2) (2021-10-14)
+
+
+### Bug Fixes
+
+* use unjs/pathe to prevent incompatibilities with windows paths ([#4](https://github.com/ElMassimo/iles/issues/4)) ([f2ffacb](https://github.com/ElMassimo/iles/commit/f2ffacb7cf808600ce565990e7021b409d451d3b))
+
+
+
 ## [0.2.1](https://github.com/ElMassimo/iles/compare/v0.2.0...v0.2.1) (2021-10-13)
 
 
