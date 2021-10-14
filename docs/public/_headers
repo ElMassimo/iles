@@ -13,3 +13,6 @@
 /bench.png
   cache-control: max-age=31536000
   cache-control: immutable
+
+/*
+  content-security-policy-report-only: default-src 'self'; font-src 'self'; img-src 'self' pixel.thesemetrics.org; script-src 'self' unpkg.com; style-src 'self'

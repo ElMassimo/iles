@@ -5,7 +5,7 @@ import logoSrc from '/images/logo.svg'
 import faviconSrc from '/images/favicon.ico'
 import bannerSrc from '/images/banner.png'
 
-const { route, frontmatter, site } = usePage()
+const { frontmatter, site } = usePage()
 
 let keywords = $computed(() => (frontmatter.tags?.split(' ') || site.tags).join(', '))
 let imageUrl = $computed(() => `${site.url}${frontmatter.image || bannerSrc}`)
