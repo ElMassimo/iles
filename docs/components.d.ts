@@ -14,6 +14,7 @@ declare module 'vue' {
     CarbonLogoGithub: typeof import('~icons/carbon/logo-github')['default']
     CarbonLogoTwitter: typeof import('~icons/carbon/logo-twitter')['default']
     CarbonPen: typeof import('~icons/carbon/pen')['default']
+    Contact: typeof import('./src/components/contact.mdx')['default']
     DarkModeSwitch: typeof import('./src/components/DarkModeSwitch.vue')['default']
     DocSearchBox: typeof import('./src/components/DocSearchBox.vue')['default']
     EditLink: typeof import('./src/components/EditLink.vue')['default']

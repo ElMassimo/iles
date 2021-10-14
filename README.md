@@ -31,7 +31,7 @@
 [Astro]: https://docs.astro.build/core-concepts/component-hydration
 [vite-plugin-pages]: https://github.com/hannoeru/vite-plugin-pages
 [unplugin-vue-components]: https://github.com/antfu/unplugin-vue-components
-[Live Demo]: https://the-vue-point-with-iles.netlify.app/
+
 [requestIdleCallback]: https://developer.mozilla.org/en-US/docs/Web/API/Window/requestIdleCallback
 [intersectionobserver]: https://developer.mozilla.org/en-US/docs/Web/API/Intersection_Observer_API
 [matchMedia]: https://developer.mozilla.org/en-US/docs/Web/API/Window/matchMedia
@@ -40,6 +40,17 @@
 [devtools1]: https://user-images.githubusercontent.com/1158253/133314267-f0ba784c-ff64-4ee8-b2bf-97ecffc2facd.jpg
 [devtools2]: https://user-images.githubusercontent.com/1158253/133314279-1edc22d1-3ffb-414e-b994-212cb316593b.jpg
 [twitter]: https://twitter.com/ilesjs
+[follow me]:  https://twitter.com/MaximoMussini
+
+[hydration]: https://iles-docs.netlify.app/guide/hydration
+[markdown]: https://iles-docs.netlify.app/guide/markdown
+[guide]: https://iles-docs.netlify.app/guide/introduction
+[pages]: https://iles-docs.netlify.app/guide/development#pages
+[layouts]: https://iles-docs.netlify.app/guide/development#components
+[components]: https://iles-docs.netlify.app/guide/development#components
+[configuration reference]: https://iles-docs.netlify.app/config
+
+[blog]: https://the-vue-point-with-iles.netlify.app/
 
 __[îles]__ is a static-site generator that provides automatic [partial hydration].
 
@@ -49,33 +60,20 @@ experience provided by [Vite.js].
 When building for production, use directives to specify which components are
 interactive, and [îles] will take care of shipping the minimal amount of JS needed.
 
-__[Live Demo]__
-
 ## Features ✨
 
-- 🏝 Automatic [Partial Hydration]
-  
-  Ship JS only for the interactive bits, by default that's zero.
-
-- ⚡️ Powered by [Vite.js]
-
-  That means the server starts fast, and HMR feels instant.
-
-- 📖 Great [MDX] Support
-  
-  Use components inside markdown. With HMR, the browser becomes a live preview.
-
-- 🧱 Layouts and [Components][unplugin-vue-components]
-  
-  Use Vue components as layouts for Markdown or Vue pages.
-
-- 🛣 [File-system Based Routing][vite-plugin-pages]
-
+- 🏝 [Partial Hydration][hydration]
+- ⚡️ Powered by [Vite.js] and [Vue]
+- 📖 Great [Markdown] Support
+- 🧱 [Layouts] and [Components] auto-import
+- 🛣 [File-Based Routing][pages]
 - 🛠 Vue [Devtools][devtools1] [Support][devtools2]
 
-## Project Status
+## Demos 🚀
 
-⚠️ Alpha. APIs may change on patch releases. Lock the version to avoid breakage.
+__[Documentation Website][docs]__
+
+__[Official Vue.js Blog][blog]__ 
 
 ## Installation 💿
 
@@ -85,11 +83,11 @@ pnpm init iles@next # or npm or yarn
 
 ## Documentation 📖
 
-The [documentation website][docs] is in progress.
+Visit the [documentation website][docs] to check out the [guides][guide] and searchable [configuration reference].
 
 ## News 🗞
 
-Follow [îles][twitter] on [Twitter].
+[Follow me] or the [official îles account][twitter] on [Twitter].
 
 ## Acknowledgements 🙇‍♂️
 
