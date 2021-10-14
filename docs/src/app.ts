@@ -12,6 +12,7 @@ const prodScripts = import.meta.env.PROD ? [
 
 export default defineApp({
   head: {
+    htmlAttrs: { lang: 'en-US' },
     script: [
       { children: checkDarkTheme },
       ...prodScripts,

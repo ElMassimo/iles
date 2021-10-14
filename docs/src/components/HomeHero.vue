@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import heroImage from '/images/banner.jpg'
+import heroImageAvif from '/images/banner.avif'
 </script>
 
 <template>
@@ -7,11 +8,16 @@ import heroImage from '/images/banner.jpg'
     <div>
       <div class="space-y-2 mb-12 md:mb-14">
         <figure class="grid place-items-center">
-          <img
-            class="grid-item mx-auto max-w-full w-auto max-h-64 md:h-64 block select-none"
-            :src="heroImage"
-            :alt="$frontmatter.heroAlt"
-          >
+          <picture class="grid-item mx-auto block select-none">
+            <source type="image/avif" :srcset="heroImageAvif">
+            <img
+              class="max-w-full h-auto w-auto max-h-64 md:h-64"
+              height="256"
+              width="768"
+              :src="heroImage"
+              :alt="$frontmatter.heroAlt"
+            >
+          </picture>
           <IlesText class="grid-item banner-text text-white fill-current" alt="îles"/>
         </figure>
 
