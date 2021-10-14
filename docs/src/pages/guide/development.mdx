@@ -3,6 +3,7 @@
 [devtools2]: https://user-images.githubusercontent.com/1158253/133314279-1edc22d1-3ffb-414e-b994-212cb316593b.jpg
 [MDX]: /guide/markdown
 [glob]: https://vitejs.dev/guide/features.html#glob-import
+[config]: /config#configuring-%C3%AEles
 
 # Development 💻
 
@@ -167,6 +168,29 @@ export default {
   title: 'About',
   description: 'Learn more about what we do',
 }
+```
+
+### Sitemap 🗺
+
+A sitemap can be automatically generated for your site, all you need to do is
+provide a `siteUrl` in the [config]. That will also make it available as `site.url` and `site.canonical`.
+
+```ts
+import { defineConfig } from 'iles'
+
+export default defineConfig({
+  siteUrl: 'https://iles-docs.netlify.app',
+})
+```
+ 
+If you would like to opt-out, you can [disable it explicitly][config]:
+
+```ts
+export default defineConfig({
+  ssg: {
+    sitemap: false
+  },
+})
 ```
 
 ## Devtools 🛠
