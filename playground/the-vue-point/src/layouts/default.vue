@@ -1,8 +1,11 @@
-<script client:load lang="ts">
-import '~/logic/quicklink'
+<script setup lang="ts">
+import { useHead } from 'iles'
 
-if (import.meta.env.PROD)
-  console.log('Powered by îles 🏝', 'https://iles-docs.netlify.app')
+useHead({
+  script: [
+    { children: 'console.log("Powered by îles 🏝", "https://iles-docs.netlify.app")' },
+  ],
+})
 </script>
 
 <template>
