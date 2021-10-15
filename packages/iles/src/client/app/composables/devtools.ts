@@ -21,6 +21,14 @@ const strategyLabels: Record<string, any> = {
   'client:media': 'onMediaQuery',
   'client:only': 'noPrerender',
   'client:visible': 'whenVisible',
+  'client:static': 'static',
+}
+
+const frameworkColors: Record<any, any> = {
+  preact: { backgroundColor: 0x673AB8, textColor: 0xFFFFFF },
+  solid: { backgroundColor: 0x446B9E, textColor: 0xFFFFFF },
+  svelte: { backgroundColor: 0xFF3E00, textColor: 0xFFFFFF },
+  vue: { backgroundColor: 0x42B983, textColor: 0xFFFFFF },
 }
 
 let devtoolsApi: DevtoolsPluginApi
@@ -118,7 +126,7 @@ export function installDevtools (app: App, config: AppClientConfig) {
           id: island.id,
           label: island.componentName,
           tags: [
-            { label: island.id, textColor: 0, backgroundColor: 0x42B983 },
+            { label: island.id, textColor: 0, ...frameworkColors[island.framework] },
             { label: getStrategy(island), textColor: 0, backgroundColor: 0x22D3EE },
             getMediaQuery(island) && { label: getMediaQuery(island), textColor: 0, backgroundColor: 0xFB923C },
           ].filter(x => x) as InspectorNodeTag[],
@@ -157,6 +165,7 @@ export function installDevtools (app: App, config: AppClientConfig) {
           { key: 'el', value: island.$el?.nextSibling },
           { key: 'strategy', value: getStrategy(island) },
           getMediaQuery(island) && { key: 'mediaQuery', value: getMediaQuery(island) },
+          { key: 'framework', value: island.framework },
           { key: 'importName', value: island.importName },
           { key: 'importPath', value: island.importPath.replace(island.appConfig.root, '') },
         ].filter(x => x),

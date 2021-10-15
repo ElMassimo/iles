@@ -5,6 +5,7 @@
 declare module 'vue' {
   export interface GlobalComponents {
     Author: typeof import('./src/components/Author.vue')['default']
+    CarbonWarning: typeof import('~icons/carbon/warning')['default']
     DefaultLayout: typeof import('./src/layouts/default.vue')['default']
     Island: typeof import('iles')['Island']
     PostDate: typeof import('./src/components/PostDate.vue')['default']

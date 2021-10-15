@@ -1,9 +1,9 @@
 <script lang="ts">
 /* eslint-disable no-restricted-syntax */
-import { defineAsyncComponent, defineComponent, h, createCommentVNode } from 'vue'
+import { defineAsyncComponent, defineComponent, h, createCommentVNode, createStaticVNode } from 'vue'
 import type { PropType, DefineComponent } from 'vue'
 import { asyncMapObject, mapObject, serialize } from '../utils'
-import { newHydrationId, Hydrate, hydrationFns } from '../hydration'
+import { newHydrationId, Hydrate, hydrationFns, prerenderFns } from '../hydration'
 import { useIslandsForPath } from '../composables/islandDefinitions'
 import { useAppConfig } from '../composables/appConfig'
 import { useVueRenderer } from '../composables/vueRenderer'
@@ -30,7 +30,7 @@ export default defineComponent({
     [Hydrate.WhenVisible]: { type: Boolean, default: false },
     [Hydrate.None]: { type: Boolean, default: false },
   },
-  setup (props, { attrs }) {
+  async setup (props, { attrs }) {
     let strategy = Object.values(Hydrate).find(s => props[s])
     if (!strategy) {
       console.warn('Unknown hydration strategy, falling back to client:load. Received:', { ...attrs })
@@ -44,9 +44,12 @@ export default defineComponent({
       || ((ext === 'jsx' || ext === 'tsx') && appConfig.jsx)
       || 'vue'
 
+    const prerender = (await prerenderFns[framework]?.()) || h
+
     return {
       id: newHydrationId(),
       strategy,
+      prerender,
       framework,
       appConfig,
       islandsForPath: import.meta.env.SSR ? useIslandsForPath() : undefined,
@@ -86,9 +89,24 @@ export default defineComponent({
       return placeholder
     }
 
-    const skipPrerender = this.framework !== 'vue' || ((this.appConfig.debug || isSSR) && this.$props[Hydrate.SkipPrerender])
-    const ileRoot = h('ile-root', { id: this.id },
-      skipPrerender ? [] : [h(this.component, this.$attrs, this.$slots)])
+    const prerenderIsland = () => {
+      if (this.$props[Hydrate.SkipPrerender] || this.framework === 'vanilla')
+        return undefined
+
+      if (this.framework === 'vue')
+        return this.prerender(this.component, this.$attrs, this.$slots)
+
+      return h(defineAsyncComponent(async () => {
+        const slots = await asyncMapObject(slotVNodes, this.renderVNodes)
+        const result = this.prerender(this.component, this.$attrs, slots)
+        return createStaticVNode(result, undefined as any)
+      }))
+    }
+
+    const ileRoot = h('ile-root', { id: this.id }, prerenderIsland())
+
+    if (isSSR && this.$props[Hydrate.None])
+      return ileRoot
 
     return [
       ileRoot,

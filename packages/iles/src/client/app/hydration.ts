@@ -41,3 +41,9 @@ export const hydrationFns = {
   [Hydrate.WhenVisible]: hydrateWhenVisible.name,
   [Hydrate.None]: hydrateNow.name,
 }
+
+export const prerenderFns = {
+  preact: async () => (await import('@islands/hydration/preact')).prerender,
+  // solid: async () => (await import('@islands/hydration/solid')).prerender,
+  // svelte: async () => (await import('@islands/hydration/svelte')).prerender,
+}
