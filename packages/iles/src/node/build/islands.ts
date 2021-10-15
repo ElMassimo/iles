@@ -18,7 +18,7 @@ export async function bundleIslands (
   { routesToRender }: Awaited<ReturnType<typeof renderPages>>,
 ) {
   await buildIslands(config, islandsByPath)
-  const manifest: Manifest = await parseManifest(config.outDir)
+  const manifest: Manifest = await parseManifest(config.outDir, islandsByPath)
 
   await Promise.all(routesToRender.map(async route =>
     await renderRoute(config, manifest, route, islandsByPath[route.path])))
@@ -103,13 +103,13 @@ function resolveManifestEntries (manifest: Manifest, entryNames: string[]): stri
   })
 }
 
-async function parseManifest (outDir: string) {
+async function parseManifest (outDir: string, islandsByPath: IslandsByPath) {
   const manifestPath = join(outDir, 'manifest.json')
   try {
     return JSON.parse(await fs.readFile(manifestPath, 'utf-8'))
   }
   catch (err) {
-    console.error(err)
+    if (Object.keys(islandsByPath).length > 0) throw err
     return {}
   }
 }

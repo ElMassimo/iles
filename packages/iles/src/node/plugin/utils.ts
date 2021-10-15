@@ -1,3 +1,4 @@
+import { promises as fs, constants as fsConstants } from 'fs'
 export { default as serialize } from '@nuxt/devalue'
 
 export function isString (val: any): val is string {
@@ -33,4 +34,8 @@ export async function replaceAsync (str: string, regex: RegExp, asyncFn: (...gro
     .map(([match, ...args]) => asyncFn(match, ...args))
   const replacements = await Promise.all(promises)
   return str.replace(regex, () => replacements.shift()!)
+}
+
+export async function exists (filePath: string) {
+  return await fs.access(filePath, fsConstants.F_OK).then(() => true, () => false)
 }

@@ -1,6 +1,6 @@
 /* eslint-disable no-restricted-syntax */
+import { promises as fs } from 'fs'
 import { basename, resolve, relative } from 'pathe'
-import { promises as fs, constants as fsConstants } from 'fs'
 import { green } from 'nanocolors'
 import type { PluginOption, ResolvedConfig, ResolveFn, ViteDevServer } from 'vite'
 import { transformWithEsbuild } from 'vite'
@@ -16,7 +16,7 @@ import createDebugger from 'debug'
 import type { AppConfig, AppClientConfig } from '../shared'
 import { APP_PATH, ROUTES_REQUEST_PATH, USER_APP_REQUEST_PATH, USER_SITE_REQUEST_PATH, APP_CONFIG_REQUEST_PATH, NOT_FOUND_COMPONENT_PATH, NOT_FOUND_REQUEST_PATH } from '../alias'
 import { createServer } from '../server'
-import { escapeRegex, serialize, replaceAsync, pascalCase } from './utils'
+import { escapeRegex, serialize, replaceAsync, pascalCase, exists } from './utils'
 import { parseId, parseImports } from './parse'
 import { unresolvedIslandKey, wrapIslandsInSFC, wrapLayout } from './wrap'
 import { extendSite } from './site'
@@ -37,9 +37,6 @@ function isMarkdown (path: string) {
 function isSFCMain (path: string, query: Record<string, any>) {
   return path.endsWith('.vue') && query.vue === undefined
 }
-
-const exists = async (filePath: string) =>
-  await fs.access(filePath, fsConstants.F_OK).then(() => true, () => false)
 
 const contextComponentRegex = new RegExp(escapeRegex('_ctx.__unplugin_components_'), 'g')
 const viteIslandRegex = new RegExp(`"?${escapeRegex(unresolvedIslandKey)}"?:\\s*([^,}\n]+)[,}\n]`, 'sg')
