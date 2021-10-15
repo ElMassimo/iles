@@ -1,3 +1,52 @@
+## 0.2.3 (2021-10-15)
+
+
+### Bug Fixes
+
+* allow typescript in app.ts by using the new transformWithEsbuild API ([8990571](https://github.com/ElMassimo/iles/commit/8990571eba6212e645577c9bd301b845ef9b2f5f))
+* avoid using ref sugar in internals, the syntax is experimental ([db846aa](https://github.com/ElMassimo/iles/commit/db846aa66f0dbfdbb8c69c6b9c91c391aa659235))
+* avoid workspace dep and add devalue ([87b62f6](https://github.com/ElMassimo/iles/commit/87b62f676387f7b3493e194925f9e610cd14068e))
+* ensure iles dependencies are resolved without shamefully hoisting ([1cf863b](https://github.com/ElMassimo/iles/commit/1cf863b9d8310c89f4c289d07153e5720e84585d))
+* explicitly import `performance` to support Node 14 (close [#7](https://github.com/ElMassimo/iles/issues/7)) ([66b22ff](https://github.com/ElMassimo/iles/commit/66b22ff43706d30550943d10a5d3b6224e5fbc95))
+* frontmatter is always available and can be used to define head refs ([fad2eef](https://github.com/ElMassimo/iles/commit/fad2eef6aaec45689b820fdfe760cc0e6593e153))
+* import vueuse/head explicitly in App.vue ([47b50e3](https://github.com/ElMassimo/iles/commit/47b50e38f3eb2b7b6bdf34036fe63ee98a931ac8))
+* inline JSX elements in MDX with client directives should be wrapped ([8f36e23](https://github.com/ElMassimo/iles/commit/8f36e23c93fca10721984f5133424d71c2191cd4))
+* move esm dependencies to exclude ([9fd7e46](https://github.com/ElMassimo/iles/commit/9fd7e468fabac1d86b7a3fc98c69258bbc3e1500))
+* prevent dep scan on layouts file ([170b79d](https://github.com/ElMassimo/iles/commit/170b79d7e9e75a2fa477433b60463e722a5c91b7))
+* prevent duplicates of vue runtime ([2de396d](https://github.com/ElMassimo/iles/commit/2de396db7b79d9e7b773546cf89bcacfac168271))
+* prevent vue import query string in chunk filenames ([38bfa75](https://github.com/ElMassimo/iles/commit/38bfa754c3e165bf117ee6e81cdd0d5e1b53b3c5))
+* router link should alway scrolls to the top in development ([a1cd7f5](https://github.com/ElMassimo/iles/commit/a1cd7f5fb923b87c16ae7f8e30c62c724a463d06))
+* simplify @islands/hydration resolution ([8ee99f3](https://github.com/ElMassimo/iles/commit/8ee99f3a94d5a43e277b3eee40bf4e9a4fe18d60))
+* smaller output for islands with empty slots ([e982e01](https://github.com/ElMassimo/iles/commit/e982e01820675f31feeb3c00f7a62b1516079454))
+* throw error if manifest.json is missing when there are islands ([a3f9536](https://github.com/ElMassimo/iles/commit/a3f9536141f94b24bba6b588d4eaa07896008622))
+* typings for EnhanceApp ([86250ce](https://github.com/ElMassimo/iles/commit/86250ce278e2fd6c359db71477f261bc81938ab5))
+* use a canonical import path to prevent HMR breakage ([e6552f3](https://github.com/ElMassimo/iles/commit/e6552f31ec7ee2e3080568ac04fee7ac8fdaca38))
+* use default layout when no name is specified in <Layout> ([5afd159](https://github.com/ElMassimo/iles/commit/5afd159dbf9f5174c9f475d1fa1bfd7a833dc19d))
+* use unjs/pathe to prevent incompatibilities with windows paths ([#4](https://github.com/ElMassimo/iles/issues/4)) ([f2ffacb](https://github.com/ElMassimo/iles/commit/f2ffacb7cf808600ce565990e7021b409d451d3b))
+
+
+### Features
+
+* add `@/` alias that can be used in vue template image src ([17cced3](https://github.com/ElMassimo/iles/commit/17cced308a11d5f3805dc57f02149538141e977a))
+* Add Layout component to easily reference other layouts ([95fa649](https://github.com/ElMassimo/iles/commit/95fa649866814382de94f608cf15a605d6d79338))
+* add sitemap.xml generation ([5a748e4](https://github.com/ElMassimo/iles/commit/5a748e4ff4b49981b664beb8f709b5d9f0e41f23))
+* allow 'layout' as a top-level attribute in <route> ([02cdd5b](https://github.com/ElMassimo/iles/commit/02cdd5b83df36fbf65261c4dd7a022a075e5244b))
+* allow to use no-runtime islands with any JS. prepare support for other frameworks ([546e8d3](https://github.com/ElMassimo/iles/commit/546e8d3dc686c7545d11bfdd928fd7fd0e120a9a))
+* defineOnLoad helper to strongly type parameters ([4f93671](https://github.com/ElMassimo/iles/commit/4f93671c40412c1135a7d326f8610bea3524b005))
+* Docs + Layout Shortcuts + Meta + Site + SEO Tags ([#3](https://github.com/ElMassimo/iles/issues/3)) ([4ed90b7](https://github.com/ElMassimo/iles/commit/4ed90b72cf354823f023dd09f6797b8b71cff35b))
+* expose route in usePageData ([d227650](https://github.com/ElMassimo/iles/commit/d227650ca39bb217dd3b64cd2f851284bd28f0cd))
+* extendFrontmatter hook. unified usage as route.meta.frontmatter ([31062e0](https://github.com/ElMassimo/iles/commit/31062e04193822cddf1ef9069bec9c448b6d3b72))
+* implement <script client:...> in Vue components ([03e5abc](https://github.com/ElMassimo/iles/commit/03e5abca90f25689d9c3dcfbbecfb18be9f7a8d5))
+* improve debug panel for light color preference ([3c426a6](https://github.com/ElMassimo/iles/commit/3c426a60cf07306c163b030fe86b7b25f4b7c605))
+* output async module scripts by default, it's safe for islands ([dd88c99](https://github.com/ElMassimo/iles/commit/dd88c9944a1b27d9c2f9abcff4e1bd59f879efee))
+* provide filename in extendFrontmatter hook ([35b55c6](https://github.com/ElMassimo/iles/commit/35b55c6505561c0151960697a7bcebc4953ad968))
+* use remark plugin to accurately wrap islands in MDX ([946240d](https://github.com/ElMassimo/iles/commit/946240d9ab0e90536b0aa6e3d6d3b4e564cecc07))
+* use Vue SFC parser to detect islands instead of regexes ([e4f319b](https://github.com/ElMassimo/iles/commit/e4f319b48514c2dabdebbf40989ad65352f8bda4))
+* warn about missing parenthesis in media query expressions ([aea3b72](https://github.com/ElMassimo/iles/commit/aea3b72f1f0ccfd28f285a55e54d34d7f0bdf844))
+* warn when not selecting one of the available hydration strategies ([c7f6c79](https://github.com/ElMassimo/iles/commit/c7f6c7931f5ad72f5dc02a2ca3d23c15c3cfa967))
+
+
+
 ## [0.2.2](https://github.com/ElMassimo/iles/compare/v0.2.1...v0.2.2) (2021-10-14)
 
 
