@@ -15,15 +15,14 @@ export default defineConfig({
     rehypePlugins: [
       ['@mapbox/rehype-prism', { alias: { markup: ['html', 'vue'] } }],
     ],
+    // Example: Configure all posts to use a different layout without having to
+    // add `layout: 'post'` in every file.
     extendFrontmatter (frontmatter, filename) {
       if (filename.includes('/posts/'))
         return { layout: 'post', ...frontmatter }
     },
   },
   vite: {
-    optimizeDeps: {
-      include: ['quicklink'],
-    },
     plugins: [
       icons({ autoInstall: true }),
       windicss(),

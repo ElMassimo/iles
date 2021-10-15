@@ -1,11 +1,13 @@
 <script setup lang="ts">
 import { useHead } from 'iles'
 
-useHead({
-  script: [
-    { children: 'console.log("Powered by îles 🏝", "https://iles-docs.netlify.app")' },
-  ],
-})
+if (import.meta.env.PROD) {
+  useHead({
+    script: [
+      { children: 'console.log("Powered by îles 🏝", "https://iles-docs.netlify.app")' },
+    ],
+  })
+}
 </script>
 
 <template>

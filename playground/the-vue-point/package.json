@@ -8,17 +8,12 @@
     "preview": "vite preview --open"
   },
   "devDependencies": {
-    "@iconify/json": "1.1.393",
+    "@iconify-json/carbon": "^1.0.7",
     "@mapbox/rehype-prism": "^0.8.0",
-    "@vueuse/core": "^6.2.0",
     "feed": "^4.2.1",
     "iles": "workspace:*",
-    "refractor": "^4.1.1",
-    "unplugin-icons": "^0.12.9",
+    "unplugin-icons": "^0.12.15",
     "vite": "^2.6.5",
     "vite-plugin-windicss": "^1.4.1"
-  },
-  "dependencies": {
-    "quicklink": "^2.2.0"
   }
 }
