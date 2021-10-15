@@ -6,6 +6,7 @@ import {
   mountNewApp,
   hydrateWhenVisible,
 } from '@islands/hydration'
+import type { PrerenderFn } from '@islands/hydration'
 
 let idNumber = 0
 
@@ -42,8 +43,8 @@ export const hydrationFns = {
   [Hydrate.None]: hydrateNow.name,
 }
 
-export const prerenderFns = {
+export const prerenderFns: Record<string, () => Promise<PrerenderFn>> = {
   preact: async () => (await import('@islands/hydration/preact')).prerender,
-  // solid: async () => (await import('@islands/hydration/solid')).prerender,
-  // svelte: async () => (await import('@islands/hydration/svelte')).prerender,
+  solid: async () => (await import('@islands/hydration/solid')).prerender,
+  svelte: async () => (await import('@islands/hydration/svelte')).prerender,
 }

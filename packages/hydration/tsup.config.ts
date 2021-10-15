@@ -8,5 +8,9 @@ export const tsup: Options = {
     'vue',
     'preact',
     'preact-render-to-string',
+    'solid-js',
+    'solid-js/web/dist/web.js',
+    'svelte',
+    'svelte/internal',
   ],
 }

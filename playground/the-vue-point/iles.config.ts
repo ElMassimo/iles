@@ -5,7 +5,6 @@ import iconsResolver from 'unplugin-icons/resolver'
 import icons from 'unplugin-icons/vite'
 import windicss from 'vite-plugin-windicss'
 import inspect from 'vite-plugin-inspect'
-import preact from '@preact/preset-vite'
 
 export default defineConfig({
   siteUrl: 'https://the-vue-point-with-iles.netlify.app/',
@@ -26,7 +25,6 @@ export default defineConfig({
   vite: {
     plugins: [
       icons({ autoInstall: true }),
-      preact(),
       windicss(),
       Boolean(process.env.DEBUG) && inspect(),
     ],

@@ -3,7 +3,6 @@ import type { FunctionComponent as Component } from 'preact'
 import { renderToString } from 'preact-render-to-string'
 import { Props, Slots, PrerenderFn } from './types'
 
-// Internal: Calls the function to run custom client code.
 export default function createIsland (component: Component, id: string, el: Element, props: Props, slots: Slots | undefined) {
   render(createElement(component, props, slots), el)
 

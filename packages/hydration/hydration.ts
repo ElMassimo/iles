@@ -1,4 +1,5 @@
 import { Framework, Component, Props, Slots, PrerenderFn } from './types'
+export { PrerenderFn } from './types'
 
 // Public: Hydrates the component immediately.
 export function hydrateNow (framework: Framework, component: Component, id: string, props: Props, slots: Slots) {

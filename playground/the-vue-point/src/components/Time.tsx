@@ -1,3 +1,5 @@
-export default function Time ({ datetime, children }) {
+const Time = ({ datetime, children }) => {
   return <time datetime={datetime}>{ children }</time>
 }
+
+export default Time

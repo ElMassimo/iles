@@ -30,7 +30,7 @@ export default defineComponent({
     [Hydrate.WhenVisible]: { type: Boolean, default: false },
     [Hydrate.None]: { type: Boolean, default: false },
   },
-  async setup (props, { attrs }) {
+  setup (props, { attrs }) {
     let strategy = Object.values(Hydrate).find(s => props[s])
     if (!strategy) {
       console.warn('Unknown hydration strategy, falling back to client:load. Received:', { ...attrs })
@@ -40,20 +40,19 @@ export default defineComponent({
     const ext = props.importPath.split('.')[1]
     const appConfig = useAppConfig()
     const framework = props.using
+      || (ext === 'svelte' && 'svelte')
       || ((ext === 'js' || ext === 'ts') && 'vanilla')
       || ((ext === 'jsx' || ext === 'tsx') && appConfig.jsx)
       || 'vue'
 
-    const prerender = (await prerenderFns[framework]?.()) || h
-
     return {
       id: newHydrationId(),
       strategy,
-      prerender,
       framework,
       appConfig,
       islandsForPath: import.meta.env.SSR ? useIslandsForPath() : undefined,
       renderVNodes: useVueRenderer(),
+      prerender: prerenderFns[framework] || h,
     }
   },
   mounted () {
@@ -97,8 +96,9 @@ export default defineComponent({
         return this.prerender(this.component, this.$attrs, this.$slots)
 
       return h(defineAsyncComponent(async () => {
+        const prerender = await this.prerender()
         const slots = await asyncMapObject(slotVNodes, this.renderVNodes)
-        const result = this.prerender(this.component, this.$attrs, slots)
+        const result = prerender(this.component, this.$attrs, slots)
         return createStaticVNode(result, undefined as any)
       }))
     }
