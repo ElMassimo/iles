@@ -76,7 +76,11 @@ export function resolveAliases (root: string): AliasOptions {
       ),
     },
     {
-      find: /^@islands\/(hydration|vanilla|vue)$/,
+      find: /^@islands\/hydration$/,
+      replacement: `${HYDRATION_DIST_PATH}/hydration.js`,
+    },
+    {
+      find: /^@islands\/hydration\/(vanilla|vue|svelte|solid|preact)$/,
       replacement: `${HYDRATION_DIST_PATH}/$1.js`,
     },
   ]

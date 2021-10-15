@@ -28,6 +28,7 @@ export default defineComponent({
     [Hydrate.MediaQuery]: { type: [Boolean, String], default: false },
     [Hydrate.SkipPrerender]: { type: Boolean, default: false },
     [Hydrate.WhenVisible]: { type: Boolean, default: false },
+    [Hydrate.None]: { type: Boolean, default: false },
   },
   setup (props, { attrs }) {
     let strategy = Object.values(Hydrate).find(s => props[s])
@@ -37,13 +38,17 @@ export default defineComponent({
     }
 
     const ext = props.importPath.split('.')[1]
-    const framework = props.using || (ext === 'js' || ext === 'ts' ? 'vanilla' : 'vue')
+    const appConfig = useAppConfig()
+    const framework = props.using
+      || ((ext === 'js' || ext === 'ts') && 'vanilla')
+      || ((ext === 'jsx' || ext === 'tsx') && appConfig.jsx)
+      || 'vue'
 
     return {
       id: newHydrationId(),
       strategy,
       framework,
-      appConfig: useAppConfig(),
+      appConfig,
       islandsForPath: import.meta.env.SSR ? useIslandsForPath() : undefined,
       renderVNodes: useVueRenderer(),
     }
@@ -62,14 +67,14 @@ export default defineComponent({
       props._mediaQuery = inspectMediaQuery(this.$props[Hydrate.MediaQuery] as string)
 
     const slotVNodes = mapObject(this.$slots, slotFn => slotFn?.())
-    const islandsPrefix = `${isSSR ? '' : '/@id/'}@islands`
+    const hydrationPkg = `${isSSR ? '' : '/@id/'}@islands/hydration`
 
     const renderScript = async () => {
       const slots = await asyncMapObject(slotVNodes, this.renderVNodes)
 
       return `import { ${this.importName} as ${this.componentName} } from '${this.importPath.replace(this.appConfig.root, '')}'
-  import { ${hydrationFns[this.strategy]} as hydrate } from '${islandsPrefix}/hydration'
-  import createIsland from '${islandsPrefix}/${this.framework}'
+  import { ${hydrationFns[this.strategy]} as hydrate } from '${hydrationPkg}'
+  import createIsland from '${hydrationPkg}/${this.framework}'
   hydrate(createIsland, ${this.componentName}, '${this.id}', ${serialize(props)}, ${serialize(slots)})
   `
     }
@@ -85,17 +90,13 @@ export default defineComponent({
     const ileRoot = h('ile-root', { id: this.id },
       skipPrerender ? [] : [h(this.component, this.$attrs, this.$slots)])
 
-    // Hydrate in development to debug potential problems with the script.
-    if (this.appConfig.debug && !isSSR) {
-      return [
-        ileRoot,
-        h(defineAsyncComponent(async () => h('script', { async: true, type: 'module', innerHTML: await renderScript() }))),
-      ]
-    }
-
     return [
       ileRoot,
-      h(defineAsyncComponent(async () => createCommentVNode(await renderPlaceholder()))),
+      h(defineAsyncComponent(async () =>
+        isSSR
+          ? createCommentVNode(await renderPlaceholder())
+          : h('script', { async: true, type: 'module', innerHTML: await renderScript() }))
+      ),
     ]
   },
 })

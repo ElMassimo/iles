@@ -6,5 +6,7 @@ export const tsup: Options = {
   format: ['esm', 'cjs'],
   external: [
     'vue',
+    'preact',
+    'preact-render-to-string',
   ],
 }

@@ -72,11 +72,31 @@ export type CreateAppFactory = (options?: CreateAppConfig) => Promise<AppContext
 export type LayoutFactory = (name: string | false) => any
 
 export interface AppPlugins {
+  /**
+   * Configuration options for Vite.js
+   */
   vite: ViteOptions
+  /**
+   * Configuration options for @vitejs/plugin-vue
+   */
   vue: VueOptions
+  /**
+   * Configuration options for vite-plugin-pages
+   */
   pages: Omit<PagesOptions, 'pagesDir' | 'react'>
+  /**
+   * Configuration options for unplugin-vue-components, which manages automatic
+   * imports for components in Vue and MDX files.
+   */
   components: ComponentOptions
+  /**
+   * Configuration options for @vitejs/plugin-vue-jsx
+   */
   vueJsx: Parameters<typeof VueJsxPlugin>[0]
+  /**
+   * Configuration options for markdown processing in îles, including remark
+   * and rehype plugins.
+   */
   markdown: XdmOptions & FrontmatterOptions
   critters?: CritterOptions | false
 }
@@ -103,15 +123,53 @@ export type UserSite = typeof import('~/site').default & {
 export type PluginOption = Plugin | false | null | undefined
 
 export interface RequiredConfig {
+  /**
+   * URL for site in production, used to generate absolute URLs for sitemap.xml
+   * and social meta tags. Available as `site.url` and `site.canonical`.
+   * @type {string}
+   */
   siteUrl: string
+  /**
+   * Whether to output more information about islands and hydration in development.
+   * @default true
+   */
   debug: boolean | 'log'
+  /**
+   * Which framework to use to process `.jsx` and `.tsx` files.
+   */
+  jsx: 'vue' | 'preact' | 'solid'
+  /**
+   * Specify the output directory (relative to project root).
+   * @default 'dist'
+   */
   outDir: string
+  /**
+   * Specify the layouts directory (relative to srcDir).
+   * @default 'layouts'
+   */
   layoutsDir: string
+  /**
+   * Specify the pages directory (relative to srcDir).
+   * @default 'pages'
+   */
   pagesDir: string
+  /**
+   * Specify the directory where the app source is located (relative to project root).
+   * @default 'src'
+   */
   srcDir: string
   tempDir: string
+  /**
+   * Specify the directory to nest generated assets under (relative to outDir).
+   * @default 'assets'
+   */
   assetsDir: string
   ssg: {
+    /**
+     * Whether to generate a sitemap.xml and inject the meta tag referencing it.
+     * NOTE: Must provide siteUrl to enable sitemap generation.
+     * @default true
+     */
     sitemap?: boolean
   }
 }
@@ -132,7 +190,7 @@ export interface AppConfig extends RequiredConfig, AppPlugins {
   }
 }
 
-export type AppClientConfig = Pick<AppConfig, 'base' | 'root' | 'debug' | 'ssg' | 'siteUrl'>
+export type AppClientConfig = Pick<AppConfig, 'base' | 'root' | 'debug' | 'ssg' | 'siteUrl' | 'jsx'>
 
 export interface IslandDefinition {
   id: string

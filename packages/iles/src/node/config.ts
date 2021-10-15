@@ -13,6 +13,7 @@ import type { AppConfig, AppPlugins, ConfigEnv, ViteOptions, Plugin } from './sh
 import { camelCase, uncapitalize } from './plugin/utils'
 import { resolveAliases, DIST_CLIENT_PATH, HYDRATION_DIST_PATH } from './alias'
 import remarkWrapIslands from './plugin/remarkWrapIslands'
+import { UserConfig } from 'iles'
 
 const debug = creatDebugger('iles:config')
 
@@ -54,7 +55,7 @@ async function resolveUserConfig (root: string, configEnv: ConfigEnv) {
   debug(path ? `loaded config at ${yellow(path)}` : 'no iles.config.ts file found.')
 
   config.plugins = [
-    appConfigDefaults(config),
+    appConfigDefaults(config, userConfig as UserConfig),
     userConfig,
     ...plugins,
   ].flat().filter(p => p) as Plugin[]
@@ -94,8 +95,19 @@ async function applyPlugins (config: AppConfig, configEnv: ConfigEnv) {
   return config
 }
 
-function appConfigDefaults (appConfig: AppConfig): Omit<AppConfig, 'namedPlugins'> {
+function inferJSX (config: UserConfig) {
+  const plugins = config.vite?.plugins?.flat() || []
+  for (const plugin of plugins) {
+    const { name = '' } = plugin || {}
+    if (name.includes('preact')) return 'preact'
+    if (name.includes('solid')) return 'solid'
+  }
+  return 'vue'
+}
+
+function appConfigDefaults (appConfig: AppConfig, userConfig: UserConfig): Omit<AppConfig, 'namedPlugins'> {
   const { root } = appConfig
+  const { jsx = inferJSX(userConfig) } = userConfig
 
   function IlesLayoutResolver (name: string) {
     const [layoutName, isLayout] = name.split('Layout', 2)
@@ -107,6 +119,7 @@ function appConfigDefaults (appConfig: AppConfig): Omit<AppConfig, 'namedPlugins
 
   return {
     debug: true,
+    jsx,
     root,
     base: '/',
     siteUrl: '',
@@ -140,7 +153,7 @@ function appConfigDefaults (appConfig: AppConfig): Omit<AppConfig, 'namedPlugins
       },
     },
     vueJsx: {
-      include: /\.[jt]sx|mdx?$/,
+      include: jsx === 'vue' ? /\.([jt]sx|mdx?)$/ : /\.mdx?$/,
     },
     markdown: {
       jsx: true,
@@ -166,7 +179,7 @@ function appConfigDefaults (appConfig: AppConfig): Omit<AppConfig, 'namedPlugins
     },
     components: {
       dts: true,
-      extensions: ['vue', 'jsx', 'js', 'ts', 'mdx'],
+      extensions: ['vue', 'jsx', 'tsx', 'js', 'ts', 'mdx', 'svelte'],
       include: [/\.vue$/, /\.vue\?vue/, /\.mdx?/],
       resolvers: [
         IlesComponentResolver,

@@ -114,11 +114,15 @@ importers:
 
   packages/hydration:
     specifiers:
+      preact: ^10.5.15
+      preact-render-to-string: ^5.1.19
       tsup: ^5.3.0
       typescript: ^4.4.3
       vite: ^2.6.5
       vue: 3.2.20
     devDependencies:
+      preact: 10.5.15
+      preact-render-to-string: 5.1.19_preact@10.5.15
       tsup: 5.3.0_typescript@4.4.3
       typescript: 4.4.3
       vite: 2.6.7
@@ -229,6 +233,7 @@ importers:
     specifiers:
       '@iconify-json/carbon': ^1.0.7
       '@mapbox/rehype-prism': ^0.8.0
+      '@preact/preset-vite': ^2.1.4
       feed: ^4.2.1
       iles: workspace:*
       unplugin-icons: ^0.12.15
@@ -237,11 +242,12 @@ importers:
     devDependencies:
       '@iconify-json/carbon': 1.0.7
       '@mapbox/rehype-prism': 0.8.0
+      '@preact/preset-vite': 2.1.4_vite@2.6.7
       feed: 4.2.2
       iles: link:../../packages/iles
       unplugin-icons: 0.12.15_vite@2.6.7
       vite: 2.6.7
-      vite-plugin-windicss: 1.4.2_typescript@4.3.5+vite@2.6.7
+      vite-plugin-windicss: 1.4.2_vite@2.6.7
 
 packages:
 
@@ -1164,6 +1170,15 @@ packages:
       '@babel/helper-plugin-utils': 7.14.5
     dev: true
 
+  /@babel/plugin-syntax-jsx/7.14.5:
+    resolution: {integrity: sha512-ohuFIsOMXJnbOMRfX7/w7LocdR6R7whhuRD4ax8IipLcLPlZGJKkBxgHp++U4N/vKyU16/YDQr2f5seajD3jIw==}
+    engines: {node: '>=6.9.0'}
+    peerDependencies:
+      '@babel/core': ^7.0.0-0
+    dependencies:
+      '@babel/helper-plugin-utils': 7.14.5
+    dev: true
+
   /@babel/plugin-syntax-jsx/7.14.5_@babel+core@7.15.0:
     resolution: {integrity: sha512-ohuFIsOMXJnbOMRfX7/w7LocdR6R7whhuRD4ax8IipLcLPlZGJKkBxgHp++U4N/vKyU16/YDQr2f5seajD3jIw==}
     engines: {node: '>=6.9.0'}
@@ -1542,6 +1557,19 @@ packages:
     dependencies:
       '@babel/core': 7.15.5
       '@babel/helper-plugin-utils': 7.14.5
+    dev: true
+
+  /@babel/plugin-transform-react-jsx/7.14.9:
+    resolution: {integrity: sha512-30PeETvS+AeD1f58i1OVyoDlVYQhap/K20ZrMjLmmzmC2AYR/G43D4sdJAaDAqCD3MYpSWbmrz3kES158QSLjw==}
+    engines: {node: '>=6.9.0'}
+    peerDependencies:
+      '@babel/core': ^7.0.0-0
+    dependencies:
+      '@babel/helper-annotate-as-pure': 7.15.4
+      '@babel/helper-module-imports': 7.15.4
+      '@babel/helper-plugin-utils': 7.14.5
+      '@babel/plugin-syntax-jsx': 7.14.5
+      '@babel/types': 7.15.6
     dev: true
 
   /@babel/plugin-transform-regenerator/7.14.5_@babel+core@7.15.5:
@@ -2188,6 +2216,54 @@ packages:
     resolution: {integrity: sha512-88p7+M0QGxKpmnkfXjS4V26AnoC/eiqZutE8GLdaI5X12NY75bXSdTY9NkmYb2Xyk1O+MmkuO6Frmsj84V6I8Q==}
     dev: true
 
+  /@preact/preset-vite/2.1.4_vite@2.6.7:
+    resolution: {integrity: sha512-B7c0FMwijLrETrkuxSG3lV9ZBDt3uceMbv0T1SoKsx5OUrc7CzRf5VsDeLvypZSV0HKoy71nZW0WxOpG1bitfA==}
+    peerDependencies:
+      '@babel/core': 7.x
+      vite: 2.x
+    dependencies:
+      '@babel/plugin-transform-react-jsx': 7.14.9
+      '@prefresh/vite': 2.2.3_vite@2.6.7
+      babel-plugin-transform-hook-names: 1.0.2
+      debug: 4.3.2
+      kolorist: 1.5.0
+      resolve: 1.20.0
+      vite: 2.6.7
+    transitivePeerDependencies:
+      - preact
+      - supports-color
+    dev: true
+
+  /@prefresh/babel-plugin/0.4.1:
+    resolution: {integrity: sha512-gj3ekiYtHlZNz0zFI1z6a9mcYX80Qacw84+2++7V1skvO7kQoV2ux56r8bJkTBbKMVxwAgaYrxxIdUCYlclE7Q==}
+    dev: true
+
+  /@prefresh/core/1.3.2:
+    resolution: {integrity: sha512-Iv+uI698KDgWsrKpLvOgN3hmAMyvhVgn09mcnhZ98BUNdg/qrxE7tcUf5yFCImkgqED5/Dcn8G5hFy4IikEDvg==}
+    peerDependencies:
+      preact: ^10.0.0
+    dev: true
+
+  /@prefresh/utils/1.1.1:
+    resolution: {integrity: sha512-MUhT5m2XNN5NsZl4GnpuvlzLo6VSTa/+wBfBd3fiWUvHGhv0GF9hnA1pd//v0uJaKwUnVRQ1hYElxCV7DtYsCQ==}
+    dev: true
+
+  /@prefresh/vite/2.2.3_vite@2.6.7:
+    resolution: {integrity: sha512-TlAzVRKAZ3kiUryLzCd3AoqZDK6K7qZDc7C3QPI7hNwDGyZmJaHY+SXNMCCDaBW5xn9YlYqz/5bl3P4tptAcOg==}
+    peerDependencies:
+      preact: ^10.4.0
+      vite: '>=2.0.0-beta.3'
+    dependencies:
+      '@babel/core': 7.15.8
+      '@prefresh/babel-plugin': 0.4.1
+      '@prefresh/core': 1.3.2
+      '@prefresh/utils': 1.1.1
+      '@rollup/pluginutils': 4.1.1
+      vite: 2.6.7
+    transitivePeerDependencies:
+      - supports-color
+    dev: true
+
   /@rollup/plugin-babel/5.3.0_@babel+core@7.15.5+rollup@2.56.3:
     resolution: {integrity: sha512-9uIC8HZOnVLrLHxayq/PTzw+uS25E14KPUBh5ktF+18Mjo5yK0ToMMx6epY0uEgkjwJw0aBW4x2horYXh8juWw==}
     engines: {node: '>= 10.0.0'}
@@ -2785,12 +2861,12 @@ packages:
       - supports-color
     dev: true
 
-  /@windicss/config/1.4.2_typescript@4.3.5:
+  /@windicss/config/1.4.2:
     resolution: {integrity: sha512-wjvZH1m8Rb60zCxYQDiZmgpSsljirqBNWsKo5G7JbkHGuEgCQdC+27jtPWQoMyBJY2w76Ofa7+7jvMqgoAS+ag==}
     dependencies:
       debug: 4.3.2
       jiti: 1.11.0
-      tsup: 4.14.0_typescript@4.3.5
+      tsup: 4.14.0
       windicss: 3.1.7
     transitivePeerDependencies:
       - supports-color
@@ -2812,11 +2888,11 @@ packages:
       - supports-color
     dev: true
 
-  /@windicss/plugin-utils/1.4.2_typescript@4.3.5:
+  /@windicss/plugin-utils/1.4.2:
     resolution: {integrity: sha512-EVMclEc8lSp03ljQIviKGe9SjdJkxkhwL99H8fAVRKVDJXhTAlpRc8nqcnkf8agZ4eTY6BE3kEJaC9hDICLjBg==}
     dependencies:
       '@antfu/utils': 0.2.4
-      '@windicss/config': 1.4.2_typescript@4.3.5
+      '@windicss/config': 1.4.2
       debug: 4.3.2
       fast-glob: 3.2.7
       magic-string: 0.25.7
@@ -3119,6 +3195,12 @@ packages:
       '@babel/helper-define-polyfill-provider': 0.2.3_@babel+core@7.15.5
     transitivePeerDependencies:
       - supports-color
+    dev: true
+
+  /babel-plugin-transform-hook-names/1.0.2:
+    resolution: {integrity: sha512-5gafyjyyBTTdX/tQQ0hRgu4AhNHG/hqWi0ZZmg2xvs2FgRkJXzDNKBZCyoYqgFkovfDrgM8OoKg8karoUvWeCw==}
+    peerDependencies:
+      '@babel/core': ^7.12.10
     dev: true
 
   /bail/1.0.5:
@@ -7357,9 +7439,17 @@ packages:
       picocolors: 0.2.1
       source-map-js: 0.6.2
 
+  /preact-render-to-string/5.1.19_preact@10.5.15:
+    resolution: {integrity: sha512-bj8sn/oytIKO6RtOGSS/1+5CrQyRSC99eLUnEVbqUa6MzJX5dYh7wu9bmT0d6lm/Vea21k9KhCQwvr2sYN3rrQ==}
+    peerDependencies:
+      preact: '>=10'
+    dependencies:
+      preact: 10.5.15
+      pretty-format: 3.8.0
+    dev: true
+
   /preact/10.5.15:
     resolution: {integrity: sha512-5chK29n6QcJc3m1lVrKQSQ+V7K1Gb8HeQY6FViQ5AxCAEGu3DaHffWNDkC9+miZgsLvbvU9rxbV1qinGHMHzqA==}
-    dev: false
 
   /prelude-ls/1.2.1:
     resolution: {integrity: sha512-vkcDPrRZo1QZLbn5RLGPpg/WmIQ65qoWWhcGKf/b5eplkkarX0m9z8ppCat4mlOqUsWpyNuYgO3VRyrYHSzX5g==}
@@ -7388,6 +7478,10 @@ packages:
       ansi-regex: 5.0.0
       ansi-styles: 5.2.0
       react-is: 17.0.2
+    dev: true
+
+  /pretty-format/3.8.0:
+    resolution: {integrity: sha1-v77VbV6ad2ZF9LH/eqGjrE+jw4U=}
     dev: true
 
   /prismjs/1.25.0:
@@ -8669,6 +8763,33 @@ packages:
     resolution: {integrity: sha512-Xni35NKzjgMrwevysHTCArtLDpPvye8zV/0E4EyYn43P7/7qvQwPh9BGkHewbMulVntbigmcT7rdX3BNo9wRJg==}
     dev: true
 
+  /tsup/4.14.0:
+    resolution: {integrity: sha512-77rWdzhikTP9mQ34XMRzK83tw++LF6f4ox/HNERlgesB7g6g5VQ1iJlueG9O0P9HAZGVKavUwyoZv0+322p6rg==}
+    hasBin: true
+    peerDependencies:
+      typescript: ^4.2.3
+    peerDependenciesMeta:
+      typescript:
+        optional: true
+    dependencies:
+      cac: 6.7.3
+      chalk: 4.1.2
+      chokidar: 3.5.2
+      debug: 4.3.2
+      esbuild: 0.12.27
+      execa: 5.1.1
+      globby: 11.0.4
+      joycon: 3.0.1
+      postcss-load-config: 3.1.0
+      resolve-from: 5.0.0
+      rollup: 2.56.3
+      sucrase: 3.20.1
+      tree-kill: 1.2.2
+    transitivePeerDependencies:
+      - supports-color
+      - ts-node
+    dev: true
+
   /tsup/4.14.0_typescript@4.3.5:
     resolution: {integrity: sha512-77rWdzhikTP9mQ34XMRzK83tw++LF6f4ox/HNERlgesB7g6g5VQ1iJlueG9O0P9HAZGVKavUwyoZv0+322p6rg==}
     hasBin: true
@@ -9283,12 +9404,12 @@ packages:
       - supports-color
     dev: true
 
-  /vite-plugin-windicss/1.4.2_typescript@4.3.5+vite@2.6.7:
+  /vite-plugin-windicss/1.4.2_vite@2.6.7:
     resolution: {integrity: sha512-lyjyZ7q/5CiRppKH5RrSuchE7vz4N6LWT5cJOeTsh2bCFAEuBURmIJGOtLGL7uYfmXjNRZjQIS98BV0aQ7kFDw==}
     peerDependencies:
       vite: ^2.0.1
     dependencies:
-      '@windicss/plugin-utils': 1.4.2_typescript@4.3.5
+      '@windicss/plugin-utils': 1.4.2
       chalk: 4.1.2
       debug: 4.3.2
       vite: 2.6.7

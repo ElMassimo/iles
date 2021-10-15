@@ -30,6 +30,7 @@ export enum Hydrate {
   MediaQuery = 'client:media',
   SkipPrerender = 'client:only',
   WhenVisible = 'client:visible',
+  None = 'client:static',
 }
 
 export const hydrationFns = {
@@ -38,4 +39,5 @@ export const hydrationFns = {
   [Hydrate.MediaQuery]: hydrateOnMediaQuery.name,
   [Hydrate.SkipPrerender]: mountNewApp.name,
   [Hydrate.WhenVisible]: hydrateWhenVisible.name,
+  [Hydrate.None]: hydrateNow.name,
 }

@@ -24,7 +24,7 @@ function formatDate (dateStr: string | Date) {
   <dl>
     <dt class="sr-only">Published on</dt>
     <dd class="text-base leading-6 font-medium text-gray-500">
-      <time :datetime="getDateTime(date)">{{ formatDate(date) }}</time>
+      <Time :datetime="getDateTime(date)" client:static>{{ formatDate(date) }}</Time>
     </dd>
   </dl>
 </template>
