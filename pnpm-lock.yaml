@@ -45,8 +45,7 @@ importers:
       '@islands/headers': ^0.0.1
       '@mapbox/rehype-prism': ^0.8.0
       '@mussi/docsearch': ^3.0.0-alpha.41
-      '@preact/preset-vite': ^2.1.4
-      '@prefresh/vite': ^2.2.3
+      '@preact/preset-vite': ^2.1.5
       '@vueuse/core': ^6.5.3
       autoprefixer: ^10.3.5
       iles: ^0.2.0
@@ -64,8 +63,7 @@ importers:
       '@iconify-json/heroicons-outline': 1.0.1
       '@islands/headers': link:../packages/headers
       '@mapbox/rehype-prism': 0.8.0
-      '@preact/preset-vite': 2.1.4_vite@2.6.7
-      '@prefresh/vite': 2.2.3_vite@2.6.7
+      '@preact/preset-vite': 2.1.5_vite@2.6.7
       '@vueuse/core': 6.5.3
       autoprefixer: 10.3.7
       iles: link:../packages/iles
@@ -595,7 +593,7 @@ packages:
       '@babel/compat-data': 7.15.0
       '@babel/core': 7.15.5
       '@babel/helper-validator-option': 7.14.5
-      browserslist: 4.17.0
+      browserslist: 4.17.4
       semver: 6.3.0
     dev: true
 
@@ -2253,6 +2251,24 @@ packages:
 
   /@preact/preset-vite/2.1.4_vite@2.6.7:
     resolution: {integrity: sha512-B7c0FMwijLrETrkuxSG3lV9ZBDt3uceMbv0T1SoKsx5OUrc7CzRf5VsDeLvypZSV0HKoy71nZW0WxOpG1bitfA==}
+    peerDependencies:
+      '@babel/core': 7.x
+      vite: 2.x
+    dependencies:
+      '@babel/plugin-transform-react-jsx': 7.14.9
+      '@prefresh/vite': 2.2.3_vite@2.6.7
+      babel-plugin-transform-hook-names: 1.0.2
+      debug: 4.3.2
+      kolorist: 1.5.0
+      resolve: 1.20.0
+      vite: 2.6.7
+    transitivePeerDependencies:
+      - preact
+      - supports-color
+    dev: true
+
+  /@preact/preset-vite/2.1.5_vite@2.6.7:
+    resolution: {integrity: sha512-G+Op0d940lVwOH93Tkhz4BTgE88VpQBFWHqnz8QjHpo6IwmfP3HHQJHrp9dEt5Di2f2HQ4bpmhDqBl7+bzir6g==}
     peerDependencies:
       '@babel/core': 7.x
       vite: 2.x

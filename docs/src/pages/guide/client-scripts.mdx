@@ -76,18 +76,17 @@ Vanilla components should export a function to call when the selected
 [hydration strategy][strategy] is fulfilled.
 
 ```ts
-export default () => fetch('/images').then(...)
+export const onLoad = () => fetch('/images').then(...)
 ```
 
-The <kbd>defineClientComponent</kbd> helper provides typings for the provided
-parameters if you need them.
+If you need to use the provided parameters, use the `OnLoadFn` typings:
 
 ```ts
-import { defineClientComponent } from 'iles'
+import type { OnLoadFn } from 'iles'
 
-export default defineClientComponent((el, props, slots) => {
+export const onLoad: OnLoadFn = (el, props, slots) => {
   // Do whatever you need with the element.
-})
+}
 ```
 
 <Tip title="Why not use a renderless Vue component?">

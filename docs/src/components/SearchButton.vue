@@ -1,7 +1,7 @@
 <script client:load>
 export const onLoad = el =>
-  el.previousElementSibling.addEventListener('click', () => {
-    document.querySelector('.DocSearch-Button')?.click()
+  el.previousElementSibling?.addEventListener('click', () => {
+    document.querySelector<HTMLElement>('.DocSearch-Button')?.click()
   })
 </script>
 
