@@ -1,5 +1,6 @@
 /* eslint-disable no-use-before-define */
 import type { UserConfig as ViteOptions, ConfigEnv } from 'vite'
+import type { GetManualChunk } from 'rollup'
 import type { App, Ref, DefineComponent } from 'vue'
 import type { Options as CritterOptions } from 'critters'
 import type { Options as VueOptions } from '@vitejs/plugin-vue'
@@ -196,6 +197,7 @@ export interface IslandDefinition {
   id: string
   script: string
   placeholder: string
+  componentPath: string
   entryFilename?: string
 }
 

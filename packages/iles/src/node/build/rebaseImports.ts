@@ -9,7 +9,12 @@ export default async function rebaseImports ({ base, assetsDir }: AppConfig, cod
     await initESLexer
     const imports = parseESModules(codeStr)[0]
     const code = new MagicString(codeStr)
-    imports.forEach(({ s, e }) => {
+    imports.forEach(({ s, e, d }) => {
+      // Skip quotes if dynamic import.
+      if (d > -1) {
+        s += 1
+        e -= 1
+      }
       code.overwrite(s, e, posix.join(assetsBase, code.slice(s, e)))
     })
     return code.toString()

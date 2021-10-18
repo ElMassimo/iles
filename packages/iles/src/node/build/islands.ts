@@ -60,15 +60,17 @@ async function renderRoute (config: AppConfig, manifest: Manifest, route: SSGRou
 
 async function buildIslands (config: AppConfig, islandsByPath: IslandsByPath) {
   const entrypoints = Object.create(null)
+  const islandComponents = Object.create(null)
 
   for (const path in islandsByPath) {
     islandsByPath[path].forEach((island) => {
       island.entryFilename = fileToAssetName(`${path}/${island.id}`)
       entrypoints[island.entryFilename] = island.script
+      islandComponents[island.componentPath] = island.componentPath
     })
   }
 
-  const entryFiles = Object.keys(entrypoints).sort()
+  const entryFiles = [...Object.keys(entrypoints), ...Object.keys(islandComponents)].sort()
   if (entryFiles.length === 0) return
 
   await viteBuild(mergeViteConfig(config.vite, {

@@ -1,5 +1,7 @@
 import type { Props, Slots, Framework } from '@islands/hydration'
 
+export type { Framework }
+
 export type PrerenderFn =
   (component: any, props: Props, slots: Slots | undefined) => Promise<string>
 

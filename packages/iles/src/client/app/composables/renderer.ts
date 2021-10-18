@@ -1,5 +1,5 @@
 import { useSSRContext } from 'vue'
-import type { PrerenderFn, Framework } from '@islands/hydration'
+import type { Framework, PrerenderFn } from '@islands/prerender'
 
 export function useRenderer (framework: Framework): PrerenderFn | undefined {
   const context = useSSRContext()

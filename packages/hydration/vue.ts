@@ -1,5 +1,6 @@
 import { h, createApp as createClientApp, createStaticVNode, createSSRApp } from 'vue'
-import { Component, Props, Slots } from './types'
+import type { DefineComponent as Component } from 'vue'
+import { Props, Slots } from './types'
 
 const createVueApp = import.meta.env.SSR ? createSSRApp : createClientApp
 

@@ -52,7 +52,7 @@ export default defineComponent({
       strategy,
       framework,
       appConfig,
-      islandsForPath: import.meta.env.SSR && strategy !== Hydrate.None ? useIslandsForPath() : undefined,
+      islandsForPath: import.meta.env.SSR ? useIslandsForPath() : undefined,
       renderVNodes: useVueRenderer(),
       prerender: import.meta.env.SSR ? useRenderer(framework) : undefined,
     }
@@ -79,18 +79,26 @@ export default defineComponent({
 
     const renderScript = async () => {
       const slots = await renderSlots()
+      const eager = this.strategy === Hydrate.OnLoad || this.strategy === Hydrate.SkipPrerender
+      const componentPath = this.importPath.replace(this.appConfig.root, '')
+      const frameworkPath = `${hydrationPkg}/${this.framework}`
 
-      return `import { ${this.importName} as ${this.componentName} } from '${this.importPath.replace(this.appConfig.root, '')}'
-  import { ${hydrationFns[this.strategy]} as hydrate } from '${hydrationPkg}'
-  import createIsland from '${hydrationPkg}/${this.framework}'
-  hydrate(createIsland, ${this.componentName}, '${this.id}', ${serialize(props)}, ${serialize(slots)})
+      return `import { ${hydrationFns[this.strategy]} as hydrate } from '${hydrationPkg}'
+${eager
+    ? `import framework from '${frameworkPath}'
+import { ${this.importName} as component } from '${componentPath}'`
+    : `const framework = async () => (await import('${frameworkPath}')).default
+const component = async () => (await import('${componentPath}')).${this.importName}`
+}
+hydrate(framework, component, '${this.id}', ${serialize(props)}, ${serialize(slots)})
   `
     }
 
     const renderPlaceholder = async () => {
       const placeholder = `ISLAND_HYDRATION_PLACEHOLDER_${this.id}`
       const script = await renderScript()
-      this.islandsForPath?.push({ id: this.id, script, placeholder })
+      const componentPath = this.importPath
+      this.islandsForPath!.push({ id: this.id, script, componentPath, placeholder })
       return placeholder
     }
 
