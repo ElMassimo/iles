@@ -1,40 +1,8 @@
-<script setup lang="ts">
-import { onMounted } from 'vue'
-
-const id = 'docsearch'
-const title = !import.meta.env.SSR && navigator.platform.includes('Mac') ? '⌘ + K' : 'ctrl + K'
-
-onMounted(async () => {
-  const docsearch = (await import('@docsearch/js')).default
-  docsearch({
-    appId: 'GERZE019PN',
-    apiKey: 'cdb4a3df8ecf73fadf6bde873fc1b0d2',
-    indexName: 'iles',
-    container: `#${id}`,
-  })
-})
-
-function openSearchModal () {
-  document.getElementById('docsearch')
-    ?.querySelector<HTMLButtonElement>('.DocSearch-Button')
-    ?.click()
-}
-</script>
-
-<template>
-  <NavBarButton aria-label="Search" :title="title" @click="openSearchModal">
-    <BxBxSearch/>
-  </NavBarButton>
-  <div :id="id" class="doc-search-box"/>
-</template>
-
-<style lang="postcss">
 @import '@docsearch/css/dist/style.css';
 
-.doc-search-box {
+.DocSearch-Button {
   display: none;
 }
-
 
 .DocSearch {
   --docsearch-container-background: rgba(173, 181, 189, 0.7);
@@ -104,4 +72,3 @@ html.dark .DocSearch {
 body.DocSearch--active {
   @apply 'md:!overflow-auto';
 }
-</style>

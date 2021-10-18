@@ -6,7 +6,6 @@ import {
   mountNewApp,
   hydrateWhenVisible,
 } from '@islands/hydration'
-import type { PrerenderFn } from '@islands/hydration'
 
 let idNumber = 0
 
@@ -41,17 +40,4 @@ export const hydrationFns = {
   [Hydrate.SkipPrerender]: mountNewApp.name,
   [Hydrate.WhenVisible]: hydrateWhenVisible.name,
   [Hydrate.None]: hydrateNow.name,
-}
-
-export const prerenderFns: Record<string, PrerenderFn> = {
-  // preact: async () => (await import('@islands/hydration/preact')).prerender,
-  async solid (component, props, slots) {
-    // @ts-ignore
-    const { ssr, renderToString, createComponent } = await import('solid-js/web')
-    return renderToString(() => {
-      const children = slots?.default && ssr(slots.default)
-      return createComponent(component, { ...props, children })
-    })
-  },
-  // svelte: async () => (await import('@islands/hydration/svelte')).prerender,
 }

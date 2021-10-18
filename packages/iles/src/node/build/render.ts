@@ -4,6 +4,7 @@ import { renderHeadToString } from '@vueuse/head'
 import type { RollupOutput } from 'rollup'
 import type { Awaited, AppConfig, CreateAppFactory, IslandsByPath, SSGRoute } from '../shared'
 import type { bundle } from './bundle'
+import { renderers } from '@islands/prerender'
 import { getRoutesForSSG } from './routes'
 import { IslandDefinition } from 'iles'
 
@@ -34,7 +35,7 @@ export async function renderPage (
   createApp: CreateAppFactory,
 ) {
   const { app, head } = await createApp({ routePath: route.path })
-  const content = await require('@vue/server-renderer').renderToString(app, { islandsByPath })
+  const content = await require('@vue/server-renderer').renderToString(app, { islandsByPath, renderers })
 
   if (route.extension !== '.html') return content.replace(commentsRegex, '')
 

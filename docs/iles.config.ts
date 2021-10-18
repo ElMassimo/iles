@@ -6,6 +6,7 @@ import { FileSystemIconLoader } from 'unplugin-icons/loaders'
 import icons from 'unplugin-icons/vite'
 import windicss from 'vite-plugin-windicss'
 import inspect from 'vite-plugin-inspect'
+import preact from '@preact/preset-vite'
 
 export default defineConfig({
   siteUrl: 'https://iles-docs.netlify.app',
@@ -18,15 +19,14 @@ export default defineConfig({
       ['@mapbox/rehype-prism', { alias: { markup: ['html', 'vue'], markdown: ['mdx'] } }],
     ],
   },
-  vite: {
-    resolve: {
-      alias: [
-        { find: /^react(\/|$)/, replacement: 'preact/compat$1' },
-        { find: /^react-dom(\/|$)/, replacement: 'preact/compat$1' },
-      ],
+  pages: {
+    onRoutesGenerated (routes) {
+      return routes.filter(r => r.name === 'index')
     },
+  },
+  vite: {
     optimizeDeps: {
-      include: ['solid-js', 'quicklink', '@vueuse/core', '@docsearch/js'],
+      include: ['solid-js', 'quicklink', '@vueuse/core', '@mussi/docsearch', 'preact'],
     },
     plugins: [
       icons({
@@ -36,6 +36,7 @@ export default defineConfig({
         },
       }),
       windicss(),
+      preact(),
       Boolean(process.env.DEBUG) && inspect(),
     ],
   },

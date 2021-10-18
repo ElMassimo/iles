@@ -1,6 +1,7 @@
 packages:
   - docs
   - packages/hydration/
+  - packages/prerender/
   - packages/frontmatter/
   - packages/headers/
   - packages/iles/

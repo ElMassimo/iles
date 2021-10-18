@@ -1,6 +1,6 @@
 import { hydrate, createComponent } from 'solid-js/web'
 import type { Component } from 'solid-js'
-import { Props, Slots, PrerenderFn } from './types'
+import { Props, Slots } from './types'
 
 export default function createIsland (component: Component, id: string, el: Element, props: Props, slots: Slots | undefined) {
   if (import.meta.env.DEV)

@@ -3,11 +3,11 @@
 import type { DefineComponent } from 'vue'
 import type Vue from './vue'
 
-export type Framework = typeof Vue
+export type Framework = 'vue' | 'preact' | 'solid' | 'svelte' | 'vanilla'
+export type FrameworkFn = typeof Vue
 export type Component = DefineComponent
 export type Id = string
 export type Props = Record<string, unknown>
 export type Slots = Record<string, string>
-export type MountArgs = [Framework, Component, Id, Props]
-export type HydrationArgs = [Framework, Component, Id, Props, Slots]
-export type PrerenderFn = (component: any, props: Props, slots: Slots | undefined) => Promise<string>
+export type MountArgs = [FrameworkFn, Component, Id, Props]
+export type HydrationArgs = [FrameworkFn, Component, Id, Props, Slots]

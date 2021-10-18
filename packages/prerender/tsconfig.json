@@ -1,0 +1,19 @@
+{
+  "compilerOptions": {
+    "module": "es2020",
+    "target": "es2020",
+    "lib": ["ESNext", "DOM"],
+    "esModuleInterop": true,
+    "strict": true,
+    "strictNullChecks": true,
+    "moduleResolution": "Node",
+    "resolveJsonModule": true,
+    "skipLibCheck": true,
+    "noUnusedParameters": true
+  },
+  "exclude": [
+    "node_modules",
+    "examples",
+    "dist"
+  ]
+}

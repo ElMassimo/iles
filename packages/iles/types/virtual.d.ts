@@ -26,18 +26,3 @@ declare module '@islands/user-site' {
   const config: import('vue').Ref<import('./shared').UserSite>
   export default config
 }
-
-declare module '@islands/hydration/preact' {
-  const prerender: import('@islands/hydration').PrerenderFn
-  export { prerender }
-}
-
-declare module '@islands/hydration/svelte' {
-  const prerender: import('@islands/hydration').PrerenderFn
-  export { prerender }
-}
-
-declare module '@islands/hydration/solid' {
-  const prerender: import('@islands/hydration').PrerenderFn
-  export { prerender }
-}

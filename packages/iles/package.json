@@ -27,7 +27,7 @@
     "prepublishOnly": "npm run build"
   },
   "engines": {
-    "node": ">=12.0.0"
+    "node": ">=14.0.0"
   },
   "keywords": [
     "vite",
@@ -42,8 +42,9 @@
     "url": "https://github.com/ElMassimo/iles/issues"
   },
   "dependencies": {
-    "@islands/frontmatter": "^0.0.2",
-    "@islands/hydration": "^0.0.5",
+    "@islands/frontmatter": "workspace:*",
+    "@islands/hydration": "workspace:*",
+    "@islands/prerender": "workspace:*",
     "@nuxt/devalue": "^2.0.0",
     "@rollup/plugin-virtual": "^2.0.3",
     "@vitejs/plugin-vue": "^1.8.1",

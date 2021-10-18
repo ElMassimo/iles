@@ -8,8 +8,11 @@
     "preview": "vite preview --open"
   },
   "devDependencies": {
+    "@iconify-json/bx": "^1.0.1",
+    "@iconify-json/heroicons-outline": "^1.0.1",
     "@islands/headers": "^0.0.1",
     "@mapbox/rehype-prism": "^0.8.0",
+    "@preact/preset-vite": "^2.1.4",
     "@vueuse/core": "^6.5.3",
     "autoprefixer": "^10.3.5",
     "iles": "^0.2.0",
@@ -19,9 +22,8 @@
     "vite-plugin-windicss": "^1.4.1"
   },
   "dependencies": {
-    "@docsearch/css": "1.0.0-alpha.28",
-    "@docsearch/js": "1.0.0-alpha.28",
-    "preact": "^10.5.14",
+    "@docsearch/css": "^3.0.0-alpha.41",
+    "@mussi/docsearch": "^3.0.0-alpha.41",
     "quicklink": "^2.2.0"
   },
   "eslintConfig": {

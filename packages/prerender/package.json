@@ -1,26 +1,24 @@
 {
-  "name": "@islands/hydration",
-  "description": "Hydration utilities for îles",
-  "version": "0.0.5",
+  "name": "@islands/prerender",
+  "description": "Prerender utilities for îles",
+  "version": "0.0.1",
   "type": "module",
   "files": [
     "dist"
   ],
-  "types": "dist/hydration.d.ts",
-  "module": "dist/hydration.js",
-  "exports": {
-    ".": "./dist/hydration.js",
-    "./preact": "./dist/preact.js",
-    "./solid": "./dist/solid.js",
-    "./svelte": "./dist/svelte.js",
-    "./vanilla": "./dist/vanilla.js",
-    "./vue": "./dist/vue.js",
-    "./package.json": "./package.json"
-  },
+  "types": "dist/prerender.d.ts",
+  "module": "dist/prerender.js",
+  "main": "dist/prerender.cjs",
   "scripts": {
     "dev": "npm run build -- --watch",
-    "build": "tsup hydration.ts preact.ts vue.ts vanilla.ts solid.ts svelte.ts",
+    "build": "tsup prerender.ts",
     "prepublishOnly": "npm run build"
+  },
+  "exports": {
+    ".": {
+      "import": "./dist/prerender.js",
+      "require": "./dist/prerender.cjs"
+    }
   },
   "engines": {
     "node": ">=14.0.0"
@@ -37,8 +35,8 @@
   "bugs": {
     "url": "https://github.com/ElMassimo/iles/issues"
   },
-  "peerDependencies": {
-    "vue": "3.2.20"
+  "dependencies": {
+    "@islands/hydration": "workspace:*"
   },
   "devDependencies": {
     "preact": "^10.5.15",
