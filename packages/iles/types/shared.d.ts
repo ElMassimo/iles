@@ -166,6 +166,7 @@ export interface RequiredConfig {
    */
   assetsDir: string
   ssg: {
+    manualChunks?: GetManualChunk
     /**
      * Whether to generate a sitemap.xml and inject the meta tag referencing it.
      * NOTE: Must provide siteUrl to enable sitemap generation.

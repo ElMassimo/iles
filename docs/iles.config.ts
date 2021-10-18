@@ -10,6 +10,12 @@ import preact from '@preact/preset-vite'
 
 export default defineConfig({
   siteUrl: 'https://iles-docs.netlify.app',
+  ssg: {
+    manualChunks: (id, api) => {
+      if (id.includes('preact') || id.includes('algolia') || id.toLowerCase().includes('docsearch'))
+        return 'docsearch'
+    },
+  },
   components: {
     resolvers: [iconsResolver({ componentPrefix: '', customCollections: ['iles'] })],
   },
@@ -18,11 +24,6 @@ export default defineConfig({
       import('@islands/headers').then(m => m.default),
       ['@mapbox/rehype-prism', { alias: { markup: ['html', 'vue'], markdown: ['mdx'] } }],
     ],
-  },
-  pages: {
-    onRoutesGenerated (routes) {
-      return routes.filter(r => r.name === 'index')
-    },
   },
   vite: {
     optimizeDeps: {

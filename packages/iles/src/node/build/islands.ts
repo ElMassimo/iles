@@ -10,6 +10,7 @@ import IslandsPlugins from '../plugin'
 import type { Awaited, AppConfig, IslandsByPath, IslandDefinition, SSGRoute } from '../shared'
 import rebaseImports from './rebaseImports'
 import { fileToAssetName, uniq } from './utils'
+import { extendManualChunks } from './chunks'
 import type { renderPages } from './render'
 
 export async function bundleIslands (
@@ -82,7 +83,7 @@ async function buildIslands (config: AppConfig, islandsByPath: IslandsByPath) {
       minify: 'esbuild',
       rollupOptions: {
         input: entryFiles,
-        output: { chunkFileNames },
+        output: { chunkFileNames, manualChunks: extendManualChunks(config) },
       },
     },
     plugins: [
