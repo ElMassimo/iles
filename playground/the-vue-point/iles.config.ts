@@ -27,7 +27,7 @@ export default defineConfig({
     plugins: [
       icons({ autoInstall: true }),
       windicss(),
-      solid(),
+      solid({ ssr: true }),
       Boolean(process.env.DEBUG) && inspect(),
     ],
   },

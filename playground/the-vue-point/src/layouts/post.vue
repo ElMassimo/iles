@@ -45,7 +45,7 @@ let author = $computed(() => {
       "
       style="grid-template-rows: auto 1fr"
     >
-      <Author v-bind="author" client:idle/>
+      <Author v-bind="author"/>
       <div class="divide-y divide-gray-200 xl:pb-0 xl:col-span-3 xl:row-span-2">
         <div class="prose max-w-none pt-10 pb-8">
           <slot/>
@@ -78,7 +78,7 @@ let author = $computed(() => {
           </div>
         </div>
         <div class="pt-8">
-          <a class="link" href="/">← Back to the blog</a>
+          <BackLink client:idle href="/">Back to the blog</BackLink>
         </div>
       </footer>
     </div>

@@ -43,8 +43,15 @@ export const hydrationFns = {
   [Hydrate.None]: hydrateNow.name,
 }
 
-export const prerenderFns: Record<string, () => Promise<PrerenderFn>> = {
-  preact: async () => (await import('@islands/hydration/preact')).prerender,
-  solid: async () => (await import('@islands/hydration/solid')).prerender,
-  svelte: async () => (await import('@islands/hydration/svelte')).prerender,
+export const prerenderFns: Record<string, PrerenderFn> = {
+  // preact: async () => (await import('@islands/hydration/preact')).prerender,
+  async solid (component, props, slots) {
+    // @ts-ignore
+    const { ssr, renderToString, createComponent } = await import('solid-js/web')
+    return renderToString(() => {
+      const children = slots?.default && ssr(slots.default)
+      return createComponent(component, { ...props, children })
+    })
+  },
+  // svelte: async () => (await import('@islands/hydration/svelte')).prerender,
 }

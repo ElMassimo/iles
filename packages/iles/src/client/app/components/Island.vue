@@ -50,9 +50,9 @@ export default defineComponent({
       strategy,
       framework,
       appConfig,
-      islandsForPath: import.meta.env.SSR ? useIslandsForPath() : undefined,
+      islandsForPath: import.meta.env.SSR && strategy !== Hydrate.None ? useIslandsForPath() : undefined,
       renderVNodes: useVueRenderer(),
-      prerender: prerenderFns[framework] || h,
+      prerender: prerenderFns[framework],
     }
   },
   mounted () {
@@ -93,12 +93,13 @@ export default defineComponent({
         return undefined
 
       if (this.framework === 'vue')
-        return this.prerender(this.component, this.$attrs, this.$slots)
+        return h(this.component, this.$attrs, this.$slots)
+
+      if (!isSSR && this.framework === 'solid') return undefined
 
       return h(defineAsyncComponent(async () => {
-        const prerender = await this.prerender()
         const slots = await asyncMapObject(slotVNodes, this.renderVNodes)
-        const result = prerender(this.component, this.$attrs, slots)
+        const result = await this.prerender(this.component, this.$attrs, slots)
         return createStaticVNode(result, undefined as any)
       }))
     }

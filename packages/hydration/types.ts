@@ -10,4 +10,4 @@ export type Props = Record<string, unknown>
 export type Slots = Record<string, string>
 export type MountArgs = [Framework, Component, Id, Props]
 export type HydrationArgs = [Framework, Component, Id, Props, Slots]
-export type PrerenderFn = (component: any, props: Props, slots: Slots | undefined) => string | null | undefined
+export type PrerenderFn = (component: any, props: Props, slots: Slots | undefined) => Promise<string>

@@ -26,7 +26,7 @@ export default defineConfig({
       ],
     },
     optimizeDeps: {
-      include: ['quicklink', '@vueuse/core', '@docsearch/js'],
+      include: ['solid-js', 'quicklink', '@vueuse/core', '@docsearch/js'],
     },
     plugins: [
       icons({

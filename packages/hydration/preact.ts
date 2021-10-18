@@ -10,7 +10,7 @@ export default function createIsland (component: Component, id: string, el: Elem
     (window as any).__ILE_DEVTOOLS__?.onHydration({ id, el, slots, component, framework: 'preact' })
 }
 
-export const prerender: PrerenderFn = (component, props, slots) =>
+export const prerender: PrerenderFn = async (component, props, slots) =>
   renderToString(createElement(component, props, slots))
 
 /**

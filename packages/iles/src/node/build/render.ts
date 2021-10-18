@@ -5,6 +5,7 @@ import type { RollupOutput } from 'rollup'
 import type { Awaited, AppConfig, CreateAppFactory, IslandsByPath, SSGRoute } from '../shared'
 import type { bundle } from './bundle'
 import { getRoutesForSSG } from './routes'
+import { IslandDefinition } from 'iles'
 
 const commentsRegex = /<!--\[-->|<!--]-->|<!---->/g
 
@@ -45,6 +46,7 @@ export async function renderPage (
   <head>
     ${headTags}
     ${stylesheetTagsFrom(config, clientChunks, route)}
+    ${await scriptTagsFrom(config, islandsByPath[route.path])}
   </head>
   <body ${bodyAttrs}>
     <div id="app">${content}</div>
@@ -57,4 +59,10 @@ function stylesheetTagsFrom (config: AppConfig, clientChunks: RollupOutput['outp
     .filter(chunk => chunk.type === 'asset' && chunk.fileName.endsWith('.css'))
     .map(chunk => `<link rel="stylesheet" href="${config.base}${chunk.fileName}">`)
     .join('\n')
+}
+
+async function scriptTagsFrom (config: AppConfig, islands: undefined | IslandDefinition[]) {
+  const anySolid = islands?.some(island => island.script.includes('@islands/hydration/solid'))
+  if (!anySolid) return ''
+  return '<script>window._$HYDRATION={events:[],completed:new WeakSet()}</script>'
 }
