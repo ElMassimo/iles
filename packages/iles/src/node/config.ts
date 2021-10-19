@@ -6,14 +6,18 @@ import creatDebugger from 'debug'
 import { loadConfigFromFile, mergeConfig as mergeViteConfig } from 'vite'
 import pages from 'vite-plugin-pages'
 import xdm from 'vite-plugin-xdm'
+import vue from '@vitejs/plugin-vue'
+import vueJsx from '@vitejs/plugin-vue-jsx'
+import components from 'unplugin-vue-components/vite'
 
 import type { ComponentResolver } from 'unplugin-vue-components/types'
 import type { Frontmatter, FrontmatterPluggable } from '@islands/frontmatter'
-import type { AppConfig, AppPlugins, ConfigEnv, ViteOptions, Plugin } from './shared'
-import { camelCase, uncapitalize } from './plugin/utils'
+import type { UserConfig } from 'iles'
+
+import type { AppConfig, AppPlugins, ConfigEnv, ViteOptions, Plugin, NamedPlugins } from './shared'
+import { camelCase, resolvePlugin, uncapitalize } from './plugin/utils'
 import { resolveAliases, DIST_CLIENT_PATH, HYDRATION_DIST_PATH } from './alias'
 import remarkWrapIslands from './plugin/remarkWrapIslands'
-import { UserConfig } from 'iles'
 
 const debug = creatDebugger('iles:config')
 
@@ -48,6 +52,7 @@ export async function resolveConfig (root?: string, env?: ConfigEnv): Promise<Ap
 
 async function resolveUserConfig (root: string, configEnv: ConfigEnv) {
   const config = { root, namedPlugins: {} } as AppConfig
+  config.namedPlugins.optionalPlugins = []
 
   const { path, config: { plugins = [], ...userConfig } = {} }
     = await loadConfigFromFile(configEnv, 'iles.config.ts', root) || {}
@@ -62,8 +67,7 @@ async function resolveUserConfig (root: string, configEnv: ConfigEnv) {
 
   Object.assign(config, await applyPlugins(config, configEnv))
   config.pages.pagesDir = join(config.srcDir, config.pagesDir)
-  config.namedPlugins.pages = pages(config.pages)
-  config.namedPlugins.markdown = xdm(config.markdown)
+  await setNamedPlugins(config, config.namedPlugins)
 
   const siteUrl = config.siteUrl || ''
   const protocolIndex = siteUrl.indexOf('//')
@@ -75,6 +79,27 @@ async function resolveUserConfig (root: string, configEnv: ConfigEnv) {
   config.vite.build!.assetsDir = config.assetsDir
 
   return config
+}
+
+async function setNamedPlugins (config: AppConfig, plugins: NamedPlugins) {
+  plugins.components = components(config.components)
+  plugins.pages = pages(config.pages)
+  plugins.markdown = xdm(config.markdown)
+  plugins.vue = vue(config.vue)
+  plugins.vueJsx = vueJsx(config.vueJsx)
+
+  const optionalPlugins: [keyof AppConfig, string, (mod: any, options: any) => any][] = [
+    ['solid', 'vite-plugin-solid', (mod, options) => (mod.default || mod)({ ssr: true, ...options })],
+    ['preact', '@preact/preset-vite', (mod, options) => (mod.default || mod)(options)],
+    ['svelte', '@sveltejs/vite-plugin-svelte', (mod, options) => mod.svelte(options)],
+  ]
+  for (const [optionName, pluginName, createPlugin] of optionalPlugins) {
+    const addPlugin = config[optionName] || config.jsx === optionName
+    if (addPlugin) {
+      const options = isObject(addPlugin) ? addPlugin : {}
+      plugins.optionalPlugins.push(createPlugin(await resolvePlugin(pluginName), options))
+    }
+  }
 }
 
 async function applyPlugins (config: AppConfig, configEnv: ConfigEnv) {

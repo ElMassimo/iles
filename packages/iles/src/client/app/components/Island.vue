@@ -4,7 +4,7 @@ import { defineAsyncComponent, defineComponent, h, createCommentVNode, createSta
 import type { PropType, DefineComponent } from 'vue'
 import type { Framework } from '@islands/hydration'
 import { asyncMapObject, mapObject, serialize } from '../utils'
-import { newHydrationId, Hydrate, hydrationFns } from '../hydration'
+import { isEager, newHydrationId, Hydrate, hydrationFns } from '../hydration'
 import { useIslandsForPath } from '../composables/islandDefinitions'
 import { useRenderer } from '../composables/renderer'
 import { useAppConfig } from '../composables/appConfig'
@@ -79,12 +79,11 @@ export default defineComponent({
 
     const renderScript = async () => {
       const slots = await renderSlots()
-      const eager = this.strategy === Hydrate.OnLoad || this.strategy === Hydrate.SkipPrerender
       const componentPath = this.importPath.replace(this.appConfig.root, '')
       const frameworkPath = `${hydrationPkg}/${this.framework}`
 
       return `import { ${hydrationFns[this.strategy]} as hydrate } from '${hydrationPkg}'
-${eager
+${isEager(this.strategy)
     ? `import framework from '${frameworkPath}'
 import { ${this.importName} as component } from '${componentPath}'`
     : `const framework = async () => (await import('${frameworkPath}')).default

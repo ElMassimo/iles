@@ -13,6 +13,7 @@ export type {
   OnLoadFn,
   IslandsByPath,
   LayoutFactory,
+  NamedPlugins,
   PageComponent,
   PageData,
   PageFrontmatter,

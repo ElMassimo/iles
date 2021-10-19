@@ -10,13 +10,10 @@
   "devDependencies": {
     "@iconify-json/carbon": "^1.0.7",
     "@mapbox/rehype-prism": "^0.8.0",
-    "@preact/preset-vite": "^2.1.4",
-    "@sveltejs/vite-plugin-svelte": "^1.0.0-next.28",
     "feed": "^4.2.1",
     "iles": "workspace:*",
     "unplugin-icons": "^0.12.15",
     "vite": "^2.6.5",
-    "vite-plugin-solid": "^2.1.1",
     "vite-plugin-windicss": "^1.4.1"
   }
 }

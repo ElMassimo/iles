@@ -19,12 +19,16 @@ export function extendManualChunks (config: AppConfig): GetManualChunk {
   }
 }
 
+// Internal: Categorizes dependencies based on which islands are importing them.
+//
+// This heuristic ensures that framework-specific dependencies don't end up in a
+// shared chunk which would delay hydration for all islands.
 function vendorPerFramework(
   chunkForExtension: Record<string, string>,
   id: string,
   api: GetManualChunkApi,
   cache: Map<string, string | undefined>,
-  importStack: string[] = []
+  importStack: string[] = [],
 ): string | undefined {
   if (cache.has(id)) return cache.get(id)
 

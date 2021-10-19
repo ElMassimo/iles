@@ -6,10 +6,10 @@ import { FileSystemIconLoader } from 'unplugin-icons/loaders'
 import icons from 'unplugin-icons/vite'
 import windicss from 'vite-plugin-windicss'
 import inspect from 'vite-plugin-inspect'
-import preact from '@preact/preset-vite'
 
 export default defineConfig({
   siteUrl: 'https://iles-docs.netlify.app',
+  jsx: 'preact',
   ssg: {
     manualChunks: (id, api) => {
       if (id.includes('preact') || id.includes('algolia') || id.toLowerCase().includes('docsearch'))
@@ -27,7 +27,7 @@ export default defineConfig({
   },
   vite: {
     optimizeDeps: {
-      include: ['solid-js', 'quicklink', '@vueuse/core', '@mussi/docsearch', 'preact'],
+      include: ['quicklink', '@vueuse/core', '@mussi/docsearch'],
     },
     plugins: [
       icons({
@@ -37,7 +37,6 @@ export default defineConfig({
         },
       }),
       windicss(),
-      preact(),
       Boolean(process.env.DEBUG) && inspect(),
     ],
   },

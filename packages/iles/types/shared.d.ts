@@ -3,11 +3,17 @@ import type { UserConfig as ViteOptions, ConfigEnv } from 'vite'
 import type { GetManualChunk } from 'rollup'
 import type { App, Ref, DefineComponent } from 'vue'
 import type { Options as CritterOptions } from 'critters'
-import type { Options as VueOptions } from '@vitejs/plugin-vue'
+import type VuePlugin, { Options as VueOptions } from '@vitejs/plugin-vue'
 import type PagesPlugin, { UserOptions as PagesOptions } from 'vite-plugin-pages'
+import type ComponentsPlugin from 'unplugin-vue-components/vite'
 import type { Options as ComponentOptions } from 'unplugin-vue-components/types'
 import type VueJsxPlugin from '@vitejs/plugin-vue-jsx'
 import type XdmPlugin, { PluginOptions as XdmOptions } from 'vite-plugin-xdm'
+
+import type { Options as SolidOptions } from 'vite-plugin-solid'
+import type { Options as SvelteOptions } from '@sveltejs/vite-plugin-svelte'
+import type { PreactPluginOptions as PreactOptions } from '@preact/preset-vite'
+
 import type { FrontmatterOptions } from '@islands/frontmatter'
 import type { Router, RouteRecordRaw, RouteMeta, RouterOptions as VueRouterOptions, RouteComponent, RouteLocationNormalizedLoaded } from 'vue-router'
 import type { HeadClient, HeadObject } from '@vueuse/head'
@@ -72,6 +78,15 @@ export type CreateAppFactory = (options?: CreateAppConfig) => Promise<AppContext
 
 export type LayoutFactory = (name: string | false) => any
 
+export interface NamedPlugins {
+  pages: ReturnType<typeof PagesPlugin>
+  markdown: ReturnType<typeof XdmPlugin>
+  vue: ReturnType<typeof VuePlugin>
+  vueJsx: ReturnType<typeof VueJsxPlugin>
+  components: ReturnType<typeof ComponentsPlugin>
+  optionalPlugins: PluginOption[]
+}
+
 export interface AppPlugins {
   /**
    * Configuration options for Vite.js
@@ -94,6 +109,18 @@ export interface AppPlugins {
    * Configuration options for @vitejs/plugin-vue-jsx
    */
   vueJsx: Parameters<typeof VueJsxPlugin>[0]
+  /**
+   * Configuration options for @preact/preset-vite
+   */
+  preact?: PreactOptions
+  /**
+   * Configuration options for vite-plugin-solid
+   */
+  solid?: SolidOptions
+  /**
+   * Configuration options for @sveltejs/vite-plugin-svelte
+   */
+  svelte?: SvelteOptions
   /**
    * Configuration options for markdown processing in îles, including remark
    * and rehype plugins.
@@ -186,10 +213,7 @@ export interface AppConfig extends RequiredConfig, AppPlugins {
   configPath: string
   pages: PagesOptions
   plugins: Plugin[]
-  namedPlugins: {
-    pages: PagesPlugin
-    markdown: XdmPlugin
-  }
+  namedPlugins: NamedPlugins
 }
 
 export type AppClientConfig = Pick<AppConfig, 'base' | 'root' | 'debug' | 'ssg' | 'siteUrl' | 'jsx'>
