@@ -6,7 +6,7 @@ export const onLoad = el =>
 </script>
 
 <template>
-  <DocSearch client:load/>
+  <DocSearch client:idle/>
   <NavBarButton aria-label="Search">
     <BxBxSearch/>
   </NavBarButton>

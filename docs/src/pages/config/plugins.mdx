@@ -9,6 +9,14 @@
 [unplugin-vue-components]: https://github.com/antfu/unplugin-vue-components
 [vite-plugin-xdm]: https://github.com/ElMassimo/vite-plugin-xdm
 
+[vite-plugin-solid]: https://github.com/solidjs/vite-plugin-solid
+[@preact/preset-vite]: https://github.com/preactjs/preset-vite
+[@sveltejs/vite-plugin-svelte]: https://github.com/sveltejs/vite-plugin-svelte
+
+[Preact]: https://preactjs.com
+[SolidJS]: https://www.solidjs.com
+[Svelte]: https://svelte.dev
+
 [remark]: https://github.com/remarkjs/remark
 [rehype]: https://github.com/rehypejs/rehype
 
@@ -24,7 +32,7 @@ the following plugins are already included and pre-configured for you.
 
 The examples list some of the defaults for each plugin.
 
-> You can [provide additional options][config] for each of them using [iles.config.ts][config].
+> You can [provide additional options][config] for each of them using [`iles.config.ts`][config].
 
 ### <kbd>[@vitejs/plugin-vue]</kbd>
 
@@ -90,6 +98,27 @@ Provides excellent MDX support, and allows to tap into the [remark] and [rehype]
     },
   },
 ```
+
+### <kbd>[vite-plugin-solid]</kbd>
+
+Provides support for [SolidJS] islands.
+
+Auto-installed when configuring `jsx: 'solid'`, `solid: true`, or providing
+plugin options for `solid` in [`iles.config.ts`][config].
+
+### <kbd>[@preact/preset-vite]</kbd>
+
+Provides support for [Preact] islands.
+
+Auto-installed when configuring `jsx: 'preact'`, `preact: true`, or providing
+plugin options for `preact` in [`iles.config.ts`][config].
+
+### <kbd>[@sveltejs/vite-plugin-svelte]</kbd>
+
+Provides support for [Svelte] islands.
+
+Auto-installed when configuring `svelte: true`, or providing
+plugin options for `svelte` in [`iles.config.ts`][config].
 
 ## Official Plugins <Iles heading/>
 

@@ -3,6 +3,7 @@
 [strategy]: /guide/hydration#clientload
 [layout]: /guide/development#layouts
 [components]: /guide/development#components
+[frameworks]: /guide/frameworks
 
 # Client Scripts
 
@@ -89,9 +90,9 @@ export const onLoad: OnLoadFn = (el, props, slots) => {
 }
 ```
 
-<Tip title="Why not use a renderless Vue component?">
-The benefit is that vanilla components don't require the Vue runtime, so the final
-amount of JS in the build will be smaller.
+<Tip title="Why not use a renderless component?">
+The benefit is that vanilla JS doesn't require a runtime, so the final
+bundle size will be smaller.
 
-If your app already includes Vue islands, then use whatever you find more natural.
+If your app [already has islands with a framework][frameworks], then use whatever you find more natural.
 </Tip>

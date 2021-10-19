@@ -28,6 +28,7 @@ declare module 'vue' {
     IlesText: typeof import('~icons/iles/text')['default']
     IlesVite: typeof import('~icons/iles/vite')['default']
     IlesVue: typeof import('~icons/iles/vue')['default']
+    Image: typeof import('./src/components/Image.vue')['default']
     Island: typeof import('iles')['Island']
     LastUpdated: typeof import('./src/components/LastUpdated.vue')['default']
     Logo: typeof import('./src/components/Logo.vue')['default']

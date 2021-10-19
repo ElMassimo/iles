@@ -1,10 +1,11 @@
----
-sidebar: auto
----
-
 [pages]: /guide/pages
-[plugins]: https://vitejs.dev/plugins/
+[plugins]: /config/plugins
+[Vite's plugins]: https://vitejs.dev/plugins/
 [config reference]: https://vitejs.dev/config/
+
+[site]: /guide/development#site
+[meta tags]: /guide/meta-tags
+[sitemap]: /guide/development#sitemap
 
 # Configuration
 
@@ -14,9 +15,11 @@ Most of the options discussed are specific to <Iles/>, for the rest of the avail
 
 ## Configuring Vite <ViteLogo/>
 
-You can configure Vite.js as [usual](https://vitejs.dev/config/) using `vite.config.ts`, check Vite's [plugins] and [config reference].
+You can configure Vite.js as [usual](https://vitejs.dev/config/) using `vite.config.ts`, check [Vite's plugins] and [config reference].
 
 Alternatively, you can provide a `vite` option in [`iles.config.ts`](#configuring-îles) with the same options.
+
+> Visit the _[Plugins]_ section for more details about the [pre-configured Vite.js plugins](/config/plugins#vite-plugins).
 
 ## Configuring <span class="hidden">îles</span> <Iles heading/>
 
@@ -30,10 +33,28 @@ import { defineConfig } from 'iles'
 
 export default defineConfig({
   siteUrl: 'https://iles-docs.netlify.app',
+  jsx: 'preact',
 })
 ```
 
-> A full config reference is coming soon!
+### `jsx`
+
+- **Type:** `'vue' | 'preact' | 'solid'`
+- **Default:** `'vue'`
+
+Which framework to use to compile `.jsx` and `.tsx` files.
+
+### `siteUrl`
+
+- **Type:** `'vue' | 'preact' | 'solid'`
+- **Default:** `'vue'`
+
+URL for the [site] in production, used to generate absolute URLs for the [sitemap]
+and social [meta tags].
+
+<Tip>
+When set, it is exposed as `site.url` and `site.canonical`.
+</Tip>
 
 ## Your App
 
