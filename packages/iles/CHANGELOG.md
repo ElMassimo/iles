@@ -1,18 +1,27 @@
 ## [0.3.1](https://github.com/ElMassimo/iles/compare/v0.3.0...v0.3.1) (2021-10-19)
 
-
 ### Bug Fixes
 
 * wait for installation of optional plugins ([bfb8f20](https://github.com/ElMassimo/iles/commit/bfb8f20fd93bdbef20c6b343ab8741a6f7807345))
 
 
-
 # [0.3.0](https://github.com/ElMassimo/iles/compare/v0.2.3...v0.3.0) (2021-10-19)
 
+This release added support for Preact, SolidJS, and Svelte islands.
 
+- New `jsx: 'preact' | 'solid' | 'vue'` option in `iles.config.ts`
+- New `preact`, `solid`, and `svelte` options in `iles.config.ts` to configure plugins
+- Will automatically install the relevant Vite.js plugin when any of these options are set
+- Introduced `client:none` to allow embedding these components without hydration
+
+### Additional Features ✨
+
+- Use dynamic imports to avoid loading island components until hydration strategy is met
+- Added new chunk naming strategy based on the framework
+- Added `ssg.manualChunks` option to `iles.config.ts` to manually override as needed
+- Framwork color coding in DevTools islands
 
 ## 0.2.3 (2021-10-15)
-
 
 ### Bug Fixes
 
