@@ -1,3 +1,12 @@
+## [0.3.1](https://github.com/ElMassimo/iles/compare/v0.3.0...v0.3.1) (2021-10-19)
+
+
+### Bug Fixes
+
+* wait for installation of optional plugins ([bfb8f20](https://github.com/ElMassimo/iles/commit/bfb8f20fd93bdbef20c6b343ab8741a6f7807345))
+
+
+
 # [0.3.0](https://github.com/ElMassimo/iles/compare/v0.2.3...v0.3.0) (2021-10-19)
 
 
