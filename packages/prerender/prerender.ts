@@ -10,7 +10,7 @@ const _imports: {
     typeof import('@islands/hydration/preact'),
     typeof import('preact-render-to-string').renderToString,
   ]
-  solid?: typeof import('solid-js/web'),
+  solid?: typeof import('solid-js/web')
 } = {}
 
 export const renderers: Record<Framework, PrerenderFn> = {
@@ -31,9 +31,9 @@ export const renderers: Record<Framework, PrerenderFn> = {
       return createComponent(component, { ...props, children })
     })
   },
-  async svelte () {
-    await import('@islands/hydration/svelte')
-    throw new Error('The svelte strategy is not implemented yet.')
+  async svelte (component, props, slots) {
+    const Svelte = (await import('./svelte')).default
+    return Svelte.render({ component, props, slots })?.html
   },
   async vanilla () {
     throw new Error('The vanilla strategy does not prerender islands.')

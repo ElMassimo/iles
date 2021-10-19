@@ -9,6 +9,7 @@ import inspect from 'vite-plugin-inspect'
 export default defineConfig({
   siteUrl: 'https://the-vue-point-with-iles.netlify.app/',
   jsx: 'solid',
+  svelte: true,
   components: {
     resolvers: [iconsResolver({ componentPrefix: '' })],
   },

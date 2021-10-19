@@ -112,15 +112,15 @@ export interface AppPlugins {
   /**
    * Configuration options for @preact/preset-vite
    */
-  preact?: PreactOptions
+  preact?: boolean | PreactOptions
   /**
    * Configuration options for vite-plugin-solid
    */
-  solid?: SolidOptions
+  solid?: boolean | SolidOptions
   /**
    * Configuration options for @sveltejs/vite-plugin-svelte
    */
-  svelte?: SvelteOptions
+  svelte?: boolean | SvelteOptions
   /**
    * Configuration options for markdown processing in îles, including remark
    * and rehype plugins.

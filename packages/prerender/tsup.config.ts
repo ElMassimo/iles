@@ -7,6 +7,7 @@ export const tsup: Options = {
     'vue',
     'preact',
     '@islands/hydration/preact',
+    '@islands/hydration/svelte/island',
     'preact-render-to-string',
     'solid-js',
     'solid-js/web',

@@ -91,7 +91,9 @@ async function setNamedPlugins (config: AppConfig, plugins: NamedPlugins) {
   const optionalPlugins: [keyof AppConfig, string, (mod: any, options: any) => any][] = [
     ['solid', 'vite-plugin-solid', (mod, options) => (mod.default || mod)({ ssr: true, ...options })],
     ['preact', '@preact/preset-vite', (mod, options) => (mod.default || mod)(options)],
-    ['svelte', '@sveltejs/vite-plugin-svelte', (mod, options) => mod.svelte(options)],
+    ['svelte', '@sveltejs/vite-plugin-svelte', (mod, options) =>
+      mod.svelte({ ...options, compilerOptions: { hydratable: true, ...options?.compilerOptions } }),
+    ],
   ]
   for (const [optionName, pluginName, createPlugin] of optionalPlugins) {
     const addPlugin = config[optionName] || config.jsx === optionName

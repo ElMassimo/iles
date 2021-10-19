@@ -52,7 +52,7 @@ export default defineComponent({
       strategy,
       framework,
       appConfig,
-      islandsForPath: import.meta.env.SSR ? useIslandsForPath() : undefined,
+      islandsForPath: import.meta.env.SSR && strategy !== Hydrate.None ? useIslandsForPath() : undefined,
       renderVNodes: useVueRenderer(),
       prerender: import.meta.env.SSR ? useRenderer(framework) : undefined,
     }

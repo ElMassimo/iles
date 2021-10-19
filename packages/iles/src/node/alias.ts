@@ -77,12 +77,12 @@ export function resolveAliases (root: string): AliasOptions {
     },
     {
       find: /^@islands\/hydration$/,
-      replacement: `${HYDRATION_DIST_PATH}/hydration.js`,
+      replacement: require.resolve('@islands/hydration'),
     },
-    {
-      find: /^@islands\/hydration\/(vanilla|vue|svelte|solid|preact)$/,
-      replacement: `${HYDRATION_DIST_PATH}/$1.js`,
-    },
+    ...['vue', 'vanilla', 'svelte', 'svelte/island', 'preact', 'solid'].map(name => ({
+      find: new RegExp(`^@islands/hydration/${name}$`),
+      replacement: require.resolve(`@islands/hydration/${name}`),
+    })),
   ]
 
   return aliases
