@@ -102,6 +102,8 @@ async function setNamedPlugins (config: AppConfig, plugins: NamedPlugins) {
       plugins.optionalPlugins.push(createPlugin(await resolvePlugin(pluginName), options))
     }
   }
+  if (config.preact || config.jsx === 'preact')
+    await resolvePlugin('preact-render-to-string')
 }
 
 async function applyPlugins (config: AppConfig, configEnv: ConfigEnv) {
