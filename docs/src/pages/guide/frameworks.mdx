@@ -32,15 +32,7 @@ You must add a [hydration directive][hydration] when using these components in V
 While Vue is the natural choice given that pages and layouts in <Iles/> are Vue components,
 you might want to use a framework with a smaller runtime for the [interactive bits][hydration].
 
-The following is a summary of [the conclusions of a recent analysis][size comparison] that compares the final bundle size after adding the size of the framework runtime to the size of the compiled components:
-
-<Tip title="If the amount of interactive components per page is">
-- `less than 3` — use [Svelte] to get the smallest bundle size
-- `between 3 and 10` — you could give [SolidJS] a try
-- `more than 10` — [Preact] will be a good choice
-</Tip>
-
-For efficiency, you will want all islands to use the same framework, to offset
+For efficiency, you would want all islands to use the same framework, to offset
 the size of the runtime.
 
 But before you leave and continue building your site…
@@ -76,4 +68,20 @@ import devtoolsSrc from '/images/devtools-frameworks.png'
 
 <Tip title="Which framework should you choose?">
 _Summary:_ it depends.
+</Tip>
+
+## Bundle Size 📊
+
+The following is a summary of [the conclusions of a recent analysis][size comparison] that compares the final bundle size after adding the size of the framework runtime to the size of the compiled components:
+
+<Tip title="If the amount of interactive components per page is">
+- `less than 3` — use [Svelte] to get the smallest bundle size
+- `between 3 and 10` — you could give [SolidJS] a try
+- `more than 10` — [Preact] is a reasonable choice
+</Tip>
+
+<Tip title="But this is just a benchmark" warn>
+Do your own measurements, and as mentioned previously, there are
+often more important factors than bundle size. Choose according to your project's
+circumstances.
 </Tip>
