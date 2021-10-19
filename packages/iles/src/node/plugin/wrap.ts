@@ -72,7 +72,8 @@ async function injectClientScript (node: ElementNode, s: MagicString, filename: 
   const { attrs, content, loc: { end } } = block
   const { lang = 'ts', ...props } = attrs
 
-  const importPath = `${filename}?vue&index=${index}&clientScript=true&lang=${lang}`
+  // NOTE: Faking the extension ensures it's processed by esbuild.
+  const importPath = `${filename}?vue&index=${index}&clientScript=true&lang.${lang}`
 
   const exported = await parseExports(content)
   if (!exported.includes('onLoad')) {

@@ -1,17 +1,17 @@
 <script client:media="(max-width: 767px)" lang="ts">
-import { ref, watch } from 'vue'
+import { watch } from 'vue'
 
 export function onLoad () {
-  let openSideBar = ref(false)
+  let openSideBar = $ref(false)
 
-  watch(openSideBar, (v) => {
+  watch($$(openSideBar), (v) => {
     document.documentElement.classList.toggle('overflow-hidden', v)
     document.getElementById('sidebar-background')?.classList.toggle('hidden', !v)
     document.getElementById('sidebar-panel')?.classList.toggle('!-translate-x-0', v)
   })
 
   document.querySelectorAll<HTMLElement>('[data-sidebar]').forEach(el => {
-    el.addEventListener('click', () => { openSideBar.value = el.dataset.sidebar === 'open' })
+    el.addEventListener('click', () => { openSideBar = el.dataset.sidebar === 'open' })
   })
 }
 </script>
