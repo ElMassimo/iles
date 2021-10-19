@@ -5,10 +5,7 @@ import { green } from 'nanocolors'
 import type { PluginOption, ResolvedConfig, ResolveFn, ViteDevServer } from 'vite'
 import { transformWithEsbuild } from 'vite'
 
-import vue from '@vitejs/plugin-vue'
 import { MODULE_ID_VIRTUAL as PAGES_REQUEST_PATH } from 'vite-plugin-pages'
-import components from 'unplugin-vue-components/vite'
-import vueJsx from '@vitejs/plugin-vue-jsx'
 import MagicString from 'magic-string'
 
 import type { Frontmatter } from '@islands/frontmatter'
@@ -99,8 +96,8 @@ export default function IslandsPlugins (appConfig: AppConfig): PluginOption[] {
       },
       async load (id) {
         if (id === APP_CONFIG_REQUEST_PATH) {
-          const { base, debug, root, ssg, siteUrl } = appConfig
-          const clientConfig: AppClientConfig = { base, debug, root, ssg, siteUrl }
+          const { base, debug, jsx, root, ssg: { manualChunks: _, ...ssg }, siteUrl } = appConfig
+          const clientConfig: AppClientConfig = { base, debug, root, jsx, ssg, siteUrl }
           return `export default ${serialize(clientConfig)}`
         }
 
@@ -173,7 +170,8 @@ export default function IslandsPlugins (appConfig: AppConfig): PluginOption[] {
       },
     },
 
-    vue(appConfig.vue),
+    plugins.vue,
+    ...plugins.optionalPlugins,
 
     plugins.markdown,
 
@@ -217,13 +215,13 @@ export default _sfc_main
       },
     },
 
-    vueJsx(appConfig.vueJsx),
+    plugins.vueJsx,
 
     // https://github.com/hannoeru/vite-plugin-pages
     plugins.pages,
 
     // https://github.com/antfu/unplugin-vue-components
-    components(appConfig.components),
+    plugins.components,
 
     {
       name: 'iles:page-hmr',

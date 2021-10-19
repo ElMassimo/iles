@@ -3,6 +3,7 @@
 [strategy]: /guide/hydration#clientload
 [layout]: /guide/development#layouts
 [components]: /guide/development#components
+[frameworks]: /guide/frameworks
 
 # Client Scripts
 
@@ -76,23 +77,22 @@ Vanilla components should export a function to call when the selected
 [hydration strategy][strategy] is fulfilled.
 
 ```ts
-export default () => fetch('/images').then(...)
+export const onLoad = () => fetch('/images').then(...)
 ```
 
-The <kbd>defineClientComponent</kbd> helper provides typings for the provided
-parameters if you need them.
+If you need to use the provided parameters, use the `OnLoadFn` typings:
 
 ```ts
-import { defineClientComponent } from 'iles'
+import type { OnLoadFn } from 'iles'
 
-export default defineClientComponent((el, props, slots) => {
+export const onLoad: OnLoadFn = (el, props, slots) => {
   // Do whatever you need with the element.
-})
+}
 ```
 
-<Tip title="Why not use a renderless Vue component?">
-The benefit is that vanilla components don't require the Vue runtime, so the final
-amount of JS in the build will be smaller.
+<Tip title="Why not use a renderless component?">
+The benefit is that vanilla JS doesn't require a runtime, so the final
+bundle size will be smaller.
 
-If your app already includes Vue islands, then use whatever you find more natural.
+If your app [already has islands with a framework][frameworks], then use whatever you find more natural.
 </Tip>

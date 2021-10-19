@@ -10,6 +10,11 @@ let currentIndex = $computed(() => posts.findIndex(p => p.href === post.href))
 let date = $computed(() => posts[currentIndex]?.date)
 let nextPost = $computed(() => posts[currentIndex - 1])
 let prevPost = $computed(() => posts[currentIndex + 1])
+
+let author = $computed(() => {
+  const { twitter, gravatar, author } = post
+  return { twitter, gravatar, author }
+})
 </script>
 
 <template layout="default">
@@ -40,7 +45,7 @@ let prevPost = $computed(() => posts[currentIndex + 1])
       "
       style="grid-template-rows: auto 1fr"
     >
-      <Author v-bind="post"/>
+      <Author v-bind="author"/>
       <div class="divide-y divide-gray-200 xl:pb-0 xl:col-span-3 xl:row-span-2">
         <div class="prose max-w-none pt-10 pb-8">
           <slot/>
@@ -73,7 +78,7 @@ let prevPost = $computed(() => posts[currentIndex + 1])
           </div>
         </div>
         <div class="pt-8">
-          <a class="link" href="/">← Back to the blog</a>
+          <BackLink client:none href="/">Back to the blog</BackLink>
         </div>
       </footer>
     </div>

@@ -1,0 +1,79 @@
+[hydration]: /guide/hydration
+[client:none]: /guide/hydration#clientnone
+[mdx files]: /guide/markdown
+
+[Vue]: /config/plugins#vitejsplugin-vue
+[Preact]: /config/plugins#preactpreset-vite
+[SolidJS]: /config/plugins#vite-plugin-solid
+[Svelte]: /config/plugins#sveltejsvite-plugin-svelte
+[vanilla JS]: /guide/client-scripts#vanilla-components
+
+[useDark]: https://vueuse.org/core/usedark/
+
+[size comparison]: https://dev.to/this-is-learning/javascript-framework-todomvc-size-comparison-504f
+
+# Supported Frameworks 🧱
+
+Components from the following frameworks can be embedded in Vue and [MDX files] in <Iles/>:
+
+- [Preact]
+- [SolidJS]
+- [Svelte]
+- [Vanilla JS]
+
+<Tip warn>
+You must add a [hydration directive][hydration] when using these components in Vue and [MDX files].
+</Tip>
+
+> No JS is shipped if you use <kbd>[client:none]</kbd> 🏝
+
+## Choosing a Framework 🤔
+
+While Vue is the natural choice given that pages and layouts in <Iles/> are Vue components,
+you might want to use a framework with a smaller runtime for the [interactive bits][hydration].
+
+The following is a summary of [the conclusions of a recent analysis][size comparison] that compares the final bundle size after adding the size of the framework runtime to the size of the compiled components:
+
+<Tip title="If the amount of interactive components per page is">
+- `less than 3` — use [Svelte] to get the smallest bundle size
+- `between 3 and 10` — you could give [SolidJS] a try
+- `more than 10` — [Preact] will be a good choice
+</Tip>
+
+For efficiency, you will want all islands to use the same framework, to offset
+the size of the runtime.
+
+But before you leave and continue building your site…
+
+## Performance is Not Everything!
+
+Several factors come into play when making this decision, such as development and maintenance costs.
+
+For example, in the navbar of this site there are two islands:
+
+```vue
+<div class="flex items-center pl-6">
+  <DocSearch client:idle/>
+  <DarkModeSwitch client:load/>
+</div>
+```
+
+- `<DocSearch>` is a [Preact] component.
+
+  It's the heaviest component in this site, but I didn't have to build an accessible modal that works flawlessly in all devices and integrates with Algolia's search indexes.
+
+- `<DarkModeSwitch/>` is a [Vue] component
+
+  It leverages <kbd>[useDark]</kbd> from `@vueuse/core`, and uses a Vue `<transition>` when toggling the icon.
+
+  It could be recreated using Svelte without additional dependencies, but the
+  difference in bundle size for this site would be negligible, while risking the
+  chance of introducing bugs.
+
+import devtoolsSrc from '/images/devtools-frameworks.png'
+
+<Image narrow src={ devtoolsSrc } caption="Islands from different frameworks in DevTools"/>
+
+<Tip title="Which framework should you choose?">
+_Summary:_ it depends.
+</Tip>

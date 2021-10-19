@@ -11,7 +11,7 @@
         <NavBarLinks/>
       </div>
       <div class="flex items-center pl-6">
-        <DocSearchBox client:load/>
+        <SearchButton/>
         <DarkModeSwitch client:load/>
       </div>
     </div>

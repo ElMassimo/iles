@@ -1,10 +1,12 @@
 <script lang="ts">
 /* eslint-disable no-restricted-syntax */
-import { defineAsyncComponent, defineComponent, h, createCommentVNode } from 'vue'
+import { defineAsyncComponent, defineComponent, h, createCommentVNode, createStaticVNode } from 'vue'
 import type { PropType, DefineComponent } from 'vue'
+import type { Framework } from '@islands/hydration'
 import { asyncMapObject, mapObject, serialize } from '../utils'
-import { newHydrationId, Hydrate, hydrationFns } from '../hydration'
+import { isEager, newHydrationId, Hydrate, hydrationFns } from '../hydration'
 import { useIslandsForPath } from '../composables/islandDefinitions'
+import { useRenderer } from '../composables/renderer'
 import { useAppConfig } from '../composables/appConfig'
 import { useVueRenderer } from '../composables/vueRenderer'
 
@@ -22,12 +24,13 @@ export default defineComponent({
     componentName: { type: String, required: true },
     importName: { type: String, required: true },
     importPath: { type: String, required: true },
-    using: { type: String, default: undefined },
+    using: { type: String as PropType<Framework>, default: undefined },
     [Hydrate.WhenIdle]: { type: Boolean, default: false },
     [Hydrate.OnLoad]: { type: Boolean, default: false },
     [Hydrate.MediaQuery]: { type: [Boolean, String], default: false },
     [Hydrate.SkipPrerender]: { type: Boolean, default: false },
     [Hydrate.WhenVisible]: { type: Boolean, default: false },
+    [Hydrate.None]: { type: Boolean, default: false },
   },
   setup (props, { attrs }) {
     let strategy = Object.values(Hydrate).find(s => props[s])
@@ -37,15 +40,21 @@ export default defineComponent({
     }
 
     const ext = props.importPath.split('.')[1]
-    const framework = props.using || (ext === 'js' || ext === 'ts' ? 'vanilla' : 'vue')
+    const appConfig = useAppConfig()
+    const framework: Framework = props.using
+      || (ext === 'svelte' && 'svelte')
+      || ((ext === 'js' || ext === 'ts') && 'vanilla')
+      || ((ext === 'jsx' || ext === 'tsx') && appConfig.jsx)
+      || 'vue'
 
     return {
       id: newHydrationId(),
       strategy,
       framework,
-      appConfig: useAppConfig(),
-      islandsForPath: import.meta.env.SSR ? useIslandsForPath() : undefined,
+      appConfig,
+      islandsForPath: import.meta.env.SSR && strategy !== Hydrate.None ? useIslandsForPath() : undefined,
       renderVNodes: useVueRenderer(),
+      prerender: import.meta.env.SSR ? useRenderer(framework) : undefined,
     }
   },
   mounted () {
@@ -62,40 +71,66 @@ export default defineComponent({
       props._mediaQuery = inspectMediaQuery(this.$props[Hydrate.MediaQuery] as string)
 
     const slotVNodes = mapObject(this.$slots, slotFn => slotFn?.())
-    const islandsPrefix = `${isSSR ? '' : '/@id/'}@islands`
+    const hydrationPkg = `${isSSR ? '' : '/@id/'}@islands/hydration`
+    let renderedSlots: Record<string, string>
+
+    const renderSlots = async () =>
+      renderedSlots ||= await asyncMapObject(slotVNodes, this.renderVNodes)
 
     const renderScript = async () => {
-      const slots = await asyncMapObject(slotVNodes, this.renderVNodes)
+      const slots = await renderSlots()
+      const componentPath = this.importPath.replace(this.appConfig.root, '')
+      const frameworkPath = `${hydrationPkg}/${this.framework}`
 
-      return `import { ${this.importName} as ${this.componentName} } from '${this.importPath.replace(this.appConfig.root, '')}'
-  import { ${hydrationFns[this.strategy]} as hydrate } from '${islandsPrefix}/hydration'
-  import createIsland from '${islandsPrefix}/${this.framework}'
-  hydrate(createIsland, ${this.componentName}, '${this.id}', ${serialize(props)}, ${serialize(slots)})
+      return `import { ${hydrationFns[this.strategy]} as hydrate } from '${hydrationPkg}'
+${isEager(this.strategy)
+    ? `import framework from '${frameworkPath}'
+import { ${this.importName} as component } from '${componentPath}'`
+    : `const framework = async () => (await import('${frameworkPath}')).default
+const component = async () => (await import('${componentPath}')).${this.importName}`
+}
+hydrate(framework, component, '${this.id}', ${serialize(props)}, ${serialize(slots)})
   `
     }
 
     const renderPlaceholder = async () => {
       const placeholder = `ISLAND_HYDRATION_PLACEHOLDER_${this.id}`
       const script = await renderScript()
-      this.islandsForPath?.push({ id: this.id, script, placeholder })
+      const componentPath = this.importPath
+      this.islandsForPath!.push({ id: this.id, script, componentPath, placeholder })
       return placeholder
     }
 
-    const skipPrerender = this.framework !== 'vue' || ((this.appConfig.debug || isSSR) && this.$props[Hydrate.SkipPrerender])
-    const ileRoot = h('ile-root', { id: this.id },
-      skipPrerender ? [] : [h(this.component, this.$attrs, this.$slots)])
+    const prerenderIsland = () => {
+      if (this.strategy === Hydrate.SkipPrerender) return undefined
 
-    // Hydrate in development to debug potential problems with the script.
-    if (this.appConfig.debug && !isSSR) {
-      return [
-        ileRoot,
-        h(defineAsyncComponent(async () => h('script', { async: true, type: 'module', innerHTML: await renderScript() }))),
-      ]
+      if (this.framework === 'vanilla') return undefined
+
+      if (this.framework === 'vue')
+        return h(this.component, this.$attrs, this.$slots)
+
+      const prerender = this.prerender
+      if (!prerender) return undefined
+
+      return h(defineAsyncComponent(async () => {
+        const slots = await renderSlots()
+        const result = await prerender(this.component, this.$attrs, slots)
+        return createStaticVNode(result, undefined as any)
+      }))
     }
+
+    const ileRoot = h('ile-root', { id: this.id }, prerenderIsland())
+
+    if (isSSR && this.strategy === Hydrate.None)
+      return ileRoot
 
     return [
       ileRoot,
-      h(defineAsyncComponent(async () => createCommentVNode(await renderPlaceholder()))),
+      h(defineAsyncComponent(async () =>
+        isSSR
+          ? createCommentVNode(await renderPlaceholder())
+          : h('script', { async: true, type: 'module', innerHTML: await renderScript() }))
+      ),
     ]
   },
 })

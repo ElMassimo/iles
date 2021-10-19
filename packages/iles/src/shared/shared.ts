@@ -1,4 +1,4 @@
-import { UserApp, UserConfig, OnLoadFn } from '../../types/shared'
+import { UserApp, UserConfig } from '../../types/shared'
 
 export type {
   AppClientConfig,
@@ -13,6 +13,7 @@ export type {
   OnLoadFn,
   IslandsByPath,
   LayoutFactory,
+  NamedPlugins,
   PageComponent,
   PageData,
   PageFrontmatter,
@@ -41,8 +42,4 @@ export function defineConfig (config: UserConfig) {
 
 export function defineApp (app: UserApp) {
   return app
-}
-
-export function defineClientComponent (fn: OnLoadFn) {
-  return fn
 }

@@ -1,6 +1,35 @@
 import { promises as fs, constants as fsConstants } from 'fs'
 export { default as serialize } from '@nuxt/devalue'
 
+import newSpinner from 'mico-spinner'
+import { isPackageExists, importModule } from 'local-pkg'
+import { installPackage } from '@antfu/install-pkg'
+
+export function sleep (ms: number) {
+  return new Promise<void>(resolve => { setTimeout(resolve, ms) })
+}
+
+export async function resolvePlugin<T> (name: string) {
+  if (!isPackageExists(name)) {
+    withSpinner(`Installing ${name}...`, async () =>
+      await installPackage(name, { dev: true, preferOffline: true }))
+  }
+  return await importModule(name)
+}
+
+async function withSpinner<T> (message: string, fn: () => Promise<T>) {
+  const spinner = newSpinner(message).start()
+  try {
+    const result = await fn()
+    spinner.succeed()
+    return result
+  }
+  catch (e) {
+    spinner.fail()
+    throw e
+  }
+}
+
 export function isString (val: any): val is string {
   return typeof val === 'string'
 }

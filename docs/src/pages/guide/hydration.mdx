@@ -4,6 +4,10 @@
 [intersectionobserver]: https://developer.mozilla.org/en-US/docs/Web/API/Intersection_Observer_API
 [matchMedia]: https://developer.mozilla.org/en-US/docs/Web/API/Window/matchMedia
 
+[Preact]: /config/plugins#preactpreset-vite
+[SolidJS]: /config/plugins#vite-plugin-solid
+[Svelte]: /config/plugins#sveltejsvite-plugin-svelte
+
 # Hydration Directives <Logo/>
 
 You can define which components should remain interactive in the production
@@ -11,7 +15,7 @@ build by using `client:` directives in your components (borrowed from [Astro]).
 
 Any JS required for these components will be automatically inferred and optimized to perform partial hydration in the final build.
 
-> No JS is shipped for components without a hydration directive! 🏝
+> No JS is shipped unless you use a hydration strategy! 🏝
 
 Here's an example with MDX, an interactive audio player in a mostly static page:
 
@@ -74,6 +78,15 @@ Useful to avoid unnecessary work depending on the available viewport, such as in
 ```vue
 <Sidebar client:media="screen and (min-width: 600px)"/>
 ```
+
+## 🏝 client:none
+Does not hydrate the component in the client, it will be prerendered as static HTML.
+
+<Tip warn>
+Necessary when embedding [Preact], [SolidJS], or [Svelte] components in Vue or MDX files.
+
+__No JS will be shipped in the build.__
+</Tip>
 
 ## 🏝 client:only
 Does not prerender the component during build.

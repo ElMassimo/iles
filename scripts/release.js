@@ -177,7 +177,7 @@ async function main () {
  */
 async function publishPackage (version, runIfNotDry) {
   try {
-    await runIfNotDry('pnpm', ['publish'], {
+    await runIfNotDry('pnpm', ['publish', '--access', 'public'], {
       stdio: 'inherit',
       cwd: resolve('.'),
     })

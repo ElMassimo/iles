@@ -4,7 +4,9 @@ import { renderHeadToString } from '@vueuse/head'
 import type { RollupOutput } from 'rollup'
 import type { Awaited, AppConfig, CreateAppFactory, IslandsByPath, SSGRoute } from '../shared'
 import type { bundle } from './bundle'
+import { renderers } from '@islands/prerender'
 import { getRoutesForSSG } from './routes'
+import { IslandDefinition } from 'iles'
 
 const commentsRegex = /<!--\[-->|<!--]-->|<!---->/g
 
@@ -33,7 +35,7 @@ export async function renderPage (
   createApp: CreateAppFactory,
 ) {
   const { app, head } = await createApp({ routePath: route.path })
-  const content = await require('@vue/server-renderer').renderToString(app, { islandsByPath })
+  const content = await require('@vue/server-renderer').renderToString(app, { islandsByPath, renderers })
 
   if (route.extension !== '.html') return content.replace(commentsRegex, '')
 
@@ -45,6 +47,7 @@ export async function renderPage (
   <head>
     ${headTags}
     ${stylesheetTagsFrom(config, clientChunks, route)}
+    ${await scriptTagsFrom(config, islandsByPath[route.path])}
   </head>
   <body ${bodyAttrs}>
     <div id="app">${content}</div>
@@ -57,4 +60,10 @@ function stylesheetTagsFrom (config: AppConfig, clientChunks: RollupOutput['outp
     .filter(chunk => chunk.type === 'asset' && chunk.fileName.endsWith('.css'))
     .map(chunk => `<link rel="stylesheet" href="${config.base}${chunk.fileName}">`)
     .join('\n')
+}
+
+async function scriptTagsFrom (config: AppConfig, islands: undefined | IslandDefinition[]) {
+  const anySolid = islands?.some(island => island.script.includes('@islands/hydration/solid'))
+  if (!anySolid) return ''
+  return '<script>window._$HYDRATION={events:[],completed:new WeakSet()}</script>'
 }

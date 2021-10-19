@@ -3,7 +3,6 @@ import {
   hydrateWhenIdle,
   hydrateNow,
   hydrateOnMediaQuery,
-  mountNewApp,
   hydrateWhenVisible,
 } from '@islands/hydration'
 
@@ -30,12 +29,19 @@ export enum Hydrate {
   MediaQuery = 'client:media',
   SkipPrerender = 'client:only',
   WhenVisible = 'client:visible',
+  None = 'client:none',
 }
 
 export const hydrationFns = {
   [Hydrate.WhenIdle]: hydrateWhenIdle.name,
   [Hydrate.OnLoad]: hydrateNow.name,
   [Hydrate.MediaQuery]: hydrateOnMediaQuery.name,
-  [Hydrate.SkipPrerender]: mountNewApp.name,
+  [Hydrate.SkipPrerender]: hydrateNow.name,
   [Hydrate.WhenVisible]: hydrateWhenVisible.name,
+  [Hydrate.None]: hydrateNow.name,
+}
+
+// Internal: Strategies that will hydrate instantly and don't need dynamic imports.
+export function isEager (strategy: string) {
+  return strategy === Hydrate.OnLoad || strategy === Hydrate.SkipPrerender || strategy === Hydrate.None
 }

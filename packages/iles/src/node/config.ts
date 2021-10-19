@@ -6,11 +6,16 @@ import creatDebugger from 'debug'
 import { loadConfigFromFile, mergeConfig as mergeViteConfig } from 'vite'
 import pages from 'vite-plugin-pages'
 import xdm from 'vite-plugin-xdm'
+import vue from '@vitejs/plugin-vue'
+import vueJsx from '@vitejs/plugin-vue-jsx'
+import components from 'unplugin-vue-components/vite'
 
 import type { ComponentResolver } from 'unplugin-vue-components/types'
 import type { Frontmatter, FrontmatterPluggable } from '@islands/frontmatter'
-import type { AppConfig, AppPlugins, ConfigEnv, ViteOptions, Plugin } from './shared'
-import { camelCase, uncapitalize } from './plugin/utils'
+import type { UserConfig } from 'iles'
+
+import type { AppConfig, AppPlugins, ConfigEnv, ViteOptions, Plugin, NamedPlugins } from './shared'
+import { camelCase, resolvePlugin, uncapitalize } from './plugin/utils'
 import { resolveAliases, DIST_CLIENT_PATH, HYDRATION_DIST_PATH } from './alias'
 import remarkWrapIslands from './plugin/remarkWrapIslands'
 
@@ -47,6 +52,7 @@ export async function resolveConfig (root?: string, env?: ConfigEnv): Promise<Ap
 
 async function resolveUserConfig (root: string, configEnv: ConfigEnv) {
   const config = { root, namedPlugins: {} } as AppConfig
+  config.namedPlugins.optionalPlugins = []
 
   const { path, config: { plugins = [], ...userConfig } = {} }
     = await loadConfigFromFile(configEnv, 'iles.config.ts', root) || {}
@@ -54,15 +60,14 @@ async function resolveUserConfig (root: string, configEnv: ConfigEnv) {
   debug(path ? `loaded config at ${yellow(path)}` : 'no iles.config.ts file found.')
 
   config.plugins = [
-    appConfigDefaults(config),
+    appConfigDefaults(config, userConfig as UserConfig),
     userConfig,
     ...plugins,
   ].flat().filter(p => p) as Plugin[]
 
   Object.assign(config, await applyPlugins(config, configEnv))
   config.pages.pagesDir = join(config.srcDir, config.pagesDir)
-  config.namedPlugins.pages = pages(config.pages)
-  config.namedPlugins.markdown = xdm(config.markdown)
+  await setNamedPlugins(config, config.namedPlugins)
 
   const siteUrl = config.siteUrl || ''
   const protocolIndex = siteUrl.indexOf('//')
@@ -74,6 +79,31 @@ async function resolveUserConfig (root: string, configEnv: ConfigEnv) {
   config.vite.build!.assetsDir = config.assetsDir
 
   return config
+}
+
+async function setNamedPlugins (config: AppConfig, plugins: NamedPlugins) {
+  plugins.components = components(config.components)
+  plugins.pages = pages(config.pages)
+  plugins.markdown = xdm(config.markdown)
+  plugins.vue = vue(config.vue)
+  plugins.vueJsx = vueJsx(config.vueJsx)
+
+  const optionalPlugins: [keyof AppConfig, string, (mod: any, options: any) => any][] = [
+    ['solid', 'vite-plugin-solid', (mod, options) => (mod.default || mod)({ ssr: true, ...options })],
+    ['preact', '@preact/preset-vite', (mod, options) => (mod.default || mod)(options)],
+    ['svelte', '@sveltejs/vite-plugin-svelte', (mod, options) =>
+      mod.svelte({ ...options, compilerOptions: { hydratable: true, ...options?.compilerOptions } }),
+    ],
+  ]
+  for (const [optionName, pluginName, createPlugin] of optionalPlugins) {
+    const addPlugin = config[optionName] || config.jsx === optionName
+    if (addPlugin) {
+      const options = isObject(addPlugin) ? addPlugin : {}
+      plugins.optionalPlugins.push(createPlugin(await resolvePlugin(pluginName), options))
+    }
+  }
+  if (config.preact || config.jsx === 'preact')
+    await resolvePlugin('preact-render-to-string')
 }
 
 async function applyPlugins (config: AppConfig, configEnv: ConfigEnv) {
@@ -94,8 +124,19 @@ async function applyPlugins (config: AppConfig, configEnv: ConfigEnv) {
   return config
 }
 
-function appConfigDefaults (appConfig: AppConfig): Omit<AppConfig, 'namedPlugins'> {
+function inferJSX (config: UserConfig) {
+  const plugins = config.vite?.plugins?.flat() || []
+  for (const plugin of plugins) {
+    const { name = '' } = plugin || {}
+    if (name.includes('preact')) return 'preact'
+    if (name.includes('solid')) return 'solid'
+  }
+  return 'vue'
+}
+
+function appConfigDefaults (appConfig: AppConfig, userConfig: UserConfig): Omit<AppConfig, 'namedPlugins'> {
   const { root } = appConfig
+  const { jsx = inferJSX(userConfig) } = userConfig
 
   function IlesLayoutResolver (name: string) {
     const [layoutName, isLayout] = name.split('Layout', 2)
@@ -107,6 +148,7 @@ function appConfigDefaults (appConfig: AppConfig): Omit<AppConfig, 'namedPlugins
 
   return {
     debug: true,
+    jsx,
     root,
     base: '/',
     siteUrl: '',
@@ -140,7 +182,7 @@ function appConfigDefaults (appConfig: AppConfig): Omit<AppConfig, 'namedPlugins
       },
     },
     vueJsx: {
-      include: /\.[jt]sx|mdx?$/,
+      include: jsx === 'vue' ? /\.([jt]sx|mdx?)$/ : /\.mdx?$/,
     },
     markdown: {
       jsx: true,
@@ -166,7 +208,7 @@ function appConfigDefaults (appConfig: AppConfig): Omit<AppConfig, 'namedPlugins
     },
     components: {
       dts: true,
-      extensions: ['vue', 'jsx', 'js', 'ts', 'mdx'],
+      extensions: ['vue', 'jsx', 'tsx', 'js', 'ts', 'mdx', 'svelte'],
       include: [/\.vue$/, /\.vue\?vue/, /\.mdx?/],
       resolvers: [
         IlesComponentResolver,

@@ -9,6 +9,13 @@ import inspect from 'vite-plugin-inspect'
 
 export default defineConfig({
   siteUrl: 'https://iles-docs.netlify.app',
+  jsx: 'preact',
+  ssg: {
+    manualChunks: (id, api) => {
+      if (id.includes('preact') || id.includes('algolia') || id.toLowerCase().includes('docsearch'))
+        return 'docsearch'
+    },
+  },
   components: {
     resolvers: [iconsResolver({ componentPrefix: '', customCollections: ['iles'] })],
   },
@@ -19,14 +26,8 @@ export default defineConfig({
     ],
   },
   vite: {
-    resolve: {
-      alias: [
-        { find: /^react(\/|$)/, replacement: 'preact/compat$1' },
-        { find: /^react-dom(\/|$)/, replacement: 'preact/compat$1' },
-      ],
-    },
     optimizeDeps: {
-      include: ['quicklink', '@vueuse/core', '@docsearch/js'],
+      include: ['quicklink', '@vueuse/core', '@mussi/docsearch'],
     },
     plugins: [
       icons({

@@ -1,12 +1,19 @@
 /* eslint-disable no-use-before-define */
 import type { UserConfig as ViteOptions, ConfigEnv } from 'vite'
+import type { GetManualChunk } from 'rollup'
 import type { App, Ref, DefineComponent } from 'vue'
 import type { Options as CritterOptions } from 'critters'
-import type { Options as VueOptions } from '@vitejs/plugin-vue'
+import type VuePlugin, { Options as VueOptions } from '@vitejs/plugin-vue'
 import type PagesPlugin, { UserOptions as PagesOptions } from 'vite-plugin-pages'
+import type ComponentsPlugin from 'unplugin-vue-components/vite'
 import type { Options as ComponentOptions } from 'unplugin-vue-components/types'
 import type VueJsxPlugin from '@vitejs/plugin-vue-jsx'
 import type XdmPlugin, { PluginOptions as XdmOptions } from 'vite-plugin-xdm'
+
+import type { Options as SolidOptions } from 'vite-plugin-solid'
+import type { Options as SvelteOptions } from '@sveltejs/vite-plugin-svelte'
+import type { PreactPluginOptions as PreactOptions } from '@preact/preset-vite'
+
 import type { FrontmatterOptions } from '@islands/frontmatter'
 import type { Router, RouteRecordRaw, RouteMeta, RouterOptions as VueRouterOptions, RouteComponent, RouteLocationNormalizedLoaded } from 'vue-router'
 import type { HeadClient, HeadObject } from '@vueuse/head'
@@ -71,12 +78,53 @@ export type CreateAppFactory = (options?: CreateAppConfig) => Promise<AppContext
 
 export type LayoutFactory = (name: string | false) => any
 
+export interface NamedPlugins {
+  pages: ReturnType<typeof PagesPlugin>
+  markdown: ReturnType<typeof XdmPlugin>
+  vue: ReturnType<typeof VuePlugin>
+  vueJsx: ReturnType<typeof VueJsxPlugin>
+  components: ReturnType<typeof ComponentsPlugin>
+  optionalPlugins: PluginOption[]
+}
+
 export interface AppPlugins {
+  /**
+   * Configuration options for Vite.js
+   */
   vite: ViteOptions
+  /**
+   * Configuration options for @vitejs/plugin-vue
+   */
   vue: VueOptions
+  /**
+   * Configuration options for vite-plugin-pages
+   */
   pages: Omit<PagesOptions, 'pagesDir' | 'react'>
+  /**
+   * Configuration options for unplugin-vue-components, which manages automatic
+   * imports for components in Vue and MDX files.
+   */
   components: ComponentOptions
+  /**
+   * Configuration options for @vitejs/plugin-vue-jsx
+   */
   vueJsx: Parameters<typeof VueJsxPlugin>[0]
+  /**
+   * Configuration options for @preact/preset-vite
+   */
+  preact?: boolean | PreactOptions
+  /**
+   * Configuration options for vite-plugin-solid
+   */
+  solid?: boolean | SolidOptions
+  /**
+   * Configuration options for @sveltejs/vite-plugin-svelte
+   */
+  svelte?: boolean | SvelteOptions
+  /**
+   * Configuration options for markdown processing in îles, including remark
+   * and rehype plugins.
+   */
   markdown: XdmOptions & FrontmatterOptions
   critters?: CritterOptions | false
 }
@@ -103,15 +151,54 @@ export type UserSite = typeof import('~/site').default & {
 export type PluginOption = Plugin | false | null | undefined
 
 export interface RequiredConfig {
+  /**
+   * URL for site in production, used to generate absolute URLs for sitemap.xml
+   * and social meta tags. Available as `site.url` and `site.canonical`.
+   * @type {string}
+   */
   siteUrl: string
+  /**
+   * Whether to output more information about islands and hydration in development.
+   * @default true
+   */
   debug: boolean | 'log'
+  /**
+   * Which framework to use to process `.jsx` and `.tsx` files.
+   */
+  jsx: 'vue' | 'preact' | 'solid'
+  /**
+   * Specify the output directory (relative to project root).
+   * @default 'dist'
+   */
   outDir: string
+  /**
+   * Specify the layouts directory (relative to srcDir).
+   * @default 'layouts'
+   */
   layoutsDir: string
+  /**
+   * Specify the pages directory (relative to srcDir).
+   * @default 'pages'
+   */
   pagesDir: string
+  /**
+   * Specify the directory where the app source is located (relative to project root).
+   * @default 'src'
+   */
   srcDir: string
   tempDir: string
+  /**
+   * Specify the directory to nest generated assets under (relative to outDir).
+   * @default 'assets'
+   */
   assetsDir: string
   ssg: {
+    manualChunks?: GetManualChunk
+    /**
+     * Whether to generate a sitemap.xml and inject the meta tag referencing it.
+     * NOTE: Must provide siteUrl to enable sitemap generation.
+     * @default true
+     */
     sitemap?: boolean
   }
 }
@@ -126,18 +213,16 @@ export interface AppConfig extends RequiredConfig, AppPlugins {
   configPath: string
   pages: PagesOptions
   plugins: Plugin[]
-  namedPlugins: {
-    pages: PagesPlugin
-    markdown: XdmPlugin
-  }
+  namedPlugins: NamedPlugins
 }
 
-export type AppClientConfig = Pick<AppConfig, 'base' | 'root' | 'debug' | 'ssg' | 'siteUrl'>
+export type AppClientConfig = Pick<AppConfig, 'base' | 'root' | 'debug' | 'ssg' | 'siteUrl' | 'jsx'>
 
 export interface IslandDefinition {
   id: string
   script: string
   placeholder: string
+  componentPath: string
   entryFilename?: string
 }
 
