@@ -1,3 +1,13 @@
+## [0.3.2](https://github.com/ElMassimo/iles/compare/v0.3.1...v0.3.2) (2021-10-19)
+
+
+### Bug Fixes
+
+* ref transform typo ([1744f32](https://github.com/ElMassimo/iles/commit/1744f32c4c1956b746ee551f7759e59840635c00))
+* use refTransform in client scripts if needed ([378e03a](https://github.com/ElMassimo/iles/commit/378e03ae46fe965db082b4efb2b7d9ae5382cf92))
+
+
+
 ## [0.3.1](https://github.com/ElMassimo/iles/compare/v0.3.0...v0.3.1) (2021-10-19)
 
 ### Bug Fixes
