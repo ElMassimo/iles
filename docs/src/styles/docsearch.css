@@ -56,8 +56,11 @@ html.dark .DocSearch {
   padding-top: 4rem;
 }
 
-.DocSearch-NoResults .DocSearch-Help,
-.DocSearch-Logo {
+.DocSearch-Screen-Icon {
+  display: inline-block;
+}
+
+.DocSearch-NoResults .DocSearch-Help {
   display: none;
 }
 
