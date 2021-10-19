@@ -18,7 +18,7 @@ if (import.meta.env.PROD) {
           <img class="inline-block mr-2" style="width:36px" alt="logo" src="/logo.svg">
           <span v-if="$route.name !== 'index'" class="hidden md:inline">The Vue Point</span>
         </a>
-        <NavBarLinks client:static/>
+        <NavBarLinks client:none/>
       </nav>
     </div>
     <main class="max-w-3xl mx-auto px-4 sm:px-6 xl:max-w-5xl xl:px-0">

@@ -29,7 +29,7 @@ export enum Hydrate {
   MediaQuery = 'client:media',
   SkipPrerender = 'client:only',
   WhenVisible = 'client:visible',
-  None = 'client:static',
+  None = 'client:none',
 }
 
 export const hydrationFns = {

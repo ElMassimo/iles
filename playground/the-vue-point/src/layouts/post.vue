@@ -78,7 +78,7 @@ let author = $computed(() => {
           </div>
         </div>
         <div class="pt-8">
-          <BackLink client:static href="/">Back to the blog</BackLink>
+          <BackLink client:none href="/">Back to the blog</BackLink>
         </div>
       </footer>
     </div>

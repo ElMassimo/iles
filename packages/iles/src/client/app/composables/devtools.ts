@@ -21,7 +21,7 @@ const strategyLabels: Record<string, any> = {
   'client:media': 'onMediaQuery',
   'client:only': 'noPrerender',
   'client:visible': 'whenVisible',
-  'client:static': 'static',
+  'client:none': 'static',
 }
 
 const frameworkColors: Record<any, any> = {
