@@ -282,7 +282,7 @@ import.meta.hot.accept('/${relative(root, path)}', (...args) => __ILES_PAGE_UPDA
       name: 'iles:client-scripts',
       enforce: 'post',
       async transform (code, id) {
-        const { filename, query } = parseId(id)
+        const { path: filename, query } = parseId(id)
         if (query.clientScript && shouldTransformRef(code))
           return transformRef(code, { filename, sourceMap: true })
       },
