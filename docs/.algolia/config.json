@@ -8,13 +8,7 @@
       "page_rank": 5
     },
     {
-      "url": "https://iles-docs.netlify.app/guide/overview",
-      "selectors_key": "faqs",
-      "tags": ["faqs"],
-      "page_rank": 1
-    },
-    {
-      "url": "https://iles-docs.netlify.app/guide/comparisons",
+      "url": "https://iles-docs.netlify.app/faqs",
       "selectors_key": "faqs",
       "tags": ["faqs"],
       "page_rank": 1

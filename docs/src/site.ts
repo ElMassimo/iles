@@ -34,7 +34,6 @@ const site = {
           { text: 'Markdown', link: '/guide/markdown' },
           { text: 'Meta Tags', link: '/guide/meta-tags' },
           { text: 'Deployment', link: '/guide/deployment' },
-          { text: 'Comparisons', link: '/guide/comparisons' },
         ],
       },
       {
@@ -44,6 +43,7 @@ const site = {
           { text: 'Plugins', link: '/config/plugins' },
         ],
       },
+      { text: 'FAQs', link: '/faqs' },
     ],
   },
 }

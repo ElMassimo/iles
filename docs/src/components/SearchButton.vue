@@ -1,7 +1,5 @@
-<script client:load lang="ts">
-import type { OnLoadFn } from 'iles'
-
-export const onLoad: OnLoadFn = el =>
+<script client:load>
+export const onLoad = el =>
   el.previousElementSibling?.addEventListener('click', () => {
     document.querySelector<HTMLElement>('.DocSearch-Button')?.click()
   })

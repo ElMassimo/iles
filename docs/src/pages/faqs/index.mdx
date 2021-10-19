@@ -1,0 +1,102 @@
+[îles]: https://github.com/ElMassimo/iles
+[Vite.js]: https://vitejs.dev/
+[Vue]: https://v3.vuejs.org/
+[MDX]: https://mdxjs.com/
+[xdm]: https://github.com/wooorm/xdm
+[Astro]: https://docs.astro.build/core-concepts/component-hydration
+[Vitepress]: https://vitepress.vuejs.org/
+[vite-ssg]: https://github.com/antfu/vite-ssg
+[vite-plugin-pages]: https://github.com/hannoeru/vite-plugin-pages
+[unplugin-vue-components]: https://github.com/antfu/unplugin-vue-components
+
+[frameworks]: /guide/frameworks
+[hydration]: /guide/hydration
+[islands]: https://jasonformat.com/islands-architecture/
+
+# FAQs
+
+This section addresses common questions that people have when they found about <Iles/>.
+
+<Should/>
+
+## What's with the [islands]? <Iles noText heading/>
+
+The term has gained some popularity lately, as a metaphor for a mostly static
+page (the sea), sprinkled with interactive sections (the [islands]).
+
+Since [Vue] is the _The Progressive JavaScript Framework_, what
+better foundation for a library that makes it super easy to perform [progressive hydration][hydration]? 😃<VueLogo/>
+
+With <Iles/> the page is pre-rendered just like in SSR, but JS is only shipped
+for the interactive bits as needed, which optimizes bundle size and page load time.
+
+## Motivation 🤔
+
+I started working on <Iles/> because I wanted [Vitepress] + [Astro] using <ViteLogo/> instead of Snowpack.
+
+Currently, my goal is to provide the smoothest integration with Vue and Vite.js
+plugins so that you can iterate swiftly as you build your site or app, while
+using [components from any frameworks][frameworks] to avoid reinventing the wheel
+and focus on shipping value.
+
+## Comparisons ⚖️
+
+<Iles/> builds upon the ideas of old and new frameworks for static-site generation.
+
+> Pull requests to add more comparisons are welcome!
+
+### [Vitepress]
+
+Love Vitepress! Highly recommend it for most documentation websites. This site
+uses <Iles/> mostly for dogfooding purposes.
+
+The main difference is that <Iles/> supports [partial hydration][hydration], so
+you can ship JS only for the interactive parts of the page.
+
+Currently, partial hydration in Vitepress is a manual process, and its default
+mode is targeted at building single-page applications.
+
+Vitepress has an MPA mode that can ship no JS. In <Iles/> that happens
+automatically if you don't use [hydration directives][hydration].
+
+<Tip>
+Use Vitepress if you are building a documentation website, don't need [partial hydration][hydration], or if it has to be a single-page application.
+</Tip>
+
+### [Astro]
+
+The main inspiration for [partial hydration][hydration] in <Iles/>.
+
+Now that Astro is moving to Vite.js, the differences will become smaller.
+
+The following is a list of features and differences to help you compare:
+
+- Astro uses an .astro file format. In îles you use [Vue or MDX pages](/guide/development#pages)
+- îles provides an [inspector panel](https://user-images.githubusercontent.com/1158253/133314267-f0ba784c-ff64-4ee8-b2bf-97ecffc2facd.jpg) in Vue devtools to inspect page data and [hydration](https://user-images.githubusercontent.com/1158253/133314279-1edc22d1-3ffb-414e-b994-212cb316593b.jpg)
+- Pages in îles have access to [frontmatter and file metadata](/guide/development#using-page-data)
+- You can [glob import](/guide/development#glob-imports) pages in îles, access their frontmatter, and render them
+- îles provides [auto-import for components](/guide/development#components) in Vue and MDX files
+- Astro provides support for pagination. îles doesn't have a similar concept
+- îles supports a [convenient syntax for layouts](/guide/development#layouts). In Astro you manually import and use components as layouts
+- Astro supports paths with dynamic params. îles does not support this _yet_
+- îles has a very refined HMR, even site-wide data is automatically reloaded
+
+<Tip>
+Use Astro if you need dynamic routes or pagination.
+
+For other sites, it's mostly a matter of taste.
+</Tip>
+
+## Acknowledgements 🙇‍♂️
+
+- [Vite.js] and [Vue]: for enabling an amazing development experience
+- [Astro](https://astro.build): for sharing a novel way to define islands
+- [xdm]: provides amazing flexibility when processing Markdown
+- [vue-router], [@vueuse/head], and [vite-plugin-pages]: the backbone of this library
+- [unplugin-vue-components]: allows you to avoid the boilerplate
+- [Vitepress] and [vite-ssg]: for their different ideas on SSR
+
+[vue-router]: https://next.router.vuejs.org/
+[@vueuse/head]: https://github.com/vueuse/head
+
+<Contact/>
