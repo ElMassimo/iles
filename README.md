@@ -52,6 +52,12 @@
 
 [blog]: https://the-vue-point-with-iles.netlify.app/
 
+[Vue Plugin]: https://iles-docs.netlify.app/guide/frameworks
+[Preact]: https://iles-docs.netlify.app/guide/frameworks
+[Solid]: https://iles-docs.netlify.app/guide/frameworks
+[Svelte]: https://iles-docs.netlify.app/guide/frameworks
+[vanilla JS]: https://iles-docs.netlify.app/guide/frameworks
+
 __[îles]__ is a static-site generator that provides automatic [partial hydration].
 
 Use [Vue] and [MDX] to build your website, while enjoying the smooth development
@@ -59,6 +65,8 @@ experience provided by [Vite.js].
 
 When building for production, use directives to specify which components are
 interactive, and [îles] will take care of shipping the minimal amount of JS needed.
+
+Use [Vue][vue plugin], [Preact], [Solid], [Svelte], or [vanilla JS] components.
 
 ## Features ✨
 
