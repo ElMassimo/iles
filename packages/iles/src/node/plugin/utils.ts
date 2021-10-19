@@ -11,7 +11,7 @@ export function sleep (ms: number) {
 
 export async function resolvePlugin<T> (name: string) {
   if (!isPackageExists(name)) {
-    withSpinner(`Installing ${name}...`, async () =>
+    await withSpinner(`Installing ${name}...`, async () =>
       await installPackage(name, { dev: true, preferOffline: true }))
   }
   return await importModule(name)
