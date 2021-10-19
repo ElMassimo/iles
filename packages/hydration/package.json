@@ -1,10 +1,11 @@
 {
   "name": "@islands/hydration",
   "description": "Hydration utilities for îles",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "type": "module",
   "files": [
-    "dist"
+    "dist",
+    "island.svelte"
   ],
   "types": "dist/hydration.d.ts",
   "module": "dist/hydration.js",
