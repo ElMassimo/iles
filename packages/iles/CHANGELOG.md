@@ -1,3 +1,12 @@
+## [0.3.5](https://github.com/ElMassimo/iles/compare/v0.3.4...v0.3.5) (2021-10-20)
+
+
+### Bug Fixes
+
+* ensure that iles.config.ts and src/layouts/default.vue are optional ([7b9c99e](https://github.com/ElMassimo/iles/commit/7b9c99ed211fd7eb2730182c0f9621c52104fcad))
+
+
+
 ## [0.3.4](https://github.com/ElMassimo/iles/compare/v0.3.3...v0.3.4) (2021-10-20)
 
 
