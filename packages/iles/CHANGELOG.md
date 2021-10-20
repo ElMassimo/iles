@@ -1,3 +1,12 @@
+## [0.3.4](https://github.com/ElMassimo/iles/compare/v0.3.3...v0.3.4) (2021-10-20)
+
+
+### Bug Fixes
+
+* island resolution in windows (close [#15](https://github.com/ElMassimo/iles/issues/15)). thanks [@gustojs](https://github.com/gustojs)! ([bd6e1fa](https://github.com/ElMassimo/iles/commit/bd6e1fa203c2ed73ebf5f68222cfb88fa629028b))
+
+
+
 ## [0.3.3](https://github.com/ElMassimo/iles/compare/v0.3.2...v0.3.3) (2021-10-20)
 
 
