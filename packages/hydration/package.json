@@ -14,7 +14,6 @@
     "./preact": "./dist/preact.js",
     "./solid": "./dist/solid.js",
     "./svelte": "./dist/svelte.js",
-    "./svelte/island": "./island.svelte",
     "./vanilla": "./dist/vanilla.js",
     "./vue": "./dist/vue.js",
     "./package.json": "./package.json"
