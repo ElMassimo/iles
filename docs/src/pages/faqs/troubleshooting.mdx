@@ -1,0 +1,21 @@
+[GitHub Issues]: https://github.com/ElMassimo/iles/issues?q=is%3Aissue+is%3Aopen+sort%3Aupdated-desc
+[GitHub Discussions]: https://github.com/ElMassimo/iles/discussions
+
+# Troubleshooting
+
+This section lists a few common gotchas, and bugs introduced in the past.
+
+Please skim through __before__ opening an [issue][GitHub Issues].
+
+## Page data not properly injected in app
+
+`usePage` can not be used inside islands, as it would cause the entire context
+(page, frontmatter, meta) to be included in the bundle.
+
+Instead, pass the necessary data explicitly as props. For example:
+
+```vue
+<TimeAgo :date="$meta.lastUpdated" client:visible/>
+```
+
+<Contact/>

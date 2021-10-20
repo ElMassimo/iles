@@ -43,7 +43,13 @@ const site = {
           { text: 'Plugins', link: '/config/plugins' },
         ],
       },
-      { text: 'FAQs', link: '/faqs' },
+      {
+        text: 'FAQs',
+        children: [
+          { text: 'FAQs', link: '/faqs' },
+          { text: 'Troubleshooting', link: '/faqs/troubleshooting' },
+        ],
+      },
     ],
   },
 }

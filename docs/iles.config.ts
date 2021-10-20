@@ -27,7 +27,7 @@ export default defineConfig({
   },
   vite: {
     optimizeDeps: {
-      include: ['quicklink', '@vueuse/core', '@mussi/docsearch', 'preact'],
+      include: ['quicklink', '@vueuse/core', '@mussi/docsearch', 'preact', 'preact/debug'],
     },
     plugins: [
       icons({

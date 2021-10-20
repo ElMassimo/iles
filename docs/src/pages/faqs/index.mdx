@@ -1,4 +1,3 @@
-[îles]: https://github.com/ElMassimo/iles
 [Vite.js]: https://vitejs.dev/
 [Vue]: https://v3.vuejs.org/
 [MDX]: https://mdxjs.com/
@@ -17,27 +16,24 @@
 
 This section addresses common questions that people have when they found about <Iles/>.
 
-<Should/>
-
 ## What's with the [islands]? <Iles noText heading/>
 
 The term has gained some popularity lately, as a metaphor for a mostly static
 page (the sea), sprinkled with interactive sections (the [islands]).
 
-Since [Vue] is the _The Progressive JavaScript Framework_, what
-better foundation for a library that makes it super easy to perform [progressive hydration][hydration]? 😃<VueLogo/>
-
-With <Iles/> the page is pre-rendered just like in SSR, but JS is only shipped
-for the interactive bits as needed, which optimizes bundle size and page load time.
+With <Iles/> the page is pre-rendered just like in server-side rendering, but JS
+is automatically added for the interactive bits, making it easier to use than
+manually attaching JS to existing elements, and more optimal than hydrating the
+entire page.
 
 ## Motivation 🤔
 
 I started working on <Iles/> because I wanted [Vitepress] + [Astro] using <ViteLogo/> instead of Snowpack.
 
-Currently, my goal is to provide the smoothest integration with Vue and Vite.js
-plugins so that you can iterate swiftly as you build your site or app, while
-using [components from any frameworks][frameworks] to avoid reinventing the wheel
-and focus on shipping value.
+<Iles/> philosophy is to provide a smooth integration with Vite.js and its
+wonderful plugin ecosystem, while enabling the use of [components from any frameworks][frameworks] so that you can focus on shipping value.
+
+<Should/>
 
 ## Comparisons ⚖️
 
@@ -45,41 +41,40 @@ and focus on shipping value.
 
 > Pull requests to add more comparisons are welcome!
 
-### [Vitepress]
+### [Vitepress] <ViteLogo/>
 
 Love Vitepress! Highly recommend it for most documentation websites. This site
 uses <Iles/> mostly for dogfooding purposes.
 
 The main difference is that <Iles/> supports [partial hydration][hydration], so
-you can ship JS only for the interactive parts of the page.
+you can ship JS only for the interactive parts of the page. Currently, partial
+hydration in Vitepress is a manual process, and its default mode is targeted at
+building single-page applications.
 
-Currently, partial hydration in Vitepress is a manual process, and its default
-mode is targeted at building single-page applications.
-
-Vitepress has an MPA mode that can ship no JS. In <Iles/> that happens
+Vitepress has an MPA mode to strip away all JS. In <Iles/> that happens
 automatically if you don't use [hydration directives][hydration].
 
 <Tip>
 Use Vitepress if you are building a documentation website, don't need [partial hydration][hydration], or if it has to be a single-page application.
 </Tip>
 
-### [Astro]
+### [Astro] <AstroLogo/>
 
-The main inspiration for [partial hydration][hydration] in <Iles/>.
+Astro is the main inspiration for [partial hydration][hydration] in <Iles/>.
 
 Now that Astro is moving to Vite.js, the differences will become smaller.
 
 The following is a list of features and differences to help you compare:
 
-- Astro uses an .astro file format. In îles you use [Vue or MDX pages](/guide/development#pages)
-- îles provides an [inspector panel](https://user-images.githubusercontent.com/1158253/133314267-f0ba784c-ff64-4ee8-b2bf-97ecffc2facd.jpg) in Vue devtools to inspect page data and [hydration](https://user-images.githubusercontent.com/1158253/133314279-1edc22d1-3ffb-414e-b994-212cb316593b.jpg)
-- Pages in îles have access to [frontmatter and file metadata](/guide/development#using-page-data)
-- You can [glob import](/guide/development#glob-imports) pages in îles, access their frontmatter, and render them
-- îles provides [auto-import for components](/guide/development#components) in Vue and MDX files
-- Astro provides support for pagination. îles doesn't have a similar concept
-- îles supports a [convenient syntax for layouts](/guide/development#layouts). In Astro you manually import and use components as layouts
-- Astro supports paths with dynamic params. îles does not support this _yet_
-- îles has a very refined HMR, even site-wide data is automatically reloaded
+- Astro uses an .astro file format. In <Iles small/> you use [Vue or MDX pages](/guide/development#pages)
+- <Iles small/> provides an [inspector panel](https://user-images.githubusercontent.com/1158253/133314267-f0ba784c-ff64-4ee8-b2bf-97ecffc2facd.jpg) in Vue devtools to inspect page data and [hydration](https://user-images.githubusercontent.com/1158253/133314279-1edc22d1-3ffb-414e-b994-212cb316593b.jpg)
+- Pages in <Iles small/> have access to [frontmatter and file metadata](/guide/development#using-page-data)
+- You can [glob import](/guide/development#glob-imports) pages in <Iles small/>, access their frontmatter, and render them
+- <Iles small/> provides [auto-import for components](/guide/development#components) in Vue and MDX files
+- Astro provides support for pagination. <Iles small/> doesn't have a similar concept
+- <Iles small/> supports a [convenient syntax for layouts](/guide/development#layouts). In Astro you manually import and use components as layouts
+- Astro supports paths with dynamic params. <Iles small/> does not support this _yet_
+- <Iles small/> has a very refined HMR, even site-wide data is automatically reloaded
 
 <Tip>
 Use Astro if you need dynamic routes or pagination.

@@ -5,7 +5,7 @@ export function onLoad () {
   let openSideBar = $ref(false)
 
   watch($$(openSideBar), (v) => {
-    document.documentElement.classList.toggle('overflow-hidden', v)
+    document.documentElement.classList.toggle('<md:overflow-hidden', v)
     document.getElementById('sidebar-background')?.classList.toggle('hidden', !v)
     document.getElementById('sidebar-panel')?.classList.toggle('!-translate-x-0', v)
   })

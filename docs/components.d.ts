@@ -5,6 +5,7 @@
 declare module 'vue' {
   export interface GlobalComponents {
     AppButton: typeof import('./src/components/AppButton.vue')['default']
+    AstroLogo: typeof import('./src/components/AstroLogo.vue')['default']
     BaseLayout: typeof import('./src/layouts/base.vue')['default']
     BxBxMoon: typeof import('~icons/bx/bx-moon')['default']
     BxBxSearch: typeof import('~icons/bx/bx-search')['default']
@@ -23,6 +24,7 @@ declare module 'vue' {
     HomeFeatures: typeof import('./src/components/HomeFeatures.vue')['default']
     HomeHero: typeof import('./src/components/HomeHero.vue')['default']
     Iles: typeof import('./src/components/Iles.vue')['default']
+    IlesAstro: typeof import('~icons/iles/astro')['default']
     IlesLogo: typeof import('~icons/iles/logo')['default']
     IlesNetlify: typeof import('~icons/iles/netlify')['default']
     IlesText: typeof import('~icons/iles/text')['default']
