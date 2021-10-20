@@ -1,5 +1,5 @@
 /* eslint-disable no-restricted-syntax */
-import { join, relative, resolve, dirname } from 'pathe'
+import { join, resolve, dirname } from 'pathe'
 import { promises as fs } from 'fs'
 import virtual from '@rollup/plugin-virtual'
 import { build as viteBuild, mergeConfig as mergeViteConfig } from 'vite'
@@ -9,7 +9,7 @@ import type { PreRenderedChunk } from 'rollup'
 import IslandsPlugins from '../plugin'
 import type { Awaited, AppConfig, IslandsByPath, IslandDefinition, SSGRoute } from '../shared'
 import rebaseImports from './rebaseImports'
-import { fileToAssetName, uniq } from './utils'
+import { flattenPath, uniq } from './utils'
 import { extendManualChunks } from './chunks'
 import type { renderPages } from './render'
 
@@ -37,7 +37,14 @@ async function renderRoute (config: AppConfig, manifest: Manifest, route: SSGRou
 
     for (const island of islands) {
       // Find the corresponding entrypoint for the island.
-      const entry = manifest[`\x00virtual:${relative(config.root, island.entryFilename!)}`]
+      const entry = manifest[`\x00virtual:${island.entryFilename!}`]
+
+      if (!entry) {
+        const message = `Unable to find entry for island '${island.entryFilename}' in manifest.json`
+        console.error(`${message}. Island:\n`, island, '\n\nManifest:\n', manifest)
+        throw new Error(message)
+      }
+
       if (entry.imports) preloadScripts.push(...entry.imports)
 
       // Read the compiled code for the island.
@@ -65,7 +72,7 @@ async function buildIslands (config: AppConfig, islandsByPath: IslandsByPath) {
 
   for (const path in islandsByPath) {
     islandsByPath[path].forEach((island) => {
-      island.entryFilename = fileToAssetName(`${path}/${island.id}`)
+      island.entryFilename = `${flattenPath(path)}_${island.id}`
       entrypoints[island.entryFilename] = island.script
       islandComponents[island.componentPath] = island.componentPath
     })

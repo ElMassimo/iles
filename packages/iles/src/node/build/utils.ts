@@ -27,17 +27,15 @@ export function slash (path: string): string {
   return path.replace(/\\/g, '/')
 }
 
-// page filename conversion
-// foo/bar.md -> foo_bar.md
-export function fileToAssetName (path: string): string {
-  return slash(path).replace(/\//g, '_')
-}
-
 export function uniq<T> (arr: Array<T>) {
   return [...new Set(arr.filter(x => x))]
 }
 
-export function pathToFilename (path: string, ext: string) {
+export function flattenPath (path: string) {
+  return pathToFilename(path).replace(/\//g, '_')
+}
+
+export function pathToFilename (path: string, ext = '') {
   if (path.endsWith(ext)) ext = ''
   return `${(path.endsWith('/') ? `${path}index` : path).replace(/^\//g, '')}${ext}`
 }
