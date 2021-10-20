@@ -115,7 +115,7 @@ export default function IslandsPlugins (appConfig: AppConfig): PluginOption[] {
         }
 
         if (isBuild && id.includes(defaultLayoutPath) && !await exists(resolve(root, defaultLayoutPath.slice(1))))
-          return 'export default false'
+          return '<template><slot/></template>'
       },
       handleHotUpdate ({ file, server }) {
         if (file === appPath) return [server.moduleGraph.getModuleById(USER_APP_REQUEST_PATH)!]
