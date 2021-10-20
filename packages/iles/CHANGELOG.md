@@ -1,3 +1,12 @@
+## [0.3.6](https://github.com/ElMassimo/iles/compare/v0.3.5...v0.3.6) (2021-10-20)
+
+
+### Bug Fixes
+
+* ensure content is rendered when default layout is missing ([3d4538e](https://github.com/ElMassimo/iles/commit/3d4538e5defb841874cd8e7d1108be451e6f824a))
+
+
+
 ## [0.3.5](https://github.com/ElMassimo/iles/compare/v0.3.4...v0.3.5) (2021-10-20)
 
 
