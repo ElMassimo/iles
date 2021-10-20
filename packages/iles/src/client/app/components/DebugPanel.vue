@@ -22,7 +22,7 @@ function copyIfSelected () {
   timeoutId = setTimeout(() => { message.value = undefined }, 3000)
 }
 
-function copyAll (el: HTMLElement) {
+function copyAll (el: HTMLElement | null) {
   const selection = getSelection()
   if (!selection || !el) return
   const range = document.createRange()

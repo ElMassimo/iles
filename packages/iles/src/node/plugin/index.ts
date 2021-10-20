@@ -48,6 +48,7 @@ export default function IslandsPlugins (appConfig: AppConfig): PluginOption[] {
   let base: ResolvedConfig['base']
   let mode: ResolvedConfig['mode']
   let root: ResolvedConfig['root']
+  let isBuild: boolean
   let resolveVitePath: ResolveFn
 
   const appPath = resolve(appConfig.srcDir, 'app.ts')
@@ -75,6 +76,7 @@ export default function IslandsPlugins (appConfig: AppConfig): PluginOption[] {
         base = config.base
         mode = config.mode
         root = config.root
+        isBuild = config.command === 'build'
         resolveVitePath = config.createResolver()
       },
       async resolveId (id) {
@@ -95,7 +97,7 @@ export default function IslandsPlugins (appConfig: AppConfig): PluginOption[] {
         // Prevent import analysis failure if the default layout doesn't exist.
         if (id === defaultLayoutPath) return resolve(root, id.slice(1))
       },
-      async load (id) {
+      async load (id, ssr) {
         if (id === APP_CONFIG_REQUEST_PATH) {
           const { base, debug, jsx, root, ssg: { manualChunks: _, ...ssg }, siteUrl } = appConfig
           const clientConfig: AppClientConfig = { base, debug, root, jsx, ssg, siteUrl }
@@ -111,6 +113,9 @@ export default function IslandsPlugins (appConfig: AppConfig): PluginOption[] {
             : { code: 'export default {}' }
           return id === USER_SITE_REQUEST_PATH ? extendSite(result.code, appConfig) : result
         }
+
+        if (isBuild && id.includes(defaultLayoutPath) && !await exists(resolve(root, defaultLayoutPath.slice(1))))
+          return 'export default false'
       },
       handleHotUpdate ({ file, server }) {
         if (file === appPath) return [server.moduleGraph.getModuleById(USER_APP_REQUEST_PATH)!]

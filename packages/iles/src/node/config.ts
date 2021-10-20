@@ -54,10 +54,7 @@ async function resolveUserConfig (root: string, configEnv: ConfigEnv) {
   const config = { root, namedPlugins: {} } as AppConfig
   config.namedPlugins.optionalPlugins = []
 
-  const { path, config: { plugins = [], ...userConfig } = {} }
-    = await loadConfigFromFile(configEnv, 'iles.config.ts', root) || {}
-  if (path) config.configPath = path
-  debug(path ? `loaded config at ${yellow(path)}` : 'no iles.config.ts file found.')
+  const { plugins = [], ...userConfig } = await loadUserConfigFile(root, configEnv)
 
   config.plugins = [
     appConfigDefaults(config, userConfig as UserConfig),
@@ -79,6 +76,28 @@ async function resolveUserConfig (root: string, configEnv: ConfigEnv) {
   config.vite.build!.assetsDir = config.assetsDir
 
   return config
+}
+
+async function loadUserConfigFile (root: string, configEnv: ConfigEnv): Promise<UserConfig> {
+  try {
+    const { path, config = {} }
+      = await loadConfigFromFile(configEnv, 'iles.config.ts', root) || {}
+    if (path && config) {
+      (config! as AppConfig).configPath = path
+      debug(`loaded config at ${yellow(path)}`)
+    }
+    else {
+      debug('no iles.config.ts file found.')
+    }
+    return config
+  }
+  catch (error) {
+    if (error.message.includes('Could not resolve')) {
+      debug('no iles.config.ts file found.')
+      return {}
+    }
+    throw error
+  }
 }
 
 async function setNamedPlugins (config: AppConfig, plugins: NamedPlugins) {
