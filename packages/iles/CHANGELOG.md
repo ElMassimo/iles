@@ -1,3 +1,12 @@
+## [0.3.3](https://github.com/ElMassimo/iles/compare/v0.3.2...v0.3.3) (2021-10-20)
+
+
+### Features
+
+* add 'info' command to print the version ([698ce22](https://github.com/ElMassimo/iles/commit/698ce22964662d95e88d408a4f5023787702c03a))
+
+
+
 ## [0.3.2](https://github.com/ElMassimo/iles/compare/v0.3.1...v0.3.2) (2021-10-19)
 
 
