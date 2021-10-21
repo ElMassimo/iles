@@ -1,6 +1,6 @@
 ---
 name: Bug report
-about: Create a report to help us improve
+about: Create a report to help us improve. Please check the Troubleshooting section before opening an issue.
 title: ''
 labels: 'bug: pending triage'
 assignees: ''

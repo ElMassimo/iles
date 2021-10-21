@@ -4,6 +4,7 @@
 [MDX]: /guide/markdown
 [glob]: https://vitejs.dev/guide/features.html#glob-import
 [config]: /config#configuring-%C3%AEles
+[frontmatter]: https://github.com/wooorm/xdm#frontmatter
 
 # Development 💻
 
@@ -13,23 +14,23 @@ In this section, we'll cover the basics to start building an <Iles/> application
 
 <pre class="code">
 <code><kbd class="-ml-2"><a href="/config#srcDir">src/</a></kbd>
-├── <kbd><a href="#components">components/</a></kbd>
-│    ├── ReadingTime.vue
-│    └── Author.vue
-│
-├── <kbd><a href="#layouts">layouts/</a></kbd>
-│    ├── default.vue
-│    └── post.vue
-│
-├── <kbd><a href="#pages">pages/</a></kbd>
-│    ├── posts/
-│    │    ├── intro.mdx
-│    │    └── goodbye.mdx
-│    ├── about.vue
-│    └── index.mdx
-│
-├── <kbd><a href="/config#your-app">app.ts</a></kbd>
-└── <kbd><a href="#site">site.ts</a></kbd></code>
+  ├── <kbd><a href="#components">components/</a></kbd>
+  │    ├── ReadingTime.vue
+  │    └── Author.vue
+  │
+  ├── <kbd><a href="#layouts">layouts/</a></kbd>
+  │    ├── default.vue
+  │    └── post.vue
+  │
+  ├── <kbd><a href="#pages">pages/</a></kbd>
+  │    ├── posts/
+  │    │    ├── intro.mdx
+  │    │    └── goodbye.mdx
+  │    ├── about.vue
+  │    └── index.mdx
+  │
+  ├── <kbd><a href="/config#your-app">app.ts</a></kbd>
+  └── <kbd><a href="#site">site.ts</a></kbd></code>
 </pre>
 
 By default, <kbd>[srcDir]</kbd> is aliased as `~/` or `@/`. For example:
@@ -55,7 +56,7 @@ Check out [`vite-plugin-pages`](https://github.com/hannoeru/vite-plugin-pages) f
 
 Pages can be Vue components or [MDX files][mdx], and may specify frontmatter and route metadata.
 
-You may use Vue components inside [MDX], and access any properties defined in frontmatter:
+You may use Vue components inside [MDX], and access any properties defined in the [frontmatter]:
 
 ```mdx
 ---

@@ -26,7 +26,6 @@
 [Partial Hydration]: https://jasonformat.com/islands-architecture/
 [Vite.js]: https://vitejs.dev/
 [Vue]: https://v3.vuejs.org/
-[MDX]: https://mdxjs.com/
 [xdm]: https://github.com/wooorm/xdm
 [Astro]: https://docs.astro.build/core-concepts/component-hydration
 [vite-plugin-pages]: https://github.com/hannoeru/vite-plugin-pages
@@ -60,7 +59,7 @@
 
 __[îles]__ is a static-site generator that provides automatic [partial hydration].
 
-Use [Vue] and [MDX] to build your website, while enjoying the smooth development
+Use [Vue] and [MDX][markdown] to build your website, while enjoying the smooth development
 experience provided by [Vite.js].
 
 When building for production, use directives to specify which components are

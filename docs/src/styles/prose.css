@@ -1,3 +1,17 @@
+:root {
+  --prose-padding: 1.5rem;
+  --prose-width: min(750px, 100%);
+}
+
+.prose > *,
+.page-footer {
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: var(--prose-padding);
+  padding-right: var(--prose-padding);
+  width: var(--prose-width);
+}
+
 .prose {
   line-height: 1.75;
 
@@ -31,11 +45,13 @@
   }
 
   figure {
-    margin: 2em 0 1.5em;
+    margin-top: 2em;
+    margin-bottom: 1.5em;
   }
 
   hr {
-    margin: 3em 0;
+    margin-top: 3em;
+    margin-bottom: 3em;
   }
 
   h1 {
@@ -91,25 +107,27 @@
     margin-top: 0;
   }
 
-  iframe.example {
-    width: 100%;
-  }
-
   .img {
+    @apply my-10;
     display: block;
-    margin: 2em 0;
-    width: calc(100% + 4rem);
+    padding: 0;
+
+    &.narrow {
+      width: min(500px, 100%);
+    }
   }
 
   .caption {
     display: block;
     font-style: italic;
-    margin: -1rem 0 2rem;
+    margin-top: -1rem;
+    margin-bottom: 2rem;
     text-align: center;
   }
 
   .code.caption {
-    margin: -1rem 0 2rem;
+    margin-top: -1rem;
+    margin-bottom: 2rem;
 
     & > code {
       background: none;
@@ -119,78 +137,20 @@
 
   blockquote,
   pre {
-    @apply px-6 py-4 pr-4;
+    @apply py-4;
   }
 
   figure,
-  .img,
-  div.highlight {
-    @apply md:rounded-md -mx-8;
+  .img {
+    @apply md:rounded-md;
   }
 
   blockquote {
-    @apply md:rounded-r-md -mx-4 py-6;
+    @apply md:rounded-r-md py-6;
   }
 
   blockquote p + p {
     margin-top: 1rem;
-  }
-}
-
-p .emoji {
-  vertical-align: -0.2em;
-}
-
-a.anchor {
-  $size: 16px;
-  $margin: 4px;
-
-  border: none;
-  box-sizing: content-box;
-  display: inline-block;
-  height: $size;
-  margin-left: -($size + $margin);
-  padding-right: $margin;
-  vertical-align: middle;
-  width: $size;
-
-  &::after {
-    /* TODO: Add remark-anchor-slug plugin */
-    /*background-image: url('~/icons/link.png');*/
-    background-size: $size;
-    content: '';
-    display: block;
-    height: $size;
-    visibility: hidden;
-    width: $size;
-  }
-
-  &:hover::after {
-    visibility: visible;
-  }
-}
-
-/* stylelint-disable no-descending-specificity */
-.img {
-  &.square {
-    border-radius: 0;
-  }
-
-  &.captioned {
-    margin-bottom: 1.5rem;
-  }
-
-  @media (min-width: 1024px) {
-    &.narrow {
-      margin-left: 10%;
-      width: 80%;
-    }
-
-    &.wide {
-      --width: clamp(var(--w-container), 70vw, 940px);
-      margin-left: calc((var(--width) - var(--w-container)) / -2);
-      width: var(--width);
-    }
   }
 }
 

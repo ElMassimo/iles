@@ -13,7 +13,7 @@ defineProps({ grid: { type: Boolean, default: false } })
   display: grid;
   grid-template-columns: 1fr;
   grid-template-rows: 1fr;
-  gap: 0px 12px;
+  gap: 0px 1rem;
 }
 
 @screen md {
@@ -24,13 +24,13 @@ defineProps({ grid: { type: Boolean, default: false } })
 
 @screen lg {
   .content {
-    grid-template-columns: 250px 1fr;
+    grid-template-columns: 230px 1fr;
   }
 }
 
 @screen xl {
   .content {
-    grid-template-columns: 250px 1fr 250px;
+    grid-template-columns: 240px 1fr 250px;
   }
 }
 </style>
