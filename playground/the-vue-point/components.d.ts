@@ -9,7 +9,6 @@ declare module 'vue' {
     CarbonWarning: typeof import('~icons/carbon/warning')['default']
     DefaultLayout: typeof import('./src/layouts/default.vue')['default']
     Island: typeof import('iles')['Island']
-    NavBarLink: typeof import('./src/components/NavBarLink.svelte')['default']
     NavBarLinks: typeof import('./src/components/NavBarLinks.svelte')['default']
     PostDate: typeof import('./src/components/PostDate.vue')['default']
   }

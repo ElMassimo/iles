@@ -4,9 +4,9 @@ export default create_ssr_component(($$result: any, $$props: any) => {
   const { component, slots, props } = $$props
 
   const $$slots = slots ? Object.fromEntries(
-    Object.entries(slots).map(([name, content]) => [name, () => content])
+    Object.entries(slots).map(([name, content]) => [name, () => content]),
   ) : {}
 
   return validate_component(component || missing_component, 'svelte:component')
-    .$$render($$result, Object.assign(props), {}, $$slots)
+    .$$render($$result, props, {}, $$slots)
 })

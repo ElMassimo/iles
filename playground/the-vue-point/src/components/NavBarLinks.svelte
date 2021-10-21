@@ -6,5 +6,4 @@
     target="_blank"
     rel="noopener"
   >Vuejs.org →</a>
-  <slot/>
 </div>

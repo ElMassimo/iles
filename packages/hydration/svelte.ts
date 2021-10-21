@@ -35,6 +35,6 @@ function createSlot (raw_value: string) {
     d (detaching: boolean) {
       if (detaching) detach(html_tag.a)
       if (detaching) html_tag.d()
-    }
+    },
   }
 }
