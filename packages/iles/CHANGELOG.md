@@ -1,3 +1,12 @@
+## [0.3.7](https://github.com/ElMassimo/iles/compare/v0.3.6...v0.3.7) (2021-10-21)
+
+
+### Features
+
+* allow passing multiple slots to Svelte islands ([3bb76eb](https://github.com/ElMassimo/iles/commit/3bb76eb592c36a5a2249af92a43e97aa84fd4140))
+
+
+
 ## [0.3.6](https://github.com/ElMassimo/iles/compare/v0.3.5...v0.3.6) (2021-10-20)
 
 
