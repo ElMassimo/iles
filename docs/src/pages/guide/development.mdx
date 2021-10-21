@@ -4,7 +4,7 @@
 [MDX]: /guide/markdown
 [glob]: https://vitejs.dev/guide/features.html#glob-import
 [config]: /config#configuring-%C3%AEles
-[frontmatter]: https://github.com/wooorm/xdm#frontmatter
+[frontmatter]: /guide/markdown#frontmatter-and-meta
 
 # Development 💻
 
@@ -88,10 +88,10 @@ audio: /song-for-you.mp3
 
 You may access information about the current page using the `usePage` composition API helper, or by using the  `$frontmatter` or `$meta` global properties.
 
-- `frontmatter`: The frontmatter defined in an [MDX] document, or in a `<route>` block for Vue components
+- `frontmatter`: The [frontmatter] of an [MDX][frontmatter] document or Vue component (in `<route>`)
 - `meta`: Information about the page, including `href`, `filename`, and `lastUpdated`
 
-```ts
+```vue
 <script setup>
 import { usePage } from 'iles'
 

@@ -10,6 +10,7 @@ declare module 'vue' {
     BxBxMoon: typeof import('~icons/bx/bx-moon')['default']
     BxBxSearch: typeof import('~icons/bx/bx-search')['default']
     BxBxSun: typeof import('~icons/bx/bx-sun')['default']
+    Caption: typeof import('./src/components/Caption.vue')['default']
     CarbonArrowLeft: typeof import('~icons/carbon/arrow-left')['default']
     CarbonArrowRight: typeof import('~icons/carbon/arrow-right')['default']
     CarbonLogoGithub: typeof import('~icons/carbon/logo-github')['default']

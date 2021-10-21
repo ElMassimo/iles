@@ -95,7 +95,8 @@
     margin: 0;
   }
 
-  p code {
+  p code,
+  li code {
     @apply rounded;
 
     background-color: var(--bg-highlight);

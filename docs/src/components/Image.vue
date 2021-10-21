@@ -9,5 +9,5 @@ defineProps({
 
 <template>
   <img class="img" :class="{ narrow, wide }" :src="src" :alt="caption">
-  <span class="caption" v-text="caption"/>
+  <Caption>{{ caption }}</Caption>
 </template>
