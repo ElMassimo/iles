@@ -1,3 +1,12 @@
+## [0.3.10](https://github.com/ElMassimo/iles/compare/v0.3.9...v0.3.10) (2021-10-22)
+
+
+### Bug Fixes
+
+* could not resolve Head component ([97c2cae](https://github.com/ElMassimo/iles/commit/97c2cae979bb66deb4cbc5891d9572c206e9abc9))
+
+
+
 ## [0.3.9](https://github.com/ElMassimo/iles/compare/v0.3.8...v0.3.9) (2021-10-22)
 
 
