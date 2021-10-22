@@ -18,6 +18,7 @@ const site = {
   nav: [
     { text: 'Guide', link: '/guide' },
     { text: 'Config', link: '/config' },
+    { text: 'FAQs', link: '/faqs' },
   ],
 
   sidebar: {
