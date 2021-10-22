@@ -1,5 +1,4 @@
 /* eslint-disable no-restricted-syntax */
-import { resolve } from 'pathe'
 import type { RollupOutput } from 'rollup'
 import type { Plugin } from 'vite'
 import { build, BuildOptions, mergeConfig as mergeViteConfig, UserConfig as ViteUserConfig } from 'vite'
@@ -48,9 +47,7 @@ async function bundleWithVite (config: AppConfig, entrypoints: Entrypoints, { ss
 
 // Internal: Currently SSG supports a single stylesheet for all pages.
 function resolveEntrypoints (config: AppConfig): Entrypoints {
-  return {
-    app: resolve(APP_PATH, 'index.js'),
-  }
+  return { app: APP_PATH }
 }
 
 // Internal: Removes any client JS files from the bundle, islands will be used

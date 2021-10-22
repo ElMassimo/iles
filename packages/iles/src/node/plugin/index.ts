@@ -19,6 +19,8 @@ import { parseId, parseImports } from './parse'
 import { unresolvedIslandKey, wrapIslandsInSFC, wrapLayout } from './wrap'
 import { extendSite } from './site'
 
+export const ILES_APP_ENTRY = '/@iles-entry'
+
 const debug = {
   config: createDebugger('iles:config'),
   mdx: createDebugger('iles:mdx'),
@@ -80,6 +82,9 @@ export default function IslandsPlugins (appConfig: AppConfig): PluginOption[] {
         resolveVitePath = config.createResolver()
       },
       async resolveId (id) {
+        if (id === ILES_APP_ENTRY)
+          return APP_PATH
+
         if (id === ROUTES_REQUEST_PATH)
           return PAGES_REQUEST_PATH
 
@@ -128,24 +133,30 @@ export default function IslandsPlugins (appConfig: AppConfig): PluginOption[] {
 
         // serve our index.html after vite history fallback
         return () => {
-          server.middlewares.use((req, res, next) => {
+          server.middlewares.use(async (req, res, next) => {
+            const url = req.url || ''
             // Fallback when the user has not created a default layout.
-            if (req.url?.includes(defaultLayoutPath)) {
+            if (url.includes(defaultLayoutPath)) {
               res.statusCode = 200
               res.setHeader('content-type', 'text/javascript')
               res.end('export default false')
             }
-            else if (supportedExtensions.some(ext => req.url!.endsWith(ext))) {
+            else if (supportedExtensions.some(ext => url.endsWith(ext))) {
               res.statusCode = 200
               res.setHeader('content-type', 'text/html')
-              res.end(`
+
+              let html = `
 <!DOCTYPE html>
 <html>
   <body>
     <div id="app"></div>
-    <script type="module" src="/@fs/${APP_PATH}/index.js"></script>
+    <script type="module" src="${ILES_APP_ENTRY}"></script>
   </body>
-</html>`)
+</html>`
+              html = await server.transformIndexHtml(url, html, req.originalUrl)
+              res.end(html)
+            } else {
+              next()
             }
           })
         }

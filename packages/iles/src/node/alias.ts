@@ -3,7 +3,7 @@ import { Alias, AliasOptions } from 'vite'
 
 const PKG_ROOT = join(__dirname, '../../')
 export const DIST_CLIENT_PATH = join(__dirname, '../client')
-export const APP_PATH = join(DIST_CLIENT_PATH, 'app')
+export const APP_PATH = join(DIST_CLIENT_PATH, 'app', 'index.js')
 export const NOT_FOUND_COMPONENT_PATH = join(DIST_CLIENT_PATH, 'app/components/NotFound.vue')
 export const SHARED_PATH = join(DIST_CLIENT_PATH, 'shared')
 export const HYDRATION_DIST_PATH = join(dirname(require.resolve('@islands/hydration/package.json')), 'dist')
