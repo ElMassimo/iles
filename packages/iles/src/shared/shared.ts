@@ -1,4 +1,4 @@
-import { UserApp, UserConfig } from '../../types/shared'
+import { UserApp, UserConfig, GetStaticPaths } from '../../types/shared'
 
 export type {
   AppClientConfig,
@@ -18,6 +18,7 @@ export type {
   PageData,
   PageFrontmatter,
   PageMeta,
+  PageProps,
   Plugin,
   PluginOption,
   RouteMeta,
@@ -25,6 +26,8 @@ export type {
   RouteRecordRaw,
   RouterOptions,
   AppContext,
+  GetStaticPaths,
+  StaticPath,
   SSGRoute,
   UserApp,
   UserSite,
@@ -42,4 +45,8 @@ export function defineConfig (config: UserConfig) {
 
 export function defineApp (app: UserApp) {
   return app
+}
+
+export function defineStaticPaths (fn: GetStaticPaths) {
+  return fn
 }

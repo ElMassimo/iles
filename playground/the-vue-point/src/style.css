@@ -1,3 +1,8 @@
+html, body {
+  background: black;
+  color: white;
+}
+
 :root {
   --c-brand: #3eaf7c;
   --c-brand-light: #4abf8a;

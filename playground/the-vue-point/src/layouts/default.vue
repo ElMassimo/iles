@@ -1,5 +1,10 @@
 <script setup lang="ts">
 import { useHead } from 'iles'
+import { usePosts } from '~/logic/posts'
+
+const { clear } = usePosts()
+
+const isDev = import.meta.env.DEV
 
 if (import.meta.env.PROD) {
   useHead({
@@ -18,7 +23,12 @@ if (import.meta.env.PROD) {
           <img class="inline-block mr-2" style="width:36px" alt="logo" src="/logo.svg">
           <span v-if="$route.name !== 'index'" class="hidden md:inline">The Vue Point</span>
         </a>
-        <NavBarLinks client:none/>
+        <div class="text-base text-gray-500 leading-5">
+          <NavBarLinks client:none/>
+          <button v-if="isDev" class="top-4 right-4 absolute" @click="clear">
+            <CarbonReset/>
+          </button>
+        </div>
       </nav>
     </div>
     <main class="max-w-3xl mx-auto px-4 sm:px-6 xl:max-w-5xl xl:px-0">

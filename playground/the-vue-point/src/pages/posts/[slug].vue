@@ -1,24 +1,36 @@
+<script static lang="ts">
+import { fetchPostFiles } from '~/logic/posts'
+
+export async function getStaticPaths () {
+  return fetchPostFiles().map((post) => {
+    const slug = post.path.replace(/^posts\/(.*)\.md$/, '$1')
+    return { params: { slug }, props: { url: post.url } }
+  })
+}
+</script>
+
 <script setup lang="ts">
 import { usePage } from 'iles'
-import { usePosts, Post } from '~/logic/posts'
+import { usePosts } from '~/logic/posts'
 
-const posts = usePosts()
+let { frontmatter, route } = usePage()
+const { posts } = $(usePosts())
 
-let { page } = $(usePage())
-const post = page as any as Post
-
-let currentIndex = $computed(() => posts.findIndex(p => p.href === post.href))
+let currentIndex = $computed(() => posts.findIndex(p => p.href === route.path))
+let post = $computed(() => posts[currentIndex])
 let nextPost = $computed(() => posts[currentIndex - 1])
 let prevPost = $computed(() => posts[currentIndex + 1])
 
 let author = $computed(() => {
+  frontmatter.title = post.title
+  frontmatter.description = post.excerpt
   const { twitter, gravatar, author } = post
   return { twitter, gravatar, author }
 })
 </script>
 
 <template layout="default">
-  <article class="xl:divide-y xl:divide-gray-200">
+  <article v-if="post" class="xl:divide-y xl:divide-gray-200">
     <header class="pt-6 xl:pb-10 space-y-1 text-center">
       <PostDate :date="post.date"/>
       <h1
@@ -48,7 +60,10 @@ let author = $computed(() => {
       <Author v-bind="author"/>
       <div class="divide-y divide-gray-200 xl:pb-0 xl:col-span-3 xl:row-span-2">
         <div class="prose max-w-none pt-10 pb-8">
-          <slot/>
+          <Markdown>
+            {{ post.excerpt }}
+            {{ post.content }}
+          </Markdown>
         </div>
       </div>
 

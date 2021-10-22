@@ -15,7 +15,7 @@ export { useHead } from '@vueuse/head'
 
 // Utilities
 export { inBrowser } from './app/utils'
-export { defineApp, defineConfig } from './shared'
+export { defineApp, defineConfig, defineStaticPaths } from './shared'
 
 // Components
 export * from './app/components'

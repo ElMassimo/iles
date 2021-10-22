@@ -5,7 +5,7 @@ import { usePage } from '../composables/pageData'
 export default defineComponent({
   name: 'DebugPanel',
   setup () {
-    const { page, meta, frontmatter } = usePage()
+    const { page, meta, frontmatter, props } = usePage()
     const message = ref<string | undefined>(undefined)
     const el = ref<HTMLElement | null>(null)
     const content = ref<HTMLElement | null>(null)
@@ -14,7 +14,7 @@ export default defineComponent({
 
     const cleanPage = computed(() => {
       const layout = page.value.layoutName || 'false'
-      return { layout, frontmatter, meta }
+      return { layout, frontmatter, meta, props }
     })
 
     let timeoutId: any

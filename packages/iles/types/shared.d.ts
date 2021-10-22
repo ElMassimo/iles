@@ -15,7 +15,7 @@ import type { Options as SvelteOptions } from '@sveltejs/vite-plugin-svelte'
 import type { PreactPluginOptions as PreactOptions } from '@preact/preset-vite'
 
 import type { FrontmatterOptions } from '@islands/frontmatter'
-import type { Router, RouteRecordRaw, RouteMeta, RouterOptions as VueRouterOptions, RouteComponent, RouteLocationNormalizedLoaded } from 'vue-router'
+import type { Router, RouteRecordRaw, RouteMeta, RouterOptions as VueRouterOptions, RouteComponent, RouteLocationNormalizedLoaded, RouteParams } from 'vue-router'
 import type { HeadClient, HeadObject } from '@vueuse/head'
 export type { OnLoadFn } from '@islands/hydration/dist/vanilla'
 
@@ -23,6 +23,8 @@ export { ViteOptions, ConfigEnv }
 
 export type { Router, RouteRecordRaw, RouteMeta }
 export type RouterOptions = VueRouterOptions & { base?: string }
+
+export interface PageProps extends Record<string, any> {}
 
 export interface PageFrontmatter extends Record<string, any> {
   layout?: string | false
@@ -41,9 +43,10 @@ export interface PageComponent extends RouteComponent {
   layoutFn: false | (() => Promise<DefineComponent>)
 }
 
-export interface PageData<T = any> {
+export interface PageData<T = PageProps> {
   readonly page: Ref<PageComponent>
   readonly route: RouteLocationNormalizedLoaded
+  readonly props: T
   readonly meta: PageMeta
   readonly frontmatter: PageFrontmatter
   readonly site: UserSite
@@ -73,6 +76,13 @@ export interface SSGRoute {
   outputFilename: string
   rendered?: string
 }
+
+export interface StaticPath {
+  params: RouteParams
+  props: Record<string, any>
+}
+
+export type GetStaticPaths = () => Promise<StaticPath[]>
 
 export type CreateAppFactory = (options?: CreateAppConfig) => Promise<AppContext>
 

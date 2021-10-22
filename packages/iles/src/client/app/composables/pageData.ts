@@ -1,14 +1,23 @@
 /* eslint-disable no-restricted-syntax */
 import type { App, Ref, InjectionKey } from 'vue'
+import type { RouteLocationNormalizedLoaded, RouteParams } from 'vue-router'
 import { computed, ref, inject } from 'vue'
-import { RouteLocationNormalizedLoaded, routeLocationKey } from 'vue-router'
-import type { PageData, PageComponent, UserSite } from '../../shared'
+import { routeLocationKey } from 'vue-router'
+import type { PageData, PageProps, PageComponent, UserSite, StaticPath } from '../../shared'
 import { toReactive } from './reactivity'
 
 export const pageDataKey: InjectionKey<PageData> = Symbol('[iles-page-data]')
 
 function last <T> (arr: T[]) {
   return arr[arr.length - 1]
+}
+
+function shallowEqual (a: RouteParams, b: RouteParams) {
+  for (const key in a)
+    if (!(key in b) || a[key] !== b[key]) return false
+  for (const key in b)
+    if (!(key in a) || a[key] !== b[key]) return false
+  return true
 }
 
 function injectFromApp <T> (key: InjectionKey<T>, app?: App) {
@@ -38,16 +47,18 @@ function reactiveFromFn <T extends object> (fn: () => T): T {
 
 export function installPageData (app: App, siteRef: Ref<UserSite>): PageData {
   const route = injectFromApp(routeLocationKey, app)
+  const currentPath = (path: StaticPath) => shallowEqual(path.params, route.params)
   const page = computedInPage(() => pageFromRoute(route))
-  const meta = reactiveFromFn(() => page.value.meta || {})
+  const meta = reactiveFromFn(() => ({ ...page.value.meta, href: route.path }))
   const frontmatter = reactiveFromFn(() => page.value.frontmatter || {})
+  const props = reactiveFromFn(() => route.meta.paths?.find(currentPath)?.props || {})
   const site = toReactive(siteRef)
 
-  const pageData: PageData = { route, page, meta, frontmatter, site }
+  const pageData: PageData = { route, page, meta, frontmatter, site, props }
   app.provide(pageDataKey, pageData)
   return pageData
 }
 
-export function usePage<T = any> (app?: App): PageData<T> {
-  return injectFromApp(pageDataKey, app)
+export function usePage<T extends PageProps = PageProps> (app?: App): PageData<T> {
+  return injectFromApp<PageData<T>>(pageDataKey, app)
 }
