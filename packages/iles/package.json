@@ -71,7 +71,7 @@
     "remark-frontmatter": "^4.0.0",
     "unist-util-visit": "^2.0.3",
     "unplugin-vue-components": "^0.15.3",
-    "vite": "^2.6.5",
+    "vite": "^2.6.10",
     "vite-plugin-pages": "npm:@mussi/vite-plugin-pages@0.18.3-beta.1",
     "vite-plugin-xdm": "^0.2.0",
     "vue": "3.2.20",

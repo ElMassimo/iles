@@ -20,7 +20,8 @@
     "preact-render-to-string": "^5.1.19",
     "unplugin-icons": "^0.12.9",
     "vite": "^2.6.10",
-    "vite-plugin-windicss": "^1.4.1"
+    "vite-plugin-windicss": "^1.4.1",
+    "vite-plugin-inspect": "^0.3.9"
   },
   "dependencies": {
     "@docsearch/css": "^3.0.0-alpha.41",
