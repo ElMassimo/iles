@@ -1,3 +1,12 @@
+## [0.3.11](https://github.com/ElMassimo/iles/compare/v0.3.10...v0.3.11) (2021-10-22)
+
+
+### Bug Fixes
+
+* can't close debug panel ([0433abf](https://github.com/ElMassimo/iles/commit/0433abf3eb796f279da2a185020f4063c9ca9bc1))
+
+
+
 ## [0.3.10](https://github.com/ElMassimo/iles/compare/v0.3.9...v0.3.10) (2021-10-22)
 
 
