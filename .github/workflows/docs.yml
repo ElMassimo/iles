@@ -14,4 +14,21 @@ jobs:
       BUILD_HOOK: ${{secrets.NETLIFY_DOCS_BUILD_HOOK}}
     runs-on: ubuntu-latest
     steps:
-      - run: 'curl -X POST -d {} $BUILD_HOOK'
+      - uses: actions/checkout@v2
+
+      - name: Use Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: 16.x
+
+      - uses: pnpm/action-setup@v2.0.1
+        with:
+          version: 5.13.6
+          run_install: |
+            - recursive: false
+
+      - name: Vue TSC
+        run: pnpm docs:check
+
+      - name: Netlify
+        run: 'curl -X POST -d {} $BUILD_HOOK'

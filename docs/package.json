@@ -5,7 +5,8 @@
   "scripts": {
     "dev": "iles --open",
     "build": "iles build",
-    "preview": "vite preview --open"
+    "preview": "vite preview --open",
+    "check": "vue-tsc --noEmit"
   },
   "devDependencies": {
     "@iconify-json/bx": "^1.0.1",
@@ -15,13 +16,14 @@
     "@preact/preset-vite": "^2.1.5",
     "@vueuse/core": "^6.5.3",
     "autoprefixer": "^10.3.5",
-    "iles": "^0.3.2",
+    "iles": "^0.3.9",
     "postcss-nesting": "^8.0.1",
     "preact-render-to-string": "^5.1.19",
     "unplugin-icons": "^0.12.9",
     "vite": "^2.6.10",
+    "vite-plugin-inspect": "^0.3.9",
     "vite-plugin-windicss": "^1.4.1",
-    "vite-plugin-inspect": "^0.3.9"
+    "vue-tsc": "^0.28.7"
   },
   "dependencies": {
     "@docsearch/css": "^3.0.0-alpha.41",

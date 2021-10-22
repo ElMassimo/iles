@@ -21,7 +21,7 @@ if (!import.meta.env.SSR) {
   }
 
   const updateRelativeTimeStr = () =>
-    relativeTimeStr = currentTime((new Date() - date) / (60 * 60 * 1000))
+    relativeTimeStr = currentTime((Number(new Date()) - Number(date)) / (60 * 60 * 1000))
 
   let activeInterval = setInterval(updateRelativeTimeStr, 60 * 1000)
   onBeforeUnmount(() => clearInterval(activeInterval))

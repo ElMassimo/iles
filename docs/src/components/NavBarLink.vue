@@ -2,7 +2,7 @@
 import { useRoute } from 'iles'
 
 const props = defineProps({
-  href: { type: String, default: undefined },
+  href: { type: String, default: '' },
   external: { type: Boolean, default: false },
   text: { type: String, default: '' },
 })
