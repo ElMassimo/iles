@@ -8,6 +8,9 @@ import { resolveLayout } from '../layout'
 
 export default defineComponent({
   name: 'îles',
+  components: {
+    Head,
+  },
   setup () {
     const appConfig = useAppConfig()
     useRouterLinks()
@@ -30,7 +33,6 @@ export default defineComponent({
       layout,
       page,
       DebugPanel,
-      Head,
     }
   },
 })
