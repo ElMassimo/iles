@@ -1,3 +1,12 @@
+## [0.3.9](https://github.com/ElMassimo/iles/compare/v0.3.8...v0.3.9) (2021-10-22)
+
+
+### Bug Fixes
+
+* import composables explicitly to allow typechecking ([a804f5b](https://github.com/ElMassimo/iles/commit/a804f5b5f0a8297bc98c81cb17920c8d7d86b201))
+
+
+
 ## [0.3.8](https://github.com/ElMassimo/iles/compare/v0.3.7...v0.3.8) (2021-10-22)
 
 
