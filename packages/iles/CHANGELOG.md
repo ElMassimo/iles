@@ -1,3 +1,18 @@
+## [0.3.8](https://github.com/ElMassimo/iles/compare/v0.3.7...v0.3.8) (2021-10-22)
+
+
+### Bug Fixes
+
+* allow base html to be transformed by vite plugins ([568f8fe](https://github.com/ElMassimo/iles/commit/568f8fe7b5f1b8b2a7288b1afbdc444c282caffc))
+* include global properties in types/index.d.ts ([4cbaa5d](https://github.com/ElMassimo/iles/commit/4cbaa5dd1c74ec87e7e4aebea186935e39e4232e))
+
+
+### Features
+
+* display mounted element in island devtools ([b1c7cd3](https://github.com/ElMassimo/iles/commit/b1c7cd3c68b5de4077258e726b6a331ca2ff1a11))
+
+
+
 ## [0.3.7](https://github.com/ElMassimo/iles/compare/v0.3.6...v0.3.7) (2021-10-21)
 
 
