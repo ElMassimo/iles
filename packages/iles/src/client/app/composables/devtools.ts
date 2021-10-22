@@ -159,10 +159,11 @@ export function installDevtools (app: App, config: AppClientConfig) {
 
       const island = islandsById[payload.nodeId] as any
       if (!island) return
+      const ileRoot = island.$el?.nextSibling
       payload.state = {
         props: [
           { key: 'component', value: island.component },
-          { key: 'el', value: island.$el?.nextSibling },
+          { key: 'el', value: ileRoot?.children?.[0] || ileRoot },
           { key: 'strategy', value: getStrategy(island) },
           getMediaQuery(island) && { key: 'mediaQuery', value: getMediaQuery(island) },
           { key: 'framework', value: island.framework },
