@@ -4,7 +4,7 @@
   "version": "0.3.7",
   "main": "dist/node/index.js",
   "module": "dist/node/index.mjs",
-  "typings": "types/index.d.ts",
+  "types": "types/index.d.ts",
   "bin": {
     "iles": "bin/iles.js"
   },

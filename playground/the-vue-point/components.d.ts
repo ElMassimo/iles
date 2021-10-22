@@ -8,6 +8,7 @@ declare module 'vue' {
     BackLink: typeof import('./src/components/BackLink.tsx')['default']
     CarbonWarning: typeof import('~icons/carbon/warning')['default']
     DefaultLayout: typeof import('./src/layouts/default.vue')['default']
+    Head: typeof import('@vueuse/head')['Head']
     Island: typeof import('iles')['Island']
     NavBarLinks: typeof import('./src/components/NavBarLinks.svelte')['default']
     PostDate: typeof import('./src/components/PostDate.vue')['default']
