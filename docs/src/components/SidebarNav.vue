@@ -9,7 +9,7 @@ let hasItem = $computed(() => items.length > 0)
   <nav>
     <ul v-if="hasItem" class="py-4 px-4 lg:pt-10">
       <template v-for="item of items" :key="item.text">
-        <SidebarLink :item="item" :max-depth="2"/>
+        <SidebarLink :item="item" :maxDepth="2"/>
       </template>
     </ul>
   </nav>

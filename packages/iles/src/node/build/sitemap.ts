@@ -1,5 +1,5 @@
-import { join } from 'pathe'
 import { promises as fs } from 'fs'
+import { join } from 'pathe'
 import type { AppConfig, SSGRoute } from '../shared'
 import { withSpinner, warnMark } from './utils'
 

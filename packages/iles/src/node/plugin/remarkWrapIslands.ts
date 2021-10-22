@@ -57,7 +57,7 @@ function extractImports (nodes: MDXJSEsm[]) {
 
   declarations.forEach(({ specifiers, source: { value: path } }) => {
     if (isString(path)) {
-      specifiers.forEach(specifier => {
+      specifiers.forEach((specifier) => {
         imports[specifier.local.name] = { name: importedName(specifier), path }
       })
     }

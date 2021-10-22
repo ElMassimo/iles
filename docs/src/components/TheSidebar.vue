@@ -10,7 +10,7 @@ export function onLoad () {
     document.getElementById('sidebar-panel')?.classList.toggle('!-translate-x-0', v)
   })
 
-  document.querySelectorAll<HTMLElement>('[data-sidebar]').forEach(el => {
+  document.querySelectorAll<HTMLElement>('[data-sidebar]').forEach((el) => {
     el.addEventListener('click', () => { openSideBar = el.dataset.sidebar === 'open' })
   })
 }

@@ -14,10 +14,10 @@ let children = $computed(() => (props.item as SideBarGroup).children)
 
 <template>
   <li>
-    <SidebarLinkItem :item="item" :header="true" />
+    <SidebarLinkItem :item="item" :header="true"/>
     <ul v-if="children" class="mb-2">
       <li v-for="child in children" :key="child.text">
-        <SidebarLinkItem :item="child" />
+        <SidebarLinkItem :item="child"/>
       </li>
     </ul>
   </li>

@@ -2,11 +2,11 @@
 import { join } from 'pathe'
 import { renderHeadToString } from '@vueuse/head'
 import type { RollupOutput } from 'rollup'
+import { renderers } from '@islands/prerender'
+import { IslandDefinition } from 'iles'
 import type { Awaited, AppConfig, CreateAppFactory, IslandsByPath, SSGRoute } from '../shared'
 import type { bundle } from './bundle'
-import { renderers } from '@islands/prerender'
 import { getRoutesForSSG } from './routes'
-import { IslandDefinition } from 'iles'
 
 const commentsRegex = /<!--\[-->|<!--]-->|<!---->/g
 

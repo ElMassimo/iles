@@ -63,7 +63,7 @@ const anchorTag = (properties: any) => ({
   type: 'element',
   tagName: 'a',
   properties,
-  children: []
+  children: [],
 })
 
 function generateSlug ({ children, properties }: any, title: string, level: number): string {

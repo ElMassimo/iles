@@ -1,13 +1,13 @@
 <script setup lang="ts">
 import { usePage } from 'iles'
-import { usePosts } from '~/logic/posts'
+import { usePosts, Post } from '~/logic/posts'
 
 const posts = usePosts()
 
-let { page: post } = $(usePage())
+let { page } = $(usePage())
+const post = page as any as Post
 
 let currentIndex = $computed(() => posts.findIndex(p => p.href === post.href))
-let date = $computed(() => posts[currentIndex]?.date)
 let nextPost = $computed(() => posts[currentIndex - 1])
 let prevPost = $computed(() => posts[currentIndex + 1])
 

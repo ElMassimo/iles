@@ -1,5 +1,4 @@
 <script lang="ts">
-/* eslint-disable no-restricted-syntax */
 import { defineAsyncComponent, defineComponent, h, createCommentVNode, createStaticVNode } from 'vue'
 import type { PropType, DefineComponent } from 'vue'
 import type { Framework } from '@islands/hydration'
@@ -129,7 +128,7 @@ hydrate(framework, component, '${this.id}', ${serialize(props)}, ${serialize(slo
       h(defineAsyncComponent(async () =>
         isSSR
           ? createCommentVNode(await renderPlaceholder())
-          : h('script', { async: true, type: 'module', innerHTML: await renderScript() }))
+          : h('script', { async: true, type: 'module', innerHTML: await renderScript() })),
       ),
     ]
   },

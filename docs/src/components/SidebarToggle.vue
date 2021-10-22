@@ -1,5 +1,5 @@
 <template>
   <NavBarButton data-sidebar="open" aria-label="Toggle Sidebar">
-    <HeroiconsOutlineMenuAlt2 />
+    <HeroiconsOutlineMenuAlt2/>
   </NavBarButton>
 </template>

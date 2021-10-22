@@ -6,7 +6,7 @@ import { isPackageExists, importModule } from 'local-pkg'
 import { installPackage } from '@antfu/install-pkg'
 
 export function sleep (ms: number) {
-  return new Promise<void>(resolve => { setTimeout(resolve, ms) })
+  return new Promise<void>((resolve) => { setTimeout(resolve, ms) })
 }
 
 export async function resolvePlugin<T> (name: string) {

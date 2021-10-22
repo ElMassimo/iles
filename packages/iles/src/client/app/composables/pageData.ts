@@ -7,11 +7,11 @@ import { toReactive } from './reactivity'
 
 export const pageDataKey: InjectionKey<PageData> = Symbol('[iles-page-data]')
 
-function last <T>(arr: T[]) {
+function last <T> (arr: T[]) {
   return arr[arr.length - 1]
 }
 
-function injectFromApp <T>(key: InjectionKey<T>, app?: App) {
+function injectFromApp <T> (key: InjectionKey<T>, app?: App) {
   const result = app ? app._context.provides[key as any] as T : inject(key)
   if (!result) throw new Error('Page data not properly injected in app. Are you using it inside an island?')
   return result
@@ -32,7 +32,7 @@ export function pageFromRoute (route: RouteLocationNormalizedLoaded) {
   return (last(route.matched)?.components?.default || {}) as PageComponent
 }
 
-function reactiveFromFn <T extends object>(fn: () => T): T {
+function reactiveFromFn <T extends object> (fn: () => T): T {
   return toReactive<T>(computed(fn))
 }
 

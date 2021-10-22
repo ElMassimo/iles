@@ -63,13 +63,13 @@ function resolveAutoSidebar (headers: undefined | Header[], topLevel: number, de
 /**
  * Utils
  */
-function isSideBarConfig(
+function isSideBarConfig (
   sidebar: SideBarConfig | MultiSideBarConfig,
 ): sidebar is SideBarConfig {
   return sidebar === false || sidebar === 'auto' || isArray(sidebar)
 }
 
-export function isSideBarGroup(
+export function isSideBarGroup (
   item: SideBarItem,
 ): item is SideBarGroup {
   return (item as SideBarGroup).children !== undefined
@@ -81,7 +81,7 @@ export function isSideBarGroup(
  * combinations such as matching `guide/` and `/guide/`. If no matching config
  * was found, it will return `auto` as a fallback.
  */
-export function getSideBarConfig(
+export function getSideBarConfig (
   sidebar: SideBarConfig | MultiSideBarConfig,
   path: string,
 ): SideBarConfig {

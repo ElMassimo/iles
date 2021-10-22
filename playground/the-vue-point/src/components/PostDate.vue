@@ -15,7 +15,7 @@ function formatDate (dateStr: string | Date) {
   return date.toLocaleDateString('en-US', {
     year: 'numeric',
     month: 'long',
-    day: 'numeric'
+    day: 'numeric',
   })
 }
 </script>

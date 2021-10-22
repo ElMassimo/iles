@@ -2,10 +2,9 @@
 import { useRoute } from 'iles'
 import appConfig from '@islands/app-config'
 
+import type { PropType } from 'vue'
 import { joinUrl, isActive } from '~/logic/utils'
 import type { SideBarItem } from '~/logic/config'
-
-import type { PropType } from 'vue'
 
 const props = defineProps({
   item: {

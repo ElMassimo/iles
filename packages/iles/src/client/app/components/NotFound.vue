@@ -1,20 +1,20 @@
-<script setup lang="ts">
-import { computed } from 'vue'
+<script lang="ts">
+import { defineComponent, computed } from 'vue'
 import { useRoute, useRouter } from 'iles'
 
-const route = useRoute()
-const router = useRouter()
-const routes = computed(() => {
-  const info = router.getRoutes().map(({ path, name }) => ({ path, name }))
-  return JSON.stringify(info, null, 2)
-})
-</script>
-
-<script lang="ts">
-export default {
+export default defineComponent({
   name: 'NotFound',
   layoutFn: false,
-}
+  setup () {
+    const route = useRoute()
+    const router = useRouter()
+    const routes = computed(() => {
+      const info = router.getRoutes().map(({ path, name }) => ({ path, name }))
+      return JSON.stringify(info, null, 2)
+    })
+    return { route, routes }
+  },
+})
 </script>
 
 <template>

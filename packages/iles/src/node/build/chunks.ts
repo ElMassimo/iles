@@ -23,7 +23,7 @@ export function extendManualChunks (config: AppConfig): GetManualChunk {
 //
 // This heuristic ensures that framework-specific dependencies don't end up in a
 // shared chunk which would delay hydration for all islands.
-function vendorPerFramework(
+function vendorPerFramework (
   chunkForExtension: Record<string, string>,
   id: string,
   api: GetManualChunkApi,

@@ -25,10 +25,10 @@
           </p>
 
           <div class="flex mt-8 justify-center">
-            <AppButton size="lg" :href="$frontmatter.actionLink">
+            <AppButton lg :href="$frontmatter.actionLink">
               {{ $frontmatter.actionText }}
             </AppButton>
-            <AppButton class="ml-6" size="lg" :href="$frontmatter.altActionLink" outline>
+            <AppButton class="ml-6" lg :href="$frontmatter.altActionLink" outline>
               {{ $frontmatter.altActionText }}
             </AppButton>
           </div>

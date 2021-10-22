@@ -155,7 +155,8 @@ export default function IslandsPlugins (appConfig: AppConfig): PluginOption[] {
 </html>`
               html = await server.transformIndexHtml(url, html, req.originalUrl)
               res.end(html)
-            } else {
+            }
+            else {
               next()
             }
           })

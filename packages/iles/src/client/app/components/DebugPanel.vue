@@ -1,54 +1,62 @@
-<script setup lang="ts">
-import { computed, watch, ref } from 'vue'
+<script lang="ts">
+import { defineComponent, computed, watch, ref } from 'vue'
 import { usePage } from 'iles'
 
-const { page, meta, frontmatter } = usePage()
-const message = ref<string | undefined>(undefined)
-const el = ref<HTMLElement | null>(null)
-const content = ref<HTMLElement | null>(null)
-const open = ref(false)
-const buttonLabel = computed(() => message.value || 'Debug')
-
-const cleanPage = computed(() => {
-  const layout = page.value.layoutName || 'false'
-  return { layout, frontmatter, meta }
-})
-
-let timeoutId: any
-function copyIfSelected () {
-  if (!getSelection()?.toString()) return
-  document.execCommand('copy')
-  message.value = 'Copied!'
-  timeoutId = setTimeout(() => { message.value = undefined }, 3000)
-}
-
-function copyAll (el: HTMLElement | null) {
-  const selection = getSelection()
-  if (!selection || !el) return
-  const range = document.createRange()
-  range.selectNode(el)
-  selection.removeAllRanges()
-  selection.addRange(range)
-  copyIfSelected()
-}
-
-watch(open, (open) => {
-  if (open && message.value) {
-    clearTimeout(timeoutId)
-    message.value = undefined
-  }
-  if (!open) el.value!.scrollTop = 0
-})
-</script>
-
-<script lang="ts">
-export default {
+export default defineComponent({
   name: 'DebugPanel',
-}
+  setup () {
+    const { page, meta, frontmatter } = usePage()
+    const message = ref<string | undefined>(undefined)
+    const el = ref<HTMLElement | null>(null)
+    const content = ref<HTMLElement | null>(null)
+    const open = ref(false)
+    const buttonLabel = computed(() => message.value || 'Debug')
+
+    const cleanPage = computed(() => {
+      const layout = page.value.layoutName || 'false'
+      return { layout, frontmatter, meta }
+    })
+
+    let timeoutId: any
+    function copyIfSelected () {
+      if (!getSelection()?.toString()) return
+      document.execCommand('copy')
+      message.value = 'Copied!'
+      timeoutId = setTimeout(() => { message.value = undefined }, 3000)
+    }
+
+    function copyAll (el: HTMLElement | null) {
+      const selection = getSelection()
+      if (!selection || !el) return
+      const range = document.createRange()
+      range.selectNode(el)
+      selection.removeAllRanges()
+      selection.addRange(range)
+      copyIfSelected()
+    }
+
+    watch(open, (open) => {
+      if (open && message.value) {
+        clearTimeout(timeoutId)
+        message.value = undefined
+      }
+      if (!open) el.value!.scrollTop = 0
+    })
+
+    return {
+      open,
+      copyIfSelected,
+      buttonLabel,
+      cleanPage,
+      copyAll,
+      content,
+    }
+  },
+})
 </script>
 
 <template>
-  <div class="debug" :class="{ open }" ref="el" @click="open = !open" @mouseup="copyIfSelected">
+  <div ref="el" class="debug" :class="{ open }" @click="open = !open" @mouseup="copyIfSelected">
     <p class="title">{{ buttonLabel }}<span class="info">Open DevTools to inspect <b>islands</b> 🏝</span></p>
     <pre ref="content" class="block">{{ cleanPage }}</pre>
     <button v-show="open" class="debug title" @click="copyAll(content)">Copy to Clipboard</button>

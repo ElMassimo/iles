@@ -1,6 +1,6 @@
 /* eslint-disable no-restricted-syntax */
-import { join, resolve, dirname } from 'pathe'
 import { promises as fs } from 'fs'
+import { join, resolve, dirname } from 'pathe'
 import virtual from '@rollup/plugin-virtual'
 import { build as viteBuild, mergeConfig as mergeViteConfig } from 'vite'
 import glob from 'fast-glob'
@@ -127,5 +127,5 @@ async function parseManifest (outDir: string, islandsByPath: IslandsByPath) {
 // Internal: Remove query strings from islands inside Vue components.
 function chunkFileNames (chunk: PreRenderedChunk) {
   if (chunk.name.includes('.vue_vue')) return `assets/${chunk.name.split('.vue_vue')[0]}.[hash].js`
-  return `assets/[name].[hash].js`
+  return 'assets/[name].[hash].js'
 }

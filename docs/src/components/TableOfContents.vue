@@ -13,11 +13,11 @@ let level = $computed(() => frontmatter.sidebar === 'auto' ? (frontmatter.sideba
 
 let headers = $computed(() => resolveHeaders(meta.headers || []))
 
-function resolveHeaders(headers: Header[]): SideBarItem[] {
+function resolveHeaders (headers: Header[]): SideBarItem[] {
   return mapHeaders(groupHeaders(headers))
 }
 
-function groupHeaders(headers: Header[]): HeaderWithChildren[] {
+function groupHeaders (headers: Header[]): HeaderWithChildren[] {
   headers = headers.map(h => Object.assign({}, h))
   let lastHeading: HeaderWithChildren
   headers.forEach((h) => {
@@ -29,7 +29,7 @@ function groupHeaders(headers: Header[]): HeaderWithChildren[] {
   return headers.filter(h => h.level === level)
 }
 
-function mapHeaders(headers: HeaderWithChildren[]): SideBarItem[] {
+function mapHeaders (headers: HeaderWithChildren[]): SideBarItem[] {
   return headers.map(header => ({
     text: header.title,
     link: `#${header.slug}`,

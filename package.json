@@ -39,6 +39,7 @@
     "globals": {
       "$ref": "readonly",
       "$computed": "readonly",
+      "$shallowRef": "readonly",
       "$$": "readonly",
       "$": "readonly"
     },

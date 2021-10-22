@@ -1,21 +1,11 @@
 <script setup lang="ts">
 import { computed } from 'vue'
-import type { PropType } from 'vue'
 
 const props = defineProps({
-  href: {
-    type: String,
-    default: '',
-  },
-  outline: {
-    type: Boolean,
-    default: false,
-  },
-  inline: {
-    type: Boolean,
-    default: false,
-  },
-  size: String as PropType<'sm' | 'lg'>,
+  href: { type: String, default: '' },
+  outline: { type: Boolean, default: false },
+  inline: { type: Boolean, default: false },
+  lg: { type: Boolean, default: false },
 })
 
 const linkClass = computed(() => ([
@@ -32,21 +22,16 @@ const linkClass = computed(() => ([
     'bg-transparent border border-primary text-primary-intense hover:text-white': props.outline,
     'bg-primary-intense': !props.outline,
     'text-sm underline': props.inline,
-    'text-sm px-2.5 py-2': props.size === 'sm',
-    'text-base px-3 py-2.5 md:(text-lg px-6 py-3) border-2': props.size === 'lg',
+    'text-base px-3 py-2.5 md:(text-lg px-6 py-3) border-2': props.lg,
   },
 ]))
-
 </script>
 
 <template>
-  <a
-    :href="href"
-    :class="linkClass"
-  >
+  <a :href="href" :class="linkClass">
     <div v-if="$slots.icon" class="inline-block mr-1">
-      <slot name="icon" />
+      <slot name="icon"/>
     </div>
-    <slot />
+    <slot/>
   </a>
 </template>
