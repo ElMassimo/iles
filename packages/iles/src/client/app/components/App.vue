@@ -1,7 +1,8 @@
 <script lang="ts">
 import { defineComponent, computed, shallowRef, watch } from 'vue'
-import { useAppConfig, usePage } from 'iles'
 import { Head } from '@vueuse/head'
+import { useAppConfig } from '../composables/appConfig'
+import { usePage } from '../composables/pageData'
 import { useRouterLinks } from '../composables/routerLinks'
 import { resolveLayout } from '../layout'
 
