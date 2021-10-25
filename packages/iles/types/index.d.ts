@@ -17,7 +17,7 @@ declare module 'vue-router' {
   interface RouteMeta {
     filename: string
     layout?: import('vue').Ref<import('vue').DefineComponent | false>
-    paths?: StaticPath[]
+    pathVariants?: import('vue').Ref<StaticPath[]>
   }
 }
 

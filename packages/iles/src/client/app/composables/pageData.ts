@@ -1,7 +1,7 @@
 /* eslint-disable no-restricted-syntax */
 import type { App, Ref, InjectionKey } from 'vue'
 import type { RouteLocationNormalizedLoaded, RouteParams } from 'vue-router'
-import { computed, ref, inject } from 'vue'
+import { computed, ref, shallowRef, inject } from 'vue'
 import { routeLocationKey } from 'vue-router'
 import type { PageData, PageProps, PageComponent, UserSite, StaticPath } from '../../shared'
 import { toReactive } from './reactivity'
@@ -47,11 +47,17 @@ function reactiveFromFn <T extends object> (fn: () => T): T {
 
 export function installPageData (app: App, siteRef: Ref<UserSite>): PageData {
   const route = injectFromApp(routeLocationKey, app)
-  const currentPath = (path: StaticPath) => shallowEqual(path.params, route.params)
+  const currentPath = (path: StaticPath<any>) => shallowEqual(path.params, route.params)
   const page = computedInPage(() => pageFromRoute(route))
   const meta = reactiveFromFn(() => ({ ...page.value.meta, href: route.path }))
   const frontmatter = reactiveFromFn(() => page.value.frontmatter || {})
-  const props = reactiveFromFn(() => route.meta.paths?.find(currentPath)?.props || {})
+  const props = computedInPage(() => {
+    const pathVariants = route.meta.pathVariants?.value || []
+    const pathVariant = pathVariants.find(currentPath)
+    if (Object.keys(route.params).length > 0 && !pathVariant)
+      console.warn('This route will not be generated, unable to find matching params in `getStaticPaths`.\nFound:\n\t', route.params, '\nPaths:\n\t', pathVariants)
+    return pathVariant?.props || {}
+  })
   const site = toReactive(siteRef)
 
   const pageData: PageData = { route, page, meta, frontmatter, site, props }

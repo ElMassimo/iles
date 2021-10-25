@@ -1,4 +1,3 @@
-import { computed, watch } from 'vue'
 import { useStorage, StorageSerializers } from '@vueuse/core'
 
 const blogFilesPath = 'https://api.github.com/repos/vuejs/blog/git/trees/master?recursive=1'
@@ -31,14 +30,15 @@ async function fetchPosts () {
 }
 
 async function fetchPost (file: GitFile) {
-  const slug = file.path.replace(/^posts\/(.*)\.md$/, '$1')
+  const slug = file.path.replace(/^posts\/(.*)\.md$/, '$1').replace('.', '-')
   const { content: base64 } = await fetch(file.url).then(r => r.json())
-  const [rawMatter, excerpt, content] = atob(base64).split('---\n', 3)
+  const [, rawMatter, excerpt, content] = atob(base64).split('---\n', 4)
   const matter = Object.fromEntries(
     rawMatter.split('\n').map((line: string) => line.split(':', 2).map(s => s.trim().replace(/(^['"])(.*)\1/, '$2'))),
   )
   return {
     ...matter,
+    slug,
     href: `/posts/${slug}`,
     date: matter.date && new Date(matter.date),
     excerpt: excerpt.replace(/(^\n+)|(\n+$)/, ''),
@@ -46,18 +46,18 @@ async function fetchPost (file: GitFile) {
   } as any as Post
 }
 
-export function usePosts () {
+export async function getPosts () {
   const cache = useStorage('posts', null, undefined, { serializer: StorageSerializers.object })
-  let promise
 
-  watch(cache, () => {
-    if (Number(cache.value?.cachedAt || 0) < Number(new Date()) - 120000)
-      promise = fetchPosts().then(data => cache.value = { posts: data, cachedAt: Number(new Date()) })
-  }, { immediate: true })
-
-  return {
-    posts: computed(() => (cache.value?.posts || []) as Post[]),
-    clear () { cache.value = null },
-    promise,
+  if (Number(cache.value?.cachedAt || 0) < Number(new Date()) - 120000) {
+    const posts = await fetchPosts()
+    cache.value = { posts, cachedAt: Number(new Date()) }
   }
+
+  return (cache.value?.posts || []) as Post[]
+}
+
+export function useClearPosts () {
+  const cache = useStorage('posts', null, undefined)
+  return () => { cache.value = null }
 }

@@ -6,7 +6,7 @@ layout: false
 <script setup lang="ts">
 import { plainText, useVueRenderer } from 'iles'
 import { defineAsyncComponent } from 'vue'
-import { usePosts, Post } from '~/logic/posts'
+import { getPosts, Post } from '~/logic/posts'
 
 const url = 'https://blog.vuejs.org'
 const options = {
@@ -21,7 +21,7 @@ const options = {
     'Copyright (c) 2021-present, Yuxi (Evan) You and blog contributors',
 }
 
-let { posts } = $(usePosts())
+const posts = getPosts()
 const renderVNodes = useVueRenderer()
 
 let rssPosts = $computed(() => posts.map(post => toRSS(post)))

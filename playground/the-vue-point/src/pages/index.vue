@@ -3,9 +3,9 @@ alias: ['/posts']
 </route>
 
 <script setup lang="ts">
-import { usePosts } from '~/logic/posts'
+import { getPosts } from '~/logic/posts'
 
-let { posts } = $(usePosts())
+const posts = await getPosts()
 </script>
 
 <template>

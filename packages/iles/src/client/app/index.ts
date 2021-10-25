@@ -13,6 +13,7 @@ import { installAppConfig } from './composables/appConfig'
 import { resetHydrationId } from './hydration'
 import { defaultHead } from './head'
 import { resolveLayout } from './layout'
+import { resolveProps } from './props'
 
 const newApp = import.meta.env.SSR ? createSSRApp : createClientApp
 
@@ -48,6 +49,7 @@ export const createApp: CreateAppFactory = async (options = {}) => {
   const router = createRouter(config.base, routerOptions)
   app.use(router)
   router.beforeResolve(resolveLayout)
+  router.beforeResolve(resolveProps)
 
   // Set the path that should be rendered.
   if (import.meta.env.SSR) {

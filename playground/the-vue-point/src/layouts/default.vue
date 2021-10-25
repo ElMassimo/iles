@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { useHead } from 'iles'
-import { usePosts } from '~/logic/posts'
+import { useClearPosts } from '~/logic/posts'
 
-const { clear } = usePosts()
+const clear = useClearPosts()
 
 const isDev = import.meta.env.DEV
 

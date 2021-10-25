@@ -1,30 +1,30 @@
-<script static lang="ts">
-import { fetchPostFiles } from '~/logic/posts'
+<script lang="ts">
+import { definePageComponent } from 'iles'
+import { getPosts } from '~/logic/posts'
 
-export async function getStaticPaths () {
-  return fetchPostFiles().map((post) => {
-    const slug = post.path.replace(/^posts\/(.*)\.md$/, '$1')
-    return { params: { slug }, props: { url: post.url } }
-  })
-}
+export default definePageComponent({
+  async getStaticPaths () {
+    const posts = await getPosts()
+    return posts.map((post, i) => ({
+      params: { slug: post.slug },
+      props: { post, nextPost: posts[i - 1], prevPost: posts[i + 1] },
+    }))
+  },
+})
 </script>
 
 <script setup lang="ts">
 import { usePage } from 'iles'
-import { usePosts } from '~/logic/posts'
+import type { Post } from '~/logic/posts'
 
-let { frontmatter, route } = usePage()
-const { posts } = $(usePosts())
+const props = defineProps<{ post: Post; nextPost: Post; prevPost: Post }>()
 
-let currentIndex = $computed(() => posts.findIndex(p => p.href === route.path))
-let post = $computed(() => posts[currentIndex])
-let nextPost = $computed(() => posts[currentIndex - 1])
-let prevPost = $computed(() => posts[currentIndex + 1])
+let { frontmatter, page } = usePage()
 
 let author = $computed(() => {
-  frontmatter.title = post.title
-  frontmatter.description = post.excerpt
-  const { twitter, gravatar, author } = post
+  frontmatter.title = props.post.title
+  frontmatter.description = props.post.excerpt
+  const { twitter, gravatar, author } = props.post
   return { twitter, gravatar, author }
 })
 </script>

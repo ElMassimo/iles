@@ -41,6 +41,9 @@ export interface PageComponent extends RouteComponent {
   meta: PageMeta
   layoutName: string
   layoutFn: false | (() => Promise<DefineComponent>)
+  getStaticPaths?: GetStaticPaths
+  staticPaths: Ref<StaticPath<any>[]>
+  __file?: string
 }
 
 export interface PageData<T = PageProps> {
@@ -77,12 +80,12 @@ export interface SSGRoute {
   rendered?: string
 }
 
-export interface StaticPath {
+export interface StaticPath<T> {
   params: RouteParams
-  props: Record<string, any>
+  props: T
 }
 
-export type GetStaticPaths = () => Promise<StaticPath[]>
+export type GetStaticPaths<T = any> = () => Promise<StaticPath<T>[]>
 
 export type CreateAppFactory = (options?: CreateAppConfig) => Promise<AppContext>
 
