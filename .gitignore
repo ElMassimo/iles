@@ -3,5 +3,6 @@ dist/
 .vite-islands-temp/
 .DS_Store
 *.local
+*.tgz
 .pnpm-debug.log
 packages/.pnpm-debug.log

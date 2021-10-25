@@ -1,4 +1,4 @@
-import { promises as fs } from 'fs'
+import { rmdirSync } from 'fs'
 import { resolveConfig } from '../config'
 import { renderPages } from './render'
 import { bundle } from './bundle'
@@ -27,7 +27,7 @@ export async function build (root: string) {
       async () => await bundleIslands(appConfig, islandsByPath, pagesResult))
   }
   finally {
-    await fs.rm(appConfig.tempDir, { recursive: true, force: true })
+    rmdirSync(appConfig.tempDir, { recursive: true })
   }
 
   console.info(`build complete in ${((Date.now() - start) / 1000).toFixed(2)}s.`)

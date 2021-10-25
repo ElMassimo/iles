@@ -8,6 +8,9 @@
     "preview": "vite preview --open",
     "check": "vue-tsc --noEmit"
   },
+  "engines": {
+    "node": ">=16"
+  },
   "devDependencies": {
     "@iconify-json/bx": "^1.0.1",
     "@iconify-json/heroicons-outline": "^1.0.1",

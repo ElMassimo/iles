@@ -26,7 +26,7 @@ export async function bundleIslands (
 
   // Remove temporary island script files.
   const tempIslandFiles = await glob(join(config.outDir, '**/_virtual_*.js'))
-  for (const temp of tempIslandFiles) await fs.rm(temp)
+  for (const temp of tempIslandFiles) await fs.unlink(temp)
 }
 
 async function renderRoute (config: AppConfig, manifest: Manifest, route: SSGRoute, islands: IslandDefinition[] = []) {
