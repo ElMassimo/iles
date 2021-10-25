@@ -1,3 +1,12 @@
+## [0.3.12](https://github.com/ElMassimo/iles/compare/v0.3.11...v0.3.12) (2021-10-25)
+
+
+### Bug Fixes
+
+* node 14 compatibility ([9368926](https://github.com/ElMassimo/iles/commit/93689260c6676894813653ccb39340a45fa3c1c3))
+
+
+
 ## [0.3.11](https://github.com/ElMassimo/iles/compare/v0.3.10...v0.3.11) (2021-10-22)
 
 
