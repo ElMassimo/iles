@@ -29,10 +29,14 @@ async function fetchPosts () {
   return (await Promise.all(posts.map(fetchPost))).sort(byDate)
 }
 
+function decodeBase64 (val: string) {
+  return import.meta.env.SSR ? Buffer.from(val, 'base64').toString() : atob(val)
+}
+
 async function fetchPost (file: GitFile) {
   const slug = file.path.replace(/^posts\/(.*)\.md$/, '$1').replace('.', '-')
   const { content: base64 } = await fetch(file.url).then(r => r.json())
-  const [, rawMatter, excerpt, content] = atob(base64).split('---\n', 4)
+  const [, rawMatter, excerpt, content] = decodeBase64(base64).split('---\n', 4)
   const matter = Object.fromEntries(
     rawMatter.split('\n').map((line: string) => line.split(':', 2).map(s => s.trim().replace(/(^['"])(.*)\1/, '$2'))),
   )

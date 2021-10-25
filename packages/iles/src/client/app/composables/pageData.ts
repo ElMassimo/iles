@@ -1,7 +1,7 @@
 /* eslint-disable no-restricted-syntax */
 import type { App, Ref, InjectionKey } from 'vue'
 import type { RouteLocationNormalizedLoaded, RouteParams } from 'vue-router'
-import { computed, ref, shallowRef, inject } from 'vue'
+import { computed, ref, inject } from 'vue'
 import { routeLocationKey } from 'vue-router'
 import type { PageData, PageProps, PageComponent, UserSite, StaticPath } from '../../shared'
 import { toReactive } from './reactivity'

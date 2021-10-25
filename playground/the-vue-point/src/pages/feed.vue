@@ -4,7 +4,7 @@ layout: false
 </route>
 
 <script setup lang="ts">
-import { plainText, useVueRenderer } from 'iles'
+import { plainText } from 'iles'
 import { defineAsyncComponent } from 'vue'
 import { getPosts, Post } from '~/logic/posts'
 
@@ -21,8 +21,7 @@ const options = {
     'Copyright (c) 2021-present, Yuxi (Evan) You and blog contributors',
 }
 
-const posts = getPosts()
-const renderVNodes = useVueRenderer()
+const posts = await getPosts()
 
 let rssPosts = $computed(() => posts.map(post => toRSS(post)))
 
@@ -44,8 +43,8 @@ async function toRSS (post: Post) {
     title: post.title,
     id: `${url}${post.href}`,
     link: `${url}${post.href}`,
-    description: await renderVNodes(post.excerpt()),
-    content: await renderVNodes(post.render()),
+    description: post.excerpt,
+    content: post.content,
     author: [
       {
         name: post.author,

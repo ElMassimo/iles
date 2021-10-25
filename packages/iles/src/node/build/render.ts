@@ -15,6 +15,11 @@ export async function renderPages (
   islandsByPath: IslandsByPath,
   { clientResult }: Awaited<ReturnType<typeof bundle>>,
 ) {
+  // NOTE: Polyfill fetch for isomorphic rendering.
+  if (!globalThis.fetch)
+    // @ts-ignore
+    globalThis.fetch = require('node-fetch')
+
   const { createApp }: { createApp: CreateAppFactory} = require(join(config.tempDir, 'app.js'))
 
   const routesToRender = await getRoutesForSSG(config, createApp)

@@ -7,6 +7,7 @@ declare module 'vue' {
     Author: typeof import('./src/components/Author.vue')['default']
     BackLink: typeof import('./src/components/BackLink.tsx')['default']
     CarbonReset: typeof import('~icons/carbon/reset')['default']
+    CarbonWarning: typeof import('~icons/carbon/warning')['default']
     Head: typeof import('@vueuse/head')['Head']
     Island: typeof import('iles')['Island']
     Markdown: typeof import('./src/components/Markdown.vue')['default']
