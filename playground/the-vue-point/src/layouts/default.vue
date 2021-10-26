@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { useHead } from 'iles'
-import { useClearPosts } from '~/logic/posts'
+import { getPosts } from '~/logic/posts'
 
-const clear = useClearPosts()
+const { refresh } = await getPosts()
 
 const isDev = import.meta.env.DEV
 
@@ -25,7 +25,7 @@ if (import.meta.env.PROD) {
         </a>
         <div class="text-base text-gray-500 leading-5">
           <NavBarLinks client:none/>
-          <button v-if="isDev" class="top-4 right-4 absolute" @click="clear">
+          <button v-if="isDev" class="top-4 right-4 absolute" @click="refresh">
             <CarbonReset/>
           </button>
         </div>

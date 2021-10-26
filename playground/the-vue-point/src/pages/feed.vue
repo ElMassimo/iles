@@ -21,7 +21,7 @@ const options = {
     'Copyright (c) 2021-present, Yuxi (Evan) You and blog contributors',
 }
 
-const posts = await getPosts()
+let posts = $(await getPosts())
 
 let rssPosts = $computed(() => posts.map(post => toRSS(post)))
 

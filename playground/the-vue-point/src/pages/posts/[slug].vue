@@ -4,7 +4,7 @@ import { getPosts } from '~/logic/posts'
 
 export default definePageComponent({
   async getStaticPaths () {
-    const posts = await getPosts()
+    let posts = $(await getPosts())
     return posts.map((post, i) => ({
       params: { slug: post.slug },
       props: { post, nextPost: posts[i - 1], prevPost: posts[i + 1] },
