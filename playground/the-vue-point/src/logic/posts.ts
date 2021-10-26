@@ -50,8 +50,12 @@ async function fetchPost (file: GitFile) {
   } as any as Post
 }
 
+let serverCache: any = {}
+
 export async function getPosts () {
-  const cache = useStorage('posts', null, undefined, { serializer: StorageSerializers.object })
+  const cache = import.meta.env.SSR
+    ? (serverCache.posts ||= {})
+    : useStorage('posts', null, undefined, { serializer: StorageSerializers.object })
 
   if (Number(cache.value?.cachedAt || 0) < Number(new Date()) - 120000) {
     const posts = await fetchPosts()
