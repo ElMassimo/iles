@@ -6,6 +6,7 @@ import { renderers } from '@islands/prerender'
 import { IslandDefinition } from 'iles'
 import type { Awaited, AppConfig, CreateAppFactory, IslandsByPath, RouteToRender } from '../shared'
 import type { bundle } from './bundle'
+import { withSpinner } from './utils'
 import { getRoutesToRender } from './routes'
 
 const commentsRegex = /<!--\[-->|<!--]-->|<!---->/g
@@ -22,12 +23,15 @@ export async function renderPages (
 
   const { createApp }: { createApp: CreateAppFactory} = require(join(config.tempDir, 'app.js'))
 
-  const routesToRender = await getRoutesToRender(config, createApp)
+  const routesToRender = await withSpinner('resolving static paths', async () =>
+    await getRoutesToRender(config, createApp))
 
   const clientChunks = clientResult.output
 
-  for (const route of routesToRender)
-    route.rendered = await renderPage(config, islandsByPath, clientChunks, route, createApp)
+  await withSpinner('rendering pages', async () => {
+    for (const route of routesToRender)
+      route.rendered = await renderPage(config, islandsByPath, clientChunks, route, createApp)
+  })
 
   return { routesToRender }
 }

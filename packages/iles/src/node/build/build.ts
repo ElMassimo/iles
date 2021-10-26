@@ -17,8 +17,7 @@ export async function build (root: string) {
 
     const islandsByPath = Object.create(null)
 
-    const pagesResult = await withSpinner('rendering pages',
-      async () => await renderPages(appConfig, islandsByPath, bundleResult))
+    const pagesResult = await renderPages(appConfig, islandsByPath, bundleResult)
 
     await createSitemap(appConfig, pagesResult.routesToRender)
 

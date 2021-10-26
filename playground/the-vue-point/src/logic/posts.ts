@@ -1,6 +1,7 @@
 import { useStorage, StorageSerializers } from '@vueuse/core'
 
 const blogFilesPath = 'https://api.github.com/repos/vuejs/blog/git/trees/master?recursive=1'
+const { performance } = import.meta.env.SSR ? require('perf_hooks') : window
 
 interface GitFile {
   path: string
@@ -24,9 +25,20 @@ export async function fetchPostFiles () {
   return files.filter(file => file.path.startsWith('posts/'))
 }
 
+function timeSince (start: number): string {
+  const diff = performance.now() - start
+  return diff < 750 ? `${Math.round(diff)}ms` : `${(diff / 1000).toFixed(1)}s`
+}
+
 async function fetchPosts () {
-  const posts = await fetchPostFiles()
-  return (await Promise.all(posts.map(fetchPost))).sort(byDate)
+  const startTime = performance.now()
+  try {
+    console.info('fetching posts...')
+    const posts = await fetchPostFiles()
+    return (await Promise.all(posts.map(fetchPost))).sort(byDate)
+  } finally {
+    console.info(`  done in ${timeSince(startTime)}\n`)
+  }
 }
 
 function decodeBase64 (val: string) {

@@ -10,7 +10,7 @@ export async function withSpinner<T> (message: string, fn: () => Promise<T>) {
   try {
     const result = await fn()
     spinner.succeed()
-    console.log(`  done in ${timeSince(startTime)}\n`)
+    console.info(`  done in ${timeSince(startTime)}\n`)
     return result
   }
   catch (e) {
