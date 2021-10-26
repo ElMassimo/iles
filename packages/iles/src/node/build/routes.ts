@@ -1,54 +1,54 @@
 import { PageComponent } from 'iles'
 import { extname } from 'pathe'
-import type { AppConfig, CreateAppFactory, Router, RouteRecordRaw, SSGRoute } from '../shared'
+import type { RouteComponent, RouteRecordNormalized } from 'vue-router'
+import type { AppConfig, CreateAppFactory, Router, RouteToRender } from '../shared'
 import { pathToFilename } from './utils'
 
-export async function getRoutesForSSG (config: AppConfig, createApp: CreateAppFactory) {
-  const routesForSSG: Map<string, SSGRoute> = new Map()
+const DYNAMIC_PARAM = '/:'
 
-  const addPaths = async (router: Router, routes: RouteRecordRaw[], prefix = '') => {
-    for (const route of routes) {
-      let path = route.path
+export async function getRoutesToRender (config: AppConfig, createApp: CreateAppFactory) {
+  const routesToRender = new Map<string, RouteToRender>()
+  const { router } = await createApp()
 
-      if (path) {
-        // Check for leading slash
-        path = prefix && !path.startsWith('/') ? `${prefix}/${path}` : path
+  for (const path of await resolveRoutesToRender(router)) {
+    const extension = extname(path).slice(1) || '.html'
+    const outputFilename = pathToFilename(path, extension)
+    routesToRender.set(path, { path, outputFilename })
+  }
 
-        if (!route.meta?.filename)
-          throw new Error(`meta.filename must be specified for generated routes. Found: ${JSON.stringify(route)}`)
+  return Array.from(routesToRender.values())
+}
 
-        const filename = route.meta.filename
-        const extension = extname(path).slice(1) || '.html'
-
-        let paths = [path]
-
-        // Dynamic Route
-        if (path.includes('/:')) {
-          // @ts-ignore
-          const page = await route.component().then(m => m.default) as PageComponent
-
-          if (!page.getStaticPaths)
-            console.warn(`'getStaticPaths' is not defined for ${path} so it won't be generated.`)
-
-          paths = (await page.getStaticPaths?.() || [])
-            .map(variant => router.resolve({ ...route, ...variant }).fullPath)
-        }
-
-        paths.forEach(path => {
-          routesForSSG.set(path, {
-            path,
-            filename,
-            extension,
-            outputFilename: pathToFilename(path, extension),
-          })
-        })
-      }
-      if (Array.isArray(route.children))
-        await addPaths(router, route.children, path.replace(/\/$/g, '')) // Remove trailing slash
+async function resolveRoutesToRender (router: Router) {
+  const toResolvedPath = (route: any) => {
+    try {
+      return router.resolve(route).fullPath
+    }
+    catch (error) {
+      throw new Error(`Could not resolve ${String(route.name)}. Params: ${JSON.stringify(route.params)}. Error: ${error.message}`)
     }
   }
 
-  const app = await createApp()
-  await addPaths(app.router, app.routes)
-  return Array.from(routesForSSG.values())
+  return (await Promise.all(router.getRoutes().map(async route => {
+    const routes = route.path.includes(DYNAMIC_PARAM) ? await getDynamicPaths(route) : [route]
+    return routes.map(toResolvedPath)
+  }))).flat()
+}
+
+async function getDynamicPaths (route: RouteRecordNormalized) {
+  const { components: { default: component }, name, path, meta } = route
+  const page: PageComponent | undefined = isLazy(component)
+    ? await component().then(m => 'default' in m ? m.default : m)
+    : component
+
+  const variants = await page?.getStaticPaths?.()
+  if (!variants) {
+    console.warn(`'getStaticPaths' is not defined for ${meta?.filename || String(name)} so ${path} it won't be generated.`)
+    return []
+  }
+  return variants.map(({ params }) => ({ ...route, params }))
+}
+
+function isLazy (value: RouteRecordNormalized['components']['default']): value is () => Promise<RouteComponent> {
+  return typeof value === 'function'
 }

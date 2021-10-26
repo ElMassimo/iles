@@ -72,10 +72,8 @@ export interface AppContext extends Required<CreateAppConfig>, PageData {
   routes: RouteRecordRaw[]
 }
 
-export interface SSGRoute {
+export interface RouteToRender {
   path: string
-  filename: string
-  extension: string
   outputFilename: string
   rendered?: string
 }

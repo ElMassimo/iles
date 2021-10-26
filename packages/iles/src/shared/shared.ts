@@ -26,7 +26,7 @@ export type {
   AppContext,
   GetStaticPaths,
   StaticPath,
-  SSGRoute,
+  RouteToRender,
   UserApp,
   UserSite,
   UserConfig,

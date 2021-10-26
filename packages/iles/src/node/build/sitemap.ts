@@ -1,9 +1,9 @@
 import { promises as fs } from 'fs'
 import { join } from 'pathe'
-import type { AppConfig, SSGRoute } from '../shared'
+import type { AppConfig, RouteToRender } from '../shared'
 import { withSpinner, warnMark } from './utils'
 
-export async function createSitemap (config: AppConfig, routesToRender: SSGRoute[]) {
+export async function createSitemap (config: AppConfig, routesToRender: RouteToRender[]) {
   const { outDir, base, siteUrl, ssg: { sitemap } } = config
   if (!sitemap) return
   if (!siteUrl) return console.warn(warnMark, 'Skipping sitemap. Configure `siteUrl` to enable sitemap generation.')
@@ -15,14 +15,14 @@ export async function createSitemap (config: AppConfig, routesToRender: SSGRoute
 }
 
 // Internal: Create a sitemap for the rendered pages.
-function sitemapFor (siteUrl: string, routesToRender: SSGRoute[]) {
+function sitemapFor (siteUrl: string, routesToRender: RouteToRender[]) {
   const pageUrls = new Set<string>()
 
   // look through built pages, only add HTML
-  for (const ssgRoute of routesToRender) {
-    if (ssgRoute.extension !== '.html') continue
-    if (ssgRoute.path === '/404') continue
-    pageUrls.add(ssgRoute.path)
+  for (const route of routesToRender) {
+    if (!route.outputFilename.endsWith('.html')) continue
+    if (route.path === '/404') continue
+    pageUrls.add(route.path)
   }
 
   const sortedUrls = Array.from(pageUrls)

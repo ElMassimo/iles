@@ -19,7 +19,7 @@ import type { Post } from '~/logic/posts'
 
 const props = defineProps<{ post: Post; nextPost: Post; prevPost: Post }>()
 
-let { frontmatter, page } = usePage()
+let { frontmatter } = usePage()
 
 let author = $computed(() => {
   frontmatter.title = props.post.title

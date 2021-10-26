@@ -36,6 +36,8 @@ export function flattenPath (path: string) {
   return pathToFilename(path).replace(/\//g, '_')
 }
 
+// Internal: Removes starting slash and ensures the provided extension.
+// Paths ending with '/' are represented with index.html files.
 export function pathToFilename (path: string, ext = '') {
   if (path.endsWith(ext)) ext = ''
   return `${(path.endsWith('/') ? `${path}index` : path).replace(/^\//g, '')}${ext}`

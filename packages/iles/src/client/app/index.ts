@@ -23,7 +23,7 @@ function createRouter (base: string | undefined, routerOptions: Partial<RouterOp
   // Handle 404s in development.
   if (import.meta.env.DEV)
     // @ts-ignore
-    routes.push({ path: '/:pathMatch(.*)*', name: 'NotFound', component: () => import('@islands/components/NotFound') })
+    routes.push({ path: '/:path(.*)*', name: 'NotFound', component: () => import('@islands/components/NotFound') })
 
   return createVueRouter({
     scrollBehavior: (current, previous, savedPosition) => {
