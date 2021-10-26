@@ -9,6 +9,8 @@ export async function resolveProps (route: RouteLocationNormalizedLoaded) {
       console.warn(`getStaticPaths provided in ${page.__file || route.path}, but path is not dynamic.`)
 
     const pathVariants = await page.getStaticPaths?.() || []
+    if (!Array.isArray(pathVariants))
+      throw new Error(`Expected array from 'getStaticPaths' in ${page.__file}, got ${JSON.stringify(pathVariants)}`)
 
     if (route.meta.pathVariants)
       route.meta.pathVariants.value = pathVariants

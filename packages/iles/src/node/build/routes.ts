@@ -36,19 +36,31 @@ async function resolveRoutesToRender (router: Router) {
 }
 
 async function getDynamicPaths (route: RouteRecordNormalized) {
-  const { components: { default: component }, name, path, meta } = route
+  const { components: { default: component }, path } = route
+  const file = route.meta?.filename || String(route.name)
+
   const page: PageComponent | undefined = isLazy(component)
     ? await component().then(m => 'default' in m ? m.default : m)
     : component
 
   const variants = await page?.getStaticPaths?.()
   if (!variants) {
-    console.warn(`'getStaticPaths' is not defined for ${meta?.filename || String(name)} so ${path} it won't be generated.`)
+    console.warn(`'getStaticPaths' is not defined for ${file} so ${path} it won't be generated.`)
     return []
   }
+  if (!Array.isArray(variants))
+    throw new Error(`Expected array from 'getStaticPaths' in ${file}, got: ${JSON.stringify(variants)}`)
+
   return variants.map(({ params }) => ({ ...route, params }))
 }
 
 function isLazy (value: RouteRecordNormalized['components']['default']): value is () => Promise<RouteComponent> {
   return typeof value === 'function'
+}
+
+export function toArray<T>(array?: T | T[]): T[] {
+  array = array || []
+  if (Array.isArray(array))
+    return array
+  return [array]
 }

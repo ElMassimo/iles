@@ -60,6 +60,10 @@ iframe {
 }
 
 @media (min-width: 500px) {
+  .sticky {
+    --bg-scrollbar-track: transparent;
+  }
+
   ::-webkit-scrollbar {
     background: var(--bg-scrollbar-track);
     height: 15px;

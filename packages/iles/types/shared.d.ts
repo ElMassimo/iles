@@ -83,7 +83,7 @@ export interface StaticPath<T> {
   props: T
 }
 
-export type GetStaticPaths<T = any> = () => Promise<StaticPath<T>[]>
+export type GetStaticPaths<T = any> = () => StaticPath<T>[] | Promise<StaticPath<T>[]>
 
 export type CreateAppFactory = (options?: CreateAppConfig) => Promise<AppContext>
 

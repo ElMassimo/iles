@@ -70,15 +70,12 @@ The following is a list of features and differences to help you compare:
 - Pages in <Iles small/> have access to [frontmatter and file metadata](/guide/development#using-page-data)
 - You can [glob import](/guide/development#glob-imports) pages in <Iles small/>, access their frontmatter, and render them
 - <Iles small/> provides [auto-import for components](/guide/development#components) in Vue and MDX files
-- Astro provides support for pagination. <Iles small/> doesn't have a similar concept
+- Astro provides a `paginate` and `rss` helpers. In <Iles small/> you have to do that manually.
 - <Iles small/> supports a [convenient syntax for layouts](/guide/development#layouts). In Astro you manually import and use components as layouts
-- Astro supports paths with dynamic params. <Iles small/> does not support this _yet_
 - <Iles small/> has a very refined HMR, even site-wide data is automatically reloaded
 
 <Tip>
-Use Astro if you need dynamic routes or pagination.
-
-For other sites, it's mostly a matter of taste.
+Use Astro if you are not familiar with Vue, or don't like its template syntax.
 </Tip>
 
 ## Acknowledgements 🙇‍♂️

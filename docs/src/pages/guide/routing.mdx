@@ -1,0 +1,126 @@
+[Page]: /guide/development#pages
+[Pages]: /guide/development#pages
+[frontmatter]: /guide/markdown#frontmatter-and-meta
+[Vue Router]: https://next.router.vuejs.org/
+[getStaticPaths]: #getStaticPaths
+
+# Routing 🛣
+
+<Iles/> provides file-based routing, powered by [`vite-plugin-pages`](https://github.com/hannoeru/vite-plugin-pages).
+
+As you add files to the <kbd>src/pages</kbd> directory, they will become
+available as routes based on their filename, and [Vue Router] will be configured
+automatically.
+
+## Basic Routing
+
+Each [page] file corresponds to a route with the same name:
+
+- `src/pages/about.vue` -> `/about`
+- `src/pages/introduction.mdx` -> `/introduction`
+- `src/pages/users/profile.vue` -> `/users/profile`
+
+## Index Routes
+
+Files with the name `index` are treated as the index page of a route:
+
+- `src/pages/index.vue` -> `/`
+- `src/pages/users/index.vue` -> `/users`
+
+## Aliased Routes
+
+If you want the same component to be rendered as different pages, you can use
+[Vue Router]'s `alias` in [frontmatter]:
+
+```vue
+<route>
+alias: ['/posts']
+</route>
+```
+
+## Override Routes
+
+You can also override the default structure by providing `path` in [frontmatter]:
+
+```mdx
+---
+path: /guide/intro
+---
+```
+
+## Dynamic Routes
+
+<Iles/> supports _dynamic parameters_ in the filename, so that one [page]
+can be used to generate many different paths based on custom logic.
+
+<Tip warn>
+Pages with dynamic parameters must define <kbd>[getStaticPaths]</kbd>.
+</Tip>
+
+### Named Parameters
+
+Named parameters are denoted using square brackets:
+
+- `src/pages/posts/[slug].vue` -> `/posts/:slug`, __example__: `/posts/introduction`
+
+### Rest Parameters
+
+Catch-all routes are denoted with square brackets containing an ellipsis:
+
+- `src/pages/[...all].vue` -> `/:all(.*)*`, __example__: `/a/dynamic/path`
+
+The text after the ellipsis will be used both to name the route, and as the name
+of the prop in which the route parameters are passed.
+
+## `getStaticPaths`
+
+[Pages] with dynamic params must provide a `getStaticPaths` function.
+
+`getStaticPaths` should return an array of objects to determine which paths should be
+statically generated at build time.
+
+<Tip>
+It must be specified in the default export of a Vue component, you may use the
+`definePageComponent` helper to provide intellisense.
+</Tip>
+
+```vue
+<script lang="ts">
+import { definePageComponent } from 'iles'
+
+export default definePageComponent({
+  getStaticPaths () {
+    return [
+      { params: { section: 'one' }, props: { message: '...' } },
+      { params: { section: 'two' }, props: { message: '...' } },
+    ]
+  ],
+})
+</script>
+
+<script setup lang="ts">
+defineProps<{ message: string }>()
+</script>
+
+<template>
+  <p>{{ message }}</p>
+</template>
+```
+<Caption>`src/pages/dynamic/[section].vue`</Caption>
+
+
+See the generated examples: [one](/dynamic/one) and [two](/dynamic/two).
+
+### `params`
+
+The `params` key of each path will be used to resolve any named and rest parameters in the [page] filename, similar to how you would provide named parameters when using [Vue Router].
+
+You can access them in the [page] component using `$route.params`, or by specifying them
+in `defineProps`.
+
+### `props`
+
+You can pass additional data to each generated page by using `props` in each
+path object, and they will be provided as props in the [page] component.
+
+You can access them using `defineProps` as in the example above, or as `props` in `usePage`.
