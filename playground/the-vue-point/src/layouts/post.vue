@@ -1,36 +1,24 @@
-<script lang="ts">
-import { definePageComponent } from 'iles'
-import { getPosts } from '~/logic/posts'
-
-export default definePageComponent({
-  async getStaticPaths () {
-    let posts = $(await getPosts())
-    return posts.map((post, i) => ({
-      params: { slug: post.slug },
-      props: { post, nextPost: posts[i - 1], prevPost: posts[i + 1] },
-    }))
-  },
-})
-</script>
-
 <script setup lang="ts">
 import { usePage } from 'iles'
-import type { Post } from '~/logic/posts'
+import { usePosts, Post } from '~/logic/posts'
 
-const props = defineProps<{ post: Post; nextPost: Post; prevPost: Post }>()
+const posts = usePosts()
 
-let { frontmatter } = usePage()
+let { page } = $(usePage())
+const post = page as any as Post
+
+let currentIndex = $computed(() => posts.findIndex(p => p.href === post.href))
+let nextPost = $computed(() => posts[currentIndex - 1])
+let prevPost = $computed(() => posts[currentIndex + 1])
 
 let author = $computed(() => {
-  frontmatter.title = props.post.title
-  frontmatter.description = props.post.excerpt
-  const { twitter, gravatar, author } = props.post
+  const { twitter, gravatar, author } = post
   return { twitter, gravatar, author }
 })
 </script>
 
 <template layout="default">
-  <article v-if="post" class="xl:divide-y xl:divide-gray-200">
+  <article class="xl:divide-y xl:divide-gray-200">
     <header class="pt-6 xl:pb-10 space-y-1 text-center">
       <PostDate :date="post.date"/>
       <h1
@@ -60,10 +48,7 @@ let author = $computed(() => {
       <Author v-bind="author"/>
       <div class="divide-y divide-gray-200 xl:pb-0 xl:col-span-3 xl:row-span-2">
         <div class="prose max-w-none pt-10 pb-8">
-          <Markdown>
-            {{ post.excerpt }}
-            {{ post.content }}
-          </Markdown>
+          <slot/>
         </div>
       </div>
 

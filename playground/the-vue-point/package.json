@@ -15,23 +15,5 @@
     "unplugin-icons": "^0.12.15",
     "vite": "^2.6.10",
     "vite-plugin-windicss": "^1.4.1"
-  },
-  "eslintConfig": {
-    "extends": "@mussi/eslint-config",
-    "globals": {
-      "$ref": "readonly",
-      "$computed": "readonly",
-      "$shallowRef": "readonly",
-      "$$": "readonly",
-      "$": "readonly"
-    },
-    "rules": {
-      "prefer-const": "off",
-      "no-unused-vars": "off",
-      "import/named": "off",
-      "import/first": "off",
-      "import/no-duplicates": "off",
-      "import/order": "off"
-    }
   }
 }

@@ -3,9 +3,9 @@ alias: ['/posts']
 </route>
 
 <script setup lang="ts">
-import { getPosts } from '~/logic/posts'
+import { usePosts } from '~/logic/posts'
 
-const posts = await getPosts()
+const posts = usePosts()
 </script>
 
 <template>
@@ -36,7 +36,9 @@ const posts = await getPosts()
               <h2 class="text-2xl leading-8 font-bold tracking-tight">
                 <a class="text-gray-900" :href="post.href">{{ post.title }}</a>
               </h2>
-              <div class="prose max-w-none text-gray-500" v-html="post.excerpt"/>
+              <div class="prose max-w-none text-gray-500">
+                <component :is="post.excerpt"/>
+              </div>
             </div>
             <div class="text-base leading-6 font-medium">
               <a class="link" aria-label="read more" :href="post.href">Read more →</a>

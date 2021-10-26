@@ -6,11 +6,10 @@ declare module 'vue' {
   export interface GlobalComponents {
     Author: typeof import('./src/components/Author.vue')['default']
     BackLink: typeof import('./src/components/BackLink.tsx')['default']
-    CarbonReset: typeof import('~icons/carbon/reset')['default']
     CarbonWarning: typeof import('~icons/carbon/warning')['default']
+    DefaultLayout: typeof import('./src/layouts/default.vue')['default']
     Head: typeof import('@vueuse/head')['Head']
     Island: typeof import('iles')['Island']
-    Markdown: typeof import('./src/components/Markdown.vue')['default']
     NavBarLinks: typeof import('./src/components/NavBarLinks.svelte')['default']
     PostDate: typeof import('./src/components/PostDate.vue')['default']
   }

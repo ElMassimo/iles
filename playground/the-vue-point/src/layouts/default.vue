@@ -1,10 +1,5 @@
 <script setup lang="ts">
 import { useHead } from 'iles'
-import { getPosts } from '~/logic/posts'
-
-const { refresh } = await getPosts()
-
-const isDev = import.meta.env.DEV
 
 if (import.meta.env.PROD) {
   useHead({
@@ -23,12 +18,7 @@ if (import.meta.env.PROD) {
           <img class="inline-block mr-2" style="width:36px" alt="logo" src="/logo.svg">
           <span v-if="$route.name !== 'index'" class="hidden md:inline">The Vue Point</span>
         </a>
-        <div class="text-base text-gray-500 leading-5">
-          <NavBarLinks client:none/>
-          <button v-if="isDev" class="top-4 right-4 absolute" @click="refresh">
-            <CarbonReset/>
-          </button>
-        </div>
+        <NavBarLinks client:none/>
       </nav>
     </div>
     <main class="max-w-3xl mx-auto px-4 sm:px-6 xl:max-w-5xl xl:px-0">

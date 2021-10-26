@@ -21,7 +21,7 @@ function formatDate (dateStr: string | Date) {
 </script>
 
 <template>
-  <dl v-if="date">
+  <dl>
     <dt class="sr-only">Published on</dt>
     <dd class="text-base leading-6 font-medium text-gray-500">
       <time :datetime="getDateTime(date)">{{ formatDate(date) }}</time>
