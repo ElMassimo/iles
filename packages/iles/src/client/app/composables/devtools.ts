@@ -38,6 +38,7 @@ let page = {} as PageData['page']
 let route = {} as PageData['route']
 let meta = {} as PageData['meta']
 let frontmatter = {} as PageData['frontmatter']
+let props = {} as PageData['props']
 let site = {} as PageData['site']
 
 const devtools = {
@@ -84,6 +85,7 @@ export function installDevtools (app: App, config: AppClientConfig) {
   route = pageData.route
   page = pageData.page
   frontmatter = pageData.frontmatter
+  props = pageData.props
   meta = pageData.meta
   site = pageData.site
 
@@ -149,8 +151,9 @@ export function installDevtools (app: App, config: AppClientConfig) {
           props: [
             { key: 'component', value: page.value },
             { key: 'layout', value: page.value.layoutName },
-            { key: 'meta', value: meta },
             { key: 'frontmatter', value: frontmatter },
+            { key: 'meta', value: meta },
+            { key: 'props', value: props.value },
             { key: 'site', value: site },
           ].filter(x => x),
         }
