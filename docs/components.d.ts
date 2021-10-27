@@ -29,6 +29,7 @@ declare module 'vue' {
     IlesLogo: typeof import('~icons/iles/logo')['default']
     IlesNetlify: typeof import('~icons/iles/netlify')['default']
     IlesText: typeof import('~icons/iles/text')['default']
+    IlesVercel: typeof import('~icons/iles/vercel')['default']
     IlesVite: typeof import('~icons/iles/vite')['default']
     IlesVue: typeof import('~icons/iles/vue')['default']
     Image: typeof import('./src/components/Image.vue')['default']
@@ -60,6 +61,7 @@ declare module 'vue' {
     TheSidebar: typeof import('./src/components/TheSidebar.vue')['default']
     TimeAgo: typeof import('./src/components/TimeAgo.vue')['default']
     Tip: typeof import('./src/components/Tip.vue')['default']
+    VercelLogo: typeof import('./src/components/VercelLogo.vue')['default']
     ViteLogo: typeof import('./src/components/ViteLogo.vue')['default']
     VueLogo: typeof import('./src/components/VueLogo.vue')['default']
   }

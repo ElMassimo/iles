@@ -38,3 +38,16 @@ If using `pnpm`, make sure to install dependencies:
   command = "npx pnpm i --store=node_modules/.pnpm-store && npx pnpm run build"
 ``` 
 </Tip>
+
+## Vercel <VercelLogo/>
+
+Add a `vercel.json` file to your project to match the behavior of Vue Router:
+
+```json
+{
+  "cleanUrls": true,
+  "trailingSlash": false
+}
+```
+
+Then, push to your git repository [as usual](https://vercel.com/docs/concepts/git).
