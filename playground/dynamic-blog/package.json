@@ -1,0 +1,37 @@
+{
+  "name": "vue-blog",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "iles --open",
+    "build": "iles build",
+    "preview": "vite preview --open"
+  },
+  "devDependencies": {
+    "@iconify-json/carbon": "^1.0.7",
+    "@mapbox/rehype-prism": "^0.8.0",
+    "feed": "^4.2.1",
+    "iles": "workspace:*",
+    "unplugin-icons": "^0.12.15",
+    "vite": "^2.6.10",
+    "vite-plugin-windicss": "^1.4.1"
+  },
+  "eslintConfig": {
+    "extends": "@mussi/eslint-config",
+    "globals": {
+      "$ref": "readonly",
+      "$computed": "readonly",
+      "$shallowRef": "readonly",
+      "$$": "readonly",
+      "$": "readonly"
+    },
+    "rules": {
+      "prefer-const": "off",
+      "no-unused-vars": "off",
+      "import/named": "off",
+      "import/first": "off",
+      "import/no-duplicates": "off",
+      "import/order": "off"
+    }
+  }
+}

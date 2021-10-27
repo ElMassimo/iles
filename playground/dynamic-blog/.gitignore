@@ -1,0 +1,4 @@
+node_modules
+dist
+.vitepress/metadata.json
+.iles-ssg-temp
