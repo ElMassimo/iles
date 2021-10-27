@@ -62,6 +62,10 @@ export interface CreateAppConfig {
    * Current router path on SSG, `undefined` on client side.
    */
   routePath?: string
+  /**
+   * Props for the current page on SSG, `undefined` on client side.
+   */
+  ssrProps?: any
 }
 
 export interface AppContext extends Required<CreateAppConfig>, PageData {
@@ -72,15 +76,16 @@ export interface AppContext extends Required<CreateAppConfig>, PageData {
   routes: RouteRecordRaw[]
 }
 
-export interface RouteToRender {
-  path: string
-  outputFilename: string
-  rendered?: string
-}
-
 export interface StaticPath<T = Record<string, any>> {
   params: RouteParams
   props: T
+}
+
+export interface RouteToRender {
+  path: string
+  ssrProps: StaticPath['props']
+  outputFilename: string
+  rendered?: string
 }
 
 export interface GetStaticPathsArgs {

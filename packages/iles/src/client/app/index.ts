@@ -37,7 +37,7 @@ function createRouter (base: string | undefined, routerOptions: Partial<RouterOp
 
 export const createApp: CreateAppFactory = async (options = {}) => {
   const { head: headConfig, enhanceApp, router: routerOptions } = userApp
-  const { routePath = config.base } = options
+  const { routePath = config.base, ssrProps } = options
 
   const app = newApp(App)
 
@@ -49,7 +49,7 @@ export const createApp: CreateAppFactory = async (options = {}) => {
   const router = createRouter(config.base, routerOptions)
   app.use(router)
   router.beforeResolve(resolveLayout)
-  router.beforeResolve(resolveProps)
+  router.beforeResolve(async (route) => await resolveProps(route, ssrProps))
 
   // Set the path that should be rendered.
   if (import.meta.env.SSR) {

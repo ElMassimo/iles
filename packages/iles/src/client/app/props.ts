@@ -1,8 +1,25 @@
-import type { RouteLocationNormalizedLoaded } from 'vue-router'
+/* eslint-disable no-restricted-syntax */
+import type { RouteLocationNormalizedLoaded, RouteParams } from 'vue-router'
 import { shallowRef } from 'vue'
 import { pageFromRoute } from './composables/pageData'
 
-export async function resolveProps (route: RouteLocationNormalizedLoaded) {
+export function propsFromRoute (route: RouteLocationNormalizedLoaded) {
+  if (import.meta.env.SSR)
+    return route.meta.ssrProps as Record<string, any>
+
+  const pathVariants = route.meta.pathVariants?.value || []
+  const pathVariant = pathVariants.find(path => shallowEqual(path.params, route.params))
+  if (Object.keys(route.params).length > 0 && !pathVariant)
+    console.warn('This route will not be generated, unable to find matching params in `getStaticPaths`.\nFound:\n\t', route.params, '\nPaths:\n\t', pathVariants)
+  return pathVariant ? { ...pathVariant.params, ...pathVariant.props } : {}
+}
+
+export async function resolveProps (route: RouteLocationNormalizedLoaded, ssrProps: any) {
+  if (import.meta.env.SSR) {
+    route.meta.ssrProps = ssrProps
+    return
+  }
+
   const page = pageFromRoute(route)
   try {
     if (page.getStaticPaths && Object.keys(route.params).length === 0)
@@ -20,4 +37,12 @@ export async function resolveProps (route: RouteLocationNormalizedLoaded) {
   catch (error) {
     console.error(`Error while fetching props for ${route.path}.\n`, error)
   }
+}
+
+function shallowEqual (a: RouteParams, b: RouteParams) {
+  for (const key in a)
+    if (!(key in b) || a[key] !== b[key]) return false
+  for (const key in b)
+    if (!(key in a) || a[key] !== b[key]) return false
+  return true
 }

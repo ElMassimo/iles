@@ -10,10 +10,10 @@ export async function getRoutesToRender (config: AppConfig, createApp: CreateApp
   const routesToRender = new Map<string, RouteToRender>()
   const { router } = await createApp()
 
-  for (const path of await resolveRoutesToRender(router)) {
+  for (const { path, ssrProps } of await resolveRoutesToRender(router)) {
     const extension = extname(path).slice(1) || '.html'
     const outputFilename = pathToFilename(path, extension)
-    routesToRender.set(path, { path, outputFilename })
+    routesToRender.set(path, { path, ssrProps, outputFilename })
   }
 
   return Array.from(routesToRender.values())
@@ -22,7 +22,7 @@ export async function getRoutesToRender (config: AppConfig, createApp: CreateApp
 async function resolveRoutesToRender (router: Router) {
   const toResolvedPath = (route: any) => {
     try {
-      return router.resolve(route).fullPath
+      return { path: router.resolve(route).fullPath, ssrProps: route.ssrProps }
     }
     catch (error) {
       throw new Error(`Could not resolve ${String(route.name)}. Params: ${JSON.stringify(route.params)}. Error: ${error.message}`)
@@ -51,7 +51,8 @@ async function getDynamicPaths (route: RouteRecordNormalized) {
   if (!Array.isArray(variants))
     throw new Error(`Expected array from 'getStaticPaths' in ${file}, got: ${JSON.stringify(variants)}`)
 
-  return variants.map(({ params }) => ({ ...route, params }))
+  return variants.map(({ params, props }) =>
+    ({ name: route.name, params, ssrProps: { ...params, ...props } }))
 }
 
 function isLazy (value: RouteRecordNormalized['components']['default']): value is () => Promise<RouteComponent> {

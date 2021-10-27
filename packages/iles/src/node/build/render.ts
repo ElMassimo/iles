@@ -38,7 +38,7 @@ export async function renderPage (
   route: RouteToRender,
   createApp: CreateAppFactory,
 ) {
-  const { app, head } = await createApp({ routePath: route.path })
+  const { app, head } = await createApp({ routePath: route.path, ssrProps: route.ssrProps })
   const content = await require('@vue/server-renderer').renderToString(app, { islandsByPath, renderers })
 
   // Remove comments from Vue renderer to allow plain text, RSS, or JSON output.
