@@ -1,3 +1,18 @@
+## [0.4.3](https://github.com/ElMassimo/iles/compare/v0.4.2...v0.4.3) (2021-10-27)
+
+
+### Bug Fixes
+
+* ensure getStaticPaths is only called once per page during build ([e2d1768](https://github.com/ElMassimo/iles/commit/e2d1768a61ff8ea2d3a4ba9e6bb8e17c6c3455db))
+
+
+### Features
+
+* add page props to devtools ([c583c6a](https://github.com/ElMassimo/iles/commit/c583c6aeae9db1a538eee7b6dc4f814b7cf49b99))
+* provide route to `getStaticPaths` for more advanced scenarios ([753e03d](https://github.com/ElMassimo/iles/commit/753e03d396c97d7a0691e9440815d183dbd37781))
+
+
+
 ## [0.4.2](https://github.com/ElMassimo/iles/compare/v0.4.1...v0.4.2) (2021-10-27)
 
 
