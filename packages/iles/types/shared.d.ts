@@ -15,7 +15,7 @@ import type { Options as SvelteOptions } from '@sveltejs/vite-plugin-svelte'
 import type { PreactPluginOptions as PreactOptions } from '@preact/preset-vite'
 
 import type { FrontmatterOptions } from '@islands/frontmatter'
-import type { Router, RouteRecordRaw, RouteMeta, RouterOptions as VueRouterOptions, RouteComponent, RouteLocationNormalizedLoaded } from 'vue-router'
+import type { Router, RouteRecordRaw, RouteMeta, RouterOptions as VueRouterOptions, RouteComponent, RouteLocationNormalizedLoaded, RouteParams } from 'vue-router'
 import type { HeadClient, HeadObject } from '@vueuse/head'
 export type { OnLoadFn } from '@islands/hydration/dist/vanilla'
 
@@ -23,6 +23,8 @@ export { ViteOptions, ConfigEnv }
 
 export type { Router, RouteRecordRaw, RouteMeta }
 export type RouterOptions = VueRouterOptions & { base?: string }
+
+export interface PageProps extends Record<string, any> {}
 
 export interface PageFrontmatter extends Record<string, any> {
   layout?: string | false
@@ -39,11 +41,15 @@ export interface PageComponent extends RouteComponent {
   meta: PageMeta
   layoutName: string
   layoutFn: false | (() => Promise<DefineComponent>)
+  getStaticPaths?: GetStaticPaths
+  staticPaths: Ref<StaticPath<any>[]>
+  __file?: string
 }
 
-export interface PageData<T = any> {
+export interface PageData<T = PageProps> {
   readonly page: Ref<PageComponent>
   readonly route: RouteLocationNormalizedLoaded
+  readonly props: T
   readonly meta: PageMeta
   readonly frontmatter: PageFrontmatter
   readonly site: UserSite
@@ -66,13 +72,18 @@ export interface AppContext extends Required<CreateAppConfig>, PageData {
   routes: RouteRecordRaw[]
 }
 
-export interface SSGRoute {
+export interface RouteToRender {
   path: string
-  filename: string
-  extension: string
   outputFilename: string
   rendered?: string
 }
+
+export interface StaticPath<T> {
+  params: RouteParams
+  props: T
+}
+
+export type GetStaticPaths<T = any> = () => StaticPath<T>[] | Promise<StaticPath<T>[]>
 
 export type CreateAppFactory = (options?: CreateAppConfig) => Promise<AppContext>
 

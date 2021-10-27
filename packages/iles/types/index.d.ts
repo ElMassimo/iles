@@ -2,7 +2,7 @@
 /// <reference types="vue/ref-macros" />
 
 import Plugin from '../dist/node/plugin'
-import type { PageFrontmatter, PageMeta, UserSite } from './shared'
+import type { PageFrontmatter, PageMeta, UserSite, StaticPath } from './shared'
 
 export default Plugin
 export * from './shared'
@@ -17,6 +17,7 @@ declare module 'vue-router' {
   interface RouteMeta {
     filename: string
     layout?: import('vue').Ref<import('vue').DefineComponent | false>
+    pathVariants?: import('vue').Ref<StaticPath[]>
   }
 }
 

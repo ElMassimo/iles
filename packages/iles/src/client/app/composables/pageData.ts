@@ -1,14 +1,23 @@
 /* eslint-disable no-restricted-syntax */
 import type { App, Ref, InjectionKey } from 'vue'
+import type { RouteLocationNormalizedLoaded, RouteParams } from 'vue-router'
 import { computed, ref, inject } from 'vue'
-import { RouteLocationNormalizedLoaded, routeLocationKey } from 'vue-router'
-import type { PageData, PageComponent, UserSite } from '../../shared'
+import { routeLocationKey } from 'vue-router'
+import type { PageData, PageProps, PageComponent, UserSite, StaticPath } from '../../shared'
 import { toReactive } from './reactivity'
 
 export const pageDataKey: InjectionKey<PageData> = Symbol('[iles-page-data]')
 
 function last <T> (arr: T[]) {
   return arr[arr.length - 1]
+}
+
+function shallowEqual (a: RouteParams, b: RouteParams) {
+  for (const key in a)
+    if (!(key in b) || a[key] !== b[key]) return false
+  for (const key in b)
+    if (!(key in a) || a[key] !== b[key]) return false
+  return true
 }
 
 function injectFromApp <T> (key: InjectionKey<T>, app?: App) {
@@ -32,6 +41,14 @@ export function pageFromRoute (route: RouteLocationNormalizedLoaded) {
   return (last(route.matched)?.components?.default || {}) as PageComponent
 }
 
+export function propsFromRoute (route: RouteLocationNormalizedLoaded) {
+  const pathVariants = route.meta.pathVariants?.value || []
+  const pathVariant = pathVariants.find(path => shallowEqual(path.params, route.params))
+  if (Object.keys(route.params).length > 0 && !pathVariant)
+    console.warn('This route will not be generated, unable to find matching params in `getStaticPaths`.\nFound:\n\t', route.params, '\nPaths:\n\t', pathVariants)
+  return pathVariant ? { ...pathVariant.props, ...pathVariant.params } : {}
+}
+
 function reactiveFromFn <T extends object> (fn: () => T): T {
   return toReactive<T>(computed(fn))
 }
@@ -39,15 +56,16 @@ function reactiveFromFn <T extends object> (fn: () => T): T {
 export function installPageData (app: App, siteRef: Ref<UserSite>): PageData {
   const route = injectFromApp(routeLocationKey, app)
   const page = computedInPage(() => pageFromRoute(route))
-  const meta = reactiveFromFn(() => page.value.meta || {})
+  const meta = reactiveFromFn(() => ({ ...page.value.meta, href: route.path }))
   const frontmatter = reactiveFromFn(() => page.value.frontmatter || {})
+  const props = computedInPage(() => propsFromRoute(route))
   const site = toReactive(siteRef)
 
-  const pageData: PageData = { route, page, meta, frontmatter, site }
+  const pageData: PageData = { route, page, meta, frontmatter, site, props }
   app.provide(pageDataKey, pageData)
   return pageData
 }
 
-export function usePage<T = any> (app?: App): PageData<T> {
-  return injectFromApp(pageDataKey, app)
+export function usePage<T extends PageProps = PageProps> (app?: App): PageData<T> {
+  return injectFromApp<PageData<T>>(pageDataKey, app)
 }

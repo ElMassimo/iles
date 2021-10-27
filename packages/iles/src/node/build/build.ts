@@ -1,9 +1,8 @@
-import { rmdirSync } from 'fs'
 import { resolveConfig } from '../config'
 import { renderPages } from './render'
 import { bundle } from './bundle'
 import { bundleIslands } from './islands'
-import { withSpinner } from './utils'
+import { withSpinner, rm } from './utils'
 import { createSitemap } from './sitemap'
 
 export async function build (root: string) {
@@ -18,8 +17,7 @@ export async function build (root: string) {
 
     const islandsByPath = Object.create(null)
 
-    const pagesResult = await withSpinner('rendering pages',
-      async () => await renderPages(appConfig, islandsByPath, bundleResult))
+    const pagesResult = await renderPages(appConfig, islandsByPath, bundleResult)
 
     await createSitemap(appConfig, pagesResult.routesToRender)
 
@@ -27,7 +25,7 @@ export async function build (root: string) {
       async () => await bundleIslands(appConfig, islandsByPath, pagesResult))
   }
   finally {
-    rmdirSync(appConfig.tempDir, { recursive: true })
+    rm(appConfig.tempDir)
   }
 
   console.info(`build complete in ${((Date.now() - start) / 1000).toFixed(2)}s.`)

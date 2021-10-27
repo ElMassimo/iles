@@ -5,6 +5,8 @@
 [glob]: https://vitejs.dev/guide/features.html#glob-import
 [config]: /config#configuring-%C3%AEles
 [frontmatter]: /guide/markdown#frontmatter-and-meta
+[routing]: /guide/routing
+[hydration]: /guide/hydration
 
 # Development 💻
 
@@ -51,8 +53,7 @@ Components in the <kbd>src/components</kbd> dir will be auto-imported on-demand,
 
 ## Pages 🛣
 
-Routes will be auto-generated for files in the <kbd>src/pages</kbd> dir with the same file structure.
-Check out [`vite-plugin-pages`](https://github.com/hannoeru/vite-plugin-pages) for more details.
+[Routes will be auto-generated][routing] for files in the <kbd>src/pages</kbd> dir with the same file structure.
 
 Pages can be Vue components or [MDX files][mdx], and may specify frontmatter and route metadata.
 
@@ -198,4 +199,4 @@ export default defineConfig({
 
 Page information is available in a debug panel, similar to Vitepress, but you may also access an _Islands_ inspector in Vue devtools.
 
-This can be useful when debugging islands hydration, which we'll cover in the next section.
+This can be useful when debugging [islands hydration][hydration].

@@ -5,6 +5,7 @@ import { useAppConfig } from '../composables/appConfig'
 import { usePage } from '../composables/pageData'
 import { useRouterLinks } from '../composables/routerLinks'
 import { resolveLayout } from '../layout'
+import { resolveProps } from '../props'
 
 export default defineComponent({
   name: 'îles',
@@ -15,13 +16,20 @@ export default defineComponent({
     const appConfig = useAppConfig()
     useRouterLinks()
 
-    const { page, route } = usePage()
+    const { page, route, props } = usePage()
 
     const layoutName = computed(() => page.value.layoutName)
     const layout = computed(() => route.meta.layout?.value)
-    if (import.meta.env.DEV) { // HMR for layout changes
+    if (import.meta.env.DEV) {
+      // HMR for layout changes
       watch([page, layoutName], async ([page], [oldPage]) => {
         if (page === oldPage) await resolveLayout(route)
+      })
+
+      // HMR for static path changes
+      const getStaticPaths = computed(() => page.value.getStaticPaths)
+      watch([page, getStaticPaths], async ([page], [oldPage]) => {
+        if (page === oldPage) await resolveProps(route)
       })
     }
 
@@ -32,6 +40,7 @@ export default defineComponent({
     return {
       layout,
       page,
+      props,
       DebugPanel,
     }
   },
@@ -44,9 +53,9 @@ export default defineComponent({
   </Head>
   <Suspense>
     <router-view>
-      <component :is="page" v-if="layout === false"/>
-      <component :is="layout" v-else :key="(page as any).__file">
-        <component :is="page"/>
+      <component :is="page" v-if="layout === false" v-bind="props"/>
+      <component :is="layout" v-else :key="page.__file">
+        <component :is="page" v-bind="props"/>
       </component>
     </router-view>
   </Suspense>

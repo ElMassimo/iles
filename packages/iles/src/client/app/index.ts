@@ -13,6 +13,7 @@ import { installAppConfig } from './composables/appConfig'
 import { resetHydrationId } from './hydration'
 import { defaultHead } from './head'
 import { resolveLayout } from './layout'
+import { resolveProps } from './props'
 
 const newApp = import.meta.env.SSR ? createSSRApp : createClientApp
 
@@ -22,7 +23,7 @@ function createRouter (base: string | undefined, routerOptions: Partial<RouterOp
   // Handle 404s in development.
   if (import.meta.env.DEV)
     // @ts-ignore
-    routes.push({ path: '/:pathMatch(.*)*', name: 'NotFound', component: () => import('@islands/components/NotFound') })
+    routes.push({ path: '/:path(.*)*', name: 'NotFound', component: () => import('@islands/components/NotFound') })
 
   return createVueRouter({
     scrollBehavior: (current, previous, savedPosition) => {
@@ -48,6 +49,7 @@ export const createApp: CreateAppFactory = async (options = {}) => {
   const router = createRouter(config.base, routerOptions)
   app.use(router)
   router.beforeResolve(resolveLayout)
+  router.beforeResolve(resolveProps)
 
   // Set the path that should be rendered.
   if (import.meta.env.SSR) {
@@ -55,7 +57,7 @@ export const createApp: CreateAppFactory = async (options = {}) => {
     await router.isReady()
   }
 
-  const { frontmatter, meta, page, route, site } = installPageData(app, siteRef)
+  const { frontmatter, meta, page, props, route, site } = installPageData(app, siteRef)
   Object.defineProperty(app.config.globalProperties, '$frontmatter', { get: () => frontmatter })
   Object.defineProperty(app.config.globalProperties, '$meta', { get: () => meta })
   Object.defineProperty(app.config.globalProperties, '$site', { get: () => site })
@@ -66,6 +68,7 @@ export const createApp: CreateAppFactory = async (options = {}) => {
     head,
     frontmatter,
     meta,
+    props,
     site,
     page,
     route,

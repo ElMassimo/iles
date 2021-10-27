@@ -281,6 +281,7 @@ import.meta.hot.accept('/${relative(root, path)}', (...args) => __ILES_PAGE_UPDA
         }
         else {
           const { meta, layout, ...frontmatter } = pageMatter
+          appendToSfc('inheritAttrs', serialize(false))
           appendToSfc('meta', serialize(meta))
           appendToSfc('frontmatter', serialize(frontmatter))
         }

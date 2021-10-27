@@ -1,3 +1,4 @@
+import fs from 'fs'
 import { performance } from 'perf_hooks'
 import newSpinner from 'mico-spinner'
 
@@ -9,7 +10,7 @@ export async function withSpinner<T> (message: string, fn: () => Promise<T>) {
   try {
     const result = await fn()
     spinner.succeed()
-    console.log(`  done in ${timeSince(startTime)}\n`)
+    console.info(`  done in ${timeSince(startTime)}\n`)
     return result
   }
   catch (e) {
@@ -35,6 +36,8 @@ export function flattenPath (path: string) {
   return pathToFilename(path).replace(/\//g, '_')
 }
 
+// Internal: Removes starting slash and ensures the provided extension.
+// Paths ending with '/' are represented with index.html files.
 export function pathToFilename (path: string, ext = '') {
   if (path.endsWith(ext)) ext = ''
   return `${(path.endsWith('/') ? `${path}index` : path).replace(/^\//g, '')}${ext}`
@@ -45,4 +48,11 @@ export async function replaceAsync (str: string, regex: RegExp, asyncFn: (...gro
     .map(([match, ...args]) => asyncFn(match, ...args))
   const replacements = await Promise.all(promises)
   return str.replace(regex, () => replacements.shift()!)
+}
+
+export function rm (dir: string) {
+  if ('rmSync' in fs)
+    fs.rmSync(dir, { recursive: true, force: true })
+  else
+    fs.rmdirSync(dir, { recursive: true })
 }

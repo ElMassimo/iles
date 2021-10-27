@@ -7,7 +7,7 @@ import glob from 'fast-glob'
 import type { Manifest, UserConfig as ViteUserConfig } from 'vite'
 import type { PreRenderedChunk } from 'rollup'
 import IslandsPlugins from '../plugin'
-import type { Awaited, AppConfig, IslandsByPath, IslandDefinition, SSGRoute } from '../shared'
+import type { Awaited, AppConfig, IslandsByPath, IslandDefinition, RouteToRender } from '../shared'
 import rebaseImports from './rebaseImports'
 import { flattenPath, uniq } from './utils'
 import { extendManualChunks } from './chunks'
@@ -29,10 +29,10 @@ export async function bundleIslands (
   for (const temp of tempIslandFiles) await fs.unlink(temp)
 }
 
-async function renderRoute (config: AppConfig, manifest: Manifest, route: SSGRoute, islands: IslandDefinition[] = []) {
+async function renderRoute (config: AppConfig, manifest: Manifest, route: RouteToRender, islands: IslandDefinition[] = []) {
   let content = route.rendered!
 
-  if (route.extension === '.html') {
+  if (route.outputFilename.endsWith('.html')) {
     const preloadScripts: string[] = []
 
     for (const island of islands) {
