@@ -106,7 +106,7 @@ You can leverage [`import.meta.glob`][glob] to import page components, which is
 very convenient when rendering collections or index pages.
 
 ```ts
-export function usePosts () {
+export function getPosts () {
   const posts = Object.values(
     import.meta.globEagerDefault('../pages/posts/**/*.mdx')
   )
@@ -118,9 +118,9 @@ Page data is available directly in the component modules:
 
 ```vue
 <script setup lang="ts">
-import { usePosts } from '~/logic/posts'
+import { getPosts } from '~/logic/posts'
 
-const posts = usePosts()
+const posts = getPosts()
 </script>
 
 <template>

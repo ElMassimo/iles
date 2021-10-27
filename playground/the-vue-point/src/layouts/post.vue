@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { usePage } from 'iles'
-import { usePosts, Post } from '~/logic/posts'
+import { getPosts, Post } from '~/logic/posts'
 
-const posts = usePosts()
+const posts = getPosts()
 
 let { page } = $(usePage())
 const post = page as any as Post

@@ -3,9 +3,9 @@ alias: ['/posts']
 </route>
 
 <script setup lang="ts">
-import { usePosts } from '~/logic/posts'
+import { getPosts } from '~/logic/posts'
 
-const posts = usePosts()
+const posts = getPosts()
 </script>
 
 <template>

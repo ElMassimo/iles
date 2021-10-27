@@ -32,7 +32,7 @@ function withExcerpt (post: Post) {
   return { ...post, excerpt }
 }
 
-export function usePosts () {
+export function getPosts () {
   // @ts-ignore
   const posts = Object.values(import.meta.globEagerDefault('../pages/posts/**/*.{md,mdx}')) as Post[]
   return posts.sort(byDate).map(withExcerpt)
