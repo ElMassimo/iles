@@ -1,9 +1,6 @@
 // exports in this file are exposed to the client app via 'iles'
 // so the user can do `import { usePage } from 'iles'`
 
-import type { ComponentOptionsWithoutProps } from 'vue'
-import type { UserApp, GetStaticPaths } from './shared'
-
 // Generic Types
 export type { Router, RouteRecordRaw } from './shared'
 
@@ -18,14 +15,7 @@ export { useHead } from '@vueuse/head'
 
 // Utilities
 export { inBrowser } from './app/utils'
-
-export function defineApp (app: UserApp) {
-  return app
-}
-
-export function definePageComponent<T> (page: ComponentOptionsWithoutProps<T> & { getStaticPaths?: GetStaticPaths<T> }) {
-  return page
-}
+export { defineApp, definePageComponent } from './shared'
 
 // Components
 export * from './app/components'
