@@ -1,3 +1,12 @@
+## [0.4.4-0](https://github.com/ElMassimo/iles/compare/v0.4.3...v0.4.4-0) (2021-10-27)
+
+
+### Bug Fixes
+
+* drop remark-frontmatter and add micromark plugins directly ([8d6f3f3](https://github.com/ElMassimo/iles/commit/8d6f3f3b184674e30181a7ca52361de3baaeb5ac))
+
+
+
 ## [0.4.3](https://github.com/ElMassimo/iles/compare/v0.4.2...v0.4.3) (2021-10-27)
 
 
