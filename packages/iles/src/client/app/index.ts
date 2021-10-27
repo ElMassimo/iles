@@ -74,7 +74,6 @@ export const createApp: CreateAppFactory = async (options = {}) => {
     route,
     router,
     routes,
-    routePath,
   }
   head.addHeadObjs(ref(defaultHead(context, userApp.socialTags)))
 

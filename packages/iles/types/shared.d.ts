@@ -68,7 +68,7 @@ export interface CreateAppConfig {
   ssrProps?: any
 }
 
-export interface AppContext extends Required<CreateAppConfig>, PageData {
+export interface AppContext extends PageData {
   app: App
   config: AppClientConfig
   head: HeadClient
