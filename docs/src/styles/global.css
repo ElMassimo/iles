@@ -62,6 +62,7 @@ iframe {
 @media (min-width: 500px) {
   .sticky {
     --bg-scrollbar-track: transparent;
+    --bg-scrollbar-thumb: var(--bg-highlight);
   }
 
   ::-webkit-scrollbar {
