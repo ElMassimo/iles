@@ -1,3 +1,12 @@
+## [0.4.2](https://github.com/ElMassimo/iles/compare/v0.4.1...v0.4.2) (2021-10-27)
+
+
+### Bug Fixes
+
+* revert change to d.ts ([89f2d5e](https://github.com/ElMassimo/iles/commit/89f2d5ede96a82480f387245c6edba0f2c5a9a08))
+
+
+
 ## [0.4.1](https://github.com/ElMassimo/iles/compare/v0.4.0...v0.4.1) (2021-10-27)
 
 
