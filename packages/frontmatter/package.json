@@ -1,6 +1,6 @@
 {
   "name": "@islands/frontmatter",
-  "version": "0.0.2",
+  "version": "0.0.3-0",
   "scripts": {
     "dev": "npm run build -- --watch",
     "build": "tsup src/frontmatter.ts",
