@@ -23,7 +23,7 @@ const debug = creatDebugger('iles:config')
 
 export type { AppConfig }
 
-export const IlesComponentResolver: ComponentResolver = (name) => {
+const IlesComponentResolver: ComponentResolver = (name) => {
   if (name === 'Island') return { importName: 'Island', path: 'iles' }
   if (name === 'Head') return { importName: 'Head', path: '@vueuse/head' }
 }

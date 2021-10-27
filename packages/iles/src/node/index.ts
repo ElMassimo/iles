@@ -1,6 +1,8 @@
-import Plugin from './plugin/index'
+export { default, ILES_APP_ENTRY } from './plugin/plugin'
+export { build } from './build/build'
+export { resolveConfig } from './config'
+import { UserConfig } from '../../types/shared'
 
-export default Plugin
-export * from './build/build'
-export * from './config'
-export { defineApp, defineConfig } from './shared'
+export function defineConfig (config: UserConfig) {
+  return config
+}

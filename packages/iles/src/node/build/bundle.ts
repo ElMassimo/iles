@@ -4,7 +4,7 @@ import type { Plugin } from 'vite'
 import { build, BuildOptions, mergeConfig as mergeViteConfig, UserConfig as ViteUserConfig } from 'vite'
 import { APP_PATH } from '../alias'
 import { AppConfig } from '../shared'
-import IslandsPlugins from '../plugin'
+import IslandsPlugins from '../plugin/plugin'
 
 type Entrypoints = Record<string, string>
 

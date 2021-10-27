@@ -15,7 +15,17 @@ export { useHead } from '@vueuse/head'
 
 // Utilities
 export { inBrowser } from './app/utils'
-export { defineApp, definePageComponent } from './shared'
+
+import type { ComponentOptionsWithoutProps } from 'vue'
+import { UserApp, GetStaticPaths } from '../../types/shared'
+
+export function defineApp (app: UserApp) {
+  return app
+}
+
+export function definePageComponent<T> (page: ComponentOptionsWithoutProps<T> & { getStaticPaths?: GetStaticPaths<T> }) {
+  return page
+}
 
 // Components
 export * from './app/components'
