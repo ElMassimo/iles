@@ -1,10 +1,12 @@
 import type { Program, VariableDeclarator } from 'estree'
 import { valueToEstree } from 'estree-util-value-to-estree'
 import { load as yaml } from 'js-yaml'
-import { parse as toml } from 'toml'
 import { name as isValidIdentifierName } from 'estree-util-is-identifier-name'
 import type { Pluggable, Plugin } from 'unified'
 import type { Node, Data, Parent } from 'unist'
+
+import { frontmatter } from 'micromark-extension-frontmatter'
+import { frontmatterFromMarkdown, frontmatterToMarkdown } from 'mdast-util-frontmatter'
 
 export type Frontmatter = Record<string, any>
 
@@ -27,16 +29,30 @@ function mapFind <T, O> (arr: T[], fn: (i: T) => O): O | undefined {
  * @param options - Optional options to configure the output.
  * @returns A unified transformer.
  */
-const plugin: FrontmatterPlugin = (options?: FrontmatterOptions) => (ast, file) => {
-  const parent = ast as Parent
-  const nodes = parent.children as (Node<Data> & { value: string })[]
-  const rawMatter = mapFind(nodes, parseFrontmatter) || {}
-  const { meta, layout: _, ...frontmatter } = options?.extendFrontmatter?.(rawMatter, file.path) || rawMatter
-  parent.children.unshift(defineConsts({ ...frontmatter, meta, frontmatter }))
+const plugin: FrontmatterPlugin = function (options?: FrontmatterOptions) {
+  const data = this.data()
+
+  const addExtension = (field: string, value: unknown) => {
+    const list = (data[field] ||= []) as unknown[]
+    list.push(value)
+  }
+
+  const preset = 'yaml'
+  addExtension('micromarkExtensions', frontmatter(preset))
+  addExtension('fromMarkdownExtensions', frontmatterFromMarkdown(preset))
+  addExtension('toMarkdownExtensions', frontmatterToMarkdown(preset))
+
+  return (ast, file) => {
+    const parent = ast as Parent
+    const nodes = parent.children as (Node<Data> & { value: string })[]
+    const rawMatter = mapFind(nodes, parseFrontmatter) || {}
+    const { meta, layout: _, ...frontmatter } = options?.extendFrontmatter?.(rawMatter, file.path) || rawMatter
+    parent.children.unshift(defineConsts({ ...frontmatter, meta, frontmatter }))
+  }
 }
 
 function parseFrontmatter ({ type, value }: { type: string; value: string }) {
-  const data = type === 'yaml' ? yaml(value) : type === 'toml' ? toml(value) : undefined
+  const data = type === 'yaml' ? yaml(value) as any : undefined
   if (data && typeof data !== 'object')
     throw new Error(`Expected frontmatter data to be an object, got:\n${value}`)
   return data

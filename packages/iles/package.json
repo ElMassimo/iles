@@ -3,7 +3,6 @@
   "description": "Vite & Vue powered static site generator with partial hydration",
   "version": "0.4.3",
   "main": "dist/node/index.js",
-  "module": "dist/node/index.mjs",
   "types": "types/index.d.ts",
   "bin": {
     "iles": "bin/iles.js"
@@ -95,7 +94,8 @@
     "rimraf": "^3.0.2",
     "rollup": "^2.56.3",
     "semver": "^7.3.5",
-    "typescript": "^4.3.2",
+    "typescript": "^4.4.4",
+    "tsup": "5.5.0",
     "vite-plugin-pwa": "^0.11.2",
     "vite-plugin-solid": "^2.1.1"
   }

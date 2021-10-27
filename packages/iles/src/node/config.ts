@@ -17,6 +17,7 @@ import type { UserConfig } from 'iles'
 import type { AppConfig, AppPlugins, ConfigEnv, ViteOptions, Plugin, NamedPlugins } from './shared'
 import { camelCase, resolvePlugin, uncapitalize } from './plugin/utils'
 import { resolveAliases, DIST_CLIENT_PATH, HYDRATION_DIST_PATH } from './alias'
+import { remarkFrontmatter } from '@islands/frontmatter'
 import remarkWrapIslands from './plugin/remarkWrapIslands'
 
 const debug = creatDebugger('iles:config')
@@ -207,7 +208,6 @@ function appConfigDefaults (appConfig: AppConfig, userConfig: UserConfig): Omit<
       jsx: true,
       remarkPlugins: [
         remarkWrapIslands,
-        'remark-frontmatter',
         frontmatterPlugin(appConfig),
       ],
       // Adds meta fields such as filename, lastUpdated, and href.
@@ -238,7 +238,6 @@ function appConfigDefaults (appConfig: AppConfig, userConfig: UserConfig): Omit<
 }
 
 async function frontmatterPlugin (config: AppConfig): Promise<FrontmatterPluggable> {
-  const { remarkFrontmatter } = await import('@islands/frontmatter')
   return [remarkFrontmatter, {
     get extendFrontmatter () {
       return config.markdown.extendFrontmatter
@@ -306,10 +305,12 @@ function chainPluginCallbacks<T extends keyof AppPlugins> (
   config: AppConfig, option: T, callbackNames: (keyof AppPlugins[T])[], isAsync: boolean) {
   callbackNames.forEach((callbackName) => {
     const pluginCallbacks = config.plugins
+      // @ts-ignore
       .map(plugin => plugin[option]?.[callbackName as keyof Plugin[T]])
       .filter(x => x)
 
     if (pluginCallbacks.length > 0)
+      // @ts-ignore
       config[option][callbackName] = chainCallbacks(pluginCallbacks, isAsync) as any
   })
 }

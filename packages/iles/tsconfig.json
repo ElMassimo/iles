@@ -9,6 +9,7 @@
     "noUnusedLocals": true,
     "skipLibCheck": true,
     "esModuleInterop": true,
+    "useUnknownInCatchVariables": false,
     "lib": ["ESNext", "DOM"],
     "types": ["node", "@peeky/runner"],
     "paths": {

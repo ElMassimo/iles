@@ -31,7 +31,7 @@
     "minimist": "^1.2.5",
     "pnpm": "^6.15.0",
     "semver": "^7.3.5",
-    "typescript": "^4.3.5"
+    "typescript": "^4.4.4"
   },
   "resolutions": {
     "eslint-plugin-vue": "7.17.0"

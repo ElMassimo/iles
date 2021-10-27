@@ -4,7 +4,7 @@ export const tsup: Options = {
   target: 'node14',
   splitting: true,
   sourcemap: false,
-  format: ['esm', 'cjs'],
+  format: ['cjs'],
   outDir: 'dist/node',
   external: [
     '@vue/runtime-dom/dist/runtime-dom.esm-bundler.js',
