@@ -1,3 +1,12 @@
+# [0.4.0](https://github.com/ElMassimo/iles/compare/v0.3.12...v0.4.0) (2021-10-27)
+
+
+### Features
+
+* 🛣 Dynamic Parameters 🛣 ([#25](https://github.com/ElMassimo/iles/issues/25)) ([9148e4a](https://github.com/ElMassimo/iles/commit/9148e4a16f8ca79d6f14d8d3df34462a6e07cd6b))
+
+
+
 ## [0.3.12](https://github.com/ElMassimo/iles/compare/v0.3.11...v0.3.12) (2021-10-25)
 
 
