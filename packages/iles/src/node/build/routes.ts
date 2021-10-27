@@ -43,7 +43,7 @@ async function getDynamicPaths (route: RouteRecordNormalized) {
     ? await component().then(m => 'default' in m ? m.default : m)
     : component
 
-  const variants = await page?.getStaticPaths?.()
+  const variants = await page?.getStaticPaths?.({ route })
   if (!variants) {
     console.warn(`'getStaticPaths' is not defined for ${file} so ${path} it won't be generated.`)
     return []

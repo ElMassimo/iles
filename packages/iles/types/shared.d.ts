@@ -15,7 +15,7 @@ import type { Options as SvelteOptions } from '@sveltejs/vite-plugin-svelte'
 import type { PreactPluginOptions as PreactOptions } from '@preact/preset-vite'
 
 import type { FrontmatterOptions } from '@islands/frontmatter'
-import type { Router, RouteRecordRaw, RouteMeta, RouterOptions as VueRouterOptions, RouteComponent, RouteLocationNormalizedLoaded, RouteParams } from 'vue-router'
+import type { Router, RouteRecordRaw, RouteMeta, RouterOptions as VueRouterOptions, RouteComponent, RouteRecordNormalized, RouteLocationNormalizedLoaded, RouteParams } from 'vue-router'
 import type { HeadClient, HeadObject } from '@vueuse/head'
 export type { OnLoadFn } from '@islands/hydration/dist/vanilla'
 
@@ -78,12 +78,16 @@ export interface RouteToRender {
   rendered?: string
 }
 
-export interface StaticPath<T> {
+export interface StaticPath<T = Record<string, any>> {
   params: RouteParams
   props: T
 }
 
-export type GetStaticPaths<T = any> = () => StaticPath<T>[] | Promise<StaticPath<T>[]>
+export interface GetStaticPathsArgs {
+  route: RouteLocationNormalizedLoaded | RouteRecordNormalized
+}
+
+export type GetStaticPaths<T = any> = (args: GetStaticPathsArgs) => StaticPath<T>[] | Promise<StaticPath<T>[]>
 
 export type CreateAppFactory = (options?: CreateAppConfig) => Promise<AppContext>
 
