@@ -3,6 +3,9 @@
 [frontmatter]: /guide/markdown#frontmatter-and-meta
 [Vue Router]: https://next.router.vuejs.org/
 [getStaticPaths]: /guide/routing#getstaticpaths
+[pagination demo]: https://the-vue-point-with-iles.netlify.app/posts/1
+[pagination source]: https://github.com/ElMassimo/iles/blob/main/playground/the-vue-point/src/pages/posts/%5Bpage%5D.vue
+[dynamic source]: https://github.com/ElMassimo/iles/blob/main/docs/src/pages/dynamic/%5Bsection%5D.vue
 
 # Routing 🛣
 
@@ -108,8 +111,10 @@ defineProps<{ message: string }>()
 ```
 <Caption>`src/pages/dynamic/[section].vue`</Caption>
 
-<Tip title="Demo">
-See the generated examples: [one](/dynamic/one) and [two](/dynamic/two).
+<Tip title="Demos">
+See the generated examples: [one](/dynamic/one) and [two](/dynamic/two), and the [source code][dynamic source].
+
+See a [pagination demo], and the [source code][pagination source].
 </Tip>
 
 ### `params`

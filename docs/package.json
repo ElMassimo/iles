@@ -21,7 +21,7 @@
     "@preact/preset-vite": "^2.1.5",
     "@vueuse/core": "^6.5.3",
     "autoprefixer": "^10.3.5",
-    "iles": "^0.4.2",
+    "iles": "^0.4.3",
     "postcss-nesting": "^8.0.1",
     "preact-render-to-string": "^5.1.19",
     "unplugin-icons": "^0.12.9",
