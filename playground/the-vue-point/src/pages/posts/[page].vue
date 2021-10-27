@@ -21,7 +21,7 @@ defineProps<{
 </script>
 
 <template layout="default">
-  <h1 class="text-3xl leading-9 font-extrabold text-gray-900 tracking-tight sm:text-4xl sm:leading-10 md:text-5xl">Pagination Example</h1>
+  <h1 class="text-3xl leading-9 font-extrabold text-gray-900 tracking-tight sm:text-4xl sm:leading-10 md:text-5xl">Paginated Posts</h1>
   <ul class="divide-y divide-gray-200">
     <li v-for="post of items" :key="post.href" class="py-12">
       <article class="space-y-2 xl:(grid grid-cols-4 space-y-0 items-baseline)">
@@ -44,10 +44,10 @@ defineProps<{
   </ul>
   <div class="py-8 grid grid-cols-2">
     <div v-if="prevPage" class="link col-start-1">
-      <router-link :to="{ params: { page: prevPage } }">Previous Page</router-link>
+      <router-link :to="{ params: { page: prevPage } }">← Newer</router-link>
     </div>
     <div v-if="nextPage" class="link col-start-2 text-right">
-      <router-link :to="{ params: { page: nextPage } }">Next Page</router-link>
+      <router-link :to="{ params: { page: nextPage } }">Older →</router-link>
     </div>
   </div>
 </template>
