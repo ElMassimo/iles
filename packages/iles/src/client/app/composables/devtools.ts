@@ -170,6 +170,7 @@ export function installDevtools (app: App, config: AppClientConfig) {
           { key: 'strategy', value: getStrategy(island) },
           getMediaQuery(island) && { key: 'mediaQuery', value: getMediaQuery(island) },
           { key: 'framework', value: island.framework },
+          { key: 'props', value: island.$attrs },
           { key: 'importName', value: island.importName },
           { key: 'importPath', value: island.importPath.replace(island.appConfig.root, '') },
         ].filter(x => x),
