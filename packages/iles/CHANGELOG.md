@@ -1,3 +1,12 @@
+## [0.4.4-1](https://github.com/ElMassimo/iles/compare/v0.4.4-0...v0.4.4-1) (2021-10-28)
+
+
+### Bug Fixes
+
+* typings for resolveProps ([1f33fcf](https://github.com/ElMassimo/iles/commit/1f33fcf53bd1c2e6186c8ec5c1afa768198eb771))
+
+
+
 ## [0.4.4-0](https://github.com/ElMassimo/iles/compare/v0.4.3...v0.4.4-0) (2021-10-27)
 
 
