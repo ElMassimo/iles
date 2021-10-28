@@ -8,7 +8,7 @@ export function propsFromRoute (route: RouteLocationNormalizedLoaded) {
     return route.meta.ssrProps as Record<string, any>
 
   const pathVariants = route.meta.pathVariants?.value || []
-  const pathVariant = pathVariants.find(path => shallowEqual(path.params, route.params))
+  const pathVariant = pathVariants.find(path => sameParams(path.params, route.params))
   if (Object.keys(route.params).length > 0 && !pathVariant)
     console.warn('This route will not be generated, unable to find matching params in `getStaticPaths`.\nFound:\n\t', route.params, '\nPaths:\n\t', pathVariants)
   return pathVariant ? { ...pathVariant.params, ...pathVariant.props } : {}
@@ -39,10 +39,6 @@ export async function resolveProps (route: RouteLocationNormalizedLoaded, ssrPro
   }
 }
 
-function shallowEqual (a: RouteParams, b: RouteParams) {
-  for (const key in a)
-    if (!(key in b) || a[key] !== b[key]) return false
-  for (const key in b)
-    if (!(key in a) || a[key] !== b[key]) return false
-  return true
+function sameParams (a: RouteParams, b: RouteParams) {
+  return JSON.stringify(a) === JSON.stringify(b)
 }
