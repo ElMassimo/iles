@@ -14,10 +14,10 @@ import type { ComponentResolver } from 'unplugin-vue-components/types'
 import type { Frontmatter, FrontmatterPluggable } from '@islands/frontmatter'
 import type { UserConfig } from 'iles'
 
+import { remarkFrontmatter } from '@islands/frontmatter'
 import type { AppConfig, AppPlugins, ConfigEnv, ViteOptions, Plugin, NamedPlugins } from './shared'
 import { camelCase, resolvePlugin, uncapitalize } from './plugin/utils'
 import { resolveAliases, DIST_CLIENT_PATH, HYDRATION_DIST_PATH } from './alias'
-import { remarkFrontmatter } from '@islands/frontmatter'
 import remarkWrapIslands from './plugin/remarkWrapIslands'
 
 const debug = creatDebugger('iles:config')

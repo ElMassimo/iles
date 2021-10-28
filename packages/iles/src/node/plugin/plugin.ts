@@ -306,6 +306,13 @@ import.meta.hot.accept('/${relative(root, path)}', (...args) => __ILES_PAGE_UPDA
       },
     },
 
+    appConfig.jsx === 'preact' && {
+      name: 'iles:preact-jsx-config',
+      config () {
+        return { esbuild: { include: /\.(tsx?|jsx)$/ } }
+      },
+    },
+
     {
       name: 'iles:resolve-islands',
       enforce: 'post',
