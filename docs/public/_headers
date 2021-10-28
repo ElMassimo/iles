@@ -15,4 +15,4 @@
   cache-control: immutable
 
 /*
-  content-security-policy-report-only: default-src 'self'; font-src 'self'; img-src 'self' data: pixel.thesemetrics.org; script-src 'self' 'unsafe-inline' unpkg.com; connect-src 'self' 'unsafe-inline' pixel.thesemetrics.org; style-src 'self'
+  content-security-policy-report-only: default-src 'self'; font-src 'self'; img-src 'self' data: pixel.thesemetrics.org developer.stackblitz.com; script-src 'self' 'unsafe-inline' unpkg.com; connect-src 'self' 'unsafe-inline' pixel.thesemetrics.org; style-src 'self'
