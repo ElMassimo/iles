@@ -1,3 +1,12 @@
+## [0.4.4](https://github.com/ElMassimo/iles/compare/v0.4.4-1...v0.4.4) (2021-10-28)
+
+
+### Bug Fixes
+
+* ensure dynamic parameters in catch-all routes can be matched ([89631e7](https://github.com/ElMassimo/iles/commit/89631e77b08d3f0cf77ed0dce4124219d17460ed))
+
+
+
 ## [0.4.4-1](https://github.com/ElMassimo/iles/compare/v0.4.4-0...v0.4.4-1) (2021-10-28)
 
 
