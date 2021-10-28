@@ -102,7 +102,7 @@ export default function IslandsPlugins (appConfig: AppConfig): PluginOption[] {
         // Prevent import analysis failure if the default layout doesn't exist.
         if (id === defaultLayoutPath) return resolve(root, id.slice(1))
       },
-      async load (id, ssr) {
+      async load (id) {
         if (id === APP_CONFIG_REQUEST_PATH) {
           const { base, debug, jsx, root, ssg: { manualChunks: _, ...ssg }, siteUrl } = appConfig
           const clientConfig: AppClientConfig = { base, debug, root, jsx, ssg, siteUrl }
