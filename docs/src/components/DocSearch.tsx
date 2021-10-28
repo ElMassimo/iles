@@ -1,11 +1,11 @@
-import { DocSearch } from '@mussi/docsearch'
+import { DocSearch, DocSearchProps } from '@mussi/docsearch'
 import '~/styles/docsearch.css'
 
-const options = import.meta.env.DEV
+const options: Partial<DocSearchProps> = import.meta.env.DEV
   ? {
     transformItems: (items) => {
       return items.map((item) => {
-        const getRelativePath = (url) => {
+        const getRelativePath = (url: string) => {
           const { pathname, hash } = new URL(url)
           return pathname + hash
         }
@@ -15,7 +15,7 @@ const options = import.meta.env.DEV
   }
   : {}
 
-const IlesDocSearch = props =>
+const IlesDocSearch = (props: Partial<DocSearchProps>) =>
   <DocSearch
     appId="GERZE019PN"
     apiKey="cdb4a3df8ecf73fadf6bde873fc1b0d2"

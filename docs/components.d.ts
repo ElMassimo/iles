@@ -18,7 +18,7 @@ declare module 'vue' {
     CarbonPen: typeof import('~icons/carbon/pen')['default']
     Contact: typeof import('./src/components/contact.mdx')['default']
     DarkModeSwitch: typeof import('./src/components/DarkModeSwitch.vue')['default']
-    DocSearch: typeof import('./src/components/DocSearch.jsx')['default']
+    DocSearch: typeof import('./src/components/DocSearch.tsx')['default']
     EditLink: typeof import('./src/components/EditLink.vue')['default']
     Head: typeof import('@vueuse/head')['Head']
     HeroiconsOutlineMenuAlt2: typeof import('~icons/heroicons-outline/menu-alt2')['default']

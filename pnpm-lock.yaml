@@ -46,7 +46,7 @@ importers:
       '@preact/preset-vite': ^2.1.5
       '@vueuse/core': ^6.5.3
       autoprefixer: ^10.3.5
-      iles: ^0.4.4-1
+      iles: ^0.4.6
       postcss-nesting: ^8.0.1
       preact: ^10.5.15
       preact-render-to-string: ^5.1.19
@@ -69,7 +69,7 @@ importers:
       '@preact/preset-vite': 2.1.5_preact@10.5.15+vite@2.6.12
       '@vueuse/core': 6.7.3
       autoprefixer: 10.3.7
-      iles: 0.4.4-1
+      iles: 0.4.6
       postcss-nesting: 8.0.1
       preact-render-to-string: 5.1.19_preact@10.5.15
       unplugin-icons: 0.12.17_vite@2.6.12
@@ -5800,8 +5800,8 @@ packages:
     resolution: {integrity: sha512-BMpfD7PpiETpBl/A6S498BaIJ6Y/ABT93ETbby2fP00v4EbvPBXWEoaR1UBPKs3iR53pJY7EtZk5KACI57i1Uw==}
     engines: {node: '>= 4'}
 
-  /iles/0.4.4-1:
-    resolution: {integrity: sha512-Y/NvNkzPKeIK9XZtokBkaejSpBEq+qoz4gvWSg0YgdelGbl892UUkHaha1K/gsxC+uZOHrlbVm3A0yebwcOvdw==}
+  /iles/0.4.6:
+    resolution: {integrity: sha512-VmJTqp4rH7n7OjmvCf7FDySXBfw3coe6Hhq5NuHvo7b0m3NpMQa2GJXYcFLlxGQUono/JdGKfc/BldVpJtA/kw==}
     engines: {node: '>=14.0.0'}
     hasBin: true
     dependencies:
