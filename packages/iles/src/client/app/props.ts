@@ -14,7 +14,7 @@ export function propsFromRoute (route: RouteLocationNormalizedLoaded) {
   return pathVariant ? { ...pathVariant.params, ...pathVariant.props } : {}
 }
 
-export async function resolveProps (route: RouteLocationNormalizedLoaded, ssrProps: any) {
+export async function resolveProps (route: RouteLocationNormalizedLoaded, ssrProps?: any) {
   if (import.meta.env.SSR) {
     route.meta.ssrProps = ssrProps
     return
