@@ -12,6 +12,7 @@ export async function resolveLayout (route: RouteLocationNormalizedLoaded) {
       route.meta.layout = shallowRef(layout)
   }
   catch (error) {
-    console.error(`Error while fetching '${page?.layoutName}' layout:\n`, error)
+    console.error(`Error while fetching '${page?.layoutName}' layout.`)
+    throw error
   }
 }

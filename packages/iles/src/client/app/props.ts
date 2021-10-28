@@ -35,7 +35,8 @@ export async function resolveProps (route: RouteLocationNormalizedLoaded, ssrPro
       route.meta.pathVariants = shallowRef(pathVariants)
   }
   catch (error) {
-    console.error(`Error while fetching props for ${route.path}.\n`, error)
+    console.error(`Error while fetching props for ${route.path}.`)
+    throw error
   }
 }
 
