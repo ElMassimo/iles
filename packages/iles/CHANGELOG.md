@@ -1,3 +1,12 @@
+## [0.4.5](https://github.com/ElMassimo/iles/compare/v0.4.4...v0.4.5) (2021-10-28)
+
+
+### Features
+
+* (devtools) display props passed to island components ([d5f0ede](https://github.com/ElMassimo/iles/commit/d5f0ede1483b1e204a7d332107c983a790f5d113))
+
+
+
 ## [0.4.4](https://github.com/ElMassimo/iles/compare/v0.4.4-1...v0.4.4) (2021-10-28)
 
 
