@@ -1,3 +1,13 @@
+## [0.4.6](https://github.com/ElMassimo/iles/compare/v0.4.5...v0.4.6) (2021-10-28)
+
+
+### Bug Fixes
+
+* ensure errors are thrown when layout or props are not resolved ([9a9f6a1](https://github.com/ElMassimo/iles/commit/9a9f6a1cff09174addd95c6313fd84d778ab89e1))
+* ensure vite:esbuild runs on .tsx files when using preact ([6bd4639](https://github.com/ElMassimo/iles/commit/6bd4639f704554cc898b4df9f854c8de2576d2f4))
+
+
+
 ## [0.4.5](https://github.com/ElMassimo/iles/compare/v0.4.4...v0.4.5) (2021-10-28)
 
 
