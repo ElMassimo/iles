@@ -26,6 +26,8 @@ export const USER_SITE_REQUEST_PATH = `/${USER_SITE_ID}`
 
 export const NOT_FOUND_REQUEST_PATH = '@islands/components/NotFound'
 
+export const ILES_APP_ENTRY = '/@iles-entry'
+
 export function resolveAliases (root: string): AliasOptions {
   const paths: Record<string, string> = {
     '/@shared': SHARED_PATH,
