@@ -19,6 +19,9 @@ Like [Vite.js], the default output dir is <kbd>/dist</kbd>.
 Add a `netlify.toml` file to your project:
 
 ```toml
+[build.environment]
+  NODE_VERSION = "16"
+  
 [build]
   publish = "dist"
   command = "npm run build"
@@ -31,6 +34,7 @@ If using `pnpm`, make sure to install dependencies:
 
 ```toml
 [build.environment]
+  NODE_VERSION = "16"
   NPM_FLAGS = "--version"
 
 [build]
