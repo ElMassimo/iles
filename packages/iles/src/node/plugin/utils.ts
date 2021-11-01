@@ -14,7 +14,7 @@ export async function resolvePlugin<T> (name: string) {
     await withSpinner(`Installing ${name}...`, async () =>
       await installPackage(name, { dev: true, preferOffline: true }))
   }
-  return await importModule(name)
+  return await importModule(name).then(m => m.default || m)
 }
 
 async function withSpinner<T> (message: string, fn: () => Promise<T>) {
