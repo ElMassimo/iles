@@ -1,9 +1,9 @@
 {
-  "name": "@islands/headers",
+  "name": "@islands/headings",
   "version": "0.0.1",
   "scripts": {
     "dev": "npm run build -- --watch",
-    "build": "tsup src/headers.ts",
+    "build": "tsup src/headings.ts",
     "prepublishOnly": "npm run build"
   },
   "type": "module",
@@ -11,8 +11,8 @@
     "dist",
     "src"
   ],
-  "types": "dist/headers.d.ts",
-  "main": "dist/headers.js",
+  "types": "dist/headings.d.ts",
+  "main": "dist/headings.js",
   "funding": "https://github.com/sponsors/ElMassimo",
   "author": "Máximo Mussini <maximomussini@gmail.com>",
   "repository": {
@@ -28,6 +28,7 @@
   },
   "devDependencies": {
     "@types/estree": "^0.0.46",
+    "iles": "workspace:*",
     "slugo": "^0.4.0",
     "tsup": "5.5.0",
     "typescript": "^4.4.4",

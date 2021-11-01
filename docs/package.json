@@ -16,7 +16,7 @@
   "devDependencies": {
     "@iconify-json/bx": "^1.0.1",
     "@iconify-json/heroicons-outline": "^1.0.1",
-    "@islands/headers": "^0.0.1",
+    "@islands/headings": "workspace:*",
     "@mapbox/rehype-prism": "^0.8.0",
     "@preact/preset-vite": "^2.1.5",
     "@vueuse/core": "^6.5.3",

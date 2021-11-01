@@ -10,6 +10,9 @@ import inspect from 'vite-plugin-inspect'
 export default defineConfig({
   siteUrl: 'https://iles-docs.netlify.app',
   jsx: 'preact',
+  modules: [
+    '@islands/headings',
+  ],
   ssg: {
     manualChunks: (id, api) => {
       if (id.includes('preact') || id.includes('algolia') || id.toLowerCase().includes('docsearch'))
@@ -21,7 +24,6 @@ export default defineConfig({
   },
   markdown: {
     rehypePlugins: [
-      import('@islands/headers').then(m => m.default),
       ['@mapbox/rehype-prism', { alias: { markup: ['html', 'vue'], markdown: ['mdx'] } }],
     ],
   },

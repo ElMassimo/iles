@@ -1,45 +1,61 @@
 import type { Program, VariableDeclarator } from 'estree'
 import type { Pluggable, Plugin } from 'unified'
 import type { Data, Parent } from 'unist'
+import type { IlesModule } from 'iles'
 
-import { valueToEstree } from 'estree-util-value-to-estree'
+import estreeUtilValueToEstree from 'estree-util-value-to-estree'
 import { Node, toString } from 'hast-util-to-string'
 import { headingRank } from 'hast-util-heading-rank'
 import slugo from 'slugo'
 
-export interface Header {
+const { valueToEstree } = estreeUtilValueToEstree
+
+export interface Heading {
   level: number
   title: string
   slug: string
 }
 
-export interface HeaderOptions {
+export interface HeadingOptions {
   slug?: typeof generateSlug
 }
-export type HeaderPlugin = Plugin<[HeaderOptions?]>
-export type HeaderPluggable = [HeaderPlugin, HeaderOptions?]
+export type HeadingPlugin = Plugin<[HeadingOptions?]>
+export type HeadingPluggable = [HeadingPlugin, HeadingOptions?]
+
+/**
+ * An iles module that injects a rehype plugin to auto-link headings and expose
+ * them in `meta`.
+ */
+export default function IlesHeadings (): IlesModule {
+  return {
+    name: '@islands/headings',
+    markdown: {
+      rehypePlugins: [rehypePlugin],
+    },
+  }
+}
 
 /**
  * A rehype plugin to auto-link headings, export title in `frontmatter`, and
- * expose header data in `meta`.
+ * expose heading data in `meta`.
  *
  * @param options - Optional options to configure the output.
  * @returns A unified transformer.
  */
-const plugin: HeaderPlugin = ({ slug = generateSlug }: HeaderOptions = {}) => (ast) => {
+export const rehypePlugin: HeadingPlugin = ({ slug = generateSlug }: HeadingOptions = {}) => (ast) => {
   const { children } = ast as Parent
 
-  const headers: Header[] = []
+  const headings: Heading[] = []
   children.forEach((node: any) => {
     const level = headingRank(node)
     if (level) {
       const title = toString(node)
-      headers.push({ level, title, slug: slug(node, title, level) })
+      headings.push({ level, title, slug: slug(node, title, level) })
     }
   })
-  const assignments = [assignment('meta', 'headers', '=', headers)]
+  const assignments = [assignment('meta', 'headings', '=', headings)]
 
-  const title = headers.length && headers[0].level === 1 && headers[0].title
+  const title = headings.length && headings[0].level === 1 && headings[0].title
   if (title) assignments.push(assignment('frontmatter', 'title', '||=', title))
 
   children.push({
@@ -49,7 +65,6 @@ const plugin: HeaderPlugin = ({ slug = generateSlug }: HeaderOptions = {}) => (a
     },
   })
 }
-export default plugin
 
 const emojiRegex = /(?:⚡️|[\u2700-\u27BF]|(?:\uD83C[\uDDE6-\uDDFF]){2}|[\uD800-\uDBFF][\uDC00-\uDFFF])[\uFE0E\uFE0F]?(?:[\u0300-\u036F\uFE20-\uFE23\u20D0-\u20F0]|\uD83C[\uDFFB-\uDFFF])?(?:\u200D(?:[^\uD800-\uDFFF]|(?:\uD83C[\uDDE6-\uDDFF]){2}|[\uD800-\uDBFF][\uDC00-\uDFFF])[\uFE0E\uFE0F]?(?:[\u0300-\u036F\uFE20-\uFE23\u20D0-\u20F0]|\uD83C[\uDFFB-\uDFFF])?)*/g
 const hyphens = /(^-+)|(-+$)/g

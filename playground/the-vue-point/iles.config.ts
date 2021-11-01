@@ -10,6 +10,9 @@ export default defineConfig({
   siteUrl: 'https://the-vue-point-with-iles.netlify.app/',
   jsx: 'solid',
   svelte: true,
+  modules: [
+    '@islands/headings',
+  ],
   components: {
     resolvers: [iconsResolver({ componentPrefix: '' })],
   },

@@ -120,19 +120,17 @@ Provides support for [Svelte] islands.
 Auto-installed when configuring `svelte: true`, or providing
 plugin options for `svelte` in [`iles.config.ts`][config].
 
-## Official Plugins <Iles heading/>
+## Official Modules <Iles heading/>
 
-### <kbd>@islands/headers</kbd>
+### <kbd>@islands/headings</kbd>
 
-A [rehype] plugin to add anchor links to headings in markdown files, add a slug
-id to reference them, and expose them in `meta.headers`.
+Adds a [rehype] plugin to inject anchor links to headings in markdown files, add
+a slug id to reference them, and expose them in `meta.headings`.
 
 ```ts
-  markdown: {
-    rehypePlugins: [
-      import('@islands/headers').then(m => m.default),
-    ],
-  },
+  modules: [
+    '@islands/headings',
+  ],
 ```
 
 <Tip title="Automatic Title!">

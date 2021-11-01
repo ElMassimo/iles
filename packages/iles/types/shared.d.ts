@@ -1,5 +1,5 @@
 /* eslint-disable no-use-before-define */
-import type { UserConfig as ViteOptions, ConfigEnv } from 'vite'
+import type { UserConfig as ViteOptions, ConfigEnv, PluginOption as VitePluginOption } from 'vite'
 import type { GetManualChunk } from 'rollup'
 import type { App, Ref, DefineComponent } from 'vue'
 import type { Options as CritterOptions } from 'critters'
@@ -104,10 +104,10 @@ export interface NamedPlugins {
   vue: ReturnType<typeof VuePlugin>
   vueJsx: ReturnType<typeof VueJsxPlugin>
   components: ReturnType<typeof ComponentsPlugin>
-  optionalPlugins: PluginOption[]
+  optionalPlugins: VitePluginOption[]
 }
 
-export interface AppPlugins {
+export interface BaseIlesConfig {
   /**
    * Configuration options for Vite.js
    */
@@ -149,9 +149,10 @@ export interface AppPlugins {
   critters?: CritterOptions | false
 }
 
-export interface Plugin extends Partial<AppPlugins> {
+export interface IlesModule extends Partial<BaseIlesConfig> {
   name: string
   config?: (config: UserConfig, env: ConfigEnv) => UserConfig | null | void | Promise<UserConfig | null | void>
+  configResolved?: (config: AppConfig, env: ConfigEnv) => void | Promise<void>
 }
 
 export type EnhanceAppContext = AppContext
@@ -168,7 +169,8 @@ export type UserSite = typeof import('~/site').default & {
   canonical: string
 }
 
-export type PluginOption = Plugin | false | null | undefined
+export type IlesModuleLike = IlesModule | IlesModule[] | false | null | undefined
+export type IlesModuleOption = IlesModuleLike | Promise<IlesModuleLike> | string | [string, any]
 
 export interface RequiredConfig {
   /**
@@ -223,16 +225,16 @@ export interface RequiredConfig {
   }
 }
 
-export interface UserConfig extends Partial<RequiredConfig>, Partial<Plugin> {
-  plugins?: (PluginOption | PluginOption[])[]
+export interface UserConfig extends Partial<RequiredConfig>, Partial<IlesModule> {
+  modules?: IlesModuleOption[]
 }
 
-export interface AppConfig extends RequiredConfig, AppPlugins {
+export interface AppConfig extends RequiredConfig, BaseIlesConfig {
   base: string
   root: string
   configPath: string
   pages: PagesOptions
-  plugins: Plugin[]
+  modules: IlesModule[]
   namedPlugins: NamedPlugins
 }
 

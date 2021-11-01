@@ -1,7 +1,7 @@
 import { computed } from 'vue'
 import { usePage } from 'iles'
 
-import type { Header } from '@islands/headers'
+import type { Heading } from '@islands/heading'
 import type {
   SideBarConfig,
   MultiSideBarConfig,
@@ -26,20 +26,20 @@ export function useSideBar () {
     if (sidebar === false)
       return []
 
-    // if it's `auto`, render headers of the current page
+    // if it's `auto`, render heading of the current page
     if (sidebar === 'auto')
-      return resolveAutoSidebar(meta.headers, frontmatter.sidebarLevel || 1, frontmatter.sidebarDepth || 1)
+      return resolveAutoSidebar(meta.heading, frontmatter.sidebarLevel || 1, frontmatter.sidebarDepth || 1)
 
     return sidebar
   })
 }
 
-function resolveAutoSidebar (headers: undefined | Header[], topLevel: number, depth: number): SideBarItem[] {
-  if (headers === undefined) return []
+function resolveAutoSidebar (heading: undefined | Heading[], topLevel: number, depth: number): SideBarItem[] {
+  if (heading === undefined) return []
 
   const ret: SideBarItem[] = []
   let lastTopHeading: SideBarItem | undefined
-  headers.forEach(({ level, title, slug }) => {
+  heading.forEach(({ level, title, slug }) => {
     if (level - 1 > depth)
       return
 

@@ -15,8 +15,9 @@ import type { Frontmatter, FrontmatterPluggable } from '@islands/frontmatter'
 import type { UserConfig } from 'iles'
 
 import { remarkFrontmatter } from '@islands/frontmatter'
-import type { AppConfig, AppPlugins, ConfigEnv, ViteOptions, Plugin, NamedPlugins } from './shared'
-import { camelCase, resolvePlugin, uncapitalize } from './plugin/utils'
+import { importModule } from '@islands/modules'
+import type { AppConfig, BaseIlesConfig, ConfigEnv, ViteOptions, IlesModule, IlesModuleLike, IlesModuleOption, NamedPlugins } from './shared'
+import { camelCase, resolvePlugin, uncapitalize, isString, compact } from './plugin/utils'
 import { resolveAliases, DIST_CLIENT_PATH, HYDRATION_DIST_PATH } from './alias'
 import remarkWrapIslands from './plugin/remarkWrapIslands'
 
@@ -44,9 +45,9 @@ export async function resolveConfig (root?: string, env?: ConfigEnv): Promise<Ap
     layoutsDir: resolve(srcDir, appConfig.layoutsDir),
   })
 
-  const ceChecks = appConfig.plugins.map(plugin => plugin.vue?.template?.compilerOptions?.isCustomElement).filter(x => x)
-  appConfig.vue.template!.compilerOptions!.isCustomElement = (tagName: string) =>
-    tagName.startsWith('ile-') || ceChecks.some(fn => fn!(tagName))
+  for (const mod of appConfig.modules) {
+    await mod.configResolved?.(appConfig, env)
+  }
 
   return appConfig
 }
@@ -55,15 +56,18 @@ async function resolveUserConfig (root: string, configEnv: ConfigEnv) {
   const config = { root, namedPlugins: {} } as AppConfig
   config.namedPlugins.optionalPlugins = []
 
-  const { plugins = [], ...userConfig } = await loadUserConfigFile(root, configEnv)
+  const { modules = [], ...userConfig } = await loadUserConfigFile(root, configEnv)
 
-  config.plugins = [
-    appConfigDefaults(config, userConfig as UserConfig),
-    userConfig,
-    ...plugins,
-  ].flat().filter(p => p) as Plugin[]
+  if ((userConfig as any).plugins)
+    throw new Error(`îles 'plugins' have been renamed to 'modules'. If you want to provide Vite plugins instead, place them in 'vite:'. Received 'plugins' in ${(userConfig as any).configPath}:\n${JSON.stringify((userConfig as any).plugins)}`)
 
-  Object.assign(config, await applyPlugins(config, configEnv))
+  config.modules = compact<IlesModule>([
+    { ...appConfigDefaults(config, userConfig as UserConfig), name: 'iles:base-config', modules: undefined },
+    { ...userConfig, name: 'user-config' },
+    ...await resolveUserModules(modules),
+  ].flat())
+
+  Object.assign(config, await applyModules(config, configEnv))
   config.pages.pagesDir = join(config.srcDir, config.pagesDir)
   await setNamedPlugins(config, config.namedPlugins)
 
@@ -90,7 +94,7 @@ async function loadUserConfigFile (root: string, configEnv: ConfigEnv): Promise<
     else {
       debug('no iles.config.ts file found.')
     }
-    return config
+    return config as UserConfig
   }
   catch (error) {
     if (error.message.includes('Could not resolve')) {
@@ -102,6 +106,10 @@ async function loadUserConfigFile (root: string, configEnv: ConfigEnv): Promise<
 }
 
 async function setNamedPlugins (config: AppConfig, plugins: NamedPlugins) {
+  const ceChecks = config.modules.map(mod => mod.vue?.template?.compilerOptions?.isCustomElement).filter(x => x)
+  config.vue.template!.compilerOptions!.isCustomElement = (tagName: string) =>
+    tagName.startsWith('ile-') || ceChecks.some(fn => fn!(tagName))
+
   plugins.components = components(config.components)
   plugins.pages = pages(config.pages)
   plugins.markdown = xdm(config.markdown)
@@ -126,22 +134,44 @@ async function setNamedPlugins (config: AppConfig, plugins: NamedPlugins) {
     await resolvePlugin('preact-render-to-string')
 }
 
-async function applyPlugins (config: AppConfig, configEnv: ConfigEnv) {
-  for (const plugin of config.plugins) {
-    // @ts-ignore
-    const { name, config: configFn, plugins, ...pluginOptions } = plugin
-    if (plugins && plugins.length > 0) throw new Error(`Plugins in îles can't specify the 'plugins' option. Found in ${name}: ${JSON.stringify(pluginOptions)}`)
+async function applyModules (config: AppConfig, configEnv: ConfigEnv) {
+  for (const mod of config.modules) {
+    if ((mod as any).modules)
+      throw new Error(`Modules in îles can't specify the 'modules' option, return an array of modules instead. Found in ${mod.name}: ${JSON.stringify((mod as any).modules)}`)
 
-    config = mergeConfig(config, pluginOptions)
+    const { name, config: configFn, configResolved: _, ...moduleConfig } = mod
+
+    config = mergeConfig(config, moduleConfig)
     if (configFn) {
       const partialConfig = await configFn(config, configEnv)
+      console.log(name, partialConfig)
       if (partialConfig) config = mergeConfig(config, partialConfig as any)
+      console.log({ config })
     }
   }
-  chainPluginCallbacks(config, 'pages', ['onRoutesGenerated', 'onClientGenerated'], true)
-  chainPluginCallbacks(config, 'pages', ['extendRoute'], false)
-  chainPluginCallbacks(config, 'markdown', ['extendFrontmatter'], false)
+  chainModuleCallbacks(config, 'pages', ['onRoutesGenerated', 'onClientGenerated'], true)
+  chainModuleCallbacks(config, 'pages', ['extendRoute'], false)
+  chainModuleCallbacks(config, 'markdown', ['extendFrontmatter'], false)
   return config
+}
+
+async function resolveUserModules (modules: IlesModuleOption[]): Promise<IlesModuleLike[]> {
+  return await Promise.all(modules.map(resolveModule))
+}
+
+async function resolveModule (mod: IlesModuleOption): Promise<IlesModuleLike> {
+  if (isString(mod)) return await createIlesModule(mod)
+  if (isStringModule(mod)) return await createIlesModule(...mod)
+  return await mod
+}
+
+function isStringModule (val: any): val is [string, any] {
+  return Array.isArray(val) && isString(val[0])
+}
+
+async function createIlesModule (pkgName: string, ...options: any[]): Promise<IlesModule> {
+  const fn = await importModule(pkgName)
+  return fn(...options)
 }
 
 function inferJSX (config: UserConfig) {
@@ -182,7 +212,7 @@ function appConfigDefaults (appConfig: AppConfig, userConfig: UserConfig): Omit<
     outDir: 'dist',
     layoutsDir: 'layouts',
     tempDir: '.iles-ssg-temp',
-    plugins: [] as Plugin[],
+    modules: [] as IlesModule[],
     pages: {
       routeBlockLang: 'yaml',
       syncIndex: false,
@@ -301,17 +331,17 @@ function mergeConfig<T = Record<string, any>> (a: T, b: T, isRoot = true): AppCo
   return merged as AppConfig
 }
 
-function chainPluginCallbacks<T extends keyof AppPlugins> (
-  config: AppConfig, option: T, callbackNames: (keyof AppPlugins[T])[], isAsync: boolean) {
+function chainModuleCallbacks<T extends keyof BaseIlesConfig> (
+  config: AppConfig, option: T, callbackNames: (keyof BaseIlesConfig[T])[], isAsync: boolean) {
   callbackNames.forEach((callbackName) => {
-    const pluginCallbacks = config.plugins
+    const moduleCallbacks = config.modules
       // @ts-ignore
-      .map(plugin => plugin[option]?.[callbackName as keyof Plugin[T]])
+      .map(plugin => plugin[option]?.[callbackName as keyof IlesModule[T]])
       .filter(x => x)
 
-    if (pluginCallbacks.length > 0)
+    if (moduleCallbacks.length > 0)
       // @ts-ignore
-      config[option][callbackName] = chainCallbacks(pluginCallbacks, isAsync) as any
+      config[option][callbackName] = chainCallbacks(moduleCallbacks, isAsync) as any
   })
 }
 

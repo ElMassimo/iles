@@ -44,6 +44,7 @@
     "@islands/frontmatter": "workspace:*",
     "@islands/hydration": "workspace:^0.3.0",
     "@islands/prerender": "workspace:^0.3.0",
+    "@islands/modules": "workspace:*",
     "@nuxt/devalue": "^2.0.0",
     "@rollup/plugin-virtual": "^2.0.3",
     "@vitejs/plugin-vue": "^1.8.1",
