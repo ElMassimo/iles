@@ -3,5 +3,5 @@ export const tsup: Options = {
   dts: true,
   target: 'node14',
   splitting: true,
-  format: ['esm'],
+  format: ['cjs'],
 }

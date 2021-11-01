@@ -25,6 +25,7 @@
   "homepage": "https://github.com/ElMassimo/iles",
   "bugs": "https://github.com/ElMassimo/iles/issues",
   "devDependencies": {
-    "@islands/headings": "workspace:*"
+    "@islands/headings": "workspace:*",
+    "@islands/icons": "workspace:*"
   }
 }

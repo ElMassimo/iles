@@ -6,13 +6,16 @@
     "build": "tsup src/icons.ts",
     "prepublishOnly": "npm run build"
   },
-  "type": "module",
   "files": [
     "dist",
     "src"
   ],
   "types": "dist/icons.d.ts",
-  "main": "dist/icons.js",
+  "type": "module",
+  "exports": {
+    ".": "./src/icons.mjs",
+    "./package.json": "./package.json"
+  },
   "funding": "https://github.com/sponsors/ElMassimo",
   "author": "Máximo Mussini <maximomussini@gmail.com>",
   "repository": {
@@ -22,7 +25,7 @@
   "homepage": "https://github.com/ElMassimo/iles",
   "bugs": "https://github.com/ElMassimo/iles/issues",
   "dependencies": {
-    "unplugin-icons": "^0.12.15"
+    "unplugin-icons": "^0.12.17"
   },
   "devDependencies": {
     "iles": "workspace:*"

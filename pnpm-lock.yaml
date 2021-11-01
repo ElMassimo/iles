@@ -148,7 +148,7 @@ importers:
   packages/icons:
     specifiers:
       iles: workspace:*
-      unplugin-icons: ^0.12.15
+      unplugin-icons: ^0.12.17
     dependencies:
       unplugin-icons: 0.12.17
     devDependencies:
@@ -274,8 +274,10 @@ importers:
   packages/modules:
     specifiers:
       '@islands/headings': workspace:*
+      '@islands/icons': workspace:*
     devDependencies:
       '@islands/headings': link:../headings
+      '@islands/icons': link:../icons
 
   packages/prerender:
     specifiers:
