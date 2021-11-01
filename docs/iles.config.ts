@@ -17,7 +17,7 @@ export default defineConfig({
     },
   },
   components: {
-    resolvers: [iconsResolver({ componentPrefix: '', customCollections: ['iles'] })],
+    resolvers: [iconsResolver({ componentPrefix: '', customCollections: ['icon'] })],
   },
   markdown: {
     rehypePlugins: [
@@ -33,7 +33,7 @@ export default defineConfig({
       icons({
         autoInstall: true,
         customCollections: {
-          iles: FileSystemIconLoader('./images'),
+          icon: FileSystemIconLoader('./images'),
         },
       }),
       windicss(),

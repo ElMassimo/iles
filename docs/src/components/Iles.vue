@@ -10,7 +10,7 @@ const size = props.small ? 'h-6' : 'h-10'
 
 <template>
   <a :href="$site.github" target="_blank" rel="noreferrer" aria-label="îles">
-    <IlesText v-if="!noText" class="inline-block text-intense hover:text-primary-soft fill-current stroke-current stroke-2" :class="[marginTop, size]"/>
-    <slot><IlesLogo v-if="heading" class="inline-block -mt-2"/></slot>
+    <IconText v-if="!noText" class="inline-block text-intense hover:text-primary-soft fill-current stroke-current stroke-2" :class="[marginTop, size]"/>
+    <slot><IconLogo v-if="heading" class="inline-block -mt-2"/></slot>
   </a>
 </template>

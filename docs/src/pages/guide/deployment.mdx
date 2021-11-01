@@ -55,3 +55,52 @@ Add a `vercel.json` file to your project to match the behavior of Vue Router:
 ```
 
 Then, push to your git repository [as usual](https://vercel.com/docs/concepts/git).
+
+## GitHub Pages <GitHubLogo/>
+
+To deploy in GitHub Pages, add a workflow like the following using <kbd>[actions-gh-pages]</kbd>:
+
+```yml
+name: Deploy îles site
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Use Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: 16.x
+
+      - uses: pnpm/action-setup@v1.2.1
+        with:
+          version: 5.13.6
+          run_install: |
+            - recursive: false
+
+      - name: Build Site
+        run: npm run build
+
+      - name: Deploy Site
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./dist
+```
+<Caption><code>.github/workflows/deploy.yml</code></Caption>
+
+The example above assumes `pnpm`, but you can use a different package manager
+and adjust the workflow accordingly.
+
+Read the <kbd>[actions-gh-pages]</kbd> docs for more information on configuration,
+and make sure to [manually enable `gh-pages`][actions] if it's the [first deployment][actions] with `GITHUB_TOKEN`.
+
+[actions]: https://github.com/peaceiris/actions-gh-pages#%EF%B8%8F-first-deployment-with-github_token
+[actions-gh-pages]: https://github.com/peaceiris/actions-gh-pages
