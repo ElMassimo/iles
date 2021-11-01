@@ -82,22 +82,25 @@ importers:
     specifiers:
       '@types/estree': ^0.0.46
       '@types/js-yaml': ^4.0.0
-      estree-util-is-identifier-name: ^1.1.0
-      estree-util-value-to-estree: ^1.0.0
+      estree-util-is-identifier-name: ^2.0.0
+      estree-util-value-to-estree: ^1.3.0
+      iles: workspace:*
       js-yaml: ^4.1
       mdast-util-frontmatter: ^1.0.0
       micromark-extension-frontmatter: ^1.0.0
       tsup: 5.5.0
       typescript: ^4.4.4
       unified: ^10.1.0
-    devDependencies:
-      '@types/estree': 0.0.46
-      '@types/js-yaml': 4.0.3
-      estree-util-is-identifier-name: 1.1.0
+    dependencies:
+      estree-util-is-identifier-name: 2.0.0
       estree-util-value-to-estree: 1.3.0
       js-yaml: 4.1.0
       mdast-util-frontmatter: 1.0.0
       micromark-extension-frontmatter: 1.0.0
+    devDependencies:
+      '@types/estree': 0.0.46
+      '@types/js-yaml': 4.0.3
+      iles: link:../iles
       tsup: 5.5.0_typescript@4.4.4
       typescript: 4.4.4
       unified: 10.1.0
@@ -246,7 +249,7 @@ importers:
       unplugin-vue-components: 0.16.0_66509f2b5bd817975c8a9fdc42c6e5e4
       vite: 2.6.13
       vite-plugin-pages: /@mussi/vite-plugin-pages/0.18.3-beta.2_vite@2.6.13+vue@3.2.20
-      vite-plugin-xdm: 0.2.0_vite@2.6.13
+      vite-plugin-xdm: link:../../../vite-plugin-xdm
       vue: 3.2.20
       vue-router: 4.0.11_vue@3.2.20
     devDependencies:
@@ -273,9 +276,11 @@ importers:
 
   packages/modules:
     specifiers:
+      '@islands/frontmatter': workspace:*
       '@islands/headings': workspace:*
       '@islands/icons': workspace:*
     devDependencies:
+      '@islands/frontmatter': link:../frontmatter
       '@islands/headings': link:../headings
       '@islands/icons': link:../icons
 
@@ -3164,6 +3169,7 @@ packages:
 
   /argparse/2.0.1:
     resolution: {integrity: sha512-8+9WqebbFzpX9OR+Wa6O29asIogeRMzcGtAINdpMHHyAg10f05aSFVBbcEqGf/PXw1EjAZ+q2/bEBg3DvurK3Q==}
+    dev: false
 
   /array-ify/1.0.0:
     resolution: {integrity: sha1-nlKHYrSpBmrRY6aWKjZEGOlibs4=}
@@ -5087,15 +5093,16 @@ packages:
     engines: {node: '>=4.0'}
     dev: true
 
-  /estree-util-is-identifier-name/1.1.0:
-    resolution: {integrity: sha512-OVJZ3fGGt9By77Ix9NhaRbzfbDV/2rx9EP7YIDJTmsZSEc5kYn2vWcNccYyahJL2uAQZK2a5Or2i0wtIKTPoRQ==}
-    dev: true
+  /estree-util-is-identifier-name/2.0.0:
+    resolution: {integrity: sha512-aXXZFVMnBBDRP81vS4YtAYJ0hUkgEsXea7lNKWCOeaAquGb1Jm2rcONPB5fpzwgbNxulTvrWuKnp9UElUGAKeQ==}
+    dev: false
 
   /estree-util-value-to-estree/1.3.0:
     resolution: {integrity: sha512-Y+ughcF9jSUJvncXwqRageavjrNPAI+1M/L3BI3PyLp1nmgYTGUXU6t5z1Y7OWuThoDdhPME07bQU+d5LxdJqw==}
     engines: {node: '>=12.0.0'}
     dependencies:
       is-plain-obj: 3.0.0
+    dev: false
 
   /estree-walker/1.0.1:
     resolution: {integrity: sha512-1fMXF3YP4pZZVozF8j/ZLfvnR8NSIljt56UhbZ5PeeDmmGHpgpdwQt7ITlGvYaQukCvuBRMLEiKiYC+oeIg4cg==}
@@ -5208,6 +5215,7 @@ packages:
     resolution: {integrity: sha512-JsDj9LFcoC+4ChII1QpXPA7YIaY8zmqPYw7h9j5n7St7a0BBKfNnwEBAUQRBx70o2q4rs+BeSNHk8Exm6xE7fQ==}
     dependencies:
       format: 0.2.2
+    dev: false
 
   /feed/4.2.2:
     resolution: {integrity: sha512-u5/sxGfiMfZNtJ3OvQpXcvotFpYkL0n9u9mM2vkui2nGo8b4wvDkJ8gAkYqbA8QpGyFCv3RK0Z+Iv+9veCS9bQ==}
@@ -5284,6 +5292,7 @@ packages:
   /format/0.2.2:
     resolution: {integrity: sha1-1hcBB+nv3E7TDJ3DkBbflCtctYs=}
     engines: {node: '>=0.4.x'}
+    dev: false
 
   /fraction.js/4.1.1:
     resolution: {integrity: sha512-MHOhvvxHTfRFpF1geTK9czMIZ6xclsEor2wkIGYYq+PxcQqT7vStJqjhe6S1TenZrMZzo+wlqOufBDVepUEgPg==}
@@ -6113,6 +6122,7 @@ packages:
   /is-plain-obj/3.0.0:
     resolution: {integrity: sha512-gwsOE28k+23GP1B6vFl1oVh/WOzmawBrKwo5Ev6wMKzPkaXaCDIQKzLnvsA42DRlbVTWorkgTKIviAKCWkfUwA==}
     engines: {node: '>=10'}
+    dev: false
 
   /is-plain-obj/4.0.0:
     resolution: {integrity: sha512-NXRbBtUdBioI73y/HmOhogw/U5msYPC9DAtGkJXeFcFWSFZw0mCUsPxk/snTuJHzNKA8kLBK4rH97RMB1BfCXw==}
@@ -6334,6 +6344,7 @@ packages:
     hasBin: true
     dependencies:
       argparse: 2.0.1
+    dev: false
 
   /jsesc/0.5.0:
     resolution: {integrity: sha1-597mbjXW/Bb3EP6R1c9p9w8IkR0=}
@@ -6728,6 +6739,7 @@ packages:
     resolution: {integrity: sha512-7itKvp0arEVNpCktOET/eLFAYaZ+0cNjVtFtIPxgQ5tV+3i+D4SDDTjTzPWl44LT59PC+xdx+glNTawBdF98Mw==}
     dependencies:
       micromark-extension-frontmatter: 1.0.0
+    dev: false
 
   /mdast-util-mdx-jsx/1.1.0:
     resolution: {integrity: sha512-iPeyjvvPU7biH1bw/1VM9PLSM9ZXy7409RRB4GKMWl2CASjwz27i6DIHAyjAsYdwdtPXXvX/TJ6AsfWP9M5DSA==}
@@ -6871,6 +6883,7 @@ packages:
       fault: 2.0.0
       micromark-util-character: 1.1.0
       micromark-util-symbol: 1.0.0
+    dev: false
 
   /micromark-factory-destination/1.0.0:
     resolution: {integrity: sha512-eUBA7Rs1/xtTVun9TmV3gjfPz2wEwgK5R5xcbIM5ZYAtvGF6JkyaDsj0agx8urXnO31tEO6Ug83iVH3tdedLnw==}
@@ -6920,6 +6933,7 @@ packages:
     dependencies:
       micromark-util-symbol: 1.0.0
       micromark-util-types: 1.0.1
+    dev: false
 
   /micromark-util-chunked/1.0.0:
     resolution: {integrity: sha512-5e8xTis5tEZKgesfbQMKRCyzvffRRUX+lK/y+DvsMFdabAicPkkZV6gO+FEWi9RfuKKoxxPwNL+dFF0SMImc1g==}
@@ -6996,9 +7010,11 @@ packages:
 
   /micromark-util-symbol/1.0.0:
     resolution: {integrity: sha512-NZA01jHRNCt4KlOROn8/bGi6vvpEmlXld7EHcRH+aYWUfL3Wc8JLUNNlqUMKa0hhz6GrpUWsHtzPmKof57v0gQ==}
+    dev: false
 
   /micromark-util-types/1.0.1:
     resolution: {integrity: sha512-UT0ylWEEy80RFYzK9pEaugTqaxoD/j0Y9WhHpSyitxd99zjoQz7JJ+iKuhPAgOW2MiPSUAx+c09dcqokeyaROA==}
+    dev: false
 
   /micromark/2.11.4:
     resolution: {integrity: sha512-+WoovN/ppKolQOFIAajxi7Lu9kInbPxFuTBVEavFcL8eAfVstoc5MocPmqBeAdBOJV00uaVjegzH4+MA0DN/uA==}
@@ -8627,6 +8643,7 @@ packages:
   /source-map/0.7.3:
     resolution: {integrity: sha512-CkCj6giN3S+n9qrYiBTX5gystlENnRW5jZeNLHpe6aue+SrHcG5VYwujhW9s4dY31mEGsxBDrHR6oI69fTXsaQ==}
     engines: {node: '>= 8'}
+    dev: true
 
   /source-map/0.8.0-beta.0:
     resolution: {integrity: sha512-2ymg6oRBpebeZi9UUNsgQ89bhx01TcTkmNTGnNO88imTmbSgy4nfujrgVEFKWpMTEGA11EDkTt7mqObTPdigIA==}
@@ -9195,10 +9212,6 @@ packages:
   /token-stream/1.0.0:
     resolution: {integrity: sha1-zCAOqyYT9BZtJ/+a/HylbUnfbrQ=}
     dev: true
-
-  /toml/3.0.0:
-    resolution: {integrity: sha512-y/mWCZinnvxjTKYhJ+pYxwD0mRLVvOtdS2Awbgxln6iEnt4rk0yBxeSBHkGJcPucRiG0e55mwWp+g/05rsrd6w==}
-    dev: false
 
   /totalist/1.1.0:
     resolution: {integrity: sha512-gduQwd1rOdDMGxFG1gEvhV88Oirdo2p+KjoYFU7k2g+i7n6AFFbDQ5kMPUsW0pNbfQsB/cwXvT1i4Bue0s9g5g==}
@@ -9956,18 +9969,6 @@ packages:
       - ts-node
       - typescript
     dev: true
-
-  /vite-plugin-xdm/0.2.0_vite@2.6.13:
-    resolution: {integrity: sha512-X+kt2qNU9SGzN+053IjZ+DpXX5HjZ+QHNqE6+sK79tLhmfDjU3JGh3GCN+2ILV8kKsYs7czWJta5iNPl3oyTQA==}
-    peerDependencies:
-      vite: ^2.5.1
-    dependencies:
-      '@rollup/pluginutils': 4.1.1
-      js-yaml: 4.1.0
-      source-map: 0.7.3
-      toml: 3.0.0
-      vite: 2.6.13
-    dev: false
 
   /vite/2.6.10:
     resolution: {integrity: sha512-XbevwpDJMs3lKiGEj0UQScsOCpwHIjFgfzPnFVkPgnxsF9oPv1uGyckLg58XkXv6LnO46KN9yZqJzINFmAxtUg==}

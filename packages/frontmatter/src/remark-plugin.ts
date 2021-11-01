@@ -1,5 +1,5 @@
 import type { Program, VariableDeclarator } from 'estree'
-import { valueToEstree } from 'estree-util-value-to-estree'
+import estreeUtilValueToEstree from 'estree-util-value-to-estree'
 import { load as yaml } from 'js-yaml'
 import { name as isValidIdentifierName } from 'estree-util-is-identifier-name'
 import type { Pluggable, Plugin } from 'unified'
@@ -7,6 +7,8 @@ import type { Node, Data, Parent } from 'unist'
 
 import { frontmatter } from 'micromark-extension-frontmatter'
 import { frontmatterFromMarkdown, frontmatterToMarkdown } from 'mdast-util-frontmatter'
+
+const { valueToEstree } = estreeUtilValueToEstree
 
 export type Frontmatter = Record<string, any>
 
@@ -29,7 +31,7 @@ function mapFind <T, O> (arr: T[], fn: (i: T) => O): O | undefined {
  * @param options - Optional options to configure the output.
  * @returns A unified transformer.
  */
-const plugin: FrontmatterPlugin = function (options?: FrontmatterOptions) {
+export const remarkPlugin: FrontmatterPlugin = function (options?: FrontmatterOptions) {
   const data = this.data()
 
   const addExtension = (field: string, value: unknown) => {
@@ -58,7 +60,7 @@ function parseFrontmatter ({ type, value }: { type: string; value: string }) {
   return data
 }
 
-function defineConsts (values: Record<string, any>) {
+function defineConsts (variables: Record<string, any>) {
   return {
     type: 'mdxjsEsm',
     data: {
@@ -69,7 +71,7 @@ function defineConsts (values: Record<string, any>) {
           {
             type: 'VariableDeclaration',
             kind: 'const',
-            declarations: Object.entries(values).map(([key, value]) => {
+            declarations: Object.entries(variables).map(([key, value]) => {
               if (!isValidIdentifierName(key))
                 throw new Error(`Frontmatter keys should be valid identifiers, got: ${JSON.stringify(key)}`)
 
@@ -102,5 +104,3 @@ function shorthandObjectExpression (value: Record<string, any>) {
     })),
   }
 }
-
-export default plugin

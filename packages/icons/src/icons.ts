@@ -15,7 +15,7 @@ interface ModuleOptions extends Options {
  *
  * @param options - Optional options to configure the output.
  */
-export default async function IlesIcons (options?: ModuleOptions): Promise<IlesModule> {
+export default function IlesIcons (options?: ModuleOptions): Promise<IlesModule> {
   const { resolver, ...iconsOptions } = options || {}
 
   return {

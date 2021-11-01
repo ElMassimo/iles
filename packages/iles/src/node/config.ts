@@ -11,10 +11,9 @@ import vueJsx from '@vitejs/plugin-vue-jsx'
 import components from 'unplugin-vue-components/vite'
 
 import type { ComponentResolver } from 'unplugin-vue-components/types'
-import type { Frontmatter, FrontmatterPluggable } from '@islands/frontmatter'
+import type { Frontmatter } from '@islands/frontmatter'
 import type { UserConfig } from 'iles'
 
-import { remarkFrontmatter } from '@islands/frontmatter'
 import { importModule } from '@islands/modules'
 import type { AppConfig, BaseIlesConfig, ConfigEnv, ViteOptions, IlesModule, IlesModuleLike, IlesModuleOption, NamedPlugins } from './shared'
 import { camelCase, resolvePlugin, uncapitalize, isString, compact } from './plugin/utils'
@@ -61,11 +60,12 @@ async function resolveUserConfig (root: string, configEnv: ConfigEnv) {
   if ((userConfig as any).plugins)
     throw new Error(`îles 'plugins' have been renamed to 'modules'. If you want to provide Vite plugins instead, place them in 'vite:'. Received 'plugins' in ${(userConfig as any).configPath}:\n${JSON.stringify((userConfig as any).plugins)}`)
 
-  config.modules = compact<IlesModule>([
-    { ...appConfigDefaults(config, userConfig as UserConfig), name: 'iles:base-config', modules: undefined },
-    { ...userConfig, name: 'user-config' },
-    ...await resolveUserModules(modules),
-  ].flat())
+  config.modules = compact<IlesModule>(await resolveIlesModules([
+    { name: 'iles:base-config', ...appConfigDefaults(config, userConfig as UserConfig) },
+    '@islands/frontmatter',
+    { name: 'user-config', ...userConfig },
+    ...modules,
+  ]).then(modules => modules.flat()))
 
   Object.assign(config, await applyModules(config, configEnv))
   config.pages.pagesDir = join(config.srcDir, config.pagesDir)
@@ -136,7 +136,7 @@ async function setNamedPlugins (config: AppConfig, plugins: NamedPlugins) {
 
 async function applyModules (config: AppConfig, configEnv: ConfigEnv) {
   for (const mod of config.modules) {
-    if ((mod as any).modules)
+    if ((mod as any).modules && (mod as any).modules.length > 0)
       throw new Error(`Modules in îles can't specify the 'modules' option, return an array of modules instead. Found in ${mod.name}: ${JSON.stringify((mod as any).modules)}`)
 
     const { name, config: configFn, configResolved: _, ...moduleConfig } = mod
@@ -155,7 +155,7 @@ async function applyModules (config: AppConfig, configEnv: ConfigEnv) {
   return config
 }
 
-async function resolveUserModules (modules: IlesModuleOption[]): Promise<IlesModuleLike[]> {
+async function resolveIlesModules (modules: IlesModuleOption[]): Promise<IlesModuleLike[]> {
   return await Promise.all(modules.map(resolveModule))
 }
 
@@ -236,9 +236,9 @@ function appConfigDefaults (appConfig: AppConfig, userConfig: UserConfig): Omit<
     },
     markdown: {
       jsx: true,
+      jsxRuntime: false as any,
       remarkPlugins: [
         remarkWrapIslands,
-        frontmatterPlugin(appConfig),
       ],
       // Adds meta fields such as filename, lastUpdated, and href.
       extendFrontmatter (frontmatter, absoluteFilename) {
@@ -265,14 +265,6 @@ function appConfigDefaults (appConfig: AppConfig, userConfig: UserConfig): Omit<
       ],
     },
   }
-}
-
-async function frontmatterPlugin (config: AppConfig): Promise<FrontmatterPluggable> {
-  return [remarkFrontmatter, {
-    get extendFrontmatter () {
-      return config.markdown.extendFrontmatter
-    },
-  }]
 }
 
 function viteConfigDefaults (root: string): ViteOptions {

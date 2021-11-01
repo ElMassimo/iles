@@ -12,31 +12,26 @@
     "src"
   ],
   "types": "dist/frontmatter.d.ts",
-  "module": "dist/frontmatter.js",
-  "main": "dist/frontmatter.cjs",
+  "main": "dist/frontmatter.js",
   "funding": "https://github.com/sponsors/ElMassimo",
   "author": "Máximo Mussini <maximomussini@gmail.com>",
-  "exports": {
-    ".": {
-      "import": "./dist/frontmatter.js",
-      "require": "./dist/frontmatter.cjs"
-    },
-    "./package.json": "./package.json"
-  },
   "repository": {
     "type": "git",
     "url": "https://github.com/ElMassimo/iles"
   },
   "homepage": "https://github.com/ElMassimo/iles",
   "bugs": "https://github.com/ElMassimo/iles/issues",
-  "devDependencies": {
-    "estree-util-is-identifier-name": "^1.1.0",
-    "estree-util-value-to-estree": "^1.0.0",
+  "dependencies": {
+    "estree-util-is-identifier-name": "^2.0.0",
+    "estree-util-value-to-estree": "^1.3.0",
     "js-yaml": "^4.1",
     "mdast-util-frontmatter": "^1.0.0",
-    "micromark-extension-frontmatter": "^1.0.0",
+    "micromark-extension-frontmatter": "^1.0.0"
+  },
+  "devDependencies": {
     "@types/estree": "^0.0.46",
     "@types/js-yaml": "^4.0.0",
+    "iles": "workspace:*",
     "tsup": "5.5.0",
     "typescript": "^4.4.4",
     "unified": "^10.1.0"
