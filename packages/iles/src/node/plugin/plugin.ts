@@ -173,7 +173,7 @@ export default function IslandsPlugins (appConfig: AppConfig): PluginOption[] {
           return 'export default {}; if (import.meta.hot) import.meta.hot.accept()'
 
         if (isSFCMain(path, query) && code.includes('client:') && code.includes('<template'))
-          return wrapIslandsInSFC(code, path, debug.detect)
+          return wrapIslandsInSFC(plugins.components, code, path, debug.detect)
       },
     },
     {
@@ -194,40 +194,18 @@ export default function IslandsPlugins (appConfig: AppConfig): PluginOption[] {
     plugins.markdown,
 
     {
-      name: 'iles:mdx:pos',
+      name: 'iles:mdx:hmr',
       async transform (code, id) {
         const { path } = parseId(id)
         if (!isMarkdown(path) || !code.includes('MDXContent')) return null
-
-        const match = code.match(/props\.components\), \{(.*?), wrapper: /)
-        const importedComponents = match ? match[1].split(', ') : []
-        debug.mdx(`transforming (${importedComponents.length})`, importedComponents)
-
-        const pattern = '_components = Object.assign({'
-        const index = code.indexOf(pattern) + pattern.length
-        const comps = importedComponents.map(name => `    ${name}: _resolveComponent("${name}"),`).join('\n')
-        code = `${code.slice(0, index)}\n${comps}\n${code.slice(index, code.length + 1)}`
-
-        // Allow mdx pages with only frontmatter.
-        code = code.replace('_content = <></>', '_content = null')
-
-        // Allow MDX content to be rendered without args.
-        code = code.replace('MDXContent(props)', 'MDXContent(props = {})')
 
         // TODO: Allow component to receive an excerpt prop.
         return code.replace('export default MDXContent', `
 ${code.includes(' defineComponent') ? '' : 'import { defineComponent } from \'vue\''}
 
 const _sfc_main = defineComponent({
-  ${mode === 'development' ? `__file: '${path}',` : ''}
-  props: {
-    components: { type: Object, default: () => ({}) },
-  },
-  render () {
-    return MDXContent({ ...this.$props, ...this.$attrs })
-  },
+  render: MDXContent,${mode === 'development' ? `\n  __file: '${path}',` : ''}
 })
-export const render = MDXContent
 export default _sfc_main
 `)
       },
@@ -322,26 +300,26 @@ import.meta.hot.accept('/${relative(root, path)}', (...args) => __ILES_PAGE_UPDA
 
         code = code.replace(contextComponentRegex, '__unplugin_components_')
 
-        if (!code.includes(unresolvedIslandKey)) return code
+        if (code.includes(unresolvedIslandKey)) {
+          const imports = await parseImports(code)
 
-        const imports = await parseImports(code)
+          code = await replaceAsync(code, viteIslandRegex, async (str, resolvedName) => {
+            resolvedName = resolvedName.replace(/^\$setup\./, '')
+            const componentName = resolvedName.match(unresolvedComponentsRegex)?.[1] || resolvedName
+            const importMetadata = imports[componentName]
 
-        code = await replaceAsync(code, viteIslandRegex, async (str, resolvedName) => {
-          resolvedName = resolvedName.replace(/^\$setup\./, '')
-          const componentName = resolvedName.match(unresolvedComponentsRegex)?.[1] || resolvedName
-          const importMetadata = imports[componentName]
+            if (!importMetadata)
+              throw new Error(`Unable to infer '${componentName}' island component in ${path}`)
 
-          if (!importMetadata)
-            throw new Error(`Unable to infer '${componentName}' island component in ${path}`)
+            debug.resolve(`${componentName} => ${importMetadata.path}`)
 
-          debug.resolve(`${componentName} => ${importMetadata.path}`)
-
-          return `
-component: ${componentName},
-importName: '${importMetadata.name}',
-importPath: '${await resolveVitePath(importMetadata.path, path)}',
-          `.replace(/\n/g, ' ')
-        })
+            return `
+  component: ${componentName},
+  importName: '${importMetadata.name}',
+  importPath: '${await resolveVitePath(importMetadata.path, path)}',
+            `.replace(/\n/g, ' ')
+          })
+        }
 
         if (isMarkdown(path)) {
           const componentName = code.match(unresolvedComponentsRegex)?.[1]

@@ -98,7 +98,7 @@ function identifierExpression (name: string) {
 function resolveComponentExpression (name: string) {
   return {
     type: 'mdxJsxAttributeValueExpression',
-    value: `_resolveComponent("${name}")`,
+    value: `_resolveIlesComponent("${name}")`,
     data: {
       estree: {
         type: 'Program',

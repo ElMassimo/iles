@@ -60,6 +60,7 @@ const devtools = {
   onHydration ({ id, ...event }: any) {
     const time = Date.now()
     const island: any = islandsById[id]
+    if (!island) return
     const hydrated = getStrategy(island)
     const mediaQuery = getMediaQuery(island)
     const component = island.componentName
