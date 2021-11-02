@@ -5,7 +5,6 @@ import { yellow } from 'nanocolors'
 import creatDebugger from 'debug'
 import { loadConfigFromFile, mergeConfig as mergeViteConfig } from 'vite'
 import pages from 'vite-plugin-pages'
-import markdown from './plugin/markdown'
 import vue from '@vitejs/plugin-vue'
 import vueJsx from '@vitejs/plugin-vue-jsx'
 import components from 'unplugin-vue-components/vite'
@@ -16,9 +15,11 @@ import type { UserConfig } from 'iles'
 
 import { importModule } from '@islands/modules'
 import type { AppConfig, BaseIlesConfig, ConfigEnv, ViteOptions, IlesModule, IlesModuleLike, IlesModuleOption, NamedPlugins } from './shared'
+
 import { camelCase, resolvePlugin, uncapitalize, isString, isStringPlugin, compact } from './plugin/utils'
 import { resolveAliases, DIST_CLIENT_PATH, HYDRATION_DIST_PATH } from './alias'
 import remarkWrapIslands from './plugin/remarkWrapIslands'
+import { markdown } from './plugin/markdown'
 
 const debug = creatDebugger('iles:config')
 

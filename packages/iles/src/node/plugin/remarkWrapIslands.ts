@@ -14,12 +14,12 @@ export default (options: { config: AppConfig }) => async (ast: any, file: any) =
   let imports: ImportsMetadata
   let componentPromises: (Promise<ComponentInfo>)[] = []
 
-  const { visit, SKIP } = await importModule<typeof import('unist-util-visit')>('unist-util-visit')
+  const visit = await importModule<typeof import('unist-util-visit').visit>('unist-util-visit')
 
   visit(ast, (node: Node) => {
     if (isJsxElement(node) && node.attributes.some(hasClientDirective)) {
       wrapWithIsland(node, resolveComponentImport)
-      return SKIP
+      return (visit as any).SKIP
     }
   })
 

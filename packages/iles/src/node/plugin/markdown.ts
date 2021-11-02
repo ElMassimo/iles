@@ -1,41 +1,21 @@
 import { extname } from 'path'
-import type { CompileOptions } from 'xdm/lib/integration/rollup.js'
-import type { Plugin, TransformResult } from 'vite'
 import type { Pluggable } from 'unified'
-
+import type { TransformResult } from 'vite'
 import { importModule } from '@islands/modules'
+import type { MarkdownPlugin, MarkdownOptions, MarkdownProcessor } from '../shared'
 import { isString, isStringPlugin, compact } from './utils'
 
-export type PluginLike = null | undefined | false | Pluggable
-export type PluginOption = PluginLike | Promise<PluginLike> | string | [string, any]
+type PluginLike = null | undefined | false | Pluggable
+type PluginOption = PluginLike | Promise<PluginLike> | string | [string, any]
 
-export type { Pluggable }
-
-interface CustomOptions {
-  /**
-   * Remark plugins that should be used to process files.
-   */
-  remarkPlugins?: PluginOption[]
-
-  /**
-   * Rehype plugins that should be used to process files.
-   */
-  rehypePlugins?: PluginOption[]
-}
-
-export type { CompileOptions }
-export type PluginOptions = Omit<CompileOptions, 'remarkPlugins' | 'rehypePlugins'> & CustomOptions
-
-export type XdmProcessor = ReturnType<typeof import('xdm/lib/util/create-format-aware-processors.js').createFormatAwareProcessors>
-
-export default function IlesMarkdown (options: PluginOptions = {}) {
+export const markdown: MarkdownPlugin = function IlesMarkdown (options: MarkdownOptions = {}) {
   const { remarkPlugins = [], rehypePlugins = [], ...rest } = options
 
-  let xdmProcessor: XdmProcessor
+  let markdownProcessor: MarkdownProcessor
 
   async function createXDM (sourcemap: string | boolean) {
-    const { createFormatAwareProcessors } = await import('xdm/lib/util/create-format-aware-processors.js')
-    xdmProcessor = createFormatAwareProcessors({
+    const { createFormatAwareProcessors } = await importModule('xdm/lib/util/create-format-aware-processors.js')
+    markdownProcessor = createFormatAwareProcessors({
       remarkPlugins: await resolvePlugins(remarkPlugins),
       rehypePlugins: await resolvePlugins(rehypePlugins),
       SourceMapGenerator: sourcemap ? (await import('source-map')).SourceMapGenerator : undefined,
@@ -43,11 +23,11 @@ export default function IlesMarkdown (options: PluginOptions = {}) {
     })
   }
 
-  const plugin = {
+  return {
     name: 'vite-plugin-xdm',
 
     get api () {
-      return xdmProcessor
+      return markdownProcessor
     },
 
     async configResolved (config) {
@@ -55,14 +35,12 @@ export default function IlesMarkdown (options: PluginOptions = {}) {
     },
 
     async transform (value, path) {
-      if (xdmProcessor.extnames.includes(extname(path))) {
-        const compiled = await plugin.api.process({ value, path })
+      if (markdownProcessor.extnames.includes(extname(path))) {
+        const compiled = await markdownProcessor.process({ value, path })
         return { code: String(compiled.value), map: compiled.map } as TransformResult
       }
     },
-  } as Plugin & { api: XdmProcessor }
-
-  return plugin
+  }
 }
 
 // Resolve plugins that might need an async import in CJS.

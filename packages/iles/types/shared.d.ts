@@ -8,7 +8,6 @@ import type PagesPlugin, { UserOptions as PagesOptions } from 'vite-plugin-pages
 import type ComponentsPlugin from 'unplugin-vue-components/vite'
 import type { Options as ComponentOptions } from 'unplugin-vue-components/types'
 import type VueJsxPlugin from '@vitejs/plugin-vue-jsx'
-import type XdmPlugin, { PluginOptions as XdmOptions } from 'vite-plugin-xdm'
 
 import type { Options as SolidOptions } from 'vite-plugin-solid'
 import type { Options as SvelteOptions } from '@sveltejs/vite-plugin-svelte'
@@ -19,9 +18,12 @@ import type { Router, RouteRecordRaw, RouteMeta, RouterOptions as VueRouterOptio
 import type { HeadClient, HeadObject } from '@vueuse/head'
 export type { OnLoadFn } from '@islands/hydration/dist/vanilla'
 
-export { ViteOptions, ConfigEnv }
+import type { MarkdownPlugin, MarkdownOptions, MarkdownProcessor } from './markdown'
 
+export type { MarkdownPlugin, MarkdownOptions, MarkdownProcessor }
+export type { ViteOptions, ConfigEnv }
 export type { Router, RouteRecordRaw, RouteMeta }
+
 export type RouterOptions = VueRouterOptions & { base?: string }
 
 export interface PageProps extends Record<string, any> {}
@@ -100,7 +102,7 @@ export type LayoutFactory = (name: string | false) => any
 
 export interface NamedPlugins {
   pages: ReturnType<typeof PagesPlugin>
-  markdown: ReturnType<typeof XdmPlugin>
+  markdown: ReturnType<typeof MarkdownPlugin>
   vue: ReturnType<typeof VuePlugin>
   vueJsx: ReturnType<typeof VueJsxPlugin>
   components: ReturnType<typeof ComponentsPlugin>
@@ -145,7 +147,7 @@ export interface BaseIlesConfig {
    * Configuration options for markdown processing in îles, including remark
    * and rehype plugins.
    */
-  markdown: XdmOptions & FrontmatterOptions
+  markdown: MarkdownOptions
   critters?: CritterOptions | false
 }
 
