@@ -1,3 +1,12 @@
+## [0.4.7-beta.1](https://github.com/ElMassimo/iles/compare/v0.4.7-beta.0...v0.4.7-beta.1) (2021-11-02)
+
+
+### Bug Fixes
+
+* upgrade xdm to avoid 'node:' imports and support node 14 ([49846e2](https://github.com/ElMassimo/iles/commit/49846e23276ab6cf8610a87082df9e2573f4b37c))
+
+
+
 ## [0.4.7-beta.0](https://github.com/ElMassimo/iles/compare/v0.4.6...v0.4.7-beta.0) (2021-11-02)
 
 
