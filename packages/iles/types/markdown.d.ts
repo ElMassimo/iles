@@ -1,4 +1,4 @@
-import type { CompileOptions } from 'xdm/lib/integration/rollup.js'
+import type { CompileOptions } from 'xdm/rollup'
 import type { Plugin } from 'vite'
 import type { FrontmatterOptions } from '@islands/frontmatter'
 
@@ -16,6 +16,6 @@ interface Options extends FrontmatterOptions {
 
 export type MarkdownOptions = Omit<CompileOptions, 'remarkPlugins' | 'rehypePlugins'> & Options
 
-export type MarkdownProcessor = ReturnType<typeof import('xdm/lib/util/create-format-aware-processors.js').createFormatAwareProcessors>
+export type MarkdownProcessor = ReturnType<typeof import('xdm').createFormatAwareProcessors>
 
 export type MarkdownPlugin = (options?: MarkdownOptions) => Plugin & { api: MarkdownProcessor }

@@ -14,7 +14,7 @@ export const markdown: MarkdownPlugin = function IlesMarkdown (options: Markdown
   let markdownProcessor: MarkdownProcessor
 
   async function createXDM (sourcemap: string | boolean) {
-    const { createFormatAwareProcessors } = await importModule('xdm/lib/util/create-format-aware-processors.js')
+    const { createFormatAwareProcessors } = await importModule('xdm')
     markdownProcessor = createFormatAwareProcessors({
       remarkPlugins: await resolvePlugins(remarkPlugins),
       rehypePlugins: await resolvePlugins(rehypePlugins),

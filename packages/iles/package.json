@@ -65,7 +65,7 @@
     "vite-plugin-pages": "npm:@mussi/vite-plugin-pages@0.18.3-beta.2",
     "vue": "^3.2.21",
     "vue-router": "^4.0.12",
-    "xdm": "npm:@islands/xdm"
+    "xdm": "npm:@islands/xdm@3.2.2"
   },
   "devDependencies": {
     "@antfu/install-pkg": "^0.1.0",
