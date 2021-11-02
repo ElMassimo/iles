@@ -1,3 +1,12 @@
+## [0.4.7-beta.2](https://github.com/ElMassimo/iles/compare/v0.4.7-beta.1...v0.4.7-beta.2) (2021-11-02)
+
+
+### Bug Fixes
+
+* ensure unist-util-visit is loaded correctly ([1709f4a](https://github.com/ElMassimo/iles/commit/1709f4a01273d0889031f1549c4f221fb8410557))
+
+
+
 ## [0.4.7-beta.1](https://github.com/ElMassimo/iles/compare/v0.4.7-beta.0...v0.4.7-beta.1) (2021-11-02)
 
 
