@@ -40,7 +40,7 @@
     "url": "https://github.com/ElMassimo/iles/issues"
   },
   "dependencies": {
-    "@islands/frontmatter": "workspace:^0.1.0",
+    "@islands/frontmatter": "workspace:^0.2.0",
     "@islands/hydration": "workspace:^0.3.0",
     "@islands/modules": "workspace:^0.1.0",
     "@islands/prerender": "workspace:^0.3.0",

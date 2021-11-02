@@ -1,6 +1,6 @@
 # [0.2.0](https://github.com/ElMassimo/iles/compare/frontmatter@0.0.3-0...frontmatter@0.2.0) (2021-11-02)
 
-
+- __BREAKING CHANGES__: Now it's an îles plugin that registers the remark plugin.
 
 ## 0.0.3-0 (2021-10-27)
 
