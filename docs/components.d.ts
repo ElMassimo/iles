@@ -33,6 +33,7 @@ declare module 'vue' {
     IconVite: typeof import('~icons/icon/vite')['default']
     IconVue: typeof import('~icons/icon/vue')['default']
     Iles: typeof import('./src/components/Iles.vue')['default']
+    Iles2: typeof import('~icons/il/es2')['default']
     Image: typeof import('./src/components/Image.vue')['default']
     Island: typeof import('iles')['Island']
     LastUpdated: typeof import('./src/components/LastUpdated.vue')['default']

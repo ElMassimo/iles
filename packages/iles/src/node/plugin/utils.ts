@@ -1,9 +1,19 @@
 import { promises as fs, constants as fsConstants } from 'fs'
+import createDebugger from 'debug'
 export { default as serialize } from '@nuxt/devalue'
 
 import newSpinner from 'mico-spinner'
 import { isPackageExists, importModule } from 'local-pkg'
 import { installPackage } from '@antfu/install-pkg'
+
+export const debug = {
+  config: createDebugger('iles:config'),
+  mdx: createDebugger('iles:mdx'),
+  layout: createDebugger('iles:layout'),
+  detect: createDebugger('iles:detect'),
+  resolve: createDebugger('iles:resolve'),
+  build: createDebugger('iles:build'),
+}
 
 export function sleep (ms: number) {
   return new Promise<void>((resolve) => { setTimeout(resolve, ms) })
@@ -32,6 +42,10 @@ async function withSpinner<T> (message: string, fn: () => Promise<T>) {
 
 export function isString (val: any): val is string {
   return typeof val === 'string'
+}
+
+export function isStringPlugin (val: any): val is [string, any] {
+  return Array.isArray(val) && isString(val[0])
 }
 
 export function uniq<T> (arr: Array<T>) {

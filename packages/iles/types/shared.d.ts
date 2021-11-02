@@ -1,5 +1,5 @@
 /* eslint-disable no-use-before-define */
-import type { UserConfig as ViteOptions, ConfigEnv, PluginOption as VitePluginOption } from 'vite'
+import type { ResolveFn, UserConfig as ViteOptions, ConfigEnv, PluginOption as VitePluginOption } from 'vite'
 import type { GetManualChunk } from 'rollup'
 import type { App, Ref, DefineComponent } from 'vue'
 import type { Options as CritterOptions } from 'critters'
@@ -236,6 +236,7 @@ export interface AppConfig extends RequiredConfig, BaseIlesConfig {
   pages: PagesOptions
   modules: IlesModule[]
   namedPlugins: NamedPlugins
+  resolvePath?: ResolveFn
 }
 
 export type AppClientConfig = Pick<AppConfig, 'base' | 'root' | 'debug' | 'ssg' | 'siteUrl' | 'jsx'>

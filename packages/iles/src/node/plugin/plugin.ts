@@ -2,7 +2,7 @@
 import { promises as fs } from 'fs'
 import { basename, resolve, relative } from 'pathe'
 import { green } from 'nanocolors'
-import type { PluginOption, ResolvedConfig, ResolveFn, ViteDevServer } from 'vite'
+import type { PluginOption, ResolvedConfig, ViteDevServer } from 'vite'
 import { transformWithEsbuild } from 'vite'
 
 import { MODULE_ID_VIRTUAL as PAGES_REQUEST_PATH } from 'vite-plugin-pages'
@@ -10,25 +10,15 @@ import MagicString from 'magic-string'
 
 import type { Frontmatter } from '@islands/frontmatter'
 import { shouldTransformRef, transformRef } from 'vue/compiler-sfc'
-import createDebugger from 'debug'
 import type { AppConfig, AppClientConfig } from '../shared'
 import { APP_PATH, ROUTES_REQUEST_PATH, USER_APP_REQUEST_PATH, USER_SITE_REQUEST_PATH, APP_CONFIG_REQUEST_PATH, NOT_FOUND_COMPONENT_PATH, NOT_FOUND_REQUEST_PATH } from '../alias'
 import { createServer } from '../server'
-import { escapeRegex, serialize, replaceAsync, pascalCase, exists } from './utils'
-import { parseId, parseImports } from './parse'
-import { unresolvedIslandKey, wrapIslandsInSFC, wrapLayout } from './wrap'
+import { serialize, pascalCase, exists, debug } from './utils'
+import { parseId } from './parse'
+import { wrapIslandsInSFC, wrapLayout } from './wrap'
 import { extendSite } from './site'
 
 export const ILES_APP_ENTRY = '/@iles-entry'
-
-const debug = {
-  config: createDebugger('iles:config'),
-  mdx: createDebugger('iles:mdx'),
-  layout: createDebugger('iles:layout'),
-  detect: createDebugger('iles:detect'),
-  resolve: createDebugger('iles:resolve'),
-  build: createDebugger('iles:build'),
-}
 
 function isMarkdown (path: string) {
   return path.endsWith('.mdx') || path.endsWith('.md')
@@ -38,9 +28,6 @@ function isSFCMain (path: string, query: Record<string, any>) {
   return path.endsWith('.vue') && query.vue === undefined
 }
 
-const contextComponentRegex = new RegExp(escapeRegex('_ctx.__unplugin_components_'), 'g')
-const viteIslandRegex = new RegExp(`"?${escapeRegex(unresolvedIslandKey)}"?:\\s*([^,}\n]+)[,}\n]`, 'sg')
-const unresolvedComponentsRegex = /_resolveComponent\("([^)]+?)"\)/
 const templateLayoutRegex = /<template.*?\slayout=\s*['"](\w+)['"].*?>/
 
 // Public: Configures MDX, Vue, Components, and Islands plugins.
@@ -51,7 +38,6 @@ export default function IslandsPlugins (appConfig: AppConfig): PluginOption[] {
   let mode: ResolvedConfig['mode']
   let root: ResolvedConfig['root']
   let isBuild: boolean
-  let resolveVitePath: ResolveFn
 
   const appPath = resolve(appConfig.srcDir, 'app.ts')
   const sitePath = resolve(appConfig.srcDir, 'site.ts')
@@ -79,7 +65,7 @@ export default function IslandsPlugins (appConfig: AppConfig): PluginOption[] {
         mode = config.mode
         root = config.root
         isBuild = config.command === 'build'
-        resolveVitePath = config.createResolver()
+        appConfig.resolvePath = config.createResolver()
       },
       async resolveId (id) {
         if (id === ILES_APP_ENTRY)
@@ -173,7 +159,7 @@ export default function IslandsPlugins (appConfig: AppConfig): PluginOption[] {
           return 'export default {}; if (import.meta.hot) import.meta.hot.accept()'
 
         if (isSFCMain(path, query) && code.includes('client:') && code.includes('<template'))
-          return wrapIslandsInSFC(plugins.components, code, path, debug.detect)
+          return wrapIslandsInSFC(appConfig, code, path)
       },
     },
     {
@@ -184,7 +170,7 @@ export default function IslandsPlugins (appConfig: AppConfig): PluginOption[] {
         if (!isSFCMain(path, query) || !isLayout(path)) return
         const layoutName = code.match(templateLayoutRegex)?.[1] || false
         if (String(layoutName) === 'false') return
-        return wrapLayout(code, path, debug.layout)
+        return wrapLayout(code, path)
       },
     },
 
@@ -198,6 +184,9 @@ export default function IslandsPlugins (appConfig: AppConfig): PluginOption[] {
       async transform (code, id) {
         const { path } = parseId(id)
         if (!isMarkdown(path) || !code.includes('MDXContent')) return null
+
+        // Allow empty markdown files.
+        code = code.replace('<></>', '')
 
         // TODO: Allow component to receive an excerpt prop.
         return code.replace('export default MDXContent', `
@@ -288,46 +277,6 @@ import.meta.hot.accept('/${relative(root, path)}', (...args) => __ILES_PAGE_UPDA
       name: 'iles:preact-jsx-config',
       config () {
         return { esbuild: { include: /\.(tsx?|jsx)$/ } }
-      },
-    },
-
-    {
-      name: 'iles:resolve-islands',
-      enforce: 'post',
-      async transform (code, id) {
-        const { path, query } = parseId(id)
-        if (!isMarkdown(path) && !isSFCMain(path, query)) return
-
-        code = code.replace(contextComponentRegex, '__unplugin_components_')
-
-        if (code.includes(unresolvedIslandKey)) {
-          const imports = await parseImports(code)
-
-          code = await replaceAsync(code, viteIslandRegex, async (str, resolvedName) => {
-            resolvedName = resolvedName.replace(/^\$setup\./, '')
-            const componentName = resolvedName.match(unresolvedComponentsRegex)?.[1] || resolvedName
-            const importMetadata = imports[componentName]
-
-            if (!importMetadata)
-              throw new Error(`Unable to infer '${componentName}' island component in ${path}`)
-
-            debug.resolve(`${componentName} => ${importMetadata.path}`)
-
-            return `
-  component: ${componentName},
-  importName: '${importMetadata.name}',
-  importPath: '${await resolveVitePath(importMetadata.path, path)}',
-            `.replace(/\n/g, ' ')
-          })
-        }
-
-        if (isMarkdown(path)) {
-          const componentName = code.match(unresolvedComponentsRegex)?.[1]
-          if (componentName)
-            throw new Error(`Unable to infer '${componentName}' component in ${path}`)
-        }
-
-        return code
       },
     },
   ]

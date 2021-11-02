@@ -1,10 +1,10 @@
 import type { Program, VariableDeclarator } from 'estree'
-import estreeUtilValueToEstree from 'estree-util-value-to-estree'
-import { load as yaml } from 'js-yaml'
-import { name as isValidIdentifierName } from 'estree-util-is-identifier-name'
 import type { Pluggable, Plugin } from 'unified'
 import type { Node, Data, Parent } from 'unist'
 
+import estreeUtilValueToEstree from 'estree-util-value-to-estree'
+import { load as yaml } from 'js-yaml'
+import { name as isValidIdentifierName } from 'estree-util-is-identifier-name'
 import { frontmatter } from 'micromark-extension-frontmatter'
 import { frontmatterFromMarkdown, frontmatterToMarkdown } from 'mdast-util-frontmatter'
 

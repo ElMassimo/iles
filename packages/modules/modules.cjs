@@ -1,4 +1,5 @@
 function unwrapModule (mod) {
+  console.log('unwrapModule', mod)
   return mod && mod.default ? unwrapModule(mod.default) : mod
 }
 

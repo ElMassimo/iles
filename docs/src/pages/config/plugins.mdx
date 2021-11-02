@@ -20,6 +20,8 @@
 [remark]: https://github.com/remarkjs/remark
 [rehype]: https://github.com/rehypejs/rehype
 
+[unplugin-icons]: https://github.com/antfu/unplugin-icons
+
 # Plugins 🔌
 
 <Iles/> has an extensible plugin system, which is used internally to provide
@@ -124,8 +126,13 @@ plugin options for `svelte` in [`iles.config.ts`][config].
 
 ### <kbd>@islands/headings</kbd>
 
-Adds a [rehype] plugin to inject anchor links to headings in markdown files, add
-a slug id to reference them, and expose them in `meta.headings`.
+A module that injects a [rehype] plugin to parse headings in [MDX documents][mdx]:
+
+- 🔗 adds an id to headings and injects an anchor tag to link them
+
+- 🏷 automatically extracts the title from an `<h1>` and sets `frontmatter.title`
+
+- 📖 sets `meta.headings` to enable rendering sidebars and table of contents.
 
 ```ts
   modules: [
@@ -133,7 +140,17 @@ a slug id to reference them, and expose them in `meta.headings`.
   ],
 ```
 
-<Tip title="Automatic Title!">
-The plugin will also extract an `h1` heading in the page and use it as the page
-title if none is set in the [frontmatter][mdx].
-</Tip>
+### <kbd>@islands/icons</kbd>
+
+A module to add and configure [unplugin-icons]:
+
+- ✨ `autoInstall` enabled by default
+
+- 🧱 files in `/icons` dir available as a custom `icon` collection
+
+```ts
+  modules: [
+    '@islands/icons',
+  ],
+```
+

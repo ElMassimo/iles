@@ -5,7 +5,7 @@ import { yellow } from 'nanocolors'
 import creatDebugger from 'debug'
 import { loadConfigFromFile, mergeConfig as mergeViteConfig } from 'vite'
 import pages from 'vite-plugin-pages'
-import xdm from 'vite-plugin-xdm'
+import markdown from './plugin/markdown'
 import vue from '@vitejs/plugin-vue'
 import vueJsx from '@vitejs/plugin-vue-jsx'
 import components from 'unplugin-vue-components/vite'
@@ -16,7 +16,7 @@ import type { UserConfig } from 'iles'
 
 import { importModule } from '@islands/modules'
 import type { AppConfig, BaseIlesConfig, ConfigEnv, ViteOptions, IlesModule, IlesModuleLike, IlesModuleOption, NamedPlugins } from './shared'
-import { camelCase, resolvePlugin, uncapitalize, isString, compact } from './plugin/utils'
+import { camelCase, resolvePlugin, uncapitalize, isString, isStringPlugin, compact } from './plugin/utils'
 import { resolveAliases, DIST_CLIENT_PATH, HYDRATION_DIST_PATH } from './alias'
 import remarkWrapIslands from './plugin/remarkWrapIslands'
 
@@ -44,9 +44,8 @@ export async function resolveConfig (root?: string, env?: ConfigEnv): Promise<Ap
     layoutsDir: resolve(srcDir, appConfig.layoutsDir),
   })
 
-  for (const mod of appConfig.modules) {
+  for (const mod of appConfig.modules)
     await mod.configResolved?.(appConfig, env)
-  }
 
   return appConfig
 }
@@ -112,7 +111,7 @@ async function setNamedPlugins (config: AppConfig, plugins: NamedPlugins) {
 
   plugins.components = components(config.components)
   plugins.pages = pages(config.pages)
-  plugins.markdown = xdm(config.markdown)
+  plugins.markdown = markdown(config.markdown)
   plugins.vue = vue(config.vue)
   plugins.vueJsx = vueJsx(config.vueJsx)
 
@@ -161,12 +160,8 @@ async function resolveIlesModules (modules: IlesModuleOption[]): Promise<IlesMod
 
 async function resolveModule (mod: IlesModuleOption): Promise<IlesModuleLike> {
   if (isString(mod)) return await createIlesModule(mod)
-  if (isStringModule(mod)) return await createIlesModule(...mod)
+  if (isStringPlugin(mod)) return await createIlesModule(...mod)
   return await mod
-}
-
-function isStringModule (val: any): val is [string, any] {
-  return Array.isArray(val) && isString(val[0])
 }
 
 async function createIlesModule (pkgName: string, ...options: any[]): Promise<IlesModule> {
@@ -238,7 +233,7 @@ function appConfigDefaults (appConfig: AppConfig, userConfig: UserConfig): Omit<
       jsx: true,
       jsxRuntime: false as any,
       remarkPlugins: [
-        remarkWrapIslands,
+        [remarkWrapIslands, { get config () { return appConfig } }],
       ],
       // Adds meta fields such as filename, lastUpdated, and href.
       extendFrontmatter (frontmatter, absoluteFilename) {
@@ -263,6 +258,7 @@ function appConfigDefaults (appConfig: AppConfig, userConfig: UserConfig): Omit<
         IlesComponentResolver,
         IlesLayoutResolver,
       ],
+      transformer: 'vue3',
     },
   }
 }
