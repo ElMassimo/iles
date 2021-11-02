@@ -19,7 +19,6 @@ export default (options: { config: AppConfig }) => async (ast: any, file: any) =
   const SKIP = unistUtilVisit.SKIP
 
   visit(ast, (node: Node) => {
-    if ((node as any).name) console.log((node as any).name)
     if (isJsxElement(node) && node.attributes.some(hasClientDirective)) {
       wrapWithIsland(node, resolveComponentImport)
       return SKIP

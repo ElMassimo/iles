@@ -11,6 +11,7 @@
     "@iconify-json/carbon": "^1.0.7",
     "@mapbox/rehype-prism": "^0.8.0",
     "@islands/headings": "workspace:*",
+    "@islands/icons": "workspace:*",
     "feed": "^4.2.1",
     "iles": "workspace:*",
     "unplugin-icons": "^0.12.15",

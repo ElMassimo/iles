@@ -13,6 +13,13 @@
   ],
   "types": "dist/frontmatter.d.ts",
   "main": "dist/frontmatter.js",
+  "exports": {
+    ".": {
+      "import": "./dist/frontmatter.js",
+      "require": "./src/frontmatter.cjs"
+    },
+    "./package.json": "./package.json"
+  },
   "funding": "https://github.com/sponsors/ElMassimo",
   "author": "Máximo Mussini <maximomussini@gmail.com>",
   "repository": {
