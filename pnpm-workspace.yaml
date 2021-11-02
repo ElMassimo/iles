@@ -2,7 +2,6 @@ packages:
   - docs
   - packages/hydration/
   - packages/prerender/
-  - packages/modules/
   - packages/frontmatter/
   - packages/headings/
   - packages/icons/

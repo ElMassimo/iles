@@ -14,7 +14,7 @@ import type { ComponentResolver } from 'unplugin-vue-components/types'
 import type { Frontmatter } from '@islands/frontmatter'
 import type { UserConfig } from 'iles'
 
-import { importModule } from '@islands/modules'
+import { importModule } from 'lib/modules'
 import type { AppConfig, BaseIlesConfig, ConfigEnv, ViteOptions, IlesModule, IlesModuleLike, IlesModuleOption, NamedPlugins } from './shared'
 
 import { camelCase, resolvePlugin, uncapitalize, isString, isStringPlugin, compact } from './plugin/utils'

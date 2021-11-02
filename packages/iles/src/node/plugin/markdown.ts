@@ -1,7 +1,7 @@
 import { extname } from 'path'
 import type { Pluggable } from 'unified'
 import type { TransformResult } from 'vite'
-import { importModule } from '@islands/modules'
+import { importModule } from 'lib/modules'
 import type { MarkdownPlugin, MarkdownOptions, MarkdownProcessor } from '../shared'
 import { isString, isStringPlugin, compact } from './utils'
 

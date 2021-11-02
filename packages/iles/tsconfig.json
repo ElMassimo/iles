@@ -16,6 +16,7 @@
       "src/*": ["src/*"],
       "client/*": ["src/client/*"],
       "node/*": ["src/node/*"],
+      "lib/*": ["src/node/*"],
       "shared/*": ["src/shared/*"],
       "tests/*": ["__tests__/*"],
       "/@shared/*": ["src/client/shared/*"],

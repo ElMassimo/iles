@@ -7,6 +7,7 @@ export const tsup: Options = {
   format: ['cjs'],
   outDir: 'dist/node',
   external: [
+    '../../lib/modules',
     '@vue/runtime-dom/dist/runtime-dom.esm-bundler.js',
     'solid-js/web',
     'preact-render-to-string',
