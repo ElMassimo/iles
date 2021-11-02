@@ -17,14 +17,14 @@ let hasLinks = $computed(() => next || prev)
     <div class="flex border-t pt-6 justify-between items-center">
       <div class="max-w-1/2 flex items-center">
         <a v-if="prev" class="nav-link" :href="prev.link">
-          <CarbonArrowLeft class="mr-3"/>
+          <IconCarbonArrowLeft class="mr-3"/>
           <span class="text-sm md:text-base">{{ prev.text }}</span>
         </a>
       </div>
       <div class="max-w-1/2 flex items-center">
         <a v-if="next" class="nav-link text-right justify-end" :href="next.link">
           <span class="text-sm md:text-base">{{ next.text }}</span>
-          <CarbonArrowRight class="ml-3"/>
+          <IconCarbonArrowRight class="ml-3"/>
         </a>
       </div>
     </div>

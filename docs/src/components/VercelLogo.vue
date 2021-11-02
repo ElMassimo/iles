@@ -1,5 +1,5 @@
 <template>
   <a href="https://vercel.com" target="_blank" rel="noreferrer">
-    <IconVercel v-bind="$attrs" class="inline-block mx-1 -mt-1"/>
+    <IconAppVercel v-bind="$attrs" class="inline-block mx-1 -mt-1"/>
   </a>
 </template>

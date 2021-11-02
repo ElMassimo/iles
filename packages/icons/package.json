@@ -1,0 +1,33 @@
+{
+  "name": "@islands/icons",
+  "version": "0.0.1",
+  "scripts": {
+    "dev": "npm run build -- --watch",
+    "build": "tsup src/icons.ts",
+    "prepublishOnly": "npm run build"
+  },
+  "files": [
+    "dist",
+    "src"
+  ],
+  "types": "dist/icons.d.ts",
+  "type": "module",
+  "exports": {
+    ".": "./src/icons.mjs",
+    "./package.json": "./package.json"
+  },
+  "funding": "https://github.com/sponsors/ElMassimo",
+  "author": "Máximo Mussini <maximomussini@gmail.com>",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ElMassimo/iles"
+  },
+  "homepage": "https://github.com/ElMassimo/iles",
+  "bugs": "https://github.com/ElMassimo/iles/issues",
+  "dependencies": {
+    "unplugin-icons": "^0.12.17"
+  },
+  "devDependencies": {
+    "iles": "workspace:*"
+  }
+}

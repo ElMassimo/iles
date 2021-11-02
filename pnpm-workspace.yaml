@@ -2,7 +2,9 @@ packages:
   - docs
   - packages/hydration/
   - packages/prerender/
+  - packages/modules/
   - packages/frontmatter/
-  - packages/headers/
+  - packages/headings/
+  - packages/icons/
   - packages/iles/
   - playground/the-vue-point/

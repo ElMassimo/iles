@@ -20,10 +20,51 @@
 [remark]: https://github.com/remarkjs/remark
 [rehype]: https://github.com/rehypejs/rehype
 
-# Plugins 🔌
+[unplugin-icons]: https://github.com/antfu/unplugin-icons
+
+# Modules and Plugins 🔌
 
 <Iles/> has an extensible plugin system, which is used internally to provide
 features such as `frontmatter` and `meta` information for [pages].
+
+## Official Modules <Iles heading/>
+
+### <kbd>@islands/headings</kbd>
+
+A module that injects a [rehype] plugin to parse headings in [MDX documents][mdx]:
+
+- 🔗 adds an id to headings and injects an anchor tag to link them
+
+- 🏷 automatically extracts the title from an `<h1>` and sets `frontmatter.title`
+
+- 📖 sets `meta.headings` to enable rendering sidebars and table of contents
+
+```ts
+// iles.config.ts
+import { defineConfig } from 'iles'
+
+export default defineConfig({
+  modules: [
+    '@islands/headings',
+  ],
+})
+```
+
+### <kbd>@islands/icons</kbd>
+
+A module to add and configure [unplugin-icons]:
+
+- ✨ `autoInstall` enabled by default, and `icon` prefix to prevent conflicts
+
+- 🧱 configures the `unplugin-vue-components` resolver automatically
+
+- 🎨 files in the `/icons` dir available as the `app` collection, `<IconApp...`
+
+```ts
+  modules: [
+    '@islands/icons',
+  ],
+```
 
 ## Vite Plugins <ViteLogo/>
 
@@ -120,22 +161,3 @@ Provides support for [Svelte] islands.
 Auto-installed when configuring `svelte: true`, or providing
 plugin options for `svelte` in [`iles.config.ts`][config].
 
-## Official Plugins <Iles heading/>
-
-### <kbd>@islands/headers</kbd>
-
-A [rehype] plugin to add anchor links to headings in markdown files, add a slug
-id to reference them, and expose them in `meta.headers`.
-
-```ts
-  markdown: {
-    rehypePlugins: [
-      import('@islands/headers').then(m => m.default),
-    ],
-  },
-```
-
-<Tip title="Automatic Title!">
-The plugin will also extract an `h1` heading in the page and use it as the page
-title if none is set in the [frontmatter][mdx].
-</Tip>

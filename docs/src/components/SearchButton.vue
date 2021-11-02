@@ -10,6 +10,6 @@ export const onLoad: OnLoadFn = el =>
 <template>
   <DocSearch client:idle/>
   <NavBarButton aria-label="Search">
-    <BxBxSearch/>
+    <IconBxBxSearch/>
   </NavBarButton>
 </template>

@@ -1,21 +1,39 @@
 import type { Node } from 'unist'
-import visit from 'unist-util-visit'
-import type { MDXJsxFlowElement, MDXJsxTextElement, MDXJsxAttribute, MDXJsxExpressionAttribute } from 'mdast-util-mdx-jsx'
+import type { ComponentInfo } from 'unplugin-vue-components/types'
+import type { MDXJsxFlowElement, MDXJsxTextElement, MDXJsxAttribute, MDXJsxExpressionAttribute, MDXJsxAttributeValueExpression, Program } from 'mdast-util-mdx-jsx'
 import type { MDXJSEsm } from 'mdast-util-mdxjs-esm'
 import type { ImportDeclaration } from 'estree'
-import { unresolvedIslandKey } from './wrap'
+import { importModule } from '@islands/modules'
+import { AppConfig } from '../shared'
+import { resolveComponent } from './wrap'
 import type { ImportsMetadata } from './parse'
 import { isString } from './utils'
 
-export default () => (ast: any) => {
+export default (options: { config: AppConfig }) => async (ast: any, file: any) => {
+  let components = options.config.namedPlugins.components.api
   let imports: ImportsMetadata
+  let componentPromises: (Promise<ComponentInfo>)[] = []
 
-  visit(ast, (node) => {
+  const visit = await importModule<typeof import('unist-util-visit').visit>('unist-util-visit')
+
+  visit(ast, (node: Node) => {
     if (isJsxElement(node) && node.attributes.some(hasClientDirective)) {
-      if (!imports) imports = extractImports(ast.children.filter((node: Node) => node.type === 'mdxjsEsm'))
-      wrapWithIsland(node, imports)
+      wrapWithIsland(node, resolveComponentImport)
+      return (visit as any).SKIP
     }
   })
+
+  const componentsToImport = await Promise.all(componentPromises)
+  if (componentsToImport.length > 0)
+    ast.children.unshift(defineImports(componentsToImport))
+
+  async function resolveComponentImport (name: string) {
+    if (!imports) imports = extractImports(ast.children.filter((node: Node) => node.type === 'mdxjsEsm'))
+    if (imports[name]) return imports[name]
+    const info = resolveComponent(components, name, file.path, componentPromises.length)
+    componentPromises.push(info)
+    return await info
+  }
 }
 
 function isJsxElement (node: Node): node is MDXJsxFlowElement | MDXJsxTextElement {
@@ -32,23 +50,20 @@ function isImport (statement: any): statement is ImportDeclaration {
 
 // Internal: Replaces the JSX element with an Island, and sets an attribute to
 // enable future resolution.
-function wrapWithIsland (node: MDXJsxFlowElement | MDXJsxTextElement, imports: ImportsMetadata) {
+async function wrapWithIsland (node: MDXJsxFlowElement | MDXJsxTextElement, resolveComponentImport: (name: string) => Promise<ComponentInfo>) {
   const { name } = node
   if (!name) return
 
   node.name = 'Island'
-  node.attributes.unshift(
-    {
-      type: 'mdxJsxAttribute',
-      name: 'componentName',
-      value: name,
-    } as MDXJsxAttribute,
-    {
-      type: 'mdxJsxAttribute',
-      name: unresolvedIslandKey,
-      value: imports[name] ? identifierExpression(name) : resolveComponentExpression(name),
-    } as MDXJsxAttribute,
-  )
+
+  const importMeta = await resolveComponentImport(name)
+
+  node.attributes.unshift(...jsxAttributes({
+    component: identifierExpression(importMeta.name!),
+    componentName: name,
+    importName: importMeta.importName,
+    importPath: importMeta.path,
+  }))
 }
 
 function extractImports (nodes: MDXJSEsm[]) {
@@ -58,7 +73,8 @@ function extractImports (nodes: MDXJSEsm[]) {
   declarations.forEach(({ specifiers, source: { value: path } }) => {
     if (isString(path)) {
       specifiers.forEach((specifier) => {
-        imports[specifier.local.name] = { name: importedName(specifier), path }
+        const name = specifier.local.name
+        imports[name] = { name, importName: importedName(specifier), path }
       })
     }
   })
@@ -73,57 +89,50 @@ function importedName (specifier: ImportDeclaration['specifiers'][number]) {
   }
 }
 
-function identifierExpression (name: string) {
+function identifierExpression (name: string): MDXJsxAttributeValueExpression {
   return {
     type: 'mdxJsxAttributeValueExpression',
     value: name,
     data: {
       estree: {
         type: 'Program',
+        sourceType: 'module',
         body: [
           {
             type: 'ExpressionStatement',
-            expression: {
-              type: 'Identifier',
-              name,
-            },
+            expression: { type: 'Identifier', name },
           },
         ],
-        sourceType: 'module',
       },
     },
   }
 }
 
-function resolveComponentExpression (name: string) {
+function jsxAttributes (val: Record<string, MDXJsxAttribute['value']>): MDXJsxAttribute[] {
+  return Object.entries(val).map(([name, value]) => (
+    { type: 'mdxJsxAttribute', name, value }
+  ))
+}
+
+function defineImports (components: ComponentInfo[]) {
   return {
-    type: 'mdxJsxAttributeValueExpression',
-    value: `_resolveComponent("${name}")`,
+    type: 'mdxjsEsm',
     data: {
       estree: {
         type: 'Program',
-        body: [
-          {
-            type: 'ExpressionStatement',
-            expression: {
-              type: 'CallExpression',
-              callee: {
-                type: 'Identifier',
-                name: '_resolveComponent',
-              },
-              arguments: [
-                {
-                  type: 'Literal',
-                  value: name,
-                  raw: `"${name}"`,
-                },
-              ],
-              optional: false,
-            },
-          },
-        ],
         sourceType: 'module',
-      },
+        body: components.map(component => ({
+          type: 'ImportDeclaration',
+          specifiers: [
+            {
+              type: 'ImportSpecifier',
+              imported: { type: 'Identifier', name: component.importName! },
+              local: { type: 'Identifier', name: component.name! }
+            },
+          ],
+          source: { type: 'Literal', value: component.path, raw: `'${component.path}'` },
+        })),
+      } as Program,
     },
   }
 }

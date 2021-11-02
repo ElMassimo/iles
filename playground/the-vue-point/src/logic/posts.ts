@@ -1,10 +1,11 @@
-import { h, DefineComponent, FunctionalComponent } from 'vue'
+import { h, DefineComponent, FunctionalComponent, VNode } from 'vue'
 
 export interface Post extends Record<string, any> {
   title: string
   href: string
   date: Date
   content: DefineComponent
+  render: () => VNode
 }
 
 function byDate (a: Post, b: Post) {
@@ -15,8 +16,8 @@ function isArray<T> (val: any): val is T[] {
   return Array.isArray(val)
 }
 
-const ExcerptOnly: FunctionalComponent = (_props, { slots }) => {
-  const mdxDoc = slots.default?.()?.[0]
+const ExcerptOnly = (post: Post) => {
+  const mdxDoc = post.render()
   if (!mdxDoc) return null
 
   const mdElements = mdxDoc.children
@@ -27,8 +28,7 @@ const ExcerptOnly: FunctionalComponent = (_props, { slots }) => {
 }
 
 function withExcerpt (post: Post) {
-  const excerpt: FunctionalComponent = (props, ctx) =>
-    h(post, { components: { wrapper: ExcerptOnly } })
+  const excerpt: FunctionalComponent = () => ExcerptOnly(post)
   return { ...post, excerpt }
 }
 

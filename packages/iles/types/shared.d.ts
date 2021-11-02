@@ -1,5 +1,5 @@
 /* eslint-disable no-use-before-define */
-import type { UserConfig as ViteOptions, ConfigEnv } from 'vite'
+import type { ResolveFn, UserConfig as ViteOptions, ConfigEnv, PluginOption as VitePluginOption } from 'vite'
 import type { GetManualChunk } from 'rollup'
 import type { App, Ref, DefineComponent } from 'vue'
 import type { Options as CritterOptions } from 'critters'
@@ -8,7 +8,6 @@ import type PagesPlugin, { UserOptions as PagesOptions } from 'vite-plugin-pages
 import type ComponentsPlugin from 'unplugin-vue-components/vite'
 import type { Options as ComponentOptions } from 'unplugin-vue-components/types'
 import type VueJsxPlugin from '@vitejs/plugin-vue-jsx'
-import type XdmPlugin, { PluginOptions as XdmOptions } from 'vite-plugin-xdm'
 
 import type { Options as SolidOptions } from 'vite-plugin-solid'
 import type { Options as SvelteOptions } from '@sveltejs/vite-plugin-svelte'
@@ -19,9 +18,12 @@ import type { Router, RouteRecordRaw, RouteMeta, RouterOptions as VueRouterOptio
 import type { HeadClient, HeadObject } from '@vueuse/head'
 export type { OnLoadFn } from '@islands/hydration/dist/vanilla'
 
-export { ViteOptions, ConfigEnv }
+import type { MarkdownPlugin, MarkdownOptions, MarkdownProcessor } from './markdown'
 
+export type { MarkdownPlugin, MarkdownOptions, MarkdownProcessor }
+export type { ViteOptions, ConfigEnv }
 export type { Router, RouteRecordRaw, RouteMeta }
+
 export type RouterOptions = VueRouterOptions & { base?: string }
 
 export interface PageProps extends Record<string, any> {}
@@ -100,14 +102,14 @@ export type LayoutFactory = (name: string | false) => any
 
 export interface NamedPlugins {
   pages: ReturnType<typeof PagesPlugin>
-  markdown: ReturnType<typeof XdmPlugin>
+  markdown: ReturnType<typeof MarkdownPlugin>
   vue: ReturnType<typeof VuePlugin>
   vueJsx: ReturnType<typeof VueJsxPlugin>
   components: ReturnType<typeof ComponentsPlugin>
-  optionalPlugins: PluginOption[]
+  optionalPlugins: VitePluginOption[]
 }
 
-export interface AppPlugins {
+export interface BaseIlesConfig {
   /**
    * Configuration options for Vite.js
    */
@@ -145,13 +147,14 @@ export interface AppPlugins {
    * Configuration options for markdown processing in îles, including remark
    * and rehype plugins.
    */
-  markdown: XdmOptions & FrontmatterOptions
+  markdown: MarkdownOptions
   critters?: CritterOptions | false
 }
 
-export interface Plugin extends Partial<AppPlugins> {
+export interface IlesModule extends Partial<BaseIlesConfig> {
   name: string
   config?: (config: UserConfig, env: ConfigEnv) => UserConfig | null | void | Promise<UserConfig | null | void>
+  configResolved?: (config: AppConfig, env: ConfigEnv) => void | Promise<void>
 }
 
 export type EnhanceAppContext = AppContext
@@ -168,7 +171,8 @@ export type UserSite = typeof import('~/site').default & {
   canonical: string
 }
 
-export type PluginOption = Plugin | false | null | undefined
+export type IlesModuleLike = IlesModule | IlesModule[] | false | null | undefined
+export type IlesModuleOption = IlesModuleLike | Promise<IlesModuleLike> | string | [string, any]
 
 export interface RequiredConfig {
   /**
@@ -223,17 +227,18 @@ export interface RequiredConfig {
   }
 }
 
-export interface UserConfig extends Partial<RequiredConfig>, Partial<Plugin> {
-  plugins?: (PluginOption | PluginOption[])[]
+export interface UserConfig extends Partial<RequiredConfig>, Partial<IlesModule> {
+  modules?: IlesModuleOption[]
 }
 
-export interface AppConfig extends RequiredConfig, AppPlugins {
+export interface AppConfig extends RequiredConfig, BaseIlesConfig {
   base: string
   root: string
   configPath: string
   pages: PagesOptions
-  plugins: Plugin[]
+  modules: IlesModule[]
   namedPlugins: NamedPlugins
+  resolvePath?: ResolveFn
 }
 
 export type AppClientConfig = Pick<AppConfig, 'base' | 'root' | 'debug' | 'ssg' | 'siteUrl' | 'jsx'>

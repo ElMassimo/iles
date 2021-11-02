@@ -1,12 +1,8 @@
 import { init as initESLexer, parse as parseESModules } from 'es-module-lexer'
+import type { ComponentInfo } from 'unplugin-vue-components/types'
 import type { Awaited } from '../shared'
 
-export interface ImportMetadata {
-  name: string
-  path: string
-}
-
-export type ImportsMetadata = Record<string, ImportMetadata>
+export type ImportsMetadata = Record<string, ComponentInfo>
 
 export function parseId (id: string) {
   const index = id.indexOf('?')
@@ -37,8 +33,8 @@ export async function parseImports (code: string) {
     imports.forEach(({ d: isDynamic, n: path, ss: statementStart, s: importPathStart }) => {
       if (isDynamic > -1 || !path) return
       const importFragment = code.substring(statementStart, importPathStart)
-      parseImportVariables(importFragment).forEach(([name, asName]) => {
-        importMap[asName] = { name, path }
+      parseImportVariables(importFragment).forEach(([importName, name]) => {
+        importMap[name] = { importName, name, path }
       })
     })
     return importMap

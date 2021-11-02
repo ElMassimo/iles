@@ -1,10 +1,10 @@
 /// <reference types="vite/client" />
 /// <reference types="vue/ref-macros" />
 
-import type { Header } from '@islands/headers'
+import type { Heading } from '@islands/headings'
 
 declare module 'iles' {
   export interface PageMeta {
-    headers?: Header[]
+    headings?: Heading[]
   }
 }
