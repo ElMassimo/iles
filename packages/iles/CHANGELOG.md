@@ -1,39 +1,6 @@
-# [0.5.0](https://github.com/ElMassimo/iles/compare/v0.4.7-beta.6...v0.5.0) (2021-11-02)
+# [0.5.0](https://github.com/ElMassimo/iles/compare/v0.4.6...v0.5.0) (2021-11-02)
 
-
-
-## [0.4.7-beta.6](https://github.com/ElMassimo/iles/compare/v0.4.7-beta.5...v0.4.7-beta.6) (2021-11-02)
-
-
-
-## [0.4.7-beta.5](https://github.com/ElMassimo/iles/compare/v0.4.7-beta.4...v0.4.7-beta.5) (2021-11-02)
-
-
-
-## [0.4.7-beta.4](https://github.com/ElMassimo/iles/compare/v0.4.7-beta.2...v0.4.7-beta.4) (2021-11-02)
-
-
-
-## [0.4.7-beta.2](https://github.com/ElMassimo/iles/compare/v0.4.7-beta.1...v0.4.7-beta.2) (2021-11-02)
-
-
-### Bug Fixes
-
-* ensure unist-util-visit is loaded correctly ([1709f4a](https://github.com/ElMassimo/iles/commit/1709f4a01273d0889031f1549c4f221fb8410557))
-
-
-
-## [0.4.7-beta.1](https://github.com/ElMassimo/iles/compare/v0.4.7-beta.0...v0.4.7-beta.1) (2021-11-02)
-
-
-### Bug Fixes
-
-* upgrade xdm to avoid 'node:' imports and support node 14 ([49846e2](https://github.com/ElMassimo/iles/commit/49846e23276ab6cf8610a87082df9e2573f4b37c))
-
-
-
-## [0.4.7-beta.0](https://github.com/ElMassimo/iles/compare/v0.4.6...v0.4.7-beta.0) (2021-11-02)
-
+* 🔌 Modules: ESM imports and configResolved 🔌 (#28)
 
 
 ## [0.4.6](https://github.com/ElMassimo/iles/compare/v0.4.5...v0.4.6) (2021-10-28)
