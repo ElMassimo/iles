@@ -144,9 +144,7 @@ async function applyModules (config: AppConfig, configEnv: ConfigEnv) {
     config = mergeConfig(config, moduleConfig)
     if (configFn) {
       const partialConfig = await configFn(config, configEnv)
-      console.log(name, partialConfig)
       if (partialConfig) config = mergeConfig(config, partialConfig as any)
-      console.log({ config })
     }
   }
   chainModuleCallbacks(config, 'pages', ['onRoutesGenerated', 'onClientGenerated'], true)

@@ -30,7 +30,7 @@ An [îles] module that injects a [rehype] plugin to parse headings in
 
 - 🏷 automatically extracts the title from an `<h1>` and sets `frontmatter.title`
 
-- 📖 sets `meta.headings` to enable rendering sidebars and table of contents.
+- 📖 sets `meta.headings` to enable rendering sidebars and table of contents
 
 ### Usage 🚀
 
