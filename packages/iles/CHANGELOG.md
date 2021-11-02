@@ -1,3 +1,12 @@
+## [0.5.1](https://github.com/ElMassimo/iles/compare/v0.5.0...v0.5.1) (2021-11-02)
+
+
+### Bug Fixes
+
+* ensure non-mdx markdown files can be processed ([6a9b941](https://github.com/ElMassimo/iles/commit/6a9b941bc17b59fee058ea7a03bc1482d2f639c2))
+
+
+
 # [0.5.0](https://github.com/ElMassimo/iles/compare/v0.4.6...v0.5.0) (2021-11-02)
 
 * 🔌 Modules: ESM imports and configResolved 🔌 (#28)
