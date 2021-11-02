@@ -1,3 +1,7 @@
+## [0.4.7-beta.6](https://github.com/ElMassimo/iles/compare/v0.4.7-beta.5...v0.4.7-beta.6) (2021-11-02)
+
+
+
 ## [0.4.7-beta.5](https://github.com/ElMassimo/iles/compare/v0.4.7-beta.4...v0.4.7-beta.5) (2021-11-02)
 
 
