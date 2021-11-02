@@ -1,7 +1,7 @@
 import { computed } from 'vue'
 import { usePage } from 'iles'
 
-import type { Heading } from '@islands/heading'
+import type { Heading } from '@islands/headings'
 import type {
   SideBarConfig,
   MultiSideBarConfig,
@@ -28,7 +28,7 @@ export function useSideBar () {
 
     // if it's `auto`, render heading of the current page
     if (sidebar === 'auto')
-      return resolveAutoSidebar(meta.heading, frontmatter.sidebarLevel || 1, frontmatter.sidebarDepth || 1)
+      return resolveAutoSidebar(meta.headings, frontmatter.sidebarLevel || 1, frontmatter.sidebarDepth || 1)
 
     return sidebar
   })
