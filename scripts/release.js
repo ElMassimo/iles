@@ -22,7 +22,7 @@ const isDryRun = args.dry
 /**
  * @type {boolean}
  */
-const skipBuild = args.skipBuild
+const skipBuild = args.skipBuild || name === 'modules'
 
 /**
  * @type {import('semver').ReleaseType[]}
