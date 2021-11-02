@@ -23,8 +23,8 @@ export default function IlesIcons (options?: ModuleOptions): IlesModule {
     components: {
       resolvers: [
         iconsResolver({
-          componentPrefix: '',
-          customCollections: ['icon'],
+          prefix: 'icon',
+          customCollections: ['app'],
           ...resolver,
         }),
       ],
@@ -34,7 +34,7 @@ export default function IlesIcons (options?: ModuleOptions): IlesModule {
         icons({
           autoInstall: true,
           customCollections: {
-            icon: FileSystemIconLoader('./icons'),
+            app: FileSystemIconLoader('./icons'),
           },
           ...iconsOptions,
         }),

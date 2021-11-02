@@ -24,11 +24,11 @@
 
 An [îles] module to add and configure [unplugin-icons]:
 
-- ✨ `autoInstall` enabled by default
+- ✨ `autoInstall` enabled by default, and `icon` prefix to prevent conflicts
 
 - 🧱 configures the `unplugin-vue-components` resolver automatically
 
-- 🎨 files in the `/icons` dir available as a custom `icon` collection
+- 🎨 files in the `/icons` dir available as the `app` collection, `<IconApp...`
 
 
 ### Usage 🚀

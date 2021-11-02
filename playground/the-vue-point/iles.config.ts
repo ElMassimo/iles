@@ -2,7 +2,6 @@ import { defineConfig } from 'iles'
 
 import iconsResolver from 'unplugin-icons/resolver'
 
-import icons from 'unplugin-icons/vite'
 import windicss from 'vite-plugin-windicss'
 import inspect from 'vite-plugin-inspect'
 
@@ -12,10 +11,8 @@ export default defineConfig({
   svelte: true,
   modules: [
     '@islands/headings',
+    '@islands/icons',
   ],
-  components: {
-    resolvers: [iconsResolver({ componentPrefix: '' })],
-  },
   markdown: {
     rehypePlugins: [
       ['@mapbox/rehype-prism', { alias: { markup: ['html', 'vue'] } }],
@@ -29,7 +26,6 @@ export default defineConfig({
   },
   vite: {
     plugins: [
-      icons({ autoInstall: true }),
       windicss(),
       Boolean(process.env.DEBUG) && inspect(),
     ],

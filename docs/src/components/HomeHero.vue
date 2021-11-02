@@ -13,7 +13,7 @@
               :alt="$frontmatter.heroAlt"
             >
           </picture>
-          <IconText class="grid-item banner-text text-white fill-current" alt="îles"/>
+          <IconAppText class="grid-item banner-text text-white fill-current" alt="îles"/>
         </figure>
 
         <div class="text-center">
