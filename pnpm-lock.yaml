@@ -207,7 +207,7 @@ importers:
       vite-plugin-solid: ^2.1.1
       vue: ^3.2.21
       vue-router: ^4.0.12
-      xdm: npm:@islands/xdm@3.2.2
+      xdm: npm:@islands/xdm@^3.2.3
     dependencies:
       '@islands/frontmatter': link:../frontmatter
       '@islands/hydration': link:../hydration
@@ -232,7 +232,7 @@ importers:
       vite-plugin-pages: /@mussi/vite-plugin-pages/0.18.3-beta.2_vite@2.6.13+vue@3.2.21
       vue: 3.2.21
       vue-router: 4.0.12_vue@3.2.21
-      xdm: /@islands/xdm/3.2.2
+      xdm: /@islands/xdm/3.2.3
     devDependencies:
       '@antfu/install-pkg': 0.1.0
       '@islands/headings': link:../headings
@@ -261,16 +261,6 @@ importers:
       vfile: 5.2.0
       vite-plugin-pwa: 0.11.2_vite@2.6.13
       vite-plugin-solid: 2.1.1
-
-  packages/modules:
-    specifiers:
-      '@islands/frontmatter': workspace:*
-      '@islands/headings': workspace:*
-      '@islands/icons': workspace:*
-    devDependencies:
-      '@islands/frontmatter': link:../frontmatter
-      '@islands/headings': link:../headings
-      '@islands/icons': link:../icons
 
   packages/prerender:
     specifiers:
@@ -625,7 +615,7 @@ packages:
       '@babel/compat-data': 7.15.0
       '@babel/core': 7.15.5
       '@babel/helper-validator-option': 7.14.5
-      browserslist: 4.17.5
+      browserslist: 4.17.6
       semver: 6.3.0
     dev: true
 
@@ -2146,6 +2136,37 @@ packages:
       deasync: 0.1.23
     transitivePeerDependencies:
       - supports-color
+    dev: true
+
+  /@islands/xdm/3.2.3:
+    resolution: {integrity: sha512-BvPrPc7cKV/rIqqoD7n0S5TTMBSKGRK+x/vbTWOmVzdGbxBE1AvxJoECsisJ0/ZXZwWZ/hSXGJkjMvaDG2BAIg==}
+    dependencies:
+      '@rollup/pluginutils': 4.1.1
+      '@types/estree-jsx': 0.0.1
+      '@types/mdx': 2.0.1
+      astring: 1.7.5
+      estree-util-build-jsx: 2.0.0
+      estree-util-is-identifier-name: 2.0.0
+      estree-walker: 3.0.0
+      got: 11.8.2
+      hast-util-to-estree: 2.0.2
+      markdown-extensions: 1.1.1
+      mdast-util-mdx: 1.1.0
+      micromark-extension-mdxjs: 1.0.0
+      periscopic: 3.0.4
+      remark-parse: 10.0.0
+      remark-rehype: 10.0.0
+      source-map: 0.7.3
+      unified: 10.1.0
+      unist-util-position-from-estree: 1.1.1
+      unist-util-stringify-position: 3.0.0
+      unist-util-visit: 4.1.0
+      vfile: 5.2.0
+    optionalDependencies:
+      deasync: 0.1.23
+    transitivePeerDependencies:
+      - supports-color
+    dev: false
 
   /@jest/types/27.1.0:
     resolution: {integrity: sha512-pRP5cLIzN7I7Vp6mHKRSaZD7YpBTK7hawx5si8trMKqk4+WOdK8NEKOTO2G8PKWD1HbKMVckVB6/XHh/olhf2g==}
@@ -3623,18 +3644,6 @@ packages:
       node-releases: 1.1.75
     dev: true
 
-  /browserslist/4.17.5:
-    resolution: {integrity: sha512-I3ekeB92mmpctWBoLXe0d5wPS2cBuRvvW0JyyJHMrk9/HmP2ZjrTboNAZ8iuGqaEIlKguljbQY32OkOJIRrgoA==}
-    engines: {node: ^6 || ^7 || ^8 || ^9 || ^10 || ^11 || ^12 || >=13.7}
-    hasBin: true
-    dependencies:
-      caniuse-lite: 1.0.30001271
-      electron-to-chromium: 1.3.879
-      escalade: 3.1.1
-      node-releases: 2.0.1
-      picocolors: 1.0.0
-    dev: true
-
   /browserslist/4.17.6:
     resolution: {integrity: sha512-uPgz3vyRTlEiCv4ee9KlsKgo2V6qPk7Jsn0KAn2OBqbqKo3iNcPEC1Ti6J4dwnz+aIRfEEEuOzC9IBk8tXUomw==}
     engines: {node: ^6 || ^7 || ^8 || ^9 || ^10 || ^11 || ^12 || >=13.7}
@@ -3738,10 +3747,6 @@ packages:
 
   /caniuse-lite/1.0.30001255:
     resolution: {integrity: sha512-F+A3N9jTZL882f/fg/WWVnKSu6IOo3ueLz4zwaOPbPYHNmM/ZaDUyzyJwS1mZhX7Ex5jqTyW599Gdelh5PDYLQ==}
-    dev: true
-
-  /caniuse-lite/1.0.30001271:
-    resolution: {integrity: sha512-BBruZFWmt3HFdVPS8kceTBIguKxu4f99n5JNp06OlPD/luoAMIaIK5ieV5YjnBLH3Nysai9sxj9rpJj4ZisXOA==}
     dev: true
 
   /caniuse-lite/1.0.30001274:
@@ -4533,10 +4538,6 @@ packages:
 
   /electron-to-chromium/1.3.835:
     resolution: {integrity: sha512-rHQszGg2KLMqOWPNTpwCnlp7Kb85haJa8j089DJCreZueykoSN/in+EMlay3SSDMNKR4VGPvfskxofHV18xVJg==}
-    dev: true
-
-  /electron-to-chromium/1.3.879:
-    resolution: {integrity: sha512-zJo+D9GwbJvM31IdFmwcGvychhk4KKbKYo2GWlsn+C/dxz2NwmbhGJjWwTfFSF2+eFH7VvfA8MCZ8SOqTrlnpw==}
     dev: true
 
   /electron-to-chromium/1.3.886:

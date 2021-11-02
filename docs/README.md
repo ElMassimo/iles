@@ -22,6 +22,7 @@
 <hr/>
 
 [docs]: https://iles-docs.netlify.app
+[îles]: https://iles-docs.netlify.app
 
 # Documentation 📖
 
