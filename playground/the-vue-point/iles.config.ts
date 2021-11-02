@@ -1,7 +1,5 @@
 import { defineConfig } from 'iles'
 
-import iconsResolver from 'unplugin-icons/resolver'
-
 import windicss from 'vite-plugin-windicss'
 import inspect from 'vite-plugin-inspect'
 

@@ -13,10 +13,10 @@ import type { ComponentResolver } from 'unplugin-vue-components/types'
 import type { Frontmatter } from '@islands/frontmatter'
 import type { UserConfig } from 'iles'
 
-import { importModule } from '@islands/modules'
 import type { AppConfig, BaseIlesConfig, ConfigEnv, ViteOptions, IlesModule, IlesModuleLike, IlesModuleOption, NamedPlugins } from './shared'
 
 import { camelCase, resolvePlugin, uncapitalize, isString, isStringPlugin, compact } from './plugin/utils'
+import { importESModule } from './modules'
 import { resolveAliases, DIST_CLIENT_PATH, HYDRATION_DIST_PATH } from './alias'
 import remarkWrapIslands from './plugin/remarkWrapIslands'
 import { markdown } from './plugin/markdown'
@@ -164,7 +164,7 @@ async function resolveModule (mod: IlesModuleOption): Promise<IlesModuleLike> {
 }
 
 async function createIlesModule (pkgName: string, ...options: any[]): Promise<IlesModule> {
-  const fn = await importModule(pkgName)
+  const fn = await importESModule(pkgName)
   return fn(...options)
 }
 

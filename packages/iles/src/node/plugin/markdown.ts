@@ -1,9 +1,9 @@
 import { extname } from 'path'
 import type { Pluggable } from 'unified'
 import type { TransformResult } from 'vite'
-import { importModule } from '@islands/modules'
 import type { MarkdownPlugin, MarkdownOptions, MarkdownProcessor } from '../shared'
 import { isString, isStringPlugin, compact } from './utils'
+import { importESModule } from '../modules'
 
 type PluginLike = null | undefined | false | Pluggable
 type PluginOption = PluginLike | Promise<PluginLike> | string | [string, any]
@@ -14,7 +14,7 @@ export const markdown: MarkdownPlugin = function IlesMarkdown (options: Markdown
   let markdownProcessor: MarkdownProcessor
 
   async function createXDM (sourcemap: string | boolean) {
-    const { createFormatAwareProcessors } = await importModule('xdm')
+    const { createFormatAwareProcessors } = await importESModule('xdm')
     markdownProcessor = createFormatAwareProcessors({
       remarkPlugins: await resolvePlugins(remarkPlugins),
       rehypePlugins: await resolvePlugins(rehypePlugins),
@@ -56,5 +56,5 @@ async function resolvePlugin (plugin: PluginOption): Promise<PluginLike> {
 }
 
 async function importPlugin (pkgName: string, ...options: any[]): Promise<Pluggable> {
-  return [await importModule(pkgName), ...options]
+  return [await importESModule(pkgName), ...options]
 }

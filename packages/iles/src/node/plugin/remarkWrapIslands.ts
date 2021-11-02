@@ -3,8 +3,8 @@ import type { ComponentInfo } from 'unplugin-vue-components/types'
 import type { MDXJsxFlowElement, MDXJsxTextElement, MDXJsxAttribute, MDXJsxExpressionAttribute, MDXJsxAttributeValueExpression, Program } from 'mdast-util-mdx-jsx'
 import type { MDXJSEsm } from 'mdast-util-mdxjs-esm'
 import type { ImportDeclaration } from 'estree'
-import { importModule } from '@islands/modules'
 import { AppConfig } from '../shared'
+import { importESModule } from '../modules'
 import { resolveComponent } from './wrap'
 import type { ImportsMetadata } from './parse'
 import { isString } from './utils'
@@ -14,12 +14,11 @@ export default (options: { config: AppConfig }) => async (ast: any, file: any) =
   let imports: ImportsMetadata
   let componentPromises: (Promise<ComponentInfo>)[] = []
 
-  const unistUtilVisit = await importModule('unist-util-visit')
+  const unistUtilVisit = await importESModule('unist-util-visit')
   const visit: typeof import('unist-util-visit').visit = unistUtilVisit.visit || unistUtilVisit
   const SKIP = unistUtilVisit.SKIP
 
   visit(ast, (node: Node) => {
-    if ((node as any).name) console.log((node as any).name)
     if (isJsxElement(node) && node.attributes.some(hasClientDirective)) {
       wrapWithIsland(node, resolveComponentImport)
       return SKIP

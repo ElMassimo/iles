@@ -10,6 +10,7 @@
   "files": [
     "bin",
     "dist",
+    "lib",
     "types"
   ],
   "scripts": {
@@ -42,7 +43,6 @@
   "dependencies": {
     "@islands/frontmatter": "workspace:^0.2.0",
     "@islands/hydration": "workspace:^0.3.0",
-    "@islands/modules": "workspace:^0.1.0",
     "@islands/prerender": "workspace:^0.3.0",
     "@nuxt/devalue": "^2.0.0",
     "@rollup/plugin-virtual": "^2.0.3",
