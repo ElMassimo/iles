@@ -165,8 +165,8 @@ async function resolveModule (mod: IlesModuleOption): Promise<IlesModuleLike> {
 }
 
 async function createIlesModule (pkgName: string, ...options: any[]): Promise<IlesModule> {
-  const pkgPath = await tryInstallModule(pkgName)
-  const fn = await importModule(pkgPath)
+  await tryInstallModule(pkgName)
+  const fn = await importModule(pkgName)
   return fn(...options)
 }
 
