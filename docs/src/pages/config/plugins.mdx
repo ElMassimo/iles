@@ -24,8 +24,59 @@
 
 # Modules and Plugins 🔌
 
-<Iles/> has an extensible plugin system, which is used internally to provide
+<Iles/> has an extensible module system, which is used internally to provide
 features such as `frontmatter` and `meta` information for [pages].
+
+## Adding a Module
+
+Use the <kbd>modules</kbd> option in [`iles.config.ts`][config] to add modules to your application.
+
+```ts
+// iles.config.ts
+import { defineConfig } from 'iles'
+
+import icons from '@islands/icons'
+
+export default defineConfig({
+  modules: [
+    // Automatically imported and instantiated
+    '@islands/headings',
+
+    // Use an array to pass options
+    ['@islands/icons', { autoInstall: false }] ,
+
+    // Manually imported, provides better type-inference
+    icons({ autoInstall: false }),
+
+    // A one-off module that won't be published
+    {
+      name: 'custom-module',
+      configResolved (config) {
+        console.log({ config })
+      },
+    },
+  ],
+})
+```
+
+## Authoring a Module
+
+Modules in <Iles/> have access to the [same configuration options][config] as in
+`iles.config.ts`, and can make use of the `config` and `configResolved` hooks 
+that work similarly to [those in Vite](https://vitejs.dev/guide/api-plugin.html#config).
+
+You can start your own module package by running:
+
+```bash
+pnpm init iles-module@next # or npm or yarn
+```
+
+Module packages should be `"type": "module"` and have a default ESM export,
+which is used to instantiate the module when the user provides it as a string.
+
+<Tip title="No Need for Packages">
+  If you don't intend to publish it you can always import a local file or provide it inline instead.
+</Tip>
 
 ## Official Modules <Iles heading/>
 
