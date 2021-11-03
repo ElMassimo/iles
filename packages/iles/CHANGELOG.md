@@ -1,3 +1,12 @@
+## [0.5.3-beta.1](https://github.com/ElMassimo/iles/compare/v0.5.3-beta.0...v0.5.3-beta.1) (2021-11-03)
+
+
+### Bug Fixes
+
+* avoid directory import of esm modules ([a82fc97](https://github.com/ElMassimo/iles/commit/a82fc971f2631ebfb2bae0405ff08515e40eafa9))
+
+
+
 ## [0.5.3-beta.0](https://github.com/ElMassimo/iles/compare/v0.5.2...v0.5.3-beta.0) (2021-11-03)
 
 
