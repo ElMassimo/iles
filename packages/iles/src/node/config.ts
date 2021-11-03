@@ -1,7 +1,7 @@
 /* eslint-disable no-restricted-syntax */
 import fs from 'fs'
 import { join, relative, resolve } from 'pathe'
-import { yellow } from 'nanocolors'
+import pc from 'picocolors'
 import creatDebugger from 'debug'
 import { loadConfigFromFile, mergeConfig as mergeViteConfig } from 'vite'
 import pages from 'vite-plugin-pages'
@@ -90,7 +90,7 @@ async function loadUserConfigFile (root: string, configEnv: ConfigEnv): Promise<
       = await loadConfigFromFile(configEnv, 'iles.config.ts', root) || {}
     if (path && config) {
       (config! as AppConfig).configPath = path
-      debug(`loaded config at ${yellow(path)}`)
+      debug(`loaded config at ${pc.yellow(path)}`)
     }
     else {
       debug('no iles.config.ts file found.')

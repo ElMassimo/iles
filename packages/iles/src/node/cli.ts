@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
-import { red, cyan, yellow, green } from 'nanocolors'
+import pc from 'picocolors'
 import minimist from 'minimist'
 const argv: any = minimist(process.argv.slice(2))
 
@@ -7,8 +7,8 @@ const command = argv._[0]
 const root = argv._[command ? 1 : 0]
 if (root) argv.root = root
 
-const getVersion = () => cyan(`iles v${require('../../package.json').version}`)
-  + yellow(` vite v${require('vite/package.json').version}`)
+const getVersion = () => pc.cyan(`iles v${require('../../package.json').version}`)
+  + pc.yellow(` vite v${require('vite/package.json').version}`)
 
 const printVersion = () => console.info(getVersion())
 
@@ -22,11 +22,11 @@ async function executeCommand (command: string) {
       .then(async ({ server }) => {
         await server.listen()
         const { config: { logger } } = server
-        logger.info(getVersion() + green(' dev server running at:\n'), { clear: !logger.hasWarned })
+        logger.info(getVersion() + pc.green(' dev server running at:\n'), { clear: !logger.hasWarned })
         server.printUrls()
       })
       .catch((err: any) => {
-        console.error(red('error starting server:\n'), err)
+        console.error(pc.red('error starting server:\n'), err)
         process.exit(1)
       })
   }
@@ -34,7 +34,7 @@ async function executeCommand (command: string) {
     printVersion()
     const { build } = await import('./build/build')
     build(root).catch((err: any) => {
-      console.error(red('build error:\n'), err)
+      console.error(pc.red('build error:\n'), err)
       process.exit(1)
     })
   }
@@ -42,7 +42,7 @@ async function executeCommand (command: string) {
     printVersion()
   }
   else {
-    console.error(red(`unknown command "${command}".`))
+    console.error(pc.red(`unknown command "${command}".`))
     process.exit(1)
   }
 }

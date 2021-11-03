@@ -1,7 +1,7 @@
 /* eslint-disable no-restricted-syntax */
 import { promises as fs } from 'fs'
 import { basename, resolve, relative } from 'pathe'
-import { green } from 'nanocolors'
+import pc from 'picocolors'
 import type { PluginOption, ResolvedConfig, ViteDevServer } from 'vite'
 import { transformWithEsbuild } from 'vite'
 
@@ -286,7 +286,7 @@ async function restartOnConfigChanges (config: AppConfig, server: ViteDevServer)
   const restartIfConfigChanged = async (path: string) => {
     if (path === config.configPath) {
       server.config.logger.info(
-        green(
+        pc.green(
           `${relative(process.cwd(), config.configPath)} changed, restarting server...`,
         ),
         { clear: true, timestamp: true },

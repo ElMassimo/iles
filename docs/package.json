@@ -11,7 +11,7 @@
     "unlink": "pnpm unlink ../packages/iles"
   },
   "engines": {
-    "node": ">=16"
+    "node": ">=14"
   },
   "devDependencies": {
     "@iconify-json/bx": "^1.0.1",
@@ -22,7 +22,7 @@
     "@preact/preset-vite": "^2.1.5",
     "@vueuse/core": "^6.5.3",
     "autoprefixer": "^10.3.5",
-    "iles": "^0.5.3-beta.1",
+    "iles": "^0.5.3",
     "postcss-nesting": "^8.0.1",
     "preact-render-to-string": "^5.1.19",
     "vite": "^2.6.13",
