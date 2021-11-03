@@ -1,3 +1,12 @@
+## [0.5.2](https://github.com/ElMassimo/iles/compare/v0.5.1...v0.5.2) (2021-11-03)
+
+
+### Bug Fixes
+
+* missing types for markdown config option ([e03cde2](https://github.com/ElMassimo/iles/commit/e03cde25eefd86d20c9ee73e080a30013620887f))
+
+
+
 ## [0.5.1](https://github.com/ElMassimo/iles/compare/v0.5.0...v0.5.1) (2021-11-02)
 
 
