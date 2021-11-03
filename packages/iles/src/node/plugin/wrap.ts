@@ -40,6 +40,7 @@ export async function wrapIslandsInSFC (config: AppConfig, code: string, filenam
   }
 
   const s = new MagicString(code)
+  const components: ComponentsApi = config.namedPlugins.components.api
 
   if (scriptClient) await injectClientScript(template.ast, s, filename, scriptClientIndex, scriptClient)
 
@@ -49,20 +50,6 @@ export async function wrapIslandsInSFC (config: AppConfig, code: string, filenam
   let componentCounter = 0
   let injectionOffset = scriptSetup?.loc?.start?.offset
 
-  const resolveComponentImport = async ({ tag, props }: ElementNode): Promise<ComponentInfo> => {
-    debug.detect(`<${tag} ${props.map(prop => prop.loc.source).join(' ')}>`)
-    const meta = imports[tag]
-    if (meta) return meta
-
-    if (injectionOffset === undefined) {
-      const opening = `<script setup lang="${script?.attrs?.lang || 'ts'}">`
-      s.prepend(opening)
-      injectionOffset = 0
-    }
-
-    return await injectComponentImport(config, s, tag, filename, componentCounter++, injectionOffset)
-  }
-
   await visitSFCNode(template.ast, s, resolveComponentImport)
 
   // Close script setup tag if any component was injected.
@@ -70,15 +57,35 @@ export async function wrapIslandsInSFC (config: AppConfig, code: string, filenam
     s.appendRight(0, '\n</script>\n')
 
   return { code: s.toString(), map: s.generateMap({ hires: true }) }
+
+  async function resolveComponentImport (strategy: string, tagName: string): Promise<ComponentInfo> {
+    debug.detect(`<${tagName} ${strategy}>`)
+    if (imports[tagName]) return imports[tagName]
+    const info = await resolveComponent(components, tagName, filename, componentCounter++)
+    if (strategy !== 'client:only') injectComponentImport(info)
+    return info
+  }
+
+  function injectComponentImport (info: ComponentInfo) {
+    if (injectionOffset === undefined) {
+      const opening = `<script setup lang="${script?.attrs?.lang || 'ts'}">`
+      s.prepend(opening)
+      injectionOffset = 0
+    }
+    s.appendRight(injectionOffset, `\n${components.stringifyImport(info)}`)
+  }
 }
 
-async function visitSFCNode (node: ElementNode | TemplateChildNode, s: MagicString, resolveComponentImport: (n: ElementNode) => Promise<ComponentInfo>) {
-  if ('props' in node && node.props.some(prop => prop.name.startsWith('client:'))) {
+async function visitSFCNode (node: ElementNode | TemplateChildNode, s: MagicString, resolveComponentImport: (strategy: string, tag: string) => Promise<ComponentInfo>) {
+  const strategy = 'props' in node
+    && node.props.find(prop => prop.name.startsWith('client:'))?.name
+
+  if (strategy) {
     const { tag, loc: { start, end } } = node
 
-    const importMeta = await resolveComponentImport(node)
+    const importMeta = await resolveComponentImport(strategy, tag)
     const componentProps = `
-      :component="${importMeta.name}"
+      :component="${strategy === 'client:only' ? null : importMeta.name}"
       componentName="${tag}"
       importName="${importMeta.importName}"
       importPath="${importMeta.path}"
@@ -92,6 +99,7 @@ async function visitSFCNode (node: ElementNode | TemplateChildNode, s: MagicStri
     if (!node.isSelfClosing)
       s.overwrite(end.offset - 1 - tag.length, end.offset - 1, 'Island')
   }
+
   if ('children' in node) {
     for (const child of node.children)
       await visitSFCNode(child as any, s, resolveComponentImport)
@@ -102,13 +110,6 @@ export async function resolveComponent (components: ComponentsApi, tag: string, 
   const info = await components.findComponent(tag, filename)
   if (!info) throw new Error(`Could not resolve ${tag} in ${filename}. Make sure to import it explicitly, or add a component resolver.`)
   return { importName: 'default', ...info, name: `__ile_components_${counter}` }
-}
-
-async function injectComponentImport (config: AppConfig, s: MagicString, tag: string, filename: string, counter: number, injectionOffset: number) {
-  const components: ComponentsApi = config.namedPlugins.components.api
-  const info = await resolveComponent(components, tag, filename, counter)
-  s.appendRight(injectionOffset, `\n${components.stringifyImport(info)}`)
-  return info
 }
 
 async function injectClientScript (node: ElementNode, s: MagicString, filename: string, index: number, block: SFCBlock) {

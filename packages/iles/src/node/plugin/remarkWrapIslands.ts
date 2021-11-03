@@ -7,20 +7,22 @@ import { importModule } from 'lib/modules'
 import { AppConfig } from '../shared'
 import { resolveComponent } from './wrap'
 import type { ImportsMetadata } from './parse'
-import { isString } from './utils'
+import { debug, isString } from './utils'
 
 export default (options: { config: AppConfig }) => async (ast: any, file: any) => {
   let components = options.config.namedPlugins.components.api
   let imports: ImportsMetadata
   let componentPromises: (Promise<ComponentInfo>)[] = []
+  let componentCounter = 0
 
   const unistUtilVisit = await importModule('unist-util-visit')
   const visit: typeof import('unist-util-visit').visit = unistUtilVisit.visit || unistUtilVisit
   const SKIP = unistUtilVisit.SKIP
 
   visit(ast, (node: Node) => {
-    if (isJsxElement(node) && node.attributes.some(hasClientDirective)) {
-      wrapWithIsland(node, resolveComponentImport)
+    const strategy = isJsxElement(node) && node.attributes.find(isClientDirective)?.name
+    if (strategy) {
+      wrapWithIsland(strategy, node, resolveComponentImport)
       return SKIP
     }
   })
@@ -29,11 +31,12 @@ export default (options: { config: AppConfig }) => async (ast: any, file: any) =
   if (componentsToImport.length > 0)
     ast.children.unshift(defineImports(componentsToImport))
 
-  async function resolveComponentImport (name: string) {
+  async function resolveComponentImport (strategy: string, tagName: string) {
+    debug.detect(`<${tagName} ${strategy}>`)
     if (!imports) imports = extractImports(ast.children.filter((node: Node) => node.type === 'mdxjsEsm'))
-    if (imports[name]) return imports[name]
-    const info = resolveComponent(components, name, file.path, componentPromises.length)
-    componentPromises.push(info)
+    if (imports[tagName]) return imports[tagName]
+    const info = resolveComponent(components, tagName, file.path, componentCounter++)
+    if (strategy !== 'client:only') componentPromises.push(info)
     return await info
   }
 }
@@ -42,7 +45,7 @@ function isJsxElement (node: Node): node is MDXJsxFlowElement | MDXJsxTextElemen
   return node.type === 'mdxJsxFlowElement' || node.type === 'mdxJsxTextElement'
 }
 
-function hasClientDirective (attr: MDXJsxAttribute | MDXJsxExpressionAttribute) {
+function isClientDirective (attr: MDXJsxAttribute | MDXJsxExpressionAttribute): attr is MDXJsxAttribute {
   return 'name' in attr && attr.name.startsWith('client:')
 }
 
@@ -52,17 +55,19 @@ function isImport (statement: any): statement is ImportDeclaration {
 
 // Internal: Replaces the JSX element with an Island, and sets an attribute to
 // enable future resolution.
-async function wrapWithIsland (node: MDXJsxFlowElement | MDXJsxTextElement, resolveComponentImport: (name: string) => Promise<ComponentInfo>) {
-  const { name } = node
-  if (!name) return
+async function wrapWithIsland (strategy: string, node: MDXJsxFlowElement | MDXJsxTextElement, resolveComponentImport: (strategy: string, name: string) => Promise<ComponentInfo>) {
+  const tagName = node.name
+  if (!tagName) return
 
   node.name = 'Island'
 
-  const importMeta = await resolveComponentImport(name)
+  const importMeta = await resolveComponentImport(strategy, tagName)
 
   node.attributes.unshift(...jsxAttributes({
-    component: identifierExpression(importMeta.name!),
-    componentName: name,
+    component: jsxExpression(strategy === 'client:only'
+      ? { type: 'Literal', value: null, raw: 'null' }
+      : { type: 'Identifier', name: importMeta.name! }),
+    componentName: tagName,
     importName: importMeta.importName,
     importPath: importMeta.path,
   }))
@@ -91,20 +96,15 @@ function importedName (specifier: ImportDeclaration['specifiers'][number]) {
   }
 }
 
-function identifierExpression (name: string): MDXJsxAttributeValueExpression {
+function jsxExpression (expression: any): MDXJsxAttributeValueExpression {
   return {
     type: 'mdxJsxAttributeValueExpression',
-    value: name,
+    value: expression.name || expression.raw,
     data: {
       estree: {
         type: 'Program',
         sourceType: 'module',
-        body: [
-          {
-            type: 'ExpressionStatement',
-            expression: { type: 'Identifier', name },
-          },
-        ],
+        body: [{ type: 'ExpressionStatement', expression }],
       },
     },
   }

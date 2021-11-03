@@ -19,7 +19,7 @@ export default defineComponent({
   name: 'Island',
   inheritAttrs: false,
   props: {
-    component: { type: [Object, Function] as PropType<DefineComponent>, required: true },
+    component: { type: [Object, Function, null] as PropType<DefineComponent>, required: true },
     componentName: { type: String, required: true },
     importName: { type: String, required: true },
     importPath: { type: String, required: true },
