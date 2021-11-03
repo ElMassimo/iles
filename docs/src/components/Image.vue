@@ -2,8 +2,8 @@
 defineProps({
   caption: { type: String, required: true },
   src: { type: String, required: true },
-  narrow: { type: Boolean, defalt: false },
-  wide: { type: Boolean, defalt: false },
+  narrow: { type: Boolean, default: false },
+  wide: { type: Boolean, default: false },
 })
 </script>
 
