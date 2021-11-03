@@ -1,19 +1,16 @@
-## [0.5.3-beta.1](https://github.com/ElMassimo/iles/compare/v0.5.3-beta.0...v0.5.3-beta.1) (2021-11-03)
+## [0.5.3](https://github.com/ElMassimo/iles/compare/v0.5.3-beta.1...v0.5.3) (2021-11-03)
 
 
 ### Bug Fixes
 
-* avoid directory import of esm modules ([a82fc97](https://github.com/ElMassimo/iles/commit/a82fc971f2631ebfb2bae0405ff08515e40eafa9))
+* ensure client:only components are not imported in SSR ([241fb95](https://github.com/ElMassimo/iles/commit/241fb956cfeb81ddad168376d4e05ad7631ddd5f))
+* rely on the error code to detect missing packages ([9077c84](https://github.com/ElMassimo/iles/commit/9077c84acf961d774a67ee35987534daf41eebc6))
 
-
-
-## [0.5.3-beta.0](https://github.com/ElMassimo/iles/compare/v0.5.2...v0.5.3-beta.0) (2021-11-03)
 
 
 ### Features
 
 * auto-install iles modules. improve vite plugins auto-install ([56cd478](https://github.com/ElMassimo/iles/commit/56cd4783b56e0169421b5cbc148189a6136d1b10))
-
 
 
 ## [0.5.2](https://github.com/ElMassimo/iles/compare/v0.5.1...v0.5.2) (2021-11-03)
