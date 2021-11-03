@@ -1,4 +1,4 @@
-import type { CompileOptions } from 'xdm/rollup'
+import type { CompileOptions } from 'xdm/lib/integration/rollup.js'
 import type { Plugin } from 'vite'
 import type { FrontmatterOptions } from '@islands/frontmatter'
 
