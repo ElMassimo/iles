@@ -40,14 +40,14 @@ importers:
       '@docsearch/css': ^3.0.0-alpha.41
       '@iconify-json/bx': ^1.0.1
       '@iconify-json/heroicons-outline': ^1.0.1
-      '@islands/headings': ^0.1.0
-      '@islands/icons': ^0.1.0
+      '@islands/headings': ^0.1.1
+      '@islands/icons': ^0.1.1
       '@mapbox/rehype-prism': ^0.8.0
       '@mussi/docsearch': ^3.0.0-alpha.41
       '@preact/preset-vite': ^2.1.5
       '@vueuse/core': ^6.5.3
       autoprefixer: ^10.3.5
-      iles: ^0.5.0
+      iles: ^0.5.2
       postcss-nesting: ^8.0.1
       preact: ^10.5.15
       preact-render-to-string: ^5.1.19
@@ -64,13 +64,13 @@ importers:
     devDependencies:
       '@iconify-json/bx': 1.0.1
       '@iconify-json/heroicons-outline': 1.0.2
-      '@islands/headings': 0.1.0
-      '@islands/icons': 0.1.0_vite@2.6.13
+      '@islands/headings': 0.1.1
+      '@islands/icons': 0.1.1_vite@2.6.13
       '@mapbox/rehype-prism': 0.8.0
       '@preact/preset-vite': 2.1.5_preact@10.5.15+vite@2.6.13
       '@vueuse/core': 6.7.4
       autoprefixer: 10.4.0
-      iles: 0.5.0
+      iles: 0.5.2
       postcss-nesting: 8.0.1
       preact-render-to-string: 5.1.19_preact@10.5.15
       vite: 2.6.13
@@ -288,7 +288,6 @@ importers:
   playground/the-vue-point:
     specifiers:
       '@iconify-json/carbon': ^1.0.7
-      '@islands/headings': workspace:*
       '@islands/icons': workspace:*
       '@mapbox/rehype-prism': ^0.8.0
       feed: ^4.2.1
@@ -298,7 +297,6 @@ importers:
       vite-plugin-windicss: ^1.4.1
     devDependencies:
       '@iconify-json/carbon': 1.0.7
-      '@islands/headings': link:../../packages/headings
       '@islands/icons': link:../../packages/icons
       '@mapbox/rehype-prism': 0.8.0
       feed: 4.2.2
@@ -2067,8 +2065,8 @@ packages:
       micromark-extension-frontmatter: 1.0.0
     dev: true
 
-  /@islands/headings/0.1.0:
-    resolution: {integrity: sha512-9CQNEF82dgJwMPVZ+F8mr3nTF9Y/keEMhDBrLZmzXHIk/GyO/AxkQJ8kSPHljdFY7N19WfVrWFH+yZGd9mVyNg==}
+  /@islands/headings/0.1.1:
+    resolution: {integrity: sha512-sDMDQD6b9d48psagYBt5MbWm0wonJ4t7BJV/hzln45Xg+h4RxBUT9d/R66UaAmHiPx5b/Q+4c3VvXq9HYciMvg==}
     dependencies:
       estree-util-value-to-estree: 1.3.0
       hast-util-heading-rank: 2.1.0
@@ -2084,8 +2082,8 @@ packages:
       vue: 3.2.21
     dev: true
 
-  /@islands/icons/0.1.0_vite@2.6.13:
-    resolution: {integrity: sha512-T0y2JD7xHvVSNu/bt+k7ncG2aPQMc8EvD5taR5hOmSw7XrEWm0wGBvv785212v/v4jX8guECMBE1D4apFPnNtw==}
+  /@islands/icons/0.1.1_vite@2.6.13:
+    resolution: {integrity: sha512-iDGRyO+YiqWKeOEAFmiq//aQE0kcgrl6GO42BgVCTXnNMIR7Dlvx0K8WcadxRb9ouhzNFvKZtysbcOuVOPGwbQ==}
     dependencies:
       unplugin-icons: 0.12.17_vite@2.6.13
     transitivePeerDependencies:
@@ -2106,36 +2104,6 @@ packages:
       '@islands/hydration': 0.3.2_vue@3.2.21
     transitivePeerDependencies:
       - vue
-    dev: true
-
-  /@islands/xdm/3.2.2:
-    resolution: {integrity: sha512-CWwC+irz9joHZtONlpbRl0G9N09vqhfsSkDWDyaRqF+NJW0NdOwNomH1BQYLXZZKGetcxcvIpy7cNOXtpGJ49A==}
-    dependencies:
-      '@rollup/pluginutils': 4.1.1
-      '@types/estree-jsx': 0.0.1
-      '@types/mdx': 2.0.1
-      astring: 1.7.5
-      estree-util-build-jsx: 2.0.0
-      estree-util-is-identifier-name: 2.0.0
-      estree-walker: 3.0.0
-      got: 11.8.2
-      hast-util-to-estree: 2.0.2
-      markdown-extensions: 1.1.1
-      mdast-util-mdx: 1.1.0
-      micromark-extension-mdxjs: 1.0.0
-      periscopic: 3.0.4
-      remark-parse: 10.0.0
-      remark-rehype: 10.0.0
-      source-map: 0.7.3
-      unified: 10.1.0
-      unist-util-position-from-estree: 1.1.1
-      unist-util-stringify-position: 3.0.0
-      unist-util-visit: 4.1.0
-      vfile: 5.2.0
-    optionalDependencies:
-      deasync: 0.1.23
-    transitivePeerDependencies:
-      - supports-color
     dev: true
 
   /@islands/xdm/3.2.3:
@@ -2166,7 +2134,6 @@ packages:
       deasync: 0.1.23
     transitivePeerDependencies:
       - supports-color
-    dev: false
 
   /@jest/types/27.1.0:
     resolution: {integrity: sha512-pRP5cLIzN7I7Vp6mHKRSaZD7YpBTK7hawx5si8trMKqk4+WOdK8NEKOTO2G8PKWD1HbKMVckVB6/XHh/olhf2g==}
@@ -6241,8 +6208,8 @@ packages:
     engines: {node: '>= 4'}
     dev: true
 
-  /iles/0.5.0:
-    resolution: {integrity: sha512-RU1x3BSF+n9n5pC6pOz9L9W3ky60i6IPWJaO3AgWLYZonN5krc08lGzQnL9yZOK22lxe9uyh0cpjJ52vkHAskA==}
+  /iles/0.5.2:
+    resolution: {integrity: sha512-cjXHl7Lkcd/xK5MOD0nPK6SqifNiLiKzT1lvnuWldoMxfgi53QoGVWRLUhXgIDrA5ZqAInlXLT8KtuMpjKMNWA==}
     engines: {node: '>=14.0.0'}
     hasBin: true
     dependencies:
@@ -6269,7 +6236,7 @@ packages:
       vite-plugin-pages: /@mussi/vite-plugin-pages/0.18.3-beta.2_vite@2.6.13+vue@3.2.21
       vue: 3.2.21
       vue-router: 4.0.12_vue@3.2.21
-      xdm: /@islands/xdm/3.2.2
+      xdm: /@islands/xdm/3.2.3
     transitivePeerDependencies:
       - '@babel/parser'
       - '@babel/traverse'
