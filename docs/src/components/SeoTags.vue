@@ -2,6 +2,8 @@
 import { usePage } from 'iles'
 
 import bannerSrc from '/images/banner.png'
+import logoSrc from '/icons/logo.svg'
+import faviconSrc from '/images/favicon.ico'
 
 const { frontmatter, site } = usePage()
 
@@ -22,7 +24,7 @@ let imageUrl = $computed(() => `${site.url}${frontmatter.image || bannerSrc}`)
     <meta property="twitter:image" :content="imageUrl">
     <meta property="twitter:site" :content="`@${site.twitterHandle}`">
     <meta property="twitter:card" content="summary_large_image">
-    <link rel="icon" type="image/svg+xml" href="/icons/logo.svg">
-    <link rel="shortcut icon" href="/images/favicon.ico">
+    <link rel="icon" type="image/svg+xml" :href="logoSrc">
+    <link rel="shortcut icon" :href="faviconSrc">
   </Head>
 </template>

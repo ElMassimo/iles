@@ -8,7 +8,7 @@ on:
 
 jobs:
   build:
-    if: ${{ startsWith(github.event.head_commit.message, 'docs') }}
+    if: ${{ startsWith(github.event.head_commit.message, 'docs') || startsWith(github.event.head_commit.message, 'crawl') }}
     name: crawl
     env:
       API_KEY: ${{secrets.ALGOLIA_API_KEY}}
