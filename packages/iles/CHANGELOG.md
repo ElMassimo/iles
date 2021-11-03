@@ -1,3 +1,12 @@
+## [0.5.3-beta.0](https://github.com/ElMassimo/iles/compare/v0.5.2...v0.5.3-beta.0) (2021-11-03)
+
+
+### Features
+
+* auto-install iles modules. improve vite plugins auto-install ([56cd478](https://github.com/ElMassimo/iles/commit/56cd4783b56e0169421b5cbc148189a6136d1b10))
+
+
+
 ## [0.5.2](https://github.com/ElMassimo/iles/compare/v0.5.1...v0.5.2) (2021-11-03)
 
 
