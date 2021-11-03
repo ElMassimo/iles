@@ -1,10 +1,11 @@
 import { promises as fs, constants as fsConstants } from 'fs'
 import createDebugger from 'debug'
-export { default as serialize } from '@nuxt/devalue'
-
+import { dirname } from 'pathe'
 import newSpinner from 'mico-spinner'
-import { isPackageExists, importModule } from 'local-pkg'
 import { installPackage } from '@antfu/install-pkg'
+import { unwrapDefault } from 'lib/modules'
+
+export { default as serialize } from '@nuxt/devalue'
 
 export const debug = {
   config: createDebugger('iles:config'),
@@ -19,12 +20,25 @@ export function sleep (ms: number) {
   return new Promise<void>((resolve) => { setTimeout(resolve, ms) })
 }
 
-export async function resolvePlugin<T> (name: string) {
-  if (!isPackageExists(name)) {
-    await withSpinner(`Installing ${name}...`, async () =>
-      await installPackage(name, { dev: true, preferOffline: true }))
+export async function tryInstallModule (name: string) {
+  try {
+    return require.resolve(name)
+  } catch (error) {
+    if (!error.message?.includes('Cannot find'))
+      throw error
+
+    console.info(`\n${name} not found. Proceeding to auto-install.\n`)
+
+    await withSpinner(`Installing ${name}`, async () =>
+      await installPackage(name, { dev: true, preferOffline: true, silent: true }))
+
+    return dirname(require.resolve(`${name}/package.json`))
   }
-  return await importModule(name).then(m => m.default || m)
+}
+
+export async function importLibrary<T> (pkgName: string) {
+  const pkgPath = await tryInstallModule(pkgName)
+  return unwrapDefault(require(pkgPath))
 }
 
 async function withSpinner<T> (message: string, fn: () => Promise<T>) {

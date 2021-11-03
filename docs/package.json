@@ -8,7 +8,7 @@
     "preview": "vite preview --open",
     "check": "vue-tsc --noEmit",
     "link": "pnpm link ../packages/iles",
-    "unlink": "pnpm unlink ../packages/iles"
+    "unlink": "pnpm unlink"
   },
   "engines": {
     "node": ">=16"

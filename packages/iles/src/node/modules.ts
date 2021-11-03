@@ -1,1 +1,1 @@
-export { importModule } from '../../lib/modules'
+export { importModule, unwrapDefault } from '../../lib/modules'

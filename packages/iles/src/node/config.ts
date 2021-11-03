@@ -17,7 +17,7 @@ import type { UserConfig } from 'iles'
 import { importModule } from 'lib/modules'
 import type { AppConfig, BaseIlesConfig, ConfigEnv, ViteOptions, IlesModule, IlesModuleLike, IlesModuleOption, NamedPlugins } from './shared'
 
-import { camelCase, resolvePlugin, uncapitalize, isString, isStringPlugin, compact } from './plugin/utils'
+import { camelCase, tryInstallModule, importLibrary, uncapitalize, isString, isStringPlugin, compact } from './plugin/utils'
 import { resolveAliases, DIST_CLIENT_PATH, HYDRATION_DIST_PATH } from './alias'
 import remarkWrapIslands from './plugin/remarkWrapIslands'
 import { markdown } from './plugin/markdown'
@@ -70,7 +70,7 @@ async function resolveUserConfig (root: string, configEnv: ConfigEnv) {
 
   Object.assign(config, await applyModules(config, configEnv))
   config.pages.pagesDir = join(config.srcDir, config.pagesDir)
-  await setNamedPlugins(config, config.namedPlugins)
+  await setNamedPlugins(config, configEnv, config.namedPlugins)
 
   const siteUrl = config.siteUrl || ''
   const protocolIndex = siteUrl.indexOf('//')
@@ -106,7 +106,7 @@ async function loadUserConfigFile (root: string, configEnv: ConfigEnv): Promise<
   }
 }
 
-async function setNamedPlugins (config: AppConfig, plugins: NamedPlugins) {
+async function setNamedPlugins (config: AppConfig, env: ConfigEnv, plugins: NamedPlugins) {
   const ceChecks = config.modules.map(mod => mod.vue?.template?.compilerOptions?.isCustomElement).filter(x => x)
   config.vue.template!.compilerOptions!.isCustomElement = (tagName: string) =>
     tagName.startsWith('ile-') || ceChecks.some(fn => fn!(tagName))
@@ -128,11 +128,11 @@ async function setNamedPlugins (config: AppConfig, plugins: NamedPlugins) {
     const addPlugin = config[optionName] || config.jsx === optionName
     if (addPlugin) {
       const options = isObject(addPlugin) ? addPlugin : {}
-      plugins.optionalPlugins.push(createPlugin(await resolvePlugin(pluginName), options))
+      plugins.optionalPlugins.push(createPlugin(await importLibrary(pluginName), options))
+      if (optionName === 'preact')
+        await importLibrary('preact-render-to-string')
     }
   }
-  if (config.preact || config.jsx === 'preact')
-    await resolvePlugin('preact-render-to-string')
 }
 
 async function applyModules (config: AppConfig, configEnv: ConfigEnv) {
@@ -165,7 +165,8 @@ async function resolveModule (mod: IlesModuleOption): Promise<IlesModuleLike> {
 }
 
 async function createIlesModule (pkgName: string, ...options: any[]): Promise<IlesModule> {
-  const fn = await importModule(pkgName)
+  const pkgPath = await tryInstallModule(pkgName)
+  const fn = await importModule(pkgPath)
   return fn(...options)
 }
 
