@@ -13,7 +13,10 @@
   "types": "dist/icons.d.ts",
   "type": "module",
   "exports": {
-    ".": "./src/icons.mjs",
+    ".": {
+      "import": "./src/icons.mjs",
+      "require": "./dist/icons.cjs"
+    },
     "./package.json": "./package.json"
   },
   "funding": "https://github.com/sponsors/ElMassimo",

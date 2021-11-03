@@ -12,7 +12,13 @@
     "src"
   ],
   "types": "dist/headings.d.ts",
-  "main": "dist/headings.js",
+  "exports": {
+    ".": {
+      "import": "./dist/headings.js",
+      "require": "./src/headings.cjs"
+    },
+    "./package.json": "./package.json"
+  },
   "funding": "https://github.com/sponsors/ElMassimo",
   "author": "Máximo Mussini <maximomussini@gmail.com>",
   "repository": {
