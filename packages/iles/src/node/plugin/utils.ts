@@ -24,7 +24,7 @@ export async function tryInstallModule (name: string) {
   try {
     return require.resolve(name)
   } catch (error) {
-    if (!error.message?.includes('Cannot find'))
+    if (error.code !== 'MODULE_NOT_FOUND')
       throw error
 
     console.info(`\n${name} not found. Proceeding to auto-install.\n`)
