@@ -33,7 +33,7 @@ export async function parseImports (code: string) {
     imports.forEach(({ d: isDynamic, n: path, ss: statementStart, s: importPathStart }) => {
       if (isDynamic > -1 || !path) return
       const importFragment = code.substring(statementStart, importPathStart)
-      parseImportVariables(importFragment).forEach(([importName, name]) => {
+      parseImportVariables(importFragment).forEach(([importName, name = importName]) => {
         importMap[name] = { importName, name, path }
       })
     })

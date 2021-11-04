@@ -17,6 +17,7 @@ import { serialize, pascalCase, exists, debug } from './utils'
 import { parseId } from './parse'
 import { wrapIslandsInSFC, wrapLayout } from './wrap'
 import { extendSite } from './site'
+import { autoImportComposables, writeComposablesDTS } from './composables'
 
 export const ILES_APP_ENTRY = '/@iles-entry'
 
@@ -66,6 +67,8 @@ export default function IslandsPlugins (appConfig: AppConfig): PluginOption[] {
         root = config.root
         isBuild = config.command === 'build'
         appConfig.resolvePath = config.createResolver()
+
+        writeComposablesDTS(root)
       },
       async resolveId (id) {
         if (id === ILES_APP_ENTRY)
@@ -220,6 +223,16 @@ export default _sfc_main
 import.meta.hot.accept('/${relative(root, path)}', (...args) => __ILES_PAGE_UPDATE__(args))
 `
         }
+      },
+    },
+
+    {
+      name: 'iles:composables',
+      enforce: 'post',
+      async transform (code, id) {
+        const { path, query } = parseId(id)
+        if (isSFCMain(path, query) || /\.[tj]sx?/.test(path))
+          return await autoImportComposables(code, id)
       },
     },
 
