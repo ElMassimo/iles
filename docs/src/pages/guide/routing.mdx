@@ -84,13 +84,11 @@ statically generated at build time.
 
 <Tip>
 It must be specified in the default export of a Vue component, you may use the
-`definePageComponent` helper to provide intellisense.
+`definePageComponent` helper to provide intellisense, it will be automatically imported.
 </Tip>
 
 ```vue
 <script lang="ts">
-import { definePageComponent } from 'iles'
-
 export default definePageComponent({
   getStaticPaths () {
     return [

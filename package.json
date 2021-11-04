@@ -43,7 +43,11 @@
       "$computed": "readonly",
       "$shallowRef": "readonly",
       "$$": "readonly",
-      "$": "readonly"
+      "$": "readonly",
+      "usePage": "readonly",
+      "useRoute": "readonly",
+      "useHead": "readonly",
+      "definePageComponent": "readonly"
     },
     "rules": {
       "prefer-const": "off",

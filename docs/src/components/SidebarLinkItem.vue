@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { useRoute } from 'iles'
 import appConfig from '@islands/app-config'
 
 import type { PropType } from 'vue'

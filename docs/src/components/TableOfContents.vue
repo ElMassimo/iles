@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { usePage } from 'iles'
-
 import type { Heading } from '@islands/headings'
 import type { SideBarItem } from '~/logic/config'
 

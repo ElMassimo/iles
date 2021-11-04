@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { usePage } from 'iles'
-
 import bannerSrc from '/images/banner.png'
 import logoSrc from '/icons/logo.svg'
 import faviconSrc from '/images/favicon.ico'

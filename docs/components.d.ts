@@ -6,6 +6,7 @@ declare module 'vue' {
   export interface GlobalComponents {
     AppButton: typeof import('./src/components/AppButton.vue')['default']
     AstroLogo: typeof import('./src/components/AstroLogo.vue')['default']
+    AutoImported: typeof import('./src/components/AutoImported.vue')['default']
     BaseLayout: typeof import('./src/layouts/base.vue')['default']
     Caption: typeof import('./src/components/Caption.vue')['default']
     Contact: typeof import('./src/components/contact.mdx')['default']

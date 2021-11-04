@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { usePage } from 'iles'
 import { getSideBarLinks } from '~/logic/sidebar'
 
 let { route, site } = usePage()

@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { useRoute } from 'iles'
-
 const props = defineProps({
   href: { type: String, default: '' },
   external: { type: Boolean, default: false },

@@ -1,5 +1,4 @@
 import { computed } from 'vue'
-import { usePage } from 'iles'
 
 import type { Heading } from '@islands/headings'
 import type {
