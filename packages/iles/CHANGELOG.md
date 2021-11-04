@@ -1,3 +1,12 @@
+# [0.6.0](https://github.com/ElMassimo/iles/compare/v0.5.4...v0.6.0) (2021-11-04)
+
+
+### Features
+
+* auto-import iles composables: usePage, useRoute, useHead, definePageComponent ([2dba5fa](https://github.com/ElMassimo/iles/commit/2dba5fa40db4a834497bf688c21260023680c220))
+
+
+
 ## [0.5.4](https://github.com/ElMassimo/iles/compare/v0.5.3...v0.5.4) (2021-11-03)
 
 
