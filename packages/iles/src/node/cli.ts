@@ -13,7 +13,7 @@ const getVersion = () => pc.cyan(`iles v${require('../../package.json').version}
 const printVersion = () => console.info(getVersion())
 
 executeCommand(!command || command === 'dev' ? 'serve' : command)
-  .catch(error => { throw error })
+  .catch((error) => { throw error })
 
 async function executeCommand (command: string) {
   if (command === 'serve') {

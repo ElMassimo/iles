@@ -49,7 +49,7 @@ export const createApp: CreateAppFactory = async (options = {}) => {
   const router = createRouter(config.base, routerOptions)
   app.use(router)
   router.beforeResolve(resolveLayout)
-  router.beforeResolve(async (route) => await resolveProps(route, ssrProps))
+  router.beforeResolve(async route => await resolveProps(route, ssrProps))
 
   // Set the path that should be rendered.
   if (import.meta.env.SSR) {
@@ -90,11 +90,10 @@ if (!import.meta.env.SSR) {
 
     const devtools = await import('./composables/devtools')
     devtools.installDevtools(app, config)
+    Object.assign(window, { __ILES_PAGE_UPDATE__: forcePageUpdate })
 
     router.afterEach(resetHydrationId) // reset island identifiers to match ssg.
     await router.isReady() // wait until page component is fetched before mounting
     app.mount('#app', true)
-
-    Object.assign(window, { __ILES_PAGE_UPDATE__: forcePageUpdate })
   })()
 }

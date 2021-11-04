@@ -29,7 +29,7 @@ async function resolveRoutesToRender (router: Router) {
     }
   }
 
-  return (await Promise.all(router.getRoutes().map(async route => {
+  return (await Promise.all(router.getRoutes().map(async (route) => {
     const routes = route.path.includes(DYNAMIC_PARAM) ? await getDynamicPaths(route) : [route]
     return routes.map(toResolvedPath)
   }))).flat()
@@ -59,7 +59,7 @@ function isLazy (value: RouteRecordNormalized['components']['default']): value i
   return typeof value === 'function'
 }
 
-export function toArray<T>(array?: T | T[]): T[] {
+export function toArray<T> (array?: T | T[]): T[] {
   array = array || []
   if (Array.isArray(array))
     return array

@@ -129,7 +129,7 @@ function defineImports (components: ComponentInfo[]) {
             {
               type: 'ImportSpecifier',
               imported: { type: 'Identifier', name: component.importName! },
-              local: { type: 'Identifier', name: component.name! }
+              local: { type: 'Identifier', name: component.name! },
             },
           ],
           source: { type: 'Literal', value: component.path, raw: `'${component.path}'` },

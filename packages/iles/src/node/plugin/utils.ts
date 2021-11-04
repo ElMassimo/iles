@@ -23,7 +23,8 @@ export function sleep (ms: number) {
 export async function tryInstallModule (name: string) {
   try {
     return require.resolve(name)
-  } catch (error) {
+  }
+  catch (error) {
     if (error.code !== 'MODULE_NOT_FOUND')
       throw error
 
