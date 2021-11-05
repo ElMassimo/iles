@@ -1,3 +1,17 @@
+## [0.6.1](https://github.com/ElMassimo/iles/compare/v0.6.0...v0.6.1) (2021-11-05)
+
+
+### Bug Fixes
+
+* auto-import iles composables only in srcDir files ([81a68a0](https://github.com/ElMassimo/iles/commit/81a68a0995031bcca0df2da9c659ee85ef70072d))
+
+
+### Features
+
+* fail on incorrect usage of hydration strategies (close [#31](https://github.com/ElMassimo/iles/issues/31)) ([c7fd936](https://github.com/ElMassimo/iles/commit/c7fd93680c55fc67a8b69dff3389262c71a2731e))
+
+
+
 # [0.6.0](https://github.com/ElMassimo/iles/compare/v0.5.4...v0.6.0) (2021-11-04)
 
 
