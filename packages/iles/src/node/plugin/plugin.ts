@@ -230,6 +230,8 @@ import.meta.hot.accept('/${relative(root, path)}', (...args) => __ILES_PAGE_UPDA
       name: 'iles:composables',
       enforce: 'post',
       async transform (code, id) {
+        if (!id.startsWith(appConfig.srcDir)) return
+
         const { path, query } = parseId(id)
         if (isSFCMain(path, query) || /\.[tj]sx?/.test(path))
           return await autoImportComposables(code, id)
