@@ -34,6 +34,10 @@ export async function wrapIslandsInSFC (config: AppConfig, code: string, filenam
   const scriptClientIndex = customBlocks.findIndex(b => b.type === 'scriptClient')
   const scriptClient = scriptClientIndex > -1 && customBlocks[scriptClientIndex]
   if (errors.length > 0) return
+
+  if ((scriptClient && 'setup' in scriptClient.attrs) || (scriptSetup && Object.keys(scriptSetup.attrs).some(attr => attr.startsWith('client:'))))
+    throw new Error(`Incorrect usage of hydration strategy in script setup.\nSee https://iles-docs.netlify.app/guide/client-scripts#client-script-block`)
+
   if (!template) {
     if (scriptClient) throw new Error(`Vue components with <script client:...> must define a template. No template found in ${filename}`)
     return
