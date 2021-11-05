@@ -115,7 +115,7 @@ async function setNamedPlugins (config: AppConfig, env: ConfigEnv, plugins: Name
   plugins.pages = pages(config.pages)
   plugins.markdown = markdown(config.markdown)
   plugins.vue = vue(config.vue)
-  plugins.vueJsx = vueJsx(config.vueJsx)
+  if (config.jsx === 'vue') plugins.vueJsx = vueJsx(config.vueJsx)
 
   const optionalPlugins: [keyof AppConfig, string, (mod: any, options: any) => any][] = [
     ['solid', 'vite-plugin-solid', (mod, options) => mod({ ssr: true, ...options })],
@@ -227,12 +227,10 @@ function appConfigDefaults (appConfig: AppConfig, userConfig: UserConfig): Omit<
         compilerOptions: {},
       },
     },
-    vueJsx: {
-      include: jsx === 'vue' ? /\.([jt]sx|mdx?)$/ : /\.mdx?$/,
-    },
+    vueJsx: {},
     markdown: {
-      jsx: true,
-      jsxRuntime: false as any,
+      jsxRuntime: 'automatic' as any,
+      jsxImportSource: 'iles',
       remarkPlugins: [
         [remarkWrapIslands, { get config () { return appConfig } }],
       ],

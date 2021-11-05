@@ -104,7 +104,7 @@ export interface NamedPlugins {
   pages: ReturnType<typeof PagesPlugin>
   markdown: ReturnType<typeof MarkdownPlugin>
   vue: ReturnType<typeof VuePlugin>
-  vueJsx: ReturnType<typeof VueJsxPlugin>
+  vueJsx?: ReturnType<typeof VueJsxPlugin>
   components: ReturnType<typeof ComponentsPlugin>
   optionalPlugins: VitePluginOption[]
 }
