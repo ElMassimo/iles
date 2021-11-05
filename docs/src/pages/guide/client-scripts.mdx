@@ -21,6 +21,10 @@ console.log('Powered by îles 🏝', 'https://iles-docs.netlify.app')
 </script>
 ```
 
+<Tip warn>
+Client script blocks are completely detached from the Vue component, which will be statically pre-rendered. The [strategy] is applied to the script, __not__ the component.
+</Tip>
+
 The script will be injected every time the component is rendered, and it's
 guaranteed to execute after all elements rendered by the component are in the DOM.
 
@@ -44,7 +48,7 @@ but you must export `onLoad`.
 This function will be called when the condition for the selected strategy is met—when the element becomes visible if using `client:visible`, when the media query matches if using `client:media`, etc.
 
 ```vue
-<script client:visible" lang="ts">
+<script client:visible lang="ts">
 console.log('Not necessarily visible')
 
 export function onLoad () {
