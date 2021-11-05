@@ -1,5 +1,7 @@
 [GitHub Issues]: https://github.com/ElMassimo/iles/issues?q=is%3Aissue+is%3Aopen+sort%3Aupdated-desc
 [GitHub Discussions]: https://github.com/ElMassimo/iles/discussions
+[layout]: /guide/development#layouts
+[deployment]: /guide/deployment
 
 # Troubleshooting
 
@@ -17,5 +19,12 @@ Instead, pass the necessary data explicitly as props. For example:
 ```vue
 <TimeAgo :date="$meta.lastUpdated" client:visible/>
 ```
+
+## Could not load layout file during build
+
+[Layout file names must be lowercase][layout]: `default.vue` instead of `Default.vue`.
+
+Most [service providers][deployment] are Linux-based, which is case-sensitive.
+This is why it might work in your local macOS or Windows, but fail when [deploying][deployment].
 
 <Contact/>
