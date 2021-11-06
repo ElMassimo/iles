@@ -175,6 +175,15 @@ export default function IslandsPlugins (appConfig: AppConfig): PluginOption[] {
       },
     },
 
+    {
+      name: 'iles:mdx:slots',
+      async transform (code, id) {
+        const { path } = parseId(id)
+        if (isMarkdown(path))
+          return code.replace(/<template #/g, '<template v-slot:')
+      },
+    },
+
     plugins.markdown,
     plugins.vue,
     ...plugins.optionalPlugins,

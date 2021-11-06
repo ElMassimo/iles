@@ -147,18 +147,20 @@ import doc from '~/pages/introduction.mdx'
 
 ## Advanced: Multiple Slots in MDX
 
-If you need to provide several slots to a component in [MDX], you can use `v-slots` or provide an [object slot][vue-jsx]:
+If you need to provide several slots to a component in [MDX], you can use the standard Vue syntax. `v-slots` or [object slots][vue-jsx] are not supported.
 
 ```mdx
-export const titleWithMarkdown = <span>But better keep it <b>simple</b></span>
-
-<Tip warn v-slots={{ title: () => titleWithMarkdown }}>
-The syntax is confusing, and you can often achieve the same using props.
+<Tip warn>
+  <template #title>
+    <span>But better keep it <b>simple</b></span>
+  </template>
+  At this point you might be better off using a Vue page instead.
 </Tip>
 ```
 
-export const titleWithMarkdown = <span>But better keep it <b>simple</b></span>
-
-<Tip warn v-slots={{ title: () => titleWithMarkdown }}>
-The syntax is confusing, and you can often achieve the same using props.
+<Tip warn>
+  <template #title>
+    <span>But better keep it <b>simple</b></span>
+  </template>
+  At this point you might be better off using a Vue page instead.
 </Tip>
