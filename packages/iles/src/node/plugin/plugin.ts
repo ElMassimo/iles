@@ -7,7 +7,6 @@ import { transformWithEsbuild } from 'vite'
 
 import { MODULE_ID_VIRTUAL as PAGES_REQUEST_PATH } from 'vite-plugin-pages'
 import MagicString from 'magic-string'
-import hash from 'hash-sum'
 
 import type { Frontmatter } from '@islands/frontmatter'
 import { shouldTransformRef, transformRef } from 'vue/compiler-sfc'
@@ -15,7 +14,7 @@ import type { AppConfig, AppClientConfig } from '../shared'
 import { APP_PATH, ROUTES_REQUEST_PATH, USER_APP_REQUEST_PATH, USER_SITE_REQUEST_PATH, APP_CONFIG_REQUEST_PATH, NOT_FOUND_COMPONENT_PATH, NOT_FOUND_REQUEST_PATH } from '../alias'
 import { createServer } from '../server'
 import { serialize, pascalCase, exists, debug } from './utils'
-import { parseId, parseImports } from './parse'
+import { parseId } from './parse'
 import { wrapIslandsInSFC, wrapLayout } from './wrap'
 import { extendSite } from './site'
 import { autoImportComposables, writeComposablesDTS } from './composables'
@@ -37,7 +36,6 @@ export default function IslandsPlugins (appConfig: AppConfig): PluginOption[] {
   debug.config(appConfig)
 
   let base: ResolvedConfig['base']
-  let mode: ResolvedConfig['mode']
   let root: ResolvedConfig['root']
   let isBuild: boolean
 
@@ -64,7 +62,6 @@ export default function IslandsPlugins (appConfig: AppConfig): PluginOption[] {
       configResolved (config) {
         if (base) return
         base = config.base
-        mode = config.mode
         root = config.root
         isBuild = config.command === 'build'
         appConfig.resolvePath = config.createResolver()
@@ -178,47 +175,9 @@ export default function IslandsPlugins (appConfig: AppConfig): PluginOption[] {
       },
     },
 
+    plugins.markdown,
     plugins.vue,
     ...plugins.optionalPlugins,
-
-    plugins.markdown,
-
-    {
-      name: 'iles:mdx:hmr',
-      async transform (code, id) {
-        const { path } = parseId(id)
-        if (!isMarkdown(path) || !code.includes('MDXContent')) return null
-
-        // Allow empty markdown files.
-        code = code.replace('_jsx(_Fragment, {})', '')
-
-        // Allow unplugin-vue-components to auto-import components.
-        const imports = await parseImports(code)
-        code = code.replace(/(jsxs?)\((\w+\b)/g, (original, fn, identifier) =>
-          imports[identifier] ? original : `${fn}(_resolveComponent("${identifier}")`)
-
-        const hmrId = hash(`${id}default`)
-
-        // TODO: Allow component to receive an excerpt prop.
-        return code.replace('export default MDXContent', `
-${code.includes(' defineComponent') ? '' : 'import { defineComponent } from \'vue\''}
-
-const _sfc_main = defineComponent({
-  render: MDXContent,${mode === 'development' ? `\n  __file: '${path}',` : ''}
-})
-export default _sfc_main
-
-import { resolveComponent as _resolveComponent } from 'vue'
-
-${!isBuild && `
-_sfc_main.__hmrId = "${hmrId}"
-__VUE_HMR_RUNTIME__.createRecord("${hmrId}", _sfc_main)
-import.meta.hot.accept(({default: __default}) => {
-__VUE_HMR_RUNTIME__.reload("${hmrId}", __default)
-})`}
-`)
-      },
-    },
 
     plugins.vueJsx,
 

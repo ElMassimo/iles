@@ -222,6 +222,7 @@ function appConfigDefaults (appConfig: AppConfig, userConfig: UserConfig): Omit<
     },
     vite: viteConfigDefaults(root),
     vue: {
+      include: /\.(vue|mdx?)$/,
       refTransform: true,
       template: {
         compilerOptions: {},

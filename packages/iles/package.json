@@ -59,13 +59,14 @@
     "minimist": "^1.2.5",
     "pathe": "^0.2.0",
     "picocolors": "^1.0.0",
+    "source-map": "^0.7.3",
     "unist-util-visit": "^4.1.0",
     "unplugin-vue-components": "npm:@islands/components@0.17.0",
     "vite": "^2.6.13",
     "vite-plugin-pages": "npm:@mussi/vite-plugin-pages@0.18.3-beta.2",
     "vue": "^3.2.21",
     "vue-router": "^4.0.12",
-    "xdm": "npm:@islands/xdm@^3.2.3"
+    "xdm": "file:../../../xdm"
   },
   "devDependencies": {
     "@antfu/install-pkg": "^0.1.0",
