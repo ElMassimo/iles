@@ -18,6 +18,7 @@ import { parseId } from './parse'
 import { wrapIslandsInSFC, wrapLayout } from './wrap'
 import { extendSite } from './site'
 import { autoImportComposables, writeComposablesDTS } from './composables'
+import { hmrRuntime } from './hmr'
 
 export const ILES_APP_ENTRY = '/@iles-entry'
 
@@ -186,6 +187,16 @@ export default function IslandsPlugins (appConfig: AppConfig): PluginOption[] {
 
     // https://github.com/antfu/unplugin-vue-components
     plugins.components,
+
+    {
+      name: 'iles:mdx:hmr',
+      apply: 'serve',
+      async transform (code, id) {
+        const { path } = parseId(id)
+        if (isMarkdown(path) && code.includes('_sfc_main = '))
+          return `${code}\n${hmrRuntime(id)}`
+      },
+    },
 
     {
       name: 'iles:page-hmr',

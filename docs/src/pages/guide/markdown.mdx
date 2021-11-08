@@ -6,7 +6,6 @@
 [frontmatter]: https://github.com/wooorm/xdm#frontmatter
 [meta]: /guide/development#using-page-data
 [component]: https://v3.vuejs.org/api/built-in-components.html#component
-[named slots]: https://v3.vuejs.org/guide/component-slots.html#named-slots
 
 # Markdown 📖
 
@@ -100,12 +99,6 @@ You can access the document's `frontmatter`, and `meta` info injected by <Iles/>
 And use expressions, such as { meta.lastUpdated.toLocaleDateString('en-US') }.
 </Tip>
 
-<Tip title="Directives">
-You can use directives such as `v-if` and `v-for` (unlike in [Vue JSX]).
-
-The shortcuts for `v-bind`, `v-on`, and `v-slot` are not valid MDX, so use them __explicitly__.
-</Tip>
-
 ## Markdown in Vue <VueLogo/>
 
 Markdown files can be used as Vue components, and they will be automatically
@@ -153,31 +146,18 @@ import doc from '~/pages/introduction.mdx'
 
 ## Advanced: Multiple Slots in MDX
 
-You can use [named slots] as usual, although it's usually nicer to extract into
-components to keep the MDX simpler (and framework-agnostic).
+If you need to provide several slots to a component in [MDX], you can use [`v-slots`][vue-jsx]:
 
 ```mdx
-<Tip>
-  <template v-slot:title>
-    <b>Table of Contents</b> _(just an example, use a Vue component instead)_
-  </template>
-  <ul>
-    <li v-for="heading in headings.filter(h => h.level === 2)">
-      <a href={`#${heading.slug}`}>{ heading.title }</a>
-    </li>
-  </ul>
+export const titleWithMarkdown = <span>But better keep it <b>simple</b></span>
+
+<Tip warn v-slots={{ title: () => titleWithMarkdown }}>
+The syntax is confusing, and you can often achieve the same using props.
 </Tip>
 ```
 
-<Tip>
-  <template v-slot:title>
-    <b>Table of Contents</b> _(just an example, use a Vue component instead)_
-  </template>
-  <ul>
-    <li v-for="heading in headings.filter(h => h.level === 2)">
-      <a href={`#${heading.slug}`}>{ heading.title }</a>
-    </li>
-  </ul>
-</Tip>
+export const titleWithMarkdown = <span>But better keep it <b>simple</b></span>
 
-If you are used to [vue-jsx], have in mind [object slots][vue-jsx] are not supported.
+<Tip warn v-slots={{ title: () => titleWithMarkdown }}>
+The syntax is confusing, and you can often achieve the same using props.
+</Tip>
