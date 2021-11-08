@@ -63,13 +63,6 @@ The `filename` and the page `href` can be accessed through [`meta`][meta].
 
 HMR is fully supported, and components can be used [without importing them][components]. 
 
-<Tip title="Directives">
-You may use directives such as `v-if` and `v-for` (unlike in [Vue JSX]).
-
-The shortcuts for `v-bind`, `v-on`, and `v-slot` are not valid MDX, so use them __explicitly__.
-</Tip>
-
-
 ### Markdown in Slots
 
 Components can receive markdown content using slots:
@@ -105,6 +98,12 @@ export const example = 'Variables in Markdown'
 You can access the document's `frontmatter`, and `meta` info injected by <Iles/>.
 
 And use expressions, such as { meta.lastUpdated.toLocaleDateString('en-US') }.
+</Tip>
+
+<Tip title="Directives">
+You can use directives such as `v-if` and `v-for` (unlike in [Vue JSX]).
+
+The shortcuts for `v-bind`, `v-on`, and `v-slot` are not valid MDX, so use them __explicitly__.
 </Tip>
 
 ## Markdown in Vue <VueLogo/>
@@ -154,7 +153,8 @@ import doc from '~/pages/introduction.mdx'
 
 ## Advanced: Multiple Slots in MDX
 
-You can use [named slots] as usual. [Object slots][vue-jsx] are not supported.
+You can use [named slots] as usual, although it's usually nicer to extract into
+components to keep the MDX simpler (and framework-agnostic).
 
 ```mdx
 <Tip>
@@ -179,3 +179,5 @@ You can use [named slots] as usual. [Object slots][vue-jsx] are not supported.
     </li>
   </ul>
 </Tip>
+
+If you are used to [vue-jsx], have in mind [object slots][vue-jsx] are not supported.
