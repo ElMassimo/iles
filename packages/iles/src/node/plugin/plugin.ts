@@ -194,7 +194,7 @@ export default function IslandsPlugins (appConfig: AppConfig): PluginOption[] {
       async transform (code, id) {
         const { path } = parseId(id)
         if (isMarkdown(path) && code.includes('_sfc_main = '))
-          return `${code}\n${hmrRuntime(id)}`
+          return `${code.replace('defineComponent({', m => `${m}__file: '${path}',`)}\n${hmrRuntime(id)}`
       },
     },
 
