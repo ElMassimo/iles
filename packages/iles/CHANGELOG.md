@@ -1,3 +1,12 @@
+## [0.6.2-beta.1](https://github.com/ElMassimo/iles/compare/v0.6.2-beta.0...v0.6.2-beta.1) (2021-11-09)
+
+
+### Bug Fixes
+
+* node 14 compatibility ([fd30327](https://github.com/ElMassimo/iles/commit/fd303272f598f3911e3995eebeaf9245ef9364b1))
+
+
+
 ## [0.6.2-beta.0](https://github.com/ElMassimo/iles/compare/v0.6.1...v0.6.2-beta.0) (2021-11-09)
 
 
