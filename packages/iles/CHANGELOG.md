@@ -1,3 +1,12 @@
+## [0.6.2-beta.2](https://github.com/ElMassimo/iles/compare/v0.6.2-beta.1...v0.6.2-beta.2) (2021-11-09)
+
+
+### Features
+
+* allow layouts to pass props to pages ([20eaa3b](https://github.com/ElMassimo/iles/commit/20eaa3b56a18b717b61a306f37ea3d60b82448f5))
+
+
+
 ## [0.6.2-beta.1](https://github.com/ElMassimo/iles/compare/v0.6.2-beta.0...v0.6.2-beta.1) (2021-11-09)
 
 
