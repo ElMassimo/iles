@@ -38,6 +38,7 @@ export default function IslandsPlugins (appConfig: AppConfig): PluginOption[] {
 
   let base: ResolvedConfig['base']
   let root: ResolvedConfig['root']
+  let mode: ResolvedConfig['mode']
   let isBuild: boolean
 
   const appPath = resolve(appConfig.srcDir, 'app.ts')
@@ -63,6 +64,7 @@ export default function IslandsPlugins (appConfig: AppConfig): PluginOption[] {
       configResolved (config) {
         if (base) return
         base = config.base
+        mode = config.mode
         root = config.root
         isBuild = config.command === 'build'
         appConfig.resolvePath = config.createResolver()
@@ -187,12 +189,29 @@ export default function IslandsPlugins (appConfig: AppConfig): PluginOption[] {
     plugins.components,
 
     {
-      name: 'iles:mdx:hmr',
+      name: 'iles:mdx:post',
       apply: 'serve',
       async transform (code, id) {
         const { path } = parseId(id)
-        if (isMarkdown(path) && code.includes('_sfc_main = '))
-          return `${code.replace('defineComponent({', m => `${m}__file: '${path}',`)}\n${hmrRuntime(id)}`
+        if (!isMarkdown(path) || !code.includes('MDXContent')) return null
+
+        // Allow empty markdown files.
+        code = code.replace('_jsx(_Fragment, {})', '')
+
+        // TODO: Allow component to receive an excerpt prop.
+        return code.replace('export default MDXContent', `
+${code.includes(' defineComponent') ? '' : 'import { defineComponent } from \'vue\''}
+
+const _sfc_main = defineComponent({
+  props: {
+    components: { type: Array },
+  },
+  render () {
+    return MDXContent({ ...this.$props, ...this.$attrs })
+  },${mode === 'development' ? `\n  __file: '${path}',` : ''}
+})
+export default _sfc_main
+${mode === 'development' ? hmrRuntime(id) : ''}`)
       },
     },
 

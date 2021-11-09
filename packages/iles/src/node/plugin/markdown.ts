@@ -9,7 +9,7 @@ type PluginLike = null | undefined | false | Pluggable
 type PluginOption = PluginLike | Promise<PluginLike> | string | [string, any]
 
 export const markdown: MarkdownPlugin = function IlesMarkdown (options: MarkdownOptions = {}) {
-  const { remarkPlugins = [], rehypePlugins = [], ...rest } = options
+  const { remarkPlugins = [], rehypePlugins = [], recmaPlugins = [], ...rest } = options
 
   let markdownProcessor: MarkdownProcessor
 
@@ -18,6 +18,7 @@ export const markdown: MarkdownPlugin = function IlesMarkdown (options: Markdown
     markdownProcessor = createFormatAwareProcessors({
       remarkPlugins: await resolvePlugins(remarkPlugins),
       rehypePlugins: await resolvePlugins(rehypePlugins),
+      recmaPlugins: await resolvePlugins(recmaPlugins),
       SourceMapGenerator: sourcemap ? (await import('source-map')).SourceMapGenerator : undefined,
       ...rest,
     })

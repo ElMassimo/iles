@@ -209,7 +209,7 @@ importers:
       vite-plugin-solid: ^2.1.1
       vue: ^3.2.21
       vue-router: ^4.0.12
-      xdm: npm:@islands/xdm@3.2.4-beta.2
+      xdm: npm:@islands/xdm@3.2.5
     dependencies:
       '@islands/frontmatter': link:../frontmatter
       '@islands/hydration': link:../hydration
@@ -235,7 +235,7 @@ importers:
       vite-plugin-pages: /@mussi/vite-plugin-pages/0.18.3-beta.2_vite@2.6.13+vue@3.2.21
       vue: 3.2.21
       vue-router: 4.0.12_vue@3.2.21
-      xdm: /@islands/xdm/3.2.4-beta.2
+      xdm: /@islands/xdm/3.2.5
     devDependencies:
       '@antfu/install-pkg': 0.1.0
       '@islands/headings': link:../headings
@@ -2155,6 +2155,38 @@ packages:
       deasync: 0.1.23
     transitivePeerDependencies:
       - supports-color
+    dev: true
+
+  /@islands/xdm/3.2.5:
+    resolution: {integrity: sha512-f1d02guy/tKF9FO4xhTNdaPw163ZoAI/0YhttiJkvmzBrj/maggFg9NoOauGlh000Pw5qQwtv7B9jwy1NR7DDg==}
+    dependencies:
+      '@rollup/pluginutils': 4.1.1
+      '@types/estree-jsx': 0.0.1
+      '@types/mdx': 2.0.1
+      astring: 1.7.5
+      estree-util-build-jsx: 2.0.0
+      estree-util-is-identifier-name: 2.0.0
+      estree-walker: 3.0.0
+      got: 11.8.2
+      hast-util-to-estree: 2.0.2
+      markdown-extensions: 1.1.1
+      mdast-util-mdx: 1.1.0
+      micromark-extension-mdxjs: 1.0.0
+      periscopic: 3.0.4
+      remark-parse: 10.0.0
+      remark-rehype: 10.0.1
+      source-map: 0.7.3
+      stringify-entities: 4.0.2
+      unified: 10.1.0
+      unist-util-position-from-estree: 1.1.1
+      unist-util-stringify-position: 3.0.0
+      unist-util-visit: 4.1.0
+      vfile: 5.2.0
+    optionalDependencies:
+      deasync: 0.1.23
+    transitivePeerDependencies:
+      - supports-color
+    dev: false
 
   /@jest/types/27.1.0:
     resolution: {integrity: sha512-pRP5cLIzN7I7Vp6mHKRSaZD7YpBTK7hawx5si8trMKqk4+WOdK8NEKOTO2G8PKWD1HbKMVckVB6/XHh/olhf2g==}
@@ -3757,9 +3789,6 @@ packages:
   /character-entities-legacy/1.1.4:
     resolution: {integrity: sha512-3Xnr+7ZFS1uxeiUDvV02wQ+QDbc55o97tIV5zHScSPJpcLm/r0DFPcoY3tYRp+VZukxuMeKgXYmsXQHO05zQeA==}
     dev: true
-
-  /character-entities-legacy/2.0.0:
-    resolution: {integrity: sha512-YwaEtEvWLpFa6Wh3uVLrvirA/ahr9fki/NUd/Bd4OR6EdJ8D22hovYQEOUCBfQfcqnC4IAMGMsHXY1eXgL4ZZA==}
 
   /character-entities-legacy/3.0.0:
     resolution: {integrity: sha512-RpPp0asT/6ufRm//AJVwpViZbGM/MkjQFxJccQRHmISF/22NBtsHqAWmL+/pmkPWoIUJdWyeVleTl1wydHATVQ==}
@@ -5435,6 +5464,14 @@ packages:
     dependencies:
       '@types/estree': 0.0.46
 
+  /estree-util-build-jsx/2.0.0:
+    resolution: {integrity: sha512-d49hPGqBCJF/bF06g1Ywg7zjH1mrrUdPPrixBlKBxcX4WvMYlUUJ8BkrwlzWc8/fm6XqGgk5jilhgeZBDEGwOQ==}
+    dependencies:
+      '@types/estree-jsx': 0.0.1
+      estree-util-is-identifier-name: 2.0.0
+      estree-walker: 3.0.0
+    dev: false
+
   /estree-util-is-identifier-name/2.0.0:
     resolution: {integrity: sha512-aXXZFVMnBBDRP81vS4YtAYJ0hUkgEsXea7lNKWCOeaAquGb1Jm2rcONPB5fpzwgbNxulTvrWuKnp9UElUGAKeQ==}
 
@@ -6573,6 +6610,12 @@ packages:
     engines: {node: '>=0.10.0'}
     dev: true
 
+  /is-reference/3.0.0:
+    resolution: {integrity: sha512-Eo1W3wUoHWoCoVM4GVl/a+K0IgiqE5aIo4kJABFyMum1ZORlPkC+UC357sSQUL5w5QCE5kCC9upl75b7+7CY/Q==}
+    dependencies:
+      '@types/estree': 0.0.50
+    dev: false
+
   /is-regex/1.1.4:
     resolution: {integrity: sha512-kvRdxDsxZjhzUX07ZnLydzS1TU/TJlTUHHY4YLL87e37oUA49DfkLqgy+VjFocowy29cKvcSiu+kIv728jTTVg==}
     engines: {node: '>= 0.4'}
@@ -7198,7 +7241,7 @@ packages:
       '@types/mdast': 3.0.10
       mdast-util-to-markdown: 1.2.4
       parse-entities: 3.1.0
-      stringify-entities: 4.0.1
+      stringify-entities: 4.0.2
       unist-util-remove-position: 4.0.1
       unist-util-stringify-position: 3.0.0
       vfile-message: 3.0.2
@@ -8149,6 +8192,13 @@ packages:
 
   /pathe/0.2.0:
     resolution: {integrity: sha512-sTitTPYnn23esFR3RlqYBWn4c45WGeLcsKzQiUpXJAyfcWkolvlYpV8FLo7JishK946oQwMFUCHXQ9AjGPKExw==}
+
+  /periscopic/3.0.4:
+    resolution: {integrity: sha512-SFx68DxCv0Iyo6APZuw/AKewkkThGwssmU0QWtTlvov3VAtPX+QJ4CadwSaz8nrT5jPIuxdvJWB4PnD2KNDxQg==}
+    dependencies:
+      estree-walker: 3.0.0
+      is-reference: 3.0.0
+    dev: false
 
   /picocolors/0.2.1:
     resolution: {integrity: sha512-cMlDqaLEqfSaW8Z7N5Jw+lyIW869EzT73/F5lhtY9cLGoVxSXznfgfXMO0Z5K0o0Q2TkTXq+0KFsdnSe3jDViA==}
@@ -9343,11 +9393,11 @@ packages:
       safe-buffer: 5.2.1
     dev: true
 
-  /stringify-entities/4.0.1:
-    resolution: {integrity: sha512-gmMQxKXPWIO3NXNSPyWNhlYcBNGpPA/487D+9dLPnU4xBnIrnHdr8cv5rGJOS/1BRxEXRb7uKwg7BA36IWV7xg==}
+  /stringify-entities/4.0.2:
+    resolution: {integrity: sha512-MTxTVcEkorNtBbNpoFJPEh0kKdM6+QbMjLbaxmvaPMmayOXdr/AIVIIJX7FReUVweRBFJfZepK4A4AKgwuFpMQ==}
     dependencies:
       character-entities-html4: 2.0.0
-      character-entities-legacy: 2.0.0
+      character-entities-legacy: 3.0.0
 
   /stringify-object/3.3.0:
     resolution: {integrity: sha512-rHqiFh1elqCQ9WPLIC8I0Q/g/wj5J1eMkyoiD6eoQApWHP0FtlK7rqnhmabL5VUY9JQCcqwwvlOaSuutekgyrw==}

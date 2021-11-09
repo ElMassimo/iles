@@ -225,6 +225,8 @@ function appConfigDefaults (appConfig: AppConfig, userConfig: UserConfig): Omit<
       },
     },
     markdown: {
+      jsxRuntime: 'automatic',
+      jsxImportSource: 'iles',
       remarkPlugins: [
         [remarkWrapIslands, { get config () { return appConfig } }],
       ],
