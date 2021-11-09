@@ -1,7 +1,7 @@
 {
   "name": "@islands/hydration",
   "description": "Hydration utilities for îles",
-  "version": "0.3.2",
+  "version": "0.3.3",
   "type": "module",
   "files": [
     "dist",

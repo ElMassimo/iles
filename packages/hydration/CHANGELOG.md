@@ -1,3 +1,17 @@
+## [0.3.3](https://github.com/ElMassimo/iles/compare/hydration@0.3.2...hydration@0.3.3) (2021-11-09)
+
+
+### Bug Fixes
+
+* drop remark-frontmatter and add micromark plugins directly ([8d6f3f3](https://github.com/ElMassimo/iles/commit/8d6f3f3b184674e30181a7ca52361de3baaeb5ac))
+
+
+### Features
+
+* **devtools:** display props in hydration timeline ([112ba62](https://github.com/ElMassimo/iles/commit/112ba62890234573f86200ffd4082af8f64f2634))
+
+
+
 ## [0.3.2](https://github.com/ElMassimo/iles/compare/hydration@0.3.1...hydration@0.3.2) (2021-10-21)
 
 
