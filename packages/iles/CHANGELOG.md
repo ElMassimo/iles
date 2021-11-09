@@ -1,3 +1,12 @@
+## [0.6.2-beta.3](https://github.com/ElMassimo/iles/compare/v0.6.2-beta.2...v0.6.2-beta.3) (2021-11-09)
+
+
+### Bug Fixes
+
+* include jsx-runtime in the package ([89d5f8d](https://github.com/ElMassimo/iles/commit/89d5f8d112469139d3df4618637cdf625cce4f18))
+
+
+
 ## [0.6.2-beta.2](https://github.com/ElMassimo/iles/compare/v0.6.2-beta.1...v0.6.2-beta.2) (2021-11-09)
 
 
