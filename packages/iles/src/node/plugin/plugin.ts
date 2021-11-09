@@ -190,13 +190,9 @@ export default function IslandsPlugins (appConfig: AppConfig): PluginOption[] {
 
     {
       name: 'iles:mdx:post',
-      apply: 'serve',
       async transform (code, id) {
         const { path } = parseId(id)
         if (!isMarkdown(path) || !code.includes('MDXContent')) return null
-
-        // Allow empty markdown files.
-        code = code.replace('_jsx(_Fragment, {})', '')
 
         // TODO: Allow component to receive an excerpt prop.
         return code.replace('export default MDXContent', `

@@ -15,6 +15,10 @@ function jsx (type, { children, 'v-slots': vSlots, ...props }) {
       : { ...vSlots, default: () => children }
   }
   else {
+    // Allow empty fragment expressions.
+    if (type === Fragment)
+      return null
+
     slots = vSlots || null
   }
 
