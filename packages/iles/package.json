@@ -47,7 +47,6 @@
     "@nuxt/devalue": "^2.0.0",
     "@rollup/plugin-virtual": "^2.0.3",
     "@vitejs/plugin-vue": "^1.10.0-beta.0",
-    "@vitejs/plugin-vue-jsx": "^1.2.0",
     "@vue/devtools-api": "^6.0.0-beta.15",
     "@vue/server-renderer": "^3.2.21",
     "@vueuse/head": "^0.6.0",
@@ -66,7 +65,7 @@
     "vite-plugin-pages": "npm:@mussi/vite-plugin-pages@0.18.3-beta.2",
     "vue": "^3.2.21",
     "vue-router": "^4.0.12",
-    "xdm": "file:../../../xdm"
+    "xdm": "npm:@islands/xdm@3.2.4-beta.1"
   },
   "devDependencies": {
     "@antfu/install-pkg": "^0.1.0",

@@ -180,8 +180,6 @@ export default function IslandsPlugins (appConfig: AppConfig): PluginOption[] {
     plugins.vue,
     ...plugins.optionalPlugins,
 
-    plugins.vueJsx,
-
     // https://github.com/hannoeru/vite-plugin-pages
     plugins.pages,
 
@@ -231,7 +229,8 @@ import.meta.hot.accept('/${relative(root, path)}', (...args) => __ILES_PAGE_UPDA
       async transform (code, id) {
         const { path, query } = parseId(id)
         const isMarkdownPath = isMarkdown(path)
-        if (!isMarkdownPath && !isSFCMain(path, query)) return
+        const isSFC = isSFCMain(path, query)
+        if (!isMarkdownPath && !isSFC) return
 
         const s = new MagicString(code)
         const sfcIndex = code.indexOf('{', code.indexOf('const _sfc_main = ')) + 1
@@ -243,23 +242,25 @@ import.meta.hot.accept('/${relative(root, path)}', (...args) => __ILES_PAGE_UPDA
         }
 
         const pageMatter = frontmatterFromPage(path)
-        if (!pageMatter) return
 
         if (isMarkdownPath) {
+          appendToSfc('inheritAttrs', serialize(false))
           s.appendRight(sfcIndex, '...meta,...frontmatter,meta,frontmatter,')
         }
-        else {
-          const { meta, layout, ...frontmatter } = pageMatter
-          appendToSfc('inheritAttrs', serialize(false))
-          appendToSfc('meta', serialize(meta))
-          appendToSfc('frontmatter', serialize(frontmatter))
-        }
 
-        const layoutName = pageMatter.layout ?? 'default'
-        appendToSfc('layoutName', serialize(layoutName))
-        appendToSfc('layoutFn', String(layoutName) === 'false'
-          ? 'false'
-          : `() => import('${layoutsRoot}/${layoutName}.vue').then(m => m.default)`)
+        if (pageMatter) {
+          if (isSFC) {
+            const { meta, layout, ...frontmatter } = pageMatter
+            appendToSfc('inheritAttrs', serialize(false))
+            appendToSfc('meta', serialize(meta))
+            appendToSfc('frontmatter', serialize(frontmatter))
+          }
+          const layoutName = pageMatter.layout ?? 'default'
+          appendToSfc('layoutName', serialize(layoutName))
+          appendToSfc('layoutFn', String(layoutName) === 'false'
+            ? 'false'
+            : `() => import('${layoutsRoot}/${layoutName}.vue').then(m => m.default)`)
+        }
 
         return s.toString()
       },
