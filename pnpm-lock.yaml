@@ -209,7 +209,7 @@ importers:
       vite-plugin-solid: ^2.1.1
       vue: ^3.2.21
       vue-router: ^4.0.12
-      xdm: npm:@islands/xdm@3.2.4-beta.1
+      xdm: npm:@islands/xdm@3.2.4-beta.2
     dependencies:
       '@islands/frontmatter': link:../frontmatter
       '@islands/hydration': link:../hydration
@@ -235,7 +235,7 @@ importers:
       vite-plugin-pages: /@mussi/vite-plugin-pages/0.18.3-beta.2_vite@2.6.13+vue@3.2.21
       vue: 3.2.21
       vue-router: 4.0.12_vue@3.2.21
-      xdm: /@islands/xdm/3.2.4-beta.1
+      xdm: /@islands/xdm/3.2.4-beta.2
     devDependencies:
       '@antfu/install-pkg': 0.1.0
       '@islands/headings': link:../headings
@@ -2098,11 +2098,11 @@ packages:
       hast-util-to-string: 2.0.0
     dev: true
 
-  /@islands/hydration/0.3.2_vue@3.2.21:
-    resolution: {integrity: sha512-C8QXADpgd3ctNVV3iNCMMEFP0hssXimOOPs61vLsTZXloQ7hyrisPkCAuoUjQ5ACZmVo3ifF9hFz7HIalubO8w==}
+  /@islands/hydration/0.3.3_vue@3.2.21:
+    resolution: {integrity: sha512-CAUXsjot2Wf5fL7h5gmyprZScMpyHhKEn22YN3DNv5loZ7KoVAoe3FQ6scZXU4/hQLRnVCkPL3l4oeS0YEQEjQ==}
     engines: {node: '>=14.0.0'}
     peerDependencies:
-      vue: 3.2.20
+      vue: ^3.2.21
     dependencies:
       vue: 3.2.21
     dev: true
@@ -2126,7 +2126,7 @@ packages:
     resolution: {integrity: sha512-4rxPxs1NK58AdbTRpXZUiqsuTQUF9onsuK7AnphWfnb6jX71LA/xvxJ5x1UtvxFqpm+Kxdz/mGpixdlF3nzUQA==}
     engines: {node: '>=14.0.0'}
     dependencies:
-      '@islands/hydration': 0.3.2_vue@3.2.21
+      '@islands/hydration': 0.3.3_vue@3.2.21
     transitivePeerDependencies:
       - vue
     dev: true
@@ -2155,6 +2155,33 @@ packages:
       deasync: 0.1.23
     transitivePeerDependencies:
       - supports-color
+    dev: true
+
+  /@islands/xdm/3.2.4-beta.2:
+    resolution: {integrity: sha512-et+p4XHLz0JWPcAai/7pb3qoNHnyaWtrbDkiBZ02/0ZdgP1M1XbYemoZl4j1EAcNcIjQayYZAe65eEQj2JCbdw==}
+    dependencies:
+      '@rollup/pluginutils': 4.1.1
+      '@types/estree-jsx': 0.0.1
+      '@types/mdx': 2.0.1
+      astring: 1.7.5
+      estree-util-is-identifier-name: 2.0.0
+      estree-walker: 3.0.0
+      got: 11.8.2
+      hast-util-to-estree: 2.0.2
+      markdown-extensions: 1.1.1
+      mdast-util-mdx: 1.1.0
+      micromark-extension-mdxjs: 1.0.0
+      remark-parse: 10.0.0
+      remark-rehype: 10.0.1
+      source-map: 0.7.3
+      unified: 10.1.0
+      unist-util-visit: 4.1.0
+      vfile: 5.2.0
+    optionalDependencies:
+      deasync: 0.1.23
+    transitivePeerDependencies:
+      - supports-color
+    dev: false
 
   /@jest/types/27.1.0:
     resolution: {integrity: sha512-pRP5cLIzN7I7Vp6mHKRSaZD7YpBTK7hawx5si8trMKqk4+WOdK8NEKOTO2G8PKWD1HbKMVckVB6/XHh/olhf2g==}
@@ -6196,7 +6223,7 @@ packages:
     hasBin: true
     dependencies:
       '@islands/frontmatter': 0.3.0
-      '@islands/hydration': 0.3.2_vue@3.2.21
+      '@islands/hydration': 0.3.3_vue@3.2.21
       '@islands/prerender': 0.3.1_vue@3.2.21
       '@nuxt/devalue': 2.0.0
       '@rollup/plugin-virtual': 2.0.3
