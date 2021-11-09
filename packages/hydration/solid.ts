@@ -10,7 +10,7 @@ export default function createIsland (component: Component, id: string, el: Elem
   hydrate(() => createComponent(component, { ...props, children: createContent(slots) }), el)
 
   if (import.meta.env.DEV)
-    (window as any).__ILE_DEVTOOLS__?.onHydration({ id, el, slots, component, framework: 'solid' })
+    (window as any).__ILE_DEVTOOLS__?.onHydration({ id, el, props, slots, component, framework: 'solid' })
 }
 
 function createContent (slots: Slots | undefined) {

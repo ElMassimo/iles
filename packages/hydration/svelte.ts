@@ -12,7 +12,7 @@ export default function createIsland (component: Component, id: string, el: Elem
   new component({ target: el, props: { ...props, $$slots, $$scope: { ctx: {} } }, hydrate: true })
 
   if (import.meta.env.DEV)
-    (window as any).__ILE_DEVTOOLS__?.onHydration({ id, el, slots, component, framework: 'svelte' })
+    (window as any).__ILE_DEVTOOLS__?.onHydration({ id, el, props, slots, component, framework: 'svelte' })
 }
 
 // Internal: A custom function to provide rendered content for Svelte slots.

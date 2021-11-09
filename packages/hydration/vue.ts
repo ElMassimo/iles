@@ -14,5 +14,5 @@ export default function createVueIsland (component: Component, id: string, el: E
     .mount(el!, Boolean(slots))
 
   if (import.meta.env.DEV)
-    (window as any).__ILE_DEVTOOLS__?.onHydration({ id, el, slots, component })
+    (window as any).__ILE_DEVTOOLS__?.onHydration({ id, el, props, slots, component })
 }

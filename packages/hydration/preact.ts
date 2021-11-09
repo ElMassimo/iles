@@ -6,7 +6,7 @@ export default function createIsland (component: Component, id: string, el: Elem
   render(createElement(component, props, slots), el)
 
   if (import.meta.env.DEV)
-    (window as any).__ILE_DEVTOOLS__?.onHydration({ id, el, slots, component, framework: 'preact' })
+    (window as any).__ILE_DEVTOOLS__?.onHydration({ id, el, props, slots, component, framework: 'preact' })
 }
 
 /**

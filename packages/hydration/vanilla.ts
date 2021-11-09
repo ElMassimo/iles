@@ -8,5 +8,5 @@ export default function createIsland (component: Component | OnLoadFn, id: strin
     component(el, props, slots)
 
   if (import.meta.env.DEV)
-    (window as any).__ILE_DEVTOOLS__?.onHydration({ id, el, slots, component, framework: 'none' })
+    (window as any).__ILE_DEVTOOLS__?.onHydration({ id, el, props, slots, component, framework: 'none' })
 }
