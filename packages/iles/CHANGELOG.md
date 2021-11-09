@@ -1,3 +1,12 @@
+## [0.6.2-beta.4](https://github.com/ElMassimo/iles/compare/v0.6.2-beta.3...v0.6.2-beta.4) (2021-11-09)
+
+
+### Bug Fixes
+
+* apply plugin during build ([c3c6299](https://github.com/ElMassimo/iles/commit/c3c6299cc92111e6cd1683fe68dd18ade258f5ab))
+
+
+
 ## [0.6.2-beta.3](https://github.com/ElMassimo/iles/compare/v0.6.2-beta.2...v0.6.2-beta.3) (2021-11-09)
 
 
