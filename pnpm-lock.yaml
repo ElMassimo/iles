@@ -47,7 +47,7 @@ importers:
       '@preact/preset-vite': ^2.1.5
       '@vueuse/core': ^6.5.3
       autoprefixer: ^10.3.5
-      iles: ^0.6.2-beta.1
+      iles: ^0.6.2-beta.2
       postcss-nesting: ^8.0.1
       preact: ^10.5.15
       preact-render-to-string: ^5.1.19
@@ -70,7 +70,7 @@ importers:
       '@preact/preset-vite': 2.1.5_preact@10.5.15+vite@2.6.13
       '@vueuse/core': 6.7.4
       autoprefixer: 10.4.0
-      iles: 0.6.2-beta.1
+      iles: 0.6.2-beta.2
       postcss-nesting: 8.0.1
       preact-render-to-string: 5.1.19_preact@10.5.15
       vite: 2.6.13
@@ -2131,32 +2131,6 @@ packages:
       - vue
     dev: true
 
-  /@islands/xdm/3.2.4-beta.2:
-    resolution: {integrity: sha512-et+p4XHLz0JWPcAai/7pb3qoNHnyaWtrbDkiBZ02/0ZdgP1M1XbYemoZl4j1EAcNcIjQayYZAe65eEQj2JCbdw==}
-    dependencies:
-      '@rollup/pluginutils': 4.1.1
-      '@types/estree-jsx': 0.0.1
-      '@types/mdx': 2.0.1
-      astring: 1.7.5
-      estree-util-is-identifier-name: 2.0.0
-      estree-walker: 3.0.0
-      got: 11.8.2
-      hast-util-to-estree: 2.0.2
-      markdown-extensions: 1.1.1
-      mdast-util-mdx: 1.1.0
-      micromark-extension-mdxjs: 1.0.0
-      remark-parse: 10.0.0
-      remark-rehype: 10.0.1
-      source-map: 0.7.3
-      unified: 10.1.0
-      unist-util-visit: 4.1.0
-      vfile: 5.2.0
-    optionalDependencies:
-      deasync: 0.1.23
-    transitivePeerDependencies:
-      - supports-color
-    dev: true
-
   /@islands/xdm/3.2.5:
     resolution: {integrity: sha512-f1d02guy/tKF9FO4xhTNdaPw163ZoAI/0YhttiJkvmzBrj/maggFg9NoOauGlh000Pw5qQwtv7B9jwy1NR7DDg==}
     dependencies:
@@ -2186,7 +2160,6 @@ packages:
       deasync: 0.1.23
     transitivePeerDependencies:
       - supports-color
-    dev: false
 
   /@jest/types/27.1.0:
     resolution: {integrity: sha512-pRP5cLIzN7I7Vp6mHKRSaZD7YpBTK7hawx5si8trMKqk4+WOdK8NEKOTO2G8PKWD1HbKMVckVB6/XHh/olhf2g==}
@@ -5470,7 +5443,6 @@ packages:
       '@types/estree-jsx': 0.0.1
       estree-util-is-identifier-name: 2.0.0
       estree-walker: 3.0.0
-    dev: false
 
   /estree-util-is-identifier-name/2.0.0:
     resolution: {integrity: sha512-aXXZFVMnBBDRP81vS4YtAYJ0hUkgEsXea7lNKWCOeaAquGb1Jm2rcONPB5fpzwgbNxulTvrWuKnp9UElUGAKeQ==}
@@ -6227,8 +6199,8 @@ packages:
     engines: {node: '>= 4'}
     dev: true
 
-  /iles/0.6.2-beta.1:
-    resolution: {integrity: sha512-sOLJbOkGgtXn9emr/ldACCwg1q42DAzO4QxOuAkzM4jEhL8M1zfRVc2GNuW6fFjU5Mc1VPrTBgJVRmpsVUro3w==}
+  /iles/0.6.2-beta.2:
+    resolution: {integrity: sha512-942AX6mFZF7nAoPwSJBS+tliy4xthVGTwV5IMqtAX4d5Fk03azTy4i1ZtBxozpvzL2ZOGpYG9BVVAr+XCv1RGw==}
     engines: {node: '>=14.0.0'}
     hasBin: true
     dependencies:
@@ -6256,7 +6228,7 @@ packages:
       vite-plugin-pages: /@mussi/vite-plugin-pages/0.18.3-beta.2_vite@2.6.13+vue@3.2.21
       vue: 3.2.21
       vue-router: 4.0.12_vue@3.2.21
-      xdm: /@islands/xdm/3.2.4-beta.2
+      xdm: /@islands/xdm/3.2.5
     transitivePeerDependencies:
       - '@babel/parser'
       - '@babel/traverse'
@@ -6614,7 +6586,6 @@ packages:
     resolution: {integrity: sha512-Eo1W3wUoHWoCoVM4GVl/a+K0IgiqE5aIo4kJABFyMum1ZORlPkC+UC357sSQUL5w5QCE5kCC9upl75b7+7CY/Q==}
     dependencies:
       '@types/estree': 0.0.50
-    dev: false
 
   /is-regex/1.1.4:
     resolution: {integrity: sha512-kvRdxDsxZjhzUX07ZnLydzS1TU/TJlTUHHY4YLL87e37oUA49DfkLqgy+VjFocowy29cKvcSiu+kIv728jTTVg==}
@@ -8198,7 +8169,6 @@ packages:
     dependencies:
       estree-walker: 3.0.0
       is-reference: 3.0.0
-    dev: false
 
   /picocolors/0.2.1:
     resolution: {integrity: sha512-cMlDqaLEqfSaW8Z7N5Jw+lyIW869EzT73/F5lhtY9cLGoVxSXznfgfXMO0Z5K0o0Q2TkTXq+0KFsdnSe3jDViA==}
