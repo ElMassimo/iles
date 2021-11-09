@@ -7,7 +7,6 @@ import type VuePlugin, { Options as VueOptions } from '@vitejs/plugin-vue'
 import type PagesPlugin, { UserOptions as PagesOptions } from 'vite-plugin-pages'
 import type ComponentsPlugin from 'unplugin-vue-components/vite'
 import type { Options as ComponentOptions } from 'unplugin-vue-components/types'
-import type VueJsxPlugin from '@vitejs/plugin-vue-jsx'
 
 import type { Options as SolidOptions } from 'vite-plugin-solid'
 import type { Options as SvelteOptions } from '@sveltejs/vite-plugin-svelte'
@@ -104,7 +103,6 @@ export interface NamedPlugins {
   pages: ReturnType<typeof PagesPlugin>
   markdown: ReturnType<typeof MarkdownPlugin>
   vue: ReturnType<typeof VuePlugin>
-  vueJsx: ReturnType<typeof VueJsxPlugin>
   components: ReturnType<typeof ComponentsPlugin>
   optionalPlugins: VitePluginOption[]
 }
@@ -127,10 +125,6 @@ export interface BaseIlesConfig {
    * imports for components in Vue and MDX files.
    */
   components: ComponentOptions
-  /**
-   * Configuration options for @vitejs/plugin-vue-jsx
-   */
-  vueJsx: Parameters<typeof VueJsxPlugin>[0]
   /**
    * Configuration options for @preact/preset-vite
    */
@@ -189,7 +183,7 @@ export interface RequiredConfig {
   /**
    * Which framework to use to process `.jsx` and `.tsx` files.
    */
-  jsx: 'vue' | 'preact' | 'solid'
+  jsx?: 'vue' | 'preact' | 'solid'
   /**
    * Specify the output directory (relative to project root).
    * @default 'dist'

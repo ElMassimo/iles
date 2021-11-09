@@ -6,7 +6,6 @@ import creatDebugger from 'debug'
 import { loadConfigFromFile, mergeConfig as mergeViteConfig } from 'vite'
 import pages from 'vite-plugin-pages'
 import vue from '@vitejs/plugin-vue'
-import vueJsx from '@vitejs/plugin-vue-jsx'
 import components from 'unplugin-vue-components/vite'
 import frontmatter from '@islands/frontmatter'
 
@@ -115,7 +114,6 @@ async function setNamedPlugins (config: AppConfig, env: ConfigEnv, plugins: Name
   plugins.pages = pages(config.pages)
   plugins.markdown = markdown(config.markdown)
   plugins.vue = vue(config.vue)
-  plugins.vueJsx = vueJsx(config.vueJsx)
 
   const optionalPlugins: [keyof AppConfig, string, (mod: any, options: any) => any][] = [
     ['solid', 'vite-plugin-solid', (mod, options) => mod({ ssr: true, ...options })],
@@ -177,7 +175,6 @@ function inferJSX (config: UserConfig) {
     if (name.includes('preact')) return 'preact'
     if (name.includes('solid')) return 'solid'
   }
-  return 'vue'
 }
 
 function appConfigDefaults (appConfig: AppConfig, userConfig: UserConfig): Omit<AppConfig, 'namedPlugins'> {
@@ -227,12 +224,7 @@ function appConfigDefaults (appConfig: AppConfig, userConfig: UserConfig): Omit<
         compilerOptions: {},
       },
     },
-    vueJsx: {
-      include: jsx === 'vue' ? /\.([jt]sx|mdx?)$/ : /\.mdx?$/,
-    },
     markdown: {
-      jsx: true,
-      jsxRuntime: false as any,
       remarkPlugins: [
         [remarkWrapIslands, { get config () { return appConfig } }],
       ],

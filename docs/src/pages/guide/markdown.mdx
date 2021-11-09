@@ -1,6 +1,5 @@
 [MDX]: https://v2.mdxjs.com/docs/what-is-mdx/
 [XDM]: https://github.com/wooorm/xdm
-[Vue JSX]: https://www.npmjs.com/package/@vitejs/plugin-vue-jsx
 [components]: /guide/development#components
 [vue-jsx]: https://github.com/vuejs/jsx-next#slot
 [frontmatter]: https://github.com/wooorm/xdm#frontmatter
@@ -58,8 +57,7 @@ The `filename` and the page `href` can be accessed through [`meta`][meta].
 
 ## Vue in Markdown <VueLogo/>
 
-<Iles/> combines [Vue JSX] and [XDM] and enables you to use Vue components
-in MDX files.
+<Iles/> extends [XDM] enabling you to use Vue components in MDX files.
 
 HMR is fully supported, and components can be used [without importing them][components]. 
 
@@ -147,7 +145,7 @@ import doc from '~/pages/introduction.mdx'
 
 ## Advanced: Multiple Slots in MDX
 
-If you need to provide several slots to a component in [MDX], you can use `v-slots` or provide an [object slot][vue-jsx]:
+If you need to provide several slots to a component in [MDX], you can use [`v-slots`][vue-jsx]:
 
 ```mdx
 export const titleWithMarkdown = <span>But better keep it <b>simple</b></span>

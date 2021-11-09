@@ -31,7 +31,7 @@ export const markdown: MarkdownPlugin = function IlesMarkdown (options: Markdown
     },
 
     async configResolved (config) {
-      await createXDM(config.build.sourcemap)
+      await createXDM(config.mode === 'development' || config.build.sourcemap)
     },
 
     async transform (value, path) {

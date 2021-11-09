@@ -18,6 +18,7 @@ import { parseId } from './parse'
 import { wrapIslandsInSFC, wrapLayout } from './wrap'
 import { extendSite } from './site'
 import { autoImportComposables, writeComposablesDTS } from './composables'
+import { hmrRuntime } from './hmr'
 
 export const ILES_APP_ENTRY = '/@iles-entry'
 
@@ -36,7 +37,6 @@ export default function IslandsPlugins (appConfig: AppConfig): PluginOption[] {
   debug.config(appConfig)
 
   let base: ResolvedConfig['base']
-  let mode: ResolvedConfig['mode']
   let root: ResolvedConfig['root']
   let isBuild: boolean
 
@@ -63,7 +63,6 @@ export default function IslandsPlugins (appConfig: AppConfig): PluginOption[] {
       configResolved (config) {
         if (base) return
         base = config.base
-        mode = config.mode
         root = config.root
         isBuild = config.command === 'build'
         appConfig.resolvePath = config.createResolver()
@@ -177,39 +176,25 @@ export default function IslandsPlugins (appConfig: AppConfig): PluginOption[] {
       },
     },
 
+    plugins.markdown,
     plugins.vue,
     ...plugins.optionalPlugins,
-
-    plugins.markdown,
-
-    {
-      name: 'iles:mdx:hmr',
-      async transform (code, id) {
-        const { path } = parseId(id)
-        if (!isMarkdown(path) || !code.includes('MDXContent')) return null
-
-        // Allow empty markdown files.
-        code = code.replace('<></>', '')
-
-        // TODO: Allow component to receive an excerpt prop.
-        return code.replace('export default MDXContent', `
-${code.includes(' defineComponent') ? '' : 'import { defineComponent } from \'vue\''}
-
-const _sfc_main = defineComponent({
-  render: MDXContent,${mode === 'development' ? `\n  __file: '${path}',` : ''}
-})
-export default _sfc_main
-`)
-      },
-    },
-
-    plugins.vueJsx,
 
     // https://github.com/hannoeru/vite-plugin-pages
     plugins.pages,
 
     // https://github.com/antfu/unplugin-vue-components
     plugins.components,
+
+    {
+      name: 'iles:mdx:hmr',
+      apply: 'serve',
+      async transform (code, id) {
+        const { path } = parseId(id)
+        if (isMarkdown(path) && code.includes('_sfc_main = '))
+          return `${code.replace('defineComponent({', m => `${m}__file: '${path}',`)}\n${hmrRuntime(id)}`
+      },
+    },
 
     {
       name: 'iles:page-hmr',
@@ -244,7 +229,8 @@ import.meta.hot.accept('/${relative(root, path)}', (...args) => __ILES_PAGE_UPDA
       async transform (code, id) {
         const { path, query } = parseId(id)
         const isMarkdownPath = isMarkdown(path)
-        if (!isMarkdownPath && !isSFCMain(path, query)) return
+        const isSFC = isSFCMain(path, query)
+        if (!isMarkdownPath && !isSFC) return
 
         const s = new MagicString(code)
         const sfcIndex = code.indexOf('{', code.indexOf('const _sfc_main = ')) + 1
@@ -256,23 +242,25 @@ import.meta.hot.accept('/${relative(root, path)}', (...args) => __ILES_PAGE_UPDA
         }
 
         const pageMatter = frontmatterFromPage(path)
-        if (!pageMatter) return
 
         if (isMarkdownPath) {
+          appendToSfc('inheritAttrs', serialize(false))
           s.appendRight(sfcIndex, '...meta,...frontmatter,meta,frontmatter,')
         }
-        else {
-          const { meta, layout, ...frontmatter } = pageMatter
-          appendToSfc('inheritAttrs', serialize(false))
-          appendToSfc('meta', serialize(meta))
-          appendToSfc('frontmatter', serialize(frontmatter))
-        }
 
-        const layoutName = pageMatter.layout ?? 'default'
-        appendToSfc('layoutName', serialize(layoutName))
-        appendToSfc('layoutFn', String(layoutName) === 'false'
-          ? 'false'
-          : `() => import('${layoutsRoot}/${layoutName}.vue').then(m => m.default)`)
+        if (pageMatter) {
+          if (isSFC) {
+            const { meta, layout, ...frontmatter } = pageMatter
+            appendToSfc('inheritAttrs', serialize(false))
+            appendToSfc('meta', serialize(meta))
+            appendToSfc('frontmatter', serialize(frontmatter))
+          }
+          const layoutName = pageMatter.layout ?? 'default'
+          appendToSfc('layoutName', serialize(layoutName))
+          appendToSfc('layoutFn', String(layoutName) === 'false'
+            ? 'false'
+            : `() => import('${layoutsRoot}/${layoutName}.vue').then(m => m.default)`)
+        }
 
         return s.toString()
       },

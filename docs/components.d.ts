@@ -11,6 +11,7 @@ declare module 'vue' {
     Caption: typeof import('./src/components/Caption.vue')['default']
     Contact: typeof import('./src/components/contact.mdx')['default']
     DarkModeSwitch: typeof import('./src/components/DarkModeSwitch.vue')['default']
+    Display: typeof import('./src/components/Display.vue')['default']
     DocSearch: typeof import('./src/components/DocSearch.tsx')['default']
     EditLink: typeof import('./src/components/EditLink.vue')['default']
     GitHubLogo: typeof import('./src/components/GitHubLogo.vue')['default']
