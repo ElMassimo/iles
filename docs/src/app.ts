@@ -4,6 +4,8 @@ import '~/styles/all.css'
 
 import { defineApp } from 'iles'
 
+import Image from '~/components/Image.vue'
+
 import checkDarkTheme from '~/logic/dark-color-scheme-check?raw'
 
 const prodScripts = import.meta.env.PROD ? [
@@ -17,5 +19,8 @@ export default defineApp({
       { children: checkDarkTheme },
       ...prodScripts,
     ],
+  },
+  mdxComponents: {
+    img: Image,
   },
 })

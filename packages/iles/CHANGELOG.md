@@ -5,46 +5,9 @@
 
 * add mdxComponents config option to provide components globally ([a2d63e1](https://github.com/ElMassimo/iles/commit/a2d63e1ad089a2e15debd4433b450d6d4c1434bd))
 
-
-
-## [0.6.2-beta.4](https://github.com/ElMassimo/iles/compare/v0.6.2-beta.3...v0.6.2-beta.4) (2021-11-09)
-
-
-### Bug Fixes
-
-* apply plugin during build ([c3c6299](https://github.com/ElMassimo/iles/commit/c3c6299cc92111e6cd1683fe68dd18ade258f5ab))
-
-
-
-## [0.6.2-beta.3](https://github.com/ElMassimo/iles/compare/v0.6.2-beta.2...v0.6.2-beta.3) (2021-11-09)
-
-
-### Bug Fixes
-
-* include jsx-runtime in the package ([89d5f8d](https://github.com/ElMassimo/iles/commit/89d5f8d112469139d3df4618637cdf625cce4f18))
-
-
-
-## [0.6.2-beta.2](https://github.com/ElMassimo/iles/compare/v0.6.2-beta.1...v0.6.2-beta.2) (2021-11-09)
-
-
-### Features
-
 * allow layouts to pass props to pages ([20eaa3b](https://github.com/ElMassimo/iles/commit/20eaa3b56a18b717b61a306f37ea3d60b82448f5))
 
-
-
-## [0.6.2-beta.1](https://github.com/ElMassimo/iles/compare/v0.6.2-beta.0...v0.6.2-beta.1) (2021-11-09)
-
-
-### Bug Fixes
-
-* node 14 compatibility ([fd30327](https://github.com/ElMassimo/iles/commit/fd303272f598f3911e3995eebeaf9245ef9364b1))
-
-
-
-## [0.6.2-beta.0](https://github.com/ElMassimo/iles/compare/v0.6.1...v0.6.2-beta.0) (2021-11-09)
-
+* perf: skip babel transform and `@vitejs/plugin-vue-jsx` for MDX components
 
 
 ## [0.6.1](https://github.com/ElMassimo/iles/compare/v0.6.0...v0.6.1) (2021-11-05)

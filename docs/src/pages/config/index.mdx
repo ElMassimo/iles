@@ -7,6 +7,8 @@
 [meta tags]: /guide/meta-tags
 [sitemap]: /guide/development#sitemap
 
+[shortcodes]: /guide/markdown#advanced-provide-components-shortcodes
+
 # Configuration
 
 The following section is an overview of basic configuration for <Iles/>.
@@ -109,6 +111,24 @@ Set the page title, meta tags, additional CSS, or scripts using [`@vueuse/head`]
 
 A hook where you can add plugins to the Vue app, or do anything else prior to
 the app being mounted.
+
+### `mdxComponents`
+
+- **Type:** `MDXComponents | (context: AppContext) => MDXComponents`
+
+Provide an object that [maps tag names in MDX to components][shortcodes] to render.
+
+```ts
+import { defineApp } from 'iles'
+import Image from '~/components/Image.vue'
+
+export default defineApp({
+  mdxComponents: {
+    b: 'strong',
+    img: Image,
+  },
+})
+```
 
 ### `router`
 

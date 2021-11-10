@@ -5,6 +5,8 @@
 [frontmatter]: https://github.com/wooorm/xdm#frontmatter
 [meta]: /guide/development#using-page-data
 [component]: https://v3.vuejs.org/api/built-in-components.html#component
+[mdxComponents]: /config#mdxcomponents
+[enhanceApp]: /config#enhanceapp
 
 # Markdown 📖
 
@@ -142,6 +144,60 @@ import doc from '~/pages/introduction.mdx'
   <span>Last Updated: {{ formatDate(doc.meta.lastUpdated) }}</span>>
 </template>
 ```
+
+## Advanced: Provide Components (Shortcodes)
+
+You can use any components from <kbd>[src/components][components]</kbd>
+or those [globally registered in Vue][enhanceApp] without manually importing them in MDX.
+
+If you would like to replace built-in tags such as `img` and `a` with
+custom components, or provide other components, there are two main options.
+
+### Provide Components Globally
+
+Use the <kbd>[mdxComponents]</kbd> option to override components globally
+for all MDX components.
+
+<Tip title="Recommended ✨">
+Easy to setup, and provides consistency in how documents are rendered across the site.
+</Tip>
+
+### Provide Components Explicitly 
+
+If you need more control, pass the `components` prop to MDX components to specify
+an object that maps tag names to Vue or MDX components.
+
+```vue
+<script setup>
+import Introduction from '~/pages/introduction.mdx'
+
+const components = {
+  strong: 'b',
+  img: Image,
+  a: SmartLink,
+}
+</script>
+
+<template>
+  <h1>{{ Introduction.title }}</h1>
+  <Introduction :components="components"/>
+</template>
+```
+
+This technique can also be used more broadly. For example, to override components only in MDX pages using a specific layout:
+
+```vue
+<script setup>
+const postComponents = { ... }
+</script>
+
+<template>
+  <main>
+    <slot :components="postComponents"/>
+  </main>
+</template>
+```
+<Caption>`src/layouts/post.vue`</Caption>
 
 ## Advanced: Multiple Slots in MDX
 

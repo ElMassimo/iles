@@ -47,7 +47,7 @@ importers:
       '@preact/preset-vite': ^2.1.5
       '@vueuse/core': ^6.5.3
       autoprefixer: ^10.3.5
-      iles: ^0.6.2-beta.4
+      iles: ^0.6.2
       postcss-nesting: ^8.0.1
       preact: ^10.5.15
       preact-render-to-string: ^5.1.19
@@ -70,7 +70,7 @@ importers:
       '@preact/preset-vite': 2.1.5_preact@10.5.15+vite@2.6.13
       '@vueuse/core': 6.7.4
       autoprefixer: 10.4.0
-      iles: 0.6.2-beta.4
+      iles: 0.6.2
       postcss-nesting: 8.0.1
       preact-render-to-string: 5.1.19_preact@10.5.15
       vite: 2.6.13
@@ -6199,8 +6199,8 @@ packages:
     engines: {node: '>= 4'}
     dev: true
 
-  /iles/0.6.2-beta.4:
-    resolution: {integrity: sha512-AGFf4habFxam8WOz/2mFjtkUWllJGju1D0CTa14AS55Bc04ECkK3WMECK/M8+SQ3j2+jOwkLlgQpBgf88ILm5w==}
+  /iles/0.6.2:
+    resolution: {integrity: sha512-dE/qrSJqideuy+y12STkVpTNhzjdkAfi6FSrDiuCK3OUuUO/aaTHNthGTHfmHgPzJxBhqTsB6TuCUo9lr93dTQ==}
     engines: {node: '>=14.0.0'}
     hasBin: true
     dependencies:

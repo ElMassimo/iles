@@ -1,13 +1,13 @@
 <script setup lang="ts">
 defineProps({
-  caption: { type: String, required: true },
+  alt: { type: String, required: true },
   src: { type: String, required: true },
-  narrow: { type: Boolean, default: false },
+  narrow: { type: Boolean, default: true },
   wide: { type: Boolean, default: false },
 })
 </script>
 
 <template>
-  <img class="img" :class="{ narrow, wide }" :src="src" :alt="caption">
-  <Caption>{{ caption }}</Caption>
+  <img class="img mx-auto" :class="{ narrow, wide }" :src="src" :alt="alt">
+  <Caption>{{ alt }}</Caption>
 </template>
