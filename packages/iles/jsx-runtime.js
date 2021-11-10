@@ -1,4 +1,4 @@
-import { getCurrentInstance, resolveComponent, createVNode, Fragment } from 'vue'
+import { resolveComponent, createVNode, Fragment } from 'vue'
 
 // Internal: Compatibility layer with the automatic JSX runtime of React.
 //
