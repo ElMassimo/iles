@@ -1,3 +1,12 @@
+## [0.6.3](https://github.com/ElMassimo/iles/compare/v0.6.2...v0.6.3) (2021-11-10)
+
+
+### Features
+
+* add `provideMDXComponents` to simplify certain use cases ([de9f331](https://github.com/ElMassimo/iles/commit/de9f331d678ace129eef62a9b269b70fa095d298))
+
+
+
 ## [0.6.2](https://github.com/ElMassimo/iles/compare/v0.6.2-beta.4...v0.6.2) (2021-11-10)
 
 
