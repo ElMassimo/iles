@@ -1,6 +1,6 @@
 <script setup lang="ts">
 const components = {
-  strong: 'b',
+  b: 'strong',
 }
 </script>
 

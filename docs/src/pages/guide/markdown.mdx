@@ -171,6 +171,9 @@ an object that maps tag names to Vue or MDX components.
 <script setup>
 import Introduction from '~/pages/introduction.mdx'
 
+import Image from '~/components/Image.vue'
+import SmartLink from '~/components/SmartLink.vue'
+
 const components = {
   strong: 'b',
   img: Image,
@@ -184,18 +187,20 @@ const components = {
 </template>
 ```
 
-This technique can also be used more broadly. For example, to override components only in MDX pages using a specific layout:
+This technique can also be used more broadly. For example, to override components only in MDX pages using a specific layout you can use `provideMDXComponents`:
 
 ```vue
 <script setup>
-const postComponents = { ... }
+import { provideMDXComponents } from 'iles'
+
+import ExternalLink from '~/components/ExternalLink.vue'
+
+provideMDXComponents({
+  a: ExternalLink,
+})
 </script>
 
-<template>
-  <main>
-    <slot :components="postComponents"/>
-  </main>
-</template>
+...
 ```
 <Caption>`src/layouts/post.vue`</Caption>
 
