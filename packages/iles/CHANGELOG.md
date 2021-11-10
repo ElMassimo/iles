@@ -1,3 +1,12 @@
+## [0.6.4](https://github.com/ElMassimo/iles/compare/v0.6.3...v0.6.4) (2021-11-10)
+
+
+### Bug Fixes
+
+* remove unused `getCurrentInstance` import ([12c615f](https://github.com/ElMassimo/iles/commit/12c615fabee9880b24dcc25abbb6a7dba510f216))
+
+
+
 ## [0.6.3](https://github.com/ElMassimo/iles/compare/v0.6.2...v0.6.3) (2021-11-10)
 
 
