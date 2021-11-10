@@ -1,3 +1,12 @@
+## [0.6.2](https://github.com/ElMassimo/iles/compare/v0.6.2-beta.4...v0.6.2) (2021-11-10)
+
+
+### Features
+
+* add mdxComponents config option to provide components globally ([a2d63e1](https://github.com/ElMassimo/iles/commit/a2d63e1ad089a2e15debd4433b450d6d4c1434bd))
+
+
+
 ## [0.6.2-beta.4](https://github.com/ElMassimo/iles/compare/v0.6.2-beta.3...v0.6.2-beta.4) (2021-11-09)
 
 
