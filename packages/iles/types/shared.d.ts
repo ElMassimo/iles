@@ -152,10 +152,12 @@ export interface IlesModule extends Partial<BaseIlesConfig> {
 }
 
 export type EnhanceAppContext = AppContext
+export type MDXComponents = Record<string, any>
 
 export interface UserApp {
   head?: HeadConfig | ((ctx: EnhanceAppContext) => HeadConfig)
   enhanceApp?: (ctx: EnhanceAppContext) => void | Promise<void>
+  mdxComponents?: MDXComponents | ((ctx: EnhanceAppContext) => MDXComponents | Promise<MDXComponents>)
   router?: Omit<VueRouterOptions, 'history', 'routes'>
   socialTags?: boolean
 }

@@ -200,7 +200,7 @@ ${code.includes(' defineComponent') ? '' : 'import { defineComponent } from \'vu
 
 const _sfc_main = defineComponent({
   props: {
-    components: { type: Array },
+    components: { type: Object },
   },
   render () {
     return MDXContent({ ...this.$props, ...this.$attrs })

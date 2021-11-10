@@ -23,6 +23,7 @@ export type {
   MarkdownOptions,
   MarkdownPlugin,
   MarkdownProcessor,
+  MDXComponents,
   RouteMeta,
   Router,
   RouteRecordRaw,

@@ -9,6 +9,7 @@ import siteRef from '@islands/user-site'
 import type { CreateAppFactory, AppContext, RouterOptions } from '../shared'
 import App from './components/App.vue'
 import { installPageData, forcePageUpdate } from './composables/pageData'
+import { installMDXComponents } from './composables/mdxComponents'
 import { installAppConfig } from './composables/appConfig'
 import { resetHydrationId } from './hydration'
 import { defaultHead } from './head'
@@ -80,6 +81,7 @@ export const createApp: CreateAppFactory = async (options = {}) => {
   // Apply any configuration added by the user in app.ts
   if (headConfig) head.addHeadObjs(ref(typeof headConfig === 'function' ? headConfig(context) : headConfig))
   if (enhanceApp) await enhanceApp(context)
+  await installMDXComponents(context, userApp)
 
   return context
 }

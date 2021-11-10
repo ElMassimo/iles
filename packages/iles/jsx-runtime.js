@@ -1,4 +1,4 @@
-import { resolveComponent as _resolveComponent, createVNode, Fragment } from 'vue'
+import { getCurrentInstance, resolveComponent, createVNode, Fragment } from 'vue'
 
 // Internal: Compatibility layer with the automatic JSX runtime of React.
 //
@@ -23,15 +23,6 @@ function jsx (type, { children, 'v-slots': vSlots, ...props }) {
   }
 
   return createVNode(type, props, slots)
-}
-
-// Internal: Replacement for _missingMdxReference in xdm.
-function resolveComponent (name) {
-  const component = _resolveComponent(name)
-  if (component === name)
-    throw new Error(`Expected component ${name} to be defined: you likely forgot to import, pass, or provide it.`)
-
-  return component
 }
 
 export { jsx, jsx as jsxs, resolveComponent, Fragment }
