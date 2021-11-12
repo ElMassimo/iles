@@ -1,6 +1,7 @@
 /* eslint-disable no-restricted-syntax */
 import { promises as fs } from 'fs'
 import { join, resolve, dirname } from 'pathe'
+// @ts-ignore
 import virtual from '@rollup/plugin-virtual'
 import { build as viteBuild, mergeConfig as mergeViteConfig } from 'vite'
 import glob from 'fast-glob'
