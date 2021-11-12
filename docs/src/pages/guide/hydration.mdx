@@ -82,12 +82,10 @@ Useful to avoid unnecessary work depending on the available viewport, such as in
 ## 🏝 client:none
 Does not hydrate the component in the client, it will be prerendered as static HTML.
 
-<Tip warn>
-Allows to detect [Preact], [SolidJS], or [Svelte] components embedded in Vue or MDX files.
+Allows <Iles/> to detect [Preact], [SolidJS], or [Svelte] components embedded in Vue or MDX files.
 
-__No JS will be shipped in the build.__
-  
-You can use any of the other directives if you want the component to be interactive.
+<Tip title="No JS will be shipped in the build">
+You should use any of the other directives if you want the component to be interactive.
 </Tip>
 
 ## 🏝 client:only
