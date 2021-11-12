@@ -40,6 +40,7 @@ async function bundleWithVite (config: AppConfig, entrypoints: Entrypoints, { ss
       rollupOptions: {
         input: entrypoints,
         preserveEntrySignatures: 'allow-extension',
+        treeshake: false,
       },
     },
   } as ViteUserConfig)) as RollupOutput
