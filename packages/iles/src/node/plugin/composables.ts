@@ -6,7 +6,7 @@ import { parseImports } from './parse'
 const definitionRegex = /(?:function|const|let|var)\s+(definePageComponent|use(?:Page|Route|Head)\b)/g
 const composableUsageRegex = /\b(definePageComponent|use(?:Page|Route|Head))\s*\(/g
 
-export async function autoImportComposables (code: string, id: string): Promise<string | void> {
+export async function autoImportComposables (code: string, id: string): Promise<string | undefined> {
   const matches = Array.from(code.matchAll(composableUsageRegex))
   if (matches.length === 0) return
 

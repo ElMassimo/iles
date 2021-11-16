@@ -4,6 +4,7 @@ packages:
   - packages/prerender/
   - packages/frontmatter/
   - packages/headings/
+  - packages/mdx/
   - packages/icons/
   - packages/iles/
   - playground/the-vue-point/

@@ -8,6 +8,7 @@ import pages from 'vite-plugin-pages'
 import vue from '@vitejs/plugin-vue'
 import components from 'unplugin-vue-components/vite'
 import frontmatter from '@islands/frontmatter'
+import vueMdx from '@islands/mdx'
 
 import type { ComponentResolver } from 'unplugin-vue-components/types'
 import type { Frontmatter } from '@islands/frontmatter'
@@ -19,7 +20,6 @@ import type { AppConfig, BaseIlesConfig, ConfigEnv, ViteOptions, IlesModule, Ile
 import { camelCase, tryInstallModule, importLibrary, uncapitalize, isString, isStringPlugin, compact } from './plugin/utils'
 import { resolveAliases, DIST_CLIENT_PATH, HYDRATION_DIST_PATH } from './alias'
 import remarkWrapIslands from './plugin/remarkWrapIslands'
-import { markdown } from './plugin/markdown'
 
 const debug = creatDebugger('iles:config')
 
@@ -52,8 +52,7 @@ export async function resolveConfig (root?: string, env?: ConfigEnv): Promise<Ap
 }
 
 async function resolveUserConfig (root: string, configEnv: ConfigEnv) {
-  const config = { root, namedPlugins: {} } as AppConfig
-  config.namedPlugins.optionalPlugins = []
+  const config = { root } as AppConfig
 
   const { modules = [], ...userConfig } = await loadUserConfigFile(root, configEnv)
 
@@ -63,6 +62,7 @@ async function resolveUserConfig (root: string, configEnv: ConfigEnv) {
   config.modules = compact<IlesModule>(await resolveIlesModules([
     { name: 'iles:base-config', ...appConfigDefaults(config, userConfig as UserConfig) },
     frontmatter(),
+    vueMdx(),
     { name: 'user-config', ...userConfig },
     ...modules,
   ]).then(modules => modules.flat()))
@@ -112,7 +112,6 @@ async function setNamedPlugins (config: AppConfig, env: ConfigEnv, plugins: Name
 
   plugins.components = components(config.components)
   plugins.pages = pages(config.pages)
-  plugins.markdown = markdown(config.markdown)
   plugins.vue = vue(config.vue)
 
   const optionalPlugins: [keyof AppConfig, string, (mod: any, options: any) => any][] = [
@@ -126,7 +125,7 @@ async function setNamedPlugins (config: AppConfig, env: ConfigEnv, plugins: Name
     const addPlugin = config[optionName] || config.jsx === optionName
     if (addPlugin) {
       const options = isObject(addPlugin) ? addPlugin : {}
-      plugins.optionalPlugins.push(createPlugin(await importLibrary(pluginName), options))
+      config.vitePlugins.push(createPlugin(await importLibrary(pluginName), options))
       if (optionName === 'preact')
         await importLibrary('preact-render-to-string')
     }
@@ -177,7 +176,7 @@ function inferJSX (config: UserConfig) {
   }
 }
 
-function appConfigDefaults (appConfig: AppConfig, userConfig: UserConfig): Omit<AppConfig, 'namedPlugins'> {
+function appConfigDefaults (appConfig: AppConfig, userConfig: UserConfig): AppConfig {
   const { root } = appConfig
   const { jsx = inferJSX(userConfig) } = userConfig
 
@@ -217,6 +216,8 @@ function appConfigDefaults (appConfig: AppConfig, userConfig: UserConfig): Omit<
         return { ...route, meta: { ...route.meta, filename } }
       },
     },
+    namedPlugins: {} as NamedPlugins,
+    vitePlugins: [],
     vite: viteConfigDefaults(root),
     vue: {
       refTransform: true,

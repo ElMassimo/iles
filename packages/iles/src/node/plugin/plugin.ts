@@ -18,7 +18,6 @@ import { parseId } from './parse'
 import { wrapIslandsInSFC, wrapLayout } from './wrap'
 import { extendSite } from './site'
 import { autoImportComposables, writeComposablesDTS } from './composables'
-import { hmrRuntime } from './hmr'
 
 export const ILES_APP_ENTRY = '/@iles-entry'
 
@@ -38,7 +37,6 @@ export default function IslandsPlugins (appConfig: AppConfig): PluginOption[] {
 
   let base: ResolvedConfig['base']
   let root: ResolvedConfig['root']
-  let mode: ResolvedConfig['mode']
   let isBuild: boolean
 
   const appPath = resolve(appConfig.srcDir, 'app.ts')
@@ -64,7 +62,6 @@ export default function IslandsPlugins (appConfig: AppConfig): PluginOption[] {
       configResolved (config) {
         if (base) return
         base = config.base
-        mode = config.mode
         root = config.root
         isBuild = config.command === 'build'
         appConfig.resolvePath = config.createResolver()
@@ -178,38 +175,14 @@ export default function IslandsPlugins (appConfig: AppConfig): PluginOption[] {
       },
     },
 
-    plugins.markdown,
     plugins.vue,
-    ...plugins.optionalPlugins,
+    ...appConfig.vitePlugins,
 
     // https://github.com/hannoeru/vite-plugin-pages
     plugins.pages,
 
     // https://github.com/antfu/unplugin-vue-components
     plugins.components,
-
-    {
-      name: 'iles:mdx:post',
-      async transform (code, id) {
-        const { path } = parseId(id)
-        if (!isMarkdown(path) || !code.includes('MDXContent')) return null
-
-        // TODO: Allow component to receive an excerpt prop.
-        return code.replace('export default MDXContent', `
-${code.includes(' defineComponent') ? '' : 'import { defineComponent } from \'vue\''}
-
-const _sfc_main = defineComponent({
-  props: {
-    components: { type: Object },
-  },
-  render () {
-    return MDXContent({ ...this.$props, ...this.$attrs })
-  },${mode === 'development' ? `\n  __file: '${path}',` : ''}
-})
-export default _sfc_main
-${mode === 'development' ? hmrRuntime(id) : ''}`)
-      },
-    },
 
     {
       name: 'iles:page-hmr',

@@ -12,14 +12,12 @@ import type { Options as SolidOptions } from 'vite-plugin-solid'
 import type { Options as SvelteOptions } from '@sveltejs/vite-plugin-svelte'
 import type { PreactPluginOptions as PreactOptions } from '@preact/preset-vite'
 
-import type { FrontmatterOptions } from '@islands/frontmatter'
 import type { Router, RouteRecordRaw, RouteMeta, RouterOptions as VueRouterOptions, RouteComponent, RouteRecordNormalized, RouteLocationNormalizedLoaded, RouteParams } from 'vue-router'
 import type { HeadClient, HeadObject } from '@vueuse/head'
 export type { OnLoadFn } from '@islands/hydration/dist/vanilla'
 
-import type { MarkdownPlugin, MarkdownOptions, MarkdownProcessor } from './markdown'
+import type { MarkdownOptions } from '@islands/mdx'
 
-export type { MarkdownPlugin, MarkdownOptions, MarkdownProcessor }
 export type { ViteOptions, ConfigEnv }
 export type { Router, RouteRecordRaw, RouteMeta }
 
@@ -101,10 +99,8 @@ export type LayoutFactory = (name: string | false) => any
 
 export interface NamedPlugins {
   pages: ReturnType<typeof PagesPlugin>
-  markdown: ReturnType<typeof MarkdownPlugin>
   vue: ReturnType<typeof VuePlugin>
   components: ReturnType<typeof ComponentsPlugin>
-  optionalPlugins: VitePluginOption[]
 }
 
 export interface BaseIlesConfig {
@@ -234,6 +230,7 @@ export interface AppConfig extends RequiredConfig, BaseIlesConfig {
   pages: PagesOptions
   modules: IlesModule[]
   namedPlugins: NamedPlugins
+  vitePlugins: VitePluginOption[]
   resolvePath?: ResolveFn
 }
 
