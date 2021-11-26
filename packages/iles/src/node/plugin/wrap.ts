@@ -64,7 +64,7 @@ export async function wrapIslandsInSFC (config: AppConfig, code: string, filenam
 
   async function resolveComponentImport (strategy: string, tagName: string): Promise<ComponentInfo> {
     debug.detect(`<${tagName} ${strategy}>`)
-    if (imports[tagName]) return imports[tagName]
+    if (imports[tagName]) return await resolveImportPath(config, imports[tagName], filename)
     const info = await resolveComponent(components, tagName, filename, componentCounter++)
     if (strategy !== 'client:only') injectComponentImport(info)
     return info
@@ -114,6 +114,11 @@ export async function resolveComponent (components: ComponentsApi, tag: string, 
   const info = await components.findComponent(tag, filename)
   if (!info) throw new Error(`Could not resolve ${tag} in ${filename}. Make sure to import it explicitly, or add a component resolver.`)
   return { importName: 'default', ...info, name: `__ile_components_${counter}` }
+}
+
+export async function resolveImportPath (config: AppConfig, info: ComponentInfo, importer: string) {
+  info.path = (await config.resolvePath(info.path, importer)) || info.path
+  return info
 }
 
 async function injectClientScript (node: ElementNode, s: MagicString, filename: string, index: number, block: SFCBlock) {

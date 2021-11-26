@@ -231,7 +231,7 @@ export interface AppConfig extends RequiredConfig, BaseIlesConfig {
   modules: IlesModule[]
   namedPlugins: NamedPlugins
   vitePlugins: VitePluginOption[]
-  resolvePath?: ResolveFn
+  resolvePath: ResolveFn
 }
 
 export type AppClientConfig = Pick<AppConfig, 'base' | 'root' | 'debug' | 'ssg' | 'siteUrl' | 'jsx'>

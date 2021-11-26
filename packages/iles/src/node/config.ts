@@ -217,6 +217,7 @@ function appConfigDefaults (appConfig: AppConfig, userConfig: UserConfig): AppCo
       },
     },
     namedPlugins: {} as NamedPlugins,
+    resolvePath: undefined as any,
     vitePlugins: [],
     vite: viteConfigDefaults(root),
     vue: {

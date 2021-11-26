@@ -5,12 +5,12 @@ import type { MDXJSEsm } from 'mdast-util-mdxjs-esm'
 import type { ImportDeclaration } from 'estree'
 import { importModule } from 'lib/modules'
 import { AppConfig } from '../shared'
-import { resolveComponent } from './wrap'
+import { resolveComponent, resolveImportPath } from './wrap'
 import type { ImportsMetadata } from './parse'
 import { debug, isString } from './utils'
 
-export default (options: { config: AppConfig }) => async (ast: any, file: any) => {
-  let components = options.config.namedPlugins.components.api
+export default ({ config }: { config: AppConfig }) => async (ast: any, file: any) => {
+  let components = config.namedPlugins.components.api
   let imports: ImportsMetadata
   let componentPromises: (Promise<ComponentInfo>)[] = []
   let componentCounter = 0
@@ -34,7 +34,7 @@ export default (options: { config: AppConfig }) => async (ast: any, file: any) =
   async function resolveComponentImport (strategy: string, tagName: string) {
     debug.detect(`<${tagName} ${strategy}>`)
     if (!imports) imports = extractImports(ast.children.filter((node: Node) => node.type === 'mdxjsEsm'))
-    if (imports[tagName]) return imports[tagName]
+    if (imports[tagName]) return await resolveImportPath(config, imports[tagName], file.path)
     const info = resolveComponent(components, tagName, file.path, componentCounter++)
     if (strategy !== 'client:only') componentPromises.push(info)
     return await info
