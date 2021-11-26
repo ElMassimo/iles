@@ -1,5 +1,6 @@
 [Vite.js]: https://vitejs.dev/
 [starter]: /guide
+[pnpm]: https://pnpm.io/
 
 # Deployment 🚀
 
@@ -9,39 +10,51 @@ This section contains useful information for building and deploying an <Iles/> a
 
 ## Build 📦
 
-To build your site, run <kbd>npm run build</kbd> if you used the [starter], or
-manually add a `"build": "iles build",` script to your `package.json`.
+If you used the [starter], the default configuration to [build](/guide#usage) your site is:
 
-Like [Vite.js], the default output dir is <kbd>/dist</kbd>.
+- __Build Command__: <kbd>npm run build</kbd>
+- __Output Directory__: <kbd>dist</kbd>
+
+Else, you could manually add a `"build": "iles build",` script to your `package.json`.
+
+Like in most [Vite.js] projects, the default output dir is <kbd>/dist</kbd>.
+
+## pnpm
+
+[pnpm] is not supported out of the box in most providers, but you can still use it.
+
+In most cases, that requires manually installing dependencies by prepending an install
+command to the configured __Build Command__:
+
+```bash
+npx pnpm i --store=node_modules/.pnpm-store && npx pnpm run build
+```
+
+## Cloudflare Pages <CloudflareLogo/>
+
+To deploy in Cloudflare Pages, you will need to [create a project](https://developers.cloudflare.com/pages/get-started) and configure:
+
+- __Build Command__: <kbd>npm run build</kbd>
+- __Output Directory__: <kbd>dist</kbd>
+
+Additionally, since the default version of node is `12.18.0`, you will need to
+set the `NODE_VERSION` environment variable to `14.18.1` or higher.
 
 ## Netlify <NetlifyLogo/>
 
 Add a `netlify.toml` file to your project:
 
 ```toml
-[build.environment]
-  NODE_VERSION = "16"
-  
 [build]
   publish = "dist"
   command = "npm run build"
+
+[build.environment]
+  NODE_VERSION = "16"
+  # NPM_FLAGS = "--version" # uncomment if using pnpm to skip npm install
 ``` 
 
 Then, push to your git repository [as usual](https://docs.netlify.com/configure-builds/get-started/).
-
-<Tip title="pnpm">
-If using `pnpm`, make sure to install dependencies:
-
-```toml
-[build.environment]
-  NODE_VERSION = "16"
-  NPM_FLAGS = "--version"
-
-[build]
-  publish = "dist"
-  command = "npx pnpm i --store=node_modules/.pnpm-store && npx pnpm run build"
-``` 
-</Tip>
 
 ## Vercel <VercelLogo/>
 
