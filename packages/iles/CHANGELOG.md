@@ -1,3 +1,17 @@
+## [0.6.5](https://github.com/ElMassimo/iles/compare/v0.6.4...v0.6.5) (2021-11-26)
+
+
+### Bug Fixes
+
+* resolve import aliases in island component paths ([edc014a](https://github.com/ElMassimo/iles/commit/edc014ae2f4e41be8c772202bd893051c00f610a))
+
+
+### Performance Improvements
+
+* avoid treeshaking on temporary bundles ([9a5df2c](https://github.com/ElMassimo/iles/commit/9a5df2cf210d45a1af2683aa064163c5b291c607))
+
+
+
 ## [0.6.4](https://github.com/ElMassimo/iles/compare/v0.6.3...v0.6.4) (2021-11-10)
 
 
