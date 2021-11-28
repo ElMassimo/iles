@@ -1,3 +1,4 @@
+import { resolve } from 'path'
 import { defineConfig } from 'iles'
 
 import windicss from 'vite-plugin-windicss'
@@ -24,6 +25,11 @@ export default defineConfig({
   vite: {
     optimizeDeps: {
       include: ['quicklink', '@vueuse/core', '@mussi/docsearch', 'preact', 'preact/debug'],
+    },
+    resolve: {
+      alias: {
+        '~images': resolve(__dirname, 'images'),
+      },
     },
     plugins: [
       windicss(),
