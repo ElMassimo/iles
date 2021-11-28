@@ -55,7 +55,9 @@ async function renderRoute (config: AppConfig, manifest: Manifest, route: RouteT
       // Inline the script in the SSR'ed html to load the island.
       const rebasedCode = await rebaseImports(config, code)
       content = content.replace(`<!--${island.placeholder}-->`,
-        `<script type="module" async>${rebasedCode}</script>`)
+        // TODO: Remove additional script tag once Firefox is fixed
+        // https://bugzilla.mozilla.org/show_bug.cgi?id=1737882
+        `<script></script><script type="module" async>${rebasedCode}</script>`)
     }
 
     // Preload scripts for islands in the page.
