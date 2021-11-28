@@ -1,11 +1,12 @@
-import { remarkPlugin } from './remark-plugin'
+import { remarkMdxFrontmatter } from './remark-mdx-frontmatter'
+import { remarkMdxImages } from './remark-mdx-images'
 
 export type {
   FrontmatterPluggable,
   FrontmatterPlugin,
   Frontmatter,
   FrontmatterOptions,
-} from './remark-plugin'
+} from './remark-mdx-frontmatter'
 
 /**
  * An iles module that injects remark plugins to parse frontmatter and expose it
@@ -21,10 +22,9 @@ export default function IlesFrontmatter (): any {
     },
     markdown: {
       remarkPlugins: [
-        [remarkPlugin, { get extendFrontmatter () { return extendFrontmatter } }],
+        [remarkMdxFrontmatter, { get extendFrontmatter () { return extendFrontmatter } }],
+        remarkMdxImages,
       ],
     },
   }
 }
-
-export { remarkPlugin }

@@ -31,7 +31,7 @@ function mapFind <T, O> (arr: T[], fn: (i: T) => O): O | undefined {
  * @param options - Optional options to configure the output.
  * @returns A unified transformer.
  */
-export const remarkPlugin: FrontmatterPlugin = function (options?: FrontmatterOptions) {
+export const remarkMdxFrontmatter: FrontmatterPlugin = function (options?: FrontmatterOptions) {
   const data = this.data()
 
   const addExtension = (field: string, value: unknown) => {
