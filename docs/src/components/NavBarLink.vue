@@ -7,7 +7,7 @@ const props = defineProps({
 
 const route = useRoute()
 let attrs = $computed(() => props.external ? { rel: 'noreferrer', target: '_blank' } : {})
-let isActive = $computed(() => route.path.includes(props.href))
+let isActive = $computed(() => props.href && route.path.includes(props.href))
 </script>
 
 <template>
