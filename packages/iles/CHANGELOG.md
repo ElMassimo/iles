@@ -1,3 +1,12 @@
+## [0.6.6](https://github.com/ElMassimo/iles/compare/v0.6.5...v0.6.6) (2021-11-28)
+
+
+### Bug Fixes
+
+* workaround Firefox bug related to async module scripts ([74a8d1f](https://github.com/ElMassimo/iles/commit/74a8d1fce738f036c165055acd86fa19261a1d04)), closes [#51](https://github.com/ElMassimo/iles/issues/51)
+
+
+
 ## [0.6.5](https://github.com/ElMassimo/iles/compare/v0.6.4...v0.6.5) (2021-11-26)
 
 
