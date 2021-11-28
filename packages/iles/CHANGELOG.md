@@ -1,3 +1,7 @@
+## [0.6.7](https://github.com/ElMassimo/iles/compare/v0.6.6...v0.6.7) (2021-11-28)
+
+
+
 ## [0.6.6](https://github.com/ElMassimo/iles/compare/v0.6.5...v0.6.6) (2021-11-28)
 
 
