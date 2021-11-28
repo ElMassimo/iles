@@ -1,6 +1,6 @@
 <script setup lang="ts">
 const props = defineProps({
-  href: { type: String, default: '' },
+  href: { type: String, default: undefined },
   external: { type: Boolean, default: false },
   text: { type: String, default: '' },
 })

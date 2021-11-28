@@ -13,7 +13,7 @@
               :alt="$frontmatter.heroAlt"
             >
           </picture>
-          <IconAppText class="grid-item banner-text text-white fill-current" alt="îles"/>
+          <IconAppText class="grid-item banner-text text-white fill-current"/>
         </figure>
 
         <div class="text-center">
@@ -25,10 +25,10 @@
           </p>
 
           <div class="flex mt-8 justify-center">
-            <AppButton lg :href="$frontmatter.actionLink">
+            <AppButton :href="$frontmatter.actionLink">
               {{ $frontmatter.actionText }}
             </AppButton>
-            <AppButton class="ml-6" lg :href="$frontmatter.altActionLink" outline>
+            <AppButton class="ml-6" :href="$frontmatter.altActionLink" outline>
               {{ $frontmatter.altActionText }}
             </AppButton>
           </div>

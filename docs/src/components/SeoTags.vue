@@ -14,7 +14,7 @@ let imageUrl = $computed(() => `${site.url}${frontmatter.image || bannerSrc}`)
     <meta property="keywords" :content="site.tags.join(', ')">
     <meta property="HandheldFriendly" content="True">
     <meta property="MobileOptimized" content="320">
-    <meta httpEquiv="cleartype" content="on">
+    <meta http-equiv="cleartype" content="on">
     <meta property="theme-color" content="#5C7E8F">
     <meta property="og:type" content="website">
     <meta property="og:locale" content="en_US">

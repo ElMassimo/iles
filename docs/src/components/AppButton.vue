@@ -1,37 +1,36 @@
 <script setup lang="ts">
-import { computed } from 'vue'
-
-const props = defineProps({
-  href: { type: String, default: '' },
+defineProps({
   outline: { type: Boolean, default: false },
-  inline: { type: Boolean, default: false },
-  lg: { type: Boolean, default: false },
 })
-
-const linkClass = computed(() => ([
-  `
-  inline-flex items-center justify-center
-  px-3 py-2
-  border border-transparent rounded-md
-  hover:bg-primary
-  shadow-sm
-  text-base text-white font-medium
-  transition duration-50
-  ring-primary focus:ring-3 ring-opacity-50
-  `, {
-    'bg-transparent border border-primary text-primary-intense hover:text-white': props.outline,
-    'bg-primary-intense': !props.outline,
-    'text-sm underline': props.inline,
-    'text-base px-3 py-2.5 md:(text-lg px-6 py-3) border-2': props.lg,
-  },
-]))
 </script>
 
 <template>
-  <a :href="href" :class="linkClass">
+  <a class="app-button" :class="{ outline, colored: !outline }">
     <div v-if="$slots.icon" class="inline-block mr-1">
       <slot name="icon"/>
     </div>
     <slot/>
   </a>
 </template>
+
+<style lang="postcss" scoped>
+.colored {
+  @apply bg-primary-intense border-transparent text-white;
+}
+
+.outline {
+  @apply bg-transparent border border-primary text-primary-intense hover:text-white;
+}
+
+.app-button {
+  @apply inline-flex items-center justify-center
+    px-3 py-2.5
+    md:(text-lg px-6 py-3)
+    border border-2 rounded-md
+    shadow-sm
+    text-base font-medium
+    transition duration-50
+    hover:bg-primary
+    ring-primary focus:ring-3 ring-opacity-50;
+}
+</style>
