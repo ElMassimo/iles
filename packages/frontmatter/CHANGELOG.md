@@ -1,3 +1,17 @@
+# [0.4.0](https://github.com/ElMassimo/iles/compare/frontmatter@0.3.0...frontmatter@0.4.0) (2021-11-28)
+
+
+### Bug Fixes
+
+* explicitly catch any import errors that may occur ([821d6cf](https://github.com/ElMassimo/iles/commit/821d6cf4b93d0c676fd29c0b627deca5a697a241))
+
+
+### Features
+
+* import images in MDX files to enable asset fingerprinting ([832855b](https://github.com/ElMassimo/iles/commit/832855b4a19ac67b572074ba7613cc46e7a6c552))
+
+
+
 # [0.3.0](https://github.com/ElMassimo/iles/compare/frontmatter@0.2.0...frontmatter@0.3.0) (2021-11-02)
 
 
