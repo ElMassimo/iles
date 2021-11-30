@@ -1,12 +1,12 @@
 import type { CompileOptions } from 'xdm/lib/integration/rollup.js'
 import type { Plugin } from 'vite'
-import type { FrontmatterOptions } from '@islands/frontmatter'
+import type { FrontmatterOptions, ImageOptions } from '@islands/frontmatter'
 import type { Pluggable } from 'unified'
 
 export type PluginLike = null | undefined | false | Pluggable
 export type PluginOption = PluginLike | Promise<PluginLike> | string | [string, any]
 
-interface Options extends FrontmatterOptions {
+interface Options extends FrontmatterOptions, ImageOptions {
   /**
    * Recma plugins that should be used to process files.
    */

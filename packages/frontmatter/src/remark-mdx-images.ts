@@ -3,29 +3,35 @@ import type { MDXJSEsm } from 'mdast-util-mdxjs-esm'
 import type { Image } from 'mdast'
 import type { Plugin } from 'unified'
 import type { Parent, Node } from 'unist'
+import type { VFile } from 'vfile'
 
 import { visit, SKIP } from 'unist-util-visit'
 
 const urlPattern = /^(https?:)?\//
 
+export interface ImageOptions {
+  withImageSrc?: (src: string, file: VFile) => string | void
+}
+
 /**
  * A Remark plugin for converting Markdown images to MDX images using imports
  * for the image source.
  */
-export const remarkMdxImages = () => (ast: Parent) => {
+export const remarkMdxImages: Plugin<[ImageOptions?]> = (options?: ImageOptions) => (ast, vfile) => {
+  const parent = ast as Parent
   const imports: Omit<MDXJSEsm, 'value'>[] = []
   const imported = new Map<string, string>()
 
-  visit(ast, (node, index, parent) => {
+  visit(parent, (node, index, parent) => {
     if (node.type === 'image')
       return replaceMarkdownImage(node as Image, index!, parent!)
 
-    if (isJsxElement(node) && node.name === 'img')
+    if (isJsxElement(node) && (node.name === 'img' || node.name === 'Img' || node.name === 'Image'))
       return replaceSrcAttribute(node)
   })
 
   if (imports.length > 0)
-    ast.children.unshift(...imports)
+    parent.children.unshift(...imports)
 
   function replaceSrcAttribute (node: MDXJsxFlowElement) {
     for (const attr of node.attributes) {
@@ -82,6 +88,9 @@ export const remarkMdxImages = () => (ast: Parent) => {
     if (!name) {
       name = `__mdx_image_${imported.size}`
       imported.set(url, name)
+
+      const src = options?.withImageSrc?.(url, vfile) || url
+
       imports.push({
         type: 'mdxjsEsm',
         data: {
@@ -91,7 +100,7 @@ export const remarkMdxImages = () => (ast: Parent) => {
             body: [
               {
                 type: 'ImportDeclaration',
-                source: { type: 'Literal', value: url, raw: JSON.stringify(url) },
+                source: { type: 'Literal', value: src, raw: JSON.stringify(src) },
                 specifiers: [
                   {
                     type: 'ImportDefaultSpecifier',

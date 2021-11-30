@@ -16,9 +16,6 @@ export interface FrontmatterOptions {
   extendFrontmatter?: (frontmatter: Frontmatter, filename: string) => Frontmatter | void
 }
 
-export type FrontmatterPlugin = Plugin<[FrontmatterOptions?]>
-export type FrontmatterPluggable = [FrontmatterPlugin, FrontmatterOptions?]
-
 function mapFind <T, O> (arr: T[], fn: (i: T) => O): O | undefined {
   let result
   let found = arr.find(item => result = fn(item))
@@ -31,7 +28,7 @@ function mapFind <T, O> (arr: T[], fn: (i: T) => O): O | undefined {
  * @param options - Optional options to configure the output.
  * @returns A unified transformer.
  */
-export const remarkMdxFrontmatter: FrontmatterPlugin = function (options?: FrontmatterOptions) {
+export const remarkMdxFrontmatter: Plugin<[FrontmatterOptions?]> = function (options?: FrontmatterOptions) {
   const data = this.data()
 
   const addExtension = (field: string, value: unknown) => {
