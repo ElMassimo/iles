@@ -39,7 +39,7 @@
     "url": "https://github.com/ElMassimo/iles/issues"
   },
   "peerDependencies": {
-    "vue": "^3.2.21"
+    "vue": "^3.2.23"
   },
   "devDependencies": {
     "preact": "^10.5.15",
@@ -49,6 +49,6 @@
     "tsup": "5.5.0",
     "typescript": "^4.4.4",
     "vite": "^2.6.13",
-    "vue": "^3.2.21"
+    "vue": "^3.2.23"
   }
 }
