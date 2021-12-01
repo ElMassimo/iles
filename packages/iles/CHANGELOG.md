@@ -1,3 +1,13 @@
+## [0.6.9](https://github.com/ElMassimo/iles/compare/v0.6.8...v0.6.9) (2021-12-01)
+
+
+### Features
+
+* expose _raw in MDX to efficiently serialize HTML ([1468435](https://github.com/ElMassimo/iles/commit/1468435e930c671fe7e3b0e910f2b85c65f23af8))
+* new @islands/prism module with code and line highlighting ([f7416ec](https://github.com/ElMassimo/iles/commit/f7416ec8ea45b10fd199bdb2806ea54373ec2bf9))
+
+
+
 ## [0.6.8](https://github.com/ElMassimo/iles/compare/v0.6.7...v0.6.8) (2021-11-30)
 
 
