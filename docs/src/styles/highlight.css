@@ -1,5 +1,4 @@
-pre[class*='language-'],
-pre.code {
+div[class*='language-'] {
   background: var(--h-background);
   border-radius: 0.2rem;
   color: var(--h-foreground);
@@ -7,11 +6,43 @@ pre.code {
   hyphens: none;
   line-height: 1.6em;
   overflow: auto;
+  position: relative;
+  padding-left: 0;
   padding-right: 0;
   tab-size: 2;
   white-space: pre;
   word-break: normal;
   word-spacing: normal;
+}
+
+pre[class*='language-'] {
+  position: relative; /* position it to allow text selection */
+  overflow: auto;
+}
+
+pre.line-highlight,
+pre.line-numbers {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  margin: 0;
+  width: 100%;
+  user-select: none;
+  overflow: hidden;
+}
+
+.line-highlight > .highlighted {
+  background: var(--bg-highlight);
+}
+
+div[class*='language-']:before {
+  content: attr(data-lang);
+  color: var(--fc-softer);
+  font-size: 0.8rem;
+  position: absolute;
+  right: 0.8em;
+  top: 0.4em;
 }
 
 /* Selection */

@@ -43,12 +43,12 @@ importers:
       '@iconify-json/heroicons-outline': ^1.0.1
       '@islands/headings': ^0.1.1
       '@islands/icons': ^0.1.1
-      '@mapbox/rehype-prism': ^0.8.0
+      '@islands/prism': ^0.1.0
       '@mussi/docsearch': ^3.0.0-alpha.41
       '@preact/preset-vite': ^2.1.5
       '@vueuse/core': ^6.5.3
       autoprefixer: ^10.3.5
-      iles: ^0.6.8
+      iles: ^0.6.9
       postcss-nesting: ^8.0.1
       preact: ^10.5.15
       preact-render-to-string: ^5.1.19
@@ -67,11 +67,11 @@ importers:
       '@iconify-json/heroicons-outline': 1.0.2
       '@islands/headings': 0.1.1
       '@islands/icons': 0.1.1_vite@2.6.13
-      '@mapbox/rehype-prism': 0.8.0
+      '@islands/prism': 0.1.0
       '@preact/preset-vite': 2.1.5_preact@10.5.15+vite@2.6.13
       '@vueuse/core': 6.9.2
       autoprefixer: 10.4.0
-      iles: 0.6.8
+      iles: 0.6.9
       postcss-nesting: 8.0.1
       preact-render-to-string: 5.1.19_preact@10.5.15
       vite: 2.6.13
@@ -1264,8 +1264,8 @@ packages:
       - webpack
     dev: true
 
-  /@islands/mdx/0.3.1:
-    resolution: {integrity: sha512-cmJ0hNRsdZAp+S4/+Q/9d24JNo5bw2+P1wRU+GniObE/Hf5FgecofGlf2EfCX9jJUiLFuC1HXjKxS6XaeoIj0Q==}
+  /@islands/mdx/0.3.2:
+    resolution: {integrity: sha512-1EiXv7rZCNz2GkTCj032GMOa2kStDMhDS+kt7EbyElMIxeS3eOPSV7mEVn1qD6t5oVlYfSS5jMZ+IOqkXarB6A==}
     dependencies:
       estree-walker: 3.0.0
       hash-sum: 2.0.0
@@ -1282,6 +1282,13 @@ packages:
       '@islands/hydration': 0.3.3_vue@3.2.23
     transitivePeerDependencies:
       - vue
+    dev: true
+
+  /@islands/prism/0.1.0:
+    resolution: {integrity: sha512-yqjxZzhTPgNUSRRfz6J0Wl+WbfB48KR1D+7/yTYUic0IDvjsRhURuwN6JD50MrQBa3LyiRrE9W44tuzXSSiwXg==}
+    dependencies:
+      prismjs: 1.25.0
+      unist-util-visit: 4.1.0
     dev: true
 
   /@jest/types/27.1.0:
@@ -4806,14 +4813,14 @@ packages:
     engines: {node: '>= 4'}
     dev: true
 
-  /iles/0.6.8:
-    resolution: {integrity: sha512-sZs6sRxcs1Unr5jiMRor0RzDFijmf6JyfbOzFZhyht+f0qlVwd3Qa2RsaPqRPUCOzBoOkHf+WInuxv+2P4eQUQ==}
+  /iles/0.6.9:
+    resolution: {integrity: sha512-a3Em8KoqdSowvxSGPsPuD6dWWFiM1muBLhlhs2Rs6jBf3WgJaGqw88G8zryHaG4Rqr8HgqWraZym7fn/bPyVvg==}
     engines: {node: '>=14.0.0'}
     hasBin: true
     dependencies:
       '@islands/frontmatter': 0.4.1
       '@islands/hydration': 0.3.3_vue@3.2.23
-      '@islands/mdx': 0.3.1
+      '@islands/mdx': 0.3.2
       '@islands/prerender': 0.3.1_vue@3.2.23
       '@nuxt/devalue': 2.0.0
       '@rollup/plugin-virtual': 2.0.3

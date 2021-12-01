@@ -9,6 +9,7 @@
   --bg-highlight: rgba(126, 185, 220, 0.15);
   --bg-primary: var(--fc-primary-soft);
   --bg-soft: rgba(126, 185, 220, 0.35);
+  --fc-softer: theme('colors.gray.400');
   --fc-soft: theme('colors.gray.500');
   --fc: theme('colors.gray.700');
   --fc-hard: theme('colors.gray.800');
@@ -29,6 +30,7 @@ html.dark {
   --bg-html: theme('colors.warm-gray.900');
   --br-normal: rgba(226, 235, 255, 0.15);
   --bg-soft: rgba(195, 185, 185, 0.15);
+  --fc-softer: theme('colors.warm-gray.500');
   --fc-soft: theme('colors.warm-gray.500');
   --fc: theme('colors.warm-gray.300');
   --fc-hard: theme('colors.warm-gray.200');

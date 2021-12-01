@@ -10,17 +10,13 @@ export default defineConfig({
   modules: [
     '@islands/headings',
     '@islands/icons',
+    '@islands/prism',
   ],
   ssg: {
     manualChunks: (id, api) => {
       if (id.includes('preact') || id.includes('algolia') || id.toLowerCase().includes('docsearch'))
         return 'docsearch'
     },
-  },
-  markdown: {
-    rehypePlugins: [
-      ['@mapbox/rehype-prism', { alias: { markup: ['html', 'vue'], markdown: ['mdx'] } }],
-    ],
   },
   vite: {
     optimizeDeps: {

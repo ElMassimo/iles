@@ -4,6 +4,7 @@
 }
 
 .prose > *,
+.prose > div[class*='language-'] > pre,
 .page-footer {
   margin-left: auto;
   margin-right: auto;
@@ -86,7 +87,7 @@
 
   p,
   blockquote,
-  pre {
+  div[class*='language-'] {
     margin-bottom: 1.25em;
     margin-top: 1.25em;
   }
@@ -137,7 +138,7 @@
   }
 
   blockquote,
-  pre {
+  div[class*='language-'] pre {
     @apply py-4;
   }
 

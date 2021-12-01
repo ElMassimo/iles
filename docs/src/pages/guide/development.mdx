@@ -14,6 +14,7 @@ In this section, we'll cover the basics to start building an <Iles/> application
 
 ## Default App Structure 📂
 
+<div class="language-tree">
 <pre class="code">
 <code><kbd class="-ml-2"><a href="/config#srcDir">src/</a></kbd>
   ├── <kbd><a href="#components">components/</a></kbd>
@@ -34,6 +35,7 @@ In this section, we'll cover the basics to start building an <Iles/> application
   ├── <kbd><a href="/config#your-app">app.ts</a></kbd>
   └── <kbd><a href="#site">site.ts</a></kbd></code>
 </pre>
+</div>
 
 By default, <kbd>[srcDir]</kbd> is aliased as `~/` or `@/`. For example:
 
@@ -107,7 +109,7 @@ const { frontmatter, meta } = usePage()
 You can leverage [`import.meta.glob`][glob] to import page components, which is
 very convenient when rendering collections or index pages.
 
-```ts
+```ts {3}
 export function getPosts () {
   const posts = Object.values(
     import.meta.globEagerDefault('../pages/posts/**/*.mdx')
