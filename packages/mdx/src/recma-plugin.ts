@@ -1,5 +1,5 @@
 import { walk } from 'estree-walker'
-import type { Node, Statement, FunctionDeclaration, Program } from 'estree-jsx'
+import type { Node, Statement, ImportSpecifier, FunctionDeclaration, Program } from 'estree-jsx'
 import type { Plugin } from 'unified'
 
 /**
@@ -22,11 +22,10 @@ function resolveMissingComponents (tree: Program) {
       if (node.type === 'ImportDeclaration') {
         const importSource = node.source?.value
         if (typeof importSource === 'string' && importSource.endsWith('jsx-runtime')) {
-          node.specifiers.push({
-            type: 'ImportSpecifier',
-            imported: { type: 'Identifier', name: 'resolveComponent' },
-            local: { type: 'Identifier', name: '_resolveComponent' },
-          })
+          node.specifiers.push(
+            importSpecifier('resolveComponent'),
+            importSpecifier('raw'),
+          )
         }
         return this.skip()
       }
@@ -99,5 +98,13 @@ function rewriteMdxContentComponents (statements: Statement[]) {
 
     // Optimization: assume all missing component checks are at the beginning.
     break
+  }
+}
+
+function importSpecifier (name: string): ImportSpecifier {
+  return {
+    type: 'ImportSpecifier',
+    imported: { type: 'Identifier', name },
+    local: { type: 'Identifier', name: `_${name}` },
   }
 }

@@ -1,4 +1,4 @@
-import { resolveComponent, createVNode, Fragment } from 'vue'
+import { resolveComponent, createVNode, createStaticVNode, Fragment } from 'vue'
 
 // Internal: Compatibility layer with the automatic JSX runtime of React.
 //
@@ -25,4 +25,4 @@ function jsx (type, { children, 'v-slots': vSlots, ...props }) {
   return createVNode(type, props, slots)
 }
 
-export { jsx, jsx as jsxs, resolveComponent, Fragment }
+export { jsx, jsx as jsxs, resolveComponent, createStaticVNode as raw, Fragment }
