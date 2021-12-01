@@ -1,3 +1,12 @@
+## [0.3.2](https://github.com/ElMassimo/iles/compare/mdx@0.3.1...mdx@0.3.2) (2021-12-01)
+
+
+### Features
+
+* expose _raw in MDX to efficiently serialize HTML ([1468435](https://github.com/ElMassimo/iles/commit/1468435e930c671fe7e3b0e910f2b85c65f23af8))
+
+
+
 ## [0.3.1](https://github.com/ElMassimo/iles/compare/mdx@0.3.0...mdx@0.3.1) (2021-11-30)
 
 
