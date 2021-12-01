@@ -1,6 +1,8 @@
 /* eslint-disable no-restricted-syntax */
 import type { RollupOutput } from 'rollup'
 import type { Plugin } from 'vite'
+
+import glob from 'fast-glob'
 import { build, BuildOptions, mergeConfig as mergeViteConfig, UserConfig as ViteUserConfig } from 'vite'
 import { APP_PATH } from '../alias'
 import { AppConfig } from '../shared'
@@ -17,9 +19,16 @@ export async function bundle (config: AppConfig) {
   const [clientResult, serverResult] = await Promise.all([
     bundleWithVite(config, entrypoints, { ssr: false }),
     bundleWithVite(config, entrypoints, { ssr: true }),
+    // config.pages.htmlEntrypoints ? bundleWithVite(config, resolveHtmlEntrypoints(config), { ssr: false }) : Promise.resolve({}),
   ])
 
   return { clientResult, serverResult }
+}
+
+function resolveHtmlEntrypoints (config: AppConfig) {
+  const entrypoints: Entrypoints = {}
+  glob.sync('./**/*.html', { cwd: config.root, ignore: ['node_modules/**'] }).forEach(file => { entrypoints[file] = file })
+  return entrypoints
 }
 
 // Internal: Creates a client and server bundle.

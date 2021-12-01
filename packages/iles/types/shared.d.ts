@@ -227,7 +227,13 @@ export interface AppConfig extends RequiredConfig, BaseIlesConfig {
   base: string
   root: string
   configPath: string
-  pages: PagesOptions
+  pages: PagesOptions & {
+    /**
+     * Whether to build treat .html files in the site as entrypoints.
+     * @default false
+     */
+    htmlEntrypoints?: boolean
+  }
   modules: IlesModule[]
   namedPlugins: NamedPlugins
   vitePlugins: VitePluginOption[]

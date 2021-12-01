@@ -4,6 +4,7 @@ import { useSSRContext } from 'vue'
 export function useVueRenderer () {
   const context = import.meta.env.SSR ? useSSRContext() : {}
   return async (vNodes: undefined | VNode | VNode[]) => {
+    console.log({ vNodes })
     if (!vNodes) return ''
     const { renderToString } = await import('@vue/server-renderer')
 

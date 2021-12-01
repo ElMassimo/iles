@@ -122,6 +122,12 @@ export default function IslandsPlugins (appConfig: AppConfig): PluginOption[] {
         return () => {
           server.middlewares.use(async (req, res, next) => {
             const url = req.url || ''
+
+            // Let Vite process existing files.
+            if (url.startsWith('/@fs/')) return next()
+            const filename = resolve(root, url.slice(1))
+            if (await exists(filename)) return next()
+
             // Fallback when the user has not created a default layout.
             if (url.includes(defaultLayoutPath)) {
               res.statusCode = 200
