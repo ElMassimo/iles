@@ -71,6 +71,7 @@
     "@antfu/install-pkg": "^0.1.0",
     "@islands/headings": "workspace:^0.1.0",
     "@islands/icons": "workspace:^0.1.0",
+    "@islands/prism": "workspace:^0.1.0",
     "@preact/preset-vite": "^2",
     "@sveltejs/vite-plugin-svelte": "^1.0.0-next.30",
     "@types/debug": "^4.1.7",

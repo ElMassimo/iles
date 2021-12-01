@@ -39,8 +39,7 @@ export default function IlesHeadings (): IlesModule {
  * A rehype plugin to auto-link headings, export title in `frontmatter`, and
  * expose heading data in `meta`.
  *
- * @param options - Optional options to configure the output.
- * @returns A unified transformer.
+ * @param options - Options to configure heading generation.
  */
 export const rehypePlugin: HeadingPlugin = ({ slug = generateSlug }: HeadingOptions = {}) => (ast) => {
   const { children } = ast as Parent

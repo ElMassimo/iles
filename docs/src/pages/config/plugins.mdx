@@ -21,6 +21,9 @@
 
 [unplugin-icons]: https://github.com/antfu/unplugin-icons
 
+[prismjs]: https://prismjs.com/
+[@islands/prism]: https://github.com/ElMassimo/iles/tree/main/packages/prism
+
 # Modules and Plugins 🔌
 
 <Iles/> has an extensible module system, which is used internally to provide
@@ -42,7 +45,7 @@ export default defineConfig({
     '@islands/headings',
 
     // Use an array to pass options
-    ['@islands/icons', { autoInstall: false }] ,
+    ['@islands/prism', { showLineNumbers: true }] ,
 
     // Manually imported, provides better type-inference
     icons({ autoInstall: false }),
@@ -113,6 +116,26 @@ A module to add and configure [unplugin-icons]:
 ```ts
   modules: [
     '@islands/icons',
+  ],
+```
+
+### <kbd>@islands/prism</kbd>
+
+A module that injects a [remark] plugin to highlight code blocks in [MDX documents][mdx]:
+
+- 💎 uses [prismjs] supporting a wide variety of programming languages
+
+- 🔦 highlight specific lines (`{3}`, `{7-13}`, or `{16,23-27,40}`)
+
+- 🔢 display line numbers (`showLineNumbers`)
+
+- 🚀 faster than [`@mapbox/rehype-prism`](https://github.com/mapbox/rehype-prism), [`remark-prism`](https://github.com/sergioramos/remark-prism) and [`rehype-prism-plus`](https://github.com/timlrx/rehype-prism-plus)
+
+Check the [readme][@islands/prism] for more information.
+
+```ts
+  modules: [
+    '@islands/prism'
   ],
 ```
 

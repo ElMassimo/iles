@@ -6,5 +6,6 @@ packages:
   - packages/headings/
   - packages/mdx/
   - packages/icons/
+  - packages/prism/
   - packages/iles/
   - playground/the-vue-point/
