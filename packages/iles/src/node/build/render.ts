@@ -44,6 +44,10 @@ export async function renderPage (
   // Remove comments from Vue renderer to allow plain text, RSS, or JSON output.
   content = content.replace(commentsRegex, '')
 
+  // Skip HTML shell to allow Vue to render plain text, RSS, or JSON output.
+  if (!route.outputFilename.endsWith('.html'))
+    return content
+
   const { headTags, htmlAttrs, bodyAttrs } = renderHeadToString(head)
 
   return `
