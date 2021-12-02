@@ -1,12 +1,14 @@
 /* eslint-disable no-restricted-syntax */
+import { promises as fs } from 'fs'
 import type { RollupOutput } from 'rollup'
 import type { Plugin } from 'vite'
-
 import glob from 'fast-glob'
+import { relative, dirname, resolve } from 'pathe'
 import { build, BuildOptions, mergeConfig as mergeViteConfig, UserConfig as ViteUserConfig } from 'vite'
 import { APP_PATH } from '../alias'
 import { AppConfig } from '../shared'
 import IslandsPlugins from '../plugin/plugin'
+import { rm } from './utils'
 
 type Entrypoints = Record<string, string>
 
@@ -19,37 +21,49 @@ export async function bundle (config: AppConfig) {
   const [clientResult, serverResult] = await Promise.all([
     bundleWithVite(config, entrypoints, { ssr: false }),
     bundleWithVite(config, entrypoints, { ssr: true }),
-    // config.pages.htmlEntrypoints ? bundleWithVite(config, resolveHtmlEntrypoints(config), { ssr: false }) : Promise.resolve({}),
+    bundleHtmlEntrypoints(config),
   ])
 
   return { clientResult, serverResult }
 }
 
-function resolveHtmlEntrypoints (config: AppConfig) {
-  const entrypoints: Entrypoints = {}
-  glob.sync('./**/*.html', { cwd: config.root, ignore: ['node_modules/**'] }).forEach(file => { entrypoints[file] = file })
-  return entrypoints
+async function bundleHtmlEntrypoints (config: AppConfig) {
+  const entrypoints = glob.sync(resolve(config.pagesDir, './**/*.html'),
+    { cwd: config.root, ignore: ['node_modules/**'] })
+
+  if (entrypoints.length > 0)
+    await bundleWithVite(config, entrypoints, { htmlBuild: true, ssr: false })
 }
 
 // Internal: Creates a client and server bundle.
 // NOTE: The client bundle is used only to obtain styles, JS is discarded.
-async function bundleWithVite (config: AppConfig, entrypoints: Entrypoints, { ssr }: BuildOptions) {
+async function bundleWithVite (config: AppConfig, entrypoints: string[] | Entrypoints, options: BuildOptions & { htmlBuild?: boolean }) {
+  const { htmlBuild = false, ssr, rollupOptions, ...buildOptions } = options
+
   return await build(mergeViteConfig(config.vite, {
     logLevel: 'warn',
     ssr: {
       external: ['vue', '@vue/server-renderer'],
       noExternal: ['iles'],
     },
-    plugins: [IslandsPlugins(config), !ssr && removeJsPlugin()],
+    plugins: [
+      IslandsPlugins(config),
+      htmlBuild
+        ? moveHtmlPagesPlugin(config)
+        : !ssr && removeJsPlugin(),
+    ],
     build: {
       ssr,
+      ...buildOptions,
+      cssCodeSplit: htmlBuild,
       minify: ssr ? false : 'esbuild',
-      emptyOutDir: true,
+      emptyOutDir: ssr,
       outDir: ssr ? config.tempDir : config.outDir,
       rollupOptions: {
         input: entrypoints,
-        preserveEntrySignatures: 'allow-extension',
-        treeshake: false,
+        preserveEntrySignatures: htmlBuild ? undefined : 'allow-extension',
+        treeshake: htmlBuild,
+        ...rollupOptions,
       },
     },
   } as ViteUserConfig)) as RollupOutput
@@ -68,6 +82,24 @@ function removeJsPlugin (): Plugin {
     generateBundle (_, bundle) {
       for (const name in bundle)
         if (bundle[name].fileName.endsWith('.js')) delete bundle[name]
+    },
+  }
+}
+
+// Internal: Moves any HTML entrypoints to the correct location in the output dir.
+function moveHtmlPagesPlugin (config: AppConfig): Plugin {
+  return {
+    name: 'iles:html-pages',
+    async writeBundle (options, bundle) {
+      const outDir = resolve(config.root, config.outDir)
+      await Promise.all(Object.entries(bundle).map(async ([name, chunk]) => {
+        if (name.endsWith('.html')) {
+          const dest = resolve(outDir, relative(config.pagesDir, resolve(config.root, name)))
+          await fs.mkdir(dirname(dest), { recursive: true })
+          await fs.rename(resolve(outDir, name), dest)
+        }
+      }))
+      rm(resolve(outDir, relative(config.root, config.srcDir)))
     },
   }
 }

@@ -11,6 +11,8 @@ export async function build (root: string) {
   process.env.NODE_ENV = 'production'
   const appConfig = await resolveConfig(root, { command: 'build', mode: 'production' })
 
+  rm(appConfig.outDir)
+
   const bundleResult = await withSpinner('building client + server bundles',
     async () => await bundle(appConfig))
 

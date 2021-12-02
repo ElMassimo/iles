@@ -1,4 +1,5 @@
-export { default, ILES_APP_ENTRY } from './plugin/plugin'
+export { default } from './plugin/plugin'
+export { ILES_APP_ENTRY } from './plugin/middleware'
 export { build } from './build/build'
 export { resolveConfig } from './config'
 import { UserConfig } from '../../types/shared'

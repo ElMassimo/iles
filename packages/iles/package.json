@@ -74,6 +74,7 @@
     "@islands/prism": "workspace:^0.1.0",
     "@preact/preset-vite": "^2",
     "@sveltejs/vite-plugin-svelte": "^1.0.0-next.30",
+    "@types/connect": "^3.4.35",
     "@types/debug": "^4.1.7",
     "@types/fs-extra": "^9.0.12",
     "@types/node": "^15.14.9",

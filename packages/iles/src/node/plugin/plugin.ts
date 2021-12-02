@@ -1,8 +1,7 @@
 /* eslint-disable no-restricted-syntax */
 import { promises as fs } from 'fs'
 import { basename, resolve, relative } from 'pathe'
-import pc from 'picocolors'
-import type { PluginOption, ResolvedConfig, ViteDevServer } from 'vite'
+import type { PluginOption, ResolvedConfig } from 'vite'
 import { transformWithEsbuild } from 'vite'
 
 import { MODULE_ID_VIRTUAL as PAGES_REQUEST_PATH } from 'vite-plugin-pages'
@@ -12,14 +11,12 @@ import type { Frontmatter } from '@islands/frontmatter'
 import { shouldTransformRef, transformRef } from 'vue/compiler-sfc'
 import type { AppConfig, AppClientConfig } from '../shared'
 import { APP_PATH, ROUTES_REQUEST_PATH, USER_APP_REQUEST_PATH, USER_SITE_REQUEST_PATH, APP_CONFIG_REQUEST_PATH, NOT_FOUND_COMPONENT_PATH, NOT_FOUND_REQUEST_PATH } from '../alias'
-import { createServer } from '../server'
+import { configureMiddleware, ILES_APP_ENTRY } from './middleware'
 import { serialize, pascalCase, exists, debug } from './utils'
 import { parseId } from './parse'
 import { wrapIslandsInSFC, wrapLayout } from './wrap'
 import { extendSite } from './site'
 import { autoImportComposables, writeComposablesDTS } from './composables'
-
-export const ILES_APP_ENTRY = '/@iles-entry'
 
 function isMarkdown (path: string) {
   return path.endsWith('.mdx') || path.endsWith('.md')
@@ -114,46 +111,7 @@ export default function IslandsPlugins (appConfig: AppConfig): PluginOption[] {
         if (file === sitePath) return [server.moduleGraph.getModuleById(USER_SITE_REQUEST_PATH)!]
       },
       configureServer (server) {
-        restartOnConfigChanges(appConfig, server)
-
-        const supportedExtensions = ['.html', '.xml', '.json', '.rss', '.atom']
-
-        // serve our index.html after vite history fallback
-        return () => {
-          server.middlewares.use(async (req, res, next) => {
-            const url = req.url || ''
-
-            // Let Vite process existing files.
-            if (url.startsWith('/@fs/')) return next()
-            const filename = resolve(root, url.slice(1))
-            if (await exists(filename)) return next()
-
-            // Fallback when the user has not created a default layout.
-            if (url.includes(defaultLayoutPath)) {
-              res.statusCode = 200
-              res.setHeader('content-type', 'text/javascript')
-              res.end('export default false')
-            }
-            else if (supportedExtensions.some(ext => url.endsWith(ext))) {
-              res.statusCode = 200
-              res.setHeader('content-type', 'text/html')
-
-              let html = `
-<!DOCTYPE html>
-<html>
-  <body>
-    <div id="app"></div>
-    <script type="module" src="${ILES_APP_ENTRY}"></script>
-  </body>
-</html>`
-              html = await server.transformIndexHtml(url, html, req.originalUrl)
-              res.end(html)
-            }
-            else {
-              next()
-            }
-          })
-        }
+        return configureMiddleware(appConfig, server, defaultLayoutPath)
       },
     },
     {
@@ -277,26 +235,4 @@ import.meta.hot.accept('/${relative(root, path)}', (...args) => __ILES_PAGE_UPDA
       },
     },
   ]
-}
-
-async function restartOnConfigChanges (config: AppConfig, server: ViteDevServer) {
-  const restartIfConfigChanged = async (path: string) => {
-    if (path === config.configPath) {
-      server.config.logger.info(
-        pc.green(
-          `${relative(process.cwd(), config.configPath)} changed, restarting server...`,
-        ),
-        { clear: true, timestamp: true },
-      )
-      await server.close()
-      // @ts-ignore
-      global.__vite_start_time = Date.now()
-      const { server: newServer } = await createServer(server.config.root, server.config.server)
-      await newServer.listen()
-    }
-  }
-  // Shut down the server and start a new one if config changes.
-  server.watcher.add(config.configPath)
-  server.watcher.on('add', restartIfConfigChanged)
-  server.watcher.on('change', restartIfConfigChanged)
 }
