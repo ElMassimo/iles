@@ -11,22 +11,21 @@ export async function build (root: string) {
   process.env.NODE_ENV = 'production'
   const appConfig = await resolveConfig(root, { command: 'build', mode: 'production' })
 
-  try {
-    const bundleResult = await withSpinner('building client + server bundles',
-      async () => await bundle(appConfig))
+  rm(appConfig.outDir)
 
-    const islandsByPath = Object.create(null)
+  const bundleResult = await withSpinner('building client + server bundles',
+    async () => await bundle(appConfig))
 
-    const pagesResult = await renderPages(appConfig, islandsByPath, bundleResult)
+  const islandsByPath = Object.create(null)
 
-    await createSitemap(appConfig, pagesResult.routesToRender)
+  const pagesResult = await renderPages(appConfig, islandsByPath, bundleResult)
 
-    await withSpinner('building islands bundle',
-      async () => await bundleIslands(appConfig, islandsByPath, pagesResult))
-  }
-  finally {
-    rm(appConfig.tempDir)
-  }
+  await createSitemap(appConfig, pagesResult.routesToRender)
+
+  await withSpinner('building islands bundle',
+    async () => await bundleIslands(appConfig, islandsByPath, pagesResult))
+
+  rm(appConfig.tempDir)
 
   console.info(`build complete in ${((Date.now() - start) / 1000).toFixed(2)}s.`)
 }
