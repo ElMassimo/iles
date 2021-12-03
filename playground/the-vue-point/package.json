@@ -14,7 +14,7 @@
     "feed": "^4.2.1",
     "iles": "workspace:*",
     "unplugin-icons": "^0.12.15",
-    "vite": "^2.6.13",
+    "vite": "^2.7.0-beta.10",
     "vite-plugin-windicss": "^1.5.1"
   }
 }

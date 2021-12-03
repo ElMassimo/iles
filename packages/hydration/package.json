@@ -20,7 +20,7 @@
   },
   "scripts": {
     "dev": "npm run build -- --watch",
-    "build": "tsup hydration.ts preact.ts vue.ts vanilla.ts solid.ts svelte.ts",
+    "build": "rimraf -rf dist && tsup hydration.ts preact.ts vue.ts vanilla.ts solid.ts svelte.ts",
     "prepublishOnly": "npm run build"
   },
   "engines": {

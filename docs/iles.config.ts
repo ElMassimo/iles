@@ -22,6 +22,9 @@ export default defineConfig({
     optimizeDeps: {
       include: ['quicklink', '@vueuse/core', '@mussi/docsearch', 'preact', 'preact/debug'],
     },
+    ssr: {
+      noExternal: ['@mussi/docsearch'],
+    },
     resolve: {
       alias: {
         '~images': resolve(__dirname, 'images'),
