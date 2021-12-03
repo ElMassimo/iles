@@ -1,11 +1,9 @@
 /* eslint-disable no-restricted-syntax */
 import { promises as fs } from 'fs'
-import { join, resolve, dirname } from 'pathe'
-// @ts-ignore
-import virtual from '@rollup/plugin-virtual'
+import { join, resolve, relative, dirname } from 'pathe'
 import { build as viteBuild, mergeConfig as mergeViteConfig } from 'vite'
 import glob from 'fast-glob'
-import type { Manifest, UserConfig as ViteUserConfig } from 'vite'
+import type { Manifest, UserConfig as ViteUserConfig, Plugin } from 'vite'
 import type { PreRenderedChunk } from 'rollup'
 import IslandsPlugins from '../plugin/plugin'
 import type { Awaited, AppConfig, IslandsByPath, IslandDefinition, RouteToRender } from '../shared'
@@ -13,6 +11,8 @@ import rebaseImports from './rebaseImports'
 import { flattenPath, uniq } from './utils'
 import { extendManualChunks } from './chunks'
 import type { renderPages } from './render'
+
+const VIRTUAL_PREFIX = 'virtual_ile_'
 
 export async function bundleIslands (
   config: AppConfig,
@@ -25,8 +25,8 @@ export async function bundleIslands (
   await Promise.all(routesToRender.map(async route =>
     await renderRoute(config, manifest, route, islandsByPath[route.path])))
 
+  const tempIslandFiles = await glob(join(config.outDir, `**/${VIRTUAL_PREFIX}*.js`))
   // Remove temporary island script files.
-  const tempIslandFiles = await glob(join(config.outDir, '**/_virtual_*.js'))
   for (const temp of tempIslandFiles) await fs.unlink(temp)
 }
 
@@ -37,8 +37,8 @@ async function renderRoute (config: AppConfig, manifest: Manifest, route: RouteT
     const preloadScripts: string[] = []
 
     for (const island of islands) {
+      const entry = manifest[`${VIRTUAL_PREFIX}${island.entryFilename!}`]
       // Find the corresponding entrypoint for the island.
-      const entry = manifest[`\x00virtual:${island.entryFilename!}`]
 
       if (!entry) {
         const message = `Unable to find entry for island '${island.entryFilename}' in manifest.json`
@@ -93,14 +93,33 @@ async function buildIslands (config: AppConfig, islandsByPath: IslandsByPath) {
       minify: 'esbuild',
       rollupOptions: {
         input: entryFiles,
-        output: { chunkFileNames, manualChunks: extendManualChunks(config) },
+        output: {
+          entryFileNames: chunkFilenames,
+          chunkFilenames,
+          manualChunks: extendManualChunks(config),
+        },
       },
     },
     plugins: [
+      virtualEntrypointsPlugin(config.root, entrypoints),
       IslandsPlugins(config),
-      virtual(entrypoints),
     ],
   } as ViteUserConfig))
+}
+
+function virtualEntrypointsPlugin (root: string, entrypoints: Record<string, string>): Plugin {
+  return {
+    name: 'iles:entrypoints',
+    resolveId(id, importer) {
+      const entryFilename = relative(root, id.split('?', 2)[0])
+      if (entryFilename in entrypoints)
+        return VIRTUAL_PREFIX + entryFilename
+    },
+    load (id) {
+      if (id.startsWith(VIRTUAL_PREFIX))
+        return entrypoints[id.slice(VIRTUAL_PREFIX.length)]
+    }
+  }
 }
 
 function stringifyPreload (base: string, manifest: Manifest, hrefs: string[]) {
@@ -128,7 +147,7 @@ async function parseManifest (outDir: string, islandsByPath: IslandsByPath) {
 }
 
 // Internal: Remove query strings from islands inside Vue components.
-function chunkFileNames (chunk: PreRenderedChunk) {
+function chunkFilenames (chunk: PreRenderedChunk) {
   if (chunk.name.includes('.vue_vue')) return `assets/${chunk.name.split('.vue_vue')[0]}.[hash].js`
   return 'assets/[name].[hash].js'
 }

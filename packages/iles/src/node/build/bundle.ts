@@ -4,7 +4,7 @@ import type { RollupOutput } from 'rollup'
 import type { Plugin } from 'vite'
 import glob from 'fast-glob'
 import { relative, dirname, resolve } from 'pathe'
-import { build, BuildOptions, mergeConfig as mergeViteConfig, UserConfig as ViteUserConfig } from 'vite'
+import { build, mergeConfig as mergeViteConfig, UserConfig as ViteUserConfig } from 'vite'
 import { APP_PATH } from '../alias'
 import { AppConfig } from '../shared'
 import IslandsPlugins from '../plugin/plugin'
@@ -37,8 +37,8 @@ async function bundleHtmlEntrypoints (config: AppConfig) {
 
 // Internal: Creates a client and server bundle.
 // NOTE: The client bundle is used only to obtain styles, JS is discarded.
-async function bundleWithVite (config: AppConfig, entrypoints: string[] | Entrypoints, options: BuildOptions & { htmlBuild?: boolean }) {
-  const { htmlBuild = false, ssr, rollupOptions, ...buildOptions } = options
+async function bundleWithVite (config: AppConfig, entrypoints: string[] | Entrypoints, options: { ssr: boolean, htmlBuild?: boolean }) {
+  const { htmlBuild = false, ssr } = options
 
   return await build(mergeViteConfig(config.vite, {
     logLevel: 'warn',
@@ -54,7 +54,6 @@ async function bundleWithVite (config: AppConfig, entrypoints: string[] | Entryp
     ],
     build: {
       ssr,
-      ...buildOptions,
       cssCodeSplit: htmlBuild,
       minify: ssr ? false : 'esbuild',
       emptyOutDir: ssr,
@@ -63,7 +62,6 @@ async function bundleWithVite (config: AppConfig, entrypoints: string[] | Entryp
         input: entrypoints,
         preserveEntrySignatures: htmlBuild ? undefined : 'allow-extension',
         treeshake: htmlBuild,
-        ...rollupOptions,
       },
     },
   } as ViteUserConfig)) as RollupOutput
