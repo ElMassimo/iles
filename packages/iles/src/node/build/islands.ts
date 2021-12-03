@@ -64,7 +64,7 @@ async function renderRoute (config: AppConfig, manifest: Manifest, route: RouteT
     route.rendered = content.replace('</head>', `${stringifyPreload(config.base, manifest, preloadScripts)}</head>`)
   }
 
-  route = await config.ssg.beforePageRender(route, config) || route
+  route = await config.ssg.beforePageRender?.(route, config) || route
 
   const filename = resolve(config.outDir, route.outputFilename)
   await fs.mkdir(dirname(filename), { recursive: true })

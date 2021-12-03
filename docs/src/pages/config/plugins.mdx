@@ -22,6 +22,9 @@
 [unplugin-icons]: https://github.com/antfu/unplugin-icons
 
 [prismjs]: https://prismjs.com/
+[@islands/headings]: https://github.com/ElMassimo/iles/tree/main/packages/headings
+[@islands/icons]: https://github.com/ElMassimo/iles/tree/main/packages/icons
+[@islands/mdx]: https://github.com/ElMassimo/iles/tree/main/packages/mdx
 [@islands/prism]: https://github.com/ElMassimo/iles/tree/main/packages/prism
 
 # Modules and Plugins 🔌
@@ -82,7 +85,7 @@ which is used to instantiate the module when the user provides it as a string.
 
 ## Official Modules <Iles heading/>
 
-### <kbd>@islands/headings</kbd>
+### <kbd>[@islands/headings]</kbd>
 
 A module that injects a [rehype] plugin to parse headings in [MDX documents][mdx]:
 
@@ -103,7 +106,7 @@ export default defineConfig({
 })
 ```
 
-### <kbd>@islands/icons</kbd>
+### <kbd>[@islands/icons]</kbd>
 
 A module to add and configure [unplugin-icons]:
 
@@ -119,7 +122,7 @@ A module to add and configure [unplugin-icons]:
   ],
 ```
 
-### <kbd>@islands/prism</kbd>
+### <kbd>[@islands/prism]</kbd>
 
 A module that injects a [remark] plugin to highlight code blocks in [MDX documents][mdx]:
 
@@ -138,6 +141,28 @@ Check the [readme][@islands/prism] for more information.
     '@islands/prism'
   ],
 ```
+
+### <kbd>[@islands/mdx]</kbd>
+
+Enabled by default, provides excellent MDX support and allows to tap into the
+[remark] and [rehype] ecosystems.
+
+```ts
+  // Example config from "The Vue Point in îles"
+  markdown: {
+    rehypePlugins: [
+      ['@mapbox/rehype-prism', { alias: { markup: ['html', 'vue'] } }],
+    ],
+    extendFrontmatter (frontmatter, filename) {
+      if (filename.includes('/posts/'))
+        return { layout: 'post', ...frontmatter }
+    },
+  },
+```
+
+<Tip>
+You may add additional properties in the frontmatter by using the <kbd>markdown.extendFrontmatter</kbd> option.
+</Tip>
 
 ## Vite Plugins <ViteLogo/>
 
@@ -183,23 +208,6 @@ automatic component resolution in [MDX files][mdx].
   // Example config from "The Vue Point in îles"
   components: {
     resolvers: [iconsResolver({ componentPrefix: '' })],
-  },
-```
-
-### <kbd>[vite-plugin-xdm]</kbd>
-
-Provides excellent MDX support, and allows to tap into the [remark] and [rehype] ecosystems.
-
-```ts
-  // Example config from "The Vue Point in îles"
-  markdown: {
-    rehypePlugins: [
-      ['@mapbox/rehype-prism', { alias: { markup: ['html', 'vue'] } }],
-    ],
-    extendFrontmatter (frontmatter, filename) {
-      if (filename.includes('/posts/'))
-        return { layout: 'post', ...frontmatter }
-    },
   },
 ```
 

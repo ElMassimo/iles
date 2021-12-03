@@ -25,7 +25,7 @@ export async function build (root: string) {
   await withSpinner('building islands bundle',
     async () => await bundleIslands(appConfig, islandsByPath, pagesResult))
 
-  appConfig.ssg.onSiteRendered({
+  appConfig.ssg.onSiteRendered?.({
     config: appConfig,
     pages: pagesResult.routesToRender,
   })

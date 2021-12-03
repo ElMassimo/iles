@@ -197,8 +197,6 @@ function appConfigDefaults (appConfig: AppConfig, userConfig: UserConfig): AppCo
     siteUrl: '',
     ssg: {
       sitemap: true,
-      beforePageRender () {},
-      onSiteRendered () {},
     },
     configPath: resolve(root, 'iles.config.ts'),
     assetsDir: 'assets',
