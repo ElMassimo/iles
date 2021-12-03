@@ -1,3 +1,20 @@
+## [0.6.10](https://github.com/ElMassimo/iles/compare/v0.6.9...v0.6.10) (2021-12-03)
+
+
+### Bug Fixes
+
+* avoid requiring preact-render-to-string before it's used ([3eb3bb4](https://github.com/ElMassimo/iles/commit/3eb3bb4cba1c3d6c95eb402e349731f64134732f))
+* regression in non-HTML pages such as json, rss, and txt ([0006bc0](https://github.com/ElMassimo/iles/commit/0006bc05e151ceee6601374575c1c9286012aee2))
+
+
+### Features
+
+* add `beforePageRender` and `onSiteRendered` hooks ([579e164](https://github.com/ElMassimo/iles/commit/579e164042ae789e1faa4e64551acaa39e45ee20))
+* add a preview command to the cli (no extra deps) ([22ba9bc](https://github.com/ElMassimo/iles/commit/22ba9bc1f9f1dbaac792b4cad0b1bdc61745706a))
+* support html entrypoints that coexist with the generated pages ([#53](https://github.com/ElMassimo/iles/issues/53)) ([4bc300e](https://github.com/ElMassimo/iles/commit/4bc300e99ca4bbc6cc0781cee9614ab317b7b783))
+
+
+
 ## [0.6.9](https://github.com/ElMassimo/iles/compare/v0.6.8...v0.6.9) (2021-12-01)
 
 
