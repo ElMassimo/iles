@@ -18,10 +18,10 @@ export const renderers: Record<Framework, PrerenderFn> = {
     const [
       { createElement },
       renderToString,
-    ] = _imports.preact ||= await Promise.all([
-      import('@islands/hydration/preact'),
+    ] = _imports.preact ||= [
+      await import('@islands/hydration/preact'),
       require('preact-render-to-string') as typeof import('preact-render-to-string').renderToString,
-    ])
+    ]
     return renderToString(createElement(component, props, slots))
   },
   async solid (component, props, slots) {
