@@ -148,6 +148,7 @@ async function applyModules (config: AppConfig, configEnv: ConfigEnv) {
   chainModuleCallbacks(config, 'pages', ['onRoutesGenerated', 'onClientGenerated'], true)
   chainModuleCallbacks(config, 'pages', ['extendRoute'], false)
   chainModuleCallbacks(config, 'markdown', ['extendFrontmatter'], false)
+  chainModuleCallbacks(config, 'ssg', ['beforePageRender', 'onSiteRendered'], true)
   return config
 }
 
@@ -196,6 +197,8 @@ function appConfigDefaults (appConfig: AppConfig, userConfig: UserConfig): AppCo
     siteUrl: '',
     ssg: {
       sitemap: true,
+      beforePageRender () {},
+      onSiteRendered () {},
     },
     configPath: resolve(root, 'iles.config.ts'),
     assetsDir: 'assets',

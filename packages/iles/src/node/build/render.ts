@@ -50,8 +50,7 @@ export async function renderPage (
 
   const { headTags, htmlAttrs, bodyAttrs } = renderHeadToString(head)
 
-  return `
-<!DOCTYPE html>
+  return `<!DOCTYPE html>
 <html ${htmlAttrs}>
   <head>
     ${headTags}
@@ -61,7 +60,7 @@ export async function renderPage (
   <body ${bodyAttrs}>
     <div id="app">${content}</div>
   </body>
-</html>`.trim()
+</html>`
 }
 
 function stylesheetTagsFrom (config: AppConfig, clientChunks: RollupOutput['output']) {

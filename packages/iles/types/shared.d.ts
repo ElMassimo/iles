@@ -2,7 +2,6 @@
 import type { ResolveFn, UserConfig as ViteOptions, ConfigEnv, PluginOption as VitePluginOption } from 'vite'
 import type { GetManualChunk } from 'rollup'
 import type { App, Ref, DefineComponent } from 'vue'
-import type { Options as CritterOptions } from 'critters'
 import type VuePlugin, { Options as VueOptions } from '@vitejs/plugin-vue'
 import type PagesPlugin, { UserOptions as PagesOptions } from 'vite-plugin-pages'
 import type ComponentsPlugin from 'unplugin-vue-components/vite'
@@ -84,7 +83,7 @@ export interface RouteToRender {
   path: string
   ssrProps: StaticPath['props']
   outputFilename: string
-  rendered?: string
+  rendered: string
 }
 
 export interface GetStaticPathsArgs {
@@ -101,6 +100,11 @@ export interface NamedPlugins {
   pages: ReturnType<typeof PagesPlugin>
   vue: ReturnType<typeof VuePlugin>
   components: ReturnType<typeof ComponentsPlugin>
+}
+
+export interface SSGContext {
+  config: AppConfig
+  pages: RouteToRender[]
 }
 
 export interface BaseIlesConfig {
@@ -138,7 +142,30 @@ export interface BaseIlesConfig {
    * and rehype plugins.
    */
   markdown: MarkdownOptions
-  critters?: CritterOptions | false
+  /**
+   * Options for iles build.
+   */
+  ssg: {
+    /**
+     * This hook will be invoked before îles renders a page.
+     * Plugins may alter the rendered HTML
+     */
+    beforePageRender?: (page: RouteToRender, config: AppConfig) => RouteToRender | void | Promise<void | RouteToRender>
+    /**
+     * This hook will be invoked once îles has rendered the entire site.
+     */
+    onSiteRendered?: (context: SSGContext) => void | Promise<void>
+    /**
+     * Allows to configure how JS chunks for islands should be grouped.
+     */
+    manualChunks?: GetManualChunk
+    /**
+     * Whether to generate a sitemap.xml and inject the meta tag referencing it.
+     * NOTE: Must provide siteUrl to enable sitemap generation.
+     * @default true
+     */
+    sitemap?: boolean
+  }
 }
 
 export interface IlesModule extends Partial<BaseIlesConfig> {
@@ -208,15 +235,6 @@ export interface RequiredConfig {
    * @default 'assets'
    */
   assetsDir: string
-  ssg: {
-    manualChunks?: GetManualChunk
-    /**
-     * Whether to generate a sitemap.xml and inject the meta tag referencing it.
-     * NOTE: Must provide siteUrl to enable sitemap generation.
-     * @default true
-     */
-    sitemap?: boolean
-  }
 }
 
 export interface UserConfig extends Partial<RequiredConfig>, Partial<IlesModule> {
@@ -234,7 +252,7 @@ export interface AppConfig extends RequiredConfig, BaseIlesConfig {
   resolvePath: ResolveFn
 }
 
-export type AppClientConfig = Pick<AppConfig, 'base' | 'root' | 'debug' | 'ssg' | 'siteUrl' | 'jsx'>
+export type AppClientConfig = Pick<AppConfig, 'base' | 'root' | 'debug' | 'siteUrl' | 'jsx'> & { sitemap?: boolean }
 
 export interface IslandDefinition {
   id: string

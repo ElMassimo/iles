@@ -13,7 +13,7 @@ export async function getRoutesToRender (config: AppConfig, createApp: CreateApp
   for (const { path, ssrProps } of await resolveRoutesToRender(router)) {
     const extension = extname(path).slice(1) || '.html'
     const outputFilename = pathToFilename(path, extension)
-    routesToRender.set(path, { path, ssrProps, outputFilename })
+    routesToRender.set(path, { path, ssrProps, outputFilename, rendered: '' })
   }
 
   return Array.from(routesToRender.values())

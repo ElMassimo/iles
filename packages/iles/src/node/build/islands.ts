@@ -31,7 +31,7 @@ export async function bundleIslands (
 }
 
 async function renderRoute (config: AppConfig, manifest: Manifest, route: RouteToRender, islands: IslandDefinition[] = []) {
-  let content = route.rendered!
+  let content = route.rendered
 
   if (route.outputFilename.endsWith('.html')) {
     const preloadScripts: string[] = []
@@ -61,12 +61,14 @@ async function renderRoute (config: AppConfig, manifest: Manifest, route: RouteT
     }
 
     // Preload scripts for islands in the page.
-    content = content.replace('</head>', `${stringifyPreload(config.base, manifest, preloadScripts)}</head>`)
+    route.rendered = content.replace('</head>', `${stringifyPreload(config.base, manifest, preloadScripts)}</head>`)
   }
+
+  route = await config.ssg.beforePageRender(route, config) || route
 
   const filename = resolve(config.outDir, route.outputFilename)
   await fs.mkdir(dirname(filename), { recursive: true })
-  await fs.writeFile(filename, content, 'utf-8')
+  await fs.writeFile(filename, route.rendered, 'utf-8')
 }
 
 async function buildIslands (config: AppConfig, islandsByPath: IslandsByPath) {

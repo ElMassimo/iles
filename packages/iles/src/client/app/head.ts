@@ -38,7 +38,7 @@ export function defaultHead ({ frontmatter, route, config, site }: AppContext, i
     title,
     meta,
     link: [
-      config.ssg.sitemap && { rel: 'sitemap', href: `${site.url}/sitemap.xml` },
+      config.sitemap && { rel: 'sitemap', href: `${site.url}/sitemap.xml` },
     ].filter(notEmpty),
     htmlAttrs: { lang: 'en-US' },
   }

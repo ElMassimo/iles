@@ -13,7 +13,7 @@ export default defineConfig({
     '@islands/prism',
   ],
   ssg: {
-    manualChunks: (id, api) => {
+    manualChunks (id, api) {
       if (id.includes('preact') || id.includes('algolia') || id.toLowerCase().includes('docsearch'))
         return 'docsearch'
     },
