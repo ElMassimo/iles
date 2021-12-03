@@ -1,5 +1,6 @@
 node_modules/
 dist/
+.iles-ssg-temp/
 .vite-islands-temp/
 .DS_Store
 *.local
