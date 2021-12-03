@@ -127,7 +127,7 @@ async function setNamedPlugins (config: AppConfig, env: ConfigEnv, plugins: Name
       const options = isObject(addPlugin) ? addPlugin : {}
       config.vitePlugins.push(createPlugin(await importLibrary(pluginName), options))
       if (optionName === 'preact')
-        await importLibrary('preact-render-to-string')
+        await tryInstallModule('preact-render-to-string')
     }
   }
 }
