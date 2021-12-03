@@ -19,12 +19,6 @@ export default defineConfig({
     },
   },
   vite: {
-    optimizeDeps: {
-      include: ['quicklink', '@vueuse/core', '@mussi/docsearch', 'preact', 'preact/debug'],
-    },
-    ssr: {
-      noExternal: ['@mussi/docsearch'],
-    },
     resolve: {
       alias: {
         '~images': resolve(__dirname, 'images'),
@@ -34,5 +28,13 @@ export default defineConfig({
       windicss(),
       Boolean(process.env.DEBUG) && inspect(),
     ],
+    optimizeDeps: {
+      include: ['quicklink', '@vueuse/core', '@mussi/docsearch', 'preact', 'preact/debug'],
+    },
+    ...{
+      ssr: {
+        noExternal: ['@mussi/docsearch'],
+      }
+    } as any,
   },
 })

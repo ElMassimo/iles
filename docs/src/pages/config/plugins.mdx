@@ -2,11 +2,12 @@
 [mdx]: /guide/markdown
 [configuring them as usual]: /config#configuring-vite
 [config]: /config#configuring-%C3%AEles
+[components]: /guide/development#components
 
 [@vitejs/plugin-vue]: https://www.npmjs.com/package/@vitejs/plugin-vue
 [vite-plugin-pages]: https://github.com/ElMassimo/vite-plugin-pages
 [unplugin-vue-components]: https://github.com/antfu/unplugin-vue-components
-[vite-plugin-xdm]: https://github.com/ElMassimo/vite-plugin-xdm
+[xdm]: https://github.com/wooorm/xdm
 
 [vite-plugin-solid]: https://github.com/solidjs/vite-plugin-solid
 [@preact/preset-vite]: https://github.com/preactjs/preset-vite
@@ -144,8 +145,10 @@ Check the [readme][@islands/prism] for more information.
 
 ### <kbd>[@islands/mdx]</kbd>
 
-Enabled by default, provides excellent MDX support and allows to tap into the
-[remark] and [rehype] ecosystems.
+Shipped inside <Iles/> to provides [MDX support][mdx], powered by <kbd>[xdm]</kbd>.
+
+- 🧩 fully customizable with [remark] and [rehype] plugins
+- 🧱 components are [resolved automatically][components]
 
 ```ts
   // Example config from "The Vue Point in îles"
@@ -160,8 +163,9 @@ Enabled by default, provides excellent MDX support and allows to tap into the
   },
 ```
 
-<Tip>
-You may add additional properties in the frontmatter by using the <kbd>markdown.extendFrontmatter</kbd> option.
+<Tip title="Customizing Frontmatter">
+Use <kbd>markdown.extendFrontmatter</kbd> to provide additional frontmatter options,
+like setting a different layout for all pages in a specific dir, or inferring the title or date from the file name.
 </Tip>
 
 ## Vite Plugins <ViteLogo/>

@@ -33,7 +33,7 @@ export default defineConfig({
 
 > Visit the _[Plugins]_ section for more details about the [pre-configured Vite.js plugins](/config/plugins#vite-plugins).
 
-## Configuring <span class="hidden">îles</span> <Iles heading/>
+## Configuring <span class="hidden" aria-hidden="true">îles</span> <Iles heading/>
 
 You may provide an `iles.config.ts` configuration file to customize settings
 related to markdown, component resolution, and other îles-specific features.
@@ -49,12 +49,60 @@ export default defineConfig({
 })
 ```
 
+### `modules`
+
+- **Type:** `IlesModuleOption[]`
+
+<Iles/> modules to apply in the site. [Read the _Plugins and Modules_ guide][plugins].
+
+### `debug`
+
+- **Type:** `boolean | 'log'`
+- **Default:** `true`
+
+Whether to output more information about islands and hydration in development.
+
 ### `jsx`
 
 - **Type:** `'vue' | 'preact' | 'solid'`
 - **Default:** `'vue'`
 
 Which framework to use to compile `.jsx` and `.tsx` files.
+
+### `ssg`
+
+Options applied during site generation when running <kbd>iles build</kbd>.
+
+#### `ssg.beforePageRender`
+
+- **Type:** `async (page: RouteToRender, config: AppConfig) => RouteToRender | void`
+
+This hook will be invoked before îles renders a page.
+
+<Tip>
+Modify `page.rendered` to alter the content of the page as needed.
+</Tip>
+
+#### `ssg.onSiteRendered`
+
+- **Type:** `async ({ pages: RouteToRender[], config: AppConfig }) => void`
+
+This hook will be invoked once îles has rendered the entire site.
+
+#### `ssg.manualChunks`
+
+Allows to configure how JS chunks for islands should be grouped.
+
+#### `ssg.sitemap`
+
+- **Type:** ` boolean`
+- **Default:**: `true`
+
+Whether to [generate a sitemap][sitemap] and reference it using a meta tag in all pages.
+
+<Tip warn>
+You must provide <kbd>[siteUrl](#siteurl)</kbd> to enable sitemap generation.
+</Tip>
 
 ### `siteUrl`
 
@@ -63,6 +111,7 @@ Which framework to use to compile `.jsx` and `.tsx` files.
 
 URL for the [site] in production, used to generate absolute URLs for the [sitemap]
 and social [meta tags].
+
 
 <Tip>
 When set, it is exposed as `site.url` and `site.canonical`.

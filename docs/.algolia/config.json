@@ -59,6 +59,7 @@
       },
       "lvl1": ".prose h2",
       "lvl2": ".prose h3",
+      "lvl3": ".prose h4",
       "text": ".prose p, .prose li",
       "lang": {
         "selector": "/html/@lang",
