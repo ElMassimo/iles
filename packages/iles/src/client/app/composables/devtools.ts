@@ -31,7 +31,7 @@ const frameworkColors: Record<any, any> = {
   vue: { backgroundColor: 0x42B983, textColor: 0xFFFFFF },
 }
 
-let devtoolsApi: DevtoolsPluginApi
+let devtoolsApi: DevtoolsPluginApi<unknown>
 let appConfig: AppClientConfig
 
 let page = {} as PageData['page']
@@ -80,7 +80,7 @@ const devtools = {
 
 ;(window as any).__ILE_DEVTOOLS__ = devtools
 
-export function installDevtools (app: App, config: AppClientConfig) {
+export function installDevtools (app: App & { __app: true }, config: AppClientConfig) {
   appConfig = config
   const pageData = usePage(app)
   route = pageData.route

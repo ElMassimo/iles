@@ -91,7 +91,7 @@ if (!import.meta.env.SSR) {
     const { app, router } = await createApp()
 
     const devtools = await import('./composables/devtools')
-    devtools.installDevtools(app, config)
+    devtools.installDevtools(app as any, config)
     Object.assign(window, { __ILES_PAGE_UPDATE__: forcePageUpdate })
 
     router.afterEach(resetHydrationId) // reset island identifiers to match ssg.
