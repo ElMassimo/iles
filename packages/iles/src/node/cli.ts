@@ -38,6 +38,14 @@ async function executeCommand (command: string) {
       process.exit(1)
     })
   }
+  else if (command === 'preview') {
+    printVersion()
+    const { preview } = await import('./preview')
+    preview(root, argv).catch((err: any) => {
+      console.error(pc.red('error starting preview:\n'), err)
+      process.exit(1)
+    })
+  }
   else if (command === 'info') {
     printVersion()
   }

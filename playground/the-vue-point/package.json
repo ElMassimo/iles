@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "iles --open",
     "build": "iles build",
-    "preview": "vite preview --open"
+    "preview": "iles preview --open"
   },
   "devDependencies": {
     "@iconify-json/carbon": "^1.0.7",

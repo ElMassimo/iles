@@ -32,22 +32,24 @@ Alternatively, add `iles` to your `package.json` in an existing project.
 
 ## Usage 🚀
 
-The `iles` executable provides two commands, `serve` and `build`.
+The `iles` executable provides the following commands:
 
 - <kbd>iles serve</kbd>: Starts the development server
 - <kbd>iles build</kbd>: Creates a production build of the site
+- <kbd>iles preview</kbd>: Preview the site after building
 
 The following shortcuts are added by default when using the [starter]:
 
 ```json
   "scripts": {
-    "dev": "iles --open",
+    "dev": "iles dev --open",
     "build": "iles build",
-    "preview": "vite preview --open"
+    "preview": "iles preview --open"
   },
 ```
 
 - <kbd>npm run dev</kbd>: Starts the development server
 - <kbd>npm run build</kbd>: Creates a production build of the site
+- <kbd>npm run preview</kbd>: Preview the site after building
 
 <Contact/>

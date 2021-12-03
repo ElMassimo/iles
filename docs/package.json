@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "iles --open",
     "build": "iles build",
-    "preview": "vite preview --open",
+    "preview": "iles preview --open",
     "check": "vue-tsc --noEmit",
     "link": "pnpm link ../packages/iles",
     "unlink": "pnpm unlink ../packages/iles"
