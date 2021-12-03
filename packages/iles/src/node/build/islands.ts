@@ -94,8 +94,8 @@ async function buildIslands (config: AppConfig, islandsByPath: IslandsByPath) {
       rollupOptions: {
         input: entryFiles,
         output: {
-          entryFileNames: chunkFilenames,
-          chunkFilenames,
+          entryFileNames: chunkFileNames,
+          chunkFileNames,
           manualChunks: extendManualChunks(config),
         },
       },
@@ -147,7 +147,7 @@ async function parseManifest (outDir: string, islandsByPath: IslandsByPath) {
 }
 
 // Internal: Remove query strings from islands inside Vue components.
-function chunkFilenames (chunk: PreRenderedChunk) {
+function chunkFileNames (chunk: PreRenderedChunk) {
   if (chunk.name.includes('.vue_vue')) return `assets/${chunk.name.split('.vue_vue')[0]}.[hash].js`
   return 'assets/[name].[hash].js'
 }
