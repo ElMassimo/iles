@@ -118,7 +118,7 @@ import Acknowledgements from '~/components/Acknowledgements.mdx' // not needed
 They can also be used in MDX files as components, which is the easiest way to
 reuse footers or sections that are repeated across documents.
 
-```mdx
+```jsx
 import Acknowledgements from '~/components/Acknowledgements.mdx' // not needed
 
 And _without_ further ado:
@@ -208,7 +208,7 @@ provideMDXComponents({
 
 If you need to provide several slots to a component in [MDX], you can use [`v-slots`][vue-jsx]:
 
-```mdx
+```jsx
 export const titleWithMarkdown = <span>But better keep it <b>simple</b></span>
 
 <Tip warn v-slots={{ title: () => titleWithMarkdown }}>
