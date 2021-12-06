@@ -24,6 +24,7 @@
     "build-node": "tsup src/node",
     "build-client": "tsc -p src/client",
     "build": "rimraf -rf dist && node scripts/copyShared && npm run build-client && npm run build-node && node scripts/copyClient",
+    "build-fast": "rimraf -rf dist && node scripts/copyShared && npm run build-client && npm run build-node -- --no-dts && node scripts/copyClient",
     "prepublishOnly": "npm run build"
   },
   "engines": {

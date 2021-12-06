@@ -1,7 +1,8 @@
 {
   "private": true,
   "scripts": {
-    "build": "npm -C hydration run 'build' && npm -C prerender run 'build' && npm -C frontmatter run 'build' && npm -C mdx run 'build' && npm -C headings run 'build' && npm -C prism run 'build' && npm -C icons run 'build' && npm -C iles run 'build'",
+    "build": "pnpm -r --parallel --filter . run build",
+    "build-fast": "pnpm -r --parallel --filter . --filter !iles run build -- --no-dts && npm -C iles run build-fast",
     "dev": "pnpm -r --parallel --filter . run dev"
   }
 }
