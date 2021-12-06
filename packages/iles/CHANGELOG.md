@@ -1,3 +1,12 @@
+## [0.6.11](https://github.com/ElMassimo/iles/compare/v0.6.10...v0.6.11) (2021-12-06)
+
+
+### Features
+
+* add `prettyUrls: false` to support services without transparent redirects ([3185aea](https://github.com/ElMassimo/iles/commit/3185aeaa6d7c4e49ec3da0ae60252ab660a70c6c))
+
+
+
 ## [0.6.10](https://github.com/ElMassimo/iles/compare/v0.6.9...v0.6.10) (2021-12-03)
 
 
