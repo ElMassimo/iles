@@ -6,6 +6,7 @@ import inspect from 'vite-plugin-inspect'
 export default defineConfig({
   siteUrl: 'https://the-vue-point-with-iles.netlify.app/',
   jsx: 'solid',
+  prettyUrls: false,
   svelte: true,
   modules: [
     '@islands/icons',
