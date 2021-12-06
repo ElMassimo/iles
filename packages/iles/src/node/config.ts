@@ -21,6 +21,8 @@ import { camelCase, tryInstallModule, importLibrary, uncapitalize, isString, isS
 import { resolveAliases, DIST_CLIENT_PATH, HYDRATION_DIST_PATH } from './alias'
 import remarkWrapIslands from './plugin/remarkWrapIslands'
 
+import { explicitHtmlPath } from './utils'
+
 const debug = creatDebugger('iles:config')
 
 export type { AppConfig }
@@ -195,6 +197,7 @@ function appConfigDefaults (appConfig: AppConfig, userConfig: UserConfig): AppCo
     root,
     base: '/',
     siteUrl: '',
+    prettyUrls: true,
     ssg: {
       sitemap: true,
     },
@@ -212,9 +215,13 @@ function appConfigDefaults (appConfig: AppConfig, userConfig: UserConfig): AppCo
       extensions: ['vue', 'md', 'mdx'],
       // NOTE: Adds filename to the meta information in the route so that it can
       // be used to correctly infer the file name during SSG.
-      extendRoute (route) {
+      extendRoute ({ path, ...route }) {
         const filename = join(root, route.component)
-        return { ...route, meta: { ...route.meta, filename } }
+
+        if (!appConfig.prettyUrls)
+          path = explicitHtmlPath(path, filename)
+
+        return { ...route, path, meta: { ...route.meta, filename } }
       },
     },
     namedPlugins: {} as NamedPlugins,
@@ -238,13 +245,17 @@ function appConfigDefaults (appConfig: AppConfig, userConfig: UserConfig): AppCo
       extendFrontmatter (frontmatter, absoluteFilename) {
         let resolvedPage = appConfig.namedPlugins.pages.api.pageForFile(absoluteFilename)
         const normalizedPath = resolvedPage && `/${resolvedPage.route.replace(/(^|\/)index$/, '')}`
-        const { route: { path = normalizedPath } = {}, meta: routeMeta, templateAttrs: _t, ...routeMatter }: Frontmatter = resolvedPage?.customBlock || {}
+        let { route: { path = normalizedPath } = {}, meta: routeMeta, templateAttrs: _t, ...routeMatter }: Frontmatter = resolvedPage?.customBlock || {}
         const meta = {
           lastUpdated: new Date(Math.round(fs.statSync(absoluteFilename).mtimeMs)),
           ...frontmatter.meta,
           ...routeMeta,
           filename: relative(root, absoluteFilename),
         }
+
+        if (!appConfig.prettyUrls)
+          path = explicitHtmlPath(path, absoluteFilename)
+
         if (path !== undefined) meta.href = `${appConfig.base}${path.slice(1)}`
         return { ...frontmatter, ...routeMatter, meta }
       },

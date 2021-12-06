@@ -7,6 +7,7 @@ import createDebugger from 'debug'
 
 import type { AppConfig } from '../shared'
 import { createServer } from '../server'
+import { pathToHtmlFilename } from '../utils'
 import { exists } from './utils'
 
 export const ILES_APP_ENTRY = '/@iles-entry'
@@ -21,8 +22,7 @@ export function configureMiddleware (config: AppConfig, server: ViteDevServer, d
   const htmlPagesMiddleware: NextHandleFunction = function ilesHtmlPagesMiddleware (req, res, next) {
     let { url = '' } = req
 
-    const ext = extname(url)
-    if (!ext) url += url.endsWith('/') ? 'index.html' : '.html'
+    url = pathToHtmlFilename(url)
 
     if (url.endsWith('.html')) {
       const filename = resolve(config.pagesDir, url.slice(1))

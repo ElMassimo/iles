@@ -210,6 +210,11 @@ export interface RequiredConfig {
    */
   jsx?: 'vue' | 'preact' | 'solid'
   /**
+   * Whether to skip `.html` in hrefs and router paths.
+   * @default true
+   */
+  prettyUrls: boolean
+  /**
    * Specify the output directory (relative to project root).
    * @default 'dist'
    */

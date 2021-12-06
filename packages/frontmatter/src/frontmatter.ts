@@ -1,5 +1,6 @@
 import { remarkMdxFrontmatter, FrontmatterOptions } from './remark-mdx-frontmatter'
 import { remarkMdxImages, ImageOptions } from './remark-mdx-images'
+import { remarkInternalHrefs, HrefOptions } from './remark-internal-hrefs'
 
 export type {
   Frontmatter,
@@ -15,17 +16,18 @@ export type {
  * to the MDX JS expressions as `meta` and `frontmatter`.
  */
 export default function IlesFrontmatter (): any {
-  let options: FrontmatterOptions & ImageOptions = {}
+  let options: FrontmatterOptions & ImageOptions & HrefOptions = {}
 
   return {
     name: '@islands/frontmatter',
-    configResolved ({ markdown }: any) {
-      Object.assign(options, markdown)
+    configResolved ({ markdown, prettyUrls }: any) {
+      Object.assign(options, markdown, { prettyUrls })
     },
     markdown: {
       remarkPlugins: [
         [remarkMdxFrontmatter, options],
         [remarkMdxImages, options],
+        [remarkInternalHrefs, options],
       ],
     },
   }
