@@ -1,39 +1,40 @@
 import type { MDXJsxFlowElement, MDXJsxTextElement, MDXJsxAttribute, MDXJsxAttributeValueExpression } from 'mdast-util-mdx-jsx'
 import type { MDXJSEsm } from 'mdast-util-mdxjs-esm'
-import type { Image } from 'mdast'
+import type { Root, Image } from 'mdast'
 import type { Plugin } from 'unified'
 import type { Parent, Node } from 'unist'
 import type { VFile } from 'vfile'
 
 import { visit, SKIP } from 'unist-util-visit'
 
-const urlPattern = /^(https?:)?\//
+import { isAbsolute, isJsxElement, isString } from './utils'
 
 export interface ImageOptions {
   withImageSrc?: (src: string, file: VFile) => string | void
 }
 
+type ImagePlugin = Plugin<[ImageOptions?], Root, Root>
+
 /**
  * A Remark plugin for converting Markdown images to MDX images using imports
  * for the image source.
  */
-export const remarkMdxImages: Plugin<[ImageOptions?]> = (options?: ImageOptions) => (ast, vfile) => {
-  const parent = ast as Parent
-  const imports: Omit<MDXJSEsm, 'value'>[] = []
+export const remarkMdxImages: ImagePlugin = options => (ast, vfile) => {
+  const imports: MDXJSEsm[] = []
   const imported = new Map<string, string>()
 
-  visit(parent, (node, index, parent) => {
+  visit(ast, (node, index, parent) => {
     if (node.type === 'image')
-      return replaceMarkdownImage(node as Image, index!, parent!)
+      return replaceMarkdownImage(node, index!, parent!)
 
     if (isJsxElement(node) && (node.name === 'img' || node.name === 'Img' || node.name === 'Image'))
       return replaceSrcAttribute(node)
   })
 
   if (imports.length > 0)
-    parent.children.unshift(...imports)
+    ast.children.unshift(...imports)
 
-  function replaceSrcAttribute (node: MDXJsxFlowElement) {
+  function replaceSrcAttribute (node: MDXJsxTextElement | MDXJsxFlowElement) {
     for (const attr of node.attributes) {
       if (attr.type === 'mdxJsxAttribute' && attr.name === 'src' && isString(attr.value)) {
         const srcExpression = imageSrcToMdxExpression(attr.value)
@@ -82,7 +83,7 @@ export const remarkMdxImages: Plugin<[ImageOptions?]> = (options?: ImageOptions)
   }
 
   function imageSrcToIdentifier (url: string) {
-    if (urlPattern.test(url)) return
+    if (isAbsolute(url)) return
 
     let name = imported.get(url)
     if (!name) {
@@ -93,6 +94,7 @@ export const remarkMdxImages: Plugin<[ImageOptions?]> = (options?: ImageOptions)
 
       imports.push({
         type: 'mdxjsEsm',
+        value: '_not_used_',
         data: {
           estree: {
             type: 'Program',
@@ -116,12 +118,4 @@ export const remarkMdxImages: Plugin<[ImageOptions?]> = (options?: ImageOptions)
 
     return name
   }
-}
-
-function isJsxElement (node: Node): node is MDXJsxFlowElement {
-  return node.type === 'mdxJsxFlowElement'
-}
-
-function isString (val: any): val is string {
-  return typeof val === 'string'
 }

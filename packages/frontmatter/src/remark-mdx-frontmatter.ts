@@ -1,5 +1,7 @@
-import type { Program, VariableDeclarator } from 'estree'
+import type { ObjectExpression } from 'estree'
 import type { Pluggable, Plugin } from 'unified'
+import type { MDXJSEsm } from 'mdast-util-mdxjs-esm'
+import type { Root } from 'mdast'
 import type { Node, Data, Parent } from 'unist'
 
 import estreeUtilValueToEstree from 'estree-util-value-to-estree'
@@ -28,7 +30,7 @@ function mapFind <T, O> (arr: T[], fn: (i: T) => O): O | undefined {
  * @param options - Optional options to configure the output.
  * @returns A unified transformer.
  */
-export const remarkMdxFrontmatter: Plugin<[FrontmatterOptions?]> = function (options?: FrontmatterOptions) {
+export const remarkMdxFrontmatter: Plugin<[FrontmatterOptions?], Root, Root> = function (options?: FrontmatterOptions) {
   const data = this.data()
 
   const addExtension = (field: string, value: unknown) => {
@@ -42,11 +44,10 @@ export const remarkMdxFrontmatter: Plugin<[FrontmatterOptions?]> = function (opt
   addExtension('toMarkdownExtensions', frontmatterToMarkdown(preset))
 
   return (ast, file) => {
-    const parent = ast as Parent
-    const nodes = parent.children as (Node<Data> & { value: string })[]
+    const nodes = ast.children as (Node<Data> & { value: string })[]
     const rawMatter = mapFind(nodes, parseFrontmatter) || {}
     const { meta, layout: _, ...frontmatter } = options?.extendFrontmatter?.(rawMatter, file.path) || rawMatter
-    parent.children.unshift(defineConsts({ ...frontmatter, meta, frontmatter }))
+    ast.children.unshift(defineConsts({ ...frontmatter, meta, frontmatter }))
   }
 }
 
@@ -57,9 +58,10 @@ function parseFrontmatter ({ type, value }: { type: string; value: string }) {
   return data
 }
 
-function defineConsts (variables: Record<string, any>) {
+function defineConsts (variables: Record<string, any>): MDXJSEsm {
   return {
     type: 'mdxjsEsm',
+    value: '_not_used_',
     data: {
       estree: {
         type: 'Program',
@@ -78,18 +80,18 @@ function defineConsts (variables: Record<string, any>) {
                 init: key === 'frontmatter'
                   ? shorthandObjectExpression(value)
                   : valueToEstree(value),
-              } as VariableDeclarator
+              }
             }),
           },
         ],
-      } as Program,
+      },
     },
   }
 }
 
 // Example:
 //  const frontmatter = { title, source }
-function shorthandObjectExpression (value: Record<string, any>) {
+function shorthandObjectExpression (value: Record<string, any>): ObjectExpression {
   return {
     type: 'ObjectExpression',
     properties: Object.keys(value).map(id => ({
@@ -98,6 +100,8 @@ function shorthandObjectExpression (value: Record<string, any>) {
       value: { type: 'Identifier', name: id },
       kind: 'init',
       shorthand: true,
+      method: false,
+      computed: false,
     })),
   }
 }
