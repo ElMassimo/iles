@@ -1,6 +1,7 @@
 [Vite.js]: https://vitejs.dev/
 [starter]: /guide
 [pnpm]: https://pnpm.io/
+[prettyUrls]: /config#prettyurls
 
 # Deployment 🚀
 
@@ -66,6 +67,9 @@ Add a `vercel.json` file to your project to match the behavior of Vue Router:
   "trailingSlash": false
 }
 ```
+
+Alternatively, you can disable <kbd>[prettyUrls]</kbd>, which will explicitly
+add `.html` in link hrefs, and trailing slashes on index html files.
 
 Then, push to your git repository [as usual](https://vercel.com/docs/concepts/git).
 

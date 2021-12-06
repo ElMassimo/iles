@@ -8,6 +8,8 @@
 [sitemap]: /guide/development#sitemap
 
 [shortcodes]: /guide/markdown#advanced-provide-components-shortcodes
+[deployment]: /guide/deployment 
+[Vitepress]: /faqs#vitepress
 
 # Configuration
 
@@ -68,6 +70,18 @@ Whether to output more information about islands and hydration in development.
 - **Default:** `'vue'`
 
 Which framework to use to compile `.jsx` and `.tsx` files.
+
+### `prettyUrls`
+
+- **Type:** `boolean`
+- **Default:** `true`
+
+Whether to skip `.html` and trailing slashes in link hrefs and router paths.
+
+<Tip>
+Set `prettyUrls: false` to simplify the migration of an existing [Vitepress] site
+without having to add redirects, or when deploying on services that don't support pretty urls ([most do][deployment]).
+</Tip>
 
 ### `ssg`
 
