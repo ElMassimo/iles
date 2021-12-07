@@ -10,11 +10,9 @@ export default defineConfig({
   svelte: true,
   modules: [
     '@islands/icons',
+    '@islands/prism',
   ],
   markdown: {
-    rehypePlugins: [
-      ['@mapbox/rehype-prism', { alias: { markup: ['html', 'vue'] } }],
-    ],
     // Example: Configure all posts to use a different layout without having to
     // add `layout: 'post'` in every file.
     extendFrontmatter (frontmatter, filename) {
