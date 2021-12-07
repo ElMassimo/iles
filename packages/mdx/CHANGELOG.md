@@ -1,3 +1,12 @@
+## [0.3.3](https://github.com/ElMassimo/iles/compare/mdx@0.3.2...mdx@0.3.3) (2021-12-07)
+
+
+### Features
+
+* allow mdx render function to receive props ([894c953](https://github.com/ElMassimo/iles/commit/894c953a0d73373c74ed4f06401588849221cdaa))
+
+
+
 ## [0.3.2](https://github.com/ElMassimo/iles/compare/mdx@0.3.1...mdx@0.3.2) (2021-12-01)
 
 
