@@ -7,7 +7,8 @@ import { plainText, useVueRenderer } from 'iles'
 import { defineAsyncComponent } from 'vue'
 import { getPosts, Post } from '~/logic/posts'
 
-const url = 'https://blog.vuejs.org'
+const { site } = usePage()
+const url = site.url
 const options = {
   title: 'The Vue Point',
   description: 'The official blog for the Vue.js project',
