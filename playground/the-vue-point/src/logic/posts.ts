@@ -1,4 +1,4 @@
-import { h, DefineComponent, FunctionalComponent, VNode } from 'vue'
+import { DefineComponent, FunctionalComponent, VNode } from 'vue'
 
 export interface Post extends Record<string, any> {
   title: string

@@ -1,6 +1,5 @@
 <route>
 path: /feed.rss
-layout: false
 </route>
 
 <script setup lang="ts">

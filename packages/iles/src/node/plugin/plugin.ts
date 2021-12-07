@@ -1,6 +1,6 @@
 /* eslint-disable no-restricted-syntax */
 import { promises as fs } from 'fs'
-import { basename, resolve, relative } from 'pathe'
+import { basename, extname, resolve, relative } from 'pathe'
 import type { PluginOption, ResolvedConfig } from 'vite'
 import { transformWithEsbuild } from 'vite'
 
@@ -48,8 +48,15 @@ export default function IslandsPlugins (appConfig: AppConfig): PluginOption[] {
   }
 
   function frontmatterFromPage (path: string): Frontmatter | undefined {
-    if (plugins.pages.api.pageForFile(path))
-      return appConfig.markdown.extendFrontmatter?.({}, path) || {}
+    const page = plugins.pages.api.pageForFile(path)
+    if (page) {
+      const ext = extname(page.customBlock.route?.path)
+      const isHtml = !ext || ext === '.html'
+      return {
+        layout: isHtml ? 'default' : false,
+        ...appConfig.markdown.extendFrontmatter?.({}, path),
+      }
+    }
   }
 
   return [
