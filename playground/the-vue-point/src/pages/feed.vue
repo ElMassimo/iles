@@ -10,7 +10,7 @@ import { getPosts, Post } from '~/logic/posts'
 const url = 'https://blog.vuejs.org'
 const options = {
   title: 'The Vue Point',
-  description: 'The offical blog for the Vue.js project',
+  description: 'The official blog for the Vue.js project',
   id: url,
   link: url,
   language: 'en',
