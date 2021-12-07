@@ -43,8 +43,8 @@ async function toRSS (post: Post) {
     title: post.title,
     id: `${url}${post.href}`,
     link: `${url}${post.href}`,
-    description: await renderVNodes(post.excerpt()),
-    content: await renderVNodes(post.render()),
+    description: await renderVNodes(post.excerpt),
+    content: await renderVNodes(post.render),
     author: [
       {
         name: post.author,
