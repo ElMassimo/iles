@@ -48,7 +48,7 @@ importers:
       '@preact/preset-vite': ^2.1.5
       '@vueuse/core': ^6.5.3
       autoprefixer: ^10.3.5
-      iles: ^0.6.10
+      iles: ^0.6.12
       postcss-nesting: ^8.0.1
       preact: ^10.5.15
       preact-render-to-string: ^5.1.19
@@ -71,7 +71,7 @@ importers:
       '@preact/preset-vite': 2.1.5_e6e4d528c92e97a1dfd1fc6f622d66e5
       '@vueuse/core': 6.9.2
       autoprefixer: 10.4.0
-      iles: 0.6.10
+      iles: 0.6.12
       postcss-nesting: 8.0.1
       preact-render-to-string: 5.1.19_preact@10.5.15
       vite: 2.7.0-beta.10
@@ -1264,8 +1264,8 @@ packages:
       - webpack
     dev: true
 
-  /@islands/mdx/0.3.2:
-    resolution: {integrity: sha512-1EiXv7rZCNz2GkTCj032GMOa2kStDMhDS+kt7EbyElMIxeS3eOPSV7mEVn1qD6t5oVlYfSS5jMZ+IOqkXarB6A==}
+  /@islands/mdx/0.3.3:
+    resolution: {integrity: sha512-msdcPxRxnx30mtZF1iM9+v2O+g06GbZqYp5xMXJvj/jnkUpbDW1LDgVKzMmBFmOF/h6PRhuUnQxX8+ZPDX0EHg==}
     dependencies:
       estree-walker: 3.0.0
       hash-sum: 2.0.0
@@ -4801,14 +4801,14 @@ packages:
     engines: {node: '>= 4'}
     dev: true
 
-  /iles/0.6.10:
-    resolution: {integrity: sha512-oxCglwDQmZa+PuPfUd2FD0vsx7j/WQ0A9mXcLpRs/O/fkdXWOW4vEWYTfdtY5Bg8bQ/u+ptMeDOoDYFAXoz6/w==}
+  /iles/0.6.12:
+    resolution: {integrity: sha512-PJUnHL6RjgImyjGmxrhBIAlh0Ht5okcxHFibD6WB6+uZkwDBieXYSN7zTGfBJ4o84donSVn60vcyNxbViIsMOg==}
     engines: {node: '>=14.0.0'}
     hasBin: true
     dependencies:
       '@islands/frontmatter': 0.4.2
       '@islands/hydration': 0.3.3_vue@3.2.23
-      '@islands/mdx': 0.3.2
+      '@islands/mdx': 0.3.3
       '@islands/prerender': 0.3.1_vue@3.2.23
       '@nuxt/devalue': 2.0.0
       '@vitejs/plugin-vue': 1.10.0-beta.0_vite@2.7.0-beta.10
