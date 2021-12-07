@@ -57,8 +57,9 @@ const _sfc_main = defineComponent({
   props: {
     components: { type: Object },
   },
-  render () {
-    return MDXContent({ ...this.$props, ...this.$attrs })
+  render (props) {
+    if (!props) props = this ? { ...this.$props, ...this.$attrs } : {}
+    return MDXContent(props)
   },${isDevelopment ? `\n  __file: '${path}',` : ''}
 })
 export default _sfc_main
