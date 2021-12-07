@@ -1,3 +1,17 @@
+## [0.6.12](https://github.com/ElMassimo/iles/compare/v0.6.11...v0.6.12) (2021-12-07)
+
+
+### Bug Fixes
+
+* useVueRenderer now preserves appContext and currentInstance ([cd90b41](https://github.com/ElMassimo/iles/commit/cd90b417b8cb44109a66dc085338777a7526a81f))
+
+
+### Features
+
+* auto-detect non-html pages and skip layout ([f687ce5](https://github.com/ElMassimo/iles/commit/f687ce5276fb85314e805fe16f8d18e1ade38866))
+
+
+
 ## [0.6.11](https://github.com/ElMassimo/iles/compare/v0.6.10...v0.6.11) (2021-12-06)
 
 
