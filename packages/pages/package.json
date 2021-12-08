@@ -30,12 +30,12 @@
   "bugs": "https://github.com/ElMassimo/iles/issues",
   "dependencies": {
     "debug": "^4.3.3",
-    "deep-equal": "^2.0.5",
     "js-yaml": "^4.1",
     "pathe": "^0.2.0"
   },
   "devDependencies": {
     "@types/js-yaml": "^4.0.0",
+    "deep-equal": "^2.0.5",
     "tsup": "5.5.0",
     "typescript": "^4.4.4",
     "unified": "^10.1.0"
