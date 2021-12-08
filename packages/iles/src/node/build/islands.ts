@@ -112,7 +112,7 @@ async function buildIslands (config: AppConfig, islandsByPath: IslandsByPath) {
 function virtualEntrypointsPlugin (root: string, entrypoints: Record<string, string>): Plugin {
   return {
     name: 'iles:entrypoints',
-    resolveId(id, importer) {
+    resolveId (id, importer) {
       const entryFilename = relative(root, id.split('?', 2)[0])
       if (entryFilename in entrypoints)
         return VIRTUAL_PREFIX + entryFilename
@@ -120,7 +120,7 @@ function virtualEntrypointsPlugin (root: string, entrypoints: Record<string, str
     load (id) {
       if (id.startsWith(VIRTUAL_PREFIX))
         return entrypoints[id.slice(VIRTUAL_PREFIX.length)]
-    }
+    },
   }
 }
 

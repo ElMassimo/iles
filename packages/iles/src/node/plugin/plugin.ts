@@ -42,21 +42,10 @@ export default function IslandsPlugins (appConfig: AppConfig): PluginOption[] {
   const defaultLayoutPath = `${layoutsRoot}/default.vue`
 
   const plugins = appConfig.namedPlugins
+  const pagesApi = plugins.pages.api
 
   function isLayout (path: string) {
     return path.includes(appConfig.layoutsDir)
-  }
-
-  function frontmatterFromPage (path: string): Frontmatter | undefined {
-    const page = plugins.pages.api.pageForFile(path)
-    if (page) {
-      const ext = extname(page.customBlock.route?.path)
-      const isHtml = !ext || ext === '.html'
-      return {
-        layout: isHtml ? 'default' : false,
-        ...appConfig.markdown.extendFrontmatter?.({}, path),
-      }
-    }
   }
 
   return [
@@ -162,7 +151,7 @@ export default function IslandsPlugins (appConfig: AppConfig): PluginOption[] {
       // Force a refresh for all page computed properties.
       async transform (code, id) {
         const { path } = parseId(id)
-        if (isLayout(path) || plugins.pages.api.pageForFile(path)) {
+        if (isLayout(path) || pagesApi.isPage(path)) {
           return `${code}
 import.meta.hot.accept('/${relative(root, path)}', (...args) => __ILES_PAGE_UPDATE__(args))
 `
@@ -183,7 +172,7 @@ import.meta.hot.accept('/${relative(root, path)}', (...args) => __ILES_PAGE_UPDA
     },
 
     {
-      name: 'iles:sfc:page-data',
+      name: 'iles:page-data',
       enforce: 'post',
       async transform (code, id) {
         const { path, query } = parseId(id)
@@ -200,25 +189,19 @@ import.meta.hot.accept('/${relative(root, path)}', (...args) => __ILES_PAGE_UPDA
           return s.toString()
         }
 
-        const pageMatter = frontmatterFromPage(path)
-
-        if (isMarkdownPath) {
+        const matter = pagesApi.frontmatterForFile(path)
+        if (matter) {
+          const { meta, layout = 'default', ...frontmatter } = matter
+          s.prepend(`let _meta = ${serialize(meta)}, _frontmatter = ${serialize(frontmatter)};`)
           appendToSfc('inheritAttrs', serialize(false))
-          s.appendRight(sfcIndex, '...meta,...frontmatter,meta,frontmatter,')
-        }
+          s.appendRight(sfcIndex, '..._meta,..._frontmatter,meta:_meta,frontmatter:_frontmatter,')
 
-        if (pageMatter) {
-          if (isSFC) {
-            const { meta, layout, ...frontmatter } = pageMatter
-            appendToSfc('inheritAttrs', serialize(false))
-            appendToSfc('meta', serialize(meta))
-            appendToSfc('frontmatter', serialize(frontmatter))
+          if (pagesApi.isPage(path)) {
+            appendToSfc('layoutName', serialize(layout))
+            appendToSfc('layoutFn', String(layout) === 'false'
+              ? 'false'
+              : `() => import('${layoutsRoot}/${layout}.vue').then(m => m.default)`)
           }
-          const layoutName = pageMatter.layout ?? 'default'
-          appendToSfc('layoutName', serialize(layoutName))
-          appendToSfc('layoutFn', String(layoutName) === 'false'
-            ? 'false'
-            : `() => import('${layoutsRoot}/${layoutName}.vue').then(m => m.default)`)
         }
 
         return s.toString()

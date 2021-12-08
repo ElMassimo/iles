@@ -13,6 +13,7 @@ import type { PreactPluginOptions as PreactOptions } from '@preact/preset-vite'
 
 import type { Router, RouteRecordRaw, RouteMeta, RouterOptions as VueRouterOptions, RouteComponent, RouteRecordNormalized, RouteLocationNormalizedLoaded, RouteParams } from 'vue-router'
 import type { HeadClient, HeadObject } from '@vueuse/head'
+export type { PageFrontmatter, PageMeta } from '@islands/frontmatter'
 export type { OnLoadFn } from '@islands/hydration/dist/vanilla'
 
 import type { MarkdownOptions } from '@islands/mdx'
@@ -23,16 +24,6 @@ export type { Router, RouteRecordRaw, RouteMeta }
 export type RouterOptions = VueRouterOptions & { base?: string }
 
 export interface PageProps extends Record<string, any> {}
-
-export interface PageFrontmatter extends Record<string, any> {
-  layout?: string | false
-}
-
-export interface PageMeta {
-  href: string
-  filename: string
-  lastUpdated: Date
-}
 
 export interface PageComponent extends RouteComponent {
   frontmatter: PageFrontmatter

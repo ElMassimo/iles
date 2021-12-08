@@ -4,10 +4,10 @@ import { join, relative, resolve } from 'pathe'
 import pc from 'picocolors'
 import creatDebugger from 'debug'
 import { loadConfigFromFile, mergeConfig as mergeViteConfig } from 'vite'
-import pages from 'vite-plugin-pages'
 import vue from '@vitejs/plugin-vue'
 import components from 'unplugin-vue-components/vite'
 import frontmatter from '@islands/frontmatter'
+import pages from '@islands/pages'
 import vueMdx from '@islands/mdx'
 
 import type { ComponentResolver } from 'unplugin-vue-components/types'
@@ -67,10 +67,10 @@ async function resolveUserConfig (root: string, configEnv: ConfigEnv) {
     vueMdx(),
     { name: 'user-config', ...userConfig },
     ...modules,
+    pages(),
   ]).then(modules => modules.flat()))
 
   Object.assign(config, await applyModules(config, configEnv))
-  config.pages.pagesDir = join(config.srcDir, config.pagesDir)
   await setNamedPlugins(config, configEnv, config.namedPlugins)
 
   const siteUrl = config.siteUrl || ''
@@ -113,7 +113,6 @@ async function setNamedPlugins (config: AppConfig, env: ConfigEnv, plugins: Name
     tagName.startsWith('ile-') || ceChecks.some(fn => fn!(tagName))
 
   plugins.components = components(config.components)
-  plugins.pages = pages(config.pages)
   plugins.vue = vue(config.vue)
 
   const optionalPlugins: [keyof AppConfig, string, (mod: any, options: any) => any][] = [
@@ -209,21 +208,6 @@ function appConfigDefaults (appConfig: AppConfig, userConfig: UserConfig): AppCo
     layoutsDir: 'layouts',
     tempDir: '.iles-ssg-temp',
     modules: [] as IlesModule[],
-    pages: {
-      routeBlockLang: 'yaml',
-      syncIndex: false,
-      extensions: ['vue', 'md', 'mdx'],
-      // NOTE: Adds filename to the meta information in the route so that it can
-      // be used to correctly infer the file name during SSG.
-      extendRoute ({ path, ...route }) {
-        const filename = join(root, route.component)
-
-        if (!appConfig.prettyUrls)
-          path = explicitHtmlPath(path, filename)
-
-        return { ...route, path, meta: { ...route.meta, filename } }
-      },
-    },
     namedPlugins: {} as NamedPlugins,
     resolvePath: undefined as any,
     vitePlugins: [],
@@ -234,6 +218,34 @@ function appConfigDefaults (appConfig: AppConfig, userConfig: UserConfig): AppCo
         compilerOptions: {},
       },
     },
+    // Adds meta fields such as filename, lastUpdated, and href.
+    extendFrontmatter (frontmatter, absoluteFilename) {
+      let resolvedPage = appConfig.namedPlugins.pages.api.pageForFile(absoluteFilename)
+      const normalizedPath = resolvedPage && `/${resolvedPage.route.replace(/(^|\/)index$/, '')}`
+      let { route: { path = normalizedPath } = {}, meta: routeMeta, templateAttrs: _t, ...routeMatter }: Frontmatter = resolvedPage?.customBlock || {}
+      const meta = {
+        lastUpdated: new Date(Math.round(fs.statSync(absoluteFilename).mtimeMs)),
+        ...frontmatter.meta,
+        ...routeMeta,
+        filename: relative(root, absoluteFilename),
+      }
+
+      if (!appConfig.prettyUrls)
+        path = explicitHtmlPath(path, absoluteFilename)
+
+      if (path !== undefined) meta.href = `${appConfig.base}${path.slice(1)}`
+      return { ...frontmatter, ...routeMatter, meta }
+    },
+    // NOTE: Adds filename to the meta information in the route so that it can
+    // be used to correctly infer the file name during SSG.
+    extendRoute ({ path, ...route }) {
+      const filename = join(root, route.component)
+
+      if (!appConfig.prettyUrls)
+        path = explicitHtmlPath(path, filename)
+
+      return
+    },
     markdown: {
       jsxRuntime: 'automatic',
       jsxImportSource: 'iles',
@@ -241,24 +253,6 @@ function appConfigDefaults (appConfig: AppConfig, userConfig: UserConfig): AppCo
       remarkPlugins: [
         [remarkWrapIslands, { get config () { return appConfig } }],
       ],
-      // Adds meta fields such as filename, lastUpdated, and href.
-      extendFrontmatter (frontmatter, absoluteFilename) {
-        let resolvedPage = appConfig.namedPlugins.pages.api.pageForFile(absoluteFilename)
-        const normalizedPath = resolvedPage && `/${resolvedPage.route.replace(/(^|\/)index$/, '')}`
-        let { route: { path = normalizedPath } = {}, meta: routeMeta, templateAttrs: _t, ...routeMatter }: Frontmatter = resolvedPage?.customBlock || {}
-        const meta = {
-          lastUpdated: new Date(Math.round(fs.statSync(absoluteFilename).mtimeMs)),
-          ...frontmatter.meta,
-          ...routeMeta,
-          filename: relative(root, absoluteFilename),
-        }
-
-        if (!appConfig.prettyUrls)
-          path = explicitHtmlPath(path, absoluteFilename)
-
-        if (path !== undefined) meta.href = `${appConfig.base}${path.slice(1)}`
-        return { ...frontmatter, ...routeMatter, meta }
-      },
     },
     components: {
       dts: true,

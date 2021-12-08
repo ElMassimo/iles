@@ -34,7 +34,7 @@ export default defineConfig({
     ...{
       ssr: {
         noExternal: ['@mussi/docsearch'],
-      }
+      },
     } as any,
   },
 })

@@ -1,0 +1,43 @@
+{
+  "name": "@islands/pages",
+  "version": "0.1.0",
+  "scripts": {
+    "dev": "npm run build -- --watch",
+    "build": "tsup src/pages.ts",
+    "prepublishOnly": "npm run build"
+  },
+  "type": "module",
+  "files": [
+    "dist",
+    "src"
+  ],
+  "types": "dist/pages.d.ts",
+  "main": "dist/pages.js",
+  "exports": {
+    ".": {
+      "import": "./dist/pages.js",
+      "require": "./src/pages.cjs"
+    },
+    "./package.json": "./package.json"
+  },
+  "funding": "https://github.com/sponsors/ElMassimo",
+  "author": "Máximo Mussini <maximomussini@gmail.com>",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ElMassimo/iles"
+  },
+  "homepage": "https://github.com/ElMassimo/iles",
+  "bugs": "https://github.com/ElMassimo/iles/issues",
+  "dependencies": {
+    "debug": "^4.3.3",
+    "deep-equal": "^2.0.5",
+    "js-yaml": "^4.1",
+    "pathe": "^0.2.0"
+  },
+  "devDependencies": {
+    "@types/js-yaml": "^4.0.0",
+    "tsup": "5.5.0",
+    "typescript": "^4.4.4",
+    "unified": "^10.1.0"
+  }
+}
