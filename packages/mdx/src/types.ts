@@ -1,12 +1,14 @@
 import type { CompileOptions } from 'xdm/lib/integration/rollup.js'
 import type { Plugin } from 'vite'
-import type { FrontmatterOptions, ImageOptions } from '@islands/frontmatter'
 import type { Pluggable } from 'unified'
+import type { VFile } from 'vfile'
 
 export type PluginLike = null | undefined | false | Pluggable
 export type PluginOption = PluginLike | Promise<PluginLike> | string | [string, any]
 
-interface Options extends FrontmatterOptions, ImageOptions {
+type XdmOptions = Omit<CompileOptions, 'remarkPlugins' | 'rehypePlugins' | 'recmaPlugins'>
+
+export interface MarkdownOptions extends XdmOptions {
   /**
    * Recma plugins that should be used to process files.
    */
@@ -21,6 +23,10 @@ interface Options extends FrontmatterOptions, ImageOptions {
    * Rehype plugins that should be used to process files.
    */
   rehypePlugins?: PluginOption[]
-}
 
-export type MarkdownOptions = Omit<CompileOptions, 'remarkPlugins' | 'rehypePlugins' | 'recmaPlugins'> & Options
+  /**
+   * Allows to modify an image src. Useful to customize image processing using
+   * `vite-imagetools` or other rollup plugins.
+   */
+  withImageSrc?: (src: string, file: VFile) => string | void
+}

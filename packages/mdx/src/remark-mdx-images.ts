@@ -4,16 +4,12 @@ import type { Root, Image } from 'mdast'
 import type { Plugin } from 'unified'
 import type { Parent, Node } from 'unist'
 import type { VFile } from 'vfile'
+import type { MarkdownOptions } from './types'
 
 import { visit, SKIP } from 'unist-util-visit'
-
 import { isAbsolute, isJsxElement, isString } from './utils'
 
-export interface ImageOptions {
-  withImageSrc?: (src: string, file: VFile) => string | void
-}
-
-type ImagePlugin = Plugin<[ImageOptions?], Root, Root>
+type ImagePlugin = Plugin<[MarkdownOptions?], Root, Root>
 
 /**
  * A Remark plugin for converting Markdown images to MDX images using imports

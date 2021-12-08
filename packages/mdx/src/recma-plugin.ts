@@ -35,7 +35,7 @@ function resolveMissingComponents (tree: Program) {
 
       if (node.id?.name === 'MDXContent') {
         const createMdxContent = node.body.body.find(s =>
-          s.type === 'FunctionDeclaration' && s.id?.name === '_createMdxContent'
+          s.type === 'FunctionDeclaration' && s.id?.name === '_createMdxContent',
         ) as FunctionDeclaration | undefined
 
         if (createMdxContent)

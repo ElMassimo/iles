@@ -19,3 +19,10 @@ export function isJsxElement (node: Node): node is MDXJsxTextElement | MDXJsxFlo
 export function isString (val: any): val is string {
   return typeof val === 'string'
 }
+
+export function toExplicitHtmlPath (path: string) {
+  if (isExternal(path) || extname(path) !== '.html') return path
+  if (path.endsWith('/')) return path
+  if (path.endsWith('/index.html')) return path.replace(/\/index\.html$/, '/')
+  return `${path}.html`
+}

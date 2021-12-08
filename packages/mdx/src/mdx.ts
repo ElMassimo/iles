@@ -1,5 +1,9 @@
+import remarkFrontmatter from 'remark-frontmatter'
+
 import recmaPlugin from './recma-plugin'
-import vitePlugins from './vite-plugins'
+import mdxPlugins from './mdx-vite-plugins'
+import { remarkInternalHrefs } from './remark-internal-hrefs'
+import { remarkMdxImages } from './remark-mdx-images'
 
 /**
  * An iles module that injects a recma plugin that transforms MDX to allow
@@ -12,7 +16,15 @@ export function vueMdx (): any {
       recmaPlugins: [recmaPlugin],
     },
     configResolved (config: any) {
-      config.vitePlugins.push(...vitePlugins(config.markdown))
+      const { markdown, prettyUrls } = config
+
+      markdown.remarkPlugins.unshift(
+        [remarkFrontmatter, ['yaml', 'toml']],
+        [remarkMdxImages, markdown],
+        [remarkInternalHrefs, { prettyUrls }],
+      )
+
+      config.vitePlugins.push(...mdxPlugins(markdown))
     },
   }
 }
