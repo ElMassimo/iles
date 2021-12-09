@@ -37,7 +37,7 @@ async function bundleHtmlEntrypoints (config: AppConfig) {
 
 // Internal: Creates a client and server bundle.
 // NOTE: The client bundle is used only to obtain styles, JS is discarded.
-async function bundleWithVite (config: AppConfig, entrypoints: string[] | Entrypoints, options: { ssr: boolean, htmlBuild?: boolean }) {
+async function bundleWithVite (config: AppConfig, entrypoints: string[] | Entrypoints, options: { ssr: boolean; htmlBuild?: boolean }) {
   const { htmlBuild = false, ssr } = options
 
   return await build(mergeViteConfig(config.vite, {

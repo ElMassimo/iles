@@ -12,13 +12,11 @@ export default defineConfig({
     '@islands/icons',
     '@islands/prism',
   ],
-  markdown: {
-    // Example: Configure all posts to use a different layout without having to
-    // add `layout: 'post'` in every file.
-    extendFrontmatter (frontmatter, filename) {
-      if (filename.includes('/posts/'))
-        return { layout: 'post', ...frontmatter }
-    },
+  // Example: Configure all posts to use a different layout without having to
+  // add `layout: 'post'` in every file.
+  extendFrontmatter (frontmatter, filename) {
+    if (filename.includes('/posts/'))
+      frontmatter.layout ||= 'post'
   },
   vite: {
     plugins: [

@@ -1,5 +1,6 @@
 import type { Node } from 'unist'
 import type { MDXJsxTextElement, MDXJsxFlowElement } from 'mdast-util-mdx-jsx'
+import { extname } from 'path'
 
 const urlPattern = /^(https?:)?\//
 const externalUrlPattern = /^(https?:)?\/\//
@@ -18,4 +19,12 @@ export function isJsxElement (node: Node): node is MDXJsxTextElement | MDXJsxFlo
 
 export function isString (val: any): val is string {
   return typeof val === 'string'
+}
+
+export function toExplicitHtmlPath (path: string) {
+  const ext = extname(path)
+  if (isExternal(path) || ext && ext !== '.html') return path
+  if (path.endsWith('/')) return path
+  if (path.endsWith('/index.html')) return path.replace(/\/index\.html$/, '/')
+  return `${path}.html`
 }

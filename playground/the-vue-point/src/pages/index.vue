@@ -1,11 +1,11 @@
-<route>
+<page>
 alias: ['/posts']
-</route>
+</page>
 
 <script setup lang="ts">
 import { getPosts } from '~/logic/posts'
 
-const posts = getPosts()
+let posts = $(getPosts())
 </script>
 
 <template>

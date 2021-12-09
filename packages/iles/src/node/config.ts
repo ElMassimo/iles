@@ -1,21 +1,19 @@
 /* eslint-disable no-restricted-syntax */
 import fs from 'fs'
-import { join, relative, resolve } from 'pathe'
+import { join, resolve } from 'pathe'
 import pc from 'picocolors'
 import creatDebugger from 'debug'
 import { loadConfigFromFile, mergeConfig as mergeViteConfig } from 'vite'
-import pages from 'vite-plugin-pages'
 import vue from '@vitejs/plugin-vue'
 import components from 'unplugin-vue-components/vite'
-import frontmatter from '@islands/frontmatter'
+import pages from '@islands/pages'
 import vueMdx from '@islands/mdx'
 
 import type { ComponentResolver } from 'unplugin-vue-components/types'
-import type { Frontmatter } from '@islands/frontmatter'
 import type { UserConfig } from 'iles'
 
 import { importModule } from 'lib/modules'
-import type { AppConfig, BaseIlesConfig, ConfigEnv, ViteOptions, IlesModule, IlesModuleLike, IlesModuleOption, NamedPlugins } from './shared'
+import type { AppConfig, ConfigEnv, ViteOptions, IlesModule, IlesModuleLike, IlesModuleOption, NamedPlugins } from './shared'
 
 import { camelCase, tryInstallModule, importLibrary, uncapitalize, isString, isStringPlugin, compact } from './plugin/utils'
 import { resolveAliases, DIST_CLIENT_PATH, HYDRATION_DIST_PATH } from './alias'
@@ -50,6 +48,8 @@ export async function resolveConfig (root?: string, env?: ConfigEnv): Promise<Ap
   for (const mod of appConfig.modules)
     await mod.configResolved?.(appConfig, env)
 
+  checkDeprecations(appConfig as any)
+
   return appConfig
 }
 
@@ -63,14 +63,13 @@ async function resolveUserConfig (root: string, configEnv: ConfigEnv) {
 
   config.modules = compact<IlesModule>(await resolveIlesModules([
     { name: 'iles:base-config', ...appConfigDefaults(config, userConfig as UserConfig) },
-    frontmatter(),
     vueMdx(),
     { name: 'user-config', ...userConfig },
     ...modules,
+    pages(),
   ]).then(modules => modules.flat()))
 
   Object.assign(config, await applyModules(config, configEnv))
-  config.pages.pagesDir = join(config.srcDir, config.pagesDir)
   await setNamedPlugins(config, configEnv, config.namedPlugins)
 
   const siteUrl = config.siteUrl || ''
@@ -113,7 +112,6 @@ async function setNamedPlugins (config: AppConfig, env: ConfigEnv, plugins: Name
     tagName.startsWith('ile-') || ceChecks.some(fn => fn!(tagName))
 
   plugins.components = components(config.components)
-  plugins.pages = pages(config.pages)
   plugins.vue = vue(config.vue)
 
   const optionalPlugins: [keyof AppConfig, string, (mod: any, options: any) => any][] = [
@@ -147,10 +145,8 @@ async function applyModules (config: AppConfig, configEnv: ConfigEnv) {
       if (partialConfig) config = mergeConfig(config, partialConfig as any)
     }
   }
-  chainModuleCallbacks(config, 'pages', ['onRoutesGenerated', 'onClientGenerated'], true)
-  chainModuleCallbacks(config, 'pages', ['extendRoute'], false)
-  chainModuleCallbacks(config, 'markdown', ['extendFrontmatter'], false)
-  chainModuleCallbacks(config, 'ssg', ['beforePageRender', 'onSiteRendered'], true)
+  chainModuleCallbacks(config, ['extendFrontmatter', 'extendRoute', 'extendRoutes'])
+  chainModuleCallbacks(config, ['beforePageRender', 'onSiteRendered'], 'ssg')
   return config
 }
 
@@ -209,21 +205,6 @@ function appConfigDefaults (appConfig: AppConfig, userConfig: UserConfig): AppCo
     layoutsDir: 'layouts',
     tempDir: '.iles-ssg-temp',
     modules: [] as IlesModule[],
-    pages: {
-      routeBlockLang: 'yaml',
-      syncIndex: false,
-      extensions: ['vue', 'md', 'mdx'],
-      // NOTE: Adds filename to the meta information in the route so that it can
-      // be used to correctly infer the file name during SSG.
-      extendRoute ({ path, ...route }) {
-        const filename = join(root, route.component)
-
-        if (!appConfig.prettyUrls)
-          path = explicitHtmlPath(path, filename)
-
-        return { ...route, path, meta: { ...route.meta, filename } }
-      },
-    },
     namedPlugins: {} as NamedPlugins,
     resolvePath: undefined as any,
     vitePlugins: [],
@@ -234,6 +215,16 @@ function appConfigDefaults (appConfig: AppConfig, userConfig: UserConfig): AppCo
         compilerOptions: {},
       },
     },
+    // Adds lastUpdated meta field.
+    extendFrontmatter (frontmatter, filename) {
+      frontmatter.meta.lastUpdated
+        = new Date(Math.round(fs.statSync(filename).mtimeMs))
+    },
+    // Adds handling for explicit HTML urls.
+    extendRoute (route) {
+      if (appConfig.prettyUrls === false)
+        route.path = explicitHtmlPath(route.path, route.componentFilename)
+    },
     markdown: {
       jsxRuntime: 'automatic',
       jsxImportSource: 'iles',
@@ -241,24 +232,6 @@ function appConfigDefaults (appConfig: AppConfig, userConfig: UserConfig): AppCo
       remarkPlugins: [
         [remarkWrapIslands, { get config () { return appConfig } }],
       ],
-      // Adds meta fields such as filename, lastUpdated, and href.
-      extendFrontmatter (frontmatter, absoluteFilename) {
-        let resolvedPage = appConfig.namedPlugins.pages.api.pageForFile(absoluteFilename)
-        const normalizedPath = resolvedPage && `/${resolvedPage.route.replace(/(^|\/)index$/, '')}`
-        let { route: { path = normalizedPath } = {}, meta: routeMeta, templateAttrs: _t, ...routeMatter }: Frontmatter = resolvedPage?.customBlock || {}
-        const meta = {
-          lastUpdated: new Date(Math.round(fs.statSync(absoluteFilename).mtimeMs)),
-          ...frontmatter.meta,
-          ...routeMeta,
-          filename: relative(root, absoluteFilename),
-        }
-
-        if (!appConfig.prettyUrls)
-          path = explicitHtmlPath(path, absoluteFilename)
-
-        if (path !== undefined) meta.href = `${appConfig.base}${path.slice(1)}`
-        return { ...frontmatter, ...routeMatter, meta }
-      },
     },
     components: {
       dts: true,
@@ -329,41 +302,43 @@ function mergeConfig<T = Record<string, any>> (a: T, b: T, isRoot = true): AppCo
   return merged as AppConfig
 }
 
-function chainModuleCallbacks<T extends keyof BaseIlesConfig> (
-  config: AppConfig, option: T, callbackNames: (keyof BaseIlesConfig[T])[], isAsync: boolean) {
+function chainModuleCallbacks(config: any, callbackNames: string[], option?: string): any {
   callbackNames.forEach((callbackName) => {
     const moduleCallbacks = config.modules
-      // @ts-ignore
-      .map(plugin => plugin[option]?.[callbackName as keyof IlesModule[T]])
-      .filter(x => x)
+      .map((plugin: any) => (option ? plugin[option] : plugin)?.[callbackName])
+      .filter((x: any) => x)
 
-    if (moduleCallbacks.length > 0)
-      // @ts-ignore
-      config[option][callbackName] = chainCallbacks(moduleCallbacks, isAsync) as any
+    if (moduleCallbacks.length > 0) {
+      const original = option ? config[option] : config
+      original[callbackName] = chainCallbacks(moduleCallbacks)
+    }
   })
 }
 
-function chainCallbacks (fns: any, isAsync: boolean): Function {
-  if (isAsync) {
-    return async (...args: any[]) => {
-      for (let i = 0; i < fns.length; i++) {
-        const result = await (fns[i] as any)(...args)
-        if (result) args[0] = result
-      }
-      return args[0]
+function chainCallbacks (fns: any): any {
+  return async (...args: any[]) => {
+    for (let i = 0; i < fns.length; i++) {
+      const result = await (fns[i] as any)(...args)
+      if (result) args[0] = result
     }
-  }
-  else {
-    return (...args: any[]) => {
-      for (let i = 0; i < fns.length; i++) {
-        const result = (fns[i] as any)(...args)
-        if (result) args[0] = result
-      }
-      return args[0]
-    }
+    return args[0]
   }
 }
 
 function isObject (value: unknown): value is Record<string, any> {
   return Object.prototype.toString.call(value) === '[object Object]'
+}
+
+function checkDeprecations (config: any) {
+  if (config.markdown?.extendFrontmatter)
+    throw new Error('CHANGES REQUIRED: `markdown.extendFrontmatter` is now `extendFrontmatter`')
+
+  if (config.pages?.extendRoute)
+    throw new Error('CHANGES REQUIRED: `pages.extendRoute` is now `extendRoute`')
+
+  if (config.pages?.onRoutesGenerated)
+    throw new Error('CHANGES REQUIRED: `pages.onRoutesGenerated` is now `extendRoutes`')
+
+  if (config.pages)
+    throw new Error('CHANGES REQUIRED: `pages` is no longer an option, see @islands/pages')
 }

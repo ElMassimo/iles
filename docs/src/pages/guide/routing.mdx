@@ -7,9 +7,11 @@
 [pagination source]: https://github.com/ElMassimo/iles/blob/main/playground/the-vue-point/src/pages/posts/%5Bpage%5D.vue
 [dynamic source]: https://github.com/ElMassimo/iles/blob/main/docs/src/pages/dynamic/%5Bsection%5D.vue
 
+[@islands/pages]: /config/plugins#islandspages
+
 # Routing 🛣
 
-<Iles/> provides file-based routing, powered by [`vite-plugin-pages`](https://github.com/hannoeru/vite-plugin-pages).
+<Iles/> provides file-based routing, powered by <kbd>[@islands/pages]</kbd>
 
 As you add files to the <kbd>src/pages</kbd> directory, they will become
 available as routes based on their filename, and [Vue Router] will be configured
@@ -36,9 +38,9 @@ If you want the same component to be rendered as different pages, you can use
 [Vue Router]'s `alias` in [frontmatter]:
 
 ```vue
-<route>
+<page>
 alias: ['/posts']
-</route>
+</page>
 ```
 
 ## Override Routes
@@ -50,6 +52,8 @@ You can also override the default structure by providing `path` in [frontmatter]
 path: /guide/intro
 ---
 ```
+
+<PageHooks/>
 
 ## Dynamic Routes
 

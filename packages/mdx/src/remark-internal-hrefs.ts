@@ -1,5 +1,3 @@
-import { extname } from 'path'
-
 import type { MDXJsxFlowElement, MDXJsxTextElement } from 'mdast-util-mdx-jsx'
 import type { MDXJSEsm } from 'mdast-util-mdxjs-esm'
 import type { Root, Link } from 'mdast'
@@ -8,7 +6,7 @@ import type { Parent, Node } from 'unist'
 
 import { visit, SKIP } from 'unist-util-visit'
 
-import { isExternal, isJsxElement, isString } from './utils'
+import { isExternal, isJsxElement, isString, toExplicitHtmlPath } from './utils'
 
 export interface HrefOptions {
   prettyUrls?: boolean
@@ -47,11 +45,4 @@ const remarkProcessor: HrefProcessor = (ast, vfile) => {
       }
     }
   }
-}
-
-function toExplicitHtmlPath (path: string) {
-  if (isExternal(path) || extname(path) !== '.html') return path
-  if (path.endsWith('/')) return path
-  if (path.endsWith('/index.html')) return path.replace(/\/index\.html$/, '/')
-  return `${path}.html`
 }

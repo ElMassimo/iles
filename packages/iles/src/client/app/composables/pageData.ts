@@ -21,7 +21,7 @@ function injectFromApp <T> (key: InjectionKey<T>, app?: App) {
 const _lastPageChange = ref(new Date())
 export const forcePageUpdate = () => { _lastPageChange.value = new Date() }
 
-const computedInPage = <T>(fn: () => T) => {
+export const computedInPage = <T>(fn: () => T) => {
   return computed<T>(() => {
     // eslint-disable-next-line no-unused-expressions
     _lastPageChange.value // track dependency to recompute as needed.
@@ -40,7 +40,7 @@ function reactiveFromFn <T extends object> (fn: () => T): T {
 export function installPageData (app: App, siteRef: Ref<UserSite>): PageData {
   const route = injectFromApp(routeLocationKey, app)
   const page = computedInPage(() => pageFromRoute(route))
-  const meta = reactiveFromFn(() => ({ ...page.value.meta, href: route.path }))
+  const meta = reactiveFromFn(() => page.value.meta || {})
   const frontmatter = reactiveFromFn(() => page.value.frontmatter || {})
   const props = computedInPage(() => propsFromRoute(route))
   const site = toReactive(siteRef)

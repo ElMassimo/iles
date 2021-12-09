@@ -31,11 +31,11 @@
   "dependencies": {
     "estree-walker": "^3.0",
     "hash-sum": "^2.0",
+    "remark-frontmatter": "^4.0.1",
     "source-map": "^0.7.3",
     "xdm": "3.3"
   },
   "devDependencies": {
-    "@islands/frontmatter": "workspace:*",
     "@types/estree-jsx": "^0.0.1",
     "@types/hash-sum": "^1.0",
     "tsup": "5.5.0",

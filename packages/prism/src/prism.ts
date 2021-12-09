@@ -97,7 +97,7 @@ function addLineNumbers (lines: string[]) {
 function extractLineNumbers (meta: string) {
   const rangesStr = meta.match(/\{(.*?)\}/)?.[1]
   if (rangesStr) {
-    const ranges = rangesStr.split(',').map((v) => v.split('-').map((v) => parseInt(v, 10)))
+    const ranges = rangesStr.split(',').map(v => v.split('-').map(v => parseInt(v, 10)))
     return (line: number) =>
       ranges.some(([start, end]) => end ? line >= start && line <= end : line === start)
   }

@@ -3,7 +3,6 @@ import type { ResolveFn, UserConfig as ViteOptions, ConfigEnv, PluginOption as V
 import type { GetManualChunk } from 'rollup'
 import type { App, Ref, DefineComponent } from 'vue'
 import type VuePlugin, { Options as VueOptions } from '@vitejs/plugin-vue'
-import type PagesPlugin, { UserOptions as PagesOptions } from 'vite-plugin-pages'
 import type ComponentsPlugin from 'unplugin-vue-components/vite'
 import type { Options as ComponentOptions } from 'unplugin-vue-components/types'
 
@@ -13,26 +12,19 @@ import type { PreactPluginOptions as PreactOptions } from '@preact/preset-vite'
 
 import type { Router, RouteRecordRaw, RouteMeta, RouterOptions as VueRouterOptions, RouteComponent, RouteRecordNormalized, RouteLocationNormalizedLoaded, RouteParams } from 'vue-router'
 import type { HeadClient, HeadObject } from '@vueuse/head'
+import type { PagesApi, PagesOptions } from '@islands/pages'
+export type { RawPageMatter, PageFrontmatter, PageMeta } from '@islands/pages'
 export type { OnLoadFn } from '@islands/hydration/dist/vanilla'
 
 import type { MarkdownOptions } from '@islands/mdx'
 
 export type { ViteOptions, ConfigEnv }
 export type { Router, RouteRecordRaw, RouteMeta }
+export type { RouteLocationNormalizedLoaded } from 'vue-router'
 
 export type RouterOptions = VueRouterOptions & { base?: string }
 
 export interface PageProps extends Record<string, any> {}
-
-export interface PageFrontmatter extends Record<string, any> {
-  layout?: string | false
-}
-
-export interface PageMeta {
-  href: string
-  filename: string
-  lastUpdated: Date
-}
 
 export interface PageComponent extends RouteComponent {
   frontmatter: PageFrontmatter
@@ -97,7 +89,7 @@ export type CreateAppFactory = (options?: CreateAppConfig) => Promise<AppContext
 export type LayoutFactory = (name: string | false) => any
 
 export interface NamedPlugins {
-  pages: ReturnType<typeof PagesPlugin>
+  pages: { api: PagesApi }
   vue: ReturnType<typeof VuePlugin>
   components: ReturnType<typeof ComponentsPlugin>
 }
@@ -107,7 +99,7 @@ export interface SSGContext {
   pages: RouteToRender[]
 }
 
-export interface BaseIlesConfig {
+export interface BaseIlesConfig extends PagesOptions {
   /**
    * Configuration options for Vite.js
    */
@@ -116,10 +108,6 @@ export interface BaseIlesConfig {
    * Configuration options for @vitejs/plugin-vue
    */
   vue: VueOptions
-  /**
-   * Configuration options for vite-plugin-pages
-   */
-  pages: Omit<PagesOptions, 'pagesDir' | 'react'>
   /**
    * Configuration options for unplugin-vue-components, which manages automatic
    * imports for components in Vue and MDX files.
@@ -220,15 +208,15 @@ export interface RequiredConfig {
    */
   outDir: string
   /**
-   * Specify the layouts directory (relative to srcDir).
-   * @default 'layouts'
-   */
-  layoutsDir: string
-  /**
    * Specify the pages directory (relative to srcDir).
    * @default 'pages'
    */
   pagesDir: string
+  /**
+   * Specify the layouts directory (relative to srcDir).
+   * @default 'layouts'
+   */
+  layoutsDir: string
   /**
    * Specify the directory where the app source is located (relative to project root).
    * @default 'src'
@@ -246,11 +234,10 @@ export interface UserConfig extends Partial<RequiredConfig>, Partial<IlesModule>
   modules?: IlesModuleOption[]
 }
 
-export interface AppConfig extends RequiredConfig, BaseIlesConfig {
+export interface AppConfig extends RequiredConfig, Omit<BaseIlesConfig, 'pagesDir'> {
   base: string
   root: string
   configPath: string
-  pages: PagesOptions
   modules: IlesModule[]
   namedPlugins: NamedPlugins
   vitePlugins: VitePluginOption[]

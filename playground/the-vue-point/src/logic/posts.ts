@@ -1,4 +1,5 @@
 import { DefineComponent, FunctionalComponent, VNode } from 'vue'
+import { computedInPage } from 'iles'
 
 export interface Post extends Record<string, any> {
   title: string
@@ -33,7 +34,9 @@ function withExcerpt (post: Post) {
 }
 
 export function getPosts () {
-  // @ts-ignore
-  const posts = Object.values(import.meta.globEagerDefault('../pages/posts/**/*.{md,mdx}')) as Post[]
-  return posts.sort(byDate).map(withExcerpt)
+  return computedInPage(() => {
+    // @ts-ignore
+    const posts = Object.values(import.meta.globEagerDefault('../pages/posts/**/*.{md,mdx}')) as Post[]
+    return posts.sort(byDate).map(withExcerpt)
+  })
 }

@@ -56,6 +56,7 @@
       "no-unused-vars": "off",
       "import/named": "off",
       "import/first": "off",
+      "no-restricted-syntax": "off",
       "no-use-before-define": "off",
       "react/react-in-jsx-scope": "off",
       "@typescript-eslint/no-var-requires": "off",

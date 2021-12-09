@@ -37,7 +37,7 @@ async function resolveRoutesToRender (router: Router) {
 
 async function getDynamicPaths (route: RouteRecordNormalized) {
   const { components: { default: component }, path } = route
-  const file = route.meta?.filename || String(route.name)
+  const file = String(route.name)
 
   const page: PageComponent | undefined = isLazy(component)
     ? await component().then(m => 'default' in m ? m.default : m)

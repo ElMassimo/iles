@@ -43,7 +43,7 @@
     "url": "https://github.com/ElMassimo/iles/issues"
   },
   "dependencies": {
-    "@islands/frontmatter": "workspace:^0.4.2",
+    "@islands/pages": "workspace:^0.3.0",
     "@islands/hydration": "workspace:^0.3.3",
     "@islands/mdx": "workspace:^0.3.2",
     "@islands/prerender": "workspace:^0.3.1",
@@ -62,7 +62,6 @@
     "unist-util-visit": "^4.1.0",
     "unplugin-vue-components": "npm:@islands/components@0.17.0",
     "vite": "^2.7.0",
-    "vite-plugin-pages": "npm:@mussi/vite-plugin-pages@0.18.3-beta.2",
     "vue": "^3.2.23",
     "vue-router": "^4.0.12",
     "xdm": "3.3.1"
