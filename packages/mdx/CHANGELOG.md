@@ -1,3 +1,12 @@
+## [0.7.1](https://github.com/ElMassimo/iles/compare/mdx@0.7.0...mdx@0.7.1) (2021-12-09)
+
+
+### Bug Fixes
+
+* add dependency to keep package size lighter ([d71a2a1](https://github.com/ElMassimo/iles/commit/d71a2a156caddb14d420ba11b8206d2757d4905e))
+
+
+
 # [0.7.0](https://github.com/ElMassimo/iles/compare/mdx@0.3.3...mdx@0.7.0) (2021-12-09)
 
 
