@@ -22,13 +22,12 @@
     "@preact/preset-vite": "^2.1.5",
     "@vueuse/core": "^6.5.3",
     "autoprefixer": "^10.3.5",
-    "iles": "^0.6.12",
+    "iles": "^0.7.1",
     "postcss-nesting": "^8.0.1",
     "preact-render-to-string": "^5.1.19",
-    "vite": "^2.7.0",
     "vite-plugin-inspect": "^0.3.9",
     "vite-plugin-windicss": "^1.5.1",
-    "vue-tsc": "^0.28.7"
+    "vue-tsc": "^0.29.8"
   },
   "dependencies": {
     "@docsearch/css": "^3.0.0-alpha.41",

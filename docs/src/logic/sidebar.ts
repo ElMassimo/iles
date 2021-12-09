@@ -14,7 +14,7 @@ import { ensureStartingSlash, normalize, isArray } from '~/logic/utils'
 export function useSideBar () {
   let { route, frontmatter, meta, site } = usePage()
 
-  return computed(() => {
+  return computed<SideBarItem[]>(() => {
     // at first, we'll check if we can find the sidebar setting in frontmatter.
     const sidebar = frontmatter.sidebar ?? (site.sidebar && getSideBarConfig(
       site.sidebar,
