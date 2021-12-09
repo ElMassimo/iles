@@ -1,3 +1,12 @@
+# 0.7.0 (2021-12-09)
+
+
+### Features
+
+* improve extendRoute to have access to the frontmatter ([#56](https://github.com/ElMassimo/iles/issues/56)) ([9eb84e9](https://github.com/ElMassimo/iles/commit/9eb84e9ec7387bcfbd7ffabb4dd7c9b5696c24f2))
+
+
+
 ## [0.4.2](https://github.com/ElMassimo/iles/compare/frontmatter@0.4.1...frontmatter@0.4.2) (2021-12-06)
 
 
