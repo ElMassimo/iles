@@ -43,9 +43,9 @@
     "url": "https://github.com/ElMassimo/iles/issues"
   },
   "dependencies": {
-    "@islands/pages": "workspace:^0.3.0",
+    "@islands/pages": "workspace:^0.7.0",
     "@islands/hydration": "workspace:^0.3.3",
-    "@islands/mdx": "workspace:^0.3.2",
+    "@islands/mdx": "workspace:^0.7.1",
     "@islands/prerender": "workspace:^0.3.1",
     "@nuxt/devalue": "^2.0.0",
     "@vitejs/plugin-vue": "^1.10.2",
