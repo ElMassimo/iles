@@ -225,7 +225,7 @@ export default defineConfig({
   markdown: {
     extendFrontmatter (frontmatter, filename) {
       if (filename.includes('/posts/'))
-        return { layout: 'post', ...frontmatter }
+        frontmatter.layout = 'post'
     },
     rehypePlugins: [
       ['@mapbox/rehype-prism', { alias: { markup: ['html', 'vue'] } }],

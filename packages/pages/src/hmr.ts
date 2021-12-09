@@ -21,7 +21,7 @@ export function handleHMR (api: PagesApi, options: ResolvedOptions, clearRoutes:
   onPage('change', async (path) => {
     const { changed, needsReload } = await api.updatePage(path)
     if (changed) {
-      invalidatePageFiles(path, options)
+      invalidatePageFiles(path, server)
       debug.hmr('change', path)
       return needsReload
     }

@@ -1,6 +1,6 @@
-<route>
+<page>
 path: /feed.rss
-</route>
+</page>
 
 <script setup lang="ts">
 import { plainText, useVueRenderer } from 'iles'

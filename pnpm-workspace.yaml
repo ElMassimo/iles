@@ -2,10 +2,10 @@ packages:
   - docs
   - packages/hydration/
   - packages/prerender/
-  - packages/frontmatter/
   - packages/headings/
   - packages/mdx/
   - packages/icons/
+  - packages/pages/
   - packages/prism/
   - packages/iles/
   - playground/the-vue-point/

@@ -1,6 +1,13 @@
 import type { Plugin } from 'vite'
 
-import type { PagesApi, PagesOptions, ResolvedOptions } from './types'
+import type { PagesOptions, ResolvedOptions } from './types'
+
+import { createApi } from './api'
+import { handleHMR } from './hmr'
+import { MODULE_ID } from './types'
+
+export type PagesApi = ReturnType<typeof createApi>
+export * from './types'
 
 /**
  * An iles module that injects remark plugins to parse pages and expose it
@@ -12,21 +19,30 @@ export default function IlesPages (): any {
   return {
     name: '@islands/pages',
     configResolved (config: any) {
-      let { extendRoute, extendRoutes, pagesDir, pageExtensions = ['vue', 'md', 'mdx'] } = config
+      let {
+        extendFrontmatter,
+        extendRoute,
+        extendRoutes,
+        pagesDir,
+        pageExtensions = ['vue', 'md', 'mdx'],
+      } = config
 
-      const options: ResolvedOptions = { extendRoute, extendRoutes, pagesDir, pageExtensions }
+      const options: ResolvedOptions = {
+        extendFrontmatter,
+        extendRoute,
+        extendRoutes,
+        pagesDir,
+        pageExtensions,
+      }
 
-      config.vitePlugins.push(PagesPlugin(options))
-    },
-    extendFrontmatter (frontmatter, filename) {
-      const page = api.pageForFilename(filename)
-      if (frontmatter.path || page)
-        frontmatter.meta.href = frontmatter.path || page.path
+      const pages = PagesPlugin(options)
+      config.vitePlugins.push(pages)
+      config.namedPlugins.pages = pages
     },
   }
 
-  function PagesPlugin (options: PagesOptions): Plugin {
-    let generatedRoutes: string
+  function PagesPlugin (options: ResolvedOptions): Plugin {
+    let generatedRoutes: string | undefined
 
     return {
       name: 'iles:pages',
@@ -40,7 +56,7 @@ export default function IlesPages (): any {
       },
       configureServer (server) {
         options.server = server
-        handleHMR(api, options, () => { generatedRoutes = null })
+        handleHMR(api, options, () => { generatedRoutes = undefined })
       },
       resolveId(id) {
         if (id === MODULE_ID)

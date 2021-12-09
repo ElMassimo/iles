@@ -1,16 +1,14 @@
 /* eslint-disable no-restricted-syntax */
 import { promises as fs } from 'fs'
-import { basename, extname, resolve, relative } from 'pathe'
+import { basename, resolve, relative } from 'pathe'
 import type { PluginOption, ResolvedConfig } from 'vite'
 import { transformWithEsbuild } from 'vite'
 
-import { MODULE_ID_VIRTUAL as PAGES_REQUEST_PATH } from 'vite-plugin-pages'
 import MagicString from 'magic-string'
 
-import type { Frontmatter } from '@islands/frontmatter'
 import { shouldTransformRef, transformRef } from 'vue/compiler-sfc'
 import type { AppConfig, AppClientConfig } from '../shared'
-import { APP_PATH, ROUTES_REQUEST_PATH, USER_APP_REQUEST_PATH, USER_SITE_REQUEST_PATH, APP_CONFIG_REQUEST_PATH, NOT_FOUND_COMPONENT_PATH, NOT_FOUND_REQUEST_PATH } from '../alias'
+import { APP_PATH, USER_APP_REQUEST_PATH, USER_SITE_REQUEST_PATH, APP_CONFIG_REQUEST_PATH, NOT_FOUND_COMPONENT_PATH, NOT_FOUND_REQUEST_PATH } from '../alias'
 import { configureMiddleware, ILES_APP_ENTRY } from './middleware'
 import { serialize, pascalCase, exists, debug } from './utils'
 import { parseId } from './parse'
@@ -42,7 +40,6 @@ export default function IslandsPlugins (appConfig: AppConfig): PluginOption[] {
   const defaultLayoutPath = `${layoutsRoot}/default.vue`
 
   const plugins = appConfig.namedPlugins
-  const pagesApi = plugins.pages.api
 
   function isLayout (path: string) {
     return path.includes(appConfig.layoutsDir)
@@ -64,9 +61,6 @@ export default function IslandsPlugins (appConfig: AppConfig): PluginOption[] {
       async resolveId (id) {
         if (id === ILES_APP_ENTRY)
           return APP_PATH
-
-        if (id === ROUTES_REQUEST_PATH)
-          return PAGES_REQUEST_PATH
 
         if (id === APP_CONFIG_REQUEST_PATH || id === USER_APP_REQUEST_PATH || id === USER_SITE_REQUEST_PATH)
           return id
@@ -137,11 +131,6 @@ export default function IslandsPlugins (appConfig: AppConfig): PluginOption[] {
 
     plugins.vue,
     ...appConfig.vitePlugins,
-
-    // https://github.com/hannoeru/vite-plugin-pages
-    plugins.pages,
-
-    // https://github.com/antfu/unplugin-vue-components
     plugins.components,
 
     {
@@ -151,7 +140,7 @@ export default function IslandsPlugins (appConfig: AppConfig): PluginOption[] {
       // Force a refresh for all page computed properties.
       async transform (code, id) {
         const { path } = parseId(id)
-        if (isLayout(path) || pagesApi.isPage(path)) {
+        if (isLayout(path) || plugins.pages.api.isPage(path)) {
           return `${code}
 import.meta.hot.accept('/${relative(root, path)}', (...args) => __ILES_PAGE_UPDATE__(args))
 `
@@ -176,32 +165,48 @@ import.meta.hot.accept('/${relative(root, path)}', (...args) => __ILES_PAGE_UPDA
       enforce: 'post',
       async transform (code, id) {
         const { path, query } = parseId(id)
-        const isMarkdownPath = isMarkdown(path)
-        const isSFC = isSFCMain(path, query)
-        if (!isMarkdownPath && !isSFC) return
+        const isMdx = isMarkdown(path)
+        if (!isMdx && !isSFCMain(path, query)) return
+
+        const isLayoutFile = isLayout(path)
+        const isPage = plugins.pages.api.isPage(path)
+        if (!isMdx && !isLayoutFile && !isPage) return
 
         const s = new MagicString(code)
         const sfcIndex = code.indexOf('{', code.indexOf('const _sfc_main = ')) + 1
-        const appendToSfc = (key: string, value: string) => s.appendRight(sfcIndex, `${key}:${value},`)
+        const appendToSfc = (key: string, value?: string) => s.appendRight(sfcIndex, value ? `${key}:${value},` : `${key},`)
 
-        if (isLayout(path)) {
+        if (isLayoutFile) {
           appendToSfc('name', `'${pascalCase(basename(path).replace('.vue', 'Layout'))}'`)
           return s.toString()
         }
 
-        const matter = pagesApi.frontmatterForFile(path)
-        if (matter) {
-          const { meta, layout = 'default', ...frontmatter } = matter
-          s.prepend(`let _meta = ${serialize(meta)}, _frontmatter = ${serialize(frontmatter)};`)
-          appendToSfc('inheritAttrs', serialize(false))
-          s.appendRight(sfcIndex, '..._meta,..._frontmatter,meta:_meta,frontmatter:_frontmatter,')
+        appendToSfc('inheritAttrs', serialize(false))
 
-          if (pagesApi.isPage(path)) {
-            appendToSfc('layoutName', serialize(layout))
-            appendToSfc('layoutFn', String(layout) === 'false'
-              ? 'false'
-              : `() => import('${layoutsRoot}/${layout}.vue').then(m => m.default)`)
-          }
+        const { meta, layout = 'default', route: _r, ...frontmatter } =
+          (isPage && plugins.pages.api.pageForFilename()?.frontmatter)
+            || await plugins.pages.api.frontmatterForFile(path) || {}
+
+        if (isMdx) {
+          const keys = Object.keys(frontmatter)
+          const entries = Object.entries(frontmatter)
+          entries.push(['meta', meta])
+
+          const bindings = entries.map(([key, value]) => `${key} = ${serialize(value)}`)
+          const bindingKeys = keys.length > 0 ? keys.join(', ') : ''
+
+          s.prepend(`const ${bindings.join(', ')}, frontmatter = { ${bindingKeys} };`)
+          appendToSfc('...meta, ...frontmatter, meta, frontmatter')
+        }
+        else {
+          s.prepend(`const _meta = ${serialize(meta)}, _frontmatter = ${serialize(frontmatter)};`)
+          appendToSfc('..._meta, ..._frontmatter, meta: _meta, frontmatter: _frontmatter')
+        }
+
+        if (isPage) {
+          const layoutPath = `'${layoutsRoot}/${layout}.vue'`
+          appendToSfc('layoutName', serialize(layout))
+          appendToSfc('layoutFn', `() => import(${layoutPath}).then(m => m.default)`)
         }
 
         return s.toString()

@@ -57,6 +57,7 @@ declare module 'vue' {
     NextAndPrevLinks: typeof import('./src/components/NextAndPrevLinks.vue')['default']
     OutboundLink: typeof import('./src/components/OutboundLink.vue')['default']
     PageFooter: typeof import('./src/components/PageFooter.vue')['default']
+    PageHooks: typeof import('./src/components/PageHooks.mdx')['default']
     SearchButton: typeof import('./src/components/SearchButton.vue')['default']
     SeoTags: typeof import('./src/components/SeoTags.vue')['default']
     Should: typeof import('./src/components/Should.mdx')['default']

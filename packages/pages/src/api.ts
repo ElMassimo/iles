@@ -1,13 +1,12 @@
-import type { PageFrontmatter, PageRoute, ResolvedOptions } from './types'
+import type { PageRoute, ResolvedOptions } from './types'
 
 import glob from 'fast-glob'
+import { promises as fs } from 'fs'
 import deepEqual from 'deep-equal'
 import { relative } from 'pathe'
 
 import { parsePageMatter } from './frontmatter'
 import { debug, slash } from './utils'
-
-export type PagesApi = ReturnType<createApi>
 
 export function createApi (options: ResolvedOptions) {
   let pagesByFile = new Map<string, PageRoute>()
@@ -24,11 +23,11 @@ export function createApi (options: ResolvedOptions) {
       return pagesByFile.get(file)
     },
     async addAllPages () {
-      await glob(`${options.pagesDir}/**/*.{${pageExtensions.join(',')}}`, { onlyFiles: true })
-        .forEach(file => this.addPage(slash(file)))
+      const files = await glob(`${options.pagesDir}/**/*.{${pageExtensions.join(',')}}`, { onlyFiles: true })
+      files.forEach(file => this.addPage(slash(file)))
     },
     async addPage (file: string) {
-      const page = await pageRouteFromFile(relative(pagesDir, file), this.frontmatterForFile(file))
+      const page = await this.pageRouteFromFile(file)
       pagesByFile.set(file, page)
       return page
     },
@@ -37,7 +36,7 @@ export function createApi (options: ResolvedOptions) {
     },
     async updatePage (file: string) {
       const prevMatter = this.pageForFilename(file)?.frontmatter
-      const { frontmatter } = this.addPage(file)
+      const { frontmatter } = await this.addPage(file)
 
       debug.hmr('%s old: %O', file, prevMatter)
       debug.hmr('%s new: %O', file, frontmatter)
@@ -48,25 +47,42 @@ export function createApi (options: ResolvedOptions) {
           || !deepEqual(prevMatter?.layout, frontmatter?.layout),
       }
     },
+    async pageRouteFromFile (file: string) {
+      const frontmatter = await this.frontmatterForFile(file)
+      const filePath = relative(pagesDir, file)
+      const extIndex = filePath.lastIndexOf('.')
+      const { path, name } = extractPathAndName(frontmatter?.route.path || filePath.slice(0, extIndex))
+
+      const route: PageRoute = {
+        name,
+        ...frontmatter?.route,
+        path,
+        frontmatter,
+        componentFilename: file,
+      }
+
+      return await options.extendRoute?.(route) || route
+    },
+    async generateRoutesModule () {
+      let routes = Array.from(pagesByFile.values()).sort(byDynamicParams)
+      routes = await options.extendRoutes?.(routes) || routes
+      debug.gen('routes: %O', routes)
+      return `export default ${stringifyRoutes(routes)}`
+    },
     async frontmatterForFile (file: string, content?: string) {
       try {
-        const matter = await parsePageMatter(file, content === undefined
-          ? await fs.readFile(file, 'utf8')
-          : content)
+        if (content === undefined) content = await fs.readFile(file, 'utf8')
 
-        return await options.extendFrontmatter?.(matter, file) || matter
+        const matter = await parsePageMatter(file, content)
+
+        return await options.extendFrontmatter?.(matter, file, this.pageForFilename(file))
+          || matter
       }
       catch (error: any) {
         if (!options.server) throw error
         options.server.config.logger.error(error.message, { timestamp: true, error })
         options.server.ws.send({ type: 'error', err: error })
       }
-    },
-    async generateRoutesModule () {
-      let routes = pagesByFile.values().sort(byDynamicParams)
-      routes = (await options.extendRoutes?.(routes)) || routes
-      debug.gen('routes: %O', routes)
-      return `export default ${stringifyRoutes(routes)}`
     },
   }
 }
@@ -75,40 +91,28 @@ export function createApi (options: ResolvedOptions) {
  * Converts the specified routes to JS so that they can be passed to Vue Router.
  */
 function stringifyRoutes (routes: PageRoute[]) {
-  routes = routes.map(({ frontmatter, ...route }) => route)
-  return JSON.stringify(routes, null, 2)
-    .replace(/"componentFilename": "(.*?)"/g, (_, componentPath) =>
+  routes = routes.map(({ frontmatter, ...route }) => ({ props: true, ...route }))
+  return JSON.stringify(routes)
+    .replace(/"componentFilename":"(.*?)"/g, (_, componentPath) =>
       `component: () => import('${componentPath}')`)
 }
 
-async function pageRouteFromFile (file: string, frontmatter: PageMatter): PageRoute {
-  const { path, name } = extractPathAndName(frontmatter.path || file)
-
-  const route: PageRoute = {
-    name,
-    ...frontmatter.route,
-    props: true,
-    path,
-    frontmatter,
-    componentFilename: file,
-  }
-
-  return (await options.extendRoute?.(page)) || page
-}
 
 function extractPathAndName (pathOrFilename: string) {
-  const names = []
-  const paths = []
+  const names: string[] = []
+  const paths: string[] = []
 
   pathOrFilename.split('/').filter(x => x).forEach(segment => {
-    const path = isDynamicRoute(segment)
+    const isDynamic = isDynamicRoute(segment)
+
+    const path = isDynamic
       ? segment.replace(/^\[(\.{3})?/, '').replace(/\]$/, '')
       : segment.toLowerCase()
 
     const isIndex = path === 'index'
 
     if (names.length === 0 || !isIndex)
-      names.push(segment)
+      names.push(path)
 
     if (!isIndex) {
       if (isDynamic)
@@ -141,4 +145,3 @@ function byDynamicParams ({ path: a }: PageRoute, { path: b }: PageRoute) {
   const bDynamic = b.includes(':')
   return aDynamic === bDynamic ? a.localeCompare(b) : aDynamic ? 1 : -1
 }
-

@@ -1,25 +1,26 @@
 import type { ViteDevServer } from 'vite'
-import type { RouteRecordRaw } from 'vue-router'
 
 export const MODULE_ID = '@islands/routes'
 
 type Awaitable<T> = T | Promise<T>
 
-export { PagesApi } from './api'
+export interface PageFrontmatter extends Record<string, any> {}
 
-export interface PageMatter {
-  frontmatter: PageFrontmatter
+export interface RawPageMatter extends PageFrontmatter {
   meta: PageMeta
   layout: false | string
-  route: Pick<RouteRecordRaw, 'name' | 'path' | 'redirect' | 'alias'>
+  route: {
+    name: string
+    path: string
+    redirect: string
+    alias: string | string[]
+  }
 }
 
 export interface PageMeta extends Record<string, any> {
   filename: string
   href: string
 }
-
-export interface PageFrontmatter extends Record<string, any> {}
 
 /**
  * The definition of a route in îles, used to render pages.
@@ -55,12 +56,12 @@ export interface PageRoute {
   /**
    * Frontmatter associated with the page.
    */
-  frontmatter?: PageMatter
+  frontmatter?: RawPageMatter
 }
 
-export type PagesOptions = {
+export interface PagesOptions {
   /**
-   * Relative path to the srcDir where page components are located.
+   * Specify the pages directory (relative to srcDir).
    * @default 'pages'
    */
   pagesDir?: string
@@ -73,7 +74,7 @@ export type PagesOptions = {
    * Use this hook to modify the frontmatter for pages and MDX files.
    * See `extendRoute` if you only want to modify route information.
    */
-  extendFrontmatter?: (frontmatter: PageMatter, filename: string, page: undefined | PageRoute) => Awaitable<PageMatter | void>
+  extendFrontmatter?: (frontmatter: RawPageMatter, filename: string, pageRoute: undefined | PageRoute) => Awaitable<RawPageMatter | void>
   /**
    * Use this hook to modify route
    * See `extendFrontmatter` if you want to add metadata.
@@ -85,7 +86,7 @@ export type PagesOptions = {
   extendRoutes?: (routes: PageRoute[]) => Awaitable<PageRoute[] | void>
 }
 
-interface ResolvedOptions extends Omit<PagesOptions, 'pagesDir' | 'pageExtensions'> {
+export interface ResolvedOptions extends Omit<PagesOptions, 'pagesDir' | 'pageExtensions'> {
   /**
    * Absolute path to the directory that contains the page files.
    */
@@ -97,10 +98,5 @@ interface ResolvedOptions extends Omit<PagesOptions, 'pagesDir' | 'pageExtension
   /**
    * Used to notify errors in a user-friendly way.
    */
-  server?: ViteDevServer
-}
-
-export interface ResolvedOptions extends Options {
-  pagesDir: PageDirOptions[]
   server?: ViteDevServer
 }

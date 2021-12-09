@@ -12,9 +12,6 @@ export const HYDRATION_DIST_PATH = join(dirname(require.resolve('@islands/hydrat
 // we can't directly import '/@islands' because
 // - it's not an actual file so we can't use tsconfig paths to redirect it
 // - TS doesn't allow shimming a module that starts with '/'
-export const ROUTES_ID = '@islands/routes'
-export const ROUTES_REQUEST_PATH = `/${ROUTES_ID}`
-
 export const APP_CONFIG_ID = '@islands/app-config'
 export const APP_CONFIG_REQUEST_PATH = `/${APP_CONFIG_ID}`
 
@@ -29,7 +26,6 @@ export const NOT_FOUND_REQUEST_PATH = '@islands/components/NotFound'
 export function resolveAliases (root: string): AliasOptions {
   const paths: Record<string, string> = {
     '/@shared': SHARED_PATH,
-    [ROUTES_ID]: ROUTES_REQUEST_PATH,
     [USER_APP_ID]: USER_APP_REQUEST_PATH,
     [USER_SITE_ID]: USER_SITE_REQUEST_PATH,
     [APP_CONFIG_ID]: APP_CONFIG_REQUEST_PATH,

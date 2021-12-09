@@ -3,9 +3,9 @@
 [configuring them as usual]: /config#configuring-vite
 [config]: /config#configuring-%C3%AEles
 [components]: /guide/development#components
+[routing]: /guide/routing
 
 [@vitejs/plugin-vue]: https://www.npmjs.com/package/@vitejs/plugin-vue
-[vite-plugin-pages]: https://github.com/ElMassimo/vite-plugin-pages
 [unplugin-vue-components]: https://github.com/antfu/unplugin-vue-components
 [xdm]: https://github.com/wooorm/xdm
 
@@ -26,6 +26,7 @@
 [@islands/headings]: https://github.com/ElMassimo/iles/tree/main/packages/headings
 [@islands/icons]: https://github.com/ElMassimo/iles/tree/main/packages/icons
 [@islands/mdx]: https://github.com/ElMassimo/iles/tree/main/packages/mdx
+[@islands/pages]: https://github.com/ElMassimo/iles/tree/main/packages/pages
 [@islands/prism]: https://github.com/ElMassimo/iles/tree/main/packages/prism
 
 # Modules and Plugins 🔌
@@ -156,16 +157,37 @@ Shipped inside <Iles/> to provides [MDX support][mdx], powered by <kbd>[xdm]</kb
     rehypePlugins: [
       ['@mapbox/rehype-prism', { alias: { markup: ['html', 'vue'] } }],
     ],
-    extendFrontmatter (frontmatter, filename) {
-      if (filename.includes('/posts/'))
-        return { layout: 'post', ...frontmatter }
-    },
+  },
+```
+
+### <kbd>[@islands/pages]</kbd>
+
+Shipped inside <Iles/> to provide support for [pages].
+
+- 🛣 file-based [routing]
+- 🎣 hooks to extend frontmatter and route data
+- 📄 adds support for a [`<page>` block][pages] in Vue single-file components
+
+```ts
+  extendFrontmatter (frontmatter, filename) {
+    if (filename.includes('/posts/'))
+      frontmatter.layout = 'post'
+  },
+  extendRoute (route) {
+    if (route.path.startsWith('/posts'))
+      route.path = path.replace(/[\d-]+/, '') // remove date
+  },
+  extendRoutes (routes) {
+    routes.push({ path: '/custom', name: 'Custom', componentFilename: ... }))
   },
 ```
 
 <Tip title="Customizing Frontmatter">
-Use <kbd>markdown.extendFrontmatter</kbd> to provide additional frontmatter options,
-like setting a different layout for all pages in a specific dir, or inferring the title or date from the file name.
+<kbd>extendFrontmatter</kbd> is very flexible, you could use it to:
+
+- Infer the title or date from the filename
+- Set a different layout for all pages in a specific dir
+- Provide additional data to use in the page, such as `gitLastUpdated`
 </Tip>
 
 ## Vite Plugins <ViteLogo/>
@@ -190,17 +212,6 @@ export default defineConfig({
     refTransform: true,
   },
 })
-```
-
-### <kbd>[vite-plugin-pages]</kbd>
-
-Provides file-based routing and `<route>` block support in single-file components.
-
-```ts
-  pages: {
-    routeBlockLang: 'yaml',
-    extensions: ['vue', 'md', 'mdx'],
-  },
 ```
 
 ### <kbd>[unplugin-vue-components]</kbd>

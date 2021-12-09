@@ -6,3 +6,7 @@ export const debug = {
   gen: Debug('iles:pages:gen'),
   options: Debug('iles:pages:options'),
 }
+
+export function slash (path: string): string {
+  return path.replace(/\\/g, '/')
+}

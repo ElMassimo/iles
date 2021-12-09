@@ -3,10 +3,12 @@ import { extname } from 'pathe'
 import grayMatter from 'gray-matter'
 import { parse as parseSFC } from 'vue/compiler-sfc'
 
-export async function parsePageMatter (filename: string, content: string): Frontmatter {
+import type { RawPageMatter } from './types'
+
+export async function parsePageMatter (filename: string, content: string): RawPageMatter {
   const parse = extname(filename) === '.vue' ? parsePageBlock : parseFrontmatter
   const matter = await parse(filename, content)
-  return preparePageMatter(matter)
+  return preparePageMatter(filename, matter)
 }
 
 /**
@@ -26,7 +28,7 @@ async function parsePageBlock (filename: string, content: string, options: Resol
 
 function parseFrontmatter (filename: string, content: string, language?: string) {
   try {
-    return grayMatter(content, { language, engines }).data || {}
+    return grayMatter(content, { language }).data || {}
   }
   catch (err: any) {
     err.message = `Invalid frontmatter for ${filename}\n${err.message}`
@@ -35,7 +37,7 @@ function parseFrontmatter (filename: string, content: string, language?: string)
 }
 
 // Internal: Extracts layout, route, and meta data from the frontmatter.
-function preparePageMatter (matter: Record<string, any>): Frontmatter {
+function preparePageMatter (filename: string, matter: Record<string, any>): RawPageMatter {
   let { layout, meta: rawMeta, route, ...frontmatter } = matter
 
   // Users can explicitly provide route to avoid unwanted behavior.
@@ -47,12 +49,12 @@ function preparePageMatter (matter: Record<string, any>): Frontmatter {
   // Skip layout for non-HTML files, such as RSS feeds.
   if (layout === undefined) {
     const ext = extname(route.path) || '.html'
-    layout = ext !== '.html' ? false : 'default'
+    layout = ext !== '.html' ? false : undefined as string
   }
 
   const meta = { filename, href: route.path!, ...rawMeta }
 
-  return { layout, meta, route: route as any, frontmatter }
+  return { layout, meta, route, ...frontmatter }
 }
 
 /**

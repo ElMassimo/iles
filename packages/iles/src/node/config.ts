@@ -1,21 +1,19 @@
 /* eslint-disable no-restricted-syntax */
 import fs from 'fs'
-import { join, relative, resolve } from 'pathe'
+import { join, resolve } from 'pathe'
 import pc from 'picocolors'
 import creatDebugger from 'debug'
 import { loadConfigFromFile, mergeConfig as mergeViteConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import components from 'unplugin-vue-components/vite'
-import frontmatter from '@islands/frontmatter'
 import pages from '@islands/pages'
 import vueMdx from '@islands/mdx'
 
 import type { ComponentResolver } from 'unplugin-vue-components/types'
-import type { Frontmatter } from '@islands/frontmatter'
 import type { UserConfig } from 'iles'
 
 import { importModule } from 'lib/modules'
-import type { AppConfig, BaseIlesConfig, ConfigEnv, ViteOptions, IlesModule, IlesModuleLike, IlesModuleOption, NamedPlugins } from './shared'
+import type { AppConfig, ConfigEnv, ViteOptions, IlesModule, IlesModuleLike, IlesModuleOption, NamedPlugins } from './shared'
 
 import { camelCase, tryInstallModule, importLibrary, uncapitalize, isString, isStringPlugin, compact } from './plugin/utils'
 import { resolveAliases, DIST_CLIENT_PATH, HYDRATION_DIST_PATH } from './alias'
@@ -63,7 +61,6 @@ async function resolveUserConfig (root: string, configEnv: ConfigEnv) {
 
   config.modules = compact<IlesModule>(await resolveIlesModules([
     { name: 'iles:base-config', ...appConfigDefaults(config, userConfig as UserConfig) },
-    frontmatter(),
     vueMdx(),
     { name: 'user-config', ...userConfig },
     ...modules,
@@ -146,10 +143,8 @@ async function applyModules (config: AppConfig, configEnv: ConfigEnv) {
       if (partialConfig) config = mergeConfig(config, partialConfig as any)
     }
   }
-  chainModuleCallbacks(config, 'pages', ['onRoutesGenerated', 'onClientGenerated'], true)
-  chainModuleCallbacks(config, 'pages', ['extendRoute'], false)
-  chainModuleCallbacks(config, 'markdown', ['extendFrontmatter'], false)
-  chainModuleCallbacks(config, 'ssg', ['beforePageRender', 'onSiteRendered'], true)
+  chainModuleCallbacks(config, ['extendFrontmatter', 'extendRoute', 'extendRoutes'])
+  chainModuleCallbacks(config, ['beforePageRender', 'onSiteRendered'], 'ssg')
   return config
 }
 
@@ -218,33 +213,18 @@ function appConfigDefaults (appConfig: AppConfig, userConfig: UserConfig): AppCo
         compilerOptions: {},
       },
     },
-    // Adds meta fields such as filename, lastUpdated, and href.
-    extendFrontmatter (frontmatter, absoluteFilename) {
-      let resolvedPage = appConfig.namedPlugins.pages.api.pageForFile(absoluteFilename)
-      const normalizedPath = resolvedPage && `/${resolvedPage.route.replace(/(^|\/)index$/, '')}`
-      let { route: { path = normalizedPath } = {}, meta: routeMeta, templateAttrs: _t, ...routeMatter }: Frontmatter = resolvedPage?.customBlock || {}
-      const meta = {
-        lastUpdated: new Date(Math.round(fs.statSync(absoluteFilename).mtimeMs)),
-        ...frontmatter.meta,
-        ...routeMeta,
-        filename: relative(root, absoluteFilename),
-      }
-
-      if (!appConfig.prettyUrls)
-        path = explicitHtmlPath(path, absoluteFilename)
-
-      if (path !== undefined) meta.href = `${appConfig.base}${path.slice(1)}`
-      return { ...frontmatter, ...routeMatter, meta }
+    // Adds lastUpdated meta field.
+    extendFrontmatter (frontmatter, filename, route) {
+      frontmatter.meta.lastUpdated =
+        new Date(Math.round(fs.statSync(filename).mtimeMs))
     },
-    // NOTE: Adds filename to the meta information in the route so that it can
-    // be used to correctly infer the file name during SSG.
-    extendRoute ({ path, ...route }) {
-      const filename = join(root, route.component)
+    // Adds handling for explicit HTML urls.
+    extendRoute (route) {
+      if (appConfig.prettyUrls === false)
+        route.path = explicitHtmlPath(route.path, route.componentFilename)
 
-      if (!appConfig.prettyUrls)
-        path = explicitHtmlPath(path, filename)
-
-      return
+      route.frontmatter.meta.href = `${appConfig.base}${route.path.slice(1)}`
+      console.log('href', route.frontmatter.meta.href)
     },
     markdown: {
       jsxRuntime: 'automatic',
@@ -323,38 +303,26 @@ function mergeConfig<T = Record<string, any>> (a: T, b: T, isRoot = true): AppCo
   return merged as AppConfig
 }
 
-function chainModuleCallbacks<T extends keyof BaseIlesConfig> (
-  config: AppConfig, option: T, callbackNames: (keyof BaseIlesConfig[T])[], isAsync: boolean) {
+function chainModuleCallbacks(config: any, callbackNames: string[], option?: string): any {
   callbackNames.forEach((callbackName) => {
     const moduleCallbacks = config.modules
-      // @ts-ignore
-      .map(plugin => plugin[option]?.[callbackName as keyof IlesModule[T]])
-      .filter(x => x)
+      .map((plugin: any) => (option ? plugin[option] : plugin)?.[callbackName])
+      .filter((x: any) => x)
 
-    if (moduleCallbacks.length > 0)
-      // @ts-ignore
-      config[option][callbackName] = chainCallbacks(moduleCallbacks, isAsync) as any
+    if (moduleCallbacks.length > 0) {
+      const original = option ? config[option] : config
+      original[callbackName] = chainCallbacks(moduleCallbacks)
+    }
   })
 }
 
-function chainCallbacks (fns: any, isAsync: boolean): Function {
-  if (isAsync) {
-    return async (...args: any[]) => {
-      for (let i = 0; i < fns.length; i++) {
-        const result = await (fns[i] as any)(...args)
-        if (result) args[0] = result
-      }
-      return args[0]
+function chainCallbacks (fns: any): any {
+  return async (...args: any[]) => {
+    for (let i = 0; i < fns.length; i++) {
+      const result = await (fns[i] as any)(...args)
+      if (result) args[0] = result
     }
-  }
-  else {
-    return (...args: any[]) => {
-      for (let i = 0; i < fns.length; i++) {
-        const result = (fns[i] as any)(...args)
-        if (result) args[0] = result
-      }
-      return args[0]
-    }
+    return args[0]
   }
 }
 

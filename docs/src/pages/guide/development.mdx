@@ -73,13 +73,13 @@ I've recently recorded a song, listen:
 <Song title={title} src={audio}/>
 ```
 
-In Vue single-file components you can use a `<route>` block to define frontmatter:
+In Vue single-file components you can use a `<page>` block to define frontmatter:
 
 ```vue
-<route>
+<page>
 title: Song for You
 audio: /song-for-you.mp3
-</route>
+</page>
 
 <template>
   <p>I've recently recorded a song, listen:</p>
@@ -88,11 +88,13 @@ audio: /song-for-you.mp3
 </template>
 ```
 
+<PageHooks/>
+
 ### Using Page Data
 
 You may access information about the current page using the `usePage` composition API helper, or by using the  `$frontmatter` or `$meta` global properties.
 
-- `frontmatter`: The [frontmatter] of an [MDX][frontmatter] document or Vue component (in `<route>`)
+- `frontmatter`: The [frontmatter] of an [MDX][frontmatter] document or Vue component (in `<page>`)
 - `meta`: Information about the page, including `href`, `filename`, and `lastUpdated`
 
 ```vue
@@ -104,6 +106,7 @@ const { frontmatter, meta } = usePage()
 ```
 
 <AutoImported/>
+
 
 ### Glob Imports
 

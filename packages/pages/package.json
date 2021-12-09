@@ -1,6 +1,6 @@
 {
   "name": "@islands/pages",
-  "version": "0.1.0",
+  "version": "0.3.0",
   "scripts": {
     "dev": "npm run build -- --watch",
     "build": "tsup src/pages.ts",
@@ -30,12 +30,15 @@
   "bugs": "https://github.com/ElMassimo/iles/issues",
   "dependencies": {
     "debug": "^4.3.3",
-    "js-yaml": "^4.1",
-    "pathe": "^0.2.0"
+    "deep-equal": "^2.0.5",
+    "fast-glob": "^3.2.7",
+    "gray-matter": "^4.0.3",
+    "pathe": "^0.2.0",
+    "vue": "^3.2.24"
   },
   "devDependencies": {
+    "@types/deep-equal": "^1.0.1",
     "@types/js-yaml": "^4.0.0",
-    "deep-equal": "^2.0.5",
     "tsup": "5.5.0",
     "typescript": "^4.4.4",
     "unified": "^10.1.0"

@@ -10,7 +10,7 @@
 <td align="center">
 <br/>
 <p align="center">
-  <h3><samp>@islands/frontmatter</samp></h3>
+  <h3><samp>@islands/pages</samp></h3>
   <img width="2000" height="0">
 </p>
 </td>
@@ -20,14 +20,37 @@
 
 [îles]: https://github.com/ElMassimo/iles
 [docs]: https://iles-docs.netlify.app
-[remark]: https://github.com/remarkjs/remark
-[frontmatter]: https://iles-docs.netlify.app/guide/markdown#frontmatter-and-meta
-[mdx documents]: https://iles-docs.netlify.app/guide/markdown
+[pages]: https://iles-docs.netlify.app/guide/development#pages
+[frontmatter]: /guide/markdown#frontmatter-and-meta
+[routing]: https://iles-docs.netlify.app/guide/routing
+[vite-plugin-pages]: https://github.com/hannoeru/vite-plugin-pages
 
-An [îles] module that injects a [remark] plugin to parse [frontmatter] in [MDX documents]:
+An [îles] module that provides support for [pages], inspired by [vite-plugin-pages].
 
-- ⚙️ runs `extendFrontmatter` to add additional `frontmatter` or `meta` info
+- 🛣 file-based [routing]
+- 🎣 hooks to extend [frontmatter] and route data
+- 📄 adds support for a [`<page>` block][pages] in Vue single-file components
 
-- 🧱 makes each frontmatter property available for bindings
+```ts
+  extendFrontmatter (frontmatter, filename) {
+    if (filename.includes('/posts/'))
+      frontmatter.layout = 'post'
+  },
+  extendRoute (route) {
+    if (route.path.startsWith('/posts'))
+      route.path = path.replace(/[\d-]+/, '') // remove date
+  },
+  extendRoutes (routes) {
+    routes.push({ path: '/custom', name: 'Custom', componentFilename: ... }))
+  },
+```
 
-- 📃 sets a `frontmatter` object with the full content
+<kbd>extendFrontmatter</kbd> is very flexible, you could use it to:
+
+- Infer the title or date from the filename
+- Set a different layout for all pages in a specific dir
+- Provide additional data to use in the page, such as `gitLastUpdated`
+
+## Acknowledgements
+
+- [`vite-plugin-pages`][vite-plugin-pages]: Early versions of îles used this wonderful library
