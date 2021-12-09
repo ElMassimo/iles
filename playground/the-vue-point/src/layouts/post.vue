@@ -2,7 +2,7 @@
 import { usePage } from 'iles'
 import { getPosts, Post } from '~/logic/posts'
 
-const posts = getPosts()
+let posts = $(getPosts())
 
 let { page } = $(usePage())
 const post = page as any as Post

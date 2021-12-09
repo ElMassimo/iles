@@ -21,7 +21,7 @@ const options = {
     'Copyright (c) 2021-present, Yuxi (Evan) You and blog contributors',
 }
 
-const posts = getPosts()
+let posts = $(getPosts())
 const renderVNodes = useVueRenderer()
 
 let rssPosts = $computed(() => posts.map(post => toRSS(post)))
