@@ -1,3 +1,12 @@
+# [0.7.0](https://github.com/ElMassimo/iles/compare/mdx@0.3.3...mdx@0.7.0) (2021-12-09)
+
+
+### Features
+
+* improve extendRoute to have access to the frontmatter ([#56](https://github.com/ElMassimo/iles/issues/56)) ([9eb84e9](https://github.com/ElMassimo/iles/commit/9eb84e9ec7387bcfbd7ffabb4dd7c9b5696c24f2))
+
+
+
 ## [0.3.3](https://github.com/ElMassimo/iles/compare/mdx@0.3.2...mdx@0.3.3) (2021-12-07)
 
 
