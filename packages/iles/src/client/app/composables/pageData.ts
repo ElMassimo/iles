@@ -21,7 +21,7 @@ function injectFromApp <T> (key: InjectionKey<T>, app?: App) {
 const _lastPageChange = ref(new Date())
 export const forcePageUpdate = () => { _lastPageChange.value = new Date() }
 
-const computedInPage = <T>(fn: () => T) => {
+export const computedInPage = <T>(fn: () => T) => {
   return computed<T>(() => {
     // eslint-disable-next-line no-unused-expressions
     _lastPageChange.value // track dependency to recompute as needed.
