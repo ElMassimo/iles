@@ -134,21 +134,6 @@ export default function IslandsPlugins (appConfig: AppConfig): PluginOption[] {
     plugins.components,
 
     {
-      name: 'iles:page-hmr',
-      apply: 'serve',
-      enforce: 'post',
-      // Force a refresh for all page computed properties.
-      async transform (code, id) {
-        const { path } = parseId(id)
-        if (isLayout(path) || plugins.pages.api.isPage(path)) {
-          return `${code}
-import.meta.hot.accept('/${relative(root, path)}', (...args) => __ILES_PAGE_UPDATE__(args))
-`
-        }
-      },
-    },
-
-    {
       name: 'iles:composables',
       enforce: 'post',
       async transform (code, id) {
@@ -188,15 +173,15 @@ import.meta.hot.accept('/${relative(root, path)}', (...args) => __ILES_PAGE_UPDA
             || await plugins.pages.api.frontmatterForFile(path)
 
         if (isMdx) {
-          const keys = Object.keys(frontmatter)
-          const entries = Object.entries(frontmatter)
-          entries.push(['meta', meta])
-
           // NOTE: Expose each frontmatter property to the MDX file.
-          const bindings = entries.map(([key, value]) => `${key} = ${serialize(value)}`)
-          const bindingKeys = keys.length > 0 ? keys.join(', ') : ''
+          const keys = Object.keys(frontmatter)
+          const bindings = Object.entries(frontmatter)
+            .map(([key, value]) => `${key} = ${serialize(value)}`)
 
-          s.prepend(`const ${bindings.join(', ')}, frontmatter = { ${bindingKeys} };`)
+          bindings.push(`meta = ${serialize(meta)}`)
+          bindings.push(`frontmatter = { ${keys.length > 0 ? keys.join(', ') : ''} }`)
+
+          s.prepend(`const ${bindings.join(', ')};`)
           appendToSfc('...meta, ...frontmatter, meta, frontmatter')
         }
         else {
@@ -212,6 +197,21 @@ import.meta.hot.accept('/${relative(root, path)}', (...args) => __ILES_PAGE_UPDA
         }
 
         return s.toString()
+      },
+    },
+
+    {
+      name: 'iles:page-hmr',
+      apply: 'serve',
+      enforce: 'post',
+      // Force a refresh for all page computed properties.
+      async transform (code, id) {
+        const { path } = parseId(id)
+        if (isLayout(path) || plugins.pages.api.isPage(path)) {
+          return `${code}
+import.meta.hot.accept('/${relative(root, path)}', (...args) => __ILES_PAGE_UPDATE__(args))
+`
+        }
       },
     },
 
