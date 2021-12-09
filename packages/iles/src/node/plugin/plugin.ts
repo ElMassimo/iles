@@ -170,7 +170,7 @@ export default function IslandsPlugins (appConfig: AppConfig): PluginOption[] {
 
         const { meta, layout = 'default', route: _r, ...frontmatter }
           = (isPage && plugins.pages.api.pageForFilename(path)?.frontmatter)
-            || await plugins.pages.api.frontmatterForFile(path)
+            || await plugins.pages.api.frontmatterForFile(path, code)
 
         if (isMdx) {
           // NOTE: Expose each frontmatter property to the MDX file.
