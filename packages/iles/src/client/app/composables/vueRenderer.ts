@@ -5,8 +5,10 @@ const newApp = import.meta.env.SSR ? createApp : createSSRApp
 
 type Nodes = undefined | VNode | VNode[]
 
-export function useVueRenderer () {
-  return withCtx(async (vNodes: Nodes | (() => Nodes | Promise<Nodes>)) => {
+export type VNodeRenderer = (vNodes: Nodes | (() => Nodes | Promise<Nodes>)) => Promise<string>
+
+export function useVueRenderer (): VNodeRenderer {
+  return withCtx((async (vNodes) => {
     if (!vNodes) return ''
 
     // Obtain the app context of the current app to enable nested renders.
@@ -25,11 +27,9 @@ export function useVueRenderer () {
 
     const { renderToString } = await import('@vue/server-renderer')
     return await renderToString(proxyApp, ssrContext)
-  }, getCurrentInstance())
+  }) as VNodeRenderer, getCurrentInstance()) as VNodeRenderer
 }
 
 function isFunction (val: any): val is Function {
   return typeof val === 'function'
 }
-
-export type VNodeRenderer = ReturnType<typeof useVueRenderer>

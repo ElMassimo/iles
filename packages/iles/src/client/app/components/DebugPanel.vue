@@ -8,7 +8,7 @@ export default defineComponent({
     const { page, meta, frontmatter, props } = usePage()
     const message = ref<string | undefined>(undefined)
     const el = ref<HTMLElement | null>(null)
-    const content = ref<HTMLElement | null>(null)
+    const content = ref<any>(null)
     const open = ref(false)
     const buttonLabel = computed(() => message.value || 'Debug')
 
