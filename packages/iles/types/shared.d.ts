@@ -12,14 +12,15 @@ import type { PreactPluginOptions as PreactOptions } from '@preact/preset-vite'
 
 import type { Router, RouteRecordRaw, RouteMeta, RouterOptions as VueRouterOptions, RouteComponent, RouteRecordNormalized, RouteLocationNormalizedLoaded, RouteParams } from 'vue-router'
 import type { HeadClient, HeadObject } from '@vueuse/head'
-import type { PagesApi } from '@islands/pages'
-export type { RawPageMatter, PageFrontmatter, PageMeta, PagesOptions } from '@islands/pages'
+import type { PagesApi, PagesOptions } from '@islands/pages'
+export type { RawPageMatter, PageFrontmatter, PageMeta } from '@islands/pages'
 export type { OnLoadFn } from '@islands/hydration/dist/vanilla'
 
 import type { MarkdownOptions } from '@islands/mdx'
 
 export type { ViteOptions, ConfigEnv }
 export type { Router, RouteRecordRaw, RouteMeta }
+export type { RouteLocationNormalizedLoaded } from 'vue-router'
 
 export type RouterOptions = VueRouterOptions & { base?: string }
 
@@ -98,7 +99,7 @@ export interface SSGContext {
   pages: RouteToRender[]
 }
 
-export interface BaseIlesConfig {
+export interface BaseIlesConfig extends PagesOptions {
   /**
    * Configuration options for Vite.js
    */
@@ -155,7 +156,7 @@ export interface BaseIlesConfig {
   }
 }
 
-export interface IlesModule extends Partial<BaseIlesConfig>, PagesOptions {
+export interface IlesModule extends Partial<BaseIlesConfig> {
   name: string
   config?: (config: UserConfig, env: ConfigEnv) => UserConfig | null | void | Promise<UserConfig | null | void>
   configResolved?: (config: AppConfig, env: ConfigEnv) => void | Promise<void>
@@ -233,7 +234,7 @@ export interface UserConfig extends Partial<RequiredConfig>, Partial<IlesModule>
   modules?: IlesModuleOption[]
 }
 
-export interface AppConfig extends RequiredConfig, Required<PagesOptions>, BaseIlesConfig {
+export interface AppConfig extends RequiredConfig, Omit<BaseIlesConfig, 'pagesDir'> {
   base: string
   root: string
   configPath: string

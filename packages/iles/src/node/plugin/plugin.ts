@@ -183,15 +183,16 @@ import.meta.hot.accept('/${relative(root, path)}', (...args) => __ILES_PAGE_UPDA
 
         appendToSfc('inheritAttrs', serialize(false))
 
-        const { meta, layout = 'default', route: _r, ...frontmatter } =
-          (isPage && plugins.pages.api.pageForFilename()?.frontmatter)
-            || await plugins.pages.api.frontmatterForFile(path) || {}
+        const { meta, layout = 'default', route: _r, ...frontmatter }
+          = (isPage && plugins.pages.api.pageForFilename(path)?.frontmatter)
+            || await plugins.pages.api.frontmatterForFile(path)
 
         if (isMdx) {
           const keys = Object.keys(frontmatter)
           const entries = Object.entries(frontmatter)
           entries.push(['meta', meta])
 
+          // NOTE: Expose each frontmatter property to the MDX file.
           const bindings = entries.map(([key, value]) => `${key} = ${serialize(value)}`)
           const bindingKeys = keys.length > 0 ? keys.join(', ') : ''
 
@@ -204,9 +205,10 @@ import.meta.hot.accept('/${relative(root, path)}', (...args) => __ILES_PAGE_UPDA
         }
 
         if (isPage) {
-          const layoutPath = `'${layoutsRoot}/${layout}.vue'`
           appendToSfc('layoutName', serialize(layout))
-          appendToSfc('layoutFn', `() => import(${layoutPath}).then(m => m.default)`)
+          appendToSfc('layoutFn', String(layout) === 'false'
+            ? 'false'
+            : `() => import('${layoutsRoot}/${layout}.vue').then(m => m.default)`)
         }
 
         return s.toString()

@@ -16,7 +16,7 @@ export default defineConfig({
   // add `layout: 'post'` in every file.
   extendFrontmatter (frontmatter, filename) {
     if (filename.includes('/posts/'))
-      frontmatter.layout = 'post'
+      frontmatter.layout ||= 'post'
   },
   vite: {
     plugins: [

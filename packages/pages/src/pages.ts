@@ -1,12 +1,11 @@
 import type { Plugin } from 'vite'
 
-import type { PagesOptions, ResolvedOptions } from './types'
+import type { PagesApi, ResolvedOptions } from './types'
 
 import { createApi } from './api'
 import { handleHMR } from './hmr'
 import { MODULE_ID } from './types'
 
-export type PagesApi = ReturnType<typeof createApi>
 export * from './types'
 
 /**
@@ -20,6 +19,7 @@ export default function IlesPages (): any {
     name: '@islands/pages',
     configResolved (config: any) {
       let {
+        base,
         extendFrontmatter,
         extendRoute,
         extendRoutes,
@@ -28,6 +28,7 @@ export default function IlesPages (): any {
       } = config
 
       const options: ResolvedOptions = {
+        base,
         extendFrontmatter,
         extendRoute,
         extendRoutes,
@@ -58,11 +59,11 @@ export default function IlesPages (): any {
         options.server = server
         handleHMR(api, options, () => { generatedRoutes = undefined })
       },
-      resolveId(id) {
+      resolveId (id) {
         if (id === MODULE_ID)
           return MODULE_ID
       },
-      async load(id) {
+      async load (id) {
         if (id === MODULE_ID)
           return generatedRoutes ||= await api.generateRoutesModule()
       },

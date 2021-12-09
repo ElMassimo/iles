@@ -214,17 +214,14 @@ function appConfigDefaults (appConfig: AppConfig, userConfig: UserConfig): AppCo
       },
     },
     // Adds lastUpdated meta field.
-    extendFrontmatter (frontmatter, filename, route) {
-      frontmatter.meta.lastUpdated =
-        new Date(Math.round(fs.statSync(filename).mtimeMs))
+    extendFrontmatter (frontmatter, filename) {
+      frontmatter.meta.lastUpdated
+        = new Date(Math.round(fs.statSync(filename).mtimeMs))
     },
     // Adds handling for explicit HTML urls.
     extendRoute (route) {
       if (appConfig.prettyUrls === false)
         route.path = explicitHtmlPath(route.path, route.componentFilename)
-
-      route.frontmatter.meta.href = `${appConfig.base}${route.path.slice(1)}`
-      console.log('href', route.frontmatter.meta.href)
     },
     markdown: {
       jsxRuntime: 'automatic',

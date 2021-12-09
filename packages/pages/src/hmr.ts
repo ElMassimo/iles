@@ -1,10 +1,9 @@
 import { ViteDevServer } from 'vite'
 import { debug, slash } from './utils'
-import { PagesApi, removePage, addPage, updatePage } from './pages'
-import { MODULE_ID, ResolvedOptions, PagesApi } from './types'
+import { Awaitable, MODULE_ID, ResolvedOptions, PagesApi } from './types'
 
 export function handleHMR (api: PagesApi, options: ResolvedOptions, clearRoutes: () => void) {
-  const { isPage, server } = options
+  const server = options.server!
 
   onPage('add', async (path) => {
     await api.addPage(path)
@@ -27,7 +26,7 @@ export function handleHMR (api: PagesApi, options: ResolvedOptions, clearRoutes:
     }
   })
 
-  function onPage (eventName: string, handler: (path: string) => void | Promise<void>) {
+  function onPage (eventName: string, handler: (path: string) => Awaitable<void | boolean>) {
     server.watcher.on(eventName, async (path) => {
       path = slash(path)
       if (api.isPage(path) && await handler(path))
@@ -51,4 +50,3 @@ function invalidatePagesModule ({ moduleGraph }: ViteDevServer) {
   const mod = moduleGraph.getModuleById(MODULE_ID)
   if (mod) moduleGraph.invalidateModule(mod)
 }
-

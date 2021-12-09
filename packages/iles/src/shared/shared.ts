@@ -25,6 +25,7 @@ export type {
   RouteMeta,
   Router,
   RouteRecordRaw,
+  RouteLocationNormalizedLoaded,
   RouterOptions,
   AppContext,
   GetStaticPaths,

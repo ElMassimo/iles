@@ -1,8 +1,11 @@
 import type { ViteDevServer } from 'vite'
+import type { createApi } from './api'
 
 export const MODULE_ID = '@islands/routes'
 
-type Awaitable<T> = T | Promise<T>
+export type Awaitable<T> = T | Promise<T>
+
+export type PagesApi = ReturnType<typeof createApi>
 
 export interface PageFrontmatter extends Record<string, any> {}
 
@@ -10,10 +13,10 @@ export interface RawPageMatter extends PageFrontmatter {
   meta: PageMeta
   layout: false | string
   route: {
-    name: string
-    path: string
-    redirect: string
-    alias: string | string[]
+    name?: string
+    path?: string
+    redirect?: string
+    alias?: string | string[]
   }
 }
 
@@ -32,7 +35,7 @@ export interface PageRoute {
   /**
    * Name for the route, can be use as a shortcut in <router-link>.
    */
-  name?: string
+  name: string
   /**
    * Path of the record. Should start with `/`.
    *
@@ -56,8 +59,10 @@ export interface PageRoute {
   /**
    * Frontmatter associated with the page.
    */
-  frontmatter?: RawPageMatter
+  frontmatter: RawPageMatter
 }
+
+export type UserRoute = Partial<PageRoute>
 
 export interface PagesOptions {
   /**
@@ -74,7 +79,7 @@ export interface PagesOptions {
    * Use this hook to modify the frontmatter for pages and MDX files.
    * See `extendRoute` if you only want to modify route information.
    */
-  extendFrontmatter?: (frontmatter: RawPageMatter, filename: string, pageRoute: undefined | PageRoute) => Awaitable<RawPageMatter | void>
+  extendFrontmatter?: (frontmatter: RawPageMatter, filename: string) => Awaitable<RawPageMatter | void>
   /**
    * Use this hook to modify route
    * See `extendFrontmatter` if you want to add metadata.
@@ -83,10 +88,14 @@ export interface PagesOptions {
   /**
    * Use this hook to access the generated routes, and modify them (optional).
    */
-  extendRoutes?: (routes: PageRoute[]) => Awaitable<PageRoute[] | void>
+  extendRoutes?: (routes: PageRoute[]) => Awaitable<UserRoute[] | void>
 }
 
 export interface ResolvedOptions extends Omit<PagesOptions, 'pagesDir' | 'pageExtensions'> {
+  /**
+   * URL base of the generated site.
+   */
+  base: string
   /**
    * Absolute path to the directory that contains the page files.
    */
