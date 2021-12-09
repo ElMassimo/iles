@@ -48,6 +48,8 @@ export async function resolveConfig (root?: string, env?: ConfigEnv): Promise<Ap
   for (const mod of appConfig.modules)
     await mod.configResolved?.(appConfig, env)
 
+  checkDeprecations(appConfig as any)
+
   return appConfig
 }
 
@@ -325,4 +327,18 @@ function chainCallbacks (fns: any): any {
 
 function isObject (value: unknown): value is Record<string, any> {
   return Object.prototype.toString.call(value) === '[object Object]'
+}
+
+function checkDeprecations (config: any) {
+  if (config.markdown?.extendFrontmatter)
+    throw new Error('CHANGES REQUIRED: `markdown.extendFrontmatter` is now `extendFrontmatter`')
+
+  if (config.pages?.extendRoute)
+    throw new Error('CHANGES REQUIRED: `pages.extendRoute` is now `extendRoute`')
+
+  if (config.pages?.onRoutesGenerated)
+    throw new Error('CHANGES REQUIRED: `pages.onRoutesGenerated` is now `extendRoutes`')
+
+  if (config.pages)
+    throw new Error('CHANGES REQUIRED: `pages` is no longer an option, see @islands/pages')
 }
