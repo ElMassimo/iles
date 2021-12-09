@@ -247,6 +247,7 @@ importers:
       tsup: 5.5.0
       typescript: 4.4.4
       unified: ^10.1
+      unist-util-visit: ^4.1.0
       vite: 2.7.0
       xdm: '3.3'
     dependencies:
@@ -254,6 +255,7 @@ importers:
       hash-sum: 2.0.0
       remark-frontmatter: 4.0.1
       source-map: 0.7.3
+      unist-util-visit: 4.1.0
       xdm: 3.3.0
     devDependencies:
       '@types/estree-jsx': 0.0.1

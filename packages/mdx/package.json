@@ -33,6 +33,7 @@
     "hash-sum": "^2.0",
     "remark-frontmatter": "^4.0.1",
     "source-map": "^0.7.3",
+    "unist-util-visit": "^4.1.0",
     "xdm": "3.3"
   },
   "devDependencies": {
