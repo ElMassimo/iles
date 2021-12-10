@@ -54,11 +54,13 @@ path: /feed.atom
 </page>
 
 <script setup lang="ts">
+import type { FeedOptions, FeedItem } from '@islands/feed'
+
 const { site } = usePage()
 
 const url = site.url
 
-let options = {
+const options: FeedOptions = {
   title: 'The Vue Point',
   description: 'The official blog for the Vue.js project',
   id: url,
@@ -68,20 +70,19 @@ let options = {
   copyright: 'Copyright (c) 2021-present',
 }
 
-let items = $computed(() =>
-  Object.values(import.meta.globEagerDefault('./posts/**/*.mdx'))
-    .map(post => ({
-      link: `${url}${post.href}`,
-      date: new Date(post.date),
-      title: post.title,
-      description: post.description,
-      content: post,
-    }))
-)
+const posts = Object.values(import.meta.globEagerDefault('./posts/**/*.mdx'))
+
+const items = posts.map<FeedItem>(post => ({
+  link: `${url}${post.href}`,
+  date: new Date(post.date),
+  title: post.title,
+  description: post.description,
+  content: post,
+}))
 </script>
 
 <template>
-  <Feed format="atom" :options="options" :items="items"/>
+  <RenderFeed format="atom" :options="options" :items="items"/>
 </template>
 ```
 

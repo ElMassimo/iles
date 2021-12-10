@@ -28,6 +28,10 @@
 [@islands/mdx]: https://github.com/ElMassimo/iles/tree/main/packages/mdx
 [@islands/pages]: https://github.com/ElMassimo/iles/tree/main/packages/pages
 [@islands/prism]: https://github.com/ElMassimo/iles/tree/main/packages/prism
+[@islands/feed]: https://github.com/ElMassimo/iles/tree/main/packages/feed
+
+[feed]: https://github.com/jpmonette/feed
+[feed example]: https://github.com/ElMassimo/iles/blob/main/playground/the-vue-point/src/pages/feed.vue
 
 # Modules and Plugins 🔌
 
@@ -123,6 +127,24 @@ A module to add and configure [unplugin-icons]:
     '@islands/icons',
   ],
 ```
+
+### <kbd>[@islands/feed]</kbd>
+
+A module to generate RSS and Atom feeds, powered by <kbd>[feed]</kbd>:
+
+- 📻 supports RSS, Atom, and JSON formats
+
+- 💪🏼 strongly typed
+
+- ⚡️ HMR during development to debug the result
+
+```ts
+  modules: [
+    '@islands/feed',
+  ],
+```
+
+Visit <kbd>[@islands/feed]</kbd> for usage instructions, or [see this example][feed example].
 
 ### <kbd>[@islands/prism]</kbd>
 
