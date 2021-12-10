@@ -181,7 +181,7 @@ function appConfigDefaults (appConfig: AppConfig, userConfig: UserConfig): AppCo
 
   function IlesLayoutResolver (name: string) {
     const [layoutName, isLayout] = name.split('Layout', 2)
-    if (isLayout === '') {
+    if (layoutName && isLayout === '') {
       const layoutFile = `${uncapitalize(camelCase(layoutName))}.vue`
       return { importName: 'default', path: join(appConfig.layoutsDir, layoutFile) }
     }
