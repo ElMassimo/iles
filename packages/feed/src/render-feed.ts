@@ -1,15 +1,14 @@
-import type { FeedOptions, Item, Author, Extension } from 'feed'
 import { createStaticVNode, defineComponent, PropType, defineAsyncComponent, h } from 'vue'
 import { useVueRenderer } from 'iles'
+import type { FeedOptions, FeedFormat, FeedItem, Author, Extension, ResolvedItem } from './types'
 
-type AsyncContent = Parameters<ReturnType<typeof useVueRenderer>>[0]
-
-interface AsyncItem extends Omit<Item, 'description' | 'content'> {
-  description?: string | AsyncContent
-  content?: string | AsyncContent
+const formats: Record<string, FeedFormat> = {
+  atom: 'atom1',
+  rss: 'rss2',
+  json: 'json1',
 }
 
-interface FeedProps<T = AsyncItem> {
+export interface FeedProps<T = FeedItem> {
   format?: 'atom' | 'rss' | 'json'
   options: FeedOptions
   items?: T[]
@@ -18,20 +17,12 @@ interface FeedProps<T = AsyncItem> {
   extensions?: Extension[]
 }
 
-type FeedFormat = 'atom1' | 'rss2' | 'json1'
-
-const formats: Record<string, FeedFormat> = {
-  atom: 'atom1',
-  rss: 'rss2',
-  json: 'json1',
-}
-
 export const RenderFeed = defineComponent({
   name: 'RenderFeed',
   props: {
     format: { type: String as PropType<'atom' | 'rss' | 'json'>, required: true },
     options: { type: Object as PropType<FeedOptions>, required: true },
-    items: { type: Array as PropType<AsyncItem[]>, default: undefined },
+    items: { type: Array as PropType<FeedItem[]>, default: undefined },
     categories: { type: Array as PropType<string[]>, default: undefined },
     contributors: { type: Array as PropType<Author[]>, default: undefined },
     extensions: { type: Array as PropType<Extension[]>, default: undefined },
@@ -59,7 +50,7 @@ export const RenderFeed = defineComponent({
   },
 })
 
-async function renderFeed (format: FeedFormat, { options, ...props }: FeedProps<Item>) {
+async function renderFeed (format: FeedFormat, { options, ...props }: FeedProps<ResolvedItem>) {
   const { Feed } = await import('feed')
   const feed = new Feed(options)
 

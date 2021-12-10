@@ -4,11 +4,12 @@ path: /feed.rss
 
 <script setup lang="ts">
 import { getPosts } from '~/logic/posts'
+import type { FeedOptions, FeedItem } from '@islands/feed'
 
 const { site } = usePage()
 const url = site.url
 
-const options = {
+const options: FeedOptions = {
   title: 'The Vue Point',
   description: 'The official blog for the Vue.js project',
   id: url,
@@ -20,7 +21,7 @@ const options = {
     'Copyright (c) 2021-present, Yuxi (Evan) You and blog contributors',
 }
 
-let items = $computed(() => getPosts().value.map(post => ({
+let items = $computed(() => getPosts().value.map<FeedItem>(post => ({
   title: post.title,
   link: `${url}${post.href}`,
   date: new Date(post.date),

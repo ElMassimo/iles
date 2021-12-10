@@ -2,6 +2,8 @@ import type { IlesModule } from 'iles'
 import { dirname, join } from 'path'
 import { fileURLToPath } from 'url'
 
+export * from './types'
+
 const __dirname = dirname(fileURLToPath(import.meta.url))
 
 /**
