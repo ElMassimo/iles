@@ -26,8 +26,6 @@ const formats: Record<string, FeedFormat> = {
   json: 'json1',
 }
 
-const isSSR = typeof window === undefined
-
 export const RenderFeed = defineComponent({
   name: 'RenderFeed',
   props: {
@@ -40,28 +38,22 @@ export const RenderFeed = defineComponent({
   },
   setup (props) {
     const renderContent = useVueRenderer()
-    const renderComponent = isSSR ? renderFeed : renderRaw
+    const renderComponent = import.meta.env.SSR ? renderFeed : renderRaw
 
     return () => {
       const format = formats[props.format || 'atom']
       if (!format) throw new Error(`@islands/feed: Unknown format '${props.format}'`)
 
-      let itemPromises = (props.items || []).map(({ description, content, ...item }) => ({
-        description: skipRender(description) ? description : renderContent(description),
-        content: skipRender(content) ? content :  renderContent(content),
-        ...item,
-      }))
-
-      console.log('itemPromises', itemPromises.map(i => i.content))
-
       return h(defineAsyncComponent(async () => {
-        const items = await Promise.all(itemPromises.map(async (item) => ({
-          ...item,
-          description: await item.description,
-          content: await item.content,
-        })))
+        let { items = [] } = props
 
-        return await renderComponent(format, { ...props, items })
+        const promises = items.map(async ({ description, content, ...item }) => ({
+          ...item,
+          description: skipRender(description) ? description : await renderContent(description),
+          content: skipRender(content) ? content : await renderContent(content),
+        }))
+
+        return await renderComponent(format, { ...props, items: await Promise.all(promises) })
       }))
     }
   },

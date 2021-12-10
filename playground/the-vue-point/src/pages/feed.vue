@@ -38,4 +38,5 @@ let items = $computed(() => getPosts().value.map(post => ({
 </script>
 
 <template>
+  <RenderFeed format="rss" v-bind="{ options, items }"/>
 </template>
