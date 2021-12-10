@@ -1,3 +1,13 @@
+## [0.7.2](https://github.com/ElMassimo/iles/compare/v0.7.1...v0.7.2) (2021-12-10)
+
+
+### Bug Fixes
+
+* avoid incorrect resolution of `<Layout>` ([c9618fc](https://github.com/ElMassimo/iles/commit/c9618fc0adcbabab10536819fcb09e9cf1198d77))
+* move plugin-vue_export-helper to the vite chunk ([7ba3c5b](https://github.com/ElMassimo/iles/commit/7ba3c5bff187680806aadc8b3b2cbdfa6fa9b3d4))
+
+
+
 ## [0.7.1](https://github.com/ElMassimo/iles/compare/v0.7.0...v0.7.1) (2021-12-09)
 
 
