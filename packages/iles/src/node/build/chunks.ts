@@ -13,7 +13,7 @@ export function extendManualChunks (config: AppConfig): GetManualChunk {
   return (id, api) => {
     const name = userChunks?.(id, api)
     if (name) return name
-    if (id.includes('vite/')) return 'vite'
+    if (id.includes('vite/') || id.includes('plugin-vue')) return 'vite'
     if (id.includes('hydration/dist')) return 'iles'
     if (id.includes('node_modules')) return vendorPerFramework(chunkForExtension, id, api, cache)
   }
