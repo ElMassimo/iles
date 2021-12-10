@@ -70,12 +70,23 @@ importers:
       '@preact/preset-vite': 2.1.5_preact@10.5.15
       '@vueuse/core': 6.9.2
       autoprefixer: 10.4.0
-      iles: 0.7.1
+      iles: 0.7.2
       postcss-nesting: 8.0.1
       preact-render-to-string: 5.1.19_preact@10.5.15
       vite-plugin-inspect: 0.3.11
       vite-plugin-windicss: 1.5.1
       vue-tsc: 0.29.8
+
+  packages/feed:
+    specifiers:
+      feed: ^4.2
+      iles: workspace:*
+      vue: ^3.2
+    dependencies:
+      feed: 4.2.2
+    devDependencies:
+      iles: link:../iles
+      vue: 3.2.24
 
   packages/headings:
     specifiers:
@@ -132,6 +143,7 @@ importers:
   packages/iles:
     specifiers:
       '@antfu/install-pkg': ^0.1.0
+      '@islands/feed': workspace:^0.1.0
       '@islands/headings': workspace:^0.1.0
       '@islands/hydration': workspace:^0.3.3
       '@islands/icons': workspace:^0.1.0
@@ -205,6 +217,7 @@ importers:
       xdm: 3.3.1
     devDependencies:
       '@antfu/install-pkg': 0.1.0
+      '@islands/feed': link:../feed
       '@islands/headings': link:../headings
       '@islands/icons': link:../icons
       '@islands/prism': link:../prism
@@ -337,16 +350,16 @@ importers:
   playground/the-vue-point:
     specifiers:
       '@iconify-json/carbon': ^1.0.7
+      '@islands/feed': workspace:*
       '@islands/icons': workspace:*
       '@islands/prism': workspace:*
-      feed: ^4.2.1
       iles: workspace:*
       vite-plugin-windicss: ^1.5.1
     devDependencies:
       '@iconify-json/carbon': 1.0.7
+      '@islands/feed': link:../../packages/feed
       '@islands/icons': link:../../packages/icons
       '@islands/prism': link:../../packages/prism
-      feed: 4.2.2
       iles: link:../../packages/iles
       vite-plugin-windicss: 1.5.1
 
@@ -1268,8 +1281,8 @@ packages:
       - supports-color
     dev: true
 
-  /@islands/pages/0.7.0:
-    resolution: {integrity: sha512-c6Uuz6ldGUxmbB6SqabGBMyl9r/88hzsl8g1wMVBUVNePPpGzZzMSoMwoKzdh0POa83Dp5v3G362MqzuUK/Z9g==}
+  /@islands/pages/0.7.1:
+    resolution: {integrity: sha512-o3WWDNzQ4W7wuYE4CSZ19yI6/aQt1eWoUt7r2biK8Sv5xM8VQL8g6vBwe0/kFSpvM6QoKeZGO+wVauhaGxIC7w==}
     dependencies:
       debug: 4.3.3
       deep-equal: 2.0.5
@@ -4093,7 +4106,7 @@ packages:
     engines: {node: '>=0.4.0'}
     dependencies:
       xml-js: 1.6.11
-    dev: true
+    dev: false
 
   /file-entry-cache/6.0.1:
     resolution: {integrity: sha512-7Gps/XWymbLk2QLYK4NzpMOrYjMhdIxXuIvy2QBsLE6ljuodKvdkWs/cpyJJ3CVIVpH0Oi1Hvg1ovbMzLdFBBg==}
@@ -4535,14 +4548,14 @@ packages:
     engines: {node: '>= 4'}
     dev: true
 
-  /iles/0.7.1:
-    resolution: {integrity: sha512-tLftWV445rDzs2aETHQxcrPuzPmLQWWBh6IyqL5jWiJCzZLZKgSka1QAKqHLpl2vCx3K0JbvtscxEYAJtqACDw==}
+  /iles/0.7.2:
+    resolution: {integrity: sha512-lJCC/I/G2UYSZwYRe/qFax+jMgtYmsV+nG0Amhht3TuQU0p1MMrr+iDjqV+szuOC0r6XestkrPj2ZXNlfBE0FA==}
     engines: {node: '>=14.0.0'}
     hasBin: true
     dependencies:
       '@islands/hydration': 0.3.3_vue@3.2.24
       '@islands/mdx': 0.7.1
-      '@islands/pages': 0.7.0
+      '@islands/pages': 0.7.1
       '@islands/prerender': 0.3.1_vue@3.2.24
       '@nuxt/devalue': 2.0.0
       '@vitejs/plugin-vue': 1.10.2_vite@2.7.0
@@ -6771,7 +6784,7 @@ packages:
 
   /sax/1.2.4:
     resolution: {integrity: sha512-NqVDv9TpANUjFm0N8uM5GxL36UgKi9/atZw+x7YFnQ8ckwFGKrl4xX4yWtrey3UJm5nP1kUbnYgLopqWNSRhWw==}
-    dev: true
+    dev: false
 
   /section-matter/1.0.0:
     resolution: {integrity: sha512-vfD3pmTzGpufjScBh50YHKzEu2lxBWhVEHsNGoEXmCmn2hKGfeNLYMzCJpe8cD7gqX7TJluOVpBkAequ6dgMmA==}
@@ -8203,7 +8216,7 @@ packages:
     hasBin: true
     dependencies:
       sax: 1.2.4
-    dev: true
+    dev: false
 
   /xtend/4.0.2:
     resolution: {integrity: sha512-LKYU1iAXJXUgAXn9URjiu+MWhyUXHsvfp7mcuYm9dSUKK0/CjtrUwFAxD82/mCWbtLsGjFIad0wIsod4zrTAEQ==}

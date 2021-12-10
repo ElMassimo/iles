@@ -1,0 +1,41 @@
+{
+  "name": "@islands/feed",
+  "version": "0.1.0",
+  "scripts": {
+    "dev": "npm run build -- --watch",
+    "build": "rimraf -rf dist && tsup src/types.ts src/feed.ts src/render-feed.ts",
+    "prepublishOnly": "npm run build"
+  },
+  "files": [
+    "dist",
+    "src"
+  ],
+  "types": "dist/feed.d.ts",
+  "type": "module",
+  "exports": {
+    ".": {
+      "import": "./dist/feed.js",
+      "require": "./src/feed.cjs"
+    },
+    "./package.json": "./package.json"
+  },
+  "funding": "https://github.com/sponsors/ElMassimo",
+  "author": "Máximo Mussini <maximomussini@gmail.com>",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ElMassimo/iles"
+  },
+  "homepage": "https://github.com/ElMassimo/iles",
+  "bugs": "https://github.com/ElMassimo/iles/issues",
+  "devDependencies": {
+    "iles": "workspace:*",
+    "vue": "^3.2"
+  },
+  "peerDependencies": {
+    "iles": "workspace:^0.7",
+    "vue": "^3.2"
+  },
+  "dependencies": {
+    "feed": "^4.2"
+  }
+}

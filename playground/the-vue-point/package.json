@@ -9,9 +9,9 @@
   },
   "devDependencies": {
     "@iconify-json/carbon": "^1.0.7",
+    "@islands/feed": "workspace:*",
     "@islands/icons": "workspace:*",
     "@islands/prism": "workspace:*",
-    "feed": "^4.2.1",
     "iles": "workspace:*",
     "vite-plugin-windicss": "^1.5.1"
   }

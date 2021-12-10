@@ -11,6 +11,7 @@ export default defineConfig({
   modules: [
     '@islands/icons',
     '@islands/prism',
+    '@islands/feed',
   ],
   // Example: Configure all posts to use a different layout without having to
   // add `layout: 'post'` in every file.

@@ -3,7 +3,7 @@ import { getCurrentInstance, createApp, createSSRApp, ssrContextKey, withCtx } f
 
 const newApp = import.meta.env.SSR ? createApp : createSSRApp
 
-type Nodes = undefined | VNode | VNode[]
+type Nodes = undefined | VNode<any, any, any> | VNode<any, any, any>[]
 
 export type VNodeRenderer = (vNodes: Nodes | (() => Nodes | Promise<Nodes>)) => Promise<string>
 
