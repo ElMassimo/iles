@@ -1,7 +1,8 @@
 import type { AppContext, VNode } from 'vue'
 import { getCurrentInstance, createApp, createSSRApp, ssrContextKey, withCtx } from 'vue'
 
-const newApp = import.meta.env.SSR ? createApp : createSSRApp
+const isSSR = typeof window === undefined
+const newApp = isSSR ? createApp : createSSRApp
 
 type Nodes = undefined | VNode | VNode[]
 
@@ -15,6 +16,7 @@ export function useVueRenderer (): VNodeRenderer {
     const { app: _, provides: appProvides, ...appContext }
       = getCurrentInstance()?.appContext || {} as AppContext
     // @ts-ignore
+    console.log({ currentInstance: getCurrentInstance() })
     const { [ssrContextKey]: ssrContext, ...provides } = appProvides
 
     // Initialize a new application that returns the specified nodes.

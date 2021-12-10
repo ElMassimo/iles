@@ -13,6 +13,7 @@ declare module 'vue' {
     Island: typeof import('iles')['Island']
     NavBarLinks: typeof import('./src/components/NavBarLinks.svelte')['default']
     PostDate: typeof import('./src/components/PostDate.vue')['default']
+    RenderFeed: typeof import('./../../packages/feed/dist/render-feed')['RenderFeed']
   }
 }
 
