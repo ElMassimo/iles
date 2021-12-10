@@ -1,9 +1,11 @@
 import { promises as fs } from 'fs'
-import { extname } from 'pathe'
+import { basename, extname } from 'pathe'
 import grayMatter from 'gray-matter'
 import { parse as parseSFC } from 'vue/compiler-sfc'
 
 import type { RawPageMatter, PageMeta } from './types'
+
+const dateRegex = /^(?<year>\d{4})-(?<month>\d{2})-(?<day>\d{2})-(?<slug>.*)(?<ext>\.\w+)$/
 
 export async function parsePageMatter (filename: string, content: string) {
   const parse = extname(filename) === '.vue' ? parsePageBlock : parseFrontmatter
@@ -53,7 +55,13 @@ function preparePageMatter (filename: string, matter: Record<string, any>): RawP
     layout = ext !== '.html' ? false : undefined
   }
 
+  // Add filename, date, and id.
   const meta = { filename, ...rawMeta }
+  const { year, month, day, slug } = extractGroups(basename(filename), dateRegex)
+  if (slug) {
+    meta.date = new Date(year, month - 1, day)
+    meta.slug = slug
+  }
 
   return { layout, meta, route, ...frontmatter }
 }
@@ -65,4 +73,8 @@ export function clearUndefined<T extends object> (obj: T): T {
   for (const key in obj)
     if (obj[key] === undefined) delete obj[key]
   return obj
+}
+
+function extractGroups (val: string, regex: RegExp): any {
+  return regex.exec(val)?.groups as any || {}
 }
