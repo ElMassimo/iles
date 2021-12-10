@@ -1,3 +1,12 @@
+## [0.7.1](https://github.com/ElMassimo/iles/compare/pages@0.7.0...pages@0.7.1) (2021-12-10)
+
+
+### Features
+
+* extract date and slug from filename and add in meta ([8a77a78](https://github.com/ElMassimo/iles/commit/8a77a786f5868fdb162520b92754eba91a403e62))
+
+
+
 # 0.7.0 (2021-12-09)
 
 
