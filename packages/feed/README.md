@@ -45,10 +45,9 @@ export default defineConfig({
 
 ### Usage 🚀
 
-To generate a feed, create a Vue SFC and specify a [`path`][routing] with the appropriate
-extension:
+To generate a feed, create a Vue SFC and specify a [`path`][routing] with the appropriate extension:
 
-```
+```vue
 <page>
 path: /feed.atom
 </page>
