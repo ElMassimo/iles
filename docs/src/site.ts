@@ -22,7 +22,7 @@ const site = {
   ],
 
   sidebar: {
-    '/guide': [
+    '/': [
       {
         text: 'Guide',
         children: [
@@ -40,9 +40,6 @@ const site = {
           { text: 'Deployment', link: '/guide/deployment' },
         ],
       },
-    ],
-    '/config': 'auto',
-    '/faqs': [
       {
         text: 'FAQs',
         children: [

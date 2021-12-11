@@ -217,27 +217,26 @@ Set it to `false` to avoid adding social tags such as `og:title` and `twitter:de
 ```ts
 import { defineConfig } from 'iles'
 
-import iconsResolver from 'unplugin-icons/resolver'
-import icons from 'unplugin-icons/vite'
 import windicss from 'vite-plugin-windicss'
 
 export default defineConfig({
   siteUrl: 'https://iles-docs.netlify.app',
-  components: {
-    resolvers: [iconsResolver({ componentPrefix: '' })],
+  extendFrontmatter (frontmatter, filename) {
+    if (filename.includes('/posts/'))
+      frontmatter.layout = 'post'
   },
   markdown: {
-    extendFrontmatter (frontmatter, filename) {
-      if (filename.includes('/posts/'))
-        frontmatter.layout = 'post'
-    },
-    rehypePlugins: [
-      ['@mapbox/rehype-prism', { alias: { markup: ['html', 'vue'] } }],
+    remarkPlugins: [
+      'remark-gemoji',
     ],
   },
+  modules: [
+    '@islands/icons',
+    '@islands/headings',
+    '@islands/prism',
+  ],
   vite: {
     plugins: [
-      icons({ autoInstall: true }),
       windicss(),
     ],
   },
