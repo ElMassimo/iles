@@ -263,14 +263,14 @@ function viteConfigDefaults (root: string): ViteOptions {
     optimizeDeps: {
       include: [
         'vue',
+        'vue-router',
+        '@vueuse/head',
         '@vue/devtools-api',
+        '@vue/server-renderer',
       ],
       exclude: [
         'iles',
-        'vue-router',
         '@nuxt/devalue',
-        '@vue/server-renderer',
-        '@vueuse/head',
         '@islands/hydration',
       ],
     },
