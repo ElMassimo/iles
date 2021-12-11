@@ -1,3 +1,12 @@
+## [0.7.2](https://github.com/ElMassimo/iles/compare/pages@0.7.1...pages@0.7.2) (2021-12-11)
+
+
+### Bug Fixes
+
+* vue is a peer dependency for @islands/pages ([aa9e82a](https://github.com/ElMassimo/iles/commit/aa9e82a39eaefb90ebeca7c709d10dd4766c81f8))
+
+
+
 ## [0.7.1](https://github.com/ElMassimo/iles/compare/pages@0.7.0...pages@0.7.1) (2021-12-10)
 
 
