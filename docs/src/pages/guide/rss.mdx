@@ -1,0 +1,110 @@
+[pages]: /guide/development#pages
+[routing]: /guide/routing
+[@islands/feed]: /guide/plugins#islandsfeed
+[usePage]: /guide/development#using-page-data
+
+[feed]: https://github.com/jpmonette/feed
+[this full example]: https://github.com/ElMassimo/iles/blob/main/playground/the-vue-point/src/pages/feed.vue
+[extract the content]: https://github.com/vuejs/blog/blob/master/.vitepress/genFeed.js#L22-L24
+[ssg.onSiteRendered]: /config#ssg-onsiterendered
+
+[glob imports]: https://vitejs.dev/guide/features.html#glob-import
+
+# RSS Feeds
+
+<Iles/> provides the <kbd>[@islands/feed]</kbd> module to generate RSS, Atom, and JSON feeds.
+
+## Adding a Feed
+
+To get started, create a Vue page and use the [`<page>` block][pages] to specify
+a <kbd>[path][routing]</kbd> for the feed.
+
+```vue
+<page>
+path: /feed.atom
+</page>
+```
+
+<Tip title="Recommended Extensions">
+Use `.atom` for Atom feeds, `.rss` for RSS feeds, and `.json` for JSON feeds.
+</Tip>
+
+<kbd>[@islands/feed]</kbd> provides a `RenderFeed` component:
+
+```vue
+<template>
+  <RenderFeed format="atom" :options="options" :items="items"/>
+</template>
+```
+
+During development, this component will render an HMR-enabled preview, allowing
+you to iterate quickly and make sure the data looks right.
+
+When building the site, it will use the <kbd>[feed]</kbd> package to generate
+a feed using the specified format. You can choose between `rss`, `atom`, and `json`.
+
+<Tip>
+Besides `items`, you can also provide [`categories`, `contributors`, and `extensions`][feed].
+</Tip>
+
+## Configuring the Feed
+
+You can use `<script setup>` to provide the `options` and `items` for the feed,
+which allows you to import code or data as needed, including composables such as <kbd>[usePage]</kbd>.
+
+```vue
+<script setup lang="ts">
+import type { FeedOptions } from '@islands/feed'
+
+const { site } = usePage()
+
+const url = site.url
+
+const options: FeedOptions = {
+  title: 'The Vue Point',
+  description: 'The official blog for the Vue.js project',
+  id: url,
+  link: url,
+  language: 'en',
+  image: 'https://vuejs.org/images/logo.png',
+  copyright: 'Copyright (c) 2021-present',
+}
+</script>
+```
+
+The <kbd>[@islands/feed]</kbd> package exposes the types provided by <kbd>[feed]</kbd>,
+which are convenient to enable intellisense and type-checking for the feed options and items.
+
+## Adding Items to the Feed
+
+[Glob imports] are a convenient way to access multiple files or pages to generate feed items.
+
+```ts
+import type { FeedItem } from '@islands/feed'
+
+const posts = Object.values(import.meta.globEagerDefault('./posts/**/*.mdx'))
+
+const items = posts.map<FeedItem>((post) => ({
+  link: url + post.href,
+  date: post.date,
+  title: post.title,
+  description: post.description,
+  content: post.render,
+}))
+```
+
+See [this full example] as a configuration reference.
+
+## Using External Content
+
+<Iles/> supports async rendering, so you can also fetch remote content as needed:
+
+```ts
+import { $fetch } from 'ohmyfetch'
+
+const { posts } = await $fetch('/api/posts')
+```
+
+## Generating a Feed Manually
+
+If you have a large amount of pages and rendering the feed is taking long, you can leverage <kbd>[ssg.onSiteRendered]</kbd> to access all rendered pages. You can [extract the content] from each `page.rendered`, and use the <kbd>[feed]</kbd> package to generate a feed.

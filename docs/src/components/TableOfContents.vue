@@ -7,7 +7,7 @@ interface HeadingWithChildren extends Heading {
 }
 
 let { meta, frontmatter } = usePage()
-let level = $computed(() => frontmatter.sidebar === 'auto' ? (frontmatter.sidebarLevel || 1) + 2 : frontmatter.sidebarLevel || 2)
+let level = $computed(() => frontmatter.tocLevel || frontmatter.sidebar === 'auto' ? (frontmatter.sidebarLevel || 1) + 2 : frontmatter.sidebarLevel || 2)
 
 let headings = $computed(() => resolveHeaders(meta.headings || []))
 

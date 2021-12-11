@@ -22,7 +22,7 @@ const site = {
   ],
 
   sidebar: {
-    '/': [
+    '/guide': [
       {
         text: 'Guide',
         children: [
@@ -35,16 +35,14 @@ const site = {
           { text: 'Frameworks', link: '/guide/frameworks' },
           { text: 'Client Scripts', link: '/guide/client-scripts' },
           { text: 'Routing', link: '/guide/routing' },
+          { text: 'RSS Feeds', link: '/guide/rss' },
+          { text: 'Plugins', link: '/guide/plugins' },
           { text: 'Deployment', link: '/guide/deployment' },
         ],
       },
-      {
-        text: 'Config',
-        children: [
-          { text: 'Configuration', link: '/config' },
-          { text: 'Plugins', link: '/config/plugins' },
-        ],
-      },
+    ],
+    '/config': 'auto',
+    '/faqs': [
       {
         text: 'FAQs',
         children: [

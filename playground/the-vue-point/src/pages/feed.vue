@@ -24,7 +24,7 @@ const options: FeedOptions = {
 let items = $computed(() => getPosts().value.map<FeedItem>(post => ({
   title: post.title,
   link: `${url}${post.href}`,
-  date: new Date(post.date),
+  date: post.date,
   description: post.excerpt,
   content: post.render,
   author: [

@@ -1,9 +1,14 @@
+---
+tocLevel: 3
+---
+
 [pages]: /guide/development#pages
 [mdx]: /guide/markdown
 [configuring them as usual]: /config#configuring-vite
 [config]: /config#configuring-%C3%AEles
 [components]: /guide/development#components
 [routing]: /guide/routing
+[rss]: /guide/rss
 
 [@vitejs/plugin-vue]: https://www.npmjs.com/package/@vitejs/plugin-vue
 [unplugin-vue-components]: https://github.com/antfu/unplugin-vue-components
@@ -31,7 +36,6 @@
 [@islands/feed]: https://github.com/ElMassimo/iles/tree/main/packages/feed
 
 [feed]: https://github.com/jpmonette/feed
-[feed example]: https://github.com/ElMassimo/iles/blob/main/playground/the-vue-point/src/pages/feed.vue
 
 # Modules and Plugins 🔌
 
@@ -69,6 +73,9 @@ export default defineConfig({
   ],
 })
 ```
+
+When providing a string, <Iles/> will automatically add the specified module to
+the development dependencies. Otherwise, add the package manually and run install.
 
 ## Authoring a Module
 
@@ -130,7 +137,7 @@ A module to add and configure [unplugin-icons]:
 
 ### <kbd>[@islands/feed]</kbd>
 
-A module to generate RSS and Atom feeds, powered by <kbd>[feed]</kbd>:
+A module to [generate RSS and Atom feeds][rss], powered by <kbd>[feed]</kbd>:
 
 - 📻 supports RSS, Atom, and JSON formats
 
@@ -143,8 +150,6 @@ A module to generate RSS and Atom feeds, powered by <kbd>[feed]</kbd>:
     '@islands/feed',
   ],
 ```
-
-Visit <kbd>[@islands/feed]</kbd> for usage instructions, or [see this example][feed example].
 
 ### <kbd>[@islands/prism]</kbd>
 
