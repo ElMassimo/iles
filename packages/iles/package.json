@@ -28,7 +28,7 @@
     "prepublishOnly": "npm run build"
   },
   "engines": {
-    "node": ">=14.0.0"
+    "node": "^14.18 || >= 16.0.0"
   },
   "keywords": [
     "vite",
@@ -43,9 +43,9 @@
     "url": "https://github.com/ElMassimo/iles/issues"
   },
   "dependencies": {
-    "@islands/pages": "workspace:^0.7.0",
     "@islands/hydration": "workspace:^0.3.3",
     "@islands/mdx": "workspace:^0.7.1",
+    "@islands/pages": "workspace:^0.7.0",
     "@islands/prerender": "workspace:^0.3.1",
     "@nuxt/devalue": "^2.0.0",
     "@vitejs/plugin-vue": "^2.0.0",
@@ -68,10 +68,10 @@
   },
   "devDependencies": {
     "@antfu/install-pkg": "^0.1.0",
+    "@islands/feed": "workspace:^0.1.0",
     "@islands/headings": "workspace:^0.1.0",
     "@islands/icons": "workspace:^0.1.0",
     "@islands/prism": "workspace:^0.1.0",
-    "@islands/feed": "workspace:^0.1.0",
     "@preact/preset-vite": "^2",
     "@sveltejs/vite-plugin-svelte": "^1.0.0-next.30",
     "@types/connect": "^3.4.35",

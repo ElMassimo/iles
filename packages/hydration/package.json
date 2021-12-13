@@ -23,9 +23,6 @@
     "build": "rimraf -rf dist && tsup hydration.ts preact.ts vue.ts vanilla.ts solid.ts svelte.ts",
     "prepublishOnly": "npm run build"
   },
-  "engines": {
-    "node": ">=14.0.0"
-  },
   "keywords": [
     "vite",
     "vue",

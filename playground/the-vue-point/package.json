@@ -8,6 +8,9 @@
     "preview": "iles preview --open",
     "now": "npm run build && npm run preview"
   },
+  "engines": {
+    "node": "^14.18 || >= 16.0.0"
+  },
   "devDependencies": {
     "@iconify-json/carbon": "^1.0.7",
     "@islands/feed": "workspace:*",

@@ -20,9 +20,6 @@
       "require": "./dist/prerender.cjs"
     }
   },
-  "engines": {
-    "node": ">=14.0.0"
-  },
   "keywords": [
     "vite",
     "vue",
