@@ -1,6 +1,4 @@
-/// <reference types="@peeky/runner" />
-
-import { init as initESLexer, parse as parseESModules } from 'es-module-lexer'
+import { test, describe, expect } from 'vitest'
 import { parseImports, parseImportVariables } from '../src/node/plugin/parse'
 
 describe('parsing component imports', () => {

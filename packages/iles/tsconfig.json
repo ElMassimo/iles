@@ -11,7 +11,7 @@
     "esModuleInterop": true,
     "useUnknownInCatchVariables": false,
     "lib": ["ESNext", "DOM"],
-    "types": ["node", "@peeky/runner"],
+    "types": ["node", "vitest"],
     "paths": {
       "src/*": ["src/*"],
       "client/*": ["src/client/*"],

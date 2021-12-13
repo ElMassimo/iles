@@ -13,22 +13,25 @@
     "lint": "eslint --ignore-pattern 'node_modules' --ignore-pattern 'dist' . --ext .ts,.js,.vue,.html",
     "release": "node scripts/release",
     "changelog": "node scripts/changelog",
-    "test": "peeky run",
-    "test:open": "peeky open"
+    "test": "iles test"
   },
   "devDependencies": {
+    "@islands/hydration": "workspace:*",
+    "@islands/mdx": "workspace:*",
+    "@islands/pages": "workspace:*",
+    "@islands/prerender": "workspace:*",
     "@mussi/eslint-config": "^0.5.1",
     "@mussi/stylelint-config": "^0.1.1",
-    "@peeky/cli": "^0.4.2",
-    "@peeky/runner": "^0.4.2",
     "concurrently": "^6.4.0",
     "conventional-changelog-cli": "^2.1.1",
     "enquirer": "^2.3.6",
     "eslint": "^7.32.0",
     "execa": "^5.1.1",
+    "iles": "workspace:*",
     "minimist": "^1.2.5",
     "semver": "^7.3.5",
-    "typescript": "4.4.4"
+    "typescript": "4.4.4",
+    "vitest": "^0.0.80"
   },
   "resolutions": {
     "eslint-plugin-vue": "7.17.0",

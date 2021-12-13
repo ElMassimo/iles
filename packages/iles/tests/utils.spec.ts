@@ -1,5 +1,4 @@
-/// <reference types="@peeky/runner" />
-
+import { test, describe, expect } from 'vitest'
 import { pascalCase, serialize } from '../src/node/plugin/utils'
 
 describe('case conversions', () => {
