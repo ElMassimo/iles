@@ -1,6 +1,6 @@
-import type { IlesModule } from 'iles'
 import { dirname, join } from 'path'
 import { fileURLToPath } from 'url'
+import type { IlesModule } from 'iles'
 
 export * from './types'
 
@@ -17,7 +17,7 @@ export default function IlesFeed (): IlesModule {
         (name) => {
           if (name === 'RenderFeed')
             return { importName: 'RenderFeed', path: join(__dirname, 'render-feed') }
-        }
+        },
       ],
     },
   }
