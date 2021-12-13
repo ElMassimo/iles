@@ -27,7 +27,7 @@ jobs:
             - recursive: false
 
       - name: Build
-        run: pnpm build-fast
+        run: pnpm build
 
       - name: Tests
         run: pnpm run test
