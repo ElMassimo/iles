@@ -52,7 +52,7 @@ importers:
       preact-render-to-string: ^5.1.19
       quicklink: ^2.2.0
       vite-plugin-inspect: ^0.3.9
-      vite-plugin-windicss: ^1.5.1
+      vite-plugin-windicss: ^1.5.4
       vue-tsc: ^0.29.8
     dependencies:
       '@docsearch/css': 3.0.0-alpha.42
@@ -68,12 +68,33 @@ importers:
       '@preact/preset-vite': 2.1.5_preact@10.6.4
       '@vueuse/core': 6.9.2
       autoprefixer: 10.4.0
-      iles: 0.7.3
+      iles: 0.7.5
       postcss-nesting: 8.0.1
       preact-render-to-string: 5.1.19_preact@10.6.4
       vite-plugin-inspect: 0.3.11
       vite-plugin-windicss: 1.5.4
       vue-tsc: 0.29.8
+
+  packages/excerpt:
+    specifiers:
+      '@types/estree': ^0.0.46
+      '@types/estree-jsx': ^0.0.1
+      estree-walker: ^3.0.0
+      hast-util-to-string: ^2.0.0
+      iles: workspace:*
+      tsup: 5.5.0
+      typescript: 4.4.4
+      unified: ^10.1.0
+    dependencies:
+      estree-walker: 3.0.0
+      hast-util-to-string: 2.0.0
+    devDependencies:
+      '@types/estree': 0.0.46
+      '@types/estree-jsx': 0.0.1
+      iles: link:../iles
+      tsup: 5.5.0_typescript@4.4.4
+      typescript: 4.4.4
+      unified: 10.1.1
 
   packages/feed:
     specifiers:
@@ -141,6 +162,7 @@ importers:
   packages/iles:
     specifiers:
       '@antfu/install-pkg': ^0.1.0
+      '@islands/excerpt': workspace:^0.1.0
       '@islands/feed': workspace:^0.1.0
       '@islands/headings': workspace:^0.1.0
       '@islands/hydration': workspace:^0.3.3
@@ -215,6 +237,7 @@ importers:
       xdm: 3.3.1
     devDependencies:
       '@antfu/install-pkg': 0.1.0
+      '@islands/excerpt': link:../excerpt
       '@islands/feed': link:../feed
       '@islands/headings': link:../headings
       '@islands/icons': link:../icons
@@ -348,6 +371,7 @@ importers:
   playground/the-vue-point:
     specifiers:
       '@iconify-json/carbon': ^1.0.7
+      '@islands/excerpt': workspace:^0.1.0
       '@islands/feed': workspace:*
       '@islands/icons': workspace:*
       '@islands/prism': workspace:*
@@ -355,6 +379,7 @@ importers:
       vite-plugin-windicss: ^1.5.1
     devDependencies:
       '@iconify-json/carbon': 1.0.7
+      '@islands/excerpt': link:../../packages/excerpt
       '@islands/feed': link:../../packages/feed
       '@islands/icons': link:../../packages/icons
       '@islands/prism': link:../../packages/prism
@@ -1182,7 +1207,7 @@ packages:
         optional: true
     dependencies:
       '@antfu/utils': 0.3.0
-      '@rollup/pluginutils': 4.1.1
+      '@rollup/pluginutils': 4.1.2
       chokidar: 3.5.2
       debug: 4.3.3
       fast-glob: 3.2.7
@@ -1580,7 +1605,7 @@ packages:
       '@prefresh/babel-plugin': 0.4.1
       '@prefresh/core': 1.3.2_preact@10.6.4
       '@prefresh/utils': 1.1.1
-      '@rollup/pluginutils': 4.1.1
+      '@rollup/pluginutils': 4.1.2
       preact: 10.6.4
     transitivePeerDependencies:
       - supports-color
@@ -1588,6 +1613,13 @@ packages:
 
   /@rollup/pluginutils/4.1.1:
     resolution: {integrity: sha512-clDjivHqWGXi7u+0d2r2sBi4Ie6VLEAzWMIkvJLnDmxoOhBYOTfzGbOQBA32THHm11/LiJbd01tJUpJsbshSWQ==}
+    engines: {node: '>= 8.0.0'}
+    dependencies:
+      estree-walker: 2.0.2
+      picomatch: 2.3.0
+
+  /@rollup/pluginutils/4.1.2:
+    resolution: {integrity: sha512-ROn4qvkxP9SyPeHaf7uQC/GPFY6L/OWy9+bd9AwcjOAWQwxRscoEyAUD8qCY5o5iL4jqQwoLk2kaTKJPb/HwzQ==}
     engines: {node: '>= 8.0.0'}
     dependencies:
       estree-walker: 2.0.2
@@ -1917,15 +1949,6 @@ packages:
       eslint-visitor-keys: 2.1.0
     dev: true
 
-  /@vitejs/plugin-vue/1.10.2_vite@2.7.2:
-    resolution: {integrity: sha512-/QJ0Z9qfhAFtKRY+r57ziY4BSbGUTGsPRMpB/Ron3QPwBZM4OZAZHdTa4a8PafCwU5DTatXG8TMDoP8z+oDqJw==}
-    engines: {node: '>=12.0.0'}
-    peerDependencies:
-      vite: ^2.5.10
-    dependencies:
-      vite: 2.7.2
-    dev: true
-
   /@vitejs/plugin-vue/2.0.0_vite@2.7.2+vue@3.2.26:
     resolution: {integrity: sha512-4Xn1h9OcaAf7KYrvz2oEi52fCCCLcCzyr3pDOrzYTWrs0DrzNOXt9fT5IiGb1f/uoNTdX3aAkXVGNXrGkzF/zw==}
     engines: {node: '>=12.0.0'}
@@ -1935,7 +1958,6 @@ packages:
     dependencies:
       vite: 2.7.2
       vue: 3.2.26
-    dev: false
 
   /@volar/code-gen/0.29.8:
     resolution: {integrity: sha512-eohLLUqPChHRPDFT5gXn4V6pr/CeTri7Ou5GI26lUvBRRAbP8p+oYfQRcbMPGeKmVkYjfVj0chsxQGx6T8PQ4Q==}
@@ -2088,14 +2110,6 @@ packages:
       vue-demi: 0.12.1
     dev: true
 
-  /@vueuse/head/0.6.0_vue@3.2.26:
-    resolution: {integrity: sha512-fi7ZjkMpEAUtTT6iR5wgL2HkX1+3zbrmbpcwU//RgJIWEr5b42jk8E9yOheaC2dYAAHzelAllVpX0pDmhcTXuw==}
-    peerDependencies:
-      vue: '>=3'
-    dependencies:
-      vue: 3.2.26
-    dev: true
-
   /@vueuse/head/0.7.3_vue@3.2.26:
     resolution: {integrity: sha512-4IRwZlpO9NKiHEHGvsXEGfy8ZD53B7neAMLsnfzu/TocpO7y9pn55mHWpodWAeUFyf6kNgKxFq5yBGTxLni3aA==}
     peerDependencies:
@@ -2103,6 +2117,14 @@ packages:
     dependencies:
       vue: 3.2.26
     dev: false
+
+  /@vueuse/head/0.7.4_vue@3.2.26:
+    resolution: {integrity: sha512-cmps+wrdgL77V72vtjU6kaAunkG6GhswaMIQoh7Twc52ql4/p7i1Amd31LqnnvNF/bfuvzcXgYvsH8I7kimZmA==}
+    peerDependencies:
+      vue: '>=3'
+    dependencies:
+      vue: 3.2.26
+    dev: true
 
   /@vueuse/shared/6.9.2:
     resolution: {integrity: sha512-lAiMh6XROs0kSKVd0Yb/6GKoQMxC1fYrFDi6opvQWISPtcqRNluRrQxLUZ3WTI78ovtoKRLktjhkFAtydcfFDg==}
@@ -2451,7 +2473,7 @@ packages:
     hasBin: true
     dependencies:
       caniuse-lite: 1.0.30001286
-      electron-to-chromium: 1.4.16
+      electron-to-chromium: 1.4.17
       escalade: 3.1.1
       node-releases: 2.0.1
       picocolors: 1.0.0
@@ -3063,8 +3085,8 @@ packages:
     resolution: {integrity: sha512-QQUumrEjFDKSVYVdaeBmFdyQGoaV+fCSMyWHvfx/u22bRHSTeBQYt6P4jMY+gFd4kgKB9nqk7RMtWkDB49OYPA==}
     dev: true
 
-  /electron-to-chromium/1.4.16:
-    resolution: {integrity: sha512-BQb7FgYwnu6haWLU63/CdVW+9xhmHls3RCQUFiV4lvw3wimEHTVcUk2hkuZo76QhR8nnDdfZE7evJIZqijwPdA==}
+  /electron-to-chromium/1.4.17:
+    resolution: {integrity: sha512-zhk1MravPtq/KBhmGB7TLBILmXTgRG9TFSI3qS3DbgyfHzIl72iiTE37r/BHIbPCJJlWIo5rySyxiH4vWhu2ZA==}
     dev: true
 
   /emmet/2.3.4:
@@ -4349,9 +4371,9 @@ packages:
     engines: {node: '>= 4'}
     dev: true
 
-  /iles/0.7.3:
-    resolution: {integrity: sha512-ne92pUAlPguJ5owImWi0qcGZ0MJa1pT54GrQFMAjfQuzo1hqqPzqH0D1OPpXlJwehusZOkBKhJ8UXgJ9zmzSrA==}
-    engines: {node: '>=14.0.0'}
+  /iles/0.7.5:
+    resolution: {integrity: sha512-URQVfZb1UJafOWG3dTyQT6jqd4HqVG+HWQ3Soe21CHWKlmdI3cbdO1+aA97PfZ9i1Xf/EMC2lFKwcd4t8RN6iQ==}
+    engines: {node: ^14.18 || >= 16.0.0}
     hasBin: true
     dependencies:
       '@islands/hydration': 0.3.3_vue@3.2.26
@@ -4359,10 +4381,10 @@ packages:
       '@islands/pages': 0.7.2_vue@3.2.26
       '@islands/prerender': 0.3.1_vue@3.2.26
       '@nuxt/devalue': 2.0.0
-      '@vitejs/plugin-vue': 1.10.2_vite@2.7.2
+      '@vitejs/plugin-vue': 2.0.0_vite@2.7.2+vue@3.2.26
       '@vue/devtools-api': 6.0.0-beta.20.1
       '@vue/server-renderer': 3.2.26_vue@3.2.26
-      '@vueuse/head': 0.6.0_vue@3.2.26
+      '@vueuse/head': 0.7.4_vue@3.2.26
       debug: 4.3.3
       es-module-lexer: 0.7.1
       local-pkg: 0.4.0
@@ -6465,14 +6487,6 @@ packages:
       fsevents: 2.3.2
     dev: true
 
-  /rollup/2.60.2:
-    resolution: {integrity: sha512-1Bgjpq61sPjgoZzuiDSGvbI1tD91giZABgjCQBKM5aYLnzjq52GoDuWVwT/cm/MCxCMPU8gqQvkj8doQ5C8Oqw==}
-    engines: {node: '>=10.0.0'}
-    hasBin: true
-    optionalDependencies:
-      fsevents: 2.3.2
-    dev: true
-
   /rollup/2.61.1:
     resolution: {integrity: sha512-BbTXlEvB8d+XFbK/7E5doIcRtxWPRiqr0eb5vQ0+2paMM04Ye4PZY5nHOQef2ix24l/L0SpLd5hwcH15QHPdvA==}
     engines: {node: '>=10.0.0'}
@@ -7125,7 +7139,7 @@ packages:
       joycon: 3.1.1
       postcss-load-config: 3.1.0
       resolve-from: 5.0.0
-      rollup: 2.60.2
+      rollup: 2.61.1
       sucrase: 3.20.3
       tree-kill: 1.2.2
       typescript: 4.4.4
@@ -7875,7 +7889,7 @@ packages:
   /xdm/3.3.1:
     resolution: {integrity: sha512-+bePFAMIxKyhBd2QQcGsG5oVy16THJm7WjAd8GD4VC21LTYM0SWySTGVPBhwXA71H6P96pgUBzg3r8GPi+178A==}
     dependencies:
-      '@rollup/pluginutils': 4.1.1
+      '@rollup/pluginutils': 4.1.2
       '@types/estree-jsx': 0.0.1
       '@types/mdx': 2.0.1
       astring: 1.8.1

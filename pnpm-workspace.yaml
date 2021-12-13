@@ -4,6 +4,7 @@ packages:
   - packages/prerender/
   - packages/headings/
   - packages/mdx/
+  - packages/excerpt/
   - packages/feed/
   - packages/icons/
   - packages/pages/
