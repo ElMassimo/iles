@@ -1,3 +1,17 @@
+## [0.7.6](https://github.com/ElMassimo/iles/compare/v0.7.5...v0.7.6) (2021-12-13)
+
+
+### Bug Fixes
+
+* typings for page frontmatter and page meta ([40e4f3e](https://github.com/ElMassimo/iles/commit/40e4f3e09e85804f150035591ddaa4d049a2d5b5))
+
+
+### Features
+
+* add @islands/excerpt module to extract excerpts from mdx documents ([d2445ad](https://github.com/ElMassimo/iles/commit/d2445ad6f60512a7dfd7acc2e1d7881cf8711247))
+
+
+
 ## [0.7.5](https://github.com/ElMassimo/iles/compare/v0.7.4...v0.7.5) (2021-12-13)
 
 
