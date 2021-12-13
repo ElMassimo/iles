@@ -5,7 +5,8 @@
   "scripts": {
     "dev": "iles --open",
     "build": "iles build",
-    "preview": "iles preview --open"
+    "preview": "iles preview --open",
+    "now": "npm run build && npm run preview"
   },
   "devDependencies": {
     "@iconify-json/carbon": "^1.0.7",

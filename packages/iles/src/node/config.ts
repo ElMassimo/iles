@@ -210,7 +210,7 @@ function appConfigDefaults (appConfig: AppConfig, userConfig: UserConfig): AppCo
     vitePlugins: [],
     vite: viteConfigDefaults(root),
     vue: {
-      refTransform: true,
+      reactivityTransform: true,
       template: {
         compilerOptions: {},
       },

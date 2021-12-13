@@ -4,12 +4,12 @@
     "node": ">=14"
   },
   "scripts": {
-    "dev:blog": "npm run -C playground/the-vue-point dev",
     "dev": "npm -C packages run dev",
     "docs": "npm -C docs run dev",
-    "docs:build": "npm -C docs run build",
+    "docs:now": "npm -C docs run now",
     "docs:check": "npm -C docs run check",
-    "build:blog": "npm run -C playground/the-vue-point build",
+    "blog": "npm run -C playground/the-vue-point dev",
+    "blog:now": "npm run -C playground/the-vue-point now",
     "preview": "npm run -C playground/the-vue-point preview",
     "build": "npm -C packages run build",
     "build-fast": "npm -C packages run build-fast",

@@ -6,6 +6,7 @@
     "dev": "iles --open",
     "build": "iles build",
     "preview": "iles preview --open",
+    "now": "npm run build && npm run preview",
     "check": "vue-tsc --noEmit",
     "link": "pnpm link ../packages/iles",
     "unlink": "pnpm unlink ../packages/iles"
@@ -32,7 +33,7 @@
   "dependencies": {
     "@docsearch/css": "^3.0.0-alpha.41",
     "@mussi/docsearch": "^3.0.0-alpha.41",
-    "preact": "^10.5.15",
+    "preact": "^10.6.4",
     "quicklink": "^2.2.0"
   },
   "eslintConfig": {
