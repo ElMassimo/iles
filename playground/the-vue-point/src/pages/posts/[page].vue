@@ -15,8 +15,8 @@ import type { Post } from '~/logic/posts'
 
 defineProps<{
   items: Post[]
-  nextPage: number | undefined
-  prevPage: number | undefined
+  nextPage?: number
+  prevPage?: number
 }>()
 </script>
 
@@ -32,7 +32,7 @@ defineProps<{
               <a class="text-gray-900" :href="post.href">{{ post.title }}</a>
             </h2>
             <div class="prose max-w-none text-gray-500">
-              <component :is="post.excerpt"/>
+              <component :is="post" excerpt/>
             </div>
           </div>
           <div class="text-base leading-6 font-medium">

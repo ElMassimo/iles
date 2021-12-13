@@ -9,9 +9,10 @@ export default defineConfig({
   prettyUrls: false,
   svelte: true,
   modules: [
+    '@islands/excerpt',
+    '@islands/feed',
     '@islands/icons',
     '@islands/prism',
-    '@islands/feed',
   ],
   // Example: Configure all posts to use a different layout without having to
   // add `layout: 'post'` in every file.
