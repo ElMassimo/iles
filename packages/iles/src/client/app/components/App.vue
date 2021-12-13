@@ -54,7 +54,7 @@ export default defineComponent({
   <Suspense>
     <router-view>
       <component :is="page" v-if="layout === false" v-bind="props"/>
-      <component :is="layout" v-else :key="page.__file">
+      <component :is="layout" v-else>
         <template #default="layoutProps">
           <component :is="page" v-bind="{ ...layoutProps, ...props }"/>
         </template>
