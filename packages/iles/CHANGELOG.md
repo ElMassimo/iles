@@ -1,3 +1,12 @@
+## [0.7.5](https://github.com/ElMassimo/iles/compare/v0.7.4...v0.7.5) (2021-12-13)
+
+
+### Bug Fixes
+
+* avoid optimizing @vue/server-rendered dep ([586f4ed](https://github.com/ElMassimo/iles/commit/586f4edc34a0c64f04e65ff80c90da499904be13))
+
+
+
 ## [0.7.4](https://github.com/ElMassimo/iles/compare/v0.7.3...v0.7.4) (2021-12-13)
 
 
