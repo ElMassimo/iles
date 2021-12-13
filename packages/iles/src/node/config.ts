@@ -266,12 +266,12 @@ function viteConfigDefaults (root: string): ViteOptions {
         'vue-router',
         '@vueuse/head',
         '@vue/devtools-api',
-        '@vue/server-renderer',
       ],
       exclude: [
         'iles',
         '@nuxt/devalue',
         '@islands/hydration',
+        '@vue/server-renderer',
       ],
     },
   }
