@@ -26,7 +26,7 @@ export type RouterOptions = VueRouterOptions & { base?: string }
 
 export interface PageProps extends Record<string, any> {}
 
-export interface PageComponent extends RouteComponent {
+export interface PageComponent extends RouteComponent, PageFrontmatter, PageMeta {
   frontmatter: PageFrontmatter
   meta: PageMeta
   layoutName: string
