@@ -9,7 +9,7 @@ export default defineConfig({
     blocklist: ['table', 'img'],
   },
   plugins: [
-    lineClamp,
+    lineClamp as any,
   ],
   theme: {
     extend: {

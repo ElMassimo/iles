@@ -36,23 +36,23 @@ importers:
 
   docs:
     specifiers:
-      '@docsearch/css': ^3.0.0-alpha.41
-      '@iconify-json/bx': ^1.0.1
-      '@iconify-json/heroicons-outline': ^1.0.1
+      '@docsearch/css': ^3.0.0-alpha.42
+      '@iconify-json/bx': ^1.0.3
+      '@iconify-json/heroicons-outline': ^1.0.2
       '@islands/headings': ^0.1.1
       '@islands/icons': ^0.1.1
       '@islands/prism': ^0.1.0
-      '@mussi/docsearch': ^3.0.0-alpha.41
+      '@mussi/docsearch': ^3.0.0-alpha.42
       '@preact/preset-vite': ^2.1.5
-      '@vueuse/core': ^6.5.3
-      autoprefixer: ^10.3.5
-      iles: ^0.7.1
+      '@vueuse/core': ^6.9.2
+      autoprefixer: ^10.4.0
+      iles: ^0.7.7
       postcss-nesting: ^8.0.1
       preact: ^10.6.4
       preact-render-to-string: ^5.1.19
       quicklink: ^2.2.0
-      vite-plugin-inspect: ^0.3.9
-      vite-plugin-windicss: ^1.5.1
+      vite-plugin-inspect: ^0.3.11
+      vite-plugin-windicss: ^1.5.4
       vue-tsc: ^0.29.8
     dependencies:
       '@docsearch/css': 3.0.0-alpha.42
@@ -68,7 +68,7 @@ importers:
       '@preact/preset-vite': 2.1.5_preact@10.6.4
       '@vueuse/core': 6.9.2
       autoprefixer: 10.4.0
-      iles: 0.7.6
+      iles: 0.7.7
       postcss-nesting: 8.0.1
       preact-render-to-string: 5.1.19_preact@10.6.4
       vite-plugin-inspect: 0.3.11
@@ -4371,8 +4371,8 @@ packages:
     engines: {node: '>= 4'}
     dev: true
 
-  /iles/0.7.6:
-    resolution: {integrity: sha512-aNOvdHdgO9+SsgglQif1CR+eUq5/6lIOPRDZonoNcf0apjI6cnblPxTMkjw/13QbLmwsMKvMvEAkcxCuM5VhNg==}
+  /iles/0.7.7:
+    resolution: {integrity: sha512-7eQQxox/7tUX8ROrP80+6bLoQ4QC+pePCtxzK3JU7UDeQ6azBwdDCGFc8WF5+NZMm3l/PoNhhgHR7+mxroF0iQ==}
     engines: {node: ^14.18 || >= 16.0.0}
     hasBin: true
     dependencies:
