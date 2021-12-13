@@ -19,8 +19,17 @@ export interface Heading {
 export interface HeadingOptions {
   slug?: typeof generateSlug
 }
+
 export type HeadingPlugin = Plugin<[HeadingOptions?]>
-export type HeadingPluggable = [HeadingPlugin, HeadingOptions?]
+
+declare module 'iles' {
+  interface PageMeta {
+    /**
+     * Headings for MDX documents.
+     */
+    headings?: Heading[]
+  }
+}
 
 /**
  * An iles module that injects a rehype plugin to auto-link headings and expose
@@ -41,7 +50,7 @@ export default function IlesHeadings (): IlesModule {
  *
  * @param options - Options to configure heading generation.
  */
-export const rehypePlugin: HeadingPlugin = ({ slug = generateSlug }: HeadingOptions = {}) => (ast) => {
+export const rehypePlugin: HeadingPlugin = ({ slug = generateSlug } = {}) => (ast) => {
   const { children } = ast as Parent
 
   const headings: Heading[] = []
