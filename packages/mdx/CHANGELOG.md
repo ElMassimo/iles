@@ -1,3 +1,12 @@
+## [0.7.2](https://github.com/ElMassimo/iles/compare/mdx@0.7.1...mdx@0.7.2) (2021-12-13)
+
+
+### Features
+
+* upgrade to @vitejs/plugin-vue@2.0.0 ([f7656e3](https://github.com/ElMassimo/iles/commit/f7656e37976c206d801f6b7476322cbf1c91aaac))
+
+
+
 ## [0.7.1](https://github.com/ElMassimo/iles/compare/mdx@0.7.0...mdx@0.7.1) (2021-12-09)
 
 
