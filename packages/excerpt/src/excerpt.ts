@@ -3,7 +3,6 @@ import type { ExcerptOptions, Options, SeparatorFn } from './types'
 import { recmaPlugin } from './recma-plugin'
 import { rehypePlugin } from './rehype-plugin'
 
-
 declare module 'iles' {
   interface PageMeta {
     /**

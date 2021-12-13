@@ -1,8 +1,8 @@
 import type { IlesModule } from 'iles'
 import type { Element } from 'hast'
 import type { Plugin } from 'unified'
-import type { Options, SeparatorFn } from './types'
 import { Node, toString } from 'hast-util-to-string'
+import type { Options, SeparatorFn } from './types'
 
 /**
  * A rehype plugin to extract an excerpt from the document, adding `excerpt` to
@@ -42,7 +42,7 @@ export const rehypePlugin: Plugin<[Options], Element> = ({ extract, isSeparator,
   }
 
   if (maxLength && excerpt.length > maxLength)
-    excerpt = excerpt.slice(0, maxLength - 1) + '…'
+    excerpt = `${excerpt.slice(0, maxLength - 1)}…`
 
   const assignments = [
     assignment('meta', 'excerpt', '=', excerpt),
