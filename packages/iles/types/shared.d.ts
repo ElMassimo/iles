@@ -12,7 +12,7 @@ import type { PreactPluginOptions as PreactOptions } from '@preact/preset-vite'
 
 import type { Router, RouteRecordRaw, RouteMeta, RouterOptions as VueRouterOptions, RouteComponent, RouteRecordNormalized, RouteLocationNormalizedLoaded, RouteParams } from 'vue-router'
 import type { HeadClient, HeadObject } from '@vueuse/head'
-import type { PagesApi, PagesOptions } from '@islands/pages'
+import type { PagesApi, PagesOptions, PageFrontmatter, PageMeta } from '@islands/pages'
 export type { RawPageMatter, PageFrontmatter, PageMeta } from '@islands/pages'
 export type { OnLoadFn } from '@islands/hydration/dist/vanilla'
 
