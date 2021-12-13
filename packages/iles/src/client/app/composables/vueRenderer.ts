@@ -5,7 +5,7 @@ const newApp = import.meta.env.SSR ? createApp : createSSRApp
 
 type Nodes = undefined | VNode<any, any, any> | VNode<any, any, any>[]
 
-export type VNodeRenderer = (vNodes: Nodes | (() => Nodes | Promise<Nodes>)) => Promise<string>
+export type VNodeRenderer = (vNodes: Nodes | ((props?: any) => Nodes | Promise<Nodes>)) => Promise<string>
 
 export function useVueRenderer (): VNodeRenderer {
   return withCtx((async (vNodes) => {

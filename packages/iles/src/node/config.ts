@@ -7,7 +7,7 @@ import { loadConfigFromFile, mergeConfig as mergeViteConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import components from 'unplugin-vue-components/vite'
 import pages from '@islands/pages'
-import vueMdx from '@islands/mdx'
+import mdx from '@islands/mdx'
 
 import type { ComponentResolver } from 'unplugin-vue-components/types'
 import type { UserConfig } from 'iles'
@@ -63,7 +63,7 @@ async function resolveUserConfig (root: string, configEnv: ConfigEnv) {
 
   config.modules = compact<IlesModule>(await resolveIlesModules([
     { name: 'iles:base-config', ...appConfigDefaults(config, userConfig as UserConfig) },
-    vueMdx(),
+    mdx(),
     { name: 'user-config', ...userConfig },
     ...modules,
     pages(),
@@ -302,7 +302,7 @@ function mergeConfig<T = Record<string, any>> (a: T, b: T, isRoot = true): AppCo
   return merged as AppConfig
 }
 
-function chainModuleCallbacks(config: any, callbackNames: string[], option?: string): any {
+function chainModuleCallbacks (config: any, callbackNames: string[], option?: string): any {
   callbackNames.forEach((callbackName) => {
     const moduleCallbacks = config.modules
       .map((plugin: any) => (option ? plugin[option] : plugin)?.[callbackName])

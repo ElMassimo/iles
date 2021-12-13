@@ -1,7 +1,7 @@
 /* eslint-disable no-use-before-define */
 import type { ResolveFn, UserConfig as ViteOptions, ConfigEnv, PluginOption as VitePluginOption } from 'vite'
 import type { GetManualChunk } from 'rollup'
-import type { App, Ref, DefineComponent } from 'vue'
+import type { App, Ref, DefineComponent, VNode } from 'vue'
 import type VuePlugin, { Options as VueOptions } from '@vitejs/plugin-vue'
 import type ComponentsPlugin from 'unplugin-vue-components/vite'
 import type { Options as ComponentOptions } from 'unplugin-vue-components/types'
@@ -33,7 +33,7 @@ export interface PageComponent extends RouteComponent, PageFrontmatter, PageMeta
   layoutFn: false | (() => Promise<DefineComponent>)
   getStaticPaths?: GetStaticPaths
   staticPaths: Ref<StaticPath<any>[]>
-  __file?: string
+  render?: (props?: any) => VNode<any, any, any>
 }
 
 export interface PageData<T = PageProps> {
