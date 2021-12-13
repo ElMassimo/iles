@@ -1,4 +1,10 @@
-import { resolveComponent, createVNode, createStaticVNode, Fragment } from 'vue'
+import {
+  defineComponent as defineVueComponent,
+  resolveComponent,
+  createVNode,
+  createStaticVNode as raw,
+  Fragment,
+} from 'vue'
 
 // Internal: Compatibility layer with the automatic JSX runtime of React.
 //
@@ -25,4 +31,26 @@ function jsx (type, { children, 'v-slots': vSlots, ...props }) {
   return createVNode(type, props, slots)
 }
 
-export { jsx, jsx as jsxs, resolveComponent, createStaticVNode as raw, Fragment }
+// Internal: Extends it to be a stateful component that can perform prop checks.
+function defineComponent (MDXContent, definition) {
+  return defineVueComponent({
+    ...definition,
+    props: {
+      components: { type: Object },
+      excerpt: { type: Boolean },
+    },
+    render (props) {
+      if (!props) props = this ? { ...this.$props, ...this.$attrs } : {}
+      return MDXContent(props)
+    },
+  })
+}
+
+export {
+  Fragment,
+  jsx,
+  jsx as jsxs,
+  defineComponent,
+  resolveComponent,
+  raw,
+}

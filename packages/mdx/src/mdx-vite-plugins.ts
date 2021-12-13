@@ -51,17 +51,12 @@ export default function IlesMdx (options: MarkdownOptions = {}): Plugin[] {
         if (!shouldTranform(path)) return
 
         return code.replace('export default MDXContent', `
-${code.includes(' defineComponent') ? '' : 'import { defineComponent } from \'vue\''}
+import { defineComponent as $defineComponent } from 'iles/jsx-runtime'
 
-const _sfc_main = defineComponent({
-  props: {
-    components: { type: Object },
-  },
-  render (props) {
-    if (!props) props = this ? { ...this.$props, ...this.$attrs } : {}
-    return MDXContent(props)
-  },${isDevelopment ? `\n  __file: '${path}',` : ''}
-})
+const _sfc_main = /* @__PURE__ */ $defineComponent(MDXContent, {${
+  isDevelopment ? `\n  __file: '${path}',` : ''
+}})
+
 export default _sfc_main
 ${isDevelopment ? hmrRuntime(path) : ''}`)
       },

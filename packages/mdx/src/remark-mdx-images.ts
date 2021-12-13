@@ -4,9 +4,9 @@ import type { Root, Image } from 'mdast'
 import type { Plugin } from 'unified'
 import type { Parent, Node } from 'unist'
 import type { VFile } from 'vfile'
+import { visit, SKIP } from 'unist-util-visit'
 import type { MarkdownOptions } from './types'
 
-import { visit, SKIP } from 'unist-util-visit'
 import { isAbsolute, isJsxElement, isString } from './utils'
 
 type ImagePlugin = Plugin<[MarkdownOptions?], Root, Root>
