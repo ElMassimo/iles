@@ -52,7 +52,7 @@ importers:
       preact-render-to-string: ^5.1.19
       quicklink: ^2.2.0
       vite-plugin-inspect: ^0.3.9
-      vite-plugin-windicss: ^1.5.4
+      vite-plugin-windicss: ^1.5.1
       vue-tsc: ^0.29.8
     dependencies:
       '@docsearch/css': 3.0.0-alpha.42
@@ -68,7 +68,7 @@ importers:
       '@preact/preset-vite': 2.1.5_preact@10.6.4
       '@vueuse/core': 6.9.2
       autoprefixer: 10.4.0
-      iles: 0.7.5
+      iles: 0.7.6
       postcss-nesting: 8.0.1
       preact-render-to-string: 5.1.19_preact@10.6.4
       vite-plugin-inspect: 0.3.11
@@ -167,8 +167,8 @@ importers:
       '@islands/headings': workspace:^0.1.0
       '@islands/hydration': workspace:^0.3.3
       '@islands/icons': workspace:^0.1.0
-      '@islands/mdx': workspace:^0.7.1
-      '@islands/pages': workspace:^0.7.0
+      '@islands/mdx': workspace:^0.7.2
+      '@islands/pages': workspace:^0.7.2
       '@islands/prerender': workspace:^0.3.1
       '@islands/prism': workspace:^0.1.0
       '@nuxt/devalue': ^2.0.0
@@ -1176,7 +1176,7 @@ packages:
         optional: true
     dependencies:
       '@antfu/utils': 0.3.0
-      '@rollup/pluginutils': 4.1.1
+      '@rollup/pluginutils': 4.1.2
       chokidar: 3.5.2
       debug: 4.3.3
       fast-glob: 3.2.7
@@ -1256,8 +1256,8 @@ packages:
       - webpack
     dev: true
 
-  /@islands/mdx/0.7.1:
-    resolution: {integrity: sha512-l7tioyHNPZt+mSvpNySq0+TeQEXIEk597LpiEA7PPa6uVU0twkBY6kj1SnYjHqmO01tcfHpwNtwnvadxWYAwvA==}
+  /@islands/mdx/0.7.2:
+    resolution: {integrity: sha512-7gURfJAez5R+c15A1Kfg4cdtF3Ha/VWQzOj9mWQjqiGa+eaOYcCKdGP2repfc9R2BpwDJ7yf4up8TAQy1xhUhQ==}
     dependencies:
       estree-walker: 3.0.0
       hash-sum: 2.0.0
@@ -4371,13 +4371,13 @@ packages:
     engines: {node: '>= 4'}
     dev: true
 
-  /iles/0.7.5:
-    resolution: {integrity: sha512-URQVfZb1UJafOWG3dTyQT6jqd4HqVG+HWQ3Soe21CHWKlmdI3cbdO1+aA97PfZ9i1Xf/EMC2lFKwcd4t8RN6iQ==}
+  /iles/0.7.6:
+    resolution: {integrity: sha512-aNOvdHdgO9+SsgglQif1CR+eUq5/6lIOPRDZonoNcf0apjI6cnblPxTMkjw/13QbLmwsMKvMvEAkcxCuM5VhNg==}
     engines: {node: ^14.18 || >= 16.0.0}
     hasBin: true
     dependencies:
       '@islands/hydration': 0.3.3_vue@3.2.26
-      '@islands/mdx': 0.7.1
+      '@islands/mdx': 0.7.2
       '@islands/pages': 0.7.2_vue@3.2.26
       '@islands/prerender': 0.3.1_vue@3.2.26
       '@nuxt/devalue': 2.0.0
