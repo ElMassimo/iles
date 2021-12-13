@@ -40,7 +40,10 @@ export default defineComponent({
         clearTimeout(timeoutId)
         message.value = undefined
       }
-      if (!open && el.value) el.value.scrollTop = 0
+      if (!open && el.value) {
+        el.value.scrollLeft = 0
+        el.value.scrollTop = 0
+      }
     })
 
     return {
