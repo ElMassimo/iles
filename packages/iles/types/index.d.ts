@@ -1,12 +1,11 @@
 /// <reference types="vite/client" />
-/// <reference types="vue/ref-macros" />
+/// <reference types="vue/macros-global" />
 
-import Plugin from '../dist/node/plugin'
+import Plugin from '../dist/node/plugin/plugin'
 import type { PageFrontmatter, PageMeta, UserSite, StaticPath, Router, RouteLocationNormalizedLoaded } from './shared'
 
 export default Plugin
 export * from './shared'
-export * from './router'
 export * from './virtual'
 export * from '../dist/client/index'
 export * from '../dist/node/index'
