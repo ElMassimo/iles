@@ -1,4 +1,4 @@
-name: docs
+name: tests
 
 on:
   push:
@@ -7,10 +7,10 @@ on:
 
 jobs:
   build:
-    if: ${{ startsWith(github.event.head_commit.message, 'docs') }}
-    name: docs
+    name: tests
     env:
-      BUILD_HOOK: ${{secrets.NETLIFY_DOCS_BUILD_HOOK}}
+      CI: true
+
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -26,8 +26,11 @@ jobs:
           run_install: |
             - recursive: false
 
-      - name: Vue TSC
-        run: pnpm docs:check
+      - name: Build
+        run: pnpm build-fast
 
-      - name: Netlify
-        run: 'curl -X POST -d {} $BUILD_HOOK'
+      - name: Tests
+        run: pnpm run test
+
+      - name: Lint
+        run: pnpm run lint
