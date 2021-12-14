@@ -34,3 +34,6 @@ jobs:
 
       - name: Lint
         run: pnpm run lint
+
+      - name: TS Check
+        run: pnpm run -C playground/the-vue-point check

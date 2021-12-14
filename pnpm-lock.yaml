@@ -385,6 +385,7 @@ importers:
       '@islands/prism': workspace:*
       iles: workspace:*
       vite-plugin-windicss: ^1.5.1
+      vue-tsc: ^0.29.8
     devDependencies:
       '@iconify-json/carbon': 1.0.7
       '@islands/excerpt': link:../../packages/excerpt
@@ -393,6 +394,7 @@ importers:
       '@islands/prism': link:../../packages/prism
       iles: link:../../packages/iles
       vite-plugin-windicss: 1.5.1
+      vue-tsc: 0.29.8
 
 packages:
 

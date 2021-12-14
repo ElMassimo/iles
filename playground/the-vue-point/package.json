@@ -6,6 +6,7 @@
     "dev": "iles --open",
     "build": "iles build",
     "preview": "iles preview --open",
+    "check": "vue-tsc --noEmit",
     "now": "npm run build && npm run preview"
   },
   "engines": {
@@ -18,6 +19,7 @@
     "@islands/icons": "workspace:*",
     "@islands/prism": "workspace:*",
     "iles": "workspace:*",
-    "vite-plugin-windicss": "^1.5.1"
+    "vite-plugin-windicss": "^1.5.1",
+    "vue-tsc": "^0.29.8"
   }
 }

@@ -2,15 +2,22 @@
 /// <reference types="vue/macros-global" />
 
 import Plugin from '../dist/node/plugin/plugin'
-import type { PageFrontmatter, PageMeta, UserSite, StaticPath, Router, RouteLocationNormalizedLoaded } from './shared'
+import type {
+  PageFrontmatter,
+  PageMeta,
+  UserSite,
+  StaticPath,
+  Router,
+  RouteLocationNormalizedLoaded,
+} from './shared'
 
 export default Plugin
 export * from './shared'
-export * from './virtual'
 export * from '../dist/client/index'
 export * from '../dist/node/index'
 
 import 'vue-router'
+import './virtual'
 
 declare module 'vue-router' {
   interface RouteMeta {

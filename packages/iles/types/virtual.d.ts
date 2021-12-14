@@ -1,8 +1,12 @@
 /* eslint-disable import/no-duplicates */
 /* eslint-disable import/order */
 declare module '*.vue' {
-  import { ComponentOptions } from 'vue'
-  const comp: ComponentOptions
+  const comp: import('./shared').PageComponent
+  export default comp
+}
+
+declare module '*.mdx' {
+  const comp: import('./shared').PageComponent
   export default comp
 }
 
