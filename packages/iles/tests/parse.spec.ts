@@ -1,5 +1,6 @@
 import { test, describe, expect } from 'vitest'
-import { parseImports, parseImportVariables } from '../src/node/plugin/parse'
+
+import { parseImports, parseImportVariables } from '@node/plugin/parse'
 
 describe('parsing component imports', () => {
   test('default imports', async () => {

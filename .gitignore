@@ -9,3 +9,5 @@ dist/
 packages/.pnpm-debug.log
 components.d.ts
 composables.d.ts
+
+packages/iles/tests/renderAsync.ts

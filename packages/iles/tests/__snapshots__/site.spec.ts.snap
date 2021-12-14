@@ -1,0 +1,64 @@
+// Vitest Snapshot v1
+
+exports[`site > with site url 1`] = `
+"
+let __site = {
+  title: 'îles',
+}
+
+__site.url = 'https://example.com/awesome'
+__site.canonical = 'example.com'
+import { ref as _$ref } from 'vue'
+const __siteRef = _$ref(__site)
+__site = { ref: __siteRef  }
+export { __site, __siteRef as default }
+
+if (import.meta.hot)
+  import.meta.hot.accept(mod => {
+    __site.ref.value = mod.__site.ref.value
+    mod.__site.ref = __site.ref
+  })
+"
+`;
+
+exports[`site > without data 1`] = `
+"
+let __site = {}
+
+__site.url = 'http://example.com'
+__site.canonical = 'example.com'
+import { ref as _$ref } from 'vue'
+const __siteRef = _$ref(__site)
+__site = { ref: __siteRef  }
+export { __site, __siteRef as default }
+
+if (import.meta.hot)
+  import.meta.hot.accept(mod => {
+    __site.ref.value = mod.__site.ref.value
+    mod.__site.ref = __site.ref
+  })
+"
+`;
+
+exports[`site > without site url 1`] = `
+"
+const site = {
+  title: 'îles',
+}
+
+let __site = site
+
+__site.url = ''
+__site.canonical = ''
+import { ref as _$ref } from 'vue'
+const __siteRef = _$ref(__site)
+__site = { ref: __siteRef  }
+export { __site, __siteRef as default }
+
+if (import.meta.hot)
+  import.meta.hot.accept(mod => {
+    __site.ref.value = mod.__site.ref.value
+    mod.__site.ref = __site.ref
+  })
+"
+`;

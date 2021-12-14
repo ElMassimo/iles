@@ -25,9 +25,19 @@ const debug = creatDebugger('iles:config')
 
 export type { AppConfig }
 
-const IlesComponentResolver: ComponentResolver = (name) => {
+export const IlesComponentResolver: ComponentResolver = (name) => {
   if (name === 'Island') return { importName: 'Island', path: 'iles' }
   if (name === 'Head') return { importName: 'Head', path: '@vueuse/head' }
+}
+
+export function IlesLayoutResolver (config: AppConfig): ComponentResolver {
+  return (name) => {
+    const [layoutName, isLayout] = name.split('Layout', 2)
+    if (layoutName && isLayout === '') {
+      const layoutFile = `${uncapitalize(camelCase(layoutName))}.vue`
+      return { importName: 'default', path: join(config.layoutsDir, layoutFile) }
+    }
+  }
 }
 
 export async function resolveConfig (root?: string, env?: ConfigEnv): Promise<AppConfig> {
@@ -179,14 +189,6 @@ function appConfigDefaults (appConfig: AppConfig, userConfig: UserConfig): AppCo
   const { root } = appConfig
   const { jsx = inferJSX(userConfig) } = userConfig
 
-  function IlesLayoutResolver (name: string) {
-    const [layoutName, isLayout] = name.split('Layout', 2)
-    if (layoutName && isLayout === '') {
-      const layoutFile = `${uncapitalize(camelCase(layoutName))}.vue`
-      return { importName: 'default', path: join(appConfig.layoutsDir, layoutFile) }
-    }
-  }
-
   return {
     debug: true,
     jsx,
@@ -239,7 +241,7 @@ function appConfigDefaults (appConfig: AppConfig, userConfig: UserConfig): AppCo
       include: [/\.vue$/, /\.vue\?vue/, /\.mdx?/],
       resolvers: [
         IlesComponentResolver,
-        IlesLayoutResolver,
+        IlesLayoutResolver(appConfig),
       ],
       transformer: 'vue3',
     },
