@@ -32,6 +32,8 @@ An [îles] module to extract an excerpt from [MDX documents][markdown]:
 
 - 🏷 can render HTML by using the `excerpt` prop in an MDX component
 
+- ⚙️ `maxLength`, `separator`, and `extract` options to customize excerpt
+
 
 ### Installation 💿
 
