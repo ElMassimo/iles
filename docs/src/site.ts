@@ -2,7 +2,7 @@ const twitterHandle = 'ilesjs'
 
 const site = {
   title: 'îles',
-  description: 'The Enjoyable Site Generator',
+  description: 'The Joyful Site Generator',
   year: new Date().getFullYear(),
 
   url: 'https://iles-docs.netlify.app',
