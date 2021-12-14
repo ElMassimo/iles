@@ -1,0 +1,27 @@
+name: deploy
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  docs:
+    if: ${{ startsWith(github.event.head_commit.message, 'docs') }}
+    name: docs
+    env:
+      BUILD_HOOK: ${{secrets.NETLIFY_DOCS_BUILD_HOOK}}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Netlify
+        run: 'curl -X POST -d {} $BUILD_HOOK'
+
+  blog:
+    if: ${{ startsWith(github.event.head_commit.message, 'blog') }}
+    name: the-vue-point
+    env:
+      BUILD_HOOK: ${{secrets.NETLIFY_VUE_POINT_BUILD_HOOK}}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Netlify
+        run: 'curl -X POST -d {} $BUILD_HOOK'

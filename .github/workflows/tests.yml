@@ -35,5 +35,8 @@ jobs:
       - name: Lint
         run: pnpm run lint
 
-      - name: TS Check
+      - name: Block TS Check
         run: pnpm run -C playground/the-vue-point check
+
+      - name: Docs TS Check
+        run: pnpm docs:check
