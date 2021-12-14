@@ -22,16 +22,18 @@
 [docs]: https://iles-docs.netlify.app
 [markdown]: https://iles-docs.netlify.app/guide/markdown
 
+[pageData]: https://iles-docs.netlify.app/guide/development#using-page-data
 [SEO tags]: https://iles-docs.netlify.app/guide/meta-tags
 [RSS feeds]: https://iles-docs.netlify.app/guide/rss
 
-An [îles] module that can parse an excerpt from [MDX documents][markdown]:
+An [îles] module to extract an excerpt from [MDX documents][markdown]:
 
-- 📖 sets `meta.excerpt` useful for [SEO tags] and [RSS feeds]
+- 📖 sets `meta.excerpt`, useful for [SEO tags] and [RSS feeds]
 
-- 🏷 can render HTML by passing `excerpt: true` prop to the doc component
+- 🏷 can render HTML by using the `excerpt` prop in an MDX component
 
-### Usage 🚀
+
+### Installation 💿
 
 ```ts
 // iles.config.ts
@@ -42,4 +44,31 @@ export default defineConfig({
     ['@islands/excerpt', { maxLength: 140 }],
   ],
 })
+```
+
+### Usage 🚀
+
+Use [`meta`][pageData] to access a text excerpt for the current page:
+
+```js
+const { meta } = usePage()
+const text = meta.excerpt
+```
+
+When importing MDX components, you can also render an HTML version of the
+excerpt by passing an `excerpt: true` prop.
+
+```vue
+<script setup>
+import Introduction from '~/pages/intro.mdx'
+
+const pages = Object.values(import.globEagerDefault('~/pages/posts/**/*.mdx'))
+</script>
+
+<template>
+  <Introduction excerpt/>
+  <template v-for="page in pages">
+    <component :is="page" excerpt/>
+  </template>
+</template>
 ```

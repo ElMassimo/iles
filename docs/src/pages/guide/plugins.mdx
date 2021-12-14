@@ -28,6 +28,7 @@ tocLevel: 3
 [unplugin-icons]: https://github.com/antfu/unplugin-icons
 
 [prismjs]: https://prismjs.com/
+[@islands/excerpt]: https://github.com/ElMassimo/iles/tree/main/packages/excerpt
 [@islands/headings]: https://github.com/ElMassimo/iles/tree/main/packages/headings
 [@islands/icons]: https://github.com/ElMassimo/iles/tree/main/packages/icons
 [@islands/mdx]: https://github.com/ElMassimo/iles/tree/main/packages/mdx
@@ -36,6 +37,10 @@ tocLevel: 3
 [@islands/feed]: https://github.com/ElMassimo/iles/tree/main/packages/feed
 
 [feed]: https://github.com/jpmonette/feed
+
+[pageData]: /guide/development#using-page-data
+[SEO tags]: /guide/meta-tags
+[RSS feeds]: /guide/rss
 
 # Modules and Plugins 🔌
 
@@ -97,6 +102,49 @@ which is used to instantiate the module when the user provides it as a string.
 </Tip>
 
 ## Official Modules <Iles heading/>
+
+### <kbd>[@islands/excerpt]</kbd>
+
+A module to extract an excerpt from [MDX documents][mdx]:
+
+- 📖 sets `meta.excerpt`, useful for [SEO tags] and [RSS feeds]
+
+- 🏷 can render HTML by using the `excerpt` prop in an [MDX component][mdx]
+
+```ts
+// iles.config.ts
+import { defineConfig } from 'iles'
+
+export default defineConfig({
+  modules: [
+    ['@islands/excerpt', { maxLength: 140 }],
+  ],
+})
+```
+
+Use <kbd>[meta][pageData]</kbd> to access a plain-text version of the excerpt for the current page:
+
+```js
+const { meta } = usePage()
+const text = meta.excerpt
+```
+
+When importing [MDX components][mdx], you use the `excerpt` prop to render HTML:
+
+```vue
+<script setup>
+import Introduction from '~/pages/intro.mdx'
+
+const pages = Object.values(import.globEagerDefault('~/pages/posts/**/*.mdx'))
+</script>
+
+<template>
+  <Introduction excerpt/>
+  <template v-for="page in pages">
+    <component :is="page" excerpt/>
+  </template>
+</template>
+```
 
 ### <kbd>[@islands/headings]</kbd>
 
