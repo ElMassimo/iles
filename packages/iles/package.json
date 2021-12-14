@@ -18,7 +18,7 @@
     "dev": "rimraf -rf dist && npm run dev-shared && npm run dev-start",
     "dev-start": "run-p dev-client dev-node dev-watch",
     "dev-client": "npm run build-client -- --watch",
-    "dev-node": "npm run build-node -- --watch",
+    "dev-node": "npm run build-node -- --watch --ignore-watch tests --ignore-watch src/client",
     "dev-shared": "node scripts/copyShared",
     "dev-watch": "node scripts/watchAndCopy",
     "build-node": "tsup src/node",

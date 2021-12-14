@@ -93,7 +93,7 @@ export default function IslandsPlugins (appConfig: AppConfig): PluginOption[] {
           return id === USER_SITE_REQUEST_PATH ? extendSite(result.code, appConfig) : result
         }
 
-        if (isBuild && id.includes(defaultLayoutPath) && !await exists(resolve(root, defaultLayoutPath.slice(1))))
+        if ((isBuild || process.env.VITEST) && id.includes(defaultLayoutPath) && !await exists(resolve(root, defaultLayoutPath.slice(1))))
           return '<template><slot/></template>'
       },
       handleHotUpdate ({ file, server }) {
