@@ -2,13 +2,13 @@ const twitterHandle = 'ilesjs'
 
 const site = {
   title: 'îles',
-  description: 'Islands of interactivity with Vue in Vite.js',
+  description: 'The Enjoyable Site Generator',
   year: new Date().getFullYear(),
 
   url: 'https://iles-docs.netlify.app',
   canonical: 'iles-docs.netlify.app',
 
-  tags: ['îles', 'iles', 'vuejs', 'vitejs', 'ssg', 'open source', 'partial hydration'],
+  tags: ['îles', 'iles', 'vuejs', 'vitejs', 'ssg', 'open source', 'partial hydration', 'islands of interactivity'],
 
   author: 'Máximo Mussini',
   github: 'https://github.com/ElMassimo/iles',
