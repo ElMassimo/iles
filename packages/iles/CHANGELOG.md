@@ -1,3 +1,12 @@
+## [0.7.8](https://github.com/ElMassimo/iles/compare/v0.7.7...v0.7.8) (2021-12-14)
+
+
+### Features
+
+* add `test` command that runs vitest ([e317bb5](https://github.com/ElMassimo/iles/commit/e317bb58870d13d12adf221c9ad105ac218b3831))
+
+
+
 ## [0.7.7](https://github.com/ElMassimo/iles/compare/v0.7.6...v0.7.7) (2021-12-13)
 
 
