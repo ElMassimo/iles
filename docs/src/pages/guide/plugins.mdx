@@ -227,10 +227,9 @@ Shipped inside <Iles/> to provides [MDX support][mdx], powered by <kbd>[xdm]</kb
 - 🧱 components are [resolved automatically][components]
 
 ```ts
-  // Example config from "The Vue Point in îles"
   markdown: {
-    rehypePlugins: [
-      ['@mapbox/rehype-prism', { alias: { markup: ['html', 'vue'] } }],
+    remarkPlugins: [
+      'remark-gemoji',
     ],
   },
 ```
