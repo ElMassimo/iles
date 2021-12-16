@@ -1,3 +1,19 @@
+## [0.3.4](https://github.com/ElMassimo/iles/compare/hydration@0.3.3...hydration@0.3.4) (2021-12-16)
+
+
+### Bug Fixes
+
+* vue is a peer dependency for @islands/pages ([aa9e82a](https://github.com/ElMassimo/iles/commit/aa9e82a39eaefb90ebeca7c709d10dd4766c81f8))
+
+
+### Features
+
+* add `turbo` setting to enable navigation without full-page reloads ([#59](https://github.com/ElMassimo/iles/issues/59)) ([9c1d11a](https://github.com/ElMassimo/iles/commit/9c1d11ab604194410637c2679490ba99805cfebe))
+* dispose islands on unmount during development ([70b663a](https://github.com/ElMassimo/iles/commit/70b663a49bdeec3660f97b5e63007c2086108e5c))
+* upgrade to @vitejs/plugin-vue@2.0.0 ([f7656e3](https://github.com/ElMassimo/iles/commit/f7656e37976c206d801f6b7476322cbf1c91aaac))
+
+
+
 ## [0.3.3](https://github.com/ElMassimo/iles/compare/hydration@0.3.2...hydration@0.3.3) (2021-11-09)
 
 
