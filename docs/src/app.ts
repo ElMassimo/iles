@@ -16,7 +16,7 @@ export default defineApp({
   head: {
     htmlAttrs: { lang: 'en-US' },
     script: [
-      { children: checkDarkTheme },
+      { children: checkDarkTheme, once: true },
       ...prodScripts,
     ],
   },
