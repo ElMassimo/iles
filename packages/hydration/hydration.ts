@@ -1,9 +1,6 @@
 import { AsyncFrameworkFn, FrameworkFn, Component, AsyncComponent, Props, Slots } from './types'
 export { Framework, Props, Slots } from './types'
 
-const whenIdle = !import.meta.env.SSR && window.requestIdleCallback || setTimeout
-const cancelIdle = !import.meta.env.SSR && window.cancelIdleCallback || clearTimeout
-
 const findById = (id: string) =>
   document.getElementById(id) || console.error(`Missing #${id}, could not mount island.`)
 
@@ -21,6 +18,9 @@ async function resolveAndHydrate (frameworkFn: AsyncFrameworkFn, componentFn: As
 // Public: Hydrate this component as soon as the main thread is free.
 // If `requestIdleCallback` isn't supported, it uses a small delay.
 export function hydrateWhenIdle (framework: AsyncFrameworkFn, component: AsyncComponent, id: string, props: Props, slots: Slots) {
+  const whenIdle = window.requestIdleCallback || setTimeout
+  const cancelIdle = window.cancelIdleCallback || clearTimeout
+
   const idleId: any = whenIdle(() =>
     resolveAndHydrate(framework, component, id, props, slots))
 
