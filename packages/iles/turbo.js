@@ -31,7 +31,7 @@ const prefetchNow = (url, importance = 'high') =>
 
 const prefetchWhenIdle = hasPrefetch()
   ? prefetchWithLinkTag
-  : (url) => prefetchNow(url, 'low')
+  : url => prefetchNow(url, 'low')
 
 // Cache of URLs and Promises we've prefetched
 const hasFetched = new Set()
@@ -46,7 +46,7 @@ function prefetch (url) {
 
 if (Observer) {
   watchLinks()
-  addEventListener('popstate', e => {
+  addEventListener('popstate', (e) => {
     if (currentPath !== location.pathname)
       replacePage(location.href, (e.state && e.state.scrollPosition) || 0)
   })
@@ -60,7 +60,7 @@ function watchLinks () {
   window.__ILE_DISPOSE__ = new Map()
   observer?.disconnect()
 
-  observer = new Observer(entries => {
+  observer = new Observer((entries) => {
     entries.forEach(({ target: link, isIntersecting }) => {
       if (isIntersecting) {
         observer.unobserve(link)
@@ -71,7 +71,7 @@ function watchLinks () {
   })
 
   requestIdleCallback(() => {
-    queryAll('a').forEach(link => {
+    queryAll('a').forEach((link) => {
       const extMatch = link.pathname.match(/\.\w+$/)
       if ((!extMatch || extMatch[0] === '.html') && link.hostname === location.hostname)
         observer.observe(link)
@@ -81,7 +81,7 @@ function watchLinks () {
 
 function onLinkClick (e) {
   const link = e.target.closest('a')
-  if (!e.ctrlKey && !e.shiftKey && !e.altKey && !e.metaKey && event.which <= 1 && link.target !== `_blank`) {
+  if (!e.ctrlKey && !e.shiftKey && !e.altKey && !e.metaKey && event.which <= 1 && link.target !== '_blank') {
     const sameLocation = link.pathname === location.pathname
     const sameHash = link.hash === location.hash
 
@@ -99,7 +99,7 @@ function onLinkClick (e) {
 
 function replacePage (url, scrollPosition, callback) {
   url = normalizeURL(url)
-  prefetchNow(url).then(p => p.text()).then(html => {
+  prefetchNow(url).then(p => p.text()).then((html) => {
     callback?.()
     currentPath = location.pathname
     replaceHtml(html)
@@ -107,10 +107,10 @@ function replacePage (url, scrollPosition, callback) {
     toArray(__ILE_DISPOSE__.values()).forEach(fn => fn())
     watchLinks()
   })
-  .catch(e => {
-    console.error(e)
-    location.href = url
-  })
+    .catch((e) => {
+      console.error(e)
+      location.href = url
+    })
 }
 
 function replaceHtml (html) {
@@ -121,7 +121,7 @@ function replaceHtml (html) {
 
   const prevHeadHrefs = new Set(queryAll('link', prevHead).map(el => el.href))
   activateScripts(head)
-  toArray(head.children).forEach(el => {
+  toArray(head.children).forEach((el) => {
     if (el.tagName !== 'LINK' || el.rel !== 'stylesheet' || !prevHeadHrefs.has(el.href))
       prevHead.appendChild(el)
   })

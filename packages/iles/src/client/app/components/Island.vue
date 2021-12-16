@@ -57,10 +57,10 @@ export default defineComponent({
     }
   },
   mounted () {
-    ;(window as any).__ILE_DEVTOOLS__?.addIslandToDevtools(this)
+    (window as any).__ILE_DEVTOOLS__?.addIslandToDevtools(this)
   },
   unmounted () {
-    ;(window as any).__ILE_DEVTOOLS__?.removeIslandFromDevtools(this)
+    (window as any).__ILE_DEVTOOLS__?.removeIslandFromDevtools(this)
     ;(window as any).__ILE_DISPOSE__?.get(this.id)?.()
   },
   render () {
