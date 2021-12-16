@@ -104,7 +104,6 @@ function replacePage (url, scrollPosition, callback) {
     currentPath = location.pathname
     replaceHtml(html)
     scrollTo(0, scrollPosition)
-    toArray(__ILE_DISPOSE__.values()).forEach(fn => fn())
     watchLinks()
   })
     .catch((e) => {
@@ -126,8 +125,9 @@ function replaceHtml (html) {
       prevHead.appendChild(el)
   })
 
-  activateScripts(body)
+  toArray(__ILE_DISPOSE__.values()).forEach(fn => fn())
   dom.body.replaceWith(body)
+  activateScripts(body)
 }
 
 function activateScripts (el) {

@@ -9,7 +9,7 @@ import Image from '~/components/Image.vue'
 import checkDarkTheme from '~/logic/dark-color-scheme-check?raw'
 
 const prodScripts = import.meta.env.PROD ? [
-  { src: 'https://unpkg.com/thesemetrics@latest', async: true },
+  { src: 'https://unpkg.com/thesemetrics@latest', async: true, once: true },
 ] : []
 
 export default defineApp({
