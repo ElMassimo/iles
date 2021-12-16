@@ -1,6 +1,6 @@
-import { test, describe, expect, beforeAll } from 'vitest'
+import { test, describe, expect } from 'vitest'
 
-import { Island } from 'iles'
+import Island from '@components/Island.vue'
 
 describe('exports', () => {
   test('ensure island component can be resolved', async () => {

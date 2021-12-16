@@ -1,11 +1,12 @@
-import { test, describe, expect, beforeAll } from 'vitest'
+import { test, describe, expect } from 'vitest'
 
 import { IlesComponentResolver, IlesLayoutResolver } from '@node/config'
+import { ISLAND_COMPONENT_PATH } from '@node/alias'
 
 describe('resolvers', () => {
   test('can resolve Island and Head', async () => {
     const resolve = IlesComponentResolver
-    expect(resolve('Island')).toEqual({ importName: 'Island', path: 'iles' })
+    expect(resolve('Island')).toEqual({ path: ISLAND_COMPONENT_PATH })
     expect(resolve('Head')).toEqual({ importName: 'Head', path: '@vueuse/head' })
     expect(resolve('Something')).toEqual(undefined)
   })

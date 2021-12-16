@@ -10,7 +10,7 @@ declare module 'vue' {
     DefaultLayout: typeof import('./src/layouts/default.vue')['default']
     Head: typeof import('@vueuse/head')['Head']
     IconCarbonWarning: typeof import('~icons/carbon/warning')['default']
-    Island: typeof import('iles')['Island']
+    Island: typeof import('./../../packages/iles/dist/client/app/components/Island.vue')['default']
     NavBarLinks: typeof import('./src/components/NavBarLinks.svelte')['default']
     PostDate: typeof import('./src/components/PostDate.vue')['default']
     RenderFeed: typeof import('./../../packages/feed/dist/render-feed')['RenderFeed']

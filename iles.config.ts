@@ -6,6 +6,7 @@ export default defineConfig({
   vite: {
     resolve: {
       alias: {
+        '@components/': `${__dirname}/packages/iles/src/client/app/components/`,
         '@node/': `${__dirname}/packages/iles/src/node/`,
       },
     },

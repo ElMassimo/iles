@@ -1,4 +1,4 @@
-import { test, describe, expect, beforeAll } from 'vitest'
+import { test, describe, expect } from 'vitest'
 
 import layout from '/src/layouts/default.vue'
 

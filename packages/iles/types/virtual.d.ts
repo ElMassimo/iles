@@ -30,3 +30,8 @@ declare module '@islands/user-site' {
   const config: import('vue').Ref<import('./shared').UserSite>
   export default config
 }
+
+declare module '@islands/components/NotFound' {
+  const component: import('vue').Component
+  export default component
+}

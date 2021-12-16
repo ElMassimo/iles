@@ -19,11 +19,13 @@ describe('building docs site', () => {
       '404.html',
       '_headers',
       'assets/bench.7e185856.png',
-      'assets/style.b0306414.css',
+      'assets/style.daf210ac.css',
+      'assets/turbo.eab766fc.js',
       'favicon.ico',
       'feed.rss',
       'index.html',
       'logo.svg',
+      'manifest.json',
       'posts/1.html',
       'posts/2.html',
       'posts/hello-2021.html',
@@ -43,17 +45,28 @@ describe('building docs site', () => {
     await assertHTML('posts/vue-3-one-piece.html', { title: 'Announcing Vue 3.0 "One Piece"' })
   })
 
-  test('styles', async () => await assertSnapshot('assets/style.b0306414.css'))
-  test('sitemap', async () => await assertSnapshot('sitemap.xml'))
-  test('headers', async () => await assertSnapshot('_headers'))
-  test('rss feed', async () => await assertSnapshot('feed.rss',
-    content => content.replace(/<\/description>.*?<\/lastBuildDate>/s, '</description>'),
-  ))
+  test('styles', async () => {
+    await assertSnapshot('assets/style.daf210ac.css')
+  })
+  test('sitemap', async () => {
+    await assertSnapshot('sitemap.xml')
+  })
+  test('headers', async () => {
+    await assertSnapshot('_headers')
+  })
+  test('rss feed', async () => {
+    await assertSnapshot('feed.rss', (content: string) =>
+      content.replace(/<\/description>.*?<\/lastBuildDate>/s, '</description>'))
+  })
 
   test('remark-mdx-image', async () => {
     const markdownImage = '<p><img alt="benchmark" src="/assets/bench.7e185856.png"></p>'
     await assertContent('posts/vue-3-2.html', markdownImage)
     await assertContent('feed.rss', markdownImage)
+  })
+
+  test('manifest', async () => {
+    await assertContent('manifest.json', '"iles/turbo":')
   })
 })
 
@@ -62,8 +75,8 @@ async function expectFileContent (path: string, transform?: (val: string) => str
   return expect(transform ? transform(content) : content)
 }
 
-async function assertSnapshot (...args: any[]) {
-  const expectContent = await expectFileContent(...args)
+async function assertSnapshot (path: string, transform?: (val: string) => string) {
+  const expectContent = await expectFileContent(path, transform)
   expectContent.toMatchSnapshot()
   return expectContent
 }
@@ -81,7 +94,7 @@ async function assertHTML (path: string, { title }: any = {}) {
   expectContent.toContain('<meta name="description" content="Updates, tips &amp; opinions from the maintainers of Vue.js.">')
   expectContent.toContain('<link rel="sitemap" href="https://the-vue-point-with-iles.netlify.app/sitemap.xml">')
   expectContent.toContain(`<meta property="og:url" content="https://the-vue-point-with-iles.netlify.app/${path.replace('index.html', '')}">`)
-  expectContent.toContain('<link rel="stylesheet" href="/assets/style.b0306414.css">')
+  expectContent.toContain('<link rel="stylesheet" href="/assets/style.daf210ac.css">')
 
   expectContent.toContain('<ile-root id="ile-1">'
     + '<div class="text-base text-gray-500 leading-5">'

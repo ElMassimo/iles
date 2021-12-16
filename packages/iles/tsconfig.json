@@ -14,8 +14,9 @@
     "types": ["node", "vitest"],
     "paths": {
       "src/*": ["src/*"],
-      "client/*": ["src/client/*"],
-      "node/*": ["src/node/*"],
+      "@components/*": ["src/client/app/components/*"],
+      "@client/*": ["src/client/*"],
+      "@node/*": ["src/node/*"],
       "lib/*": ["src/node/*"],
       "shared/*": ["src/shared/*"],
       "tests/*": ["__tests__/*"],

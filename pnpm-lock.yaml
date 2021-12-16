@@ -23,7 +23,7 @@ importers:
       minimist: ^1.2.5
       semver: ^7.3.5
       typescript: 4.4.4
-      vitest: ^0.0.80
+      vitest: ^0.0.94
     devDependencies:
       '@islands/hydration': link:packages/hydration
       '@islands/mdx': link:packages/mdx
@@ -40,7 +40,7 @@ importers:
       minimist: 1.2.5
       semver: 7.3.5
       typescript: 4.4.4
-      vitest: 0.0.80
+      vitest: 0.0.94
 
   docs:
     specifiers:
@@ -6999,8 +6999,8 @@ packages:
       readable-stream: 3.6.0
     dev: true
 
-  /tinyspy/0.0.6:
-    resolution: {integrity: sha512-1yBxEQ/lmgu6NvtAYrTxlhm6MszdJNlVHFxEWBmHYMGAWhr+Lc8rrm2K2J58NbagMINkU/qJuOfBU92kdUidSQ==}
+  /tinyspy/0.1.2:
+    resolution: {integrity: sha512-ReLcUvHQeyg6FCXWoaajS2FdikgKWSuwrbrKdq4lr0lBAHK57JqBPEF0RZVqxVC+ap5+ktQemTBJJc9XDO+fgg==}
     engines: {node: '>=14.0.0'}
     dev: true
 
@@ -7546,8 +7546,8 @@ packages:
       fsevents: 2.3.2
     dev: true
 
-  /vitest/0.0.80:
-    resolution: {integrity: sha512-lxUC5kvHi7RUX//c6BYwXqA5mfinO2OLS45jEKxt6FU/00cr72sk6hA7MjCmJSgCmyulMFw5h4ooXb6fC6cdvQ==}
+  /vitest/0.0.94:
+    resolution: {integrity: sha512-1Kt/BH/qwp0PLdmsYyuejYgYbq8w8gu7ma1ZEXygIJOYipbnSCmvxDsqijfKLz7k5/RS7ILUnBdNfUVQ3eQvCA==}
     engines: {node: '>=16.0.0'}
     hasBin: true
     peerDependencies:
@@ -7568,12 +7568,10 @@ packages:
       chai: 4.3.4
       chai-subset: 1.6.0
       fast-glob: 3.2.7
-      flatted: 3.2.4
       local-pkg: 0.4.0
-      micromatch: 4.0.4
       piscina: 3.2.0
       source-map: 0.7.3
-      tinyspy: 0.0.6
+      tinyspy: 0.1.2
     dev: true
 
   /void-elements/3.1.0:
