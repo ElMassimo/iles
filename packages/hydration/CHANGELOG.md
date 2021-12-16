@@ -1,3 +1,12 @@
+## [0.3.6](https://github.com/ElMassimo/iles/compare/hydration@0.3.5...hydration@0.3.6) (2021-12-16)
+
+
+### Bug Fixes
+
+* hydration package in ssr ([926377b](https://github.com/ElMassimo/iles/commit/926377be882fb4092749f070c6fe27718f237309))
+
+
+
 ## [0.3.5](https://github.com/ElMassimo/iles/compare/hydration@0.3.4...hydration@0.3.5) (2021-12-16)
 
 
