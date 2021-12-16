@@ -12,6 +12,9 @@ export default defineComponent({
   components: {
     Head,
   },
+  mounted () {
+    ;(window as any).__ILE_DISPOSE__ ||= new Map()
+  },
   setup () {
     const appConfig = useAppConfig()
     useRouterLinks()

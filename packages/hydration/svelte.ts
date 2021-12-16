@@ -9,7 +9,10 @@ export default function createIsland (component: Component, id: string, el: Elem
   }))
 
   // eslint-disable-next-line no-new, new-cap
-  new component({ target: el, props: { ...props, $$slots, $$scope: { ctx: {} } }, hydrate: true })
+  const app = new component({ target: el, props: { ...props, $$slots, $$scope: { ctx: {} } }, hydrate: true })
+
+  if (import.meta.env.DISPOSE_ISLANDS)
+    (window as any).__ILE_DISPOSE__?.set(id, app.$destroy)
 
   if (import.meta.env.DEV)
     (window as any).__ILE_DEVTOOLS__?.onHydration({ id, el, props, slots, component, framework: 'svelte' })

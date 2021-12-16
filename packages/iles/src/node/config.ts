@@ -58,6 +58,8 @@ export async function resolveConfig (root?: string, env?: ConfigEnv): Promise<Ap
   for (const mod of appConfig.modules)
     await mod.configResolved?.(appConfig, env)
 
+  appConfig.vite.define!['import.meta.env.DISPOSE_ISLANDS'] = env.mode === 'development'
+
   checkDeprecations(appConfig as any)
 
   return appConfig
@@ -262,6 +264,7 @@ function viteConfigDefaults (root: string): ViteOptions {
       brotliSize: false,
       cssCodeSplit: false,
     },
+    define: {},
     optimizeDeps: {
       include: [
         'vue',

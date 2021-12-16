@@ -10,8 +10,11 @@ export default function createVueIsland (component: Component, id: string, el: E
     return [slotName, () => (createStaticVNode as any)(content)]
   }))
 
-  createVueApp({ render: () => h(component, props, slotFns) })
-    .mount(el!, Boolean(slots))
+  const app = createVueApp({ render: () => h(component, props, slotFns) })
+  app.mount(el!, Boolean(slots))
+
+  if (import.meta.env.DISPOSE_ISLANDS)
+    (window as any).__ILE_DISPOSE__?.set(id, app.unmount)
 
   if (import.meta.env.DEV)
     (window as any).__ILE_DEVTOOLS__?.onHydration({ id, el, props, slots, component })

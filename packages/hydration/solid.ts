@@ -7,7 +7,10 @@ export default function createIsland (component: Component, id: string, el: Elem
     // @ts-ignore
     window._$HYDRATION ||= { events: [], completed: new WeakSet() }
 
-  hydrate(() => createComponent(component, { ...props, children: createContent(slots) }), el)
+  const dispose = hydrate(() => createComponent(component, { ...props, children: createContent(slots) }), el)
+
+  if (import.meta.env.DISPOSE_ISLANDS)
+    (window as any).__ILE_DISPOSE__?.set(id, dispose)
 
   if (import.meta.env.DEV)
     (window as any).__ILE_DEVTOOLS__?.onHydration({ id, el, props, slots, component, framework: 'solid' })
