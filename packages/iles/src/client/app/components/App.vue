@@ -1,7 +1,6 @@
 <script lang="ts">
-import { defineComponent, computed, shallowRef, watch } from 'vue'
+import { defineComponent, computed, watch } from 'vue'
 import { Head } from '@vueuse/head'
-import { useAppConfig } from '../composables/appConfig'
 import { usePage } from '../composables/pageData'
 import { useRouterLinks } from '../composables/routerLinks'
 import { resolveLayout } from '../layout'
@@ -13,8 +12,8 @@ export default defineComponent({
     Head,
   },
   setup () {
-    const appConfig = useAppConfig()
-    useRouterLinks()
+    if (import.meta.env.DEV && !import.meta.env.SSR)
+      useRouterLinks()
 
     const { page, route, props } = usePage()
 
@@ -33,15 +32,10 @@ export default defineComponent({
       })
     }
 
-    const DebugPanel = shallowRef<null | typeof import('./DebugPanel.vue').default>(null)
-    if (import.meta.env.DEV && appConfig.debug)
-      import('./DebugPanel.vue').then(m => DebugPanel.value = m.default)
-
     return {
       layout,
       page,
       props,
-      DebugPanel,
     }
   },
   mounted () {
@@ -64,5 +58,4 @@ export default defineComponent({
       </component>
     </router-view>
   </Suspense>
-  <component :is="DebugPanel" v-if="DebugPanel"/>
 </template>

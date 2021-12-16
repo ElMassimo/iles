@@ -1,11 +1,8 @@
 // Use vue-router navigation during development even when using anchor tags.
 
 import { useRouter } from 'vue-router'
-import { inBrowser } from '../utils'
 
 export function useRouterLinks () {
-  if (!inBrowser) return
-
   const router = useRouter()
 
   window.addEventListener(

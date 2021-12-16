@@ -16,7 +16,7 @@ import { importModule } from 'lib/modules'
 import type { AppConfig, ConfigEnv, ViteOptions, IlesModule, IlesModuleLike, IlesModuleOption, NamedPlugins } from './shared'
 
 import { camelCase, tryInstallModule, importLibrary, uncapitalize, isString, isStringPlugin, compact } from './plugin/utils'
-import { resolveAliases, DIST_CLIENT_PATH, HYDRATION_DIST_PATH } from './alias'
+import { resolveAliases, DIST_CLIENT_PATH, DEBUG_COMPONENT_PATH, HYDRATION_DIST_PATH, ISLAND_COMPONENT_PATH } from './alias'
 import remarkWrapIslands from './plugin/remarkWrapIslands'
 
 import { explicitHtmlPath } from './utils'
@@ -26,7 +26,8 @@ const debug = creatDebugger('iles:config')
 export type { AppConfig }
 
 export const IlesComponentResolver: ComponentResolver = (name) => {
-  if (name === 'Island') return { importName: 'Island', path: 'iles' }
+  if (name === 'Island') return { path: ISLAND_COMPONENT_PATH }
+  if (name === 'DebugPanel') return { path: DEBUG_COMPONENT_PATH }
   if (name === 'Head') return { importName: 'Head', path: '@vueuse/head' }
 }
 

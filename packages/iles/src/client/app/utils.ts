@@ -1,8 +1,6 @@
 /* eslint-disable no-restricted-syntax */
 export { default as serialize } from '@nuxt/devalue'
 
-export const inBrowser = typeof window !== 'undefined'
-
 export function mapObject<I, O> (obj: Record<string, I>, fn: (i: I, key?: string) => O): Record<string, O> {
   const result: Record<string, O> = {}
   for (let key in obj)

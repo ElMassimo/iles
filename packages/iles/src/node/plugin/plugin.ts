@@ -8,7 +8,7 @@ import MagicString from 'magic-string'
 
 import { shouldTransformRef, transformRef } from 'vue/compiler-sfc'
 import type { AppConfig, AppClientConfig } from '../shared'
-import { APP_PATH, USER_APP_REQUEST_PATH, USER_SITE_REQUEST_PATH, APP_CONFIG_REQUEST_PATH, NOT_FOUND_COMPONENT_PATH, NOT_FOUND_REQUEST_PATH } from '../alias'
+import { APP_PATH, APP_COMPONENT_PATH, USER_APP_REQUEST_PATH, USER_SITE_REQUEST_PATH, APP_CONFIG_REQUEST_PATH, NOT_FOUND_COMPONENT_PATH, NOT_FOUND_REQUEST_PATH } from '../alias'
 import { configureMiddleware, ILES_APP_ENTRY } from './middleware'
 import { serialize, pascalCase, exists, debug } from './utils'
 import { parseId } from './parse'
@@ -95,6 +95,10 @@ export default function IslandsPlugins (appConfig: AppConfig): PluginOption[] {
 
         if ((isBuild || process.env.VITEST) && id.includes(defaultLayoutPath) && !await exists(resolve(root, defaultLayoutPath.slice(1))))
           return '<template><slot/></template>'
+      },
+      transform (code, id) {
+        if (id === APP_COMPONENT_PATH && !isBuild && appConfig.debug)
+          return code.replace(/<\/template>\s$/, '<DebugPanel/></template>')
       },
       handleHotUpdate ({ file, server }) {
         if (file === appPath) return [server.moduleGraph.getModuleById(USER_APP_REQUEST_PATH)!]
