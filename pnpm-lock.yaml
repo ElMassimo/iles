@@ -74,7 +74,7 @@ importers:
       '@preact/preset-vite': 2.1.5_preact@10.6.4
       '@vueuse/core': 6.9.2
       autoprefixer: 10.4.0
-      iles: 0.7.10
+      iles: 0.7.11
       postcss-nesting: 8.0.1
       preact-render-to-string: 5.1.19_preact@10.6.4
       vite-plugin-inspect: 0.3.11
@@ -1352,8 +1352,8 @@ packages:
       hast-util-to-string: 2.0.0
     dev: true
 
-  /@islands/hydration/0.3.4:
-    resolution: {integrity: sha512-EDtalNc2+PwwANSdgeH15+t75MZqPEqO0fekc4mcSAxfuAWQd3wnSUoirlYty6Hx0/UG3iMLfT7GsU76SUQdRw==}
+  /@islands/hydration/0.3.6:
+    resolution: {integrity: sha512-Gm0AkuQvfvzy6P1iiKXLHmKv2att/QeNKcZEfrlhUn/F5z2fkkO3ud+SNnKFE29v9VdzYVIuKMQw/GIHinXK3A==}
     dev: true
 
   /@islands/icons/0.1.1:
@@ -1403,7 +1403,7 @@ packages:
     resolution: {integrity: sha512-4rxPxs1NK58AdbTRpXZUiqsuTQUF9onsuK7AnphWfnb6jX71LA/xvxJ5x1UtvxFqpm+Kxdz/mGpixdlF3nzUQA==}
     engines: {node: '>=14.0.0'}
     dependencies:
-      '@islands/hydration': 0.3.4
+      '@islands/hydration': 0.3.6
     dev: true
 
   /@islands/prism/0.1.0:
@@ -2007,8 +2007,8 @@ packages:
       upath: 2.0.1
     dev: true
 
-  /@vscode/emmet-helper/2.8.2:
-    resolution: {integrity: sha512-A/+pkBYQq2JTow1A2flfTmEOmiF780KpdkoX7VBjQ7wujeA+CFUPd17YdeIa9aim20+J5Jp7SFujPDwVFiQucQ==}
+  /@vscode/emmet-helper/2.8.3:
+    resolution: {integrity: sha512-dkTSL+BaBBS8gFgPm/GMOU+XfxaMyI+Fl1IUYxEi8Iv24RfHf9/q2eCpV2hs7sncLcoKWEbMYe5gv4Ppmp2Oxw==}
     dependencies:
       emmet: 2.3.5
       jsonc-parser: 2.3.1
@@ -2487,7 +2487,7 @@ packages:
     hasBin: true
     dependencies:
       caniuse-lite: 1.0.30001287
-      electron-to-chromium: 1.4.20
+      electron-to-chromium: 1.4.21
       escalade: 3.1.1
       node-releases: 2.0.1
       picocolors: 1.0.0
@@ -3121,8 +3121,8 @@ packages:
     resolution: {integrity: sha512-zhk1MravPtq/KBhmGB7TLBILmXTgRG9TFSI3qS3DbgyfHzIl72iiTE37r/BHIbPCJJlWIo5rySyxiH4vWhu2ZA==}
     dev: true
 
-  /electron-to-chromium/1.4.20:
-    resolution: {integrity: sha512-N7ZVNrdzX8NE90OXEFBMsBf3fp8P/vVDUER3WCUZjzC7OkNTXHVoF6W9qVhq8+dA8tGnbDajzUpj2ISNVVyj+Q==}
+  /electron-to-chromium/1.4.21:
+    resolution: {integrity: sha512-T04U2ciApGbm+dESFEBbewi2Xt0Dgyww8M4n4sOt9lnmFuYbaHEDWCROkx4jvAZDUWWry9YOdnAs+7468q80Qg==}
     dev: true
 
   /emmet/2.3.5:
@@ -4404,12 +4404,12 @@ packages:
     engines: {node: '>= 4'}
     dev: true
 
-  /iles/0.7.10:
-    resolution: {integrity: sha512-xVAm6kl9LDZ1mKhrCUNoTkHFH6nVAdtnvkI6W0RPV2l6O1rZMAAqamNTbdVOxEYawa3ZOoC0mb4ClFh3O6Etjg==}
+  /iles/0.7.11:
+    resolution: {integrity: sha512-VVLXAjjEgJsxYq8P9LcCdojaKjl9Rfsp1u6LMfJK/8a4K2OF1ew+09ROGpOYPb/qvG4RBuSZoftraJoZHeSFVQ==}
     engines: {node: ^14.18 || >= 16.0.0}
     hasBin: true
     dependencies:
-      '@islands/hydration': 0.3.4
+      '@islands/hydration': 0.3.6
       '@islands/mdx': 0.7.2
       '@islands/pages': 0.7.2_vue@3.2.26
       '@islands/prerender': 0.3.1
@@ -7683,7 +7683,7 @@ packages:
       '@volar/source-map': 0.29.8
       '@volar/transforms': 0.29.8
       '@volar/vue-code-gen': 0.29.8
-      '@vscode/emmet-helper': 2.8.2
+      '@vscode/emmet-helper': 2.8.3
       '@vue/reactivity': 3.2.26
       '@vue/shared': 3.2.26
       request-light: 0.5.5

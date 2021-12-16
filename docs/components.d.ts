@@ -46,7 +46,7 @@ declare module 'vue' {
     IconVue: typeof import('~icons/icon/vue')['default']
     Iles: typeof import('./src/components/Iles.vue')['default']
     Image: typeof import('./src/components/Image.vue')['default']
-    Island: typeof import('./../node_modules/.pnpm/iles@0.7.10/node_modules/iles/dist/client/app/components/Island.vue')['default']
+    Island: typeof import('./../node_modules/.pnpm/iles@0.7.11/node_modules/iles/dist/client/app/components/Island.vue')['default']
     LastUpdated: typeof import('./src/components/LastUpdated.vue')['default']
     Logo: typeof import('./src/components/Logo.vue')['default']
     MainContainer: typeof import('./src/components/MainContainer.vue')['default']
