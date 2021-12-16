@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import { getSideBarLinks } from '~/logic/sidebar'
+import { useSideBarLinks } from '~/logic/sidebar'
 
-let { route, site } = usePage()
+let { route } = usePage()
 
-let candidates = $computed(() => getSideBarLinks(site.sidebar, route.path))
+let candidates = $(useSideBarLinks())
 
 let index = $computed(() => candidates.findIndex(item => item.link === route.path))
 let next = $computed(() => index > -1 && candidates[index + 1])

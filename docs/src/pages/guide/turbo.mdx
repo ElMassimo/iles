@@ -1,0 +1,34 @@
+[quicklink]: https://github.com/GoogleChromeLabs/quicklink
+[hotwired]: https://github.com/hotwired/turbo
+[turbo]: /config#turbo
+[client scripts]: /guide/client-scripts
+[islands]: /guide/hydration
+[modules]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules#other_differences_between_modules_and_standard_scripts
+[docs config]: https://github.com/ElMassimo/iles/blob/main/docs/iles.config.ts#L9
+
+# Turbo (Experimental) 🚀
+
+<Iles/> provides an __experimental__ <kbd>[turbo]</kbd> mode that enables SPA-like navigation.
+
+It combines techniques from [`quicklink`][quicklink] and [`@hotwired/turbo`][hotwired], but taking advantage of the architecture of every <Iles/> site to achieve it in __under 2kb__.
+
+You can see it in action in [this site][docs config]!
+
+## How it Works 🔍
+
+- Links in the viewport are detected and prefetched like in [`quicklink`][quicklink]
+- When a link is clicked, the head and body are replaced using the prefetched html, like in [`@hotwired/turbo`][hotwired]
+- Any islands in the previous page are unmounted, islands in the new page are hydrated as needed
+
+<Tip title="Caveats" warn>
+- All `script type="module"` [execute once][modules]
+- For islands, use the lifecycle of each component as usual (`onMounted`, `onUnmounted`)
+- In [client scripts], use the `onLoad` callback for effects that should run on every page load
+- Code __outside__ components or callbacks won't run on each page navigation
+</Tip>
+
+<Tip title="Roadmap 🛣">
+It's possible to avoid unmounting islands that don't change from one page navigation to the other, making them automatically "permanent" (in the `@hotwired/turbo` terminology) without any intervention from the user.
+
+That would allow persistent components typically found in SPAs like shopping carts to work seamlessly.
+</Tip>

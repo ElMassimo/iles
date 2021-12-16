@@ -6,6 +6,7 @@ import inspect from 'vite-plugin-inspect'
 
 export default defineConfig({
   siteUrl: 'https://iles-docs.netlify.app',
+  turbo: true,
   jsx: 'preact',
   modules: [
     '@islands/headings',
@@ -29,7 +30,7 @@ export default defineConfig({
       Boolean(process.env.DEBUG) && inspect(),
     ],
     optimizeDeps: {
-      include: ['quicklink', '@vueuse/core', '@mussi/docsearch', 'preact', 'preact/debug'],
+      include: ['@vueuse/core', '@mussi/docsearch', 'preact', 'preact/debug'],
     },
     ...{
       ssr: {

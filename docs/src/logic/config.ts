@@ -1,6 +1,6 @@
 export interface SiteConfig {
   nav?: NavItem[] | false
-  sidebar?: SideBarConfig | MultiSideBarConfig
+  sidebar?: SideBarItem[]
 }
 
 // navbar --------------------------------------------------------------------
@@ -25,12 +25,6 @@ export interface NavItemWithChildren extends NavItemBase {
 
 // sidebar -------------------------------------------------------------------
 
-export type SideBarConfig = SideBarItem[] | 'auto' | false
-
-export interface MultiSideBarConfig {
-  [path: string]: SideBarConfig
-}
-
 export type SideBarItem = SideBarLink | SideBarGroup
 
 export interface SideBarLink {
@@ -38,14 +32,6 @@ export interface SideBarLink {
   link: string
 }
 
-export interface SideBarGroup {
-  text: string
-  link?: string
-
-  /**
-   * @default false
-   */
-  collapsable?: boolean
-
+export interface SideBarGroup extends SideBarLink {
   children: SideBarItem[]
 }

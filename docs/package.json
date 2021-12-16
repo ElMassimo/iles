@@ -23,7 +23,7 @@
     "@preact/preset-vite": "^2.1.5",
     "@vueuse/core": "^6.9.2",
     "autoprefixer": "^10.4.0",
-    "iles": "^0.7.7",
+    "iles": "^0.7.10",
     "postcss-nesting": "^8.0.1",
     "preact-render-to-string": "^5.1.19",
     "vite-plugin-inspect": "^0.3.11",
@@ -33,8 +33,7 @@
   "dependencies": {
     "@docsearch/css": "^3.0.0-alpha.42",
     "@mussi/docsearch": "^3.0.0-alpha.42",
-    "preact": "^10.6.4",
-    "quicklink": "^2.2.0"
+    "preact": "^10.6.4"
   },
   "eslintConfig": {
     "rules": {

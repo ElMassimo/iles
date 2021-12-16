@@ -1,37 +1,25 @@
 <script setup lang="ts">
-import appConfig from '@islands/app-config'
-
-import type { PropType } from 'vue'
-import { joinUrl, isActive } from '~/logic/utils'
+import { useAppConfig } from 'iles'
 import type { SideBarItem } from '~/logic/config'
+import { joinUrl } from '~/logic/utils'
+import { useActive } from '~/logic/sidebar'
 
-const props = defineProps({
-  item: {
-    type: Object as PropType<Partial<SideBarItem>>,
-    required: true,
-  },
-  header: {
-    type: Boolean,
-    default: false,
-  },
-  table: {
-    type: Boolean,
-    default: false,
-  },
-})
+const { item, header, table }
+  = defineProps<{ item: SideBarItem, header?: boolean, table?: boolean }>()
 
-const route = useRoute()
+const { base } = useAppConfig()
 
-let active = $computed(() => isActive(route.path, props.item.link))
-let link = $computed(() => props.item.link && joinUrl(appConfig.base, props.item.link))
+// @ts-ignore
+const active = $(useActive($$(item)))
+const link = $computed(() => item.link && joinUrl(base, item.link))
 
-let style = $computed(() => ([
-  props.header
+const style = $computed(() => ([
+  header
     ? 'font-bold py-2'
-    : props.table
+    : table
       ? 'toc-link'
       : 'sidebar-link',
-  { active },
+  { active: !table && active },
 ]))
 
 </script>
