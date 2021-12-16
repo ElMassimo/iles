@@ -3,6 +3,7 @@
 [turbo]: /config#turbo
 [client scripts]: /guide/client-scripts
 [islands]: /guide/hydration
+[supported frameworks]: /guide/frameworks
 [modules]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules#other_differences_between_modules_and_standard_scripts
 [docs config]: https://github.com/ElMassimo/iles/blob/main/docs/iles.config.ts#L9
 
@@ -19,6 +20,15 @@ You can see it in action in [this site][docs config]!
 - Links in the viewport are detected and prefetched like in [`quicklink`][quicklink]
 - When a link is clicked, the head and body are replaced using the prefetched html, like in [`@hotwired/turbo`][hotwired]
 - Any islands in the previous page are unmounted, islands in the new page are hydrated as needed
+
+## When Should I Use It? 🤔
+
+In most sites, standard navigation should already be quite fast given <Iles/>
+allows you to generate sites without any blocking JS, and the interactive pieces are prerendered at build time.
+
+However, since it's very lightweight, it's compatible with the standard lifecycle of
+any of the [supported frameworks], and it will progressively enhance the site,
+you can use it whenever a snappy navigation is preferrable.
 
 <Tip title="Caveats" warn>
 - All `script type="module"` [execute once][modules]
