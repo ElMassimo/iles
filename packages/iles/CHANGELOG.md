@@ -1,3 +1,12 @@
+## [0.7.11](https://github.com/ElMassimo/iles/compare/v0.7.10...v0.7.11) (2021-12-16)
+
+
+### Bug Fixes
+
+* clean up interaction observer and media query listeners (turbo) ([783236c](https://github.com/ElMassimo/iles/commit/783236c37b883d5300814a47ae8e6639b872f112))
+
+
+
 ## [0.7.10](https://github.com/ElMassimo/iles/compare/v0.7.9...v0.7.10) (2021-12-16)
 
 
