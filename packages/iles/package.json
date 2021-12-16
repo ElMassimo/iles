@@ -12,6 +12,7 @@
     "dist",
     "lib",
     "types",
+    "turbo.js",
     "jsx-runtime.js"
   ],
   "scripts": {
