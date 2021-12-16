@@ -12,9 +12,6 @@ export default defineComponent({
   components: {
     Head,
   },
-  mounted () {
-    ;(window as any).__ILE_DISPOSE__ ||= new Map()
-  },
   setup () {
     const appConfig = useAppConfig()
     useRouterLinks()
@@ -46,6 +43,9 @@ export default defineComponent({
       props,
       DebugPanel,
     }
+  },
+  mounted () {
+    (window as any).__ILE_DISPOSE__ ||= new Map()
   },
 })
 </script>

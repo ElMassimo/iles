@@ -3,6 +3,7 @@ import { Alias, AliasOptions } from 'vite'
 
 const PKG_ROOT = join(__dirname, '../../')
 export const CONFIG_PATH = join(PKG_ROOT, 'config.js')
+export const TURBO_SCRIPT_PATH = join(PKG_ROOT, 'turbo.js')
 export const DIST_CLIENT_PATH = join(__dirname, '../client')
 export const APP_PATH = join(DIST_CLIENT_PATH, 'app', 'index.js')
 export const NOT_FOUND_COMPONENT_PATH = join(DIST_CLIENT_PATH, 'app/components/NotFound.vue')

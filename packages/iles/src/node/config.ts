@@ -58,7 +58,8 @@ export async function resolveConfig (root?: string, env?: ConfigEnv): Promise<Ap
   for (const mod of appConfig.modules)
     await mod.configResolved?.(appConfig, env)
 
-  appConfig.vite.define!['import.meta.env.DISPOSE_ISLANDS'] = env.mode === 'development'
+  appConfig.vite.define!['import.meta.env.DISPOSE_ISLANDS']
+    = env.mode === 'development' || appConfig.turbo
 
   checkDeprecations(appConfig as any)
 
@@ -193,6 +194,7 @@ function appConfigDefaults (appConfig: AppConfig, userConfig: UserConfig): AppCo
 
   return {
     debug: true,
+    turbo: false,
     jsx,
     root,
     base: '/',

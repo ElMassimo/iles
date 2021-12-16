@@ -189,6 +189,11 @@ export interface RequiredConfig {
    */
   siteUrl: string
   /**
+   * Whether to enable SPA-like navigation by avoiding full-page reloads.
+   * @default false
+   */
+  turbo: boolean
+  /**
    * Whether to output more information about islands and hydration in development.
    * @default true
    */

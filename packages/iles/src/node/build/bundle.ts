@@ -58,6 +58,7 @@ async function bundleWithVite (config: AppConfig, entrypoints: string[] | Entryp
       minify: ssr ? false : 'esbuild',
       emptyOutDir: ssr,
       outDir: ssr ? config.tempDir : config.outDir,
+      sourcemap: false,
       rollupOptions: {
         input: entrypoints,
         preserveEntrySignatures: htmlBuild ? undefined : 'allow-extension',
