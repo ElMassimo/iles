@@ -1,6 +1,7 @@
 import { hydrate, createComponent } from 'solid-js/web'
 import type { Component } from 'solid-js'
-import { Props, Slots } from './types'
+import type { Props, Slots } from './types'
+import { onDispose } from './hydration'
 
 export default function createIsland (component: Component, id: string, el: Element, props: Props, slots: Slots | undefined) {
   if (import.meta.env.DEV)
@@ -10,7 +11,7 @@ export default function createIsland (component: Component, id: string, el: Elem
   const dispose = hydrate(() => createComponent(component, { ...props, children: createContent(slots) }), el)
 
   if (import.meta.env.DISPOSE_ISLANDS)
-    (window as any).__ILE_DISPOSE__?.set(id, dispose)
+    onDispose(id, dispose)
 
   if (import.meta.env.DEV)
     (window as any).__ILE_DEVTOOLS__?.onHydration({ id, el, props, slots, component, framework: 'solid' })

@@ -1,12 +1,13 @@
 import { h, render, toChildArray } from 'preact'
 import type { FunctionComponent as Component } from 'preact'
-import { Props, Slots } from './types'
+import type { Props, Slots } from './types'
+import { onDispose } from './hydration'
 
 export default function createIsland (component: Component, id: string, el: Element, props: Props, slots: Slots | undefined) {
   render(createElement(component, props, slots), el)
 
   if (import.meta.env.DISPOSE_ISLANDS)
-    (window as any).__ILE_DISPOSE__?.set(id, () => render(null, el))
+    onDispose(id, () => render(null, el))
 
   if (import.meta.env.DEV)
     (window as any).__ILE_DEVTOOLS__?.onHydration({ id, el, props, slots, component, framework: 'preact' })

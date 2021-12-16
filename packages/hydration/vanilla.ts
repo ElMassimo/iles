@@ -1,4 +1,5 @@
-import { Component, Props, Slots } from './types'
+import type { Component, Props, Slots } from './types'
+import { onDispose } from './hydration'
 
 type MaybeAsync<T> = T | Promise<T>
 export type OnDisposeFn = () => void
@@ -12,7 +13,7 @@ export default async function createIsland (component: Component | OnLoadFn, id:
     const dispose = await component(el, props, slots)
 
     if (import.meta.env.DISPOSE_ISLANDS && isFunction(dispose))
-      (window as any).__ILE_DISPOSE__?.set(id, dispose)
+      onDispose(id, dispose)
   }
 
   if (import.meta.env.DEV)

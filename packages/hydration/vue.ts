@@ -1,6 +1,7 @@
 import { h, createApp as createClientApp, createStaticVNode, createSSRApp } from 'vue'
 import type { DefineComponent as Component } from 'vue'
-import { Props, Slots } from './types'
+import type { Props, Slots } from './types'
+import { onDispose } from './hydration'
 
 const createVueApp = import.meta.env.SSR ? createSSRApp : createClientApp
 
@@ -14,7 +15,7 @@ export default function createVueIsland (component: Component, id: string, el: E
   app.mount(el!, Boolean(slots))
 
   if (import.meta.env.DISPOSE_ISLANDS)
-    (window as any).__ILE_DISPOSE__?.set(id, app.unmount)
+    onDispose(id, app.unmount)
 
   if (import.meta.env.DEV)
     (window as any).__ILE_DEVTOOLS__?.onHydration({ id, el, props, slots, component })

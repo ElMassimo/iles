@@ -1,5 +1,6 @@
 import { HtmlTag, empty, insert, detach } from 'svelte/internal'
-import { Props, Slots } from './types'
+import type { Props, Slots } from './types'
+import { onDispose } from './hydration'
 
 type Component = any
 
@@ -12,7 +13,7 @@ export default function createIsland (component: Component, id: string, el: Elem
   const app = new component({ target: el, props: { ...props, $$slots, $$scope: { ctx: {} } }, hydrate: true })
 
   if (import.meta.env.DISPOSE_ISLANDS)
-    (window as any).__ILE_DISPOSE__?.set(id, app.$destroy)
+    onDispose(id, app.$destroy)
 
   if (import.meta.env.DEV)
     (window as any).__ILE_DEVTOOLS__?.onHydration({ id, el, props, slots, component, framework: 'svelte' })

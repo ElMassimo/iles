@@ -5,7 +5,6 @@ const dom = document
 
 // Used to detect anchor tags in the viewport.
 let observer
-const Observer = window.IntersectionObserver
 
 // Used to detect same path navigation (hash change)
 let currentPath = location.pathname
@@ -18,10 +17,13 @@ const toArray = Array.from
 const queryAll = (selector, el = dom) =>
   toArray(el.querySelectorAll(selector))
 
+const adoptNode = node =>
+  dom.adoptNode(node)
+
 const createElement = (tagName = 'link') =>
   dom.createElement(tagName)
 
-const requestIdleCallback = window.requestIdleCallback || setTimeout
+const whenIdle = window.requestIdleCallback || setTimeout
 
 const normalizeURL = url =>
   new URL(url, location.href).pathname
@@ -44,13 +46,11 @@ function prefetch (url) {
   }
 }
 
-if (Observer) {
-  watchLinks()
-  addEventListener('popstate', (e) => {
-    if (currentPath !== location.pathname)
-      replacePage(location.href, (e.state && e.state.scrollPosition) || 0)
-  })
-}
+watchLinks()
+addEventListener('popstate', (e) => {
+  if (currentPath !== location.pathname)
+    replacePage(location.href, (e.state && e.state.scrollPosition) || 0)
+})
 
 /**
  * Detect links in the viewport and prefetch them, and intercept clicks to them
@@ -60,7 +60,7 @@ function watchLinks () {
   window.__ILE_DISPOSE__ = new Map()
   observer?.disconnect()
 
-  observer = new Observer((entries) => {
+  observer = new IntersectionObserver((entries) => {
     entries.forEach(({ target: link, isIntersecting }) => {
       if (isIntersecting) {
         observer.unobserve(link)
@@ -70,7 +70,7 @@ function watchLinks () {
     })
   })
 
-  requestIdleCallback(() => {
+  whenIdle(() => {
     queryAll('a').forEach((link) => {
       const extMatch = link.pathname.match(/\.\w+$/)
       if ((!extMatch || extMatch[0] === '.html') && link.hostname === location.hostname)
@@ -119,20 +119,21 @@ function replaceHtml (html) {
   queryAll(':not(link[rel="stylesheet"]):not(style)', prevHead).forEach(el => el.remove())
 
   const prevHeadHrefs = new Set(queryAll('link', prevHead).map(el => el.href))
-  activateScripts(head)
   toArray(head.children).forEach((el) => {
-    if (el.tagName !== 'LINK' || el.rel !== 'stylesheet' || !prevHeadHrefs.has(el.href))
+    if (el.tagName !== 'LINK' || el.rel !== 'stylesheet' || !prevHeadHrefs.has(el.href)){
+      adoptNode(el)
       prevHead.appendChild(el)
+    }
   })
-
-  toArray(__ILE_DISPOSE__.values()).forEach(fn => fn())
+  adoptNode(body)
+  toArray(__ILE_DISPOSE__).forEach(([_id, fn]) => fn())
   dom.body.replaceWith(body)
+  activateScripts(head)
   activateScripts(body)
 }
 
 function activateScripts (el) {
-  dom.adoptNode(el)
-  queryAll('script').forEach(activateScript)
+  queryAll('script', el).forEach(activateScript)
 }
 
 function activateScript (el) {
