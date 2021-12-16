@@ -1,3 +1,12 @@
+## [0.3.5](https://github.com/ElMassimo/iles/compare/hydration@0.3.4...hydration@0.3.5) (2021-12-16)
+
+
+### Bug Fixes
+
+* clean up interaction observer and media query listeners (turbo) ([783236c](https://github.com/ElMassimo/iles/commit/783236c37b883d5300814a47ae8e6639b872f112))
+
+
+
 ## [0.3.4](https://github.com/ElMassimo/iles/compare/hydration@0.3.3...hydration@0.3.4) (2021-12-16)
 
 
