@@ -1,3 +1,12 @@
+## [0.7.10](https://github.com/ElMassimo/iles/compare/v0.7.9...v0.7.10) (2021-12-16)
+
+
+### Bug Fixes
+
+* ensure turbo.js is shipped ([dbf667b](https://github.com/ElMassimo/iles/commit/dbf667b02cdcb34cd2be7cf41b509d34dd9845b1))
+
+
+
 ## [0.7.9](https://github.com/ElMassimo/iles/compare/v0.7.8...v0.7.9) (2021-12-16)
 
 
