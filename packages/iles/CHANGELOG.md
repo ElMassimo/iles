@@ -1,3 +1,18 @@
+## [0.7.9](https://github.com/ElMassimo/iles/compare/v0.7.8...v0.7.9) (2021-12-16)
+
+
+### Bug Fixes
+
+* off-by-one error in extendSite when a base is provided ([3729e6d](https://github.com/ElMassimo/iles/commit/3729e6dbe3e404f5fbaaee4f9ffb10001d445ede))
+
+
+### Features
+
+* add `turbo` setting to enable navigation without full-page reloads ([#59](https://github.com/ElMassimo/iles/issues/59)) ([9c1d11a](https://github.com/ElMassimo/iles/commit/9c1d11ab604194410637c2679490ba99805cfebe))
+* dispose islands on unmount during development ([70b663a](https://github.com/ElMassimo/iles/commit/70b663a49bdeec3660f97b5e63007c2086108e5c))
+
+
+
 ## [0.7.8](https://github.com/ElMassimo/iles/compare/v0.7.7...v0.7.8) (2021-12-14)
 
 
