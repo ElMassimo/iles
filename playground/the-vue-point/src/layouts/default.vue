@@ -4,7 +4,7 @@ import { useHead, provideMDXComponents } from 'iles'
 if (import.meta.env.PROD) {
   useHead({
     script: [
-      { children: 'console.log("Powered by îles 🏝", "https://iles-docs.netlify.app")' },
+      { type: 'module', async: true, children: 'console.log("Powered by îles 🏝", "https://iles-docs.netlify.app")' },
     ],
   })
 }
