@@ -7,6 +7,7 @@ declare module 'vue' {
     Author: typeof import('./src/components/Author.vue')['default']
     BackLink: typeof import('./src/components/BackLink.tsx')['default']
     CarbonWarning: typeof import('~icons/carbon/warning')['default']
+    DebugPanel: typeof import('./../../packages/iles/dist/client/app/components/DebugPanel.vue')['default']
     DefaultLayout: typeof import('./src/layouts/default.vue')['default']
     Head: typeof import('@vueuse/head')['Head']
     IconCarbonWarning: typeof import('~icons/carbon/warning')['default']
