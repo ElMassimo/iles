@@ -103,7 +103,7 @@ function replacePage (url, scrollPosition, callback) {
     callback?.()
     currentPath = location.pathname
     replaceHtml(html)
-    scrollTo(0, scrollPosition)
+    scrollTo(0, scrollPosition || dom.querySelector(location.hash || 'body').offsetTop)
     watchLinks()
   })
     .catch((e) => {
