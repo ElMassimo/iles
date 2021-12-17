@@ -1,3 +1,17 @@
+## [0.7.3](https://github.com/ElMassimo/iles/compare/pages@0.7.2...pages@0.7.3) (2021-12-17)
+
+
+### Bug Fixes
+
+* filename parameter in extendFrontmatter should be relative to the root ([9b4dd57](https://github.com/ElMassimo/iles/commit/9b4dd57dc813ea4a4d7deab3299c2cd95920cf6e))
+
+
+### Features
+
+* upgrade to @vitejs/plugin-vue@2.0.0 ([f7656e3](https://github.com/ElMassimo/iles/commit/f7656e37976c206d801f6b7476322cbf1c91aaac))
+
+
+
 ## [0.7.2](https://github.com/ElMassimo/iles/compare/pages@0.7.1...pages@0.7.2) (2021-12-11)
 
 
