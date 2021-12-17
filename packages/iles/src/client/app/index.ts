@@ -28,7 +28,9 @@ function createRouter (base: string | undefined, routerOptions: Partial<RouterOp
 
   return createVueRouter({
     scrollBehavior: (current, previous, savedPosition) => {
-      return savedPosition ?? (current.path !== previous.path && !current.hash ? { top: 0 } : {})
+      if (savedPosition) return savedPosition
+      if (current.path !== previous.path && !current.hash) return { top: 0 }
+      if (current.hash) return { top: document.querySelector<HTMLElement>(current.hash)?.offsetTop || 0 }
     },
     ...routerOptions,
     routes,
