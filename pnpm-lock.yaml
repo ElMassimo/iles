@@ -54,7 +54,7 @@ importers:
       '@preact/preset-vite': ^2.1.5
       '@vueuse/core': ^6.9.2
       autoprefixer: ^10.4.0
-      iles: ^0.7.10
+      iles: ^0.7.12
       postcss-nesting: ^8.0.1
       preact: ^10.6.4
       preact-render-to-string: ^5.1.19
@@ -74,7 +74,7 @@ importers:
       '@preact/preset-vite': 2.1.5_preact@10.6.4
       '@vueuse/core': 6.9.2
       autoprefixer: 10.4.0
-      iles: 0.7.11
+      iles: 0.7.12
       postcss-nesting: 8.0.1
       preact-render-to-string: 5.1.19_preact@10.6.4
       vite-plugin-inspect: 0.3.11
@@ -1384,10 +1384,10 @@ packages:
       - supports-color
     dev: true
 
-  /@islands/pages/0.7.2_vue@3.2.26:
-    resolution: {integrity: sha512-cuqMs6FAgAGP+tMW92eCJtegt5iHb6sq0qCIk1SrS+M5SQ7lSuao8r5axCjHVCKWRFpuTlT3jcSNgNxKQ4Ridg==}
+  /@islands/pages/0.7.3_vue@3.2.26:
+    resolution: {integrity: sha512-UPfqU09FKp3uYeDnSQumhzvVQw0Wd6fU532yFG878w8ySMVtOHzag5zmgBrYV3KJTShtSNfa0Y/0yOWBCklIGg==}
     peerDependencies:
-      vue: ^3.2
+      vue: ^3.2.26
     dependencies:
       debug: 4.3.3
       deep-equal: 2.0.5
@@ -1573,7 +1573,7 @@ packages:
       '@prefresh/vite': 2.2.4_preact@10.6.4
       babel-plugin-transform-hook-names: 1.0.2
       debug: 4.3.3
-      kolorist: 1.5.0
+      kolorist: 1.5.1
       resolve: 1.20.0
     transitivePeerDependencies:
       - preact
@@ -2487,7 +2487,7 @@ packages:
     hasBin: true
     dependencies:
       caniuse-lite: 1.0.30001287
-      electron-to-chromium: 1.4.21
+      electron-to-chromium: 1.4.24
       escalade: 3.1.1
       node-releases: 2.0.1
       picocolors: 1.0.0
@@ -3121,8 +3121,8 @@ packages:
     resolution: {integrity: sha512-zhk1MravPtq/KBhmGB7TLBILmXTgRG9TFSI3qS3DbgyfHzIl72iiTE37r/BHIbPCJJlWIo5rySyxiH4vWhu2ZA==}
     dev: true
 
-  /electron-to-chromium/1.4.21:
-    resolution: {integrity: sha512-T04U2ciApGbm+dESFEBbewi2Xt0Dgyww8M4n4sOt9lnmFuYbaHEDWCROkx4jvAZDUWWry9YOdnAs+7468q80Qg==}
+  /electron-to-chromium/1.4.24:
+    resolution: {integrity: sha512-erwx5r69B/WFfFuF2jcNN0817BfDBdC4765kQ6WltOMuwsimlQo3JTEq0Cle+wpHralwdeX3OfAtw/mHxPK0Wg==}
     dev: true
 
   /emmet/2.3.5:
@@ -4404,14 +4404,14 @@ packages:
     engines: {node: '>= 4'}
     dev: true
 
-  /iles/0.7.11:
-    resolution: {integrity: sha512-VVLXAjjEgJsxYq8P9LcCdojaKjl9Rfsp1u6LMfJK/8a4K2OF1ew+09ROGpOYPb/qvG4RBuSZoftraJoZHeSFVQ==}
+  /iles/0.7.12:
+    resolution: {integrity: sha512-1+5Z9lVhwbNGjLziqkY2bVarqH5wz4z17gwgyKUW1RghEJz3fU/Bsc5aMGrTAglGOBDDdgf4yqGOJS4Yay0qyQ==}
     engines: {node: ^14.18 || >= 16.0.0}
     hasBin: true
     dependencies:
       '@islands/hydration': 0.3.6
       '@islands/mdx': 0.7.2
-      '@islands/pages': 0.7.2_vue@3.2.26
+      '@islands/pages': 0.7.3_vue@3.2.26
       '@islands/prerender': 0.3.1
       '@nuxt/devalue': 2.0.0
       '@vitejs/plugin-vue': 2.0.1_vite@2.7.3+vue@3.2.26
@@ -4869,6 +4869,10 @@ packages:
 
   /kolorist/1.5.0:
     resolution: {integrity: sha512-pPobydIHK884YBtkS/tWSZXpSAEpcMbilyun3KL37ot935qL2HNKm/tI45i/Rd+MxdIWEhm7/LmUQzWZYK+Qhg==}
+
+  /kolorist/1.5.1:
+    resolution: {integrity: sha512-lxpCM3HTvquGxKGzHeknB/sUjuVoUElLlfYnXZT73K8geR9jQbroGlSCFBax9/0mpGoD3kzcMLnOlGQPJJNyqQ==}
+    dev: true
 
   /levn/0.4.1:
     resolution: {integrity: sha512-+bT2uH4E5LGE7h/n3evcS/sQlJXCpIp6ym8OWJ5eV6+67Dsql/LaaT7qJBAt2rzfoa/5QBGBhxDix1dMt2kQKQ==}
@@ -7300,7 +7304,7 @@ packages:
       '@antfu/utils': 0.3.0
       '@iconify/utils': 1.0.20
       debug: 4.3.3
-      kolorist: 1.5.0
+      kolorist: 1.5.1
       local-pkg: 0.4.0
       unplugin: 0.2.21
     transitivePeerDependencies:
@@ -7469,7 +7473,7 @@ packages:
     dependencies:
       '@windicss/plugin-utils': 1.5.4
       debug: 4.3.3
-      kolorist: 1.5.0
+      kolorist: 1.5.1
       windicss: 3.3.0
     transitivePeerDependencies:
       - supports-color
