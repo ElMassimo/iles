@@ -93,6 +93,10 @@ export interface PagesOptions {
 
 export interface ResolvedOptions extends Omit<PagesOptions, 'pagesDir' | 'pageExtensions'> {
   /**
+   * The root of the project.
+   */
+  root: string
+  /**
    * URL base of the generated site.
    */
   base: string

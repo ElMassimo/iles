@@ -19,6 +19,7 @@ export default function IlesPages (): any {
     name: '@islands/pages',
     configResolved (config: any) {
       let {
+        root,
         base,
         extendFrontmatter,
         extendRoute,
@@ -28,6 +29,7 @@ export default function IlesPages (): any {
       } = config
 
       const options: ResolvedOptions = {
+        root,
         base,
         extendFrontmatter,
         extendRoute,

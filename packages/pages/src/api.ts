@@ -10,7 +10,7 @@ import { debug, slash } from './utils'
 export function createApi (options: ResolvedOptions) {
   let pagesByFile = new Map<string, PageRoute>()
 
-  const { pagesDir, pageExtensions } = options
+  const { root, pagesDir, pageExtensions } = options
   const extensionsRE = new RegExp(`\\.${pageExtensions.join('|')}`)
 
   return {
@@ -72,6 +72,7 @@ export function createApi (options: ResolvedOptions) {
     async frontmatterForFile (file: string, content?: string): Promise<RawPageMatter> {
       try {
         if (content === undefined) content = await fs.readFile(file, 'utf8')
+        file = relative(root, file)
 
         const matter = await parsePageMatter(file, content)
 
