@@ -1,3 +1,12 @@
+## [0.7.13](https://github.com/ElMassimo/iles/compare/v0.7.12...v0.7.13) (2021-12-17)
+
+
+### Bug Fixes
+
+* navigate to hash when using turbo ([bfd9b14](https://github.com/ElMassimo/iles/commit/bfd9b14a288ea82953554f672880d491e7f12171))
+
+
+
 ## [0.7.12](https://github.com/ElMassimo/iles/compare/v0.7.11...v0.7.12) (2021-12-17)
 
 
