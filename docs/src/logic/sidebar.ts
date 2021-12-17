@@ -6,8 +6,16 @@ import type { SideBarItem, SideBarGroup } from '~/logic/config'
 import { normalize } from '~/logic/utils'
 
 export function useSideBarLinks () {
-  const sidebarItems = $(useSideBar())
-  return computed(() => sidebarItems.flat().filter(item => item.link))
+  const { route, site } = usePage()
+
+  const currentPath = $computed(() => normalize(route.path))
+  const links = $computed(() => site.sidebar.flatMap(group => group.children || group))
+  const index = $computed(() => links.findIndex(item => normalize(item.link) === currentPath))
+
+  return {
+    next: computed(() => index > -1 && links[index + 1]),
+    prev: computed(() => index > -1 && links[index - 1]),
+ }
 }
 
 export function useSideBar () {

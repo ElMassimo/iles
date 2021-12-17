@@ -1,18 +1,11 @@
 <script setup lang="ts">
 import { useSideBarLinks } from '~/logic/sidebar'
 
-let { route } = usePage()
-
-let candidates = $(useSideBarLinks())
-
-let index = $computed(() => candidates.findIndex(item => item.link === route.path))
-let next = $computed(() => index > -1 && candidates[index + 1])
-let prev = $computed(() => index > -1 && candidates[index - 1])
-let hasLinks = $computed(() => next || prev)
+const { next, prev } = $(useSideBarLinks())
 </script>
 
 <template>
-  <div v-if="hasLinks" class="-mx-2 md:-mx-4">
+  <div v-if="next || prev" class="-mx-2 md:-mx-4">
     <div class="flex border-t pt-6 justify-between items-center">
       <div class="max-w-1/2 flex items-center">
         <a v-if="prev" class="nav-link" :href="prev.link">
