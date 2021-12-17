@@ -62,7 +62,7 @@ export default function documentsPlugin (config: AppConfig): Plugin {
       return `
         import { defineAsyncComponent } from 'vue'
 
-        export default ${serialized}
+        export default ${serialized}.map(doc => ({ ...doc, ...doc.component }))
       `
     },
   }
