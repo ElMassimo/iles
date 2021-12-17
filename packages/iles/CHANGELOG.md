@@ -1,3 +1,12 @@
+## [0.7.12](https://github.com/ElMassimo/iles/compare/v0.7.11...v0.7.12) (2021-12-17)
+
+
+### Bug Fixes
+
+* scroll behavior during development when navigating to hashes ([524f64c](https://github.com/ElMassimo/iles/commit/524f64c88b48934f51c7d57738f227e23e262b66))
+
+
+
 ## [0.7.11](https://github.com/ElMassimo/iles/compare/v0.7.10...v0.7.11) (2021-12-16)
 
 
