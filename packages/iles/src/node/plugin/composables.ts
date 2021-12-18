@@ -6,6 +6,13 @@ import { parseImports } from './parse'
 const definitionRegex = /(?:function|const|let|var)\s+(definePageComponent|use(?:Page|Route|Head|Documents)\b)/g
 const composableUsageRegex = /\b(definePageComponent|use(?:Page|Route|Head|Documents))\s*\(/g
 
+const composables = [
+  'definePageComponent',
+  'useHead',
+  'usePage',
+  'useRoute',
+]
+
 export async function autoImportComposables (code: string, id: string): Promise<string | undefined> {
   const matches = Array.from(code.matchAll(composableUsageRegex))
   if (matches.length === 0) return
@@ -26,10 +33,8 @@ export function writeComposablesDTS (root: string) {
 // We suggest you to commit this file into source control
 
 declare global {
-  const definePageComponent: typeof import('iles')['definePageComponent']
-  const useHead: typeof import('iles')['useHead']
-  const usePage: typeof import('iles')['usePage']
-  const useRoute: typeof import('iles')['useRoute']
+  const useDocuments: <T = any>(globPattern: string) => T[]
+${composables.map(fn => `  const ${fn}: typeof import('iles')['${fn}']`).join("\n")}
 }
 
 export { }

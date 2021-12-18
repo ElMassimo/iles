@@ -2,8 +2,6 @@ import type { Plugin } from 'vite'
 import type { AppConfig } from '../shared'
 
 import glob from 'fast-glob'
-import { resolve } from 'pathe'
-import { promises as fs } from 'fs'
 import { parseId } from './parse'
 import { serialize } from './utils'
 
@@ -38,7 +36,7 @@ export default function documentsPlugin (config: AppConfig): Plugin {
       if (id.startsWith(DOCS_VIRTUAL_ID))
         return id
     },
-    async load (id) {
+    async load (id, options) {
       if (!id.startsWith(DOCS_VIRTUAL_ID)) return
 
       const { query: { path: rawPath } } = parseId(id)
@@ -47,6 +45,7 @@ export default function documentsPlugin (config: AppConfig): Plugin {
       const pattern = path.includes('*') ? path : `${path}/**/*.{md,mdx}`
 
       const files = await glob(pattern, { cwd: root })
+
       const data = await Promise.all(files.map(async file =>
         pages.api.pageForFilename(file)?.frontmatter || pages.api.frontmatterForFile(file)))
 
@@ -57,13 +56,14 @@ export default function documentsPlugin (config: AppConfig): Plugin {
       const serialized = serialize(documents).replace(/render:"(\w+)"/g, (_, id) => {
         const index = id.split('_')[0]
         const { filename } = data[index].meta
-        return `component: defineAsyncComponent(() => import('/${filename}'))`
+        return `component: () => import('/${filename}').then(m => m.default)`
       })
 
       return `
         import { defineAsyncComponent } from 'vue'
 
-        export default ${serialized}.map(doc => ({ ...doc, ...doc.component }))
+        export default ${serialized}
+          .map(doc => ({ ...doc, ...defineAsyncComponent(doc.component) }))
       `
     },
   }
