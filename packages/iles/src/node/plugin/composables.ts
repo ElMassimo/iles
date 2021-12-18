@@ -34,7 +34,7 @@ export function writeComposablesDTS (root: string) {
 // We suggest you to commit this file into source control
 
 declare global {
-${composables.map(fn => `  const ${fn}: typeof import('iles')['${fn}']`).join("\n")}
+${composables.map(fn => `  const ${fn}: typeof import('iles')['${fn}']`).join('\n')}
 }
 
 export { }

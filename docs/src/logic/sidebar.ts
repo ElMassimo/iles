@@ -15,7 +15,7 @@ export function useSideBarLinks () {
   return {
     next: computed(() => index > -1 && links[index + 1]),
     prev: computed(() => index > -1 && links[index - 1]),
- }
+  }
 }
 
 export function useSideBar () {
