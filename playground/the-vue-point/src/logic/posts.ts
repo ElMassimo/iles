@@ -13,8 +13,6 @@ function byDate (a: Document<Post>, b: Document<Post>) {
 }
 
 export function getPosts () {
-  return computed(() => {
-    const posts = useDocuments<Post>('~/pages/posts')
-    return posts.sort(byDate)
-  })
+  const posts = useDocuments<Post>('~/pages/posts')
+  return computed(() => posts.value.sort(byDate))
 }

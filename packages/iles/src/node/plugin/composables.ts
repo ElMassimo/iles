@@ -8,6 +8,7 @@ const composableUsageRegex = /\b(definePageComponent|use(?:Page|Route|Head|Docum
 
 const composables = [
   'definePageComponent',
+  'useDocuments',
   'useHead',
   'usePage',
   'useRoute',
@@ -33,7 +34,6 @@ export function writeComposablesDTS (root: string) {
 // We suggest you to commit this file into source control
 
 declare global {
-  const useDocuments: <T = any>(globPattern: string) => T[]
 ${composables.map(fn => `  const ${fn}: typeof import('iles')['${fn}']`).join("\n")}
 }
 

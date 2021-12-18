@@ -26,12 +26,12 @@ export type RouterOptions = VueRouterOptions & { base?: string }
 
 export interface PageProps extends Record<string, any> {}
 
-interface PageData extends PageFrontmatter, PageMeta {
+interface WithFrontmatter extends PageFrontmatter, PageMeta {
   frontmatter: PageFrontmatter
   meta: PageMeta
 }
 
-export interface PageComponent extends RouteComponent, PageData {
+export interface PageComponent extends RouteComponent, WithFrontmatter {
   layoutName: string
   layoutFn: false | (() => Promise<DefineComponent>)
   getStaticPaths?: GetStaticPaths
@@ -39,7 +39,7 @@ export interface PageComponent extends RouteComponent, PageData {
   render?: (props?: any) => VNode<any, any, any>
 }
 
-export type Document<T = PageComponent> = AsyncComponentLoader<PageComponent & T> & PageData & {
+export type Document<T = PageComponent> = AsyncComponentLoader<PageComponent & T> & WithFrontmatter & {
   component: () => Promise<PageComponent & T>
 } & T
 

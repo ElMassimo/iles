@@ -2,8 +2,8 @@
 // We suggest you to commit this file into source control
 
 declare global {
-  const useDocuments: <T = any>(globPattern: string) => T[]
   const definePageComponent: typeof import('iles')['definePageComponent']
+  const useDocuments: typeof import('iles')['useDocuments']
   const useHead: typeof import('iles')['useHead']
   const usePage: typeof import('iles')['usePage']
   const useRoute: typeof import('iles')['useRoute']

@@ -7,7 +7,8 @@ import { relative } from 'pathe'
 import { parseId } from './parse'
 import { serialize } from './utils'
 
-const usageRegex = /\buseDocuments\s*\(([^)]+)\)/sg
+const definitionRegex = /(function|const|let|var)[\s\n]+\buseDocuments\b/
+const usageRegex = /\buseDocuments[\s\n]*\(([^)]+)\)/g
 
 const fileCanUseDocuments = /(\.vue|\.[tj]sx?)$/
 
@@ -69,10 +70,17 @@ export default function documentsPlugin (config: AppConfig): Plugin {
 
       // Use defineAsyncComponent to support using <component :is="doc"> directly.
       return `
-        import { defineAsyncComponent } from 'vue'
+        import { shallowRef, defineAsyncComponent } from 'vue'
 
-        export default ${serialized}
+        export const documents = ${serialized}
           .map(doc => ({ ...doc, ...defineAsyncComponent(doc.component) }))
+
+        documents.ref = shallowRef(documents)
+
+        export default documents.ref
+
+        if (import.meta.hot)
+          import.meta.hot.accept(mod => __ILES_UPDATE_DOCUMENTS__(mod, documents))
       `
     },
     async transform (code, id) {
@@ -86,7 +94,7 @@ export default function documentsPlugin (config: AppConfig): Plugin {
       }
 
       // Replace each usage of useDocuments with an import of a virtual module.
-      if (fileCanUseDocuments.test(id)) {
+      if (fileCanUseDocuments.test(id) && !definitionRegex.test(code)) {
         const paths: [string, string][] = []
         code = code.replaceAll(usageRegex, (_, path) => {
           path = path.trim().slice(1, -1)

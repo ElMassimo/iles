@@ -1,4 +1,4 @@
-import { createApp as createClientApp, createSSRApp, ref } from 'vue'
+import { createApp as createClientApp, createSSRApp, ref, Ref } from 'vue'
 import { createMemoryHistory, createRouter as createVueRouter, createWebHistory } from 'vue-router'
 import { createHead } from '@vueuse/head'
 
@@ -6,7 +6,7 @@ import routes from '@islands/routes'
 import config from '@islands/app-config'
 import userApp from '@islands/user-app'
 import siteRef from '@islands/user-site'
-import type { CreateAppFactory, AppContext, RouterOptions } from '../shared'
+import type { CreateAppFactory, AppContext, RouterOptions, Document } from '../shared'
 import App from './components/App.vue'
 import { installPageData, forcePageUpdate } from './composables/pageData'
 import { installMDXComponents } from './composables/mdxComponents'
@@ -17,6 +17,8 @@ import { resolveLayout } from './layout'
 import { resolveProps } from './props'
 
 const newApp = import.meta.env.SSR ? createSSRApp : createClientApp
+
+type DocumentsModule = { documents: Document[] & { ref: Ref<Document[]> } }
 
 function createRouter (base: string | undefined, routerOptions: Partial<RouterOptions>) {
   if (base === '/') base = undefined
@@ -94,7 +96,20 @@ if (!import.meta.env.SSR) {
 
     const devtools = await import('./composables/devtools')
     devtools.installDevtools(app as any, config)
-    Object.assign(window, { __ILES_PAGE_UPDATE__: forcePageUpdate })
+    Object.assign(window, {
+      __ILES_PAGE_UPDATE__: forcePageUpdate,
+      __ILES_UPDATE_DOCUMENTS__ (mod: DocumentsModule, documents: DocumentsModule['documents']) {
+        const oldDocsByFile = Object.create(null)
+        documents.forEach(doc => { oldDocsByFile[doc.filename] = doc })
+        documents.ref.value = mod.documents.map(newDoc => {
+          const oldDoc = oldDocsByFile[newDoc.filename]
+          if (!oldDoc) return newDoc
+          const { meta, frontmatter } = newDoc
+          return Object.assign(oldDoc, { ...meta, ...frontmatter, meta, frontmatter })
+        })
+        mod.documents.ref = documents.ref
+      }
+    })
 
     router.afterEach(resetHydrationId) // reset island identifiers to match ssg.
     await router.isReady() // wait until page component is fetched before mounting
