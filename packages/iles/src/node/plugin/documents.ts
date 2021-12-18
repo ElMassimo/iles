@@ -47,7 +47,8 @@ export default function documentsPlugin (config: AppConfig): Plugin {
       const pattern = path.includes('*') ? path : `${path}/**/*.{md,mdx}`
 
       const files = await glob(pattern, { cwd: root })
-      const data = await Promise.all(files.map(file => pages.api.frontmatterForFile(file)))
+      const data = await Promise.all(files.map(async file =>
+        pages.api.pageForFilename(file)?.frontmatter || pages.api.frontmatterForFile(file)))
 
       const documents = data.map(({ route: _, meta, layout, ...frontmatter }, index) => {
         return { ...meta, ...frontmatter, meta, frontmatter, render: `${index}_render` }
