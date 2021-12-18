@@ -1,4 +1,4 @@
-import { createApp as createClientApp, createSSRApp, ref, Ref } from 'vue'
+import { createApp as createClientApp, createSSRApp, ref } from 'vue'
 import { createMemoryHistory, createRouter as createVueRouter, createWebHistory } from 'vue-router'
 import { createHead } from '@vueuse/head'
 
@@ -6,7 +6,7 @@ import routes from '@islands/routes'
 import config from '@islands/app-config'
 import userApp from '@islands/user-app'
 import siteRef from '@islands/user-site'
-import type { CreateAppFactory, AppContext, RouterOptions, Document } from '../shared'
+import type { CreateAppFactory, AppContext, RouterOptions } from '../shared'
 import App from './components/App.vue'
 import { installPageData, forcePageUpdate } from './composables/pageData'
 import { installMDXComponents } from './composables/mdxComponents'
@@ -17,8 +17,6 @@ import { resolveLayout } from './layout'
 import { resolveProps } from './props'
 
 const newApp = import.meta.env.SSR ? createSSRApp : createClientApp
-
-type DocumentsModule = { documents: Document[] & { ref: Ref<Document[]> } }
 
 function createRouter (base: string | undefined, routerOptions: Partial<RouterOptions>) {
   if (base === '/') base = undefined

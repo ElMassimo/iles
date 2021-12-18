@@ -16,7 +16,7 @@ const DOCS_VIRTUAL_ID = '/@islands/documents'
 
 interface DocumentModule {
   pattern: string
-  isMatch: (path: string) => boolean
+  hasDocument: (path: string) => boolean
 }
 
 export default function documentsPlugin (config: AppConfig): Plugin {
@@ -48,7 +48,7 @@ export default function documentsPlugin (config: AppConfig): Plugin {
 
       // Allow Vite to automatically detect added or removed files.
       if (server) {
-        modulesById[id] = { pattern, isMatch: (path) => isMatch(path, pattern) }
+        modulesById[id] = { pattern, hasDocument: (path) => isMatch(path, pattern) }
       }
 
       // Obtain files matching the specified pattern and extract frontmatter.
@@ -84,7 +84,7 @@ export default function documentsPlugin (config: AppConfig): Plugin {
           return () => cached ||= fn().then(mod => mod.default)
         }
 
-        if (import.meta.hot)
+        if (import.meta.hot) {
           import.meta.hot.accept(mod => {
             const docs = documents.ref.value
             const oldDocsByFile = {}
@@ -99,6 +99,7 @@ export default function documentsPlugin (config: AppConfig): Plugin {
 
             mod.documents.ref = documents.ref
           })
+        }
       `
     },
     async transform (code, id) {
@@ -132,7 +133,7 @@ export default function documentsPlugin (config: AppConfig): Plugin {
       const file = relative(root, ctx.file)
 
       for (const id in modulesById) {
-        if (modulesById[id].isMatch(file))
+        if (modulesById[id].hasDocument(file))
           ctx.modules.push(server.moduleGraph.getModuleById(id)!)
       }
     },
