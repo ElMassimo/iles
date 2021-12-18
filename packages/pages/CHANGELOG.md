@@ -1,3 +1,12 @@
+## [0.7.4](https://github.com/ElMassimo/iles/compare/pages@0.7.3...pages@0.7.4) (2021-12-18)
+
+
+### Features
+
+* useDocuments composable as a faster and more convenient version of import.meta.globEager ([#62](https://github.com/ElMassimo/iles/issues/62)) ([676a804](https://github.com/ElMassimo/iles/commit/676a80495da4178691c455238d27b8da447fb0a9))
+
+
+
 ## [0.7.3](https://github.com/ElMassimo/iles/compare/pages@0.7.2...pages@0.7.3) (2021-12-17)
 
 
