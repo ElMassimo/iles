@@ -19,7 +19,6 @@ export function createApi (options: ResolvedOptions) {
       return file.startsWith(pagesDir) && extensionsRE.test(file)
     },
     pageForFilename (file: string) {
-      return pagesByFile.get(file)
       return pagesByFile.get(resolve(root, file))
     },
     async addAllPages () {
@@ -62,6 +61,7 @@ export function createApi (options: ResolvedOptions) {
 
       route = await options.extendRoute?.(route) || route
       route.frontmatter.meta.href = `${options.base}${route.path.slice(1)}`
+
       return route
     },
     async generateRoutesModule () {
