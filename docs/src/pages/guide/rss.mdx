@@ -9,7 +9,7 @@
 [extract the content]: https://github.com/vuejs/blog/blob/master/.vitepress/genFeed.js#L22-L24
 [ssg.onSiteRendered]: /config#ssg-onsiterendered
 
-[glob imports]: https://vitejs.dev/guide/features.html#glob-import
+[useDocuments]: /guide/documents
 
 # RSS Feeds
 
@@ -77,12 +77,12 @@ which are convenient to enable intellisense and type-checking for the feed optio
 
 ## Adding Items to the Feed
 
-[Glob imports] are a convenient way to access multiple files or pages to generate feed items.
+<kbd>[useDocuments]</kbd> is a convenient way to access multiple files or pages to generate feed items.
 
 ```ts
 import type { FeedItem } from '@islands/feed'
 
-const posts = Object.values(import.meta.globEagerDefault('./posts/**/*.mdx'))
+const posts = $(useDocuments('~/pages/posts'))
 
 const items = posts.map<FeedItem>((post) => ({
   link: url + post.href,

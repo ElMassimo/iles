@@ -1,7 +1,7 @@
 import { promises as fs } from 'fs'
 import glob from 'fast-glob'
 import deepEqual from 'deep-equal'
-import { relative } from 'pathe'
+import { relative, resolve } from 'pathe'
 import type { RawPageMatter, PageRoute, ResolvedOptions, UserRoute } from './types'
 
 import { parsePageMatter } from './frontmatter'
@@ -19,7 +19,7 @@ export function createApi (options: ResolvedOptions) {
       return file.startsWith(pagesDir) && extensionsRE.test(file)
     },
     pageForFilename (file: string) {
-      return pagesByFile.get(file)
+      return pagesByFile.get(resolve(root, file))
     },
     async addAllPages () {
       const files = await glob(`${options.pagesDir}/**/*.{${pageExtensions.join(',')}}`, { onlyFiles: true })
@@ -61,6 +61,7 @@ export function createApi (options: ResolvedOptions) {
 
       route = await options.extendRoute?.(route) || route
       route.frontmatter.meta.href = `${options.base}${route.path.slice(1)}`
+
       return route
     },
     async generateRoutesModule () {

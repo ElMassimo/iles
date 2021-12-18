@@ -1,0 +1,101 @@
+[glob]: https://vitejs.dev/guide/features.html#glob-import
+[mdx documents]: /guide/markdown
+[pageData]: /guide/development#using-page-data
+[ref sugar]: https://github.com/vuejs/rfcs/discussions/369
+
+# Documents 🗃
+
+When rendering index pages, it can be convenient to import multiple pages or
+[MDX documents].
+
+Although using [`import.meta.globEager`][glob] works well, <Iles/> provides a better option.
+
+## `useDocuments`
+
+The <kbd>useDocuments</kbd> composable can be used to access all files that are
+under the specified directory, or match a given pattern.
+
+```ts
+useDocuments('~/pages/posts')
+```
+
+Provide a glob pattern if you need to narrow down the matched documents:
+
+```ts
+useDocuments('~/pages/(posts|articles)/*.{md,mdx}')
+```
+
+<Tip title="Great HMR Support 🚀">
+Changes to each document and its `frontmatter` are instantly reflected.
+
+It does not require a full page reload when files matching the pattern are added or removed.
+</Tip>
+
+## Using Data in Documents
+
+You can access each file's [`frontmatter` and `meta`][pageData] directly:
+
+```vue
+<script setup lang="ts">
+import { usePosts } from '~/logic/posts'
+
+const posts = useDocuments('~/pages/posts')
+</script>
+
+<template>
+  <h1>Posts</h1>
+  <article v-for="post of posts">
+    <time :datetime="post.date.toISOString()">{{ formatDate(post.date) }}</time>
+    <h2>
+      <a :href="post.href">{{ post.title }}</a>
+    </h2>
+    <component :is="post" excerpt/>
+  </article>
+</template>
+```
+
+<Tip title="Rendering each document">
+You can render each document by passing it directly to `<component>`.
+</Tip>
+
+## Typescript 💪🏼
+
+Any `frontmatter` and `meta` properties will be typed, including extensions you have declared for `PageMeta` or `PageFrontmatter`.
+
+```ts
+function usePosts () {
+  return useDocuments<Post>('~/pages/posts')
+}
+// typeof usePosts === ComputedRef<Post[]>
+```
+```ts
+post.href // string
+post.meta // PageMeta
+post.frontmatter // PageFrontmatter
+```
+
+## Ref Sugar (experimental in Vue)
+
+Since <kbd>useDocuments</kbd> returns a `Ref`, when accessing documents in a script you would do:
+
+```ts
+export function usePosts () {
+  const posts = useDocuments('~/pages/posts')
+  return computed(() => posts.value.sort(byDate))
+}
+```
+
+If you want to avoid using `value`, you can use [ref sugar] by wrapping it with `$()`:
+
+```ts
+export function usePosts () {
+  const posts = $(useDocuments('~/pages/posts'))
+  return computed(() => posts.sort(byDate))
+}
+```
+
+## Comparison with `import.meta.globEager`
+
+- Significantly __faster__ than `import.meta.globEager`, as it serves a single file
+- Can use any __aliases__ you have defined in Vite, no need to use relative paths
+- Does not reload the page when files are added or removed

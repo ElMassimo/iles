@@ -137,7 +137,7 @@ When importing [MDX components][mdx], you use the `excerpt` prop to render HTML:
 <script setup>
 import Introduction from '~/pages/intro.mdx'
 
-const pages = Object.values(import.globEagerDefault('~/pages/posts/**/*.mdx'))
+const pages = useDocuments('~/pages/posts')
 </script>
 
 <template>

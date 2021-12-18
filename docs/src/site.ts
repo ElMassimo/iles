@@ -29,6 +29,7 @@ const site = {
         { text: 'Introduction', link: '/guide/introduction' },
         { text: 'Getting Started', link: '/guide' },
         { text: 'Development', link: '/guide/development' },
+        { text: 'Documents', link: '/guide/documents' },
         { text: 'Markdown', link: '/guide/markdown' },
         { text: 'Meta Tags', link: '/guide/meta-tags' },
         { text: 'Hydration', link: '/guide/hydration' },

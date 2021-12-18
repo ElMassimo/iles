@@ -1,23 +1,18 @@
-import type { PageComponent } from 'iles'
-import { computedInPage } from 'iles'
+import type { Document, PageComponent } from 'iles'
+import { computed } from 'vue'
 
 export interface Post extends PageComponent {
-  title: string
-  href: string
-  excerpt: string
   date: Date
   author: string
+  title: string
   twitter: string
 }
 
-function byDate (a: Post, b: Post) {
+function byDate (a: Document<Post>, b: Document<Post>) {
   return Number(new Date(b.date)) - Number(new Date(a.date))
 }
 
 export function getPosts () {
-  return computedInPage(() => {
-    // @ts-ignore
-    const posts = Object.values(import.meta.globEagerDefault('../pages/posts/**/*.{md,mdx}')) as Post[]
-    return posts.sort(byDate)
-  })
+  const posts = useDocuments<Post>('~/pages/posts')
+  return computed(() => posts.value.sort(byDate))
 }

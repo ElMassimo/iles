@@ -15,6 +15,7 @@ import { parseId } from './parse'
 import { wrapIslandsInSFC, wrapLayout } from './wrap'
 import { extendSite } from './site'
 import { autoImportComposables, writeComposablesDTS } from './composables'
+import documents from './documents'
 
 function isMarkdown (path: string) {
   return path.endsWith('.mdx') || path.endsWith('.md')
@@ -136,6 +137,8 @@ export default function IslandsPlugins (appConfig: AppConfig): PluginOption[] {
     plugins.vue,
     ...appConfig.vitePlugins,
     plugins.components,
+
+    documents(appConfig),
 
     {
       name: 'iles:composables',
