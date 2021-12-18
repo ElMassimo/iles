@@ -8,6 +8,7 @@
 [routing]: /guide/routing
 [hydration]: /guide/hydration
 [siteUrl]: /config#siteurl
+[useDocuments]: /guide/documents
 
 # Development 💻
 
@@ -110,15 +111,12 @@ const { frontmatter, meta } = usePage()
 
 ### Glob Imports
 
-You can leverage [`import.meta.glob`][glob] to import page components, which is
-very convenient when rendering collections or index pages.
+When rendering collections or index pages, you can leverage <kbd>[useDocuments]</kbd> to conveniently access multiple page components and their data.
 
-```ts {3}
-export function getPosts () {
-  const posts = Object.values(
-    import.meta.globEagerDefault('../pages/posts/**/*.mdx')
-  )
-  return posts.sort(byDate)
+```ts {2}
+export function usePosts () {
+  const posts = useDocuments('~/pages/posts')
+  return computed(() => posts.value.sort(byDate))
 }
 ```
 
@@ -126,9 +124,9 @@ Page data is available directly in the component modules:
 
 ```vue
 <script setup lang="ts">
-import { getPosts } from '~/logic/posts'
+import { usePosts } from '~/logic/posts'
 
-const posts = getPosts()
+const posts = usePosts()
 </script>
 
 <template>
@@ -138,7 +136,7 @@ const posts = getPosts()
     <h2>
       <a :href="post.href">{{ post.title }}</a>
     </h2>
-    <component :is="post"/>
+    <component :is="post" excerpt/>
   </article>
 </template>
 ```

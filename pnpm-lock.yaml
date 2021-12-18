@@ -2168,7 +2168,7 @@ packages:
     dependencies:
       debug: 4.3.3
       jiti: 1.12.9
-      windicss: 3.3.0
+      windicss: 3.4.0
     transitivePeerDependencies:
       - supports-color
     dev: true
@@ -2196,7 +2196,7 @@ packages:
       fast-glob: 3.2.7
       magic-string: 0.25.7
       micromatch: 4.0.4
-      windicss: 3.3.0
+      windicss: 3.4.0
     transitivePeerDependencies:
       - supports-color
     dev: true
@@ -2393,7 +2393,7 @@ packages:
       postcss: ^8.1.0
     dependencies:
       browserslist: 4.19.1
-      caniuse-lite: 1.0.30001287
+      caniuse-lite: 1.0.30001291
       fraction.js: 4.1.2
       normalize-range: 0.1.2
       picocolors: 1.0.0
@@ -2500,7 +2500,7 @@ packages:
     engines: {node: ^6 || ^7 || ^8 || ^9 || ^10 || ^11 || ^12 || >=13.7}
     hasBin: true
     dependencies:
-      caniuse-lite: 1.0.30001287
+      caniuse-lite: 1.0.30001291
       electron-to-chromium: 1.4.24
       escalade: 3.1.1
       node-releases: 2.0.1
@@ -2566,8 +2566,8 @@ packages:
     resolution: {integrity: sha512-zaEMRH6xg8ESMi2eQ3R4eZ5qw/hJiVsO/HlLwniIwErij0JDr9P+8V4dtx1l+kLq6j3yy8l8W4fst1lBnat5wQ==}
     dev: true
 
-  /caniuse-lite/1.0.30001287:
-    resolution: {integrity: sha512-4udbs9bc0hfNrcje++AxBuc6PfLNHwh3PO9kbwnfCQWyqtlzg3py0YgFu8jyRTTo85VAz4U+VLxSlID09vNtWA==}
+  /caniuse-lite/1.0.30001291:
+    resolution: {integrity: sha512-roMV5V0HNGgJ88s42eE70sstqGW/gwFndosYrikHthw98N5tLnOTxFqMLQjZVRxTWFlJ4rn+MsgXrR7MDPY4jA==}
     dev: true
 
   /chai-subset/1.6.0:
@@ -3218,7 +3218,7 @@ packages:
       is-shared-array-buffer: 1.0.1
       is-string: 1.0.7
       is-weakref: 1.0.2
-      object-inspect: 1.11.1
+      object-inspect: 1.12.0
       object-keys: 1.1.1
       object.assign: 4.1.2
       string.prototype.trimend: 1.0.4
@@ -5720,8 +5720,8 @@ packages:
     resolution: {integrity: sha512-jp7ikS6Sd3GxQfZJPyH3cjcbJF6GZPClgdV+EFygjFLQ5FmW/dRUnTd9PQ9k0JhoNDabWFbpF1yCdSWCC6gexg==}
     dev: true
 
-  /object-inspect/1.11.1:
-    resolution: {integrity: sha512-If7BjFlpkzzBeV1cqgT3OSWT3azyoxDGajR+iGnFBfVV2EWyDyWaZZW2ERDjUaY2QM8i5jI3Sj7mhsM4DDAqWA==}
+  /object-inspect/1.12.0:
+    resolution: {integrity: sha512-Ho2z80bVIvJloH+YzRmpZVQe87+qASmBUKZDWgx9cu+KDrX2ZDH/3tMy+gXbZETVGs2M8YdxObOh7XAtim9Y0g==}
 
   /object-is/1.1.5:
     resolution: {integrity: sha512-3cyDsyHgtmi7I7DfSSI2LDp6SK2lwvtbg0p0R1e0RvTqF5ceGx+K2dfSjm1bKDMVCFEDAQvy+o8c6a7VujOddw==}
@@ -6577,7 +6577,7 @@ packages:
     dependencies:
       call-bind: 1.0.2
       get-intrinsic: 1.1.1
-      object-inspect: 1.11.1
+      object-inspect: 1.12.0
 
   /signal-exit/3.0.6:
     resolution: {integrity: sha512-sDl4qMFpijcGw22U5w63KmD3cZJfBuFlVNbVMKje2keoKML7X2UzWbc4XrmEbDwg0NXJc3yv4/ox7b+JWb57kQ==}
@@ -7488,7 +7488,7 @@ packages:
       '@windicss/plugin-utils': 1.5.4
       debug: 4.3.3
       kolorist: 1.5.1
-      windicss: 3.3.0
+      windicss: 3.4.0
     transitivePeerDependencies:
       - supports-color
     dev: true
@@ -7833,8 +7833,8 @@ packages:
     hasBin: true
     dev: true
 
-  /windicss/3.3.0:
-    resolution: {integrity: sha512-LxA9iCPEe4lBbC5MGLo6g1gbJxYlTXpDCLJRaHo0EcEN6X0ki26hunOJWGcBvO9qz1r/ead1L7wS5MkSoOCIZQ==}
+  /windicss/3.4.0:
+    resolution: {integrity: sha512-X+9Y1/FPxX253Xo4Hk/qfVuvoAxgKx686Z6yHxmBFMH7wRCPdRO42na9k/yEnrW6EqCFJP/GcMIHn3QENaE42g==}
     engines: {node: '>= 12'}
     hasBin: true
     dev: true
