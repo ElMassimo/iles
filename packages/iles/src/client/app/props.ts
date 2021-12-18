@@ -1,11 +1,14 @@
 /* eslint-disable no-restricted-syntax */
 import type { RouteLocationNormalizedLoaded, RouteParams } from 'vue-router'
-import { shallowRef } from 'vue'
-import { pageFromRoute } from './composables/pageData'
+import { shallowRef, watch } from 'vue'
+import { computedInPage, pageFromRoute } from './composables/pageData'
 
 export function propsFromRoute (route: RouteLocationNormalizedLoaded) {
   if (import.meta.env.SSR)
     return route.meta.ssrProps as Record<string, any>
+
+  // Track dependencies of static paths
+  ;(route.meta.pathVariantsPromise as any).value
 
   const pathVariants = route.meta.pathVariants?.value || []
   const pathVariant = pathVariants.find(path => sameParams(path.params, route.params))
@@ -20,8 +23,21 @@ export async function resolveProps (route: RouteLocationNormalizedLoaded, ssrPro
     return
   }
 
-  const page = pageFromRoute(route)
+  if (!route.meta.pathVariants) {
+    route.meta.pathVariants = shallowRef([])
+    route.meta.pathVariantsPromise = computedInPage(() => getPathVariants(route))
+    watch(route.meta.pathVariantsPromise, promise => {
+      promise.then(pathVariants => route.meta.pathVariants!.value = pathVariants)
+    })
+  }
+
+  route.meta.pathVariants!.value = await route.meta.pathVariantsPromise!.value
+}
+
+async function getPathVariants (route: RouteLocationNormalizedLoaded) {
   try {
+    const page = pageFromRoute(route)
+
     if (page.getStaticPaths && Object.keys(route.params).length === 0)
       console.warn(`getStaticPaths provided in ${page.filename || route.path}, but path is not dynamic.`)
 
@@ -29,10 +45,7 @@ export async function resolveProps (route: RouteLocationNormalizedLoaded, ssrPro
     if (!Array.isArray(pathVariants))
       throw new Error(`Expected array from 'getStaticPaths' in ${page.filename}, got ${JSON.stringify(pathVariants)}`)
 
-    if (route.meta.pathVariants)
-      route.meta.pathVariants.value = pathVariants
-    else
-      route.meta.pathVariants = shallowRef(pathVariants)
+    return pathVariants
   }
   catch (error) {
     console.error(`Error while fetching props for ${route.path}.`)

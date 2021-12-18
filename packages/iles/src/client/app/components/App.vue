@@ -24,12 +24,6 @@ export default defineComponent({
       watch([page, layoutName], async ([page], [oldPage]) => {
         if (page === oldPage) await resolveLayout(route)
       })
-
-      // HMR for static path changes
-      const getStaticPaths = computed(() => page.value.getStaticPaths)
-      watch([page, getStaticPaths], async ([page], [oldPage]) => {
-        if (page === oldPage) await resolveProps(route)
-      })
     }
 
     return {

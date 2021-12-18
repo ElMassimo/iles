@@ -23,6 +23,7 @@ declare module 'vue-router' {
   interface RouteMeta {
     layout?: import('vue').Ref<import('vue').DefineComponent | false>
     pathVariants?: import('vue').Ref<StaticPath[]>
+    pathVariantsPromise?: import('vue').ComputedRef<Promise<StaticPath[]>>
   }
 }
 
