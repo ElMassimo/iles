@@ -65,22 +65,40 @@ export default function documentsPlugin (config: AppConfig): Plugin {
       const serialized = serialize(documents).replace(/component:"(\w+)"/g, (_, id) => {
         const index = id.split('_')[0]
         const { filename } = data[index].meta
-        return `component: () => import('/${filename}').then(m => m.default)`
+        return `component: unwrapDefault(() => import('/${filename}'))`
       })
 
-      // Use defineAsyncComponent to support using <component :is="doc"> directly.
+      // Use defineAsyncComponent to support using <component :is="doc">.
+      // HMR works by updating the value of the computed ref, while preserving
+      // any previously resolved component promises to avoid refetching.
       return `
         import { shallowRef, defineAsyncComponent } from 'vue'
 
         export const documents = ${serialized}
           .map(doc => ({ ...doc, ...defineAsyncComponent(doc.component) }))
 
-        documents.ref = shallowRef(documents)
+        export default documents.ref = shallowRef(documents)
 
-        export default documents.ref
+        function unwrapDefault (fn) {
+          let cached
+          return () => cached ||= fn().then(mod => mod.default)
+        }
 
         if (import.meta.hot)
-          import.meta.hot.accept(mod => __ILES_UPDATE_DOCUMENTS__(mod, documents))
+          import.meta.hot.accept(mod => {
+            const docs = documents.ref.value
+            const oldDocsByFile = {}
+            docs.forEach(doc => { oldDocsByFile[doc.filename] = doc })
+
+            documents.ref.value = mod.documents.map(newDoc => {
+              const oldDoc = oldDocsByFile[newDoc.filename]
+              if (!oldDoc) return newDoc
+              const { meta, frontmatter } = newDoc
+              return Object.assign(oldDoc, { ...meta, ...frontmatter, meta, frontmatter })
+            })
+
+            mod.documents.ref = documents.ref
+          })
       `
     },
     async transform (code, id) {
@@ -110,7 +128,7 @@ export default function documentsPlugin (config: AppConfig): Plugin {
         }
       }
     },
-    handleHotUpdate(ctx) {
+    handleHotUpdate (ctx) {
       const file = relative(root, ctx.file)
 
       for (const id in modulesById) {

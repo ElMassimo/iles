@@ -96,20 +96,7 @@ if (!import.meta.env.SSR) {
 
     const devtools = await import('./composables/devtools')
     devtools.installDevtools(app as any, config)
-    Object.assign(window, {
-      __ILES_PAGE_UPDATE__: forcePageUpdate,
-      __ILES_UPDATE_DOCUMENTS__ (mod: DocumentsModule, documents: DocumentsModule['documents']) {
-        const oldDocsByFile = Object.create(null)
-        documents.forEach(doc => { oldDocsByFile[doc.filename] = doc })
-        documents.ref.value = mod.documents.map(newDoc => {
-          const oldDoc = oldDocsByFile[newDoc.filename]
-          if (!oldDoc) return newDoc
-          const { meta, frontmatter } = newDoc
-          return Object.assign(oldDoc, { ...meta, ...frontmatter, meta, frontmatter })
-        })
-        mod.documents.ref = documents.ref
-      }
-    })
+    Object.assign(window, { __ILES_PAGE_UPDATE__: forcePageUpdate })
 
     router.afterEach(resetHydrationId) // reset island identifiers to match ssg.
     await router.isReady() // wait until page component is fetched before mounting
