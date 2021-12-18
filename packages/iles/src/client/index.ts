@@ -13,10 +13,10 @@ export { useVueRenderer } from './app/composables/vueRenderer'
 export { useRouter, useRoute } from 'vue-router'
 export { useHead } from '@vueuse/head'
 
-import type { ComponentOptionsWithoutProps } from 'vue'
+import type { ComponentOptionsWithoutProps, ComputedRef } from 'vue'
 import { UserApp, GetStaticPaths, PageComponent, Document } from '../../types/shared'
 
-export function useDocuments<T = PageComponent> (globPattern: string): Document<T>[] {
+export function useDocuments<T = PageComponent> (globPattern: string): ComputedRef<Document<T>[]> {
   throw new Error(`Unresolved useDocuments('${globPattern}')`)
 }
 
