@@ -183,6 +183,7 @@ importers:
       '@types/connect': ^3.4.35
       '@types/debug': ^4.1.7
       '@types/fs-extra': ^9.0.12
+      '@types/micromatch': ^4.0.2
       '@types/node': ^15.14.9
       '@types/unist': ^2.0.6
       '@vitejs/plugin-vue': ^2.0.0
@@ -201,6 +202,7 @@ importers:
       mdast-util-mdx-jsx: ^1.1.0
       mdast-util-mdxjs-esm: ^1.1.1
       mico-spinner: ^1.4.0
+      micromatch: ^4.0.4
       minimist: ^1.2.5
       npm-run-all: ^4.1.5
       pathe: ^0.2.0
@@ -253,6 +255,7 @@ importers:
       '@types/connect': 3.4.35
       '@types/debug': 4.1.7
       '@types/fs-extra': 9.0.12
+      '@types/micromatch': 4.0.2
       '@types/node': 15.14.9
       '@types/unist': 2.0.6
       chokidar: 3.5.2
@@ -263,6 +266,7 @@ importers:
       globby: 11.0.4
       mdast-util-mdx-jsx: 1.1.0
       mdast-util-mdxjs-esm: 1.1.1
+      micromatch: 4.0.4
       npm-run-all: 4.1.5
       rimraf: 3.0.2
       rollup: 2.59.0
@@ -1703,6 +1707,10 @@ packages:
     dependencies:
       '@types/estree': 0.0.50
 
+  /@types/braces/3.0.1:
+    resolution: {integrity: sha512-+euflG6ygo4bn0JHtn4pYqcXwRtLvElQ7/nnjDu7iYG56H0+OhCd7d6Ug0IE3WcFpZozBKW2+80FUbv5QGk5AQ==}
+    dev: true
+
   /@types/cacheable-request/6.0.2:
     resolution: {integrity: sha512-B3xVo+dlKM6nnKTcmm5ZtY/OL8bOAOd2Olee9M1zft65ox50OzjEHW91sDiU9j6cvW8Ejg1/Qkf4xd2kugApUA==}
     dependencies:
@@ -1792,6 +1800,12 @@ packages:
 
   /@types/mdx/2.0.1:
     resolution: {integrity: sha512-JPEv4iAl0I+o7g8yVWDwk30es8mfVrjkvh5UeVR2sYPpZCK44vrAPsbJpIS+rJAUxLgaSAMKTEH5Vn5qd9XsrQ==}
+
+  /@types/micromatch/4.0.2:
+    resolution: {integrity: sha512-oqXqVb0ci19GtH0vOA/U2TmHTcRY9kuZl4mqUxe0QmJAlIW13kzhuK5pi1i9+ngav8FjpSb9FVS/GE00GLX1VA==}
+    dependencies:
+      '@types/braces': 3.0.1
+    dev: true
 
   /@types/minimist/1.2.2:
     resolution: {integrity: sha512-jhuKLIRrhvCPLqwPcx6INqmKeiA5EWrsCOPhrlFSrbrmU4ZMPjj5Ul/oLCMDO98XRUIwVm78xICz4EPCektzeQ==}

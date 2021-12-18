@@ -11,6 +11,7 @@ export type {
   OnLoadFn,
   IslandsByPath,
   LayoutFactory,
+  Document,
   NamedPlugins,
   PageComponent,
   PageData,

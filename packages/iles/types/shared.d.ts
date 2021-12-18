@@ -1,7 +1,7 @@
 /* eslint-disable no-use-before-define */
 import type { ResolveFn, UserConfig as ViteOptions, ConfigEnv, PluginOption as VitePluginOption } from 'vite'
 import type { GetManualChunk } from 'rollup'
-import type { App, Ref, DefineComponent, VNode } from 'vue'
+import type { App, Ref, DefineComponent, VNode, AsyncComponentLoader } from 'vue'
 import type VuePlugin, { Options as VueOptions } from '@vitejs/plugin-vue'
 import type ComponentsPlugin from 'unplugin-vue-components/vite'
 import type { Options as ComponentOptions } from 'unplugin-vue-components/types'
@@ -26,15 +26,22 @@ export type RouterOptions = VueRouterOptions & { base?: string }
 
 export interface PageProps extends Record<string, any> {}
 
-export interface PageComponent extends RouteComponent, PageFrontmatter, PageMeta {
+interface PageData extends PageFrontmatter, PageMeta {
   frontmatter: PageFrontmatter
   meta: PageMeta
+}
+
+export interface PageComponent extends RouteComponent, PageData {
   layoutName: string
   layoutFn: false | (() => Promise<DefineComponent>)
   getStaticPaths?: GetStaticPaths
   staticPaths: Ref<StaticPath<any>[]>
   render?: (props?: any) => VNode<any, any, any>
 }
+
+export type Document<T = PageComponent> = AsyncComponentLoader<PageComponent & T> & PageData & {
+  component: () => Promise<PageComponent & T>
+} & T
 
 export interface PageData<T = PageProps> {
   readonly page: Ref<PageComponent>

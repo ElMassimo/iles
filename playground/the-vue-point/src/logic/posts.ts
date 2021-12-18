@@ -1,22 +1,20 @@
-import type { PageComponent } from 'iles'
+import type { Document, PageComponent } from 'iles'
 import { computed } from 'vue'
 
 export interface Post extends PageComponent {
-  title: string
-  href: string
-  excerpt: string
   date: Date
   author: string
+  title: string
   twitter: string
 }
 
-function byDate (a: Post, b: Post) {
+function byDate (a: Document<Post>, b: Document<Post>) {
   return Number(new Date(b.date)) - Number(new Date(a.date))
 }
 
 export function getPosts () {
   return computed(() => {
-    const posts = useDocuments('~/pages/posts')
+    const posts = useDocuments<Post>('~/pages/posts')
     return posts.sort(byDate)
   })
 }
