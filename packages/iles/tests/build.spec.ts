@@ -36,7 +36,7 @@ describe('building docs site', () => {
   })
 
   test('html files', async () => {
-    await assertHTML('404.html')
+    await assertHTML('404.html', { title: 'Not Found' })
     await assertHTML('index.html')
     await assertHTML('posts/1.html')
     await assertHTML('posts/2.html')

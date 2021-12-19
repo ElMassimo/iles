@@ -1,3 +1,7 @@
+<page>
+title: Not Found
+</page>
+
 <template layout="base">
   <MainContainer>
     <TheSidebar class="md:hidden"/>

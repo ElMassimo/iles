@@ -1,3 +1,7 @@
+<page>
+title: Not Found
+</page>
+
 <template>
   <div class="text-center">
     <p class="text-4xl">
