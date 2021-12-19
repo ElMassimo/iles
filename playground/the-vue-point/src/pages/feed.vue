@@ -22,7 +22,7 @@ const options: FeedOptions = {
 }
 
 const posts = $(getPosts())
-const items = $computed(() => posts.map(async doc => {
+const items = $computed(() => posts.map(async (doc) => {
   const post = await doc.component()
   return {
     title: post.title,

@@ -15,7 +15,6 @@ describe('building docs site', () => {
 
   test('generated files', async () => {
     const files = await glob('**/*', { cwd: `${vuePoint}/dist`, onlyFiles: true })
-    console.log({ files })
     expect(files.sort()).toEqual([
       '404.html',
       '_headers',
