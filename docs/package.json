@@ -23,7 +23,7 @@
     "@preact/preset-vite": "^2.1.5",
     "@vueuse/core": "^6.9.2",
     "autoprefixer": "^10.4.0",
-    "iles": "^0.7.15",
+    "iles": "^0.7.16",
     "postcss-nesting": "^8.0.1",
     "preact-render-to-string": "^5.1.19",
     "vite-plugin-inspect": "^0.3.11",
