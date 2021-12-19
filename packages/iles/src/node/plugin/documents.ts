@@ -114,7 +114,7 @@ export default function documentsPlugin (config: AppConfig): Plugin {
       // Replace each usage of useDocuments with an import of a virtual module.
       if (fileCanUseDocuments.test(id) && !definitionRegex.test(code)) {
         const paths: [string, string][] = []
-        code = code.replaceAll(usageRegex, (_, path) => {
+        code = code.replace(usageRegex, (_, path) => {
           path = path.trim().slice(1, -1)
           const id = `_documents_${paths.length}`
           paths.push([id, path])
