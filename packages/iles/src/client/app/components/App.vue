@@ -4,10 +4,12 @@ import { Head } from '@vueuse/head'
 import { usePage } from '../composables/pageData'
 import { useRouterLinks } from '../composables/routerLinks'
 import { resolveLayout } from '../layout'
+const DebugPanel = () => null
 
 export default defineComponent({
   name: 'îles',
   components: {
+    DebugPanel,
     Head,
   },
   setup () {
@@ -51,4 +53,5 @@ export default defineComponent({
       </component>
     </router-view>
   </Suspense>
+  <DebugPanel/>
 </template>
