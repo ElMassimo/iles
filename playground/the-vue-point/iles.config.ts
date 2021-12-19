@@ -26,8 +26,5 @@ export default defineConfig({
       windicss(),
       Boolean(process.env.DEBUG) && inspect(),
     ],
-    build: {
-      assetsInlineLimit: 0,
-    },
   },
 })
