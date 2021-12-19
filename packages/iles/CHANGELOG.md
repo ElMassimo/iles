@@ -1,3 +1,12 @@
+## [0.7.16](https://github.com/ElMassimo/iles/compare/v0.7.15...v0.7.16) (2021-12-19)
+
+
+### Bug Fixes
+
+* node 14 compatibility, replaceAll => replace ([587a176](https://github.com/ElMassimo/iles/commit/587a176ace6114b0abcd49be1f8eb65c8a532f31))
+
+
+
 ## [0.7.15](https://github.com/ElMassimo/iles/compare/v0.7.14...v0.7.15) (2021-12-19)
 
 
