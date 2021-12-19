@@ -21,21 +21,25 @@ const options: FeedOptions = {
     'Copyright (c) 2021-present, Yuxi (Evan) You and blog contributors',
 }
 
-let items = $computed(() => getPosts().value.map<FeedItem>(post => ({
-  title: post.title,
-  link: `${url}${post.href}`,
-  date: post.date,
-  description: post.excerpt,
-  content: post.render,
-  author: [
-    {
-      name: post.author,
-      link: post.twitter
-        ? `https://twitter.com/${post.twitter}`
-        : undefined,
-    },
-  ],
-})))
+const posts = $(getPosts())
+const items = $computed(() => posts.map(async doc => {
+  const post = await doc.component()
+  return {
+    title: post.title,
+    link: `${url}${post.href}`,
+    date: post.date,
+    description: () => post.excerpt,
+    content: post,
+    author: [
+      {
+        name: post.author,
+        link: post.twitter
+          ? `https://twitter.com/${post.twitter}`
+          : undefined,
+      },
+    ],
+  } as FeedItem
+}))
 </script>
 
 <template>

@@ -1,7 +1,7 @@
 import type { FeedOptions, Item as ResolvedItem, Author, Extension } from 'feed'
-import type { useVueRenderer } from 'iles'
+import type { VueRenderable } from 'iles'
 
-export type AsyncContent = string | Parameters<ReturnType<typeof useVueRenderer>>[0]
+export type AsyncContent = string | VueRenderable
 
 export { FeedOptions, ResolvedItem, Author, Extension }
 

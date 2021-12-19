@@ -39,7 +39,7 @@ export interface PageComponent extends RouteComponent, WithFrontmatter {
   render?: (props?: any) => VNode<any, any, any>
 }
 
-export type Document<T = PageComponent> = AsyncComponentLoader<PageComponent & T> & WithFrontmatter & {
+export type Document<T = void> = AsyncComponentLoader<PageComponent & T> & WithFrontmatter & {
   component: () => Promise<PageComponent & T>
 } & T
 

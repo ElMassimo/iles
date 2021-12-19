@@ -9,14 +9,14 @@ export { useAppConfig } from './app/composables/appConfig'
 export { usePage, computedInPage } from './app/composables/pageData'
 export { useFile } from './app/composables/file'
 export { useMDXComponents, provideMDXComponents } from './app/composables/mdxComponents'
-export { useVueRenderer } from './app/composables/vueRenderer'
+export { useVueRenderer, VueRenderable } from './app/composables/vueRenderer'
 export { useRouter, useRoute } from 'vue-router'
 export { useHead } from '@vueuse/head'
 
 import type { ComponentOptionsWithoutProps, ComputedRef } from 'vue'
-import { UserApp, GetStaticPaths, PageComponent, Document } from '../../types/shared'
+import { UserApp, GetStaticPaths, Document } from '../../types/shared'
 
-export function useDocuments<T = PageComponent> (globPattern: string): ComputedRef<Document<T>[]> {
+export function useDocuments<T = void> (globPattern: string): ComputedRef<Document<T>[]> {
   throw new Error(`Unresolved useDocuments('${globPattern}')`)
 }
 

@@ -8,10 +8,12 @@ const formats: Record<string, FeedFormat> = {
   json: 'json1',
 }
 
+type MaybeAsync<T> = Promise<T> | T
+
 export interface FeedProps<T = FeedItem> {
   format?: 'atom' | 'rss' | 'json'
   options: FeedOptions
-  items?: T[]
+  items?: MaybeAsync<T>[]
   categories?: string[]
   contributors?: Author[]
   extensions?: Extension[]
@@ -22,7 +24,7 @@ export const RenderFeed = defineComponent({
   props: {
     format: { type: String as PropType<'atom' | 'rss' | 'json'>, required: true },
     options: { type: Object as PropType<FeedOptions>, required: true },
-    items: { type: Array as PropType<FeedItem[]>, default: undefined },
+    items: { type: Array as PropType<MaybeAsync<FeedItem>[]>, default: undefined },
     categories: { type: Array as PropType<string[]>, default: undefined },
     contributors: { type: Array as PropType<Author[]>, default: undefined },
     extensions: { type: Array as PropType<Extension[]>, default: undefined },
@@ -36,15 +38,18 @@ export const RenderFeed = defineComponent({
       if (!format) throw new Error(`@islands/feed: Unknown format '${props.format}'`)
 
       return h(defineAsyncComponent(async () => {
-        let { items = [] } = props
+        const maybeItems = props.items || []
 
-        const promises = items.map(async ({ description, content, ...item }) => ({
-          ...item,
-          description: skipRender(description) ? description : await renderContent(description),
-          content: skipRender(content) ? content : await renderContent(content),
+        const items = await Promise.all(maybeItems.map(async (maybeItem) => {
+          const { description, content, ...item } = await maybeItem
+          return {
+            ...item,
+            description: skipRender(description) ? description : await renderContent(description),
+            content: skipRender(content) ? content : await renderContent(content),
+          }
         }))
 
-        return await renderComponent(format, { ...props, items: await Promise.all(promises) })
+        return await renderComponent(format, { ...props, items })
       }))
     }
   },
@@ -54,7 +59,8 @@ async function renderFeed (format: FeedFormat, { options, ...props }: FeedProps<
   const { Feed } = await import('feed')
   const feed = new Feed(options)
 
-  props.items?.forEach(feed.addItem)
+  if (props.items)
+    (await Promise.all(props.items)).forEach(feed.addItem)
   props.categories?.forEach(feed.addCategory)
   props.contributors?.forEach(feed.addContributor)
   props.extensions?.forEach(feed.addExtension)
