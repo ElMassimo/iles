@@ -214,7 +214,7 @@ function appConfigDefaults (appConfig: AppConfig, userConfig: UserConfig): AppCo
     namedPlugins: {} as NamedPlugins,
     resolvePath: undefined as any,
     vitePlugins: [],
-    vite: viteConfigDefaults(root),
+    vite: viteConfigDefaults(root, userConfig),
     vue: {
       reactivityTransform: true,
       template: {
@@ -252,11 +252,11 @@ function appConfigDefaults (appConfig: AppConfig, userConfig: UserConfig): AppCo
   }
 }
 
-function viteConfigDefaults (root: string): ViteOptions {
+function viteConfigDefaults (root: string, userConfig: UserConfig): ViteOptions {
   return {
     root,
     resolve: {
-      alias: resolveAliases(root),
+      alias: resolveAliases(root, userConfig),
       dedupe: ['vue', 'vue-router', '@vueuse/head', '@vue/devtools-api'],
     },
     server: {

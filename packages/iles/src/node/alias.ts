@@ -1,3 +1,4 @@
+import type { UserConfig } from './shared'
 import { join, dirname, resolve } from 'pathe'
 import { Alias, AliasOptions } from 'vite'
 
@@ -30,13 +31,15 @@ export const USER_SITE_REQUEST_PATH = `/${USER_SITE_ID}`
 
 export const NOT_FOUND_REQUEST_PATH = '@islands/components/NotFound'
 
-export function resolveAliases (root: string): AliasOptions {
+export function resolveAliases (root: string, userConfig: UserConfig): AliasOptions {
   const paths: Record<string, string> = {
     '/@shared': SHARED_PATH,
     [USER_APP_ID]: USER_APP_REQUEST_PATH,
     [USER_SITE_ID]: USER_SITE_REQUEST_PATH,
     [APP_CONFIG_ID]: APP_CONFIG_REQUEST_PATH,
   }
+
+  const { srcDir = 'src' } = userConfig
 
   const aliases: Alias[] = [
     ...Object.keys(paths).map(p => ({
@@ -45,7 +48,7 @@ export function resolveAliases (root: string): AliasOptions {
     })),
     {
       find: /^[~@]\//,
-      replacement: `${resolve(root, 'src')}/`,
+      replacement: `${resolve(root, srcDir)}/`,
     },
     {
       find: /^iles$/,
