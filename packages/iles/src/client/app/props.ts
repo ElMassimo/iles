@@ -7,10 +7,6 @@ export function propsFromRoute (route: RouteLocationNormalizedLoaded) {
   if (import.meta.env.SSR)
     return route.meta.ssrProps as Record<string, any>
 
-    // Track dependencies of static paths
-    // eslint-disable-next-line no-unused-expressions
-    ;(route.meta.pathVariantsPromise as any).value
-
   const pathVariants = route.meta.pathVariants?.value || []
   const pathVariant = pathVariants.find(path => sameParams(path.params, route.params))
   if (Object.keys(route.params).length > 0 && !pathVariant)
@@ -27,12 +23,13 @@ export async function resolveProps (route: RouteLocationNormalizedLoaded, ssrPro
   if (!route.meta.pathVariants) {
     route.meta.pathVariants = shallowRef([])
     route.meta.pathVariantsPromise = computedInPage(() => getPathVariants(route))
-    watch(route.meta.pathVariantsPromise, (promise) => {
-      promise.then(pathVariants => route.meta.pathVariants!.value = pathVariants)
+    watch(route.meta.pathVariantsPromise, async (promise) => {
+      const pathVariants = await promise
+      if (pathVariants.length !== 0 || pathVariants.length !== route.meta.pathVariants!.value.length)
+        route.meta.pathVariants!.value = pathVariants
     })
+    route.meta.pathVariants!.value = await route.meta.pathVariantsPromise!.value
   }
-
-  route.meta.pathVariants!.value = await route.meta.pathVariantsPromise!.value
 }
 
 async function getPathVariants (route: RouteLocationNormalizedLoaded) {
