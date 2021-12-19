@@ -54,6 +54,7 @@ async function executeCommand (command: string) {
     const { spawn } = await import('child_process')
     const args = process.argv.slice(2 + argv._.length)
     spawn('vitest', ['--config', CONFIG_PATH, ...args], { stdio: 'inherit' })
+      .on('exit', code => process.exit(code || 1))
   }
   else {
     console.error(pc.red(`unknown command "${command}".`))
