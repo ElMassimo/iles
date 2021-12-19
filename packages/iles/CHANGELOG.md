@@ -1,3 +1,18 @@
+## [0.7.15](https://github.com/ElMassimo/iles/compare/v0.7.14...v0.7.15) (2021-12-19)
+
+
+### Bug Fixes
+
+* preserve exit code when running iles test ([0178b20](https://github.com/ElMassimo/iles/commit/0178b207262e577a1933dfb0aaea981633fd79dc))
+* prevent bug in vue during hmr when no instances are active ([4008502](https://github.com/ElMassimo/iles/commit/40085025afe987f647003557a43e79fdf078d372))
+
+
+### Features
+
+* allow async items in feeds ([2cda3fc](https://github.com/ElMassimo/iles/commit/2cda3fcdb743a1e80c902a69aef0d2ea12ba1dd9))
+
+
+
 ## [0.7.14](https://github.com/ElMassimo/iles/compare/v0.7.13...v0.7.14) (2021-12-18)
 
 
