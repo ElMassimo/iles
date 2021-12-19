@@ -15,12 +15,13 @@ describe('building docs site', () => {
 
   test('generated files', async () => {
     const files = await glob('**/*', { cwd: `${vuePoint}/dist`, onlyFiles: true })
+    console.log({ files })
     expect(files.sort()).toEqual([
       '404.html',
       '_headers',
       'assets/bench.7e185856.png',
       'assets/style.daf210ac.css',
-      'assets/turbo.eab766fc.js',
+      'assets/turbo.a9e83070.js',
       'favicon.ico',
       'feed.rss',
       'index.html',
