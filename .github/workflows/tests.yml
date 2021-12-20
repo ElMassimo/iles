@@ -39,3 +39,6 @@ jobs:
 
       - name: Docs TS Check
         run: pnpm docs:check
+
+      - name: Cypress
+        run: cd docs && pnpm run cy:run

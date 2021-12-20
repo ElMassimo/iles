@@ -1,0 +1,17 @@
+#!/bin/bash
+
+# scripts/test-cypress: Starts the local server and runs Cypress tests.
+set -e
+cd "$(dirname "$0")/.."
+
+echo '== Building Docs Site =='
+# npm run build
+
+echo '== Starting server =='
+npm run preview &
+
+echo '== Waiting for server to respond... =='
+npx wait-on http-get://localhost:3050 --delay 1000 --timeout 5000
+
+echo '== Server ready! =='
+npm run test:cypress && echo '== Finished! =='

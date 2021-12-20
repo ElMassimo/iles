@@ -5,11 +5,14 @@
   "scripts": {
     "dev": "iles --open",
     "build": "iles build",
-    "preview": "iles preview --open",
+    "preview": "iles preview --open --port 3050",
     "now": "npm run build && npm run preview",
     "check": "vue-tsc --noEmit",
     "link": "pnpm link ../packages/iles",
-    "unlink": "pnpm unlink ../packages/iles"
+    "unlink": "pnpm unlink ../packages/iles",
+    "cy": "cypress open",
+    "cy:run": "scripts/test-cypress",
+    "test:cypress": "cypress run"
   },
   "engines": {
     "node": "^14.18 || >= 16.0.0"

@@ -17,6 +17,7 @@
     "test": "iles test"
   },
   "devDependencies": {
+    "@cypress/vite-dev-server": "^2.2.2",
     "@islands/hydration": "*",
     "@islands/mdx": "*",
     "@islands/pages": "*",
@@ -25,6 +26,7 @@
     "@mussi/stylelint-config": "^0.1.1",
     "concurrently": "^6.4.0",
     "conventional-changelog-cli": "^2.1.1",
+    "cypress": "^9.2.0",
     "enquirer": "^2.3.6",
     "eslint": "^7.32.0",
     "execa": "^5.1.1",
