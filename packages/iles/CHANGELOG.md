@@ -1,3 +1,13 @@
+## [0.7.17](https://github.com/ElMassimo/iles/compare/v0.7.16...v0.7.17) (2021-12-20)
+
+
+### Bug Fixes
+
+* ensure ~/ and @/ aliases are resolved using the provided srcDir ([7731f16](https://github.com/ElMassimo/iles/commit/7731f16218579759ae1a2f705e123d238944436d))
+* resolve DebugPanel explicitly instead of using unplugin-vue-components ([4adb38a](https://github.com/ElMassimo/iles/commit/4adb38a301b7c3728e7d0580d9c07274c9f8c1bf))
+
+
+
 ## [0.7.16](https://github.com/ElMassimo/iles/compare/v0.7.15...v0.7.16) (2021-12-19)
 
 
