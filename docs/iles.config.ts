@@ -13,6 +13,11 @@ export default defineConfig({
     '@islands/icons',
     '@islands/prism',
   ],
+  markdown: {
+    rehypePlugins: [
+      'rehype-external-links',
+    ],
+  },
   ssg: {
     manualChunks (id, api) {
       if (id.includes('preact') || id.includes('algolia') || id.toLowerCase().includes('docsearch'))
