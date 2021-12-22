@@ -16,5 +16,5 @@ export const goBackHome = () => {
 
 // Give Turbo time to replace the body and activate the scripts.
 export const waitForTurbo = () => {
-  cy.wait(100)
+  cy.wait(500)
 }
