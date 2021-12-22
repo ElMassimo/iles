@@ -16,6 +16,9 @@
     "lib": ["ESNext", "DOM"],
     "paths": {
       "~/*": ["src/*"]
-    }
+    },
+    "exclude": [
+      "node_modules/cypress"
+    ]
   }
 }
