@@ -222,11 +222,6 @@ function appConfigDefaults (appConfig: AppConfig, userConfig: UserConfig, env: C
         compilerOptions: {},
       },
     },
-    // Adds lastUpdated meta field.
-    extendFrontmatter (frontmatter, filename) {
-      frontmatter.meta.lastUpdated
-        = new Date(Math.round(fs.statSync(filename).mtimeMs))
-    },
     // Adds handling for explicit HTML urls.
     extendRoute (route) {
       if (appConfig.prettyUrls === false)

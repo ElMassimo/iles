@@ -23,6 +23,9 @@ export function handleHMR (api: PagesApi, options: ResolvedOptions, clearRoutes:
       invalidatePageFiles(path, server)
       debug.hmr('change', path)
       return needsReload
+    } else {
+      const info = server.pluginContainer.getModuleInfo(path)
+      if (info) info.meta = { sameFrontmatter: true, ...info.meta }
     }
   })
 
