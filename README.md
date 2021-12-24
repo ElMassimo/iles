@@ -85,7 +85,7 @@ Visit the [documentation website][docs] to check out the [guides][guide] and sea
 - [xdm]: provides amazing flexibility when processing Markdown
 - [vue-router], [@vueuse/head], and [vite-plugin-pages]: the backbone of this library
 - [unplugin-vue-components]: allows you to avoid the boilerplate
-- [Vitepress] and [vite-ssg]: for their different ideas on SSR
+- [VitePress] and [vite-ssg]: for their different ideas on SSR
 
 [Vite]: https://vitejs.dev/
 [Vue]: https://v3.vuejs.org/
@@ -93,7 +93,7 @@ Visit the [documentation website][docs] to check out the [guides][guide] and sea
 [Astro]: https://docs.astro.build/core-concepts/component-hydration
 [vite-plugin-pages]: https://github.com/hannoeru/vite-plugin-pages
 [unplugin-vue-components]: https://github.com/antfu/unplugin-vue-components
-[Vitepress]: https://vitepress.vuejs.org/
+[VitePress]: https://vitepress.vuejs.org/
 [vite-ssg]: https://github.com/antfu/vite-ssg
 [vue-router]: https://next.router.vuejs.org/
 [@vueuse/head]: https://github.com/vueuse/head

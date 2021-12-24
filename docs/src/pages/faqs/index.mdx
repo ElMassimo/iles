@@ -2,7 +2,7 @@
 [Vue]: https://v3.vuejs.org/
 [xdm]: https://github.com/wooorm/xdm
 [Astro]: https://docs.astro.build/core-concepts/component-hydration
-[Vitepress]: https://vitepress.vuejs.org/
+[VitePress]: https://vitepress.vuejs.org/
 [vite-ssg]: https://github.com/antfu/vite-ssg
 [vite-plugin-pages]: https://github.com/hannoeru/vite-plugin-pages
 [unplugin-vue-components]: https://github.com/antfu/unplugin-vue-components
@@ -32,7 +32,7 @@ entire page.
 
 ## Motivation 🤔
 
-I started working on <Iles/> because I wanted [Vitepress] + [Astro] using <ViteLogo/> instead of Snowpack.
+I started working on <Iles/> because I wanted [VitePress] + [Astro] using <ViteLogo/> instead of Snowpack.
 
 <Iles/> philosophy is to provide a smooth integration with Vite.js and its
 wonderful plugin ecosystem, and enable using [components from any frameworks][frameworks] so that you can focus on shipping value.
@@ -47,25 +47,25 @@ Would like to hear more? [Listen to this recent podcast][podcast].
 
 > Pull requests to add more comparisons are welcome!
 
-### [Vitepress] <ViteLogo/>
+### [VitePress] <ViteLogo/>
 
-Love Vitepress! Highly recommend it for most documentation websites. This site
+Love VitePress! Highly recommend it for most documentation websites. This site
 uses <Iles/> mostly for dogfooding purposes.
 
 The main difference is that <Iles/> supports [partial hydration][hydration], so
 you can ship JS only for the interactive parts of the page. Currently, partial
-hydration in Vitepress is a manual process, and its default mode is targeted at
+hydration in VitePress is a manual process, and its default mode is targeted at
 building single-page applications.
 
-Vitepress has an MPA mode to strip away all JS. In <Iles/> that happens
+VitePress has an MPA mode to strip away all JS. In <Iles/> that happens
 automatically if you don't use [hydration directives][hydration].
 
 <Tip>
-Use Vitepress if you are building a documentation website, don't need [partial hydration][hydration], or if it has to be a single-page application.
+Use VitePress if you are building a documentation website, don't need [partial hydration][hydration], or if it has to be a single-page application.
 </Tip>
 
 <Tip>
-When migrating an existing site from Vitepress to <Iles/>, you might want to disable <kbd>[prettyUrls]</kbd>.
+When migrating an existing site from VitePress to <Iles/>, you might want to disable <kbd>[prettyUrls]</kbd>.
 </Tip>
 
 ### [Astro] <AstroLogo/>
@@ -96,7 +96,7 @@ Use Astro if you are not familiar with Vue, or don't like its template syntax.
 - [xdm]: provides amazing flexibility when processing Markdown
 - [vue-router], [@vueuse/head], and [vite-plugin-pages]: the backbone of this library
 - [unplugin-vue-components]: allows you to avoid the boilerplate
-- [Vitepress] and [vite-ssg]: for their different ideas on SSR
+- [VitePress] and [vite-ssg]: for their different ideas on SSR
 
 [vue-router]: https://next.router.vuejs.org/
 [@vueuse/head]: https://github.com/vueuse/head
