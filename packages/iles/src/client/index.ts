@@ -7,7 +7,6 @@ export type { Router, RouteRecordRaw } from './shared'
 // Composables
 export { useAppConfig } from './app/composables/appConfig'
 export { usePage, computedInPage } from './app/composables/pageData'
-export { useFile } from './app/composables/file'
 export { useMDXComponents, provideMDXComponents } from './app/composables/mdxComponents'
 export { useVueRenderer, VueRenderable } from './app/composables/vueRenderer'
 export { useRouter, useRoute } from 'vue-router'
