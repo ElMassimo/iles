@@ -1,3 +1,12 @@
+## [0.7.18](https://github.com/ElMassimo/iles/compare/v0.7.17...v0.7.18) (2021-12-24)
+
+
+### Bug Fixes
+
+* include config.js in the package ([0cd660a](https://github.com/ElMassimo/iles/commit/0cd660a7abf216fb0b66f905aa65f7ea6678da4b))
+
+
+
 ## [0.7.17](https://github.com/ElMassimo/iles/compare/v0.7.16...v0.7.17) (2021-12-20)
 
 
