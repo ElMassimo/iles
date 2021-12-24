@@ -1,3 +1,21 @@
+## [0.7.19](https://github.com/ElMassimo/iles/compare/v0.7.18...v0.7.19) (2021-12-24)
+
+
+### Bug Fixes
+
+* remove useFile to allow the latest vitest to load iles correctly ([94f7723](https://github.com/ElMassimo/iles/commit/94f77230bed69ffd720a872f094fbdd3d55537da))
+
+
+### BREAKING CHANGES
+
+* `useFile` can be replicated in userland, sites relying
+on it can copy this short composable and adapt it to their needs.
+
+Most of the time, it's not necessary to resolve against the root, as fs
+will resolve relative paths against `process.cwd`.
+
+
+
 ## [0.7.18](https://github.com/ElMassimo/iles/compare/v0.7.17...v0.7.18) (2021-12-24)
 
 
