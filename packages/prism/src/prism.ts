@@ -52,7 +52,6 @@ const remarkPlugin: Plugin<[PrismOptions], Root> = function RemarkPrismPlugin (o
       if (grammar) {
         const codeHtml = highlightCode(node.value, grammar, lang, node.meta || '', options)
         parent!.children[index!] = { type: 'mdxFlowExpression', value: codeHtml, data: { raw: true, count: 1 } } as any
-        console.log({ children: parent!.children })
       }
       return SKIP
     })

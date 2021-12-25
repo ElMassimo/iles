@@ -8,6 +8,18 @@ export type PluginOption = PluginLike | Promise<PluginLike> | string | [string, 
 
 type XdmOptions = Omit<CompileOptions, 'remarkPlugins' | 'rehypePlugins' | 'recmaPlugins'>
 
+import type { MDXFlowExpression } from 'mdast-util-mdx-expression'
+
+declare module 'hast' {
+  interface RootContentMap {
+    mdxFlowExpression: MDXFlowExpression
+  }
+
+  interface ElementContentMap {
+    mdxFlowExpression: MDXFlowExpression
+  }
+}
+
 export interface MarkdownOptions extends XdmOptions {
   /**
    * Recma plugins that should be used to process files.
@@ -29,4 +41,9 @@ export interface MarkdownOptions extends XdmOptions {
    * `vite-imagetools` or other rollup plugins.
    */
   withImageSrc?: (src: string, file: VFile) => string | void
+
+  /**
+   * Built-in tags that should not be optimized as HTML.
+   */
+  overrideTags?: string[]
 }

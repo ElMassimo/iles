@@ -17,7 +17,7 @@ export function vueMdx (): any {
       recmaPlugins: [recmaPlugin],
     },
     configResolved (config: any) {
-      const { markdown, prettyUrls } = config
+      const { markdown, prettyUrls, srcDir } = config
 
       markdown.remarkPlugins.unshift(
         [remarkFrontmatter, ['yaml', 'toml']],
