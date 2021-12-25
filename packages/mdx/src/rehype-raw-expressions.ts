@@ -1,5 +1,5 @@
 import type { Raw } from 'hast-util-raw'
-import type { Identifier, CallExpression, VariableDeclarator, ExpressionStatement } from 'estree'
+import type { Identifier, CallExpression, VariableDeclarator, Expression, ExpressionStatement } from 'estree'
 import type { MDXFlowExpression } from 'mdast-util-mdx-expression'
 import type { MDXJSEsm } from 'mdast-util-mdxjs-esm'
 import type { Plugin } from 'unified'
@@ -101,19 +101,23 @@ function setDynamic (node: Node) {
 }
 
 function hoistRawNodes (hoisted: Hoisted, nodes: Child[]): MDXFlowExpression {
-  const id: Identifier = { type: 'Identifier', name: `_mdh_${hoisted.length}` }
-
-  hoisted.push(variableForRawNodes(id, toHtml(nodes), nodes.length))
-
-  const statement: ExpressionStatement = {
-    type: 'ExpressionStatement',
-    expression: id,
+  let expression: Expression
+  if (nodes.length === 1 && nodes[0].type === 'text') {
+    const { value } = nodes[0]
+    expression = { type: 'Literal', value, raw: JSON.stringify(value) }
+  }
+  else {
+    const id: Identifier = { type: 'Identifier', name: `_mdh_${hoisted.length}` }
+    hoisted.push(variableForRawNodes(id, toHtml(nodes), nodes.length))
+    expression = id
   }
 
   return {
     type: 'mdxFlowExpression',
     value: NOT_USED,
-    data: { estree: { type: 'Program', sourceType: 'module', body: [statement] } },
+    data: { estree: { type: 'Program', sourceType: 'module', body: [
+      { type: 'ExpressionStatement', expression },
+    ]}},
   }
 }
 
