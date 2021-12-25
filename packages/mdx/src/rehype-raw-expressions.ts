@@ -11,7 +11,7 @@ type Child = Content
 type Node = Parent | Child
 
 type RawPlugin = Plugin<[MarkdownOptions], Parent, Parent>
-type Visitor = (node: Child, index: number, parent: null | Parent) => void
+type Visitor = (node: Child, parent?: Parent) => void
 type Hoisted = VariableDeclarator[]
 
 const toHtmlOptions: ToHtmlOptions = { allowDangerousHtml: true }
@@ -24,7 +24,7 @@ export const rehypeRawExpressions: RawPlugin = options => (ast, vfile) => {
   const shouldCreateTags = new Set(options.overrideTags || [])
   const hoisted: Hoisted = []
 
-  const enter: Visitor = (node, index, parent) => {
+  const enter: Visitor = (node) => {
     if (node.type === 'mdxFlowExpression' && node.data?.raw)
       // @ts-ignore
       node.type = 'raw'
@@ -33,7 +33,7 @@ export const rehypeRawExpressions: RawPlugin = options => (ast, vfile) => {
       setDynamic(node)
   }
 
-  const leave: Visitor = (node, index, parent) => {
+  const leave: Visitor = (node, parent) => {
     if (isDynamic(node)) {
       if (parent)
         setDynamic(parent)
@@ -43,22 +43,18 @@ export const rehypeRawExpressions: RawPlugin = options => (ast, vfile) => {
     }
   }
 
-  const visit: Visitor = (node, index, parent) => {
+  const visit: Visitor = (node, parent) => {
     if (!node) return
 
-    enter(node, index, parent)
+    enter(node, parent)
 
-    if ('children' in node) {
-      const { children } = node
-      const length = children.length
-      for (let i = 0; i < length; i++)
-        visit(children[i], i, node)
-    }
+    if ('children' in node)
+      node.children.forEach(child => visit(child, node))
 
-    leave(node, index, parent)
+    leave(node, parent)
   }
 
-  visit(ast as any, 0, null)
+  visit(ast as any)
 
   if (hoisted.length)
     ast.children.unshift({
