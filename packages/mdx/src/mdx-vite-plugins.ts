@@ -68,20 +68,13 @@ export default _sfc_main`)
         if (!shouldTransform(path)) return
 
         const hmrId = hash(`${path.split('?', 2)[0]}default`)
-        const sameFrontmatter = this.getModuleInfo(path)?.meta.sameFrontmatter
 
         return `${code}
       _sfc_main.__hmrId = "${hmrId}"
       __VUE_HMR_RUNTIME__.createRecord("${hmrId}", _sfc_main)
-      export const _sameFrontmatter = ${sameFrontmatter}
-      import.meta.hot.accept(mod => {
-        if (mod) {
-          const updated = mod.default
-          if (mod._sameFrontmatter)
-            __VUE_HMR_RUNTIME__.rerender(updated.__hmrId, updated.render)
-          else
-            __VUE_HMR_RUNTIME__.reload(updated.__hmrId, updated)
-        }
+      import.meta.hot.accept(({ default: component } = {}) => {
+        if (component)
+          __VUE_HMR_RUNTIME__.reload(component.__hmrId, component)
       })
       `
       },

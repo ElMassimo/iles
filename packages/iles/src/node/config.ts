@@ -1,6 +1,6 @@
 /* eslint-disable no-restricted-syntax */
-import fs from 'fs'
 import { join, resolve } from 'pathe'
+import { promises as fs } from 'fs'
 import pc from 'picocolors'
 import creatDebugger from 'debug'
 import { loadConfigFromFile, mergeConfig as mergeViteConfig } from 'vite'
@@ -221,6 +221,11 @@ function appConfigDefaults (appConfig: AppConfig, userConfig: UserConfig, env: C
       template: {
         compilerOptions: {},
       },
+    },
+    // Adds lastUpdated meta field.
+    async extendFrontmatter (frontmatter, filename) {
+      frontmatter.meta.lastUpdated
+        = (await fs.stat(filename)).mtime
     },
     // Adds handling for explicit HTML urls.
     extendRoute (route) {
