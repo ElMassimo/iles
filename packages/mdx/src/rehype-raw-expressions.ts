@@ -1,5 +1,5 @@
 import type { Raw } from 'hast-util-raw'
-import type { ExpressionStatement } from 'estree'
+import type { Identifier, CallExpression, VariableDeclarator, ExpressionStatement } from 'estree'
 import type { MDXFlowExpression } from 'mdast-util-mdx-expression'
 import type { MDXJSEsm } from 'mdast-util-mdxjs-esm'
 import type { Plugin } from 'unified'
@@ -12,6 +12,7 @@ type Node = Parent | Child
 
 type RawPlugin = Plugin<[MarkdownOptions], Parent, Parent>
 type Visitor = (node: Child, index: number, parent: null | Parent) => void
+type Hoisted = VariableDeclarator[]
 
 const toHtmlOptions: ToHtmlOptions = { allowDangerousHtml: true }
 
@@ -21,7 +22,7 @@ const toHtmlOptions: ToHtmlOptions = { allowDangerousHtml: true }
  */
 export const rehypeRawExpressions: RawPlugin = options => (ast, vfile) => {
   const shouldCreateTags = new Set(options.overrideTags || [])
-  const hoisted: MDXJSEsm[] = []
+  const hoisted: Hoisted = []
 
   const enter: Visitor = (node, index, parent) => {
     if (node.type === 'mdxFlowExpression' && node.data?.raw)
@@ -38,7 +39,7 @@ export const rehypeRawExpressions: RawPlugin = options => (ast, vfile) => {
         setDynamic(parent)
 
       if ('children' in node)
-        node.children = stringifyNodes(node.children) as any
+        node.children = stringifyNodes(hoisted, node.children) as any
     }
   }
 
@@ -58,17 +59,26 @@ export const rehypeRawExpressions: RawPlugin = options => (ast, vfile) => {
   }
 
   visit(ast as any, 0, null)
+
+  if (hoisted.length)
+    ast.children.unshift({
+      type: 'mdxjsEsm',
+      value: NOT_USED,
+      data: { estree: { type: 'Program', sourceType: 'module', body: [
+        { kind: 'const', type: 'VariableDeclaration', declarations: hoisted },
+      ]}},
+    } as MDXJSEsm as any)
 }
 
 const NOT_USED = '_not_used_'
 
-function stringifyNodes (nodes: Child[]) {
+function stringifyNodes (hoisted: Hoisted, nodes: Child[]) {
   const result: Child[] = []
   let rawNodes: Child[] = []
 
   const flushRawNodes = () => {
     if (rawNodes.length) {
-      result.push(toRaw(rawNodes))
+      result.push(hoistRawNodes(hoisted, rawNodes))
       rawNodes = []
     }
   }
@@ -94,8 +104,21 @@ function setDynamic (node: Node) {
   ;(node.data ||= {})._createVNode = true
 }
 
-function toRaw (nodes: Child[]) {
-  return toRawExpression(toHtml(nodes), nodes.length)
+function hoistRawNodes (hoisted: Hoisted, nodes: Child[]): MDXFlowExpression {
+  const id: Identifier = { type: 'Identifier', name: `_mdh_${hoisted.length}` }
+
+  hoisted.push(variableForRawNodes(id, toHtml(nodes), nodes.length))
+
+  const statement: ExpressionStatement = {
+    type: 'ExpressionStatement',
+    expression: id,
+  }
+
+  return {
+    type: 'mdxFlowExpression',
+    value: NOT_USED,
+    data: { estree: { type: 'Program', sourceType: 'module', body: [statement] } },
+  }
 }
 
 function toHtml (nodes: Child[]) {
@@ -109,23 +132,16 @@ function toHtml (nodes: Child[]) {
   }
 }
 
-// Internal: Returns an MDX expression to render raw HTML.
-function toRawExpression (html: string, count: number): MDXFlowExpression {
-  const rawExpression: ExpressionStatement = {
-    type: 'ExpressionStatement',
-    expression: {
-      type: 'CallExpression',
-      callee: { type: 'Identifier', name: '_raw' },
-      arguments: [
-        { type: 'Literal', value: html, raw: JSON.stringify(html) },
-        { type: 'Literal', value: count, raw: String(count) },
-      ],
-      optional: false,
-    },
+// Internal: Returns a variable definition that calls `raw` with the specified html.
+function variableForRawNodes (id: Identifier, html: string, count: number): VariableDeclarator {
+  const rawExpression: CallExpression = {
+    type: 'CallExpression',
+    callee: { type: 'Identifier', name: '_raw' },
+    arguments: [
+      { type: 'Literal', value: html, raw: JSON.stringify(html) },
+      { type: 'Literal', value: count, raw: String(count) },
+    ],
+    optional: false,
   }
-  return {
-    type: 'mdxFlowExpression',
-    value: NOT_USED,
-    data: { estree: { type: 'Program', sourceType: 'module', body: [rawExpression] } },
-  }
+  return { type: 'VariableDeclarator', id, init: rawExpression }
 }
