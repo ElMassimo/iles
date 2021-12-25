@@ -39,6 +39,8 @@
   "devDependencies": {
     "@types/estree-jsx": "^0.0.1",
     "@types/hash-sum": "^1.0",
+    "hast": "^1.0.0",
+    "mdast-util-mdx-expression": "^1.1.1",
     "tsup": "5.5.0",
     "typescript": "^4.4.4",
     "unified": "^10.1",

@@ -1,8 +1,5 @@
-import type { Pluggable, Plugin } from 'unified'
-import type { ExpressionStatement } from 'estree'
-import type { Data, Parent } from 'unist'
+import type { Plugin } from 'unified'
 import type { IlesModule } from 'iles'
-import type { MDXFlowExpression } from 'mdast-util-mdx-expression'
 import type { Root } from 'mdast'
 import type { Grammar } from 'prismjs'
 
@@ -54,7 +51,8 @@ const remarkPlugin: Plugin<[PrismOptions], Root> = function RemarkPrismPlugin (o
       const grammar = languageGrammarFor(languageShortcuts[lang] || lang)
       if (grammar) {
         const codeHtml = highlightCode(node.value, grammar, lang, node.meta || '', options)
-        parent!.children[index!] = toRawExpression(codeHtml, lang)
+        parent!.children[index!] = { type: 'mdxFlowExpression', value: codeHtml, data: { raw: true, count: 1 } } as any
+        console.log({ children: parent!.children })
       }
       return SKIP
     })
@@ -113,25 +111,4 @@ function languageGrammarFor (lang: string): undefined | Grammar {
     }
   }
   return prism.languages[lang]
-}
-
-// Internal: Returns an MDX expression to render raw HTML with the highlighted code.
-function toRawExpression (rawHTML: string, lang: string): MDXFlowExpression {
-  const rawExpression: ExpressionStatement = {
-    type: 'ExpressionStatement',
-    expression: {
-      type: 'CallExpression',
-      callee: { type: 'Identifier', name: '_raw' },
-      arguments: [
-        { type: 'Literal', value: rawHTML, raw: JSON.stringify(rawHTML) },
-        { type: 'Literal', value: 1, raw: '1' },
-      ],
-      optional: false,
-    },
-  }
-  return {
-    type: 'mdxFlowExpression',
-    value: '_not_used_',
-    data: { estree: { type: 'Program', sourceType: 'module', body: [rawExpression] } },
-  }
 }
