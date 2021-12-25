@@ -1,6 +1,6 @@
 /* eslint-disable no-restricted-syntax */
-import { join, resolve } from 'pathe'
 import { promises as fs } from 'fs'
+import { join, resolve } from 'pathe'
 import pc from 'picocolors'
 import creatDebugger from 'debug'
 import { loadConfigFromFile, mergeConfig as mergeViteConfig } from 'vite'

@@ -56,14 +56,21 @@ export const rehypeRawExpressions: RawPlugin = options => (ast, vfile) => {
 
   visit(ast as any)
 
-  if (hoisted.length)
+  if (hoisted.length) {
     ast.children.unshift({
       type: 'mdxjsEsm',
       value: NOT_USED,
-      data: { estree: { type: 'Program', sourceType: 'module', body: [
-        { kind: 'const', type: 'VariableDeclaration', declarations: hoisted },
-      ]}},
+      data: {
+        estree: {
+          type: 'Program',
+          sourceType: 'module',
+          body: [
+            { kind: 'const', type: 'VariableDeclaration', declarations: hoisted },
+          ],
+        },
+      },
     } as MDXJSEsm as any)
+  }
 }
 
 const NOT_USED = '_not_used_'
@@ -79,7 +86,7 @@ function stringifyNodes (hoisted: Hoisted, nodes: Child[]) {
     }
   }
 
-  nodes.forEach(node => {
+  nodes.forEach((node) => {
     if (isDynamic(node)) {
       flushRawNodes()
       result.push(node)
@@ -97,7 +104,7 @@ function isDynamic (node: Node) {
 }
 
 function setDynamic (node: Node) {
-  ;(node.data ||= {})._createVNode = true
+  (node.data ||= {})._createVNode = true
 }
 
 function hoistRawNodes (hoisted: Hoisted, nodes: Child[]): MDXFlowExpression {
@@ -115,9 +122,15 @@ function hoistRawNodes (hoisted: Hoisted, nodes: Child[]): MDXFlowExpression {
   return {
     type: 'mdxFlowExpression',
     value: NOT_USED,
-    data: { estree: { type: 'Program', sourceType: 'module', body: [
-      { type: 'ExpressionStatement', expression },
-    ]}},
+    data: {
+      estree: {
+        type: 'Program',
+        sourceType: 'module',
+        body: [
+          { type: 'ExpressionStatement', expression },
+        ],
+      },
+    },
   }
 }
 

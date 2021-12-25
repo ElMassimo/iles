@@ -13,11 +13,12 @@ export function useMDXComponents () {
 // Public: Allows to globally provide replacements for built-ins, such as img.
 export function provideMDXComponents (mdxComponents: MDXComponents) {
   const previousComponents = getCurrentInstance()?.appContext?.app?._context?.provides?.[mdxComponentsKey as any]
-  if (previousComponents)
-    Object.keys(mdxComponents).forEach(key => {
+  if (previousComponents) {
+    Object.keys(mdxComponents).forEach((key) => {
       if (!(key in previousComponents))
         console.warn(`Provided '${key}' MDX component, but it was not provided globally. You must specify a default for '${key}' in mdxComponents in app.ts`)
     })
+  }
   provide(mdxComponentsKey, mdxComponents)
 }
 

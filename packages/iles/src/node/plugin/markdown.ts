@@ -1,6 +1,6 @@
 import type { ViteDevServer } from 'vite'
-import type { AppConfig } from '../shared'
 import deepEqual from 'deep-equal'
+import type { AppConfig } from '../shared'
 
 let originalTags: string[]
 let lastFoundTags: string[]

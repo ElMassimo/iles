@@ -2,11 +2,10 @@ import { extname } from 'path'
 
 import type { Plugin, TransformResult } from 'vite'
 import type { createFormatAwareProcessors } from 'xdm/lib/util/create-format-aware-processors'
+import hash from 'hash-sum'
 import type { MarkdownOptions, PluginLike, PluginOption } from './types'
 
 import { resolvePlugins } from './plugins'
-
-import hash from 'hash-sum'
 
 export default function IlesMdx (options: MarkdownOptions = {}): Plugin[] {
   const { remarkPlugins = [], rehypePlugins = [], recmaPlugins = [], ...rest } = options

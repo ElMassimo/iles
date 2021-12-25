@@ -26,7 +26,7 @@ export function vueMdx (): any {
       )
 
       markdown.rehypePlugins.push(
-        [rehypeRawExpressions, markdown]
+        [rehypeRawExpressions, markdown],
       )
 
       config.vitePlugins.push(...mdxPlugins(markdown))
