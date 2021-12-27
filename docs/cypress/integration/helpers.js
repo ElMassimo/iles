@@ -5,16 +5,24 @@ export const assertPage = ({ title, content }) => {
 
 export const navigateTo = (title) => {
   cy.get('a').contains(title).click()
-  waitForTurbo()
+  waitForHydration()
 }
+
+export const visit = async (path) => {
+  cy.visit(path)
+  waitForHydration()
+}
+
+export const visitHome = () =>
+  visit('/')
 
 export const goBackHome = () => {
   cy.go('back')
   assertPage({ title: 'îles' })
-  waitForTurbo()
+  waitForHydration()
 }
 
 // Give Turbo time to replace the body and activate the scripts.
-export const waitForTurbo = () => {
-  cy.wait(500)
+export const waitForHydration = () => {
+  cy.wait(100)
 }

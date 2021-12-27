@@ -1,4 +1,4 @@
-import { navigateTo, goBackHome, assertPage } from './helpers'
+import { visitHome, navigateTo, goBackHome, assertPage } from './helpers'
 
 describe('DocSearch', () => {
   const openSearchModal = () => {
@@ -20,8 +20,8 @@ describe('DocSearch', () => {
     searchModal().should('not.exist')
   }
 
-  it('can open by clicking or with keystroke', () => {
-    cy.visit('/')
+  it('can open by clicking or with keystroke', async () => {
+    await visitHome()
     openSearchModal()
     closeSearchModal()
 

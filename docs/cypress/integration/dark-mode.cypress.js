@@ -1,4 +1,4 @@
-import { navigateTo, goBackHome, assertPage } from './helpers'
+import { visitHome, navigateTo, goBackHome, assertPage } from './helpers'
 
 describe('Dark Mode', () => {
   const toggleTheme = () => {
@@ -10,7 +10,7 @@ describe('Dark Mode', () => {
       expect(html.hasClass('dark')).to.equal(theme === 'dark'))
 
   it('can toggle on and off', () => {
-    cy.visit('/')
+    visitHome()
     cy.get('html').then(html => {
       if (html.hasClass('dark')) toggleTheme()
       assertTheme('light')

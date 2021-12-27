@@ -1,8 +1,8 @@
-import { navigateTo, assertPage, goBackHome } from './helpers'
+import { visitHome, navigateTo, assertPage, goBackHome } from './helpers'
 
 describe('The Home Page', () => {
   it('successfully loads', () => {
-    cy.visit('/')
+    visitHome()
     assertPage({ title: 'îles', content: 'The Joyful Site Generator' })
     cy.get('section')
       .should('contain', 'Partial Hydration')

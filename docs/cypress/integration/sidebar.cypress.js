@@ -1,4 +1,4 @@
-import { navigateTo, goBackHome, assertPage, waitForTurbo } from './helpers'
+import { visit, navigateTo, goBackHome, assertPage, waitForHydration } from './helpers'
 
 describe('Sidebar Toggle', () => {
   const sidebar = () =>
@@ -18,14 +18,14 @@ describe('Sidebar Toggle', () => {
   }
 
   it('is always open in mobile', () => {
-    cy.visit('/guide/markdown')
+    visit('/guide/markdown')
     sidebar().should('be.visible')
     sidebarToggle().should('not.be.visible')
   })
 
   it('can open in mobile', () => {
     cy.viewport(500, 720)
-    cy.visit('/guide/frameworks')
+    visit('/guide/frameworks')
     openSidebar()
     closeSidebar()
 
@@ -34,7 +34,7 @@ describe('Sidebar Toggle', () => {
     sidebar().contains('Config').click()
 
     // Give Turbo time to replace the body.
-    waitForTurbo()
+    waitForHydration()
     assertPage({ title: 'Config' })
     sidebar().should('not.be.visible')
 
