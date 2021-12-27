@@ -1,0 +1,19 @@
+#!/bin/bash
+
+# scripts/test-cypress: Starts the local server and runs Cypress tests.
+set -e
+cd "$(dirname "$0")/.."
+
+echo '== Starting server =='
+pnpm run preview &
+
+echo '== Waiting for server to respond... =='
+pnpx --yes wait-on http-get://localhost:3050 --delay 1000 --timeout 15000
+
+echo '== Server ready! =='
+
+if which cypress >/dev/null; then
+  cypress run && echo '== Finished! =='
+else
+  pnpx --yes cypress@9.2.0 run && echo '== Finished! =='
+fi

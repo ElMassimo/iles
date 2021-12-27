@@ -1,6 +1,8 @@
 node_modules
 dist
 .vitepress/metadata.json
+cypress/videos
+cypress/screenshots
 
 # Algolia
 .algolia.env

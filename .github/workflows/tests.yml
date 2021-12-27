@@ -3,7 +3,7 @@ name: tests
 on: [push, pull_request]
 
 jobs:
-  build:
+  tests:
     name: tests
     env:
       CI: true
@@ -29,13 +29,55 @@ jobs:
         run: pnpm build
 
       - name: Tests
-        run: pnpm run test || echo 'Until figuring out why it times out even when successful'
+        run: pnpm test || echo 'Until figuring out why it times out even when successful'
 
-      - name: Lint
-        run: pnpm run lint
-
-      - name: Block TS Check
-        run: pnpm run -C playground/the-vue-point check
+      - name: Blog TS Check
+        run: pnpm blog:check
 
       - name: Docs TS Check
         run: pnpm docs:check
+
+      - name: Lint
+        run: pnpm lint
+
+  cypress:
+    if: (! git diff --quiet 'HEAD^' HEAD docs) || ${{ contains(github.event.head_commit.message, 'docs') }}
+    name: cypress
+    env:
+      CI: true
+
+    runs-on: ubuntu-latest
+    container: cypress/included:9.2.0
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Use Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: 16.x
+
+      - uses: pnpm/action-setup@v2.0.1
+        with:
+          version: 6.10.3
+          run_install: |
+            - recursive: false
+
+      - name: Build Docs Site
+        run: pnpm docs:build
+
+      - name: Cypress
+        run: pnpm -C docs run cy:run
+
+      - uses: actions/upload-artifact@v2
+        if: failure()
+        with:
+          name: cypress-screenshots
+          path: docs/cypress/screenshots
+          retention-days: 1
+
+      - uses: actions/upload-artifact@v2
+        if: failure()
+        with:
+          name: cypress-videos
+          path: docs/cypress/videos
+          retention-days: 1
