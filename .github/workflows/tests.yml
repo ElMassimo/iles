@@ -3,7 +3,7 @@ name: tests
 on: [push, pull_request]
 
 jobs:
-  build:
+  tests:
     name: tests
     env:
       CI: true
@@ -39,3 +39,46 @@ jobs:
 
       - name: Lint
         run: pnpm lint
+
+  cypress:
+    if: (! git diff --quiet 'HEAD^' HEAD docs) || ${{ contains(github.event.head_commit.message, 'docs') }}
+    name: cypress
+    env:
+      CI: true
+
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          lfs: true
+
+      - name: Use Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: 16.x
+
+      - uses: pnpm/action-setup@v2.0.1
+        with:
+          version: 6.10.3
+          run_install: |
+            - recursive: false
+
+      - name: Build Docs Site
+        run: pnpm docs:build
+
+      - name: Cypress
+        run: pnpm -C docs run cy:run
+
+      - uses: actions/upload-artifact@v2
+        if: failure()
+        with:
+          name: cypress-screenshots
+          path: docs/cypress/screenshots
+          retention-days: 1
+
+      - uses: actions/upload-artifact@v2
+        if: failure()
+        with:
+          name: cypress-videos
+          path: docs/cypress/videos
+          retention-days: 1
