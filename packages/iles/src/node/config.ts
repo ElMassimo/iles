@@ -235,7 +235,7 @@ function appConfigDefaults (appConfig: AppConfig, userConfig: UserConfig, env: C
     // Handle 404s in development.
     extendRoutes (routes) {
       if (isDevelopment)
-        routes.push({ path: '/:zzz(.*)*', name: 'NotFoundInDev', componentFilename: '@islands/components/NotFound' })
+        return [...routes, { path: '/:zzz(.*)*', name: 'NotFoundInDev', componentFilename: '@islands/components/NotFound' }]
     },
     markdown: {
       jsxRuntime: 'automatic',
