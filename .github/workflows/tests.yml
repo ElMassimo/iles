@@ -50,8 +50,6 @@ jobs:
     container: cypress/included:9.2.0
     steps:
       - uses: actions/checkout@v2
-        with:
-          lfs: true
 
       - name: Use Node.js
         uses: actions/setup-node@v1

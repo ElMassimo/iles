@@ -11,4 +11,9 @@ echo '== Waiting for server to respond... =='
 pnpx --yes wait-on http-get://localhost:3050 --delay 1000 --timeout 15000
 
 echo '== Server ready! =='
-pnpx --yes cypress@9.2.0 run && echo '== Finished! =='
+
+if which cypress >/dev/null; then
+  cypress run && echo '== Finished! =='
+else
+  pnpx --yes cypress@9.2.0 run && echo '== Finished! =='
+fi
