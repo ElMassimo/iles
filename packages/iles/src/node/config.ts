@@ -75,7 +75,7 @@ async function resolveUserConfig (root: string, configEnv: ConfigEnv) {
     throw new Error(`îles 'plugins' have been renamed to 'modules'. If you want to provide Vite plugins instead, place them in 'vite:'. Received 'plugins' in ${(userConfig as any).configPath}:\n${JSON.stringify((userConfig as any).plugins)}`)
 
   config.modules = compact<IlesModule>(await resolveIlesModules([
-    { name: 'iles:base-config', ...appConfigDefaults(config, userConfig as UserConfig) },
+    { name: 'iles:base-config', ...appConfigDefaults(config, userConfig as UserConfig, configEnv) },
     mdx(),
     { name: 'user-config', ...userConfig },
     ...modules,
@@ -188,9 +188,10 @@ function inferJSX (config: UserConfig) {
   }
 }
 
-function appConfigDefaults (appConfig: AppConfig, userConfig: UserConfig): AppConfig {
+function appConfigDefaults (appConfig: AppConfig, userConfig: UserConfig, env: ConfigEnv): AppConfig {
   const { root } = appConfig
   const { jsx = inferJSX(userConfig) } = userConfig
+  const isDevelopment = env.mode === 'development'
 
   return {
     debug: true,
@@ -230,6 +231,11 @@ function appConfigDefaults (appConfig: AppConfig, userConfig: UserConfig): AppCo
     extendRoute (route) {
       if (appConfig.prettyUrls === false)
         route.path = explicitHtmlPath(route.path, route.componentFilename)
+    },
+    // Handle 404s in development.
+    extendRoutes (routes) {
+      if (isDevelopment)
+        routes.push({ path: '/:zzz(.*)*', name: 'NotFoundInDev', componentFilename: '@islands/components/NotFound' })
     },
     markdown: {
       jsxRuntime: 'automatic',
