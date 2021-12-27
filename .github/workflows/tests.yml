@@ -34,5 +34,8 @@ jobs:
       - name: Blog TS Check
         run: pnpm blog:check
 
+      - name: Docs TS Check
+        run: pnpm docs:check
+
       - name: Lint
         run: pnpm lint

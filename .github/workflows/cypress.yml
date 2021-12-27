@@ -26,9 +26,6 @@ jobs:
           run_install: |
             - recursive: false
 
-      - name: Docs TS Check
-        run: pnpm docs:check
-
       - name: Build Docs Site
         run: pnpm docs:build
 
