@@ -9,6 +9,7 @@
     "blog": "npm run -C playground/the-vue-point dev",
     "blog:build": "npm run -C playground/the-vue-point build",
     "blog:now": "npm run -C playground/the-vue-point now",
+    "blog:check": "npm -C playground/the-vue-point run check",
     "build": "npm -C packages run build",
     "build-fast": "npm -C packages run build-fast",
     "lint": "eslint --ignore-pattern 'node_modules' --ignore-pattern 'dist' . --ext .ts,.js,.vue,.html",

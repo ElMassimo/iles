@@ -4,9 +4,6 @@
 set -e
 cd "$(dirname "$0")/.."
 
-echo '== Building Docs Site =='
-npm run build
-
 echo '== Starting server =='
 npm run preview &
 

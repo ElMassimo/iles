@@ -7,7 +7,7 @@ on:
 
 jobs:
   docs:
-    if: ${{ contains(github.event.head_commit.message, 'docs') }}
+    if: (! git diff --quiet 'HEAD^' HEAD docs) || ${{ contains(github.event.head_commit.message, 'docs') }}
     name: docs
     env:
       BUILD_HOOK: ${{secrets.NETLIFY_DOCS_BUILD_HOOK}}
@@ -17,7 +17,7 @@ jobs:
         run: 'curl -X POST -d {} $BUILD_HOOK'
 
   blog:
-    if: ${{ contains(github.event.head_commit.message, 'blog') }}
+    if: (! git diff --quiet 'HEAD^' HEAD playground/the-vue-point) || ${{ contains(github.event.head_commit.message, 'blog') }}
     name: the-vue-point
     env:
       BUILD_HOOK: ${{secrets.NETLIFY_VUE_POINT_BUILD_HOOK}}

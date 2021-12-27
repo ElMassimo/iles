@@ -1,10 +1,11 @@
-name: tests
+name: cypress
 
 on: [push, pull_request]
 
 jobs:
-  build:
-    name: tests
+  cypress:
+    if: (! git diff --quiet 'HEAD^' HEAD docs) || ${{ contains(github.event.head_commit.message, 'docs') }}
+    name: docs cypress
     env:
       CI: true
 
@@ -25,14 +26,11 @@ jobs:
           run_install: |
             - recursive: false
 
-      - name: Build
-        run: pnpm build
+      - name: Docs TS Check
+        run: pnpm docs:check
 
-      - name: Tests
-        run: pnpm test || echo 'Until figuring out why it times out even when successful'
+      - name: Build Docs Site
+        run: pnpm docs:build
 
-      - name: Blog TS Check
-        run: pnpm blog:check
-
-      - name: Lint
-        run: pnpm lint
+      - name: Cypress
+        run: cd docs && pnpm run cy:run
