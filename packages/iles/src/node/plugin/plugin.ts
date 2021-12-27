@@ -66,13 +66,8 @@ export default function IslandsPlugins (appConfig: AppConfig): PluginOption[] {
         if (id === APP_CONFIG_REQUEST_PATH || id === USER_APP_REQUEST_PATH || id === USER_SITE_REQUEST_PATH)
           return id
 
-        if (id === NOT_FOUND_REQUEST_PATH) {
-          for (const extension of ['vue', 'mdx', 'md', 'jsx']) {
-            const path = resolve(appConfig.pagesDir, `404.${extension}`)
-            if (await exists(path)) return path
-          }
+        if (id === NOT_FOUND_REQUEST_PATH)
           return NOT_FOUND_COMPONENT_PATH
-        }
 
         // Prevent import analysis failure if the default layout doesn't exist.
         if (id === defaultLayoutPath) return resolve(root, id.slice(1))
