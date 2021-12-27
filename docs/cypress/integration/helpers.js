@@ -24,5 +24,5 @@ export const goBackHome = () => {
 
 // Give Turbo time to replace the body and activate the scripts.
 export const waitForHydration = () => {
-  cy.wait(100)
+  cy.wait(300)
 }
