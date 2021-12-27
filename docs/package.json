@@ -10,9 +10,7 @@
     "check": "vue-tsc --noEmit",
     "link": "pnpm link ../packages/iles",
     "unlink": "pnpm unlink ../packages/iles",
-    "cy": "cypress open",
-    "cy:run": "scripts/test-cypress",
-    "test:cypress": "cypress run"
+    "cy:run": "scripts/test-cypress"
   },
   "engines": {
     "node": "^14.18 || >= 16.0.0"
@@ -26,7 +24,6 @@
     "@preact/preset-vite": "^2.1.5",
     "@vueuse/core": "^6.9.2",
     "autoprefixer": "^10.4.0",
-    "cypress": "^9.2.0",
     "iles": "^0.7.16",
     "postcss-nesting": "^8.0.1",
     "preact-render-to-string": "^5.1.19",

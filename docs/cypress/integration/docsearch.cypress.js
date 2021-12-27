@@ -20,8 +20,8 @@ describe('DocSearch', () => {
     searchModal().should('not.exist')
   }
 
-  it('can open by clicking or with keystroke', async () => {
-    await visitHome()
+  it('can open by clicking or with keystroke', () => {
+    visitHome()
     openSearchModal()
     closeSearchModal()
 

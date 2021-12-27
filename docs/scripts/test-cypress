@@ -5,10 +5,10 @@ set -e
 cd "$(dirname "$0")/.."
 
 echo '== Starting server =='
-npm run preview &
+pnpm run preview &
 
 echo '== Waiting for server to respond... =='
-npx wait-on http-get://localhost:3050 --delay 1000 --timeout 15000
+pnpx --yes wait-on http-get://localhost:3050 --delay 1000 --timeout 15000
 
 echo '== Server ready! =='
-npm run test:cypress && echo '== Finished! =='
+pnpx --yes cypress@9.2.0 run && echo '== Finished! =='

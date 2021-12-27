@@ -8,7 +8,7 @@ export const navigateTo = (title) => {
   waitForHydration()
 }
 
-export const visit = async (path) => {
+export const visit = (path) => {
   cy.visit(path)
   waitForHydration()
 }
