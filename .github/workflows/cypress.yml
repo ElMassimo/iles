@@ -34,3 +34,12 @@ jobs:
 
       - name: Cypress
         run: cd docs && pnpm run cy:run
+
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: results
+          path: |
+            docs/cypress/screenshots/
+            docs/cypress/videos/
+          retention-days: 1
