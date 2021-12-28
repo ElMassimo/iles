@@ -1,3 +1,12 @@
+## [0.1.2](https://github.com/ElMassimo/iles/compare/excerpt@0.1.1...excerpt@0.1.2) (2021-12-28)
+
+
+### Features
+
+* hoist static MDX content instead of creating vnodes ([#66](https://github.com/ElMassimo/iles/issues/66)) ([07a7a36](https://github.com/ElMassimo/iles/commit/07a7a36430c6d97792910e346409027dfe10909b))
+
+
+
 ## [0.1.1](https://github.com/ElMassimo/iles/compare/excerpt@0.1.0...excerpt@0.1.1) (2021-12-13)
 
 
