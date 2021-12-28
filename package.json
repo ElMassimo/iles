@@ -3,7 +3,7 @@
   "private": true,
   "scripts": {
     "build:all": "pnpx nx run-many --target=build --all --exclude docs --exclude vue-blog",
-    "lint:all": "pnpx nx affected --target=lint",
+    "lint:all": "pnpx nx run-many --target=lint --all",
     "dev": "pnpm -r --parallel --filter packages run dev",
     "docs": "npm -C docs run dev",
     "docs:build": "npm -C docs run build",
