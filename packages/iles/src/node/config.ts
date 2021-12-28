@@ -241,6 +241,7 @@ function appConfigDefaults (appConfig: AppConfig, userConfig: UserConfig, env: C
       jsxRuntime: 'automatic',
       jsxImportSource: 'iles',
       providerImportSource: 'iles',
+      rehypePlugins: [],
       remarkPlugins: [
         [remarkWrapIslands, { get config () { return appConfig } }],
       ],

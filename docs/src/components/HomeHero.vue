@@ -20,7 +20,7 @@
           <h1 id="main-title" class="hidden text-3xl leading-10 font-semibold sm:(text-5xl leading-16)">
             {{ $site.title }}
           </h1>
-          <p class="my-6 text-xl md:text-2xl md:font-light opacity-75 px-16">
+          <p class="my-6 text-xl sm:text-2xl md:font-light opacity-75 px-16">
             {{ $frontmatter.tagline || $site.description }}
           </p>
 

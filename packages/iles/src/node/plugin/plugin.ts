@@ -76,8 +76,8 @@ export default function IslandsPlugins (appConfig: AppConfig): PluginOption[] {
       },
       async load (id) {
         if (id === APP_CONFIG_REQUEST_PATH) {
-          const { base, debug, jsx, root, ssg: { sitemap }, siteUrl } = appConfig
-          const clientConfig: AppClientConfig = { base, debug, root, jsx, sitemap, siteUrl }
+          const { base, debug, jsx, root, ssg: { sitemap }, siteUrl, markdown: { overrideElements = [] } } = appConfig
+          const clientConfig: AppClientConfig = { base, debug, root, jsx, sitemap, siteUrl, overrideElements }
           return `export default ${serialize(clientConfig)}`
         }
 

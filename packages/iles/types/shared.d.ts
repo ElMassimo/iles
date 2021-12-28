@@ -256,7 +256,10 @@ export interface AppConfig extends RequiredConfig, Omit<BaseIlesConfig, 'pagesDi
   resolvePath: ResolveFn
 }
 
-export type AppClientConfig = Pick<AppConfig, 'base' | 'root' | 'debug' | 'siteUrl' | 'jsx'> & { sitemap?: boolean }
+export type AppClientConfig = Pick<AppConfig, 'base' | 'root' | 'debug' | 'siteUrl' | 'jsx'> & {
+  overrideElements?: MarkdownOptions['overrideElements']
+  sitemap?: boolean
+}
 
 export interface IslandDefinition {
   id: string

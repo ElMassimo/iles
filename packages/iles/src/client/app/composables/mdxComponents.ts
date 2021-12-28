@@ -1,6 +1,7 @@
 import type { InjectionKey } from 'vue'
-import { inject, provide, getCurrentInstance } from 'vue'
+import { inject, provide } from 'vue'
 
+import { useAppConfig } from './appConfig'
 import type { AppContext, MDXComponents, UserApp } from '../../shared'
 
 export const mdxComponentsKey: InjectionKey<MDXComponents> = Symbol('[iles-mdx-components]')
@@ -12,12 +13,12 @@ export function useMDXComponents () {
 
 // Public: Allows to globally provide replacements for built-ins, such as img.
 export function provideMDXComponents (mdxComponents: MDXComponents) {
-  const previousComponents = getCurrentInstance()?.appContext?.app?._context?.provides?.[mdxComponentsKey as any]
-  if (previousComponents) {
-    Object.keys(mdxComponents).forEach((key) => {
-      if (!(key in previousComponents))
-        console.warn(`Provided '${key}' MDX component, but it was not provided globally. You must specify a default for '${key}' in mdxComponents in app.ts`)
-    })
+  const overrideElements = useAppConfig()?.overrideElements
+  if (overrideElements) {
+    for (const key in mdxComponents) {
+      if (key === key.toLowerCase() && !overrideElements.includes(key))
+        console.warn(`Provided an MDX shortcode for '${key}', but it's being optimized. You must specify '${key}' in mdxComponents in app.ts`)
+    }
   }
   provide(mdxComponentsKey, mdxComponents)
 }
