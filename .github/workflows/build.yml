@@ -41,7 +41,6 @@ jobs:
         run: pnpm lint:all
 
   cypress:
-    if: (! git diff --quiet 'HEAD^' HEAD docs) || ${{ contains(github.event.head_commit.message, 'docs') }}
     name: cypress
     needs: tests
     env:
@@ -87,7 +86,7 @@ jobs:
           retention-days: 1
 
   docs:
-    if: ${{ github.ref == 'refs/heads/main' }} && ((! git diff --quiet 'HEAD^' HEAD docs) || ${{ contains(github.event.head_commit.message, 'docs') }})
+    if: github.ref == 'refs/heads/main' && contains(github.event.head_commit.message, 'docs')
     name: deploy docs
     needs: tests
     env:
@@ -98,7 +97,7 @@ jobs:
         run: 'curl -X POST -d {} $BUILD_HOOK'
 
   blog:
-    if: ${{ github.ref == 'refs/heads/main' }} && ((! git diff --quiet 'HEAD^' HEAD playground/the-vue-point) || ${{ contains(github.event.head_commit.message, 'blog') }})
+    if: github.ref == 'refs/heads/main' && contains(github.event.head_commit.message, 'blog')
     name: deploy the-vue-point
     needs: tests
     env:
@@ -109,7 +108,7 @@ jobs:
         run: 'curl -X POST -d {} $BUILD_HOOK'
 
   crawl:
-    if: ${{ github.ref == 'refs/heads/main' }} && ((! git diff --quiet 'HEAD^' HEAD docs) || ${{ contains(github.event.head_commit.message, 'docs') }} || startsWith(github.event.head_commit.message, 'crawl') }})
+    if: github.ref == 'refs/heads/main' && (contains(github.event.head_commit.message, 'docs') || startsWith(github.event.head_commit.message, 'crawl'))
     name: crawl docs
     needs: docs
     env:
