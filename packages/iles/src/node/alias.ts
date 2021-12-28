@@ -1,6 +1,6 @@
-import type { UserConfig } from './shared'
 import { join, dirname, resolve } from 'pathe'
 import { Alias, AliasOptions } from 'vite'
+import type { UserConfig } from './shared'
 
 const PKG_ROOT = join(__dirname, '../../')
 export const CONFIG_PATH = join(PKG_ROOT, 'config.js')

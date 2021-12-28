@@ -7,6 +7,7 @@
     "build": "iles build",
     "preview": "iles preview --open",
     "check": "vue-tsc --noEmit",
+    "lint": "eslint . --ext .ts,.js,.vue,.html",
     "now": "npm run build && npm run preview"
   },
   "engines": {

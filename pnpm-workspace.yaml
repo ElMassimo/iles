@@ -1,5 +1,4 @@
 packages:
-  - docs
   - packages/hydration/
   - packages/prerender/
   - packages/headings/
@@ -11,3 +10,4 @@ packages:
   - packages/prism/
   - packages/iles/
   - playground/the-vue-point/
+  - docs

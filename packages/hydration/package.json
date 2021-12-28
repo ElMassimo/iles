@@ -2,6 +2,11 @@
   "name": "@islands/hydration",
   "description": "Hydration utilities for îles",
   "version": "0.3.6",
+  "scripts": {
+    "dev": "npm run build -- --watch",
+    "build": "rimraf -rf dist && tsup hydration.ts preact.ts vue.ts vanilla.ts solid.ts svelte.ts",
+    "lint": "eslint ."
+  },
   "type": "module",
   "files": [
     "dist",
@@ -17,11 +22,6 @@
     "./vanilla": "./dist/vanilla.js",
     "./vue": "./dist/vue.js",
     "./package.json": "./package.json"
-  },
-  "scripts": {
-    "dev": "npm run build -- --watch",
-    "build": "rimraf -rf dist && tsup hydration.ts preact.ts vue.ts vanilla.ts solid.ts svelte.ts",
-    "prepublishOnly": "npm run build"
   },
   "keywords": [
     "vite",

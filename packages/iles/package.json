@@ -26,8 +26,7 @@
     "build-node": "tsup src/node",
     "build-client": "tsc -p src/client",
     "build": "rimraf -rf dist && node scripts/copyShared && npm run build-client && npm run build-node && node scripts/copyClient",
-    "build-fast": "rimraf -rf dist && node scripts/copyShared && npm run build-client && npm run build-node -- --no-dts && node scripts/copyClient",
-    "prepublishOnly": "npm run build"
+    "lint": "eslint . --ext .ts,.js,.vue,.html"
   },
   "engines": {
     "node": "^14.18 || >= 16.0.0"
@@ -70,11 +69,6 @@
   },
   "devDependencies": {
     "@antfu/install-pkg": "^0.1.0",
-    "@islands/excerpt": "workspace:^0.1.0",
-    "@islands/feed": "workspace:^0.1.0",
-    "@islands/headings": "workspace:^0.1.0",
-    "@islands/icons": "workspace:^0.1.0",
-    "@islands/prism": "workspace:^0.1.0",
     "@preact/preset-vite": "^2",
     "@sveltejs/vite-plugin-svelte": "^1.0.0-next.30",
     "@types/connect": "^3.4.35",
