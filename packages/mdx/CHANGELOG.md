@@ -1,3 +1,12 @@
+## [0.7.4](https://github.com/ElMassimo/iles/compare/mdx@0.7.3...mdx@0.7.4) (2021-12-28)
+
+
+### Features
+
+* hoist static MDX content instead of creating vnodes ([#66](https://github.com/ElMassimo/iles/issues/66)) ([07a7a36](https://github.com/ElMassimo/iles/commit/07a7a36430c6d97792910e346409027dfe10909b))
+
+
+
 ## [0.7.3](https://github.com/ElMassimo/iles/compare/mdx@0.7.2...mdx@0.7.3) (2021-12-18)
 
 

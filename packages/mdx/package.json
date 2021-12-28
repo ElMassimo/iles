@@ -1,6 +1,6 @@
 {
   "name": "@islands/mdx",
-  "version": "0.7.3",
+  "version": "0.7.4",
   "scripts": {
     "dev": "rimraf -rf dist && npm run build -- --watch",
     "build": "rimraf -rf dist && tsup src/mdx.ts",
