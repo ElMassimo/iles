@@ -4,8 +4,6 @@
 ### Features
 
 * hoist static MDX content instead of creating vnodes ([#66](https://github.com/ElMassimo/iles/issues/66)) ([07a7a36](https://github.com/ElMassimo/iles/commit/07a7a36430c6d97792910e346409027dfe10909b))
-* improve extendRoute to have access to the frontmatter ([#56](https://github.com/ElMassimo/iles/issues/56)) ([9eb84e9](https://github.com/ElMassimo/iles/commit/9eb84e9ec7387bcfbd7ffabb4dd7c9b5696c24f2))
-
 
 
 # 0.1.0 (2021-12-01)
