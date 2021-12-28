@@ -22,7 +22,7 @@ const isDryRun = args.dry
 /**
  * @type {boolean}
  */
-const skipBuild = args.skipBuild || name === 'modules'
+const skipBuild = args.skipBuild
 
 /**
  * @type {import('semver').ReleaseType[]}
@@ -142,7 +142,7 @@ async function main () {
   pkg.updateVersion(targetVersion)
 
   step(`\nBuilding ${pkg.type}...`)
-  if (!skipBuild && !isDryRun) await run('pnpm', ['build'], { cwd: resolve('.') })
+  if (!skipBuild && !isDryRun) await run('pnpm', ['nx', 'run', `${pkg.name}:build`], { cwd: path.resolve(__dirname, '..') })
   else console.info('(skipped)')
 
   step('\nGenerating changelog...')
