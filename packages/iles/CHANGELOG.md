@@ -1,3 +1,13 @@
+## [0.7.20](https://github.com/ElMassimo/iles/compare/v0.7.19...v0.7.20) (2021-12-28)
+
+
+### Features
+
+* hoist static MDX content instead of creating vnodes ([#66](https://github.com/ElMassimo/iles/issues/66)) ([07a7a36](https://github.com/ElMassimo/iles/commit/07a7a36430c6d97792910e346409027dfe10909b))
+* use internal not found page during development as it's more helpful ([#64](https://github.com/ElMassimo/iles/issues/64)) ([ccbb001](https://github.com/ElMassimo/iles/commit/ccbb0019e67f6bf82a0bfb21ae030e34869ef786))
+
+
+
 ## [0.7.19](https://github.com/ElMassimo/iles/compare/v0.7.18...v0.7.19) (2021-12-24)
 
 
