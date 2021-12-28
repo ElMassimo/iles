@@ -1,7 +1,7 @@
 /* eslint-disable no-restricted-syntax */
 import { promises as fs } from 'fs'
 import { basename, resolve, relative } from 'pathe'
-import type { PluginOption, ResolvedConfig } from 'vite'
+import type { PluginOption, ResolvedConfig, ViteDevServer } from 'vite'
 import { transformWithEsbuild } from 'vite'
 
 import MagicString from 'magic-string'
@@ -14,6 +14,7 @@ import { serialize, pascalCase, exists, debug } from './utils'
 import { parseId } from './parse'
 import { wrapIslandsInSFC, wrapLayout } from './wrap'
 import { extendSite } from './site'
+import { detectMDXComponents } from './markdown'
 import { autoImportComposables, writeComposablesDTS } from './composables'
 import documents from './documents'
 
@@ -34,6 +35,7 @@ export default function IslandsPlugins (appConfig: AppConfig): PluginOption[] {
   let base: ResolvedConfig['base']
   let root: ResolvedConfig['root']
   let isBuild: boolean
+  let server: ViteDevServer
 
   const appPath = resolve(appConfig.srcDir, 'app.ts')
   const sitePath = resolve(appConfig.srcDir, 'site.ts')
@@ -74,8 +76,8 @@ export default function IslandsPlugins (appConfig: AppConfig): PluginOption[] {
       },
       async load (id) {
         if (id === APP_CONFIG_REQUEST_PATH) {
-          const { base, debug, jsx, root, ssg: { sitemap }, siteUrl } = appConfig
-          const clientConfig: AppClientConfig = { base, debug, root, jsx, sitemap, siteUrl }
+          const { base, debug, jsx, root, ssg: { sitemap }, siteUrl, markdown: { overrideElements = [] } } = appConfig
+          const clientConfig: AppClientConfig = { base, debug, root, jsx, sitemap, siteUrl, overrideElements }
           return `export default ${serialize(clientConfig)}`
         }
 
@@ -86,7 +88,14 @@ export default function IslandsPlugins (appConfig: AppConfig): PluginOption[] {
           const result = await exists(userFilename)
             ? await transformWithEsbuild(await fs.readFile(userFilename, 'utf-8'), userFilename, { sourcemap: false })
             : { code: 'export default {}' }
-          return id === USER_SITE_REQUEST_PATH ? extendSite(result.code, appConfig) : result
+
+          if (id === USER_APP_REQUEST_PATH)
+            detectMDXComponents(result.code, appConfig, server)
+
+          if (id === USER_SITE_REQUEST_PATH)
+            return extendSite(result.code, appConfig)
+
+          return result
         }
 
         if ((isBuild || process.env.VITEST) && id.includes(defaultLayoutPath) && !await exists(resolve(root, defaultLayoutPath.slice(1))))
@@ -100,7 +109,8 @@ export default function IslandsPlugins (appConfig: AppConfig): PluginOption[] {
         if (file === appPath) return [server.moduleGraph.getModuleById(USER_APP_REQUEST_PATH)!]
         if (file === sitePath) return [server.moduleGraph.getModuleById(USER_SITE_REQUEST_PATH)!]
       },
-      configureServer (server) {
+      configureServer (devServer) {
+        server = devServer
         return configureMiddleware(appConfig, server, defaultLayoutPath)
       },
     },

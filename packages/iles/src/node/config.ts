@@ -1,5 +1,5 @@
 /* eslint-disable no-restricted-syntax */
-import fs from 'fs'
+import { promises as fs } from 'fs'
 import { join, resolve } from 'pathe'
 import pc from 'picocolors'
 import creatDebugger from 'debug'
@@ -223,9 +223,9 @@ function appConfigDefaults (appConfig: AppConfig, userConfig: UserConfig, env: C
       },
     },
     // Adds lastUpdated meta field.
-    extendFrontmatter (frontmatter, filename) {
+    async extendFrontmatter (frontmatter, filename) {
       frontmatter.meta.lastUpdated
-        = new Date(Math.round(fs.statSync(filename).mtimeMs))
+        = (await fs.stat(filename)).mtime
     },
     // Adds handling for explicit HTML urls.
     extendRoute (route) {
@@ -241,6 +241,7 @@ function appConfigDefaults (appConfig: AppConfig, userConfig: UserConfig, env: C
       jsxRuntime: 'automatic',
       jsxImportSource: 'iles',
       providerImportSource: 'iles',
+      rehypePlugins: [],
       remarkPlugins: [
         [remarkWrapIslands, { get config () { return appConfig } }],
       ],

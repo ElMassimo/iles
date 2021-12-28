@@ -145,7 +145,7 @@ import doc from '~/pages/introduction.mdx'
 </template>
 ```
 
-## Advanced: Provide Components (Shortcodes)
+## Advanced: Override Elements (Shortcodes)
 
 You can use any components from <kbd>[src/components][components]</kbd>
 or those [globally registered in Vue][enhanceApp] without manually importing them in MDX.
@@ -153,32 +153,36 @@ or those [globally registered in Vue][enhanceApp] without manually importing the
 If you would like to replace built-in tags such as `img` and `a` with
 custom components, or provide other components, there are two main options.
 
-### Provide Components Globally
+### Override Components Globally
 
-Use the <kbd>[mdxComponents]</kbd> option to override components globally
-for all MDX components.
+Use the <kbd>[mdxComponents]</kbd> option to override elements globally
+in all MDX documents.
+
+```ts
+import ResponsiveImage from '~/components/ResponsiveImage.vue'
+
+export default defineApp({
+  mdxComponents: {
+    img: ResponsiveImage,
+  },
+})
+```
 
 <Tip title="Recommended ✨">
 Easy to setup, and provides consistency in how documents are rendered across the site.
 </Tip>
 
-### Provide Components Explicitly 
+### Override Components Explicitly 
 
-If you need more control, pass the `components` prop to MDX components to specify
-an object that maps tag names to Vue or MDX components.
+If you need more control, you can use the `components` prop in MDX components.
 
 ```vue
 <script setup>
 import Introduction from '~/pages/introduction.mdx'
 
-import Image from '~/components/Image.vue'
-import SmartLink from '~/components/SmartLink.vue'
+import Footer from '~/components/SpecialFooter.vue'
 
-const components = {
-  strong: 'b',
-  img: Image,
-  a: SmartLink,
-}
+const components = { Footer }
 </script>
 
 <template>
@@ -187,17 +191,15 @@ const components = {
 </template>
 ```
 
-This technique can also be used more broadly. For example, to override components only in MDX pages using a specific layout you can use `provideMDXComponents`:
+Use `provideMDXComponents` to override elements and components in all nested components. For example, to override components in all pages that use a specific layout:
 
 ```vue
 <script setup>
 import { provideMDXComponents } from 'iles'
 
-import ExternalLink from '~/components/ExternalLink.vue'
+import Footer from '~/components/PostFooter.vue'
 
-provideMDXComponents({
-  a: ExternalLink,
-})
+provideMDXComponents({ Footer })
 </script>
 
 ...

@@ -37,4 +37,6 @@ html.dark {
   --fc-intense: theme('colors.warm-gray.100');
   --fc-primary-soft: theme('colors.light-blue.500');
   --fc-primary-intense: theme('colors.light-blue.500');
+
+  color-scheme: dark
 }

@@ -32,10 +32,9 @@
     "unist-util-visit": "^4.1.0"
   },
   "devDependencies": {
-    "@types/estree": "^0.0.50",
+    "@types/mdast": "^3.0.10",
     "@types/prismjs": "^1.16.6",
     "iles": "workspace:*",
-    "mdast-util-mdx-expression": "^1.1.1",
     "tsup": "5.5.0",
     "typescript": "^4.4.4",
     "unified": "^10.1.0"

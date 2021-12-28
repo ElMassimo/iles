@@ -30,7 +30,7 @@ export function useSideBar () {
       if (!path.includes(link))
         children = []
       else if (frontmatter.sidebar === 'auto')
-        children = linksFromHeadings(meta.headings, frontmatter.sidebarLevel || 2, frontmatter.sidebarDepth || 1)
+        children = linksFromHeadings(meta.headings, 2, 1)
 
       return { ...group, link, children } as SideBarGroup
     })

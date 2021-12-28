@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { useHead, provideMDXComponents } from 'iles'
-
 if (import.meta.env.PROD) {
   useHead({
     script: [
@@ -8,10 +6,6 @@ if (import.meta.env.PROD) {
     ],
   })
 }
-
-provideMDXComponents({
-  strong: 'b',
-})
 </script>
 
 <template>

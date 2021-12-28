@@ -54,6 +54,7 @@
     "@vue/server-renderer": "^3.2.26",
     "@vueuse/head": "^0.7.3",
     "debug": "^4.3.2",
+    "deep-equal": "^2.0.5",
     "es-module-lexer": "^0.7.1",
     "local-pkg": "^0.4.0",
     "mico-spinner": "^1.4.0",
