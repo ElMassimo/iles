@@ -3,7 +3,7 @@ import type { Identifier, CallExpression, VariableDeclarator, Expression, Expres
 import type { MDXFlowExpression } from 'mdast-util-mdx-expression'
 import type { MDXJSEsm } from 'mdast-util-mdxjs-esm'
 import type { Plugin } from 'unified'
-import type { Parent, Content } from 'hast'
+import type { Parent, Content, Element } from 'hast'
 import { toHtml as hastToHtml, Options as ToHtmlOptions } from 'hast-util-to-html'
 import type { MarkdownOptions } from './types'
 
@@ -21,15 +21,17 @@ const toHtmlOptions: ToHtmlOptions = { allowDangerousHtml: true }
  * that call the `raw` helper from the JSX runtime.
  */
 export const rehypeRawExpressions: RawPlugin = options => (ast, vfile) => {
-  const shouldCreateTags = new Set(options.overrideTags || [])
+  const dynamicElements = new Set(options.overrideElements || [])
   const hoisted: Hoisted = []
+
+  dynamicElements.add('excerpt')
 
   const enter: Visitor = (node) => {
     if (node.type === 'mdxFlowExpression' && node.data?.raw)
       // @ts-ignore
       node.type = 'raw'
 
-    if (node.type.startsWith('mdx') || shouldCreateTags.has((node as any).tagName))
+    if (node.type.startsWith('mdx') || dynamicElements.has((node as Element).tagName))
       setDynamic(node)
   }
 

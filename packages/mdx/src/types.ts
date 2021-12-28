@@ -45,5 +45,5 @@ export interface MarkdownOptions extends XdmOptions {
   /**
    * Built-in tags that should not be optimized as HTML.
    */
-  overrideTags?: string[]
+  overrideElements?: string[]
 }
