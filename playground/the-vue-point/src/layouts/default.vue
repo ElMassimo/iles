@@ -8,10 +8,6 @@ if (import.meta.env.PROD) {
     ],
   })
 }
-
-provideMDXComponents({
-  strong: 'b',
-})
 </script>
 
 <template>

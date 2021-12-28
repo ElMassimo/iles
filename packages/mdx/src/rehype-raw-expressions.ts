@@ -90,7 +90,8 @@ function stringifyNodes (hoisted: Hoisted, nodes: Child[]) {
 
   nodes.forEach((node) => {
     if (isDynamic(node)) {
-      flushRawNodes()
+      // @ts-ignore
+      if (node.type !== 'mdxjsEsm') flushRawNodes()
       result.push(node)
     }
     else {

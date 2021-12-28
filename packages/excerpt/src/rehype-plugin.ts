@@ -48,7 +48,7 @@ export const rehypePlugin: Plugin<[Options], Element> = ({ extract, isSeparator,
     assignment('meta', 'excerpt', '=', excerpt),
   ]
 
-  children.push({
+  children.unshift({
     type: 'mdxjsEsm',
     data: {
       estree: { type: 'Program', sourceType: 'module', body: assignments },
