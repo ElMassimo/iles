@@ -1,6 +1,6 @@
 name: tests
 
-on: [push, pull_request]
+on: push
 
 jobs:
   tests:
@@ -26,7 +26,7 @@ jobs:
             - recursive: false
 
       - name: Build
-        run: pnpm build
+        run: pnpm build:all
 
       - name: Tests
         run: pnpm test || echo 'Until figuring out why it times out even when successful'
@@ -38,11 +38,12 @@ jobs:
         run: pnpm docs:check
 
       - name: Lint
-        run: pnpm lint
+        run: pnpm lint:all
 
   cypress:
     if: (! git diff --quiet 'HEAD^' HEAD docs) || ${{ contains(github.event.head_commit.message, 'docs') }}
     name: cypress
+    needs: tests
     env:
       CI: true
 
@@ -81,3 +82,45 @@ jobs:
           name: cypress-videos
           path: docs/cypress/videos
           retention-days: 1
+
+  docs:
+    if: (! git diff --quiet 'HEAD^' HEAD docs) || ${{ contains(github.event.head_commit.message, 'docs') }}
+    name: deploy docs
+    needs: tests
+    env:
+      BUILD_HOOK: ${{secrets.NETLIFY_DOCS_BUILD_HOOK}}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Netlify
+        run: 'curl -X POST -d {} $BUILD_HOOK'
+
+  blog:
+    if: (! git diff --quiet 'HEAD^' HEAD playground/the-vue-point) || ${{ contains(github.event.head_commit.message, 'blog') }}
+    name: deploy the-vue-point
+    needs: tests
+    env:
+      BUILD_HOOK: ${{secrets.NETLIFY_VUE_POINT_BUILD_HOOK}}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Netlify
+        run: 'curl -X POST -d {} $BUILD_HOOK'
+
+  crawl:
+    if: (! git diff --quiet 'HEAD^' HEAD docs) || ${{ contains(github.event.head_commit.message, 'docs') }} || startsWith(github.event.head_commit.message, 'crawl') }}
+    name: crawl docs
+    needs: docs
+    env:
+      API_KEY: ${{secrets.ALGOLIA_API_KEY}}
+      APPLICATION_ID: GERZE019PN
+    runs-on: ubuntu-latest
+    container: algolia/docsearch-scraper
+    steps:
+      - name: Wait for Netlify deployment
+        uses: whatnick/wait-action@master
+        with:
+          time: '30s'
+      - uses: actions/checkout@v2
+      - run: 'sudo apt-get install -y jq'
+      - run: 'echo "CONFIG=$(cat docs/.algolia/config.json | jq -r tostring)" >> $GITHUB_ENV'
+      - run: "cd /root && pipenv install"
+      - run: "cd /root && pipenv run python -m src.index"

@@ -1,7 +1,10 @@
 {
+  "name": "root",
   "private": true,
   "scripts": {
-    "dev": "npm -C packages run dev",
+    "build:all": "pnpx nx run-many --target=build --all --exclude docs --exclude vue-blog",
+    "lint:all": "pnpx nx affected --target=lint",
+    "dev": "pnpm -r --parallel --filter packages run dev",
     "docs": "npm -C docs run dev",
     "docs:build": "npm -C docs run build",
     "docs:now": "npm -C docs run now",
@@ -10,9 +13,6 @@
     "blog:build": "npm run -C playground/the-vue-point build",
     "blog:now": "npm run -C playground/the-vue-point now",
     "blog:check": "npm -C playground/the-vue-point run check",
-    "build": "npm -C packages run build",
-    "build-fast": "npm -C packages run build-fast",
-    "lint": "eslint --ignore-pattern 'node_modules' --ignore-pattern 'dist' . --ext .ts,.js,.vue,.html",
     "release": "node scripts/release",
     "changelog": "node scripts/changelog",
     "test": "packages/iles/bin/iles.js test"
@@ -24,6 +24,10 @@
     "@islands/prerender": "*",
     "@mussi/eslint-config": "^0.5.1",
     "@mussi/stylelint-config": "^0.1.1",
+    "@nrwl/cli": "latest",
+    "@nrwl/nx-cloud": "^13.0.1",
+    "@nrwl/tao": "latest",
+    "@nrwl/workspace": "latest",
     "concurrently": "^6.4.0",
     "conventional-changelog-cli": "^2.1.1",
     "enquirer": "^2.3.6",
@@ -52,6 +56,7 @@
       "useHead": "readonly",
       "definePageComponent": "readonly"
     },
+    "ignorePatterns": ["dist", "node_modules", "packages/iles/turbo.js", "docs/cypress"],
     "rules": {
       "prefer-const": "off",
       "no-unused-vars": "off",

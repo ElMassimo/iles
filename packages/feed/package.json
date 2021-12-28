@@ -4,7 +4,7 @@
   "scripts": {
     "dev": "npm run build -- --watch",
     "build": "rimraf -rf dist && tsup src/types.ts src/feed.ts src/render-feed.ts",
-    "prepublishOnly": "npm run build"
+    "lint": "eslint ."
   },
   "files": [
     "dist",

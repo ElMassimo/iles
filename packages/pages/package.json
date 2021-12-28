@@ -3,8 +3,8 @@
   "version": "0.7.4",
   "scripts": {
     "dev": "npm run build -- --watch",
-    "build": "tsup src/pages.ts",
-    "prepublishOnly": "npm run build"
+    "build": "rimraf -rf dist && tsup src/pages.ts",
+    "lint": "eslint ."
   },
   "type": "module",
   "files": [

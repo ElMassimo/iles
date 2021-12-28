@@ -1,6 +1,10 @@
 import { resolve } from 'path'
 import { defineConfig } from 'iles'
 
+import headings from '@islands/headings'
+import icons from '@islands/icons'
+import prism from '@islands/prism'
+
 import windicss from 'vite-plugin-windicss'
 import inspect from 'vite-plugin-inspect'
 
@@ -9,9 +13,9 @@ export default defineConfig({
   turbo: true,
   jsx: 'preact',
   modules: [
-    '@islands/headings',
-    '@islands/icons',
-    '@islands/prism',
+    headings(),
+    icons(),
+    prism(),
   ],
   markdown: {
     rehypePlugins: [
