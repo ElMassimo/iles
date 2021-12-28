@@ -12,7 +12,7 @@
   "scripts": {
     "dev": "npm run build -- --watch",
     "build": "rimraf -rf dist && tsup prerender.ts",
-    "prepublishOnly": "npm run build"
+    "lint": "eslint ."
   },
   "exports": {
     ".": {

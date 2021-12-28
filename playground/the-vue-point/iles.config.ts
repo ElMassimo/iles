@@ -1,5 +1,10 @@
 import { defineConfig } from 'iles'
 
+import excerpt from '@islands/excerpt'
+import feed from '@islands/feed'
+import icons from '@islands/icons'
+import prism from '@islands/prism'
+
 import windicss from 'vite-plugin-windicss'
 import inspect from 'vite-plugin-inspect'
 
@@ -10,10 +15,10 @@ export default defineConfig({
   prettyUrls: false,
   svelte: true,
   modules: [
-    '@islands/excerpt',
-    '@islands/feed',
-    '@islands/icons',
-    '@islands/prism',
+    excerpt(),
+    feed(),
+    icons(),
+    prism(),
   ],
   // Example: Configure all posts to use a different layout without having to
   // add `layout: 'post'` in every file.

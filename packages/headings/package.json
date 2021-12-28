@@ -3,8 +3,8 @@
   "version": "0.1.1",
   "scripts": {
     "dev": "npm run build -- --watch",
-    "build": "tsup src/headings.ts",
-    "prepublishOnly": "npm run build"
+    "build": "rimraf -rf dist && tsup src/headings.ts",
+    "lint": "eslint ."
   },
   "type": "module",
   "files": [

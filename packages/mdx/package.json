@@ -3,8 +3,8 @@
   "version": "0.7.3",
   "scripts": {
     "dev": "rimraf -rf dist && npm run build -- --watch",
-    "build": "tsup src/mdx.ts",
-    "prepublishOnly": "npm run build"
+    "build": "rimraf -rf dist && tsup src/mdx.ts",
+    "lint": "eslint ."
   },
   "type": "module",
   "files": [

@@ -1,6 +1,0 @@
-{
-  "private": true,
-  "scripts": {
-    "dev": "pnpm -r --parallel --filter . run dev"
-  }
-}

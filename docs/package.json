@@ -1,5 +1,5 @@
 {
-  "name": "iles-docs",
+  "name": "docs",
   "version": "1.0.0",
   "private": true,
   "scripts": {
@@ -7,9 +7,8 @@
     "build": "iles build",
     "preview": "iles preview --open --port 3050",
     "now": "npm run build && npm run preview",
+    "lint": "eslint . --ext .ts,.js,.vue,.html",
     "check": "vue-tsc --noEmit",
-    "link": "pnpm link ../packages/iles",
-    "unlink": "pnpm unlink ../packages/iles",
     "cy:run": "scripts/test-cypress"
   },
   "engines": {
@@ -18,13 +17,13 @@
   "devDependencies": {
     "@iconify-json/bx": "^1.0.3",
     "@iconify-json/heroicons-outline": "^1.0.2",
-    "@islands/headings": "^0.1.1",
-    "@islands/icons": "^0.1.1",
-    "@islands/prism": "^0.1.0",
+    "@islands/headings": "workspace:*",
+    "@islands/icons": "workspace:*",
+    "@islands/prism": "workspace:*",
     "@preact/preset-vite": "^2.1.5",
     "@vueuse/core": "^6.9.2",
     "autoprefixer": "^10.4.0",
-    "iles": "^0.7.16",
+    "iles": "workspace:*",
     "postcss-nesting": "^8.0.1",
     "preact-render-to-string": "^5.1.19",
     "rehype-external-links": "^1.0.0",
