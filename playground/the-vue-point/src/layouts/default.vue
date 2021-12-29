@@ -2,7 +2,7 @@
 if (import.meta.env.PROD) {
   useHead({
     script: [
-      { type: 'module', async: true, children: 'console.log("Powered by îles 🏝", "https://iles-docs.netlify.app")' },
+      { async: true, children: 'console.log("Powered by îles 🏝", "https://iles-docs.netlify.app")' },
     ],
   })
 }
