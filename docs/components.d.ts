@@ -61,7 +61,7 @@ declare module 'vue' {
     PageHooks: typeof import('./src/components/PageHooks.mdx')['default']
     SearchButton: typeof import('./src/components/SearchButton.vue')['default']
     SeoTags: typeof import('./src/components/SeoTags.vue')['default']
-    Should: typeof import('./src/components/Should.mdx')['default']
+    Should: typeof import('./src/components/should.mdx')['default']
     SidebarBackground: typeof import('./src/components/SidebarBackground.vue')['default']
     SidebarHeader: typeof import('./src/components/SidebarHeader.vue')['default']
     SidebarLink: typeof import('./src/components/SidebarLink.vue')['default']

@@ -60,8 +60,10 @@ importers:
       '@islands/prism': workspace:*
       '@mussi/docsearch': ^3.0.0-alpha.42
       '@preact/preset-vite': ^2.1.5
+      '@types/cross-spawn': ^6.0.2
       '@vueuse/core': ^6.9.2
       autoprefixer: ^10.4.0
+      cross-spawn: ^7.0.3
       iles: workspace:*
       postcss-nesting: ^8.0.1
       preact: ^10.6.4
@@ -81,15 +83,17 @@ importers:
       '@islands/icons': link:../packages/icons
       '@islands/prism': link:../packages/prism
       '@preact/preset-vite': 2.1.5_preact@10.6.4
+      '@types/cross-spawn': 6.0.2
       '@vueuse/core': 6.9.2
       autoprefixer: 10.4.0
+      cross-spawn: 7.0.3
       iles: link:../packages/iles
       postcss-nesting: 8.0.1
       preact-render-to-string: 5.1.19_preact@10.6.4
       rehype-external-links: 1.0.1
       vite-plugin-inspect: 0.3.11
       vite-plugin-windicss: 1.6.1
-      vue-tsc: 0.29.8_typescript@4.4.4
+      vue-tsc: 0.29.8
 
   packages/excerpt:
     specifiers:
@@ -2137,6 +2141,12 @@ packages:
     resolution: {integrity: sha512-cdeYyv4KWoEgpBISTxWvqYsVy444DOqehiF3fM3ne10AmJ62RSyNkUnxMJXHQWRQQX2eR94m5y1IZyDwBjV9FQ==}
     dependencies:
       '@types/node': 15.14.9
+    dev: true
+
+  /@types/cross-spawn/6.0.2:
+    resolution: {integrity: sha512-KuwNhp3eza+Rhu8IFI5HUXRP0LIhqH5cAjubUvGXXthh4YYBuP2ntwEX+Cz8GJoZUHlKo247wPWOfA9LYEq4cw==}
+    dependencies:
+      '@types/node': 17.0.5
     dev: true
 
   /@types/debug/4.1.7:
@@ -9655,6 +9665,16 @@ packages:
       '@vue/devtools-api': 6.0.0-beta.21.1
       vue: 3.2.26
     dev: false
+
+  /vue-tsc/0.29.8:
+    resolution: {integrity: sha512-pT0wLRjvRuSmB+J4WJT6uuV9mO0KtSSXEAtaVXZQzyk5+DJdbLIQTbRce/TXSkfqt1l1WogO78RjtOJFiMCgfQ==}
+    hasBin: true
+    peerDependencies:
+      typescript: '*'
+    dependencies:
+      '@volar/shared': 0.29.8
+      vscode-vue-languageservice: 0.29.8
+    dev: true
 
   /vue-tsc/0.29.8_typescript@4.4.4:
     resolution: {integrity: sha512-pT0wLRjvRuSmB+J4WJT6uuV9mO0KtSSXEAtaVXZQzyk5+DJdbLIQTbRce/TXSkfqt1l1WogO78RjtOJFiMCgfQ==}
