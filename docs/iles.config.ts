@@ -4,10 +4,10 @@ import { defineConfig } from 'iles'
 import headings from '@islands/headings'
 import icons from '@islands/icons'
 import prism from '@islands/prism'
-import lastUpdated from './modules/lastUpdated'
 
 import windicss from 'vite-plugin-windicss'
 import inspect from 'vite-plugin-inspect'
+import lastUpdated from './modules/lastUpdated'
 
 export default defineConfig({
   siteUrl: 'https://iles-docs.netlify.app',
