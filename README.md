@@ -12,7 +12,7 @@
 <p align="center">
   <small><em>îles — french word for "islands"</em></small>
 </p>
-<h3 align='center'>Islands of interactivity with <samp>Vue</samp> in <samp>Vite.js</samp></h3>
+<h3 align='center'>Islands of interactivity with <samp>Vue, Preact, Svelte, Solid, or plain JS</samp> in <samp>Vite.js</samp></h3>
 <p align="center">
   <a href='https://www.npmjs.com/package/iles'>
     <img src='https://img.shields.io/npm/v/iles?color=0284c7&label='>
