@@ -68,7 +68,7 @@ export function createApi (options: ResolvedOptions) {
       const routes = Array.from(pagesByFile.values()).sort(byDynamicParams)
       const userRoutes = await options.extendRoutes?.(routes) || routes
       debug.gen('routes: %O', userRoutes)
-      return `export default ${stringifyRoutes(routes)}`
+      return `export default ${stringifyRoutes(userRoutes)}`
     },
     async frontmatterForFile (file: string, content?: string): Promise<RawPageMatter> {
       try {
