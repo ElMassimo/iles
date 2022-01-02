@@ -1,3 +1,13 @@
+## [0.7.21](https://github.com/ElMassimo/iles/compare/v0.7.20...v0.7.21) (2022-01-02)
+
+
+### Bug Fixes
+
+* `ERR_REQUIRE_ESM` error when project type is set to `module` ([#69](https://github.com/ElMassimo/iles/issues/69)) ([6878911](https://github.com/ElMassimo/iles/commit/687891132aa21ebbb23ac90f37efa77517d5bed1))
+* ensure sitemap preserves double slashes when targeting a subdomain ([334a4e6](https://github.com/ElMassimo/iles/commit/334a4e67bff30c624434463a95abf0692c00dc8a))
+
+
+
 ## [0.7.20](https://github.com/ElMassimo/iles/compare/v0.7.19...v0.7.20) (2021-12-28)
 
 
