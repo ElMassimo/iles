@@ -1,3 +1,13 @@
+## [0.7.5](https://github.com/ElMassimo/iles/compare/pages@0.7.4...pages@0.7.5) (2022-01-02)
+
+
+### Bug Fixes
+
+* apply changes in extendRoutes that don't mutate the array ([31f3508](https://github.com/ElMassimo/iles/commit/31f3508071a7cc21b9bc3e2d7240c08036675a01))
+* avoid calling extendFrontmatter or extendRoute before buildStart ([4341cf9](https://github.com/ElMassimo/iles/commit/4341cf9e8ae632a740f296ce3827dde427d7f6d2))
+
+
+
 ## [0.7.4](https://github.com/ElMassimo/iles/compare/pages@0.7.3...pages@0.7.4) (2021-12-18)
 
 

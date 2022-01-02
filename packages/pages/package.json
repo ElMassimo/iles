@@ -1,6 +1,6 @@
 {
   "name": "@islands/pages",
-  "version": "0.7.4",
+  "version": "0.7.5",
   "scripts": {
     "dev": "npm run build -- --watch",
     "build": "rimraf -rf dist && tsup src/pages.ts",
