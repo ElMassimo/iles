@@ -12,6 +12,7 @@ describe('app routes', () => {
       '/posts/vue-3-2',
       '/posts/vue-3-one-piece',
       '/posts/:page',
+      '/:zzz(.*)*',
     ])
   })
 })
