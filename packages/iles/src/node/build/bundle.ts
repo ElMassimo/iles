@@ -3,7 +3,7 @@ import { promises as fs } from 'fs'
 import type { RollupOutput } from 'rollup'
 import type { Plugin } from 'vite'
 import glob from 'fast-glob'
-import { relative, dirname, resolve } from 'pathe'
+import { relative, dirname, resolve, join } from 'pathe'
 import { build, mergeConfig as mergeViteConfig, UserConfig as ViteUserConfig } from 'vite'
 import { APP_PATH } from '../alias'
 import { AppConfig } from '../shared'
@@ -51,6 +51,7 @@ async function bundleWithVite (config: AppConfig, entrypoints: string[] | Entryp
       htmlBuild
         ? moveHtmlPagesPlugin(config)
         : !ssr && removeJsPlugin(),
+      ssr && addCommonJsPackagePlugin(config),
     ],
     build: {
       ssr,
@@ -100,5 +101,15 @@ function moveHtmlPagesPlugin (config: AppConfig): Plugin {
       }))
       rm(resolve(outDir, relative(config.root, config.srcDir)))
     },
+  }
+}
+
+// Internal: Add a `package.json` file specifying the type of files as CJS.
+function addCommonJsPackagePlugin(config: AppConfig) {
+  return {
+    name: 'iles:add-common-js-package-plugin',
+    writeBundle() {
+      fs.writeFile(join(config.tempDir, 'package.json'), JSON.stringify({ type: 'commonjs' }));
+    }
   }
 }
