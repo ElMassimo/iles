@@ -105,11 +105,11 @@ function moveHtmlPagesPlugin (config: AppConfig): Plugin {
 }
 
 // Internal: Add a `package.json` file specifying the type of files as CJS.
-function addCommonJsPackagePlugin(config: AppConfig) {
+function addCommonJsPackagePlugin (config: AppConfig) {
   return {
     name: 'iles:add-common-js-package-plugin',
-    writeBundle() {
-      fs.writeFile(join(config.tempDir, 'package.json'), JSON.stringify({ type: 'commonjs' }));
-    }
+    async writeBundle () {
+      await fs.writeFile(join(config.tempDir, 'package.json'), JSON.stringify({ type: 'commonjs' }))
+    },
   }
 }
