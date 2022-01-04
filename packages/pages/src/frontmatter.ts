@@ -1,4 +1,3 @@
-import { promises as fs } from 'fs'
 import { basename, extname } from 'pathe'
 import grayMatter from 'gray-matter'
 import { parse as parseSFC } from 'vue/compiler-sfc'
