@@ -2,10 +2,10 @@
 [client:none]: /guide/hydration#clientnone
 [mdx files]: /guide/markdown
 
-[Vue]: /config/plugins#vitejsplugin-vue
-[Preact]: /config/plugins#preactpreset-vite
-[SolidJS]: /config/plugins#vite-plugin-solid
-[Svelte]: /config/plugins#sveltejsvite-plugin-svelte
+[Vue]: /guide/plugins#vitejsplugin-vue
+[Preact]: /guide/plugins#preactpreset-vite
+[SolidJS]: /guide/plugins#vite-plugin-solid
+[Svelte]: /guide/plugins#sveltejsvite-plugin-svelte
 [vanilla JS]: /guide/client-scripts#vanilla-components
 
 [useDark]: https://vueuse.org/core/usedark/
@@ -14,15 +14,16 @@
 
 # Supported Frameworks 🧱
 
-Components from the following frameworks can be embedded in Vue and [MDX files] in <Iles/>:
+Components from the following frameworks can be embedded in [Vue] and [MDX files] in <Iles/>:
 
+- [Vue] (obviously)
 - [Preact]
 - [SolidJS]
 - [Svelte]
 - [Vanilla JS]
 
 <Tip warn>
-You must add a [hydration directive][hydration] when using these components in Vue and [MDX files].
+You must add a [hydration directive][hydration] when using non-Vue components in Vue and [MDX files].
 </Tip>
 
 > No JS is shipped if you use <kbd>[client:none]</kbd> 🏝

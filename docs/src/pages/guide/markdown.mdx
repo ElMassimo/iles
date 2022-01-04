@@ -6,11 +6,12 @@
 [meta]: /guide/development#using-page-data
 [component]: https://v3.vuejs.org/api/built-in-components.html#component
 [mdxComponents]: /config#mdxcomponents
+[components]: /guide/frameworks
 [enhanceApp]: /config#enhanceapp
 
 # Markdown 📖
 
-<Iles/> provides excellent support for [`.mdx`][mdx] files thanks to <kbd>[xdm]</kbd>, allowing you to use Vue components inside markdown, and use markdown components in Vue.
+<Iles/> provides excellent support for [`.mdx`][mdx] files thanks to <kbd>[xdm]</kbd>, allowing you to use [components] inside markdown, and use markdown components in Vue.
 
 ## What is [MDX]?
 
@@ -25,7 +26,7 @@ date: 2020-10-14
 # Markdown 📖
 
 <Iles/> provides excellent support for `.mdx` files thanks to <kbd>xdm</kbd>,
-allowing you to use Vue components inside markdown, and use markdown components
+allowing you to use components inside markdown, and use markdown components
 in Vue.
 ```
 <Caption>The introduction of this MDX page.</Caption>
@@ -57,9 +58,9 @@ The `filename` and the page `href` can be accessed through [`meta`][meta].
 <SuggestChangesLink filename={ meta.filename }/>
 ```
 
-## Vue in Markdown <VueLogo/>
+## Components in Markdown 🧱
 
-<Iles/> extends [XDM] enabling you to use Vue components in MDX files.
+<Iles/> extends [XDM] enabling you to use [components] in MDX files.
 
 HMR is fully supported, and components can be used [without importing them][components]. 
 
