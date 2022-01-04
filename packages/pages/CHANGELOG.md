@@ -1,3 +1,12 @@
+## [0.7.6](https://github.com/ElMassimo/iles/compare/pages@0.7.5...pages@0.7.6) (2022-01-04)
+
+
+### Bug Fixes
+
+* resolve file before reading frontmatter (windows incompatibility) ([a13986c](https://github.com/ElMassimo/iles/commit/a13986c5bafb736a658e7836c4e783f0cd15ad16))
+
+
+
 ## [0.7.5](https://github.com/ElMassimo/iles/compare/pages@0.7.4...pages@0.7.5) (2022-01-02)
 
 
