@@ -13,7 +13,7 @@ const site = {
   author: 'Máximo Mussini',
   github: 'https://github.com/ElMassimo/iles',
   twitterHandle,
-  authorHandle: 'MaximoMussini'
+  authorHandle: 'MaximoMussini',
   twitter: `https://twitter.com/${twitterHandle}`,
 
   nav: [
