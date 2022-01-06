@@ -4,7 +4,7 @@ if (import.meta.env.PROD)
 </script>
 
 <template>
-  <SeoTags/>
+  <MetaTags/>
   <TheNavBar/>
   <slot/>
 </template>

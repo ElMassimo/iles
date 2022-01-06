@@ -20,7 +20,9 @@ let imageUrl = $computed(() => `${site.url}${frontmatter.image || bannerSrc}`)
     <meta property="og:locale" content="en_US">
     <meta property="og:image" :content="imageUrl">
     <meta property="twitter:image" :content="imageUrl">
+    <meta property="twitter:image:alt" content="îles">
     <meta property="twitter:site" :content="`@${site.twitterHandle}`">
+    <meta property="twitter:creator" :content="`@${site.authorHandle}`">
     <meta property="twitter:card" content="summary_large_image">
     <link rel="icon" type="image/svg+xml" :href="logoSrc">
     <link rel="shortcut icon" :href="faviconSrc">
