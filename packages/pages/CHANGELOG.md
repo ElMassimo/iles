@@ -1,3 +1,12 @@
+## [0.7.7-0](https://github.com/ElMassimo/iles/compare/pages@0.7.6...pages@0.7.7-0) (2022-01-06)
+
+
+### Features
+
+* additional debug information for useDocuments ([42a4457](https://github.com/ElMassimo/iles/commit/42a4457d2a80e247954b37452d26135d9bfa3cc6))
+
+
+
 ## [0.7.6](https://github.com/ElMassimo/iles/compare/pages@0.7.5...pages@0.7.6) (2022-01-04)
 
 
