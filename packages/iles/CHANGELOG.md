@@ -1,3 +1,17 @@
+## [0.7.22-0](https://github.com/ElMassimo/iles/compare/v0.7.21...v0.7.22-0) (2022-01-06)
+
+
+### Bug Fixes
+
+* ensure the cjs workaround package.json is written before rendering begins ([3d92c55](https://github.com/ElMassimo/iles/commit/3d92c553ccb61da34a196390575242f9e8a28b0a))
+
+
+### Features
+
+* additional debug information for useDocuments ([42a4457](https://github.com/ElMassimo/iles/commit/42a4457d2a80e247954b37452d26135d9bfa3cc6))
+
+
+
 ## [0.7.21](https://github.com/ElMassimo/iles/compare/v0.7.20...v0.7.21) (2022-01-02)
 
 
