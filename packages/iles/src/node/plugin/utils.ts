@@ -9,6 +9,7 @@ export { default as serialize } from '@nuxt/devalue'
 
 export const debug = {
   config: createDebugger('iles:config'),
+  documents: createDebugger('iles:documents'),
   mdx: createDebugger('iles:mdx'),
   layout: createDebugger('iles:layout'),
   detect: createDebugger('iles:detect'),

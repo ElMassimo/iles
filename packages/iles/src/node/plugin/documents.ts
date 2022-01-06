@@ -5,7 +5,7 @@ import { isMatch } from 'micromatch'
 import { relative } from 'pathe'
 import type { AppConfig } from '../shared'
 import { parseId } from './parse'
-import { serialize } from './utils'
+import { debug, serialize } from './utils'
 
 const definitionRegex = /(function|const|let|var)[\s\n]+\buseDocuments\b/
 const usageRegex = /\buseDocuments[\s\n]*\(([^)]+)\)/g
@@ -55,6 +55,8 @@ export default function documentsPlugin (config: AppConfig): Plugin {
       const data = await Promise.all(files.map(async file =>
         pages.api.pageForFilename(file)?.frontmatter || pages.api.frontmatterForFile(file)))
 
+      debug.documents('%s %O', rawPath, { path, pattern, files })
+
       // Create the structure of each document in the default export.
       const documents = data.map(({ route: _, meta, layout, ...frontmatter }, index) => {
         return { ...meta, ...frontmatter, meta, frontmatter, component: `${index}_component` }
@@ -62,9 +64,8 @@ export default function documentsPlugin (config: AppConfig): Plugin {
 
       // Serialize all the documents, adding a `component` factory function.
       const serialized = serialize(documents).replace(/component:"(\w+)"/g, (_, id) => {
-        const index = id.split('_')[0]
-        const { filename } = data[index].meta
-        return `component: unwrapDefault(() => import('/${filename}'))`
+        const index = id.split('_component')[0]
+        return `component: unwrapDefault(() => import('/${documents[index].filename}'))`
       })
 
       // Use defineAsyncComponent to support using <component :is="doc">.
