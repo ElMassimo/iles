@@ -46,7 +46,6 @@ export default function IlesPages (): any {
 
   function PagesPlugin (options: ResolvedOptions): Plugin {
     let generatedRoutes: string | undefined
-    let addedAll = false
 
     return {
       name: 'iles:pages',
@@ -56,6 +55,8 @@ export default function IlesPages (): any {
       },
       async configResolved (config) {
         api = createApi(options)
+      },
+      async buildStart () {
         await api.addAllPages()
       },
       configureServer (server) {
@@ -63,10 +64,6 @@ export default function IlesPages (): any {
         handleHMR(api, options, () => { generatedRoutes = undefined })
       },
       async resolveId (id) {
-        if (!addedAll) {
-          await api.addAllPages()
-          addedAll = true
-        }
         if (id === MODULE_ID)
           return MODULE_ID
       },
