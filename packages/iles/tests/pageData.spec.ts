@@ -1,8 +1,11 @@
 import { test, describe, expect } from 'vitest'
 
+import vue32 from '@pages/posts/vue-3-2.mdx'
+import notFound from '@pages/404.vue'
+
 describe('page data', () => {
   test('for markdown file', async () => {
-    const doc = await import('@pages/posts/vue-3-2.mdx').then(m => m.default)
+    const doc = vue32
 
     expect(typeof doc.render).toEqual('function')
     expect(typeof doc.__hmrId).toEqual('string')
@@ -28,7 +31,7 @@ describe('page data', () => {
   })
 
   test('for vue file', async () => {
-    const doc = await import('@pages/404.vue').then(m => m.default)
+    const doc = notFound
 
     expect(typeof doc.render).toEqual('function')
     expect(typeof doc.__hmrId).toEqual('string')
