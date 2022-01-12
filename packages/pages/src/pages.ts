@@ -56,16 +56,15 @@ export default function IlesPages (): any {
       async configResolved (config) {
         api = createApi(options)
       },
-      async buildStart () {
-        await api.addAllPages()
-      },
       configureServer (server) {
         options.server = server
         handleHMR(api, options, () => { generatedRoutes = undefined })
       },
       async resolveId (id) {
-        if (id === MODULE_ID)
+        if (id === MODULE_ID) {
+          await api.addAllPages()
           return MODULE_ID
+        }
       },
       async load (id) {
         if (id === MODULE_ID)
