@@ -2,6 +2,7 @@ import { resolveConfig } from '../config'
 import { renderPages } from './render'
 import { bundle } from './bundle'
 import { bundleIslands } from './islands'
+import { writePages } from './write'
 import { withSpinner, rm } from './utils'
 import { createSitemap } from './sitemap'
 
@@ -23,12 +24,16 @@ export async function build (root: string) {
   await createSitemap(appConfig, pagesResult.routesToRender)
 
   await withSpinner('building islands bundle',
-    async () => await bundleIslands(appConfig, islandsByPath, pagesResult))
+    async () => await bundleIslands(appConfig, islandsByPath))
 
-  appConfig.ssg.onSiteRendered?.({
-    config: appConfig,
-    pages: pagesResult.routesToRender,
-  })
+  const ssgContext = { config: appConfig, pages: pagesResult.routesToRender }
+
+  await appConfig.ssg.onSiteBundled?.(ssgContext)
+
+  await withSpinner('writing pages',
+    async () => await writePages(appConfig, islandsByPath, pagesResult))
+
+  await appConfig.ssg.onSiteRendered?.(ssgContext)
 
   rm(appConfig.tempDir)
 

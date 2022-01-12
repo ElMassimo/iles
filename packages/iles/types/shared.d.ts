@@ -147,6 +147,10 @@ export interface BaseIlesConfig extends PagesOptions {
      */
     beforePageRender?: (page: RouteToRender, config: AppConfig) => RouteToRender | void | Promise<void | RouteToRender>
     /**
+     * This hook will be invoked once îles has bundled client, SSR, and islands.
+     */
+    onSiteBundled?: (context: SSGContext) => void | Promise<void>
+    /**
      * This hook will be invoked once îles has rendered the entire site.
      */
     onSiteRendered?: (context: SSGContext) => void | Promise<void>

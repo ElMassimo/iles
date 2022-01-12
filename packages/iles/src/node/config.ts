@@ -159,7 +159,7 @@ async function applyModules (config: AppConfig, configEnv: ConfigEnv) {
     }
   }
   chainModuleCallbacks(config, ['extendFrontmatter', 'extendRoute', 'extendRoutes'])
-  chainModuleCallbacks(config, ['beforePageRender', 'onSiteRendered'], 'ssg')
+  chainModuleCallbacks(config, ['beforePageRender', 'onSiteBundled', 'onSiteRendered'], 'ssg')
   return config
 }
 
