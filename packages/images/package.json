@@ -1,0 +1,38 @@
+{
+  "name": "@islands/images",
+  "version": "0.3.0",
+  "scripts": {
+    "dev": "npm run build -- --watch",
+    "build": "tsup src/images.ts",
+    "lint": "eslint ."
+  },
+  "type": "module",
+  "files": [
+    "dist",
+    "src"
+  ],
+  "exports": {
+    ".": {
+      "import": "./dist/images.js",
+      "require": "./dist/images.cjs",
+      "types": "./dist/images.d.ts"
+    },
+    "./package.json": "./package.json"
+  },
+  "funding": "https://github.com/sponsors/ElMassimo",
+  "author": "Máximo Mussini <maximomussini@gmail.com>",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ElMassimo/iles"
+  },
+  "homepage": "https://github.com/ElMassimo/iles",
+  "bugs": "https://github.com/ElMassimo/iles/issues",
+  "dependencies": {
+    "vite-plugin-image-presets": "^0.3.0"
+  },
+  "devDependencies": {
+    "iles": "workspace:*",
+    "tsup": "5.5.0",
+    "typescript": "^4.4.4"
+  }
+}
