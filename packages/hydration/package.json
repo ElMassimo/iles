@@ -4,7 +4,7 @@
   "version": "0.3.6",
   "scripts": {
     "dev": "npm run build -- --watch",
-    "build": "rimraf -rf dist && tsup hydration.ts preact.ts vue.ts vanilla.ts solid.ts svelte.ts",
+    "build": "tsup hydration.ts preact.ts vue.ts vanilla.ts solid.ts svelte.ts",
     "lint": "eslint ."
   },
   "type": "module",

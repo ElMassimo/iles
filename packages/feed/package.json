@@ -3,7 +3,7 @@
   "version": "0.1.1",
   "scripts": {
     "dev": "npm run build -- --watch",
-    "build": "rimraf -rf dist && tsup src/types.ts src/feed.ts src/render-feed.ts",
+    "build": "tsup src/types.ts src/feed.ts src/render-feed.ts",
     "lint": "eslint ."
   },
   "files": [

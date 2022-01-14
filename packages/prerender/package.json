@@ -11,7 +11,7 @@
   "main": "dist/prerender.cjs",
   "scripts": {
     "dev": "npm run build -- --watch",
-    "build": "rimraf -rf dist && tsup prerender.ts",
+    "build": "tsup prerender.ts",
     "lint": "eslint ."
   },
   "exports": {

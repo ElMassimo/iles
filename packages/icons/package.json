@@ -3,7 +3,7 @@
   "version": "0.1.1",
   "scripts": {
     "dev": "npm run build -- --watch",
-    "build": "rimraf -rf dist && tsup src/icons.ts",
+    "build": "tsup src/icons.ts",
     "lint": "eslint ."
   },
   "files": [

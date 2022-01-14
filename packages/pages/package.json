@@ -3,7 +3,7 @@
   "version": "0.7.6",
   "scripts": {
     "dev": "npm run build -- --watch",
-    "build": "rimraf -rf dist && tsup src/pages.ts",
+    "build": "tsup src/pages.ts",
     "lint": "eslint ."
   },
   "type": "module",

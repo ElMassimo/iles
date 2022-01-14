@@ -3,7 +3,7 @@
   "version": "0.1.2",
   "scripts": {
     "dev": "npm run build -- --watch",
-    "build": "rimraf -rf dist && tsup src/excerpt.ts",
+    "build": "tsup src/excerpt.ts",
     "lint": "eslint ."
   },
   "type": "module",

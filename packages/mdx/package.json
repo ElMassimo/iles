@@ -2,8 +2,8 @@
   "name": "@islands/mdx",
   "version": "0.7.4",
   "scripts": {
-    "dev": "rimraf -rf dist && npm run build -- --watch",
-    "build": "rimraf -rf dist && tsup src/mdx.ts",
+    "dev": "npm run build -- --watch",
+    "build": "tsup src/mdx.ts",
     "lint": "eslint ."
   },
   "type": "module",
