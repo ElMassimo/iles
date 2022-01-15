@@ -18,6 +18,7 @@
     "@islands/excerpt": "workspace:^0.1.0",
     "@islands/feed": "workspace:*",
     "@islands/icons": "workspace:*",
+    "@islands/images": "workspace:*",
     "@islands/prism": "workspace:*",
     "iles": "workspace:*",
     "vite-plugin-windicss": "^1.5.1",
