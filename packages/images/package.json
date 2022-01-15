@@ -9,7 +9,7 @@
   "type": "module",
   "files": [
     "dist",
-    "src"
+    "src/Picture.vue"
   ],
   "exports": {
     ".": {
