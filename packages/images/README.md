@@ -24,6 +24,9 @@
 [alias]: https://iles-docs.netlify.app/guide/development#default-app-structure
 [vite-plugin-image-presets]: https://github.com/ElMassimo/vite-plugin-image-presets
 
+[live]: https://the-vue-point-with-iles.netlify.app/
+[vuepoint]: https://github.com/ElMassimo/iles/tree/main/playground/the-vue-point/iles.config.ts
+
 An [îles] module that configures [`vite-plugin-image-presets`][vite-plugin-image-presets], allowing you to easily define presets to optimize and convert images:
 
 - 🖼 define [presets][vite-plugin-image-presets] once, apply everywhere
@@ -33,6 +36,9 @@ An [îles] module that configures [`vite-plugin-image-presets`][vite-plugin-imag
 - 🖥 customize formats, srcset, & sizes
 
 - ⚡️ on-demand in dev, cached at build time 📦
+
+[__Demo__ 🖼][live]
+[__Source__ 💻][vuepoint]
 
 ### Configuration ⚙️
 
