@@ -2,6 +2,7 @@ packages:
   - packages/hydration/
   - packages/prerender/
   - packages/headings/
+  - packages/images/
   - packages/mdx/
   - packages/excerpt/
   - packages/feed/

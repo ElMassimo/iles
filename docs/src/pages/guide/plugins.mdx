@@ -31,6 +31,7 @@ tocLevel: 3
 [@islands/excerpt]: https://github.com/ElMassimo/iles/tree/main/packages/excerpt
 [@islands/headings]: https://github.com/ElMassimo/iles/tree/main/packages/headings
 [@islands/icons]: https://github.com/ElMassimo/iles/tree/main/packages/icons
+[@islands/images]: https://github.com/ElMassimo/iles/tree/main/packages/images
 [@islands/mdx]: https://github.com/ElMassimo/iles/tree/main/packages/mdx
 [@islands/pages]: https://github.com/ElMassimo/iles/tree/main/packages/pages
 [@islands/prism]: https://github.com/ElMassimo/iles/tree/main/packages/prism
@@ -41,6 +42,9 @@ tocLevel: 3
 [pageData]: /guide/development#using-page-data
 [SEO tags]: /guide/meta-tags
 [RSS feeds]: /guide/rss
+
+[alias]: /guide/development#default-app-structure
+[vite-plugin-image-presets]: https://github.com/ElMassimo/vite-plugin-image-presets
 
 # Modules and Plugins 🔌
 
@@ -184,6 +188,20 @@ A module to add and configure [unplugin-icons]:
     '@islands/icons',
   ],
 ```
+
+### <kbd>[@islands/images]</kbd>
+
+A module that configures [`vite-plugin-image-presets`][vite-plugin-image-presets], allowing you to easily define presets to optimize and convert images:
+
+- 🖼 define [presets][vite-plugin-image-presets] once, apply everywhere
+
+- 🔗 use presets directly in `img`, `source`, and `Picture`
+
+- 🖥 customize formats, srcset, & sizes
+
+- ⚡️ on-demand in dev, cached at build time 📦
+
+Check the [readme][@islands/images] for more information.
 
 ### <kbd>[@islands/feed]</kbd>
 
