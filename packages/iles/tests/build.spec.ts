@@ -11,7 +11,7 @@ const vuePoint = `${projectRoot}/playground/the-vue-point`
 describe('building docs site', () => {
   beforeAll(async () => {
     await execa('npm', ['run', 'build'], { stdio: process.env.DEBUG ? 'inherit' : undefined, cwd: vuePoint })
-  }, 15000)
+  }, 30000)
 
   test('generated files', async () => {
     const files = await glob('**/*', { cwd: `${vuePoint}/dist`, onlyFiles: true })
