@@ -28,6 +28,8 @@ An [îles] module that configures [`vite-plugin-image-presets`][vite-plugin-imag
 
 - 🖼 define [presets][vite-plugin-image-presets] once, apply everywhere
 
+- 🔗 use presets directly in `img`, `source`, and `Picture`
+
 - 🖥 customize formats, srcset, & sizes
 
 - ⚡️ on-demand in dev, cached at build time 📦
