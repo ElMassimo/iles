@@ -29,7 +29,7 @@ jobs:
         run: pnpm build:all
 
       - name: Tests
-        run: pnpm test || echo 'Until figuring out why it times out even when successful'
+        run: pnpm test
 
       - name: Blog TS Check
         run: pnpm blog:check
