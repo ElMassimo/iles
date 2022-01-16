@@ -2,10 +2,12 @@ import type { IlesModule } from 'iles'
 import type { ImageApi, ImagePresets, Options } from 'vite-plugin-image-presets'
 
 import imagePresets from 'vite-plugin-image-presets'
-import { resolve } from 'path'
+import { dirname, resolve } from 'path'
+import { fileURLToPath } from 'url'
 
 export * from 'vite-plugin-image-presets'
 
+const __dirname = dirname(fileURLToPath(import.meta.url))
 export const PICTURE_COMPONENT_PATH = resolve(__dirname, '../src/Picture.vue')
 
 /**
