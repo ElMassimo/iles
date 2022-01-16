@@ -29,7 +29,7 @@
   "homepage": "https://github.com/ElMassimo/iles",
   "bugs": "https://github.com/ElMassimo/iles/issues",
   "dependencies": {
-    "vite-plugin-image-presets": "^0.3.0"
+    "vite-plugin-image-presets": "^0.3.1"
   },
   "devDependencies": {
     "iles": "workspace:*",

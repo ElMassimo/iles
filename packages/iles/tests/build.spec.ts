@@ -18,7 +18,21 @@ describe('building docs site', () => {
     expect(files.sort()).toEqual([
       '404.html',
       '_headers',
-      'assets/bench.7e185856.png',
+      'assets/bench.0d0ef746.avif',
+      'assets/bench.3a2b8c2a.png',
+      'assets/bench.3b82a5c5.avif',
+      'assets/bench.3f1dac6b.png',
+      'assets/bench.7cfd33ca.png',
+      'assets/bench.99843580.webp',
+      'assets/bench.9f1a2c1a.webp',
+      'assets/bench.aedf485a.webp',
+      'assets/bench.c51c35ca.avif',
+      'assets/one-piece.7449be34.png',
+      'assets/one-piece.7cc06399.avif',
+      'assets/one-piece.90cbb4e4.avif',
+      'assets/one-piece.a5c231c8.png',
+      'assets/one-piece.bd5f4a10.webp',
+      'assets/one-piece.dca2948a.webp',
       'assets/style.daf210ac.css',
       'assets/turbo.a9e83070.js',
       'favicon.ico',
@@ -60,7 +74,7 @@ describe('building docs site', () => {
   })
 
   test('remark-mdx-image', async () => {
-    const markdownImage = '<p><img alt="benchmark" src="/assets/bench.7e185856.png"></p>'
+    const markdownImage = '<p><picture><source media="(-webkit-min-device-pixel-ratio: 1.5)" type="image/avif" srcset="/assets/bench.c51c35ca.avif 440w, /assets/bench.3b82a5c5.avif 758w"><source media="(-webkit-min-device-pixel-ratio: 1.5)" type="image/webp" srcset="/assets/bench.9f1a2c1a.webp 440w, /assets/bench.99843580.webp 758w"><source media="(-webkit-min-device-pixel-ratio: 1.5)" srcset="/assets/bench.7cfd33ca.png 440w, /assets/bench.3f1dac6b.png 758w"><source type="image/avif" srcset="/assets/bench.0d0ef746.avif 758w"><source type="image/webp" srcset="/assets/bench.aedf485a.webp 758w"><img srcset="/assets/bench.3a2b8c2a.png 758w" loading="lazy" src="/assets/bench.3a2b8c2a.png" alt="benchmark"></picture></p>'
     await assertContent('posts/vue-3-2.html', markdownImage)
     await assertContent('feed.rss', markdownImage)
   })
