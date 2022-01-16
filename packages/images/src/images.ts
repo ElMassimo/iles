@@ -49,5 +49,19 @@ export default function IlesImagePresets (presets: ImagePresets, options?: Optio
         }
       ]
     },
+    vue: {
+      template: {
+        transformAssetUrls: {
+          tags: {
+            video: ['src', 'poster'],
+            source: ['src', 'srcset'],
+            img: ['src', 'srcset'],
+            image: ['xlink:href', 'href'],
+            use: ['xlink:href', 'href'],
+            Picture: ['src'],
+          },
+        },
+      },
+    },
   }
 }
