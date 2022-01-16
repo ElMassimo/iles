@@ -1,9 +1,9 @@
+import { dirname, resolve } from 'path'
+import { fileURLToPath } from 'url'
 import type { IlesModule } from 'iles'
 import type { ImageApi, ImagePresets, Options } from 'vite-plugin-image-presets'
 
 import imagePresets from 'vite-plugin-image-presets'
-import { dirname, resolve } from 'path'
-import { fileURLToPath } from 'url'
 
 export * from 'vite-plugin-image-presets'
 
@@ -46,8 +46,8 @@ export default function IlesImagePresets (presets: ImagePresets, options?: Optio
               return `import _Picture from '${PICTURE_COMPONENT_PATH}'\n${code}`
             }
           },
-        }
-      ]
+        },
+      ],
     },
     vue: {
       template: {
