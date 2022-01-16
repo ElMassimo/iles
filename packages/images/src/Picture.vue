@@ -1,7 +1,7 @@
 <script setup lang="ts">
 const { src } = defineProps<{ src: string | any[] }>()
 
-const allSources = $computed(() => Array.isArray(src) ? src : [{ srcset: src }])
+const allSources = $computed(() => Array.isArray(src) ? src : [{ srcset: src, src }])
 const sources = $computed(() => allSources.slice(0, -1))
 const lastSource = $computed(() => allSources[allSources.length - 1])
 </script>

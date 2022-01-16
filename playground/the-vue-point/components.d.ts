@@ -13,6 +13,7 @@ declare module 'vue' {
     IconCarbonWarning: typeof import('~icons/carbon/warning')['default']
     Island: typeof import('./../../packages/iles/dist/client/app/components/Island.vue')['default']
     NavBarLinks: typeof import('./src/components/NavBarLinks.svelte')['default']
+    Picture: typeof import('./../../packages/images/src/Picture.vue')['default']
     PostDate: typeof import('./src/components/PostDate.vue')['default']
     RenderFeed: typeof import('./../../packages/feed/dist/render-feed')['RenderFeed']
   }

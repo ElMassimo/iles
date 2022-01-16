@@ -21,6 +21,7 @@
 [îles]: https://github.com/ElMassimo/iles
 [docs]: https://iles-docs.netlify.app
 [MDX]: https://iles-docs.netlify.app/guide/markdown
+[alias]: https://iles-docs.netlify.app/guide/development#default-app-structure
 [vite-plugin-image-presets]: https://github.com/ElMassimo/vite-plugin-image-presets
 
 An [îles] module that configures [`vite-plugin-image-presets`][vite-plugin-image-presets], allowing you to easily define presets to optimize and convert images:
@@ -44,19 +45,21 @@ import images, { hdPreset } from '@islands/images'
 export default defineConfig({
   modules: [
     images({
-      post: hdPreset({
-        class: 'img',
+      thumnail: hdPreset({
+        class: 'img thumb',
         loading: 'lazy',
-        widths: [268, 655],
+        widths: [48, 96],
         formats: {
           webp: { quality: 44 },
-          jpeg: { quality: 70 },
+          original: {},
         },
       }),
     }),
   ],
 })
 ```
+
+### Usage 🚀
 
 Use the `preset` query parameter to obtain an array of `source` and `img` attrs:
 
@@ -91,42 +94,32 @@ import src from '~/images/logo.jpg?preset=thumbnail&src'
 expect(src).toEqual('/assets/logo.81d93491.jpeg')
 ```
 
-### Usage 🚀
+#### Images in Vue
 
-An `Picture` Vue component is provided out of the box, which can receive any
-applied preset and render a `picture` tag with the corresponding `source` and `img` tags.
-
-You may use it explicitly in Vue components:
+A `Picture` Vue component is provided out of the box, which can receive any
+applied preset using the `src` prop, and renders a `picture` tag with the
+corresponding `source` and `img` tags.
 
 ```vue
-<script setup>
-import logoThumbnail from '~/images/logo.jpg?preset=thumbnail'
-</script>
-
 <template>
-  <Picture :src="logoThumbnail"/>
+  <Picture src="@/images/logo.jpg?preset=thumbnail"/>
 </template>
 ```
 
-### Markdown Usage
+Make sure to use an [alias] that starts with `@`, as Vue [currently has a bug](https://github.com/vuejs/vue-next/issues/4819) that does not transform certain
+relative imports.
 
-If you would like to use image presets in [MDX] documents, it's recommended
-to add an `img: Picture` shorthand in `src/app.ts`:
+#### Images in Markdown
 
-```ts
-  mdxComponents: {
-    img: Picture,
-  },
-```
-
-That will allow you to use presets in [MDX] without using a special syntax:
+The `Picture` component will be automatically used for any images in [MDX],
+allowing you to use a preset while keeping the standard syntax:
 
 ```mdx
-![Logo](~/images/logo.jpg?preset=thumbnail)
+![Landscape](~/images/mountains.jpg?preset=narrow)
 ```
 
-Additionally, you can use `markdown.withImageSrc` to easily apply a preset on
-all images referenced in [MDX]:
+Additionally, you can use `markdown.withImageSrc` to easily apply a preset to
+images referenced in [MDX]:
 
 ```ts
 // iles.config.ts
@@ -135,15 +128,16 @@ import { defineConfig } from 'iles'
 export default defineConfig({
   markdown: {
     withImageSrc (src, file) {
+      // Example: If no preset was manually specified, use the `narrow` preset.
       if (!src.includes('?'))
-        return `${src}?preset=post`
+        return `${src}?preset=narrow`
     },
   }
 })
 ```
 
-and do:
+allowing you to keep the MDX cleaner:
 
 ```mdx
-![Logo](~/images/logo.jpg)
+![Landscape](~/images/mountains.jpg)
 ```

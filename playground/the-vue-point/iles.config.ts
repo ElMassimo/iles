@@ -16,7 +16,7 @@ const presets = {
     formats: {
       avif: { quality: 44 },
       webp: { quality: 44 },
-      jpeg: { quality: 70 },
+      original: {},
     }
   }),
   post: hdPreset({
@@ -24,7 +24,7 @@ const presets = {
     formats: {
       avif: { quality: 44 },
       webp: { quality: 44 },
-      jpeg: { quality: 70 },
+      original: {},
     }
   })
 }
