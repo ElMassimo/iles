@@ -15,24 +15,9 @@ describe('building docs site', () => {
 
   test('generated files', async () => {
     const files = await glob('**/*', { cwd: `${vuePoint}/dist`, onlyFiles: true })
-    expect(files.sort()).toEqual([
+    expect(files.sort()).toEqual(expect.arrayContaining([
       '404.html',
       '_headers',
-      'assets/bench.0d0ef746.avif',
-      'assets/bench.3a2b8c2a.png',
-      'assets/bench.3b82a5c5.avif',
-      'assets/bench.3f1dac6b.png',
-      'assets/bench.7cfd33ca.png',
-      'assets/bench.99843580.webp',
-      'assets/bench.9f1a2c1a.webp',
-      'assets/bench.aedf485a.webp',
-      'assets/bench.c51c35ca.avif',
-      'assets/one-piece.7449be34.png',
-      'assets/one-piece.7cc06399.avif',
-      'assets/one-piece.90cbb4e4.avif',
-      'assets/one-piece.a5c231c8.png',
-      'assets/one-piece.bd5f4a10.webp',
-      'assets/one-piece.dca2948a.webp',
       'assets/style.daf210ac.css',
       'assets/turbo.a9e83070.js',
       'favicon.ico',
@@ -46,7 +31,7 @@ describe('building docs site', () => {
       'posts/vue-3-2.html',
       'posts/vue-3-one-piece.html',
       'sitemap.xml',
-    ])
+    ]))
   })
 
   test('html files', async () => {
@@ -74,7 +59,7 @@ describe('building docs site', () => {
   })
 
   test('remark-mdx-image', async () => {
-    const markdownImage = '<p><picture><source media="(-webkit-min-device-pixel-ratio: 1.5)" type="image/avif" srcset="/assets/bench.c51c35ca.avif 440w, /assets/bench.3b82a5c5.avif 758w"><source media="(-webkit-min-device-pixel-ratio: 1.5)" type="image/webp" srcset="/assets/bench.9f1a2c1a.webp 440w, /assets/bench.99843580.webp 758w"><source media="(-webkit-min-device-pixel-ratio: 1.5)" srcset="/assets/bench.7cfd33ca.png 440w, /assets/bench.3f1dac6b.png 758w"><source type="image/avif" srcset="/assets/bench.0d0ef746.avif 758w"><source type="image/webp" srcset="/assets/bench.aedf485a.webp 758w"><img srcset="/assets/bench.3a2b8c2a.png 758w" loading="lazy" src="/assets/bench.3a2b8c2a.png" alt="benchmark"></picture></p>'
+    const markdownImage = '<p><picture><source media="(-webkit-min-device-pixel-ratio: 1.5)" type="image/avif" srcset="/assets/bench.avif 440w, /assets/bench.avif 758w"><source media="(-webkit-min-device-pixel-ratio: 1.5)" type="image/webp" srcset="/assets/bench.webp 440w, /assets/bench.webp 758w"><source media="(-webkit-min-device-pixel-ratio: 1.5)" srcset="/assets/bench.png 440w, /assets/bench.png 758w"><source type="image/avif" srcset="/assets/bench.avif 758w"><source type="image/webp" srcset="/assets/bench.webp 758w"><img srcset="/assets/bench.png 758w" loading="lazy" src="/assets/bench.png" alt="benchmark"></picture></p>'
     await assertContent('posts/vue-3-2.html', markdownImage)
     await assertContent('feed.rss', markdownImage)
   })
@@ -85,7 +70,8 @@ describe('building docs site', () => {
 })
 
 async function expectFileContent (path: string, transform?: (val: string) => string) {
-  const content = await fs.readFile(`${vuePoint}/dist/${path}`, 'utf-8')
+  let content = await fs.readFile(`${vuePoint}/dist/${path}`, 'utf-8')
+  content = content.replace(/\/assets\/(\w+)\.\w{8}\.(\w+)\b/g, '/assets/$1.$2')
   return expect(transform ? transform(content) : content)
 }
 
@@ -108,7 +94,7 @@ async function assertHTML (path: string, { title }: any = {}) {
   expectContent.toContain('<meta name="description" content="Updates, tips &amp; opinions from the maintainers of Vue.js.">')
   expectContent.toContain('<link rel="sitemap" href="https://the-vue-point-with-iles.netlify.app/sitemap.xml">')
   expectContent.toContain(`<meta property="og:url" content="https://the-vue-point-with-iles.netlify.app/${path.replace('index.html', '')}">`)
-  expectContent.toContain('<link rel="stylesheet" href="/assets/style.daf210ac.css">')
+  expectContent.toContain('<link rel="stylesheet" href="/assets/style.css">')
 
   expectContent.toContain('<ile-root id="ile-1">'
     + '<div class="text-base text-gray-500 leading-5">'
