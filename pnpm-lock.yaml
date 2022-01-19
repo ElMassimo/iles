@@ -182,9 +182,9 @@ importers:
   packages/iles:
     specifiers:
       '@antfu/install-pkg': ^0.1.0
-      '@islands/hydration': workspace:^0.3.4
-      '@islands/mdx': workspace:^0.7.2
-      '@islands/pages': workspace:^0.7.2
+      '@islands/hydration': workspace:^0.3.6
+      '@islands/mdx': workspace:^0.7.4
+      '@islands/pages': workspace:^0.7.7
       '@islands/prerender': workspace:^0.3.1
       '@nuxt/devalue': ^2.0.0
       '@preact/preset-vite': ^2
