@@ -1,3 +1,17 @@
+## [0.7.22](https://github.com/ElMassimo/iles/compare/v0.7.22-0...v0.7.22) (2022-01-19)
+
+
+### Bug Fixes
+
+* deterministic src for image presets ([66994d4](https://github.com/ElMassimo/iles/commit/66994d4418115530ad73ca5f75e0518497da9613))
+
+
+### Features
+
+* add `onSiteBundled` hook that runs before pages are written ([936e279](https://github.com/ElMassimo/iles/commit/936e27992b537acd013e1b92aae5a686b9799304))
+
+
+
 ## [0.7.22-0](https://github.com/ElMassimo/iles/compare/v0.7.21...v0.7.22-0) (2022-01-06)
 
 
