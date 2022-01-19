@@ -56,7 +56,12 @@
       "useHead": "readonly",
       "definePageComponent": "readonly"
     },
-    "ignorePatterns": ["dist", "node_modules", "packages/iles/turbo.js", "docs/cypress"],
+    "ignorePatterns": [
+      "dist",
+      "node_modules",
+      "packages/iles/turbo.js",
+      "docs/cypress"
+    ],
     "rules": {
       "prefer-const": "off",
       "no-unused-vars": "off",
