@@ -1,3 +1,17 @@
+## [0.7.7](https://github.com/ElMassimo/iles/compare/pages@0.7.7-0...pages@0.7.7) (2022-01-19)
+
+
+### Bug Fixes
+
+* ensure `addAllPages` runs only if needed ([a944bdf](https://github.com/ElMassimo/iles/commit/a944bdf830a9012f8d88827d53b6f6493b3ce5da))
+
+
+### Performance Improvements
+
+* ensure addAllPages runs once per build ([7cd51e2](https://github.com/ElMassimo/iles/commit/7cd51e257fe721713221e2dd39b40762fb3af936))
+
+
+
 ## [0.7.7-0](https://github.com/ElMassimo/iles/compare/pages@0.7.6...pages@0.7.7-0) (2022-01-06)
 
 
