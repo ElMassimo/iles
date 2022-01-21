@@ -1,3 +1,12 @@
+## [0.7.8](https://github.com/ElMassimo/iles/compare/pages@0.7.7...pages@0.7.8) (2022-01-21)
+
+
+### Bug Fixes
+
+* ensure meta.filename is always resolved (close [#71](https://github.com/ElMassimo/iles/issues/71)) ([2ebbff4](https://github.com/ElMassimo/iles/commit/2ebbff4e46a23c1994d040fa2dd89f81f8204021))
+
+
+
 ## [0.7.7](https://github.com/ElMassimo/iles/compare/pages@0.7.7-0...pages@0.7.7) (2022-01-19)
 
 
