@@ -1,3 +1,12 @@
+## [0.7.23](https://github.com/ElMassimo/iles/compare/v0.7.22...v0.7.23) (2022-01-21)
+
+
+### Bug Fixes
+
+* windows compatibility of island import paths in development ([c3b0860](https://github.com/ElMassimo/iles/commit/c3b0860c8c171c8f51e31a18c1731b966888b933))
+
+
+
 ## [0.7.22](https://github.com/ElMassimo/iles/compare/v0.7.22-0...v0.7.22) (2022-01-19)
 
 
