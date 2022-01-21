@@ -73,8 +73,10 @@ export function createApi (options: ResolvedOptions) {
     },
     async frontmatterForFile (file: string, content?: string): Promise<RawPageMatter> {
       try {
+        file = resolve(root, file)
+
         if (content === undefined)
-          content = await fs.readFile(resolve(root, file), 'utf8')
+          content = await fs.readFile(file, 'utf8')
 
         file = relative(root, file)
 
