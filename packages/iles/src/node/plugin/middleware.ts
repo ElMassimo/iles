@@ -61,10 +61,13 @@ export function configureMiddleware (config: AppConfig, server: ViteDevServer, d
         let html = `
 <!DOCTYPE html>
 <html>
-<body>
-<div id="app"></div>
-<script type="module" src="${ILES_APP_ENTRY}"></script>
-</body>
+  <head>
+    <meta charset="UTF-8">
+  </head>
+  <body>
+    <div id="app"></div>
+    <script type="module" src="${ILES_APP_ENTRY}"></script>
+  </body>
 </html>`
         html = await server.transformIndexHtml(url, html, req.originalUrl)
         res.end(html)
