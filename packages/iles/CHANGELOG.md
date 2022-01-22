@@ -1,3 +1,12 @@
+## [0.7.24](https://github.com/ElMassimo/iles/compare/v0.7.23...v0.7.24) (2022-01-22)
+
+
+### Bug Fixes
+
+* explicitly use UTF-8 charset in development (close [#77](https://github.com/ElMassimo/iles/issues/77)) ([9dd89c2](https://github.com/ElMassimo/iles/commit/9dd89c2856eb3d3382f1dda2076c71ceb3ce764e))
+
+
+
 ## [0.7.23](https://github.com/ElMassimo/iles/compare/v0.7.22...v0.7.23) (2022-01-21)
 
 
