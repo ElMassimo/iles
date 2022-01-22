@@ -11,6 +11,7 @@ const site = {
   tags: ['îles', 'iles', 'vuejs', 'vitejs', 'ssg', 'open source', 'partial hydration', 'islands of interactivity'],
 
   author: 'Máximo Mussini',
+  authorUrl: 'https://maximomussini.com',
   github: 'https://github.com/ElMassimo/iles',
   twitterHandle,
   authorHandle: 'MaximoMussini',
