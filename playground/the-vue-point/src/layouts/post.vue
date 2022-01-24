@@ -4,9 +4,10 @@ import { getPosts } from '~/logic/posts'
 
 const posts = $(getPosts())
 
-const { page: post } = $(usePage())
+const { page } = $(usePage())
 
-const currentIndex = $computed(() => posts.findIndex(p => p.href === post.href))
+const currentIndex = $computed(() => posts.findIndex(p => p.href === page.href))
+const post = $computed(() => posts[currentIndex])
 const nextPost = $computed(() => posts[currentIndex - 1])
 const prevPost = $computed(() => posts[currentIndex + 1])
 
@@ -46,7 +47,7 @@ const author = $computed(() => {
     >
       <Author v-bind="author"/>
       <div class="divide-y divide-gray-200 xl:pb-0 xl:col-span-3 xl:row-span-2">
-        <div :key="post.title" class="prose max-w-none pt-10 pb-8">
+        <div class="prose max-w-none pt-10 pb-8">
           <slot/>
         </div>
       </div>
