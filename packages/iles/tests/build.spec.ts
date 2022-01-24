@@ -18,7 +18,7 @@ describe('building docs site', () => {
     expect(files.sort()).toEqual(expect.arrayContaining([
       '404.html',
       '_headers',
-      'assets/style.6d6f2c4d.css',
+      'assets/style.8c0557b7.css',
       'assets/turbo.a9e83070.js',
       'favicon.ico',
       'feed.rss',
@@ -45,7 +45,7 @@ describe('building docs site', () => {
   })
 
   test('styles', async () => {
-    await assertSnapshot('assets/style.6d6f2c4d.css')
+    await assertSnapshot('assets/style.8c0557b7.css')
   })
   test('sitemap', async () => {
     await assertSnapshot('sitemap.xml')
@@ -55,7 +55,10 @@ describe('building docs site', () => {
   })
   test('rss feed', async () => {
     await assertSnapshot('feed.rss', (content: string) =>
-      content.replace(/<\/description>.*?<\/lastBuildDate>/s, '</description>'))
+      content
+        .replace(/<\/description>.*?<\/lastBuildDate>/s, '</description>')
+        .replace(/ \d\d:\d\d:\d\d GMT/g, '')
+    )
   })
 
   test('remark-mdx-image', async () => {
