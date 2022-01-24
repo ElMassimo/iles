@@ -21,10 +21,20 @@ export function isString (val: any): val is string {
   return typeof val === 'string'
 }
 
-export function toExplicitHtmlPath (path: string) {
+export function toExplicitHtmlPath (url: string) {
+  const [path, anchor] = url.split('#', 2)
   const ext = extname(path)
-  if (isExternal(path) || (ext && ext !== '.html')) return path
-  if (path.endsWith('/')) return path
-  if (path.endsWith('/index.html')) return path.replace(/\/index\.html$/, '/')
-  return `${path}.html`
+  if (isExternal(path) || (ext && ext !== '.html') || path === '') return url
+  if (path.endsWith('/')) return url
+
+  let htmlPath
+  if (path.endsWith('/index.html'))
+    htmlPath = path.replace(/\/index\.html$/, '/')
+  else
+    htmlPath = `${path}.html`
+
+  if (anchor)
+    return `${htmlPath}#${anchor}`
+  else
+    return htmlPath
 }
