@@ -59,6 +59,7 @@ export default function documentsPlugin (config: AppConfig): Plugin {
 
       // Create the structure of each document in the default export.
       const documents = data.map(({ route: _, meta, layout, ...frontmatter }, index) => {
+        meta.filename ||= files[index]
         return { ...meta, ...frontmatter, meta, frontmatter, component: `${index}_component` }
       })
 
