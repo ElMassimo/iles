@@ -17,6 +17,7 @@
       "@components/*": ["src/client/app/components/*"],
       "@client/*": ["src/client/*"],
       "@node/*": ["src/node/*"],
+      "@mdx/*": ["../mdx/src/*"],
       "lib/*": ["src/node/*"],
       "shared/*": ["src/shared/*"],
       "tests/*": ["__tests__/*"],

@@ -22,19 +22,14 @@ export function isString (val: any): val is string {
 }
 
 export function toExplicitHtmlPath (url: string) {
-  const [path, anchor] = url.split('#', 2)
+  if (isExternal(url)) return url
+
+  let [path, anchor] = url.split('#', 2)
+  if (path === '' || path.endsWith('/')) return url
+
   const ext = extname(path)
-  if (isExternal(path) || (ext && ext !== '.html') || path === '') return url
-  if (path.endsWith('/')) return url
+  if (ext && ext !== '.html') return url
 
-  let htmlPath
-  if (path.endsWith('/index.html'))
-    htmlPath = path.replace(/\/index\.html$/, '/')
-  else
-    htmlPath = `${path}.html`
-
-  if (anchor)
-    return `${htmlPath}#${anchor}`
-  else
-    return htmlPath
+  path = path.endsWith('.html') ? path.replace(/\/index\.html$/, '/') : `${path}.html`
+  return anchor ? `${path}#${anchor}` : path
 }

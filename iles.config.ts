@@ -10,6 +10,7 @@ export default defineConfig({
       alias: {
         '@components/': `${__dirname}/packages/iles/src/client/app/components/`,
         '@node/': `${__dirname}/packages/iles/src/node/`,
+        '@mdx/': `${__dirname}/packages/mdx/src/`,
         '@pages/': `${__dirname}/playground/the-vue-point/src/pages/`,
       },
     },
