@@ -1,3 +1,12 @@
+## [0.7.26](https://github.com/ElMassimo/iles/compare/v0.7.25...v0.7.26) (2022-01-24)
+
+
+### Features
+
+* upgrade to vue@3.2.29 which fixes static content reinsertion ([6b08c39](https://github.com/ElMassimo/iles/commit/6b08c39e53b3a0b122d03a1471c46094e92406d0))
+
+
+
 ## [0.7.25](https://github.com/ElMassimo/iles/compare/v0.7.24...v0.7.25) (2022-01-24)
 
 
