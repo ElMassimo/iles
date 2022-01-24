@@ -1,3 +1,13 @@
+## [0.7.25](https://github.com/ElMassimo/iles/compare/v0.7.24...v0.7.25) (2022-01-24)
+
+
+### Bug Fixes
+
+* explicitly set meta.filename for all documents ([a7c04c3](https://github.com/ElMassimo/iles/commit/a7c04c36b2a407cb45e30c29b6c33308650d41d2))
+* prevent double .html suffix when using prettyUrls: false ([b9f3ce6](https://github.com/ElMassimo/iles/commit/b9f3ce6cae179418916781fe2db6f3d9c040f5c3))
+
+
+
 ## [0.7.24](https://github.com/ElMassimo/iles/compare/v0.7.23...v0.7.24) (2022-01-22)
 
 
