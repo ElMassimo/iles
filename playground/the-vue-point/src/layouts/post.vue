@@ -1,17 +1,16 @@
 <script setup lang="ts">
 import { usePage } from 'iles'
-import { getPosts, Post } from '~/logic/posts'
+import { getPosts } from '~/logic/posts'
 
-let posts = $(getPosts())
+const posts = $(getPosts())
 
-let { page } = $(usePage())
-const post = page as any as Post
+const { page: post } = $(usePage())
 
-let currentIndex = $computed(() => posts.findIndex(p => p.href === post.href))
-let nextPost = $computed(() => posts[currentIndex - 1])
-let prevPost = $computed(() => posts[currentIndex + 1])
+const currentIndex = $computed(() => posts.findIndex(p => p.href === post.href))
+const nextPost = $computed(() => posts[currentIndex - 1])
+const prevPost = $computed(() => posts[currentIndex + 1])
 
-let author = $computed(() => {
+const author = $computed(() => {
   const { twitter, gravatar, author } = post
   return { twitter, gravatar, author }
 })
@@ -47,7 +46,7 @@ let author = $computed(() => {
     >
       <Author v-bind="author"/>
       <div class="divide-y divide-gray-200 xl:pb-0 xl:col-span-3 xl:row-span-2">
-        <div class="prose max-w-none pt-10 pb-8">
+        <div class="prose max-w-none pt-10 pb-8" :key="post.title">
           <slot/>
         </div>
       </div>
