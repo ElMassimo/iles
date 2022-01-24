@@ -5,7 +5,7 @@ import glob from 'fast-glob'
 import type { Manifest } from 'vite'
 import type { Awaited, AppConfig, IslandsByPath, IslandDefinition, RouteToRender } from '../shared'
 import rebaseImports from './rebaseImports'
-import {uniq } from './utils'
+import { uniq } from './utils'
 import type { renderPages } from './render'
 
 import { VIRTUAL_PREFIX, VIRTUAL_TURBO_ID } from './islands'

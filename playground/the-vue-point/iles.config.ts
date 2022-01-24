@@ -17,7 +17,7 @@ const presets = {
       avif: { quality: 44 },
       webp: { quality: 44 },
       original: {},
-    }
+    },
   }),
   post: hdPreset({
     widths: [440, 758],
@@ -25,8 +25,8 @@ const presets = {
       avif: { quality: 44 },
       webp: { quality: 44 },
       original: {},
-    }
-  })
+    },
+  }),
 }
 
 export default defineConfig({
