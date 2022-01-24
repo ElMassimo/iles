@@ -1,3 +1,13 @@
+## [0.7.5](https://github.com/ElMassimo/iles/compare/mdx@0.7.4...mdx@0.7.5) (2022-01-24)
+
+
+### Bug Fixes
+
+* anchor links in MDX files when prettyUrls is false ([#78](https://github.com/ElMassimo/iles/issues/78)) ([6fb5b59](https://github.com/ElMassimo/iles/commit/6fb5b592095deb3b708d89f1508928e44cdb2f2a))
+* prevent double .html suffix when using prettyUrls: false ([b9f3ce6](https://github.com/ElMassimo/iles/commit/b9f3ce6cae179418916781fe2db6f3d9c040f5c3))
+
+
+
 ## [0.7.4](https://github.com/ElMassimo/iles/compare/mdx@0.7.3...mdx@0.7.4) (2021-12-28)
 
 
