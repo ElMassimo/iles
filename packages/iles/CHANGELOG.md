@@ -1,3 +1,12 @@
+## [0.7.27](https://github.com/ElMassimo/iles/compare/v0.7.26...v0.7.27) (2022-01-26)
+
+
+### Bug Fixes
+
+* race conditions in useDocuments when adding pages in development ([52f2a7d](https://github.com/ElMassimo/iles/commit/52f2a7dde4088aac0536cc459d5f98851eef8d37))
+
+
+
 ## [0.7.26](https://github.com/ElMassimo/iles/compare/v0.7.25...v0.7.26) (2022-01-24)
 
 
