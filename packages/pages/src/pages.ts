@@ -54,17 +54,18 @@ export default function IlesPages (): any {
         return api
       },
       async configResolved (config) {
-        api = createApi(options)
+        api ||= createApi(options) // NOTE: Reuse API between client and SSR build.
       },
-      configureServer (server) {
+      async configureServer (server) {
         options.server = server
         handleHMR(api, options, () => { generatedRoutes = undefined })
       },
+      async buildStart () {
+        await api.addAllPages()
+      },
       async resolveId (id) {
-        if (id === MODULE_ID) {
-          await api.addAllPages()
+        if (id === MODULE_ID)
           return MODULE_ID
-        }
       },
       async load (id) {
         if (id === MODULE_ID)

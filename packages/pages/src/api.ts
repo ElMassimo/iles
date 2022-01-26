@@ -68,8 +68,13 @@ export function createApi (options: ResolvedOptions) {
     async generateRoutesModule () {
       const routes = Array.from(pagesByFile.values()).sort(byDynamicParams)
       const userRoutes = await options.extendRoutes?.(routes) || routes
-      debug.gen('routes: %O', userRoutes)
       return `export default ${stringifyRoutes(userRoutes)}`
+    },
+    async frontmatterForPageOrFile (file: string, content?: string): Promise<RawPageMatter> {
+      file = resolve(root, file)
+      return this.isPage(file)
+        ? (this.pageForFilename(file) || await this.addPage(file)).frontmatter
+        : await this.frontmatterForFile(file, content)
     },
     async frontmatterForFile (file: string, content?: string): Promise<RawPageMatter> {
       try {

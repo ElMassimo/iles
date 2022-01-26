@@ -52,8 +52,7 @@ export default function documentsPlugin (config: AppConfig): Plugin {
 
       // Obtain files matching the specified pattern and extract frontmatter.
       const files = await glob(pattern, { cwd: root })
-      const data = await Promise.all(files.map(async file =>
-        pages.api.pageForFilename(file)?.frontmatter || pages.api.frontmatterForFile(file)))
+      const data = await Promise.all(files.map(file => pages.api.frontmatterForPageOrFile(file)))
 
       debug.documents('%s %O', rawPath, { path, pattern, files })
 

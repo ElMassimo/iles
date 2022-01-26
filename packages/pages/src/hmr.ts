@@ -6,8 +6,8 @@ export function handleHMR (api: PagesApi, options: ResolvedOptions, clearRoutes:
   const server = options.server!
 
   onPage('add', async (path) => {
-    await api.addPage(path)
-    debug.hmr('add', path)
+    const page = await api.addPage(path)
+    debug.hmr('add %s %O', path, page)
     return true
   })
 
