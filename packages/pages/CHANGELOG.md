@@ -1,3 +1,17 @@
+## [0.7.9](https://github.com/ElMassimo/iles/compare/pages@0.7.8...pages@0.7.9) (2022-01-26)
+
+
+### Bug Fixes
+
+* race conditions in useDocuments when adding pages in development ([52f2a7d](https://github.com/ElMassimo/iles/commit/52f2a7dde4088aac0536cc459d5f98851eef8d37))
+
+
+### Features
+
+* upgrade to vue@3.2.29 which fixes static content reinsertion ([6b08c39](https://github.com/ElMassimo/iles/commit/6b08c39e53b3a0b122d03a1471c46094e92406d0))
+
+
+
 ## [0.7.8](https://github.com/ElMassimo/iles/compare/pages@0.7.7...pages@0.7.8) (2022-01-21)
 
 
