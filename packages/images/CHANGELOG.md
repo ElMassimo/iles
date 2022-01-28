@@ -1,3 +1,12 @@
+## [0.3.2](https://github.com/ElMassimo/iles/compare/images@0.3.1...images@0.3.2) (2022-01-28)
+
+
+### Bug Fixes
+
+* windows compatibility for the Picture resolution ([da37207](https://github.com/ElMassimo/iles/commit/da37207abb4dd4d37bbb561362facf30d5e847e6))
+
+
+
 ## [0.3.1](https://github.com/ElMassimo/iles/compare/images@0.3.0...images@0.3.1) (2022-01-16)
 
 
