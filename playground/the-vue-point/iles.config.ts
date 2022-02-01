@@ -2,6 +2,7 @@ import { defineConfig } from 'iles'
 
 import excerpt from '@islands/excerpt'
 import feed from '@islands/feed'
+import headings from '@islands/headings'
 import icons from '@islands/icons'
 import images, { hdPreset } from '@islands/images'
 import prism from '@islands/prism'
@@ -38,6 +39,7 @@ export default defineConfig({
   modules: [
     excerpt(),
     feed(),
+    headings(),
     icons(),
     prism(),
     images(presets),

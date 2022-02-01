@@ -1,5 +1,5 @@
-import { dirname, resolve } from 'pathe'
 import { fileURLToPath } from 'url'
+import { dirname, resolve } from 'pathe'
 import type { IlesModule } from 'iles'
 import type { ImageApi, ImagePresets, Options } from 'vite-plugin-image-presets'
 

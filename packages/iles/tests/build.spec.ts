@@ -57,7 +57,7 @@ describe('building docs site', () => {
     await assertSnapshot('feed.rss', (content: string) =>
       content
         .replace(/<\/description>.*?<\/lastBuildDate>/s, '</description>')
-        .replace(/ \d\d:\d\d:\d\d GMT/g, '')
+        .replace(/ \d\d:\d\d:\d\d GMT/g, ''),
     )
   })
 

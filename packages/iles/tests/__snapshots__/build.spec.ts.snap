@@ -47,7 +47,7 @@ exports[`building docs site > html files 2`] = `
   <a class=\\"hover:text-gray-700\\" href=\\"/feed.rss\\">RSS <span class=\\"hidden sm:inline\\">Feed</span></a>
   <span class=\\"mr-1 ml-1\\">·</span>
   <a class=\\"hover:text-gray-700\\" href=\\"https://vuejs.org\\" target=\\"_blank\\" rel=\\"noopener\\">Vuejs.org →</a></div></ile-root></nav></div><main class=\\"max-w-3xl mx-auto px-4 sm:px-6 xl:max-w-5xl xl:px-0\\"><div class=\\"divide-y divide-gray-200\\"><div class=\\"pt-6 pb-8 space-y-2 md:space-y-5\\"><h1 class=\\"text-3xl leading-9 font-extrabold text-gray-900 tracking-tight sm:text-4xl sm:leading-10 md:text-6xl\\">The Vue Point</h1><p class=\\"text-lg leading-7 text-gray-500\\">Updates, tips &amp; opinions from the maintainers of Vue.js.</p></div><ul class=\\"divide-y divide-gray-200\\"><li class=\\"py-12\\"><article class=\\"space-y-2 xl:grid xl:grid-cols-4 xl:space-y-0 xl:items-baseline\\"><dl><dt class=\\"sr-only\\">Published on</dt><dd class=\\"text-base leading-6 font-medium text-gray-500\\"><time datetime=\\"2022-01-20T12:00:00.000Z\\">January 20, 2022</time></dd></dl><div class=\\"space-y-5 xl:col-span-3\\"><div class=\\"space-y-6\\"><h2 class=\\"text-2xl leading-8 font-bold tracking-tight\\"><a class=\\"text-gray-900\\" href=\\"/posts/vue-3-as-the-new-default.html\\">Vue 3 as the New Default</a></h2><div class=\\"prose max-w-none text-gray-500\\"><p>TL;DR: Vue 3 will become the new default version on <strong>Monday, February 7, 2022</strong>!</p>
-<p>Make sure to read the <a href=\\"#potential-required-actions\\">Potential Required Actions</a> section to see if you need to make certain changes before the switch to avoid breakage.</p>
+<p>Make sure to read the <a href=\\"/posts/vue-3-as-the-new-default.html#potential-required-actions\\">Potential Required Actions</a> section to see if you need to make certain changes before the switch to avoid breakage.</p>
 </div></div><div class=\\"text-base leading-6 font-medium\\"><a class=\\"link\\" aria-label=\\"read more\\" href=\\"/posts/vue-3-as-the-new-default.html\\">Read more →</a></div></div></article></li><li class=\\"py-12\\"><article class=\\"space-y-2 xl:grid xl:grid-cols-4 xl:space-y-0 xl:items-baseline\\"><dl><dt class=\\"sr-only\\">Published on</dt><dd class=\\"text-base leading-6 font-medium text-gray-500\\"><time datetime=\\"2021-08-05T12:00:00.000Z\\">August 5, 2021</time></dd></dl><div class=\\"space-y-5 xl:col-span-3\\"><div class=\\"space-y-6\\"><h2 class=\\"text-2xl leading-8 font-bold tracking-tight\\"><a class=\\"text-gray-900\\" href=\\"/posts/vue-3-2.html\\">Vue 3.2 Released!</a></h2><div class=\\"prose max-w-none text-gray-500\\">
 <p>We are excited to announce the release of Vue.js 3.2 \\"Quintessential Quintuplets\\"! This release includes many significant new features and performance improvements, and contains no breaking changes.</p></div></div><div class=\\"text-base leading-6 font-medium\\"><a class=\\"link\\" aria-label=\\"read more\\" href=\\"/posts/vue-3-2.html\\">Read more →</a></div></div></article></li><li class=\\"py-12\\"><article class=\\"space-y-2 xl:grid xl:grid-cols-4 xl:space-y-0 xl:items-baseline\\"><dl><dt class=\\"sr-only\\">Published on</dt><dd class=\\"text-base leading-6 font-medium text-gray-500\\"><time datetime=\\"2021-01-11T12:00:00.000Z\\">January 11, 2021</time></dd></dl><div class=\\"space-y-5 xl:col-span-3\\"><div class=\\"space-y-6\\"><h2 class=\\"text-2xl leading-8 font-bold tracking-tight\\"><a class=\\"text-gray-900\\" href=\\"/posts/hello-2021.html\\">Reflections for 2020-2021</a></h2><div class=\\"prose max-w-none text-gray-500\\"><p>With a new year upon us, we also have a new blog! In this post, we would like to take a look back at some of the highlights from 2020, as well as some ideas we have for 2021.</p></div></div><div class=\\"text-base leading-6 font-medium\\"><a class=\\"link\\" aria-label=\\"read more\\" href=\\"/posts/hello-2021.html\\">Read more →</a></div></div></article></li><li class=\\"py-12\\"><article class=\\"space-y-2 xl:grid xl:grid-cols-4 xl:space-y-0 xl:items-baseline\\"><dl><dt class=\\"sr-only\\">Published on</dt><dd class=\\"text-base leading-6 font-medium text-gray-500\\"><time datetime=\\"2020-09-18T12:00:00.000Z\\">September 18, 2020</time></dd></dl><div class=\\"space-y-5 xl:col-span-3\\"><div class=\\"space-y-6\\"><h2 class=\\"text-2xl leading-8 font-bold tracking-tight\\"><a class=\\"text-gray-900\\" href=\\"/posts/vue-3-one-piece.html\\">Announcing Vue 3.0 &quot;One Piece&quot;</a></h2><div class=\\"prose max-w-none text-gray-500\\"><p><picture><source media=\\"(-webkit-min-device-pixel-ratio: 1.5)\\" type=\\"image/avif\\" srcset=\\"/assets/one-piece.avif 200w\\"><source media=\\"(-webkit-min-device-pixel-ratio: 1.5)\\" type=\\"image/webp\\" srcset=\\"/assets/one-piece.webp 200w\\"><source media=\\"(-webkit-min-device-pixel-ratio: 1.5)\\" srcset=\\"/assets/one-piece.png 200w\\"><source type=\\"image/avif\\" srcset=\\"/assets/one-piece.avif 200w\\"><source type=\\"image/webp\\" srcset=\\"/assets/one-piece.webp 200w\\"><img srcset=\\"/assets/one-piece.png 200w\\" loading=\\"lazy\\" width=\\"200\\" src=\\"/assets/one-piece.png\\" alt=\\"Vue 3.0 One Piece Logo\\"></picture></p>
 <p>Today we are proud to announce the official release of Vue.js 3.0 \\"One Piece\\". This new major version of the framework provides improved performance, smaller bundle sizes, better TypeScript integration, new APIs for tackling large scale use cases, and a solid foundation for long-term future iterations of the framework.</p>
@@ -70,7 +70,7 @@ exports[`building docs site > html files 3`] = `
   <a class=\\"hover:text-gray-700\\" href=\\"/feed.rss\\">RSS <span class=\\"hidden sm:inline\\">Feed</span></a>
   <span class=\\"mr-1 ml-1\\">·</span>
   <a class=\\"hover:text-gray-700\\" href=\\"https://vuejs.org\\" target=\\"_blank\\" rel=\\"noopener\\">Vuejs.org →</a></div></ile-root></nav></div><main class=\\"max-w-3xl mx-auto px-4 sm:px-6 xl:max-w-5xl xl:px-0\\"><h1 class=\\"text-3xl leading-9 font-extrabold text-gray-900 tracking-tight sm:text-4xl sm:leading-10 md:text-5xl\\">Paginated Posts</h1><ul class=\\"divide-y divide-gray-200\\"><li class=\\"py-12\\"><article class=\\"space-y-2 xl:grid xl:grid-cols-4 xl:space-y-0 xl:items-baseline\\"><dl><dt class=\\"sr-only\\">Published on</dt><dd class=\\"text-base leading-6 font-medium text-gray-500\\"><time datetime=\\"2022-01-20T12:00:00.000Z\\">January 20, 2022</time></dd></dl><div class=\\"space-y-5 xl:col-span-3\\"><div class=\\"space-y-6\\"><h2 class=\\"text-2xl leading-8 font-bold tracking-tight\\"><a class=\\"text-gray-900\\" href=\\"/posts/vue-3-as-the-new-default.html\\">Vue 3 as the New Default</a></h2><div class=\\"prose max-w-none text-gray-500\\"><p>TL;DR: Vue 3 will become the new default version on <strong>Monday, February 7, 2022</strong>!</p>
-<p>Make sure to read the <a href=\\"#potential-required-actions\\">Potential Required Actions</a> section to see if you need to make certain changes before the switch to avoid breakage.</p>
+<p>Make sure to read the <a href=\\"/posts/vue-3-as-the-new-default.html#potential-required-actions\\">Potential Required Actions</a> section to see if you need to make certain changes before the switch to avoid breakage.</p>
 </div></div><div class=\\"text-base leading-6 font-medium\\"><a class=\\"link\\" aria-label=\\"read more\\" href=\\"/posts/vue-3-as-the-new-default.html\\">Read more →</a></div></div></article></li><li class=\\"py-12\\"><article class=\\"space-y-2 xl:grid xl:grid-cols-4 xl:space-y-0 xl:items-baseline\\"><dl><dt class=\\"sr-only\\">Published on</dt><dd class=\\"text-base leading-6 font-medium text-gray-500\\"><time datetime=\\"2021-08-05T12:00:00.000Z\\">August 5, 2021</time></dd></dl><div class=\\"space-y-5 xl:col-span-3\\"><div class=\\"space-y-6\\"><h2 class=\\"text-2xl leading-8 font-bold tracking-tight\\"><a class=\\"text-gray-900\\" href=\\"/posts/vue-3-2.html\\">Vue 3.2 Released!</a></h2><div class=\\"prose max-w-none text-gray-500\\">
 <p>We are excited to announce the release of Vue.js 3.2 \\"Quintessential Quintuplets\\"! This release includes many significant new features and performance improvements, and contains no breaking changes.</p></div></div><div class=\\"text-base leading-6 font-medium\\"><a class=\\"link\\" aria-label=\\"read more\\" href=\\"/posts/vue-3-2.html\\">Read more →</a></div></div></article></li></ul><div class=\\"py-8 grid grid-cols-2\\"><div class=\\"link col-start-2 text-right\\"><a href=\\"/posts/2.html\\" class=\\"\\">Older →</a></div></div><footer class=\\"w-full xl:grid xl:grid-cols-4\\"><div class=\\"pb-12 text-center text-sm xl:col-start-2 xl:col-span-3\\"><a class=\\"inline-block\\" href=\\"https://iles-docs.netlify.app\\"> Built with <img class=\\"iles inline-block h-6 ml-0.5 -mt-3\\" height=\\"28\\" alt=\\"logo\\" src=\\"/iles.svg\\"></a></div></footer></main></div></div>
   </body>
@@ -111,7 +111,7 @@ exports[`building docs site > html files 5`] = `
   <a class=\\"hover:text-gray-700\\" href=\\"/feed.rss\\">RSS <span class=\\"hidden sm:inline\\">Feed</span></a>
   <span class=\\"mr-1 ml-1\\">·</span>
   <a class=\\"hover:text-gray-700\\" href=\\"https://vuejs.org\\" target=\\"_blank\\" rel=\\"noopener\\">Vuejs.org →</a></div></ile-root></nav></div><main class=\\"max-w-3xl mx-auto px-4 sm:px-6 xl:max-w-5xl xl:px-0\\"><article class=\\"xl:divide-y xl:divide-gray-200\\"><header class=\\"pt-6 xl:pb-10 space-y-1 text-center\\"><dl><dt class=\\"sr-only\\">Published on</dt><dd class=\\"text-base leading-6 font-medium text-gray-500\\"><time datetime=\\"2021-01-11T00:00:00.000Z\\">January 11, 2021</time></dd></dl><h1 class=\\"text-3xl leading-9 font-extrabold text-gray-900 tracking-tight sm:text-4xl sm:leading-10 md:text-5xl\\">Reflections for 2020-2021</h1></header><div class=\\"divide-y xl:divide-y-0 divide-gray-200 xl:grid xl:grid-cols-4 xl:gap-x-10 pb-16 xl:pb-20\\" style=\\"grid-template-rows:auto 1fr;\\"><dl class=\\"pt-6 pb-10 xl:pt-11 xl:border-b xl:border-gray-200\\"><dt class=\\"sr-only\\">Authors</dt><dd><ul class=\\"flex justify-center xl:block space-x-8 sm:space-x-12 xl:space-x-0 xl:space-y-8\\"><li class=\\"flex items-center space-x-2\\"><img src=\\"https://gravatar.com/avatar/eca93da2c67aadafe35d477aa8f454b8\\" alt=\\"author image\\" class=\\"w-10 h-10 rounded-full\\"><dl class=\\"text-sm font-medium leading-5 whitespace-nowrap\\"><dt class=\\"sr-only\\">Name</dt><dd class=\\"text-gray-900\\">Evan You</dd><dt class=\\"sr-only\\">Twitter</dt><dd><a href=\\"https://twitter.com/@youyuxi\\" target=\\"_blank\\" rel=\\"noopnener noreferrer\\" class=\\"link\\">@youyuxi</a></dd></dl></li></ul></dd></dl><div class=\\"divide-y divide-gray-200 xl:pb-0 xl:col-span-3 xl:row-span-2\\"><div class=\\"prose max-w-none pt-10 pb-8\\"><p>With a new year upon us, we also have a new blog! In this post, we would like to take a look back at some of the highlights from 2020, as well as some ideas we have for 2021.</p>
-<h2>Looking Back at 2020</h2>
+<h2 id=\\"looking-back-at-2020\\" class=\\"heading\\"><a href=\\"#looking-back-at-2020\\" class=\\"heading-anchor\\" aria-label=\\"Permalink for Looking Back at 2020\\" tabindex=\\"-1\\"></a>Looking Back at 2020</h2>
 <p>2020 has been a challenging year, to say the least. Nonetheless, the team has made the best of a difficult situation. Despite an already massive user base, Vue's <a href=\\"https://npm-stat.com/charts.html?package=vue&#x26;from=2020-01-01&#x26;to=2020-12-31\\">NPM downloads</a> and <a href=\\"https://chrome-stats.com/d/nhdogjmejiglipccpnnnanhbledajbpd\\">Devtools weekly active users</a> both grew close to 50% throughout 2020. As time of this writing, Vue is being downloaded ~8M times per month on NPM and the devtools extension has ~1.5M weekly active users.</p>
 <p>Aside from routine maintenance, there are some incredible things that we accomplished as a team:</p>
 <ul>
@@ -135,7 +135,7 @@ exports[`building docs site > html files 5`] = `
 <li><a href=\\"https://vitepress.vuejs.org/\\">VitePress</a>, a new static site generator built on Vue 3 and Vite</li>
 </ul>
 <p>In addition to all of these exciting projects, it’s also been incredible to see the community continue to grow despite the challenges 2020 set forth in terms of being unable to facilitate in-person events. With initiatives such as remote conferences, meetups and other events, it’s been a joy to see the community interacting in new ways that might not have been possible otherwise.</p>
-<h2>Looking Forward to 2021</h2>
+<h2 id=\\"looking-forward-to-2021\\" class=\\"heading\\"><a href=\\"#looking-forward-to-2021\\" class=\\"heading-anchor\\" aria-label=\\"Permalink for Looking Forward to 2021\\" tabindex=\\"-1\\"></a>Looking Forward to 2021</h2>
 <p>While Vue 3 brings many fundamental improvements and opens up avenues for future iterations, we are still in a transition period - both in terms of the library ecosystem and best practices involving new APIs. For early 2021, our focus will be further stabilizing the Vue 3 ecosystem, and continuing to help the community through this transition period. Here is a non-exhaustive list of things we’re looking forward to:</p>
 <ul>
 <li>Stablize current RC/Beta sub projects</li>
@@ -168,7 +168,7 @@ exports[`building docs site > html files 6`] = `
   <span class=\\"mr-1 ml-1\\">·</span>
   <a class=\\"hover:text-gray-700\\" href=\\"https://vuejs.org\\" target=\\"_blank\\" rel=\\"noopener\\">Vuejs.org →</a></div></ile-root></nav></div><main class=\\"max-w-3xl mx-auto px-4 sm:px-6 xl:max-w-5xl xl:px-0\\"><article class=\\"xl:divide-y xl:divide-gray-200\\"><header class=\\"pt-6 xl:pb-10 space-y-1 text-center\\"><dl><dt class=\\"sr-only\\">Published on</dt><dd class=\\"text-base leading-6 font-medium text-gray-500\\"><time datetime=\\"2021-08-05T00:00:00.000Z\\">August 5, 2021</time></dd></dl><h1 class=\\"text-3xl leading-9 font-extrabold text-gray-900 tracking-tight sm:text-4xl sm:leading-10 md:text-5xl\\">Vue 3.2 Released!</h1></header><div class=\\"divide-y xl:divide-y-0 divide-gray-200 xl:grid xl:grid-cols-4 xl:gap-x-10 pb-16 xl:pb-20\\" style=\\"grid-template-rows:auto 1fr;\\"><dl class=\\"pt-6 pb-10 xl:pt-11 xl:border-b xl:border-gray-200\\"><dt class=\\"sr-only\\">Authors</dt><dd><ul class=\\"flex justify-center xl:block space-x-8 sm:space-x-12 xl:space-x-0 xl:space-y-8\\"><li class=\\"flex items-center space-x-2\\"><img src=\\"https://gravatar.com/avatar/eca93da2c67aadafe35d477aa8f454b8\\" alt=\\"author image\\" class=\\"w-10 h-10 rounded-full\\"><dl class=\\"text-sm font-medium leading-5 whitespace-nowrap\\"><dt class=\\"sr-only\\">Name</dt><dd class=\\"text-gray-900\\">Evan You</dd><dt class=\\"sr-only\\">Twitter</dt><dd><a href=\\"https://twitter.com/@youyuxi\\" target=\\"_blank\\" rel=\\"noopnener noreferrer\\" class=\\"link\\">@youyuxi</a></dd></dl></li></ul></dd></dl><div class=\\"divide-y divide-gray-200 xl:pb-0 xl:col-span-3 xl:row-span-2\\"><div class=\\"prose max-w-none pt-10 pb-8\\">
 <p>We are excited to announce the release of Vue.js 3.2 \\"Quintessential Quintuplets\\"! This release includes many significant new features and performance improvements, and contains no breaking changes.</p>
-<h2>New SFC Features</h2>
+<h2 id=\\"new-sfc-features\\" class=\\"heading\\"><a href=\\"#new-sfc-features\\" class=\\"heading-anchor\\" aria-label=\\"Permalink for New SFC Features\\" tabindex=\\"-1\\"></a>New SFC Features</h2>
 <p>Two new features for Single File Components (SFCs, aka <code>.vue</code> files) have graduated from experimental status and are now considered stable:</p>
 <ul>
 <li>
@@ -202,7 +202,7 @@ exports[`building docs site > html files 6`] = `
 <li><a href=\\"https://v3.vuejs.org/api/sfc-style.html#state-driven-dynamic-css\\"><code>&#x3C;style> v-bind</code></a></li>
 </ul>
 <p>Building on top of <code>&#x3C;script setup></code>, we also have a new RFC for improving the ergonomics of ref usage with compiler-enabled sugar - please share your feedback <a href=\\"https://github.com/vuejs/rfcs/discussions/369\\">here</a>.</p>
-<h2>Web Components</h2>
+<h2 id=\\"web-components\\" class=\\"heading\\"><a href=\\"#web-components\\" class=\\"heading-anchor\\" aria-label=\\"Permalink for Web Components\\" tabindex=\\"-1\\"></a>Web Components</h2>
 <p>Vue 3.2 introduces a new <code>defineCustomElement</code> method for easily creating native <a href=\\"https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_custom_elements\\">custom elements</a> using Vue component APIs:</p>
 <div class=\\"language-js\\" data-lang=\\"js\\"><pre class=\\"language-js\\"><code><span class=\\"token keyword\\">import</span> <span class=\\"token punctuation\\">{</span> defineCustomElement <span class=\\"token punctuation\\">}</span> <span class=\\"token keyword\\">from</span> <span class=\\"token string\\">'vue'</span>
 
@@ -215,7 +215,7 @@ exports[`building docs site > html files 6`] = `
 <span class=\\"token comment\\">// on the page will be upgraded.</span>
 customElements<span class=\\"token punctuation\\">.</span><span class=\\"token function\\">define</span><span class=\\"token punctuation\\">(</span><span class=\\"token string\\">'my-vue-element'</span><span class=\\"token punctuation\\">,</span> MyVueElement<span class=\\"token punctuation\\">)</span></code></pre></div>
 <p>This API allows developers to create Vue-powered UI component libraries that can be used with any framework, or no framework at all. We have also added a new section in our docs on <a href=\\"https://v3.vuejs.org/guide/web-components.html\\">consuming and creating Web Components in Vue</a>.</p>
-<h2>Performance Improvements</h2>
+<h2 id=\\"performance-improvements\\" class=\\"heading\\"><a href=\\"#performance-improvements\\" class=\\"heading-anchor\\" aria-label=\\"Permalink for Performance Improvements\\" tabindex=\\"-1\\"></a>Performance Improvements</h2>
 <p>3.2 includes some significant performance improvements to Vue's reactivity system, thanks to the great work by <a href=\\"https://github.com/basvanmeurs\\">@basvanmeurs</a>. Specifically:</p>
 <ul>
 <li><a href=\\"https://github.com/vuejs/vue-next/pull/3995\\">More efficient ref implementation (~260% faster read / ~50% faster write)</a></li>
@@ -230,10 +230,10 @@ customElements<span class=\\"token punctuation\\">.</span><span class=\\"token f
 <p>Finally, there is a new <a href=\\"https://v3.vuejs.org/api/directives.html#v-memo\\"><code>v-memo</code> directive</a> that provides the ability to memoize part of the template tree. A <code>v-memo</code> hit allows Vue to skip not only the Virtual DOM diffing, but the creation of new VNodes altogether. Although rarely needed, it provides an escape hatch to squeeze out maximum performance in certain scenarios, for example large <code>v-for</code> lists.</p>
 <p>The usage of <code>v-memo</code>, which is a one-line addition, places Vue among the fastest mainstream frameworks in <a href=\\"https://github.com/krausest/js-framework-benchmark\\">js-framework-benchmark</a>:</p>
 <p><picture><source media=\\"(-webkit-min-device-pixel-ratio: 1.5)\\" type=\\"image/avif\\" srcset=\\"/assets/bench.avif 440w, /assets/bench.avif 758w\\"><source media=\\"(-webkit-min-device-pixel-ratio: 1.5)\\" type=\\"image/webp\\" srcset=\\"/assets/bench.webp 440w, /assets/bench.webp 758w\\"><source media=\\"(-webkit-min-device-pixel-ratio: 1.5)\\" srcset=\\"/assets/bench.png 440w, /assets/bench.png 758w\\"><source type=\\"image/avif\\" srcset=\\"/assets/bench.avif 758w\\"><source type=\\"image/webp\\" srcset=\\"/assets/bench.webp 758w\\"><img srcset=\\"/assets/bench.png 758w\\" loading=\\"lazy\\" src=\\"/assets/bench.png\\" alt=\\"benchmark\\"></picture></p>
-<h2>Server-side Rendering</h2>
+<h2 id=\\"server-side-rendering\\" class=\\"heading\\"><a href=\\"#server-side-rendering\\" class=\\"heading-anchor\\" aria-label=\\"Permalink for Server-side Rendering\\" tabindex=\\"-1\\"></a>Server-side Rendering</h2>
 <p>The <code>@vue/server-renderer</code> package in 3.2 now ships an ES module build which is also decoupled from Node.js built-ins. This makes it possible to bundle and leverage <code>@vue/server-renderer</code> for use inside non-Node.js runtimes such as <a href=\\"https://developers.cloudflare.com/workers/\\">CloudFlare Workers</a> or Service Workers.</p>
 <p>We also improved the streaming render APIs, with new methods for rendering to the <a href=\\"https://developer.mozilla.org/en-US/docs/Web/API/Streams_API\\">Web Streams API</a>. Check out the <a href=\\"https://github.com/vuejs/vue-next/tree/master/packages/server-renderer#streaming-api\\">documentation of <code>@vue/server-renderer</code></a> for more details.</p>
-<h2>Effect Scope API</h2>
+<h2 id=\\"effect-scope-api\\" class=\\"heading\\"><a href=\\"#effect-scope-api\\" class=\\"heading-anchor\\" aria-label=\\"Permalink for Effect Scope API\\" tabindex=\\"-1\\"></a>Effect Scope API</h2>
 <p>3.2 introduces a new <a href=\\"https://v3.vuejs.org/api/effect-scope.html\\">Effect Scope API</a> for directly controlling the disposal timing of reactive effects (computed and watchers). It makes it easier to leverage Vue's reactivity API out of a component context, and also unlocks some advanced use cases inside components.</p>
 <p>This is low-level API largely intended for library authors, so it's recommended to read the feature's <a href=\\"https://github.com/vuejs/rfcs/blob/master/active-rfcs/0041-reactivity-effect-scope.md\\">RFC</a> for the motivation and use cases of this feature.</p>
 <hr>
@@ -259,10 +259,10 @@ exports[`building docs site > html files 7`] = `
 <p>Today we are proud to announce the official release of Vue.js 3.0 \\"One Piece\\". This new major version of the framework provides improved performance, smaller bundle sizes, better TypeScript integration, new APIs for tackling large scale use cases, and a solid foundation for long-term future iterations of the framework.</p>
 
 <p>The 3.0 release represents over 2 years of development efforts, featuring <a href=\\"https://github.com/vuejs/rfcs/tree/master/active-rfcs\\">30+ RFCs</a>, 2,600+ commits, <a href=\\"https://github.com/vuejs/vue-next/pulls?q=is%3Apr+is%3Amerged+-author%3Aapp%2Fdependabot-preview+\\">628 pull requests</a> from <a href=\\"https://github.com/vuejs/vue-next/graphs/contributors\\">99 contributors</a>, plus tremendous amount of development and documentation work outside of the core repo. We would like to express our deepest gratitude towards our team members for taking on this challenge, our contributors for the pull requests, our <a href=\\"https://github.com/vuejs/vue/blob/dev/BACKERS.md\\">sponsors and backers</a> for the financial support, and the wider community for participating in our design discussions and providing feedback for the pre-release versions. Vue is an independent project created for the community and sustained by the community, and Vue 3.0 wouldn't have been possible without your consistent support.</p>
-<h2>Taking the \\"Progressive Framework\\" Concept Further</h2>
+<h2 id=\\"taking-the-progressive-framework-concept-further\\" class=\\"heading\\"><a href=\\"#taking-the-progressive-framework-concept-further\\" class=\\"heading-anchor\\" aria-label=\\"Permalink for Taking the &#x22;Progressive Framework&#x22; Concept Further\\" tabindex=\\"-1\\"></a>Taking the \\"Progressive Framework\\" Concept Further</h2>
 <p>Vue had a simple mission from its humble beginning: to be an approachable framework that anyone can quickly learn. As our user base grew, the framework also grew in scope to adapt to the increasing demands. Over time, it evolved into what we call a \\"Progressive Framework\\": a framework that can be learned and adopted incrementally, while providing continued support as the user tackles more and more demanding scenarios.</p>
 <p>Today, with over 1.3 million users worldwide<sup>*</sup>, we are seeing Vue being used in a wildly diverse range of scenarios, from sprinkling interactivity on traditional server-rendered pages, to full-blown single page applications with hundreds of components. Vue 3 takes this flexibility even further.</p>
-<h3>Layered internal modules</h3>
+<h3 id=\\"layered-internal-modules\\" class=\\"heading\\"><a href=\\"#layered-internal-modules\\" class=\\"heading-anchor\\" aria-label=\\"Permalink for Layered internal modules\\" tabindex=\\"-1\\"></a>Layered internal modules</h3>
 <p>Vue 3.0 core can still be used via a simple <code>&#x3C;script></code> tag, but its internals has been re-written from the ground up into <a href=\\"https://github.com/vuejs/vue-next/tree/master/packages\\">a collection of decoupled modules</a>. The new architecture provides better maintainability, and allows end users to shave off up to half of the runtime size via tree-shaking.</p>
 <p>These modules also exposes lower-level APIs that unlocks many advanced use cases:</p>
 <ul>
@@ -270,15 +270,15 @@ exports[`building docs site > html files 7`] = `
 <li>The core runtime provides first-class API for creating custom renderers targeting different render targets (e.g. <a href=\\"https://github.com/rigor789/nativescript-vue-next\\">native mobile</a>, <a href=\\"https://github.com/Planning-nl/vugel\\">WebGL</a> or <a href=\\"https://github.com/ycmjason/vuminal\\">terminals</a>). The default DOM renderer is built using the same API.</li>
 <li>The <a href=\\"https://github.com/vuejs/vue-next/tree/master/packages/reactivity\\"><code>@vue/reactivity</code> module</a> exports functions that provide direct access to Vue's reactivity system, and can be used as a standalone package. It can be used to pair with other templating solutions (e.g. <a href=\\"https://github.com/yyx990803/vue-lit\\">lit-html</a>) or even in non-UI scenarios.</li>
 </ul>
-<h3>New APIs for tackling scale</h3>
+<h3 id=\\"new-apis-for-tackling-scale\\" class=\\"heading\\"><a href=\\"#new-apis-for-tackling-scale\\" class=\\"heading-anchor\\" aria-label=\\"Permalink for New APIs for tackling scale\\" tabindex=\\"-1\\"></a>New APIs for tackling scale</h3>
 <p>The 2.x Object-based API is largely intact in Vue 3. However, 3.0 also introduces the <a href=\\"https://v3.vuejs.org/guide/composition-api-introduction.html\\">Composition API</a> - a new set of APIs aimed at addressing the pain points of Vue usage in large scale applications. The Composition API builds on top of the reactivity API and enables logic composition and reuse similar to React hooks, more flexible code organization patterns, and more reliable type inference than the 2.x Object-based API.</p>
 <p>Composition API can also be used with Vue 2.x via the <a href=\\"https://github.com/vuejs/composition-api\\">@vue/composition-api</a> plugin, and there are already Composition API utility libraries that work for both Vue 2 and 3 (e.g. <a href=\\"https://github.com/antfu/vueuse\\">vueuse</a>, <a href=\\"https://github.com/pikax/vue-composable\\">vue-composable</a>).</p>
-<h3>Performance Improvements</h3>
+<h3 id=\\"performance-improvements\\" class=\\"heading\\"><a href=\\"#performance-improvements\\" class=\\"heading-anchor\\" aria-label=\\"Permalink for Performance Improvements\\" tabindex=\\"-1\\"></a>Performance Improvements</h3>
 <p>Vue 3 has demonstrated <a href=\\"https://docs.google.com/spreadsheets/d/1VJFx-kQ4KjJmnpDXIEaig-cVAAJtpIGLZNbv3Lr4CR0/edit?usp=sharing\\">significant performance improvements</a> over Vue 2 in terms of bundle size (up to 41% lighter with tree-shaking), initial render (up to 55% faster), updates (up to 133% faster), and memory usage (up to 54% less).</p>
 <p>In Vue 3, we have taken the approach of \\"compiler-informed Virtual DOM\\": the template compiler performs aggressive optimizations and generates render function code that hoists static content, leaves runtime hints for binding types, and most importantly, flattens the dynamic nodes inside a template to reduce the cost of runtime traversal. The user therefore gets the best of both worlds: compiler-optimized performance from templates, or direct control via manual render functions when the use case demands.</p>
-<h3>Improved TypeScript integration</h3>
+<h3 id=\\"improved-typescript-integration\\" class=\\"heading\\"><a href=\\"#improved-typescript-integration\\" class=\\"heading-anchor\\" aria-label=\\"Permalink for Improved TypeScript integration\\" tabindex=\\"-1\\"></a>Improved TypeScript integration</h3>
 <p>Vue 3's codebase is written in TypeScript, with automatically generated, tested, and bundled type definitions so they are always up-to-date. Composition API works great with type inference. Vetur, our official VSCode extension, now supports template expression and props type checking leveraging Vue 3's improved internal typing. Oh, and Vue 3's typing <a href=\\"https://github.com/vuejs/vue-next/blob/master/test-dts/defineComponent.test-d.tsx\\">fully supports TSX</a> if that's your preference.</p>
-<h3>Experimental Features</h3>
+<h3 id=\\"experimental-features\\" class=\\"heading\\"><a href=\\"#experimental-features\\" class=\\"heading-anchor\\" aria-label=\\"Permalink for Experimental Features\\" tabindex=\\"-1\\"></a>Experimental Features</h3>
 <p>We have proposed <a href=\\"https://github.com/vuejs/rfcs/pull/182\\">two new features</a> for Singe-File Components (SFC, aka <code>.vue</code> files):</p>
 <ul>
 <li><a href=\\"https://github.com/vuejs/rfcs/blob/sfc-improvements/active-rfcs/0000-sfc-script-setup.md\\"><code>&#x3C;script setup></code>: syntactic sugar for using Composition API inside SFCs</a></li>
@@ -286,12 +286,12 @@ exports[`building docs site > html files 7`] = `
 </ul>
 <p>These features are already implemented and available in Vue 3.0, but are provided only for the purpose of gathering feedback. They will remain experimental until the RFCs are merged.</p>
 <p>We have also implemented a currently undocumented <code>&#x3C;Suspense></code> component, which allows waiting on nested async dependencies (async components or component with <code>async setup()</code>) on initial render or branch switch. We are testing and iterating on this feature with the Nuxt.js team (<a href=\\"https://nuxtjs.slides.com/atinux/state-of-nuxt-2020\\">Nuxt 3 is on the way</a>) and will likely solidify it in 3.1.</p>
-<h2>Phased Release Process</h2>
+<h2 id=\\"phased-release-process\\" class=\\"heading\\"><a href=\\"#phased-release-process\\" class=\\"heading-anchor\\" aria-label=\\"Permalink for Phased Release Process\\" tabindex=\\"-1\\"></a>Phased Release Process</h2>
 <p>The release of Vue 3.0 marks the general readiness of the framework. While some of the frameworks sub projects may still need further work to reach stable status (specifically router and Vuex integration in the devtools), we believe it's suitable to start new, green-field projects with Vue 3 today. We also encourage library authors to start upgrading your projects to support Vue 3.</p>
 <p>Check out the <a href=\\"https://v3.vuejs.org/guide/migration/introduction.html#supporting-libraries\\">Vue 3 Libraries Guide</a> for details on all framework sub projects.</p>
-<h3>Migration and IE11 Support</h3>
+<h3 id=\\"migration-and-ie11-support\\" class=\\"heading\\"><a href=\\"#migration-and-ie11-support\\" class=\\"heading-anchor\\" aria-label=\\"Permalink for Migration and IE11 Support\\" tabindex=\\"-1\\"></a>Migration and IE11 Support</h3>
 <p>We have pushed back the migration build (v3 build with v2 compatible behavior + migration warnings) and the IE11 build due to time constraints, and are aiming to focus on them in Q4 2020. Therefore, users planning to migrate an existing v2 app or require IE11 support should be aware of these limitations at this time.</p>
-<h3>Next Steps</h3>
+<h3 id=\\"next-steps\\" class=\\"heading\\"><a href=\\"#next-steps\\" class=\\"heading-anchor\\" aria-label=\\"Permalink for Next Steps\\" tabindex=\\"-1\\"></a>Next Steps</h3>
 <p>For the near term after release, we will focus on:</p>
 <ul>
 <li>Migration build</li>
@@ -301,7 +301,7 @@ exports[`building docs site > html files 7`] = `
 </ul>
 <p>For the time being, the documentation websites, GitHub branches, and npm dist tags for Vue 3 and v3-targeting projects will remain under <code>next</code>-denoted status. This means <code>npm install vue</code> will still install Vue 2.x and <code>npm install vue@next</code> will install Vue 3. <strong>We are planning to switch all doc links, branches and dist tags to default to 3.0 in early 2021.</strong></p>
 <p>At the same time, we have started planning for 2.7, which will be the last planned minor release of the 2.x release line. 2.7 will be backporting compatible improvements from v3, and emit warnings on usage of APIs that are removed/changed in v3 to help with potential migration. We are planning to work on 2.7 in Q1 2021, which will directly become LTS upon release with an 18 months maintenance lifespan.</p>
-<h2>Trying It Out</h2>
+<h2 id=\\"trying-it-out\\" class=\\"heading\\"><a href=\\"#trying-it-out\\" class=\\"heading-anchor\\" aria-label=\\"Permalink for Trying It Out\\" tabindex=\\"-1\\"></a>Trying It Out</h2>
 <p>To learn more about Vue 3.0, check out our <a href=\\"https://v3.vuejs.org/\\">new documentation website</a>. If you are an existing Vue 2.x user, go directly to the <a href=\\"https://v3.vuejs.org/guide/migration/introduction.html\\">Migration Guide</a>.</p>
 <hr>
 <ul>
@@ -336,9 +336,9 @@ exports[`building docs site > rss feed 1`] = `
 Make sure to read the Potential Required Actions section to see if you need to make certain changes before the switch to avoid breakage.
 ]]></description>
             <content:encoded><![CDATA[<p>TL;DR: Vue 3 will become the new default version on <strong>Monday, February 7, 2022</strong>!</p>
-<p>Make sure to read the <a href=\\"#potential-required-actions\\">Potential Required Actions</a> section to see if you need to make certain changes before the switch to avoid breakage.</p>
+<p>Make sure to read the <a href=\\"/posts/vue-3-as-the-new-default.html#potential-required-actions\\">Potential Required Actions</a> section to see if you need to make certain changes before the switch to avoid breakage.</p>
 
-<h2>From a Library to a Framework</h2>
+<h2 id=\\"from-a-library-to-a-framework\\" class=\\"heading\\"><a href=\\"#from-a-library-to-a-framework\\" class=\\"heading-anchor\\" aria-label=\\"Permalink for From a Library to a Framework\\" tabindex=\\"-1\\"></a>From a Library to a Framework</h2>
 <p>When Vue first started, it was just a runtime library. Over the years, it has evolved into a framework that encompasses many sub projects:</p>
 <ul>
 <li>The core library, i.e. the <code>vue</code> npm package</li>
@@ -354,10 +354,10 @@ Make sure to read the Potential Required Actions section to see if you need to m
 <li>VuePress for Vue-based static site generation</li>
 </ul>
 <p>This is only possible because Vue is a community-driven project. Many of these projects were started by community members who later became Vue team members. The rest were originally started by me, but are now almost entirely maintained by the team (with the exception of the core library).</p>
-<h2>Soft Launch of Vue 3</h2>
+<h2 id=\\"soft-launch-of-vue-3\\" class=\\"heading\\"><a href=\\"#soft-launch-of-vue-3\\" class=\\"heading-anchor\\" aria-label=\\"Permalink for Soft Launch of Vue 3\\" tabindex=\\"-1\\"></a>Soft Launch of Vue 3</h2>
 <p>With the core releasing a new major version, all the other parts of the framework needed to move forward together. We also needed to provide a migration path for Vue 2 users. This was a massive undertaking for a community-drive team like Vue. When Vue 3 core was ready, most other parts of the framework were either in beta or still awaiting update. We decided to go ahead and release the core so that the early adopters, library authors and higher-level frameworks can start building with it while we worked on the rest of the framework.</p>
 <p>At the same time, we kept Vue 2 as the default for documentation and npm installs. This is because we knew that for many users, Vue 2 still provided a more coherent and comprehensive experience until other parts of Vue 3 are refined.</p>
-<h2>The New Vue</h2>
+<h2 id=\\"the-new-vue\\" class=\\"heading\\"><a href=\\"#the-new-vue\\" class=\\"heading-anchor\\" aria-label=\\"Permalink for The New Vue\\" tabindex=\\"-1\\"></a>The New Vue</h2>
 <p>This soft launch process took longer than we hoped, but we are finally here: we are excited to announce that Vue 3 will become the new default version on <strong>Monday, February 7, 2022</strong>.</p>
 <p>Outside of Vue core, we have improved almost every aspect of the framework:</p>
 <ul>
@@ -369,9 +369,9 @@ Make sure to read the Potential Required Actions section to see if you need to m
 <li>New devtools extension with simultaneous Vue 2 / Vue 3 support and a <a href=\\"https://devtools.vuejs.org/plugin/plugins-guide.html\\">plugin system</a> that allows community libraries to hook into the devtools panels</li>
 </ul>
 <p>We also completely reworked the main documentation. <a href=\\"https://staging.vuejs.org\\">The new vuejs.org</a> (currently in staging) will provide updated framework overview and recommendations, flexible learning paths for users from different backgrounds, the ability to toggle between Options API and Composition API throughout the guide and examples, and many new deep dive sections. It's also <em>very</em> fast - which we will discuss in more details in a separate blog post soon.</p>
-<h2>Version Switch Details</h2>
+<h2 id=\\"version-switch-details\\" class=\\"heading\\"><a href=\\"#version-switch-details\\" class=\\"heading-anchor\\" aria-label=\\"Permalink for Version Switch Details\\" tabindex=\\"-1\\"></a>Version Switch Details</h2>
 <p>Here are the details on what we mean by \\"the new default\\". In addition, please read the <a href=\\"#potential-required-actions\\">Potential Required Actions</a> section to see if you need to make certain changes before the switch to avoid breakage.</p>
-<h3>npm dist tags</h3>
+<h3 id=\\"npm-dist-tags\\" class=\\"heading\\"><a href=\\"#npm-dist-tags\\" class=\\"heading-anchor\\" aria-label=\\"Permalink for npm dist tags\\" tabindex=\\"-1\\"></a>npm dist tags</h3>
 <ul>
 <li>
 <p><code>npm install vue</code> will install Vue 3.</p>
@@ -380,7 +380,7 @@ Make sure to read the Potential Required Actions section to see if you need to m
 <p>The <code>latest</code> dist tag of all other official npm packages will point to Vue 3 compatible versions, including <code>vue-router</code>, <code>vuex</code>, <code>vue-loader</code>, and <code>@vue/test-utils</code>.</p>
 </li>
 </ul>
-<h3>Official docs and sites</h3>
+<h3 id=\\"official-docs-and-sites\\" class=\\"heading\\"><a href=\\"#official-docs-and-sites\\" class=\\"heading-anchor\\" aria-label=\\"Permalink for Official docs and sites\\" tabindex=\\"-1\\"></a>Official docs and sites</h3>
 <p>All documentation and official sites will default to Vue 3 versions. These include:</p>
 <ul>
 <li>vuejs.org</li>
@@ -398,7 +398,7 @@ Make sure to read the Potential Required Actions section to see if you need to m
 <li>vue-test-utils.vuejs.org -> v1.test-utils.vuejs.org</li>
 <li>template-explorer.vuejs.org -> v2.template-explorer.vuejs.org</li>
 </ul>
-<h3>GitHub repos</h3>
+<h3 id=\\"github-repos\\" class=\\"heading\\"><a href=\\"#github-repos\\" class=\\"heading-anchor\\" aria-label=\\"Permalink for GitHub repos\\" tabindex=\\"-1\\"></a>GitHub repos</h3>
 <p><em>The repo changes are already in effect as of this writing.</em></p>
 <p>All GitHub repos under the <code>vuejs</code> organization will switch to Vue 3 versions in the default branch. In addition, we are renaming the following repos to remove <code>next</code> in their names:</p>
 <ul>
@@ -410,11 +410,11 @@ Make sure to read the Potential Required Actions section to see if you need to m
 </ul>
 <p>In addition, translation repos for the main documentation are moved to the <a href=\\"https://github.com/vuejs-translations\\"><code>vuejs-translations</code> organization</a>.</p>
 <p>GitHub handles repo directs automatically, so previous links to source code and issues should still work.</p>
-<h3>Devtools extension</h3>
+<h3 id=\\"devtools-extension\\" class=\\"heading\\"><a href=\\"#devtools-extension\\" class=\\"heading-anchor\\" aria-label=\\"Permalink for Devtools extension\\" tabindex=\\"-1\\"></a>Devtools extension</h3>
 <p>Devtools v6, which is currently published under the <a href=\\"https://chrome.google.com/webstore/detail/vuejs-devtools/ljjemllljcmogpfapbkkighbhhppjdbg\\">beta channel</a> on Chrome Web Store, will be moved to the <a href=\\"https://chrome.google.com/webstore/detail/vuejs-devtools/nhdogjmejiglipccpnnnanhbledajbpd\\">stable channel</a> upon the version switch.</p>
 <p>The current stable channel will still be available. It will be moved to the <a href=\\"https://chrome.google.com/webstore/detail/vuejs-devtools/iaajmlceplecbljialhhkmedjlpdblhp\\">legacy channel</a>.</p>
-<h2>Potential Required Actions</h2>
-<h3>Unversioned CDN Usage</h3>
+<h2 id=\\"potential-required-actions\\" class=\\"heading\\"><a href=\\"#potential-required-actions\\" class=\\"heading-anchor\\" aria-label=\\"Permalink for Potential Required Actions\\" tabindex=\\"-1\\"></a>Potential Required Actions</h2>
+<h3 id=\\"unversioned-cdn-usage\\" class=\\"heading\\"><a href=\\"#unversioned-cdn-usage\\" class=\\"heading-anchor\\" aria-label=\\"Permalink for Unversioned CDN Usage\\" tabindex=\\"-1\\"></a>Unversioned CDN Usage</h3>
 <p>If you are using Vue 2 via a CDN link without specifying a version, make sure to specify a version range via <code>@2</code>:</p>
 <div class=\\"language-diff\\" data-lang=\\"diff\\"><pre class=\\"language-diff\\"><code><span class=\\"token deleted-sign deleted\\"><span class=\\"token prefix deleted\\">-</span><span class=\\"token line\\"> &lt;script src=\\"https://unpkg.com/vue\\">&lt;/script>
 </span></span><span class=\\"token inserted-sign inserted\\"><span class=\\"token prefix inserted\\">+</span><span class=\\"token line\\"> &lt;script src=\\"https://unpkg.com/vue@2\\">&lt;/script>
@@ -422,7 +422,7 @@ Make sure to read the Potential Required Actions section to see if you need to m
 <span class=\\"token deleted-sign deleted\\"><span class=\\"token prefix deleted\\">-</span><span class=\\"token line\\"> &lt;script src=\\"https://cdn.jsdelivr.net/npm/vue/dist/vue.min.js\\">&lt;/script>
 </span></span><span class=\\"token inserted-sign inserted\\"><span class=\\"token prefix inserted\\">+</span><span class=\\"token line\\"> &lt;script src=\\"https://cdn.jsdelivr.net/npm/vue@2/dist/vue.min.js\\">&lt;/script></span></span></code></pre></div>
 <p>Note: even if using Vue 3, you should also always specify a version range in production to avoid accidentally loading future major versions.</p>
-<h3>NPM <code>latest</code> Tag</h3>
+<h3 id=\\"npm-latest-tag\\" class=\\"heading\\"><a href=\\"#npm-latest-tag\\" class=\\"heading-anchor\\" aria-label=\\"Permalink for NPM latest Tag\\" tabindex=\\"-1\\"></a>NPM <code>latest</code> Tag</h3>
 <p>If you are installing Vue or other official libraries from npm using the <code>latest</code> tag or <code>*</code>, please update to explicitly use Vue 2 compatible versions:</p>
 <div class=\\"language-diff\\" data-lang=\\"diff\\"><pre class=\\"language-diff\\"><code>{
 <span class=\\"token unchanged\\"><span class=\\"token prefix unchanged\\"> </span><span class=\\"token line\\"> \\"dependencies\\": {
@@ -450,7 +450,7 @@ Make sure to read the Potential Required Actions section to see if you need to m
 We are excited to announce the release of Vue.js 3.2 &quot;Quintessential Quintuplets&quot;! This release includes many significant new features and performance improvements, and contains no breaking changes.]]></description>
             <content:encoded><![CDATA[
 <p>We are excited to announce the release of Vue.js 3.2 \\"Quintessential Quintuplets\\"! This release includes many significant new features and performance improvements, and contains no breaking changes.</p>
-<h2>New SFC Features</h2>
+<h2 id=\\"new-sfc-features\\" class=\\"heading\\"><a href=\\"#new-sfc-features\\" class=\\"heading-anchor\\" aria-label=\\"Permalink for New SFC Features\\" tabindex=\\"-1\\"></a>New SFC Features</h2>
 <p>Two new features for Single File Components (SFCs, aka <code>.vue</code> files) have graduated from experimental status and are now considered stable:</p>
 <ul>
 <li>
@@ -484,7 +484,7 @@ We are excited to announce the release of Vue.js 3.2 &quot;Quintessential Quintu
 <li><a href=\\"https://v3.vuejs.org/api/sfc-style.html#state-driven-dynamic-css\\"><code>&#x3C;style> v-bind</code></a></li>
 </ul>
 <p>Building on top of <code>&#x3C;script setup></code>, we also have a new RFC for improving the ergonomics of ref usage with compiler-enabled sugar - please share your feedback <a href=\\"https://github.com/vuejs/rfcs/discussions/369\\">here</a>.</p>
-<h2>Web Components</h2>
+<h2 id=\\"web-components\\" class=\\"heading\\"><a href=\\"#web-components\\" class=\\"heading-anchor\\" aria-label=\\"Permalink for Web Components\\" tabindex=\\"-1\\"></a>Web Components</h2>
 <p>Vue 3.2 introduces a new <code>defineCustomElement</code> method for easily creating native <a href=\\"https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_custom_elements\\">custom elements</a> using Vue component APIs:</p>
 <div class=\\"language-js\\" data-lang=\\"js\\"><pre class=\\"language-js\\"><code><span class=\\"token keyword\\">import</span> <span class=\\"token punctuation\\">{</span> defineCustomElement <span class=\\"token punctuation\\">}</span> <span class=\\"token keyword\\">from</span> <span class=\\"token string\\">'vue'</span>
 
@@ -497,7 +497,7 @@ We are excited to announce the release of Vue.js 3.2 &quot;Quintessential Quintu
 <span class=\\"token comment\\">// on the page will be upgraded.</span>
 customElements<span class=\\"token punctuation\\">.</span><span class=\\"token function\\">define</span><span class=\\"token punctuation\\">(</span><span class=\\"token string\\">'my-vue-element'</span><span class=\\"token punctuation\\">,</span> MyVueElement<span class=\\"token punctuation\\">)</span></code></pre></div>
 <p>This API allows developers to create Vue-powered UI component libraries that can be used with any framework, or no framework at all. We have also added a new section in our docs on <a href=\\"https://v3.vuejs.org/guide/web-components.html\\">consuming and creating Web Components in Vue</a>.</p>
-<h2>Performance Improvements</h2>
+<h2 id=\\"performance-improvements\\" class=\\"heading\\"><a href=\\"#performance-improvements\\" class=\\"heading-anchor\\" aria-label=\\"Permalink for Performance Improvements\\" tabindex=\\"-1\\"></a>Performance Improvements</h2>
 <p>3.2 includes some significant performance improvements to Vue's reactivity system, thanks to the great work by <a href=\\"https://github.com/basvanmeurs\\">@basvanmeurs</a>. Specifically:</p>
 <ul>
 <li><a href=\\"https://github.com/vuejs/vue-next/pull/3995\\">More efficient ref implementation (~260% faster read / ~50% faster write)</a></li>
@@ -512,10 +512,10 @@ customElements<span class=\\"token punctuation\\">.</span><span class=\\"token f
 <p>Finally, there is a new <a href=\\"https://v3.vuejs.org/api/directives.html#v-memo\\"><code>v-memo</code> directive</a> that provides the ability to memoize part of the template tree. A <code>v-memo</code> hit allows Vue to skip not only the Virtual DOM diffing, but the creation of new VNodes altogether. Although rarely needed, it provides an escape hatch to squeeze out maximum performance in certain scenarios, for example large <code>v-for</code> lists.</p>
 <p>The usage of <code>v-memo</code>, which is a one-line addition, places Vue among the fastest mainstream frameworks in <a href=\\"https://github.com/krausest/js-framework-benchmark\\">js-framework-benchmark</a>:</p>
 <p><picture><source media=\\"(-webkit-min-device-pixel-ratio: 1.5)\\" type=\\"image/avif\\" srcset=\\"/assets/bench.avif 440w, /assets/bench.avif 758w\\"><source media=\\"(-webkit-min-device-pixel-ratio: 1.5)\\" type=\\"image/webp\\" srcset=\\"/assets/bench.webp 440w, /assets/bench.webp 758w\\"><source media=\\"(-webkit-min-device-pixel-ratio: 1.5)\\" srcset=\\"/assets/bench.png 440w, /assets/bench.png 758w\\"><source type=\\"image/avif\\" srcset=\\"/assets/bench.avif 758w\\"><source type=\\"image/webp\\" srcset=\\"/assets/bench.webp 758w\\"><img srcset=\\"/assets/bench.png 758w\\" loading=\\"lazy\\" src=\\"/assets/bench.png\\" alt=\\"benchmark\\"></picture></p>
-<h2>Server-side Rendering</h2>
+<h2 id=\\"server-side-rendering\\" class=\\"heading\\"><a href=\\"#server-side-rendering\\" class=\\"heading-anchor\\" aria-label=\\"Permalink for Server-side Rendering\\" tabindex=\\"-1\\"></a>Server-side Rendering</h2>
 <p>The <code>@vue/server-renderer</code> package in 3.2 now ships an ES module build which is also decoupled from Node.js built-ins. This makes it possible to bundle and leverage <code>@vue/server-renderer</code> for use inside non-Node.js runtimes such as <a href=\\"https://developers.cloudflare.com/workers/\\">CloudFlare Workers</a> or Service Workers.</p>
 <p>We also improved the streaming render APIs, with new methods for rendering to the <a href=\\"https://developer.mozilla.org/en-US/docs/Web/API/Streams_API\\">Web Streams API</a>. Check out the <a href=\\"https://github.com/vuejs/vue-next/tree/master/packages/server-renderer#streaming-api\\">documentation of <code>@vue/server-renderer</code></a> for more details.</p>
-<h2>Effect Scope API</h2>
+<h2 id=\\"effect-scope-api\\" class=\\"heading\\"><a href=\\"#effect-scope-api\\" class=\\"heading-anchor\\" aria-label=\\"Permalink for Effect Scope API\\" tabindex=\\"-1\\"></a>Effect Scope API</h2>
 <p>3.2 introduces a new <a href=\\"https://v3.vuejs.org/api/effect-scope.html\\">Effect Scope API</a> for directly controlling the disposal timing of reactive effects (computed and watchers). It makes it easier to leverage Vue's reactivity API out of a component context, and also unlocks some advanced use cases inside components.</p>
 <p>This is low-level API largely intended for library authors, so it's recommended to read the feature's <a href=\\"https://github.com/vuejs/rfcs/blob/master/active-rfcs/0041-reactivity-effect-scope.md\\">RFC</a> for the motivation and use cases of this feature.</p>
 <hr>
@@ -528,7 +528,7 @@ customElements<span class=\\"token punctuation\\">.</span><span class=\\"token f
             <pubDate>Mon, 11 Jan 2021</pubDate>
             <description><![CDATA[With a new year upon us, we also have a new blog! In this post, we would like to take a look back at some of the highlights from 2020, as well as some ideas we have for 2021.]]></description>
             <content:encoded><![CDATA[<p>With a new year upon us, we also have a new blog! In this post, we would like to take a look back at some of the highlights from 2020, as well as some ideas we have for 2021.</p>
-<h2>Looking Back at 2020</h2>
+<h2 id=\\"looking-back-at-2020\\" class=\\"heading\\"><a href=\\"#looking-back-at-2020\\" class=\\"heading-anchor\\" aria-label=\\"Permalink for Looking Back at 2020\\" tabindex=\\"-1\\"></a>Looking Back at 2020</h2>
 <p>2020 has been a challenging year, to say the least. Nonetheless, the team has made the best of a difficult situation. Despite an already massive user base, Vue's <a href=\\"https://npm-stat.com/charts.html?package=vue&#x26;from=2020-01-01&#x26;to=2020-12-31\\">NPM downloads</a> and <a href=\\"https://chrome-stats.com/d/nhdogjmejiglipccpnnnanhbledajbpd\\">Devtools weekly active users</a> both grew close to 50% throughout 2020. As time of this writing, Vue is being downloaded ~8M times per month on NPM and the devtools extension has ~1.5M weekly active users.</p>
 <p>Aside from routine maintenance, there are some incredible things that we accomplished as a team:</p>
 <ul>
@@ -552,7 +552,7 @@ customElements<span class=\\"token punctuation\\">.</span><span class=\\"token f
 <li><a href=\\"https://vitepress.vuejs.org/\\">VitePress</a>, a new static site generator built on Vue 3 and Vite</li>
 </ul>
 <p>In addition to all of these exciting projects, it’s also been incredible to see the community continue to grow despite the challenges 2020 set forth in terms of being unable to facilitate in-person events. With initiatives such as remote conferences, meetups and other events, it’s been a joy to see the community interacting in new ways that might not have been possible otherwise.</p>
-<h2>Looking Forward to 2021</h2>
+<h2 id=\\"looking-forward-to-2021\\" class=\\"heading\\"><a href=\\"#looking-forward-to-2021\\" class=\\"heading-anchor\\" aria-label=\\"Permalink for Looking Forward to 2021\\" tabindex=\\"-1\\"></a>Looking Forward to 2021</h2>
 <p>While Vue 3 brings many fundamental improvements and opens up avenues for future iterations, we are still in a transition period - both in terms of the library ecosystem and best practices involving new APIs. For early 2021, our focus will be further stabilizing the Vue 3 ecosystem, and continuing to help the community through this transition period. Here is a non-exhaustive list of things we’re looking forward to:</p>
 <ul>
 <li>Stablize current RC/Beta sub projects</li>
@@ -580,10 +580,10 @@ Today we are proud to announce the official release of Vue.js 3.0 &quot;One Piec
 <p>Today we are proud to announce the official release of Vue.js 3.0 \\"One Piece\\". This new major version of the framework provides improved performance, smaller bundle sizes, better TypeScript integration, new APIs for tackling large scale use cases, and a solid foundation for long-term future iterations of the framework.</p>
 
 <p>The 3.0 release represents over 2 years of development efforts, featuring <a href=\\"https://github.com/vuejs/rfcs/tree/master/active-rfcs\\">30+ RFCs</a>, 2,600+ commits, <a href=\\"https://github.com/vuejs/vue-next/pulls?q=is%3Apr+is%3Amerged+-author%3Aapp%2Fdependabot-preview+\\">628 pull requests</a> from <a href=\\"https://github.com/vuejs/vue-next/graphs/contributors\\">99 contributors</a>, plus tremendous amount of development and documentation work outside of the core repo. We would like to express our deepest gratitude towards our team members for taking on this challenge, our contributors for the pull requests, our <a href=\\"https://github.com/vuejs/vue/blob/dev/BACKERS.md\\">sponsors and backers</a> for the financial support, and the wider community for participating in our design discussions and providing feedback for the pre-release versions. Vue is an independent project created for the community and sustained by the community, and Vue 3.0 wouldn't have been possible without your consistent support.</p>
-<h2>Taking the \\"Progressive Framework\\" Concept Further</h2>
+<h2 id=\\"taking-the-progressive-framework-concept-further\\" class=\\"heading\\"><a href=\\"#taking-the-progressive-framework-concept-further\\" class=\\"heading-anchor\\" aria-label=\\"Permalink for Taking the &#x22;Progressive Framework&#x22; Concept Further\\" tabindex=\\"-1\\"></a>Taking the \\"Progressive Framework\\" Concept Further</h2>
 <p>Vue had a simple mission from its humble beginning: to be an approachable framework that anyone can quickly learn. As our user base grew, the framework also grew in scope to adapt to the increasing demands. Over time, it evolved into what we call a \\"Progressive Framework\\": a framework that can be learned and adopted incrementally, while providing continued support as the user tackles more and more demanding scenarios.</p>
 <p>Today, with over 1.3 million users worldwide<sup>*</sup>, we are seeing Vue being used in a wildly diverse range of scenarios, from sprinkling interactivity on traditional server-rendered pages, to full-blown single page applications with hundreds of components. Vue 3 takes this flexibility even further.</p>
-<h3>Layered internal modules</h3>
+<h3 id=\\"layered-internal-modules\\" class=\\"heading\\"><a href=\\"#layered-internal-modules\\" class=\\"heading-anchor\\" aria-label=\\"Permalink for Layered internal modules\\" tabindex=\\"-1\\"></a>Layered internal modules</h3>
 <p>Vue 3.0 core can still be used via a simple <code>&#x3C;script></code> tag, but its internals has been re-written from the ground up into <a href=\\"https://github.com/vuejs/vue-next/tree/master/packages\\">a collection of decoupled modules</a>. The new architecture provides better maintainability, and allows end users to shave off up to half of the runtime size via tree-shaking.</p>
 <p>These modules also exposes lower-level APIs that unlocks many advanced use cases:</p>
 <ul>
@@ -591,15 +591,15 @@ Today we are proud to announce the official release of Vue.js 3.0 &quot;One Piec
 <li>The core runtime provides first-class API for creating custom renderers targeting different render targets (e.g. <a href=\\"https://github.com/rigor789/nativescript-vue-next\\">native mobile</a>, <a href=\\"https://github.com/Planning-nl/vugel\\">WebGL</a> or <a href=\\"https://github.com/ycmjason/vuminal\\">terminals</a>). The default DOM renderer is built using the same API.</li>
 <li>The <a href=\\"https://github.com/vuejs/vue-next/tree/master/packages/reactivity\\"><code>@vue/reactivity</code> module</a> exports functions that provide direct access to Vue's reactivity system, and can be used as a standalone package. It can be used to pair with other templating solutions (e.g. <a href=\\"https://github.com/yyx990803/vue-lit\\">lit-html</a>) or even in non-UI scenarios.</li>
 </ul>
-<h3>New APIs for tackling scale</h3>
+<h3 id=\\"new-apis-for-tackling-scale\\" class=\\"heading\\"><a href=\\"#new-apis-for-tackling-scale\\" class=\\"heading-anchor\\" aria-label=\\"Permalink for New APIs for tackling scale\\" tabindex=\\"-1\\"></a>New APIs for tackling scale</h3>
 <p>The 2.x Object-based API is largely intact in Vue 3. However, 3.0 also introduces the <a href=\\"https://v3.vuejs.org/guide/composition-api-introduction.html\\">Composition API</a> - a new set of APIs aimed at addressing the pain points of Vue usage in large scale applications. The Composition API builds on top of the reactivity API and enables logic composition and reuse similar to React hooks, more flexible code organization patterns, and more reliable type inference than the 2.x Object-based API.</p>
 <p>Composition API can also be used with Vue 2.x via the <a href=\\"https://github.com/vuejs/composition-api\\">@vue/composition-api</a> plugin, and there are already Composition API utility libraries that work for both Vue 2 and 3 (e.g. <a href=\\"https://github.com/antfu/vueuse\\">vueuse</a>, <a href=\\"https://github.com/pikax/vue-composable\\">vue-composable</a>).</p>
-<h3>Performance Improvements</h3>
+<h3 id=\\"performance-improvements\\" class=\\"heading\\"><a href=\\"#performance-improvements\\" class=\\"heading-anchor\\" aria-label=\\"Permalink for Performance Improvements\\" tabindex=\\"-1\\"></a>Performance Improvements</h3>
 <p>Vue 3 has demonstrated <a href=\\"https://docs.google.com/spreadsheets/d/1VJFx-kQ4KjJmnpDXIEaig-cVAAJtpIGLZNbv3Lr4CR0/edit?usp=sharing\\">significant performance improvements</a> over Vue 2 in terms of bundle size (up to 41% lighter with tree-shaking), initial render (up to 55% faster), updates (up to 133% faster), and memory usage (up to 54% less).</p>
 <p>In Vue 3, we have taken the approach of \\"compiler-informed Virtual DOM\\": the template compiler performs aggressive optimizations and generates render function code that hoists static content, leaves runtime hints for binding types, and most importantly, flattens the dynamic nodes inside a template to reduce the cost of runtime traversal. The user therefore gets the best of both worlds: compiler-optimized performance from templates, or direct control via manual render functions when the use case demands.</p>
-<h3>Improved TypeScript integration</h3>
+<h3 id=\\"improved-typescript-integration\\" class=\\"heading\\"><a href=\\"#improved-typescript-integration\\" class=\\"heading-anchor\\" aria-label=\\"Permalink for Improved TypeScript integration\\" tabindex=\\"-1\\"></a>Improved TypeScript integration</h3>
 <p>Vue 3's codebase is written in TypeScript, with automatically generated, tested, and bundled type definitions so they are always up-to-date. Composition API works great with type inference. Vetur, our official VSCode extension, now supports template expression and props type checking leveraging Vue 3's improved internal typing. Oh, and Vue 3's typing <a href=\\"https://github.com/vuejs/vue-next/blob/master/test-dts/defineComponent.test-d.tsx\\">fully supports TSX</a> if that's your preference.</p>
-<h3>Experimental Features</h3>
+<h3 id=\\"experimental-features\\" class=\\"heading\\"><a href=\\"#experimental-features\\" class=\\"heading-anchor\\" aria-label=\\"Permalink for Experimental Features\\" tabindex=\\"-1\\"></a>Experimental Features</h3>
 <p>We have proposed <a href=\\"https://github.com/vuejs/rfcs/pull/182\\">two new features</a> for Singe-File Components (SFC, aka <code>.vue</code> files):</p>
 <ul>
 <li><a href=\\"https://github.com/vuejs/rfcs/blob/sfc-improvements/active-rfcs/0000-sfc-script-setup.md\\"><code>&#x3C;script setup></code>: syntactic sugar for using Composition API inside SFCs</a></li>
@@ -607,12 +607,12 @@ Today we are proud to announce the official release of Vue.js 3.0 &quot;One Piec
 </ul>
 <p>These features are already implemented and available in Vue 3.0, but are provided only for the purpose of gathering feedback. They will remain experimental until the RFCs are merged.</p>
 <p>We have also implemented a currently undocumented <code>&#x3C;Suspense></code> component, which allows waiting on nested async dependencies (async components or component with <code>async setup()</code>) on initial render or branch switch. We are testing and iterating on this feature with the Nuxt.js team (<a href=\\"https://nuxtjs.slides.com/atinux/state-of-nuxt-2020\\">Nuxt 3 is on the way</a>) and will likely solidify it in 3.1.</p>
-<h2>Phased Release Process</h2>
+<h2 id=\\"phased-release-process\\" class=\\"heading\\"><a href=\\"#phased-release-process\\" class=\\"heading-anchor\\" aria-label=\\"Permalink for Phased Release Process\\" tabindex=\\"-1\\"></a>Phased Release Process</h2>
 <p>The release of Vue 3.0 marks the general readiness of the framework. While some of the frameworks sub projects may still need further work to reach stable status (specifically router and Vuex integration in the devtools), we believe it's suitable to start new, green-field projects with Vue 3 today. We also encourage library authors to start upgrading your projects to support Vue 3.</p>
 <p>Check out the <a href=\\"https://v3.vuejs.org/guide/migration/introduction.html#supporting-libraries\\">Vue 3 Libraries Guide</a> for details on all framework sub projects.</p>
-<h3>Migration and IE11 Support</h3>
+<h3 id=\\"migration-and-ie11-support\\" class=\\"heading\\"><a href=\\"#migration-and-ie11-support\\" class=\\"heading-anchor\\" aria-label=\\"Permalink for Migration and IE11 Support\\" tabindex=\\"-1\\"></a>Migration and IE11 Support</h3>
 <p>We have pushed back the migration build (v3 build with v2 compatible behavior + migration warnings) and the IE11 build due to time constraints, and are aiming to focus on them in Q4 2020. Therefore, users planning to migrate an existing v2 app or require IE11 support should be aware of these limitations at this time.</p>
-<h3>Next Steps</h3>
+<h3 id=\\"next-steps\\" class=\\"heading\\"><a href=\\"#next-steps\\" class=\\"heading-anchor\\" aria-label=\\"Permalink for Next Steps\\" tabindex=\\"-1\\"></a>Next Steps</h3>
 <p>For the near term after release, we will focus on:</p>
 <ul>
 <li>Migration build</li>
@@ -622,7 +622,7 @@ Today we are proud to announce the official release of Vue.js 3.0 &quot;One Piec
 </ul>
 <p>For the time being, the documentation websites, GitHub branches, and npm dist tags for Vue 3 and v3-targeting projects will remain under <code>next</code>-denoted status. This means <code>npm install vue</code> will still install Vue 2.x and <code>npm install vue@next</code> will install Vue 3. <strong>We are planning to switch all doc links, branches and dist tags to default to 3.0 in early 2021.</strong></p>
 <p>At the same time, we have started planning for 2.7, which will be the last planned minor release of the 2.x release line. 2.7 will be backporting compatible improvements from v3, and emit warnings on usage of APIs that are removed/changed in v3 to help with potential migration. We are planning to work on 2.7 in Q1 2021, which will directly become LTS upon release with an 18 months maintenance lifespan.</p>
-<h2>Trying It Out</h2>
+<h2 id=\\"trying-it-out\\" class=\\"heading\\"><a href=\\"#trying-it-out\\" class=\\"heading-anchor\\" aria-label=\\"Permalink for Trying It Out\\" tabindex=\\"-1\\"></a>Trying It Out</h2>
 <p>To learn more about Vue 3.0, check out our <a href=\\"https://v3.vuejs.org/\\">new documentation website</a>. If you are an existing Vue 2.x user, go directly to the <a href=\\"https://v3.vuejs.org/guide/migration/introduction.html\\">Migration Guide</a>.</p>
 <hr>
 <ul>
