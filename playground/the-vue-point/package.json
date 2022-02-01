@@ -14,14 +14,15 @@
     "node": "^14.18 || >= 16.0.0"
   },
   "devDependencies": {
-    "@iconify-json/carbon": "^1.0.7",
-    "@islands/excerpt": "workspace:^0.1.0",
+    "@iconify-json/carbon": "^1.0.14",
+    "@islands/excerpt": "workspace:^0.1.2",
     "@islands/feed": "workspace:*",
     "@islands/icons": "workspace:*",
     "@islands/images": "workspace:*",
     "@islands/prism": "workspace:*",
     "iles": "workspace:*",
-    "vite-plugin-windicss": "^1.5.1",
+    "remark-gfm": "^3.0.1",
+    "vite-plugin-windicss": "^1.6.3",
     "vue-tsc": "^0.29.8"
   }
 }

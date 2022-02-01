@@ -70,7 +70,7 @@ importers:
       preact-render-to-string: ^5.1.19
       rehype-external-links: ^1.0.0
       vite-plugin-inspect: ^0.3.11
-      vite-plugin-windicss: ^1.5.4
+      vite-plugin-windicss: ^1.6.3
       vue-tsc: ^0.29.8
     dependencies:
       '@docsearch/css': 3.0.0-alpha.42
@@ -92,7 +92,7 @@ importers:
       preact-render-to-string: 5.1.19_preact@10.6.4
       rehype-external-links: 1.0.1
       vite-plugin-inspect: 0.3.11
-      vite-plugin-windicss: 1.6.1
+      vite-plugin-windicss: 1.6.3
       vue-tsc: 0.29.8_typescript@4.4.4
 
   packages/excerpt:
@@ -551,6 +551,7 @@ packages:
     resolution: {integrity: sha512-UU8TLr/EoXdg7OjMp0h9oDoIAVr+Z/oW9cpOxQQyrsz6Qzd2ms/1CdWx8fl2OQdFpxGmq5Vc4TwfLHId6nAZjA==}
     dependencies:
       '@types/throttle-debounce': 2.1.0
+    dev: false
 
   /@antfu/utils/0.4.0:
     resolution: {integrity: sha512-gqkpvjkgFUu+s3kP+Ly33OKpo5zvVY3FDFhv5BIb98SncS3KD6DNxPfNDjwHIoyXbz1leWo1j8DtRLZ1D2Jv+Q==}
@@ -2547,36 +2548,12 @@ packages:
       vue-demi: 0.12.1
     dev: true
 
-  /@windicss/config/1.6.1:
-    resolution: {integrity: sha512-E4FKtWdYl5HwFknBQ+Z2JIF58TZiR4/ZiP8B30sfRxNlG6clh4agn5MJqTb4ER0MLkDb30Hugl2tGun0AQNbFw==}
-    dependencies:
-      debug: 4.3.3
-      jiti: 1.12.9
-      windicss: 3.4.1
-    transitivePeerDependencies:
-      - supports-color
-    dev: true
-
   /@windicss/config/1.6.3:
     resolution: {integrity: sha512-1kjdy4tyYLD4sCB4DS+3Lt1Odnde03z4Rz3EUqyWJ7SiBEWMgRk1L797SsgEH4+W1DjLBZLs1SVYzaTO/3UdJA==}
     dependencies:
       debug: 4.3.3
       jiti: 1.12.9
       windicss: 3.4.3
-    transitivePeerDependencies:
-      - supports-color
-    dev: true
-
-  /@windicss/plugin-utils/1.6.1:
-    resolution: {integrity: sha512-hFQY27bOr9SSpekIvSwBpIX25nR4cwrU5/1kJFqCwAzqyazvd7U9c/iI1E2sTEQOkPbpTTJkY2Act21Q70oSDQ==}
-    dependencies:
-      '@antfu/utils': 0.3.0
-      '@windicss/config': 1.6.1
-      debug: 4.3.3
-      fast-glob: 3.2.7
-      magic-string: 0.25.7
-      micromatch: 4.0.4
-      windicss: 3.4.1
     transitivePeerDependencies:
       - supports-color
     dev: true
@@ -9862,19 +9839,6 @@ packages:
       - supports-color
     dev: true
 
-  /vite-plugin-windicss/1.6.1:
-    resolution: {integrity: sha512-63uv4HqBxtSZB0WOtrZS8yhyfQPgGQwYgcBald+/BpLSlYJREcDKgX9Xd/qDgTAjpDRozxKQj/JWreIlyIahGg==}
-    peerDependencies:
-      vite: ^2.0.1
-    dependencies:
-      '@windicss/plugin-utils': 1.6.1
-      debug: 4.3.3
-      kolorist: 1.5.1
-      windicss: 3.4.1
-    transitivePeerDependencies:
-      - supports-color
-    dev: true
-
   /vite-plugin-windicss/1.6.3:
     resolution: {integrity: sha512-D4fEUcAPoLRLdDZMee8NrHZHmn0Qj7AjSg1xNGBnZsMTwRPj93NKZk0fIIUoiKTEh1KrdQejW8g6cg0SgGKTww==}
     peerDependencies:
@@ -10257,12 +10221,6 @@ packages:
     dependencies:
       string-width: 4.2.3
     dev: false
-
-  /windicss/3.4.1:
-    resolution: {integrity: sha512-g6mX0q8divtPT+TSWqvI35lc77pOhGwMrwCdcX48dFA16wUlSDn1kOv5z1msZy3SlWLx3Bjbe7FA6uNTvdVH8A==}
-    engines: {node: '>= 12'}
-    hasBin: true
-    dev: true
 
   /windicss/3.4.3:
     resolution: {integrity: sha512-UnugThsvEgy8RsPm4/B5DYMCAqvZzD6yWU7Anh+f07t5RSJ8zvmAylGLbXrHPJEmCKzo2Mf+fOUvISH7IJqM3A==}

@@ -12,6 +12,7 @@ declare module 'vue' {
     Head: typeof import('@vueuse/head')['Head']
     IconCarbonWarning: typeof import('~icons/carbon/warning')['default']
     Island: typeof import('./../../packages/iles/dist/client/app/components/Island.vue')['default']
+    MetaTags: typeof import('./src/components/MetaTags.vue')['default']
     NavBarLinks: typeof import('./src/components/NavBarLinks.svelte')['default']
     Picture: typeof import('./../../packages/images/src/Picture.vue')['default']
     PostDate: typeof import('./src/components/PostDate.vue')['default']

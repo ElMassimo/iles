@@ -18,7 +18,7 @@ describe('building docs site', () => {
     expect(files.sort()).toEqual(expect.arrayContaining([
       '404.html',
       '_headers',
-      'assets/style.8c0557b7.css',
+      'assets/style.b37b420f.css',
       'assets/turbo.a9e83070.js',
       'favicon.ico',
       'feed.rss',
@@ -45,7 +45,7 @@ describe('building docs site', () => {
   })
 
   test('styles', async () => {
-    await assertSnapshot('assets/style.8c0557b7.css')
+    await assertSnapshot('assets/style.b37b420f.css')
   })
   test('sitemap', async () => {
     await assertSnapshot('sitemap.xml')
@@ -100,8 +100,9 @@ async function assertHTML (path: string, { title }: any = {}) {
   expectContent.toContain('<link rel="stylesheet" href="/assets/style.css">')
 
   expectContent.toContain('<ile-root id="ile-1">'
-    + '<div class="text-base text-gray-500 leading-5">'
-    + '<a class="hover:text-gray-700 mr-4" href="/feed.rss">RSS Feed</a>')
+    + '<div class="text-sm text-gray-500 leading-5">'
+    + '<a class="hover:text-gray-700" href="https://github.com/vuejs/blog" target="_blank" rel="noopener">'
+    + '<span class="hidden sm:inline">GitHub </span>Source</a>')
 
   if (path.includes('/posts/'))
     expectContent.toContain('<ile-root id="ile-2"><a class="link" href="/">← <!--#-->Back to the blog<!--/--></a></ile-root>')

@@ -30,7 +30,7 @@
     "preact-render-to-string": "^5.1.19",
     "rehype-external-links": "^1.0.0",
     "vite-plugin-inspect": "^0.3.11",
-    "vite-plugin-windicss": "^1.5.4",
+    "vite-plugin-windicss": "^1.6.3",
     "vue-tsc": "^0.29.8"
   },
   "dependencies": {

@@ -9,6 +9,7 @@ if (import.meta.env.PROD) {
 </script>
 
 <template>
+  <MetaTags/>
   <div class="antialiased">
     <div class="max-w-3xl mx-auto px-4 sm:px-6 xl:max-w-5xl xl:px-0">
       <nav class="flex justify-between items-center py-10 font-bold">
@@ -24,7 +25,7 @@ if (import.meta.env.PROD) {
     </div>
     <main class="max-w-3xl mx-auto px-4 sm:px-6 xl:max-w-5xl xl:px-0">
       <slot/>
-      <footer class="w-full xl:grid xl:grid-cols-4">
+      <footer v-if="!$frontmatter.hideFooter" class="w-full xl:grid xl:grid-cols-4">
         <div class="pb-12 text-center text-sm xl:col-start-2 xl:col-span-3">
           <a class="inline-block" href="https://iles-docs.netlify.app">
             Built with

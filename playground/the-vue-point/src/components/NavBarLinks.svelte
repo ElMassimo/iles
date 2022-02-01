@@ -1,9 +1,19 @@
-<div class="text-base text-gray-500 leading-5">
-  <a class="hover:text-gray-700 mr-4" href="/feed.rss">RSS Feed</a>
+<div class="text-sm text-gray-500 leading-5">
   <a
     class="hover:text-gray-700"
-    href="https://v3.vuejs.org"
+    href="https://github.com/vuejs/blog"
     target="_blank"
     rel="noopener"
-  >Vuejs.org →</a>
+    ><span class="hidden sm:inline">GitHub </span>Source</a
+  >
+  <span class="mr-1 ml-1">·</span>
+  <a class="hover:text-gray-700" href="/feed.rss">RSS <span class="hidden sm:inline">Feed</span></a>
+  <span class="mr-1 ml-1">·</span>
+  <a
+    class="hover:text-gray-700"
+    href="https://vuejs.org"
+    target="_blank"
+    rel="noopener"
+    >Vuejs.org →</a
+  >
 </div>

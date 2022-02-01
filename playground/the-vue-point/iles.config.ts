@@ -53,6 +53,7 @@ export default defineConfig({
       if (!src.includes('?'))
         return `${src}?preset=post`
     },
+    remarkPlugins: ['remark-gfm'],
   },
   vite: {
     plugins: [

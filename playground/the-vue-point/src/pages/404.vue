@@ -1,5 +1,6 @@
 <page>
 title: Not Found
+hideFooter: true
 </page>
 
 <template>

@@ -13,6 +13,7 @@ describe('app routes', () => {
       '/feed.rss',
       '/posts/hello-2021',
       '/posts/vue-3-2',
+      '/posts/vue-3-as-the-new-default',
       '/posts/vue-3-one-piece',
       '/posts/:page',
       '/:zzz(.*)*',
