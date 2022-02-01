@@ -101,7 +101,7 @@ async function assertHTML (path: string, { title }: any = {}) {
 
   expectContent.toContain('<ile-root id="ile-1">'
     + '<div class="text-sm text-gray-500 leading-5">'
-    + '<a class="hover:text-gray-700" href="https://github.com/vuejs/blog" target="_blank" rel="noopener">'
+    + '<a class="hover:text-gray-700" href="https://github.com/ElMassimo/iles/tree/main/playground/the-vue-point" target="_blank" rel="noopener">'
     + '<span class="hidden sm:inline">GitHub </span>Source</a>')
 
   if (path.includes('/posts/'))
