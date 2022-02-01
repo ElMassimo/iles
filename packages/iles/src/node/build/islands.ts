@@ -1,6 +1,6 @@
 /* eslint-disable no-restricted-syntax */
 import { promises as fs } from 'fs'
-import { relative } from 'pathe'
+import { relative, resolve } from 'pathe'
 import { build as viteBuild, mergeConfig as mergeViteConfig } from 'vite'
 import type { UserConfig as ViteUserConfig, Plugin } from 'vite'
 import type { PreRenderedChunk } from 'rollup'
@@ -28,7 +28,7 @@ export async function bundleIslands (config: AppConfig, islandsByPath: IslandsBy
   const entryFiles = [...Object.keys(entrypoints), ...Object.keys(islandComponents)].sort()
 
   if (config.turbo)
-    entryFiles.push(VIRTUAL_TURBO_ID)
+    entryFiles.push(resolve(VIRTUAL_TURBO_ID))
 
   if (Object.keys(entryFiles).length === 0) return
 
