@@ -56,10 +56,11 @@
   }
 
   h1 {
-    font-size: 1.75em;
+    margin-bottom: 2rem;
+    font-size: 38px;
+    line-height: 1.4;
+    letter-spacing: -.02em;
     font-weight: 700;
-    line-height: 1.3333333;
-    margin-bottom: 1.25em;
   }
 
   h2 {

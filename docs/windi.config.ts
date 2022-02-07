@@ -22,6 +22,8 @@ export default defineConfig({
         primary: 'var(--fc-primary)',
         'primary-intense': 'var(--fc-primary-intense)',
         soft: 'var(--fc-soft)',
+        softer: 'var(--fc-softer)',
+        subtle: 'var(--bg-subtle)',
         normal: 'var(--fc)',
         hard: 'var(--fc-hard)',
         intense: 'var(--fc-intense)',

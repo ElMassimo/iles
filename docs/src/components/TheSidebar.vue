@@ -17,7 +17,7 @@ export function onLoad () {
 </script>
 
 <template>
-  <aside class="fixed z-50 md:z-0 md:static">
+  <aside class="fixed z-50 md:z-0 border-r md:static">
     <div class="h-full pointer-events-none">
       <SidebarBackground id="sidebar-background" data-sidebar="close"/>
       <div

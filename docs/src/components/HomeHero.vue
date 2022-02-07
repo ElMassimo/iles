@@ -6,7 +6,7 @@
           <picture class="grid-item mx-auto block select-none">
             <source type="image/avif" srcset="/images/banner.avif">
             <img
-              class="max-w-full h-auto w-auto max-h-64 md:h-64"
+              class="max-w-full h-auto w-auto max-h-64 md:h-64 rounded-lg"
               height="256"
               width="768"
               src="/images/banner.jpg"
@@ -27,6 +27,7 @@
           <div class="flex mt-8 justify-center">
             <AppButton :href="$frontmatter.actionLink">
               {{ $frontmatter.actionText }}
+              <IconAppArrowRight class="icon"/>
             </AppButton>
             <AppButton class="ml-6" :href="$frontmatter.altActionLink" outline>
               {{ $frontmatter.altActionText }}

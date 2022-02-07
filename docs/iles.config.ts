@@ -13,6 +13,7 @@ export default defineConfig({
   siteUrl: 'https://iles-docs.netlify.app',
   turbo: true,
   jsx: 'preact',
+  debug: false,
   modules: [
     headings(),
     icons(),

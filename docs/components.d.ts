@@ -20,6 +20,7 @@ declare module 'vue' {
     Head: typeof import('@vueuse/head')['Head']
     HomeFeatures: typeof import('./src/components/HomeFeatures.vue')['default']
     HomeHero: typeof import('./src/components/HomeHero.vue')['default']
+    IconAppArrowRight: typeof import('~icons/app/arrow-right')['default']
     IconAppAstro: typeof import('~icons/app/astro')['default']
     IconAppCloudflare: typeof import('~icons/app/cloudflare')['default']
     IconAppLogo: typeof import('~icons/app/logo')['default']

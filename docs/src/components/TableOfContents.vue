@@ -37,8 +37,8 @@ function mapHeaders (headings: HeadingWithChildren[]): SideBarItem[] {
 </script>
 
 <template>
-  <div v-if="headings.length > 0" class="py-4 pl-4 lg:pt-10">
-    <SidebarLinkItem class="px-2 uppercase text-sm" header :item="{ text: 'On This Page', link: '' }"/>
+  <div v-if="headings.length > 0" class="py-4 pl-6 lg:pt-10">
+    <SidebarLinkItem class="px-3 uppercase text-xs" header :item="{ text: 'On This Page', link: '' }"/>
     <ul class="mb-2">
       <li v-for="child in headings" :key="child.text">
         <SidebarLinkItem :item="child" :table="true"/>
