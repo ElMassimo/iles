@@ -1,7 +1,17 @@
+h1,
+h2,
+h3,
+h4,
+a,
+p {
+  transition: color .5s,background-color .5s
+}
+
 html {
   background-color: var(--bg-html);
   color: var(--fc);
   line-height: 1.6;
+  letter-spacing: .2px;
 }
 
 body {

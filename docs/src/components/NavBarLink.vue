@@ -14,7 +14,7 @@ let isActive = $computed(() => props.href && route.path.includes(props.href))
   <component
     :is="href ? 'a' : 'button'"
     :href="href"
-    class="font-medium inline-flex mx-3 leading-normal border-b border-b-2 border-b-transparent"
+    class="font-medium text-sm inline-flex mx-3 leading-normal border-b border-b-2 border-b-transparent"
     :class="{ 'hover:border-b-primary': text, 'border-b-primary': isActive }"
     v-bind="attrs"
   >

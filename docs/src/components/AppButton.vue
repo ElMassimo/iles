@@ -5,7 +5,7 @@ defineProps({
 </script>
 
 <template>
-  <a class="app-button" :class="{ outline, colored: !outline }">
+  <a class="app-button font-medium" :class="{ outline, colored: !outline }">
     <div v-if="$slots.icon" class="inline-block mr-1">
       <slot name="icon"/>
     </div>
@@ -15,22 +15,64 @@ defineProps({
 
 <style lang="postcss" scoped>
 .colored {
-  @apply bg-primary-intense border-transparent text-white;
+  background: var(--fc-primary);
+  color: white;
+
+  &:hover {
+    background: var(--fc-primary-soft);
+  }
 }
 
 .outline {
-  @apply bg-transparent border border-primary text-primary-intense hover:text-white;
+  background: theme('colors.gray.100');
+  color: theme('colors.gray.500');
+
+  &:hover {
+    background: theme('colors.gray.200');
+  }
+}
+
+html.dark {
+  .colored {
+    background: var(--fc-primary);
+    color: white;
+
+    &:hover {
+      background: var(--fc-primary-intense);
+    }
+  }
+
+  .outline {
+    background: theme('colors.warm-gray.800');
+    color: theme('colors.gray.200');
+
+    &:hover {
+      background: theme('colors.warm-gray.600');
+    }
+  }
 }
 
 .app-button {
-  @apply inline-flex items-center justify-center
-    px-3 py-2.5
-    md:(text-lg px-6 py-3)
-    border border-2 rounded-md
-    shadow-sm
-    text-base font-medium
-    transition duration-50
-    hover:bg-primary
-    ring-primary focus:ring-3 ring-opacity-50;
+  border-radius: 8px;
+  font-size: 16px;
+  padding: 7px 18px;
+
+  :deep(.icon) {
+    display: inline;
+    width: 10px;
+    position: relative;
+    top: -1px;
+    margin-left: 2px;
+    fill: currentColor;
+    transition: transform .2s;
+  }
+
+  &:hover :deep(.icon) {
+    transform: translateX(3px);
+  }
+
+  + .app-button {
+    margin-left: 18px;
+  }
 }
 </style>

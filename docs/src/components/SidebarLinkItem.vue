@@ -35,14 +35,17 @@ const style = $computed(() => ([
 
 <style lang="postcss" scoped>
 .link {
-  @apply duration-100 inline-flex;
+  @apply duration-100 inline-flex block truncate;
 }
 
 .toc-link {
   @apply items-center
     justify-between py-2 px-3 w-full rounded-md
     text-sm text-gray-700
-    dark:text-gray-400
+    text-gray-500
+    text-sm
+    font-medium
+    dark:warm-gray-400
     hover:(text-primary dark:text-primary bg-$bg-highlight);
 }
 
@@ -53,8 +56,10 @@ const style = $computed(() => ([
     pl-3 py-2
     border-l border-gray-100
     dark:border-dark-400
-    text-gray-700
-    dark:text-gray-400
+    text-gray-500
+    text-sm
+    font-medium
+    dark:warm-gray-400
     hover:(text-primary dark:text-primary);
 }
 

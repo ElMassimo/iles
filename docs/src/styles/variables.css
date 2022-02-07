@@ -1,5 +1,6 @@
 :root {
   --navbar-height: 3.5rem;
+  --footer-height: 172px;
   --full-viewport: calc(100vh - var(--navbar-height));
   --br-normal: rgba(126, 135, 160, 0.15);
   --bg-html: theme('colors.white');
@@ -9,6 +10,7 @@
   --bg-highlight: rgba(126, 185, 220, 0.15);
   --bg-primary: var(--fc-primary-soft);
   --bg-soft: rgba(126, 185, 220, 0.35);
+  --bg-subtle: theme('colors.gray.50');
   --fc-softer: theme('colors.gray.400');
   --fc-soft: theme('colors.gray.500');
   --fc: theme('colors.gray.700');
@@ -17,7 +19,7 @@
   --fc-primary-soft: theme('colors.light-blue.500');
   --fc-primary: theme('colors.light-blue.600');
   --fc-primary-intense: theme('colors.light-blue.700');
-  --w-container: 65ch;
+  --w-container: 1376px;
 }
 
 @screen md {
