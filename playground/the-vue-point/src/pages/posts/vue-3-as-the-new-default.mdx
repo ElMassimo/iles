@@ -6,7 +6,7 @@ gravatar: eca93da2c67aadafe35d477aa8f454b8
 twitter: '@youyuxi'
 ---
 
-TL;DR: Vue 3 will become the new default version on **Monday, February 7, 2022**!
+TL;DR: Vue 3 is now the new default version as of **Monday, February 7, 2022**!
 
 Make sure to read the [Potential Required Actions](/posts/vue-3-as-the-new-default.html#potential-required-actions) section to see if you need to make certain changes before the switch to avoid breakage.
 
@@ -57,23 +57,21 @@ Here are the details on what we mean by "the new default". In addition, please r
 
 ### npm dist tags
 
-- `npm install vue` will install Vue 3.
+- `npm install vue` now installs Vue 3 by default.
 
-- The `latest` dist tag of all other official npm packages will point to Vue 3 compatible versions, including `vue-router`, `vuex`, `vue-loader`, and `@vue/test-utils`.
+- The `latest` dist tag of all other official npm packages now point to Vue 3 compatible versions, including `vue-router`, `vuex`, `vue-loader`, and `@vue/test-utils`.
 
 ### Official docs and sites
 
-All documentation and official sites will default to Vue 3 versions. These include:
+All documentation and official sites now default to Vue 3 versions. These include:
 
 - vuejs.org
 - router.vuejs.org
 - vuex.vuejs.org
-- vue-test-utils.vuejs.org (will be moved to test-utils.vuejs.org)
+- vue-test-utils.vuejs.org (moved to test-utils.vuejs.org)
 - template-explorer.vuejs.org
 
-Note that the new vuejs.org will be the [completely reworked version](https://staging.vuejs.org) instead of the version currently deployed at v3.vuejs.org.
-
-The current Vue 2 versions of these sites will be moved to new addresses (the version prefixes indicate the libraries' respective versions, not Vue core's):
+The current Vue 2 versions of these sites have been moved to new addresses (the version prefixes indicate the libraries' respective versions, not Vue core's):
 
 - vuejs.org -> v2.vuejs.org (old v2 URLs will auto redirect to the new address)
 - router.vuejs.org -> v3.router.vuejs.org
@@ -83,9 +81,7 @@ The current Vue 2 versions of these sites will be moved to new addresses (the ve
 
 ### GitHub repos
 
-_The repo changes are already in effect as of this writing._
-
-All GitHub repos under the `vuejs` organization will switch to Vue 3 versions in the default branch. In addition, we are renaming the following repos to remove `next` in their names:
+All GitHub repos under the `vuejs` organization have switched to Vue 3 versions in the default branch. In addition, we have renamed the following repos to remove `next` in their names:
 
 - `vuejs/vue-next` -> [`vuejs/core`](https://github.com/vuejs/core)
 - `vuejs/vue-router-next` -> [`vuejs/router`](https://github.com/vuejs/router)
@@ -93,15 +89,15 @@ All GitHub repos under the `vuejs` organization will switch to Vue 3 versions in
 - `vuejs/vue-test-utils-next` -> [`vuejs/test-utils`](https://github.com/vuejs/test-utils)
 - `vuejs/jsx-next` -> [`vuejs/babel-plugin-jsx`](https://github.com/vuejs/babel-plugin-jsx)
 
-In addition, translation repos for the main documentation are moved to the [`vuejs-translations` organization](https://github.com/vuejs-translations).
+Translation repos for the main documentation are moved to the [`vuejs-translations` organization](https://github.com/vuejs-translations).
 
 GitHub handles repo directs automatically, so previous links to source code and issues should still work.
 
 ### Devtools extension
 
-Devtools v6, which is currently published under the [beta channel](https://chrome.google.com/webstore/detail/vuejs-devtools/ljjemllljcmogpfapbkkighbhhppjdbg) on Chrome Web Store, will be moved to the [stable channel](https://chrome.google.com/webstore/detail/vuejs-devtools/nhdogjmejiglipccpnnnanhbledajbpd) upon the version switch.
+Devtools v6, which was previously published under the [beta channel](https://chrome.google.com/webstore/detail/vuejs-devtools/ljjemllljcmogpfapbkkighbhhppjdbg) on Chrome Web Store, is now published under the [stable channel](https://chrome.google.com/webstore/detail/vuejs-devtools/nhdogjmejiglipccpnnnanhbledajbpd).
 
-The current stable channel will still be available. It will be moved to the [legacy channel](https://chrome.google.com/webstore/detail/vuejs-devtools/iaajmlceplecbljialhhkmedjlpdblhp).
+The previous version of the devtools extension is still be available and has been moved to the [legacy channel](https://chrome.google.com/webstore/detail/vuejs-devtools/iaajmlceplecbljialhhkmedjlpdblhp).
 
 ## Potential Required Actions
 
