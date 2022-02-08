@@ -8,7 +8,7 @@ describe('The Home Page', () => {
       .should('contain', 'Partial Hydration')
       .should('contain', 'Ship JS only for the interactive bits')
 
-    navigateTo('Introduction')
+    navigateTo('Get Started')
     assertPage({ title: 'Introduction' })
     cy.get('aside').should('contain', '🧱 Layouts and Components')
     cy.get('blockquote').should('contain', 'Project Status: Beta')

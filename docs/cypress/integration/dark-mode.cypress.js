@@ -20,7 +20,7 @@ describe('Dark Mode', () => {
     assertTheme('dark')
 
     // Ensure Turbo hydrates after navigation.
-    navigateTo('Get Started')
+    navigateTo('Install')
     assertPage({ title: 'Getting Started' })
     assertTheme('dark')
 
