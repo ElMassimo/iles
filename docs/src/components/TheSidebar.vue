@@ -1,13 +1,25 @@
 <script client:media="(max-width: 767px)" lang="ts">
 import { ref, watch } from 'vue'
 
+const doc = document
+
 export function onLoad () {
   const openSideBar = ref(false)
 
-  watch(openSideBar, (v) => {
-    document.documentElement.classList.toggle('<md:overflow-hidden', v)
-    document.getElementById('sidebar-background')?.classList.toggle('hidden', !v)
-    document.getElementById('sidebar-panel')?.classList.toggle('!-translate-x-0', v)
+  watch(openSideBar, (open) => {
+    doc.documentElement.classList.toggle('<md:overflow-hidden', open)
+
+    const [panel, bg] = [doc.getElementById('sidebar-panel')!, doc.getElementById('sidebar-background')!]
+
+    panel.classList.toggle('!-translate-x-0', open)
+
+    if (open) {
+      bg.classList.remove('hidden')
+      bg.classList.remove('opacity-0')
+    } else {
+      bg.classList.add('opacity-0')
+      panel.addEventListener('transitionend', e => bg.classList.add('hidden'), { once: true })
+    }
   })
 
   document.querySelectorAll<HTMLElement>('[data-sidebar]').forEach((el) => {
@@ -26,7 +38,7 @@ export function onLoad () {
         class="
           fixed top-0 left-0
           w-auto h-full pointer-events-auto
-          transform -translate-x-full md:transform-none transition-transform duration-200 ease-linear
+          transform -translate-x-full md:transform-none
           lg:min-w-62
           md:(h-$full-viewport sticky top-$navbar-height)
         "
@@ -43,3 +55,19 @@ export function onLoad () {
     </div>
   </aside>
 </template>
+
+<style scoped>
+#sidebar-background {
+  background: rgba(0,0,0,.6);
+  transition: opacity .5s;
+
+  &.hidden {
+    display: block;
+    width: 0;
+  }
+}
+
+#sidebar-panel {
+  transition: transform .5s cubic-bezier(.19,1,.22,1);
+}
+</style>
