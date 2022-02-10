@@ -1,3 +1,12 @@
+## [0.7.28](https://github.com/ElMassimo/iles/compare/v0.7.27...v0.7.28) (2022-02-10)
+
+
+### Bug Fixes
+
+* compatibility with upcoming vite 2.8 ([780ec86](https://github.com/ElMassimo/iles/commit/780ec86bb399da3d61709bed0264e6e6b72f2db9))
+
+
+
 ## [0.7.27](https://github.com/ElMassimo/iles/compare/v0.7.26...v0.7.27) (2022-01-26)
 
 
