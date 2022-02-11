@@ -14,7 +14,8 @@
     "types",
     "config.js",
     "turbo.js",
-    "jsx-runtime.js"
+    "jsx-runtime.js",
+    "tsconfig.json"
   ],
   "scripts": {
     "dev": "rimraf -rf dist && npm run dev-shared && npm run dev-start",
