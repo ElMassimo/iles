@@ -18,10 +18,10 @@
     "test": "packages/iles/bin/iles.js test"
   },
   "devDependencies": {
-    "@islands/hydration": "*",
-    "@islands/mdx": "*",
-    "@islands/pages": "*",
-    "@islands/prerender": "*",
+    "@islands/hydration": "workspace:*",
+    "@islands/mdx": "workspace:*",
+    "@islands/pages": "workspace:*",
+    "@islands/prerender": "workspace:*",
     "@mussi/eslint-config": "^0.5.1",
     "@mussi/stylelint-config": "^0.1.1",
     "@nrwl/cli": "latest",
