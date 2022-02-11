@@ -1,3 +1,12 @@
+## [0.7.29](https://github.com/ElMassimo/iles/compare/v0.7.28...v0.7.29) (2022-02-11)
+
+
+### Bug Fixes
+
+* avoid adding tsconfig.json to the published package (close [#87](https://github.com/ElMassimo/iles/issues/87)) ([7a553f3](https://github.com/ElMassimo/iles/commit/7a553f3f304b97a76b8c2770e55a73c5380833ec))
+
+
+
 ## [0.7.28](https://github.com/ElMassimo/iles/compare/v0.7.27...v0.7.28) (2022-02-10)
 
 
