@@ -1,3 +1,12 @@
+## [0.7.30](https://github.com/ElMassimo/iles/compare/v0.7.29...v0.7.30) (2022-02-11)
+
+
+### Bug Fixes
+
+* add tsconfig.json since .npmignore is not working in combination ([d4fa36f](https://github.com/ElMassimo/iles/commit/d4fa36f227e9f71b2fc54c521366b4fd87fb23a8))
+
+
+
 ## [0.7.29](https://github.com/ElMassimo/iles/compare/v0.7.28...v0.7.29) (2022-02-11)
 
 
