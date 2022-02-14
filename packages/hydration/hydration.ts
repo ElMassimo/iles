@@ -7,7 +7,10 @@ const findById = (id: string) =>
 // Public: Hydrates the component immediately.
 export function hydrateNow (framework: FrameworkFn, component: Component, id: string, props: Props, slots: Slots) {
   const el = findById(id)
-  if (el) framework(component, id, el, props, slots)
+  if (el) {
+    framework(component, id, el, props, slots)
+    el.setAttribute('hydrated', '')
+  }
 }
 
 async function resolveAndHydrate (frameworkFn: AsyncFrameworkFn, componentFn: AsyncComponent, id: string, props: Props, slots: Slots) {

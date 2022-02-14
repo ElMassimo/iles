@@ -22,7 +22,9 @@ export const goBackHome = () => {
   waitForHydration()
 }
 
-// Give Turbo time to replace the body and activate the scripts.
+// Wait until the relevant islands are hydrated.
 export const waitForHydration = () => {
-  cy.wait(300)
+  cy.get('#ile-1[hydrated]').should('have.length', 1)
+  cy.get('#ile-2[hydrated]').should('have.length', 1)
+  cy.get('#ile-3[hydrated]').should('have.length', 1)
 }

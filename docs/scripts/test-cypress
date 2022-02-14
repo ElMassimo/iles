@@ -15,5 +15,5 @@ echo '== Server ready! =='
 if which cypress >/dev/null; then
   cypress run && echo '== Finished! =='
 else
-  pnpx --yes cypress@9.2.0 run && echo '== Finished! =='
+  pnpx --yes cypress@9.4.1 run && echo '== Finished! =='
 fi
