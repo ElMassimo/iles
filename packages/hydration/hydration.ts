@@ -50,16 +50,24 @@ export function hydrateOnMediaQuery (framework: AsyncFrameworkFn, component: Asy
 export function hydrateWhenVisible (framework: AsyncFrameworkFn, component: AsyncComponent, id: string, props: Props, slots: Slots) {
   const el = findById(id)
   if (el) {
+    // NOTE: Force detection of the element for non-Vue frameworks.
+    if (import.meta.env.DEV)
+      el.style.display = 'initial'
+
     const observer = new IntersectionObserver(([{ isIntersecting }]) => {
       if (isIntersecting) {
         stopObserver()
+
+        // NOTE: Reset the display value.
+        if (import.meta.env.DEV)
+          el.style.display = ''
+
         resolveAndHydrate(framework, component, id, props, slots)
       }
     })
     const stopObserver = () => observer.disconnect()
-
-    // NOTE: Targets child elements since the root uses `display: contents`.
-    Array.from(el.children).forEach(child => observer.observe(child))
+    
+    observer.observe(el)
 
     if (import.meta.env.DISPOSE_ISLANDS)
       onDispose(id, stopObserver)

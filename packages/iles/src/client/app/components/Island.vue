@@ -137,7 +137,7 @@ hydrate(framework, component, '${this.id}', ${serialize(props)}, ${serialize(slo
 </script>
 
 <style>
-ile-root {
-  display: contents
+ile-root:empty {
+  display: none;
 }
 </style>
