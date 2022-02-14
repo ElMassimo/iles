@@ -3,7 +3,7 @@ import type { Props, Slots, Framework } from '@islands/hydration'
 export type { Framework }
 
 export type PrerenderFn =
-  (component: any, props: Props, slots: Slots | undefined) => Promise<string>
+  (component: any, props: Props, slots: Slots | undefined, id: string) => Promise<string>
 
 const _imports: {
   preact?: [
@@ -24,12 +24,12 @@ export const renderers: Record<Framework, PrerenderFn> = {
     ]
     return renderToString(createElement(component, props, slots))
   },
-  async solid (component, props, slots) {
+  async solid (component, props, slots, renderId) {
     const { ssr, renderToString, createComponent } = _imports.solid ||= await import('solid-js/web')
     return renderToString(() => {
       const children = slots?.default && ssr(slots.default)
       return createComponent(component, { ...props, children })
-    })
+    }, { renderId })
   },
   async svelte (component, props, slots) {
     const Svelte = (await import('./svelte')).default

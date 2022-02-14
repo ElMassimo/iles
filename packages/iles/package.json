@@ -64,7 +64,7 @@
     "picocolors": "^1.0.0",
     "unist-util-visit": "^4.1.0",
     "unplugin-vue-components": "npm:@islands/components@0.17.0",
-    "vite": "^2.8.0",
+    "vite": "^2.8.2",
     "vue": "^3.2.30",
     "vue-router": "^4.0.12",
     "xdm": "3.3.1"
@@ -72,7 +72,7 @@
   "devDependencies": {
     "@antfu/install-pkg": "^0.1.0",
     "@preact/preset-vite": "^2",
-    "@sveltejs/vite-plugin-svelte": "^1.0.0-next.30",
+    "@sveltejs/vite-plugin-svelte": "^1.0.0-next.37",
     "@types/connect": "^3.4.35",
     "@types/debug": "^4.1.7",
     "@types/fs-extra": "^9.0.12",
@@ -95,6 +95,6 @@
     "tsup": "5.5.0",
     "typescript": "^4.4.4",
     "vfile": "^5.2.0",
-    "vite-plugin-solid": "^2"
+    "vite-plugin-solid": "^2.2.5"
   }
 }
