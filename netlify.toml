@@ -3,4 +3,4 @@
   NODE_VERSION = "16"
 
 [build]
-  # ignore = "exit 0"
+  ignore = "exit 0"

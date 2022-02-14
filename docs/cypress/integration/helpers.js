@@ -24,6 +24,7 @@ export const goBackHome = () => {
 
 // Wait until the relevant islands are hydrated.
 export const waitForHydration = () => {
+  cy.wait(100)
   cy.get('#ile-1[hydrated]').should('have.length', 1)
   cy.get('#ile-2[hydrated]').should('have.length', 1)
   cy.get('#ile-3[hydrated]').should('have.length', 1)
