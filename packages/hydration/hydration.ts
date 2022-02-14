@@ -69,7 +69,7 @@ export function hydrateWhenVisible (framework: AsyncFrameworkFn, component: Asyn
       }
     })
     const stopObserver = () => observer.disconnect()
-    
+
     observer.observe(el)
 
     if (import.meta.env.DISPOSE_ISLANDS)
