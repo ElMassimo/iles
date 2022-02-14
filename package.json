@@ -18,26 +18,22 @@
     "test": "packages/iles/bin/iles.js test"
   },
   "devDependencies": {
-    "@islands/hydration": "workspace:*",
-    "@islands/mdx": "workspace:*",
-    "@islands/pages": "workspace:*",
-    "@islands/prerender": "workspace:*",
     "@mussi/eslint-config": "^0.5.1",
     "@mussi/stylelint-config": "^0.1.1",
-    "@nrwl/cli": "latest",
-    "@nrwl/nx-cloud": "^13.0.1",
-    "@nrwl/tao": "latest",
-    "@nrwl/workspace": "latest",
+    "@nrwl/cli": "^13.8.1",
+    "@nrwl/nx-cloud": "^13.1.4",
+    "@nrwl/tao": "^13.8.1",
+    "@nrwl/workspace": "^13.8.1",
+    "iles": "*",
     "concurrently": "^6.4.0",
     "conventional-changelog-cli": "^2.1.1",
     "enquirer": "^2.3.6",
     "eslint": "^7.32.0",
     "execa": "^5.1.1",
-    "iles": "*",
     "minimist": "^1.2.5",
     "semver": "^7.3.5",
     "typescript": "4.4.4",
-    "vitest": "^0.0.139"
+    "vitest": "^0.3.5"
   },
   "resolutions": {
     "eslint-plugin-vue": "7.17.0",
