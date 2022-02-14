@@ -31,6 +31,5 @@ export function useRouterLinks () {
         }
       }
     },
-    { capture: true },
   )
 }
