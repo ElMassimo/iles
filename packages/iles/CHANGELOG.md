@@ -1,3 +1,21 @@
+## [0.7.31](https://github.com/ElMassimo/iles/compare/v0.7.29...v0.7.31) (2022-02-17)
+
+
+### Bug Fixes
+
+* add tsconfig.json since .npmignore is not working in combination ([d4fa36f](https://github.com/ElMassimo/iles/commit/d4fa36f227e9f71b2fc54c521366b4fd87fb23a8))
+* allow to prevent navigation during dev ([6b3a088](https://github.com/ElMassimo/iles/commit/6b3a08886ab82cc16c3c006467a44ab457b5df55))
+* avoid using display: contents for client:visible islands ([5e748ad](https://github.com/ElMassimo/iles/commit/5e748ad07b85edb7e4d2d605623ba9817eb2c244))
+
+
+### BREAKING CHANGES
+
+* Necessary when using non-Vue components, as the root
+will be initially empty, which wouldn't allow it to be detected as
+visible.
+
+
+
 ## [0.7.30](https://github.com/ElMassimo/iles/compare/v0.7.29...v0.7.30) (2022-02-11)
 
 
