@@ -1,3 +1,25 @@
+## [0.3.7](https://github.com/ElMassimo/iles/compare/hydration@0.3.6...hydration@0.3.7) (2022-02-17)
+
+
+### Bug Fixes
+
+* avoid using display: contents for client:visible islands ([5e748ad](https://github.com/ElMassimo/iles/commit/5e748ad07b85edb7e4d2d605623ba9817eb2c244))
+
+
+### Features
+
+* add attribute on island hydration, useful for integration tests ([776ad6b](https://github.com/ElMassimo/iles/commit/776ad6b363b0cdf4ce0f521fae896e3a8691b993))
+* upgrade to vue@3.2.29 which fixes static content reinsertion ([6b08c39](https://github.com/ElMassimo/iles/commit/6b08c39e53b3a0b122d03a1471c46094e92406d0))
+
+
+### BREAKING CHANGES
+
+* Necessary when using non-Vue components, as the root
+will be initially empty, which wouldn't allow it to be detected as
+visible.
+
+
+
 ## [0.3.6](https://github.com/ElMassimo/iles/compare/hydration@0.3.5...hydration@0.3.6) (2021-12-16)
 
 
