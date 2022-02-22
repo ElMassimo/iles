@@ -358,7 +358,7 @@ importers:
       '@islands/hydration': workspace:^0.3.0
       preact: ^10.6.5
       preact-render-to-string: ^5.1.19
-      solid-js: ^1.3.7
+      solid-js: ^1.3.8
       svelte: ^3.46.4
       tsup: 5.5.0
       typescript: 4.4.4
@@ -369,7 +369,7 @@ importers:
     devDependencies:
       preact: 10.6.5
       preact-render-to-string: 5.1.19_preact@10.6.5
-      solid-js: 1.3.7
+      solid-js: 1.3.8
       svelte: 3.46.4
       tsup: 5.5.0_typescript@4.4.4
       typescript: 4.4.4
@@ -8872,6 +8872,10 @@ packages:
 
   /solid-js/1.3.7:
     resolution: {integrity: sha512-YAz0NQhIZ8yCR2VZK8aMjNrWMU4gnmCgzqy7EpMF7WsyWV3PSoO3HvDs3kR75Ejk/a4ohfxQNiLhC9TOQltXSA==}
+    dev: true
+
+  /solid-js/1.3.8:
+    resolution: {integrity: sha512-cgQ7s++ccPfxcgqAzfguiHPJdnYPMM3z8flzNPH/yiZw/GpDir0fZEwINn0rbBTzzl95Q7l62K/6cjYFJwesyw==}
     dev: true
 
   /solid-refresh/0.4.0_solid-js@1.3.7:
