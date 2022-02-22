@@ -1,7 +1,7 @@
 {
   "name": "@islands/prerender",
   "description": "Prerender utilities for îles",
-  "version": "0.3.1",
+  "version": "0.3.2",
   "type": "module",
   "files": [
     "dist"
@@ -33,7 +33,7 @@
     "url": "https://github.com/ElMassimo/iles/issues"
   },
   "dependencies": {
-    "@islands/hydration": "workspace:^0.3.0"
+    "@islands/hydration": "workspace:^0.3.8"
   },
   "devDependencies": {
     "preact": "^10.6.5",
