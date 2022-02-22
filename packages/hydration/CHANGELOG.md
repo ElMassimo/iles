@@ -1,3 +1,12 @@
+## [0.3.8](https://github.com/ElMassimo/iles/compare/hydration@0.3.7...hydration@0.3.8) (2022-02-22)
+
+
+### Bug Fixes
+
+* support for solid 1.3 (close [#88](https://github.com/ElMassimo/iles/issues/88)) ([#97](https://github.com/ElMassimo/iles/issues/97)) ([77dedd1](https://github.com/ElMassimo/iles/commit/77dedd1f7f81affd01b2f0f27c85b47590835d68))
+
+
+
 ## [0.3.7](https://github.com/ElMassimo/iles/compare/hydration@0.3.6...hydration@0.3.7) (2022-02-17)
 
 
