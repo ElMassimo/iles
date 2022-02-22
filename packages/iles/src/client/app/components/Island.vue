@@ -114,7 +114,7 @@ hydrate(framework, component, '${this.id}', ${serialize(props)}, ${serialize(slo
 
       return h(defineAsyncComponent(async () => {
         const slots = await renderSlots()
-        const result = await prerender(this.component, this.$attrs, slots)
+        const result = await prerender(this.component, this.$attrs, slots, this.id)
         return createStaticVNode(result, undefined as any)
       }))
     }

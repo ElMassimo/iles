@@ -6,9 +6,9 @@ import { onDispose } from './hydration'
 export default function createIsland (component: Component, id: string, el: Element, props: Props, slots: Slots | undefined) {
   if (import.meta.env.DEV)
     // @ts-ignore
-    window._$HYDRATION ||= { events: [], completed: new WeakSet() }
+    window._$HY ||= { events: [], completed: new WeakSet(), r: {} }
 
-  const dispose = hydrate(() => createComponent(component, { ...props, children: createContent(slots) }), el)
+  const dispose = hydrate(() => createComponent(component, { ...props, children: createContent(slots) }), el, { renderId: id })
 
   if (import.meta.env.DISPOSE_ISLANDS)
     onDispose(id, dispose)

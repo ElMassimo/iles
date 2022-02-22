@@ -73,5 +73,5 @@ function stylesheetTagsFrom (config: AppConfig, clientChunks: RollupOutput['outp
 async function scriptTagsFrom (config: AppConfig, islands: undefined | IslandDefinition[]) {
   const anySolid = islands?.some(island => island.script.includes('@islands/hydration/solid'))
   if (!anySolid) return ''
-  return '<script>window._$HYDRATION={events:[],completed:new WeakSet()}</script>'
+  return '<script>window._$HY={events:[],completed:new WeakSet(),r:{}}</script>'
 }
