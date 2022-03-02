@@ -1,3 +1,12 @@
+## [0.7.11](https://github.com/ElMassimo/iles/compare/pages@0.7.10...pages@0.7.11) (2022-03-02)
+
+
+### Bug Fixes
+
+* race condition when there is a large number of routes ([137874b](https://github.com/ElMassimo/iles/commit/137874b3b21a609feb4dbec9aee890428f68bcd1))
+
+
+
 ## [0.7.10](https://github.com/ElMassimo/iles/compare/pages@0.7.9...pages@0.7.10) (2022-03-02)
 
 
