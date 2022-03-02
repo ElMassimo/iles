@@ -8,6 +8,7 @@ import { parsePageMatter } from './frontmatter'
 import { debug, slash } from './utils'
 
 export function createApi (options: ResolvedOptions) {
+  let addedAllPages: Promise<void>
   let pagesByFile = new Map<string, PageRoute>()
 
   const { root, pagesDir, pageExtensions } = options
@@ -21,12 +22,13 @@ export function createApi (options: ResolvedOptions) {
     pageForFilename (file: string) {
       return pagesByFile.get(resolve(root, file))
     },
-    async addAllPages () {
-      if (pagesByFile.size > 0) return
+    async forceAddAllPages () {
       const files = await glob(`${options.pagesDir}/**/*.{${pageExtensions.join(',')}}`, { onlyFiles: true })
-      debug.files('(%i): %O', files.length, files)
       await Promise.all(files.map(async file => await this.addPage(slash(file))))
-      debug.routes('(%i): %O', pagesByFile.size, pagesByFile.keys())
+    },
+    async addAllPages () {
+      addedAllPages ||= this.forceAddAllPages()
+      await addedAllPages
     },
     async addPage (file: string) {
       const page = await this.pageRouteFromFile(file)
