@@ -24,7 +24,9 @@ export function createApi (options: ResolvedOptions) {
     async addAllPages () {
       if (pagesByFile.size > 0) return
       const files = await glob(`${options.pagesDir}/**/*.{${pageExtensions.join(',')}}`, { onlyFiles: true })
+      debug.files('(%i): %O', files.length, files)
       await Promise.all(files.map(async file => await this.addPage(slash(file))))
+      debug.routes('(%i): %O', pagesByFile.size, pagesByFile.keys())
     },
     async addPage (file: string) {
       const page = await this.pageRouteFromFile(file)

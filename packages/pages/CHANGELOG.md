@@ -1,3 +1,7 @@
+## [0.7.10](https://github.com/ElMassimo/iles/compare/pages@0.7.9...pages@0.7.10) (2022-03-02)
+
+
+
 ## [0.7.9](https://github.com/ElMassimo/iles/compare/pages@0.7.8...pages@0.7.9) (2022-01-26)
 
 

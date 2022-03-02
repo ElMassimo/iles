@@ -1,6 +1,6 @@
 {
   "name": "@islands/pages",
-  "version": "0.7.9",
+  "version": "0.7.10",
   "scripts": {
     "dev": "npm run build -- --watch",
     "build": "tsup src/pages.ts",
