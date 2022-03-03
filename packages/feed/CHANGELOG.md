@@ -1,3 +1,17 @@
+## [0.1.2](https://github.com/ElMassimo/iles/compare/feed@0.1.1...feed@0.1.2) (2022-03-03)
+
+
+### Bug Fixes
+
+* @islands/feed compatibility in windows (close [#95](https://github.com/ElMassimo/iles/issues/95)) ([fec5b40](https://github.com/ElMassimo/iles/commit/fec5b4072d292d9d3ef1a605850333553cf2d533))
+
+
+### Features
+
+* upgrade to vue@3.2.29 which fixes static content reinsertion ([6b08c39](https://github.com/ElMassimo/iles/commit/6b08c39e53b3a0b122d03a1471c46094e92406d0))
+
+
+
 ## [0.1.1](https://github.com/ElMassimo/iles/compare/feed@0.1.0...feed@0.1.1) (2021-12-19)
 
 
