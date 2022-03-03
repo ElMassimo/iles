@@ -1,4 +1,4 @@
-import { dirname, join } from 'path'
+import { dirname, join } from 'pathe'
 import { fileURLToPath } from 'url'
 import type { IlesModule } from 'iles'
 

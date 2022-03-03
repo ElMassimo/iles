@@ -112,9 +112,11 @@ importers:
     specifiers:
       feed: ^4.2
       iles: workspace:*
+      pathe: ^0.2.0
       vue: ^3.2.30
     dependencies:
       feed: 4.2.2
+      pathe: 0.2.0
     devDependencies:
       iles: link:../iles
       vue: 3.2.30
