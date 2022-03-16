@@ -1,6 +1,6 @@
 {
   "name": "@islands/mdx",
-  "version": "0.7.5",
+  "version": "0.7.6",
   "scripts": {
     "dev": "npm run build -- --watch",
     "build": "tsup src/mdx.ts",

@@ -1,3 +1,13 @@
+## [0.7.6](https://github.com/ElMassimo/iles/compare/mdx@0.7.5...mdx@0.7.6) (2022-03-16)
+
+
+### Bug Fixes
+
+* always handle raw nodes at the root level of mdx (close [#104](https://github.com/ElMassimo/iles/issues/104)) ([844060f](https://github.com/ElMassimo/iles/commit/844060f00aa6ed94b848d03ef5ca2cfb365c19e1))
+* support for solid 1.3 (close [#88](https://github.com/ElMassimo/iles/issues/88)) ([#97](https://github.com/ElMassimo/iles/issues/97)) ([77dedd1](https://github.com/ElMassimo/iles/commit/77dedd1f7f81affd01b2f0f27c85b47590835d68))
+
+
+
 ## [0.7.5](https://github.com/ElMassimo/iles/compare/mdx@0.7.4...mdx@0.7.5) (2022-01-24)
 
 
