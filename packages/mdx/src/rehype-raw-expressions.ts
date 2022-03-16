@@ -56,6 +56,7 @@ export const rehypeRawExpressions: RawPlugin = options => (ast, vfile) => {
     leave(node, parent)
   }
 
+  setDynamic(ast)
   visit(ast as any)
 
   if (hoisted.length) {
