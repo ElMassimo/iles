@@ -63,7 +63,7 @@
     "pathe": "^0.2.0",
     "picocolors": "^1.0.0",
     "unist-util-visit": "^4.1.0",
-    "unplugin-vue-components": "npm:@islands/components@0.17.0",
+    "unplugin-vue-components": "^0.18.3",
     "vite": "^2.8.2",
     "vue": "^3.2.30",
     "vue-router": "^4.0.12",

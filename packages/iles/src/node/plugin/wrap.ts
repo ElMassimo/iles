@@ -1,6 +1,6 @@
 import MagicString from 'magic-string'
 import { parse, SFCBlock } from 'vue/compiler-sfc'
-import type { ComponentsApi, ComponentInfo } from 'unplugin-vue-components/types'
+import type { PublicPluginAPI as ComponentsApi, ComponentInfo } from 'unplugin-vue-components/types'
 import type { ElementNode, TemplateChildNode } from '@vue/compiler-core'
 import type { AppConfig } from '../shared'
 import { pascalCase, isString, debug } from './utils'
