@@ -5,6 +5,7 @@ import mdxPlugins from './mdx-vite-plugins'
 import { remarkInternalHrefs } from './remark-internal-hrefs'
 import { remarkMdxImages } from './remark-mdx-images'
 import { rehypeRawExpressions } from './rehype-raw-expressions'
+import type { VFile } from '@mdx-js/mdx/lib/plugin/recma-stringify'
 
 /**
  * An iles module that injects a recma plugin that transforms MDX to allow
@@ -17,7 +18,7 @@ export function vueMdx (): any {
       recmaPlugins: [recmaPlugin],
     },
     configResolved (config: any) {
-      const { markdown, prettyUrls } = config
+      const { markdown, prettyUrls, namedPlugins } = config
 
       markdown.remarkPlugins.unshift(
         [remarkFrontmatter, ['yaml', 'toml']],
@@ -27,6 +28,14 @@ export function vueMdx (): any {
 
       markdown.rehypePlugins.push(
         [rehypeRawExpressions, markdown],
+      )
+
+      markdown.recmaPlugins.push(
+        // NOTE: Expose VFile data added by remark and rehype plugins.
+        () => (_ast: any, vfile: VFile) => {
+          const page = namedPlugins.pages.api.pageForFilename(vfile.path)
+          if (page) Object.assign(page.frontmatter.meta, vfile.data)
+        },
       )
 
       config.vitePlugins.push(...mdxPlugins(markdown))

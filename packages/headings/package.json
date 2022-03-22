@@ -28,7 +28,6 @@
   "homepage": "https://github.com/ElMassimo/iles",
   "bugs": "https://github.com/ElMassimo/iles/issues",
   "dependencies": {
-    "estree-util-value-to-estree": "^1.0.0",
     "hast-util-heading-rank": "^2.1.0",
     "hast-util-to-string": "^2.0.0"
   },

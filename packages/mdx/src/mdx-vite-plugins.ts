@@ -1,7 +1,7 @@
 import { extname } from 'path'
 
 import type { Plugin, TransformResult } from 'vite'
-import type { createFormatAwareProcessors } from 'xdm/lib/util/create-format-aware-processors'
+import type { createFormatAwareProcessors } from '@mdx-js/mdx/lib/util/create-format-aware-processors'
 import hash from 'hash-sum'
 import type { MarkdownOptions, PluginLike, PluginOption } from './types'
 
@@ -18,7 +18,7 @@ export default function IlesMdx (options: MarkdownOptions = {}): Plugin[] {
   }
 
   async function createXDM (sourcemap: string | boolean) {
-    const { createFormatAwareProcessors } = await import('xdm/lib/util/create-format-aware-processors.js')
+    const { createFormatAwareProcessors } = await import('@mdx-js/mdx/lib/util/create-format-aware-processors.js')
     markdownProcessor = createFormatAwareProcessors({
       remarkPlugins: await resolvePlugins(remarkPlugins),
       rehypePlugins: await resolvePlugins(rehypePlugins),

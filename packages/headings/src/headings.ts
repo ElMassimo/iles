@@ -3,12 +3,9 @@ import type { Pluggable, Plugin } from 'unified'
 import type { Data, Parent } from 'unist'
 import type { IlesModule } from 'iles'
 
-import estreeUtilValueToEstree from 'estree-util-value-to-estree'
 import { Node, toString } from 'hast-util-to-string'
 import { headingRank } from 'hast-util-heading-rank'
 import slugo from 'slugo'
-
-const { valueToEstree } = estreeUtilValueToEstree
 
 export interface Heading {
   level: number
@@ -50,7 +47,7 @@ export default function IlesHeadings (): IlesModule {
  *
  * @param options - Options to configure heading generation.
  */
-export const rehypePlugin: HeadingPlugin = ({ slug = generateSlug } = {}) => (ast) => {
+export const rehypePlugin: HeadingPlugin = ({ slug = generateSlug } = {}) => (ast, vfile) => {
   const { children } = ast as Parent
 
   const headings: Heading[] = []
@@ -61,17 +58,12 @@ export const rehypePlugin: HeadingPlugin = ({ slug = generateSlug } = {}) => (as
       headings.push({ level, title, slug: slug(node, title, level) })
     }
   })
-  const assignments = [assignment('meta', 'headings', '=', headings)]
 
   const title = headings.length && headings[0].level === 1 && headings[0].title
-  if (title) assignments.push(assignment('frontmatter', 'title', '||=', title))
 
-  children.push({
-    type: 'mdxjsEsm',
-    data: {
-      estree: { type: 'Program', sourceType: 'module', body: assignments },
-    },
-  })
+  // The @islands/mdx plugin will expose all data in `meta`.
+  if (title) vfile.data.title = title
+  vfile.data.headings = headings
 }
 
 const emojiRegex = /(?:⚡️|[\u2700-\u27BF]|(?:\uD83C[\uDDE6-\uDDFF]){2}|[\uD800-\uDBFF][\uDC00-\uDFFF])[\uFE0E\uFE0F]?(?:[\u0300-\u036F\uFE20-\uFE23\u20D0-\u20F0]|\uD83C[\uDFFB-\uDFFF])?(?:\u200D(?:[^\uD800-\uDFFF]|(?:\uD83C[\uDDE6-\uDDFF]){2}|[\uD800-\uDBFF][\uDC00-\uDFFF])[\uFE0E\uFE0F]?(?:[\u0300-\u036F\uFE20-\uFE23\u20D0-\u20F0]|\uD83C[\uDFFB-\uDFFF])?)*/g
@@ -100,17 +92,3 @@ function generateSlug ({ children, properties }: any, title: string, level: numb
 
   return slug
 }
-
-const assignment = (identifier: string, property: string, operator: string, value: any) => ({
-  type: 'ExpressionStatement',
-  expression: {
-    type: 'AssignmentExpression',
-    operator,
-    left: {
-      type: 'MemberExpression',
-      object: { type: 'Identifier', name: identifier },
-      property: { type: 'Identifier', name: property },
-    },
-    right: valueToEstree(value),
-  },
-})

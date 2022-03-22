@@ -35,7 +35,7 @@
     "remark-frontmatter": "^4.0.1",
     "source-map": "^0.7.3",
     "unist-util-visit": "^4.1.0",
-    "xdm": "3.3"
+    "@mdx-js/mdx": "2.1.0"
   },
   "devDependencies": {
     "@types/estree-jsx": "^0.0.1",

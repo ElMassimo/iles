@@ -1,12 +1,10 @@
-import type { CompileOptions } from 'xdm/lib/integration/rollup.js'
+import type { CompileOptions } from '@mdx-js/mdx'
 import type { Plugin } from 'vite'
 import type { Pluggable } from 'unified'
 import type { VFile } from 'vfile'
 
 export type PluginLike = null | undefined | false | Pluggable
 export type PluginOption = PluginLike | Promise<PluginLike> | string | [string, any]
-
-type XdmOptions = Omit<CompileOptions, 'remarkPlugins' | 'rehypePlugins' | 'recmaPlugins'>
 
 import type { MDXFlowExpression } from 'mdast-util-mdx-expression'
 
@@ -20,7 +18,7 @@ declare module 'hast' {
   }
 }
 
-export interface MarkdownOptions extends XdmOptions {
+export interface MarkdownOptions extends Omit<CompileOptions, 'remarkPlugins' | 'rehypePlugins' | 'recmaPlugins'> {
   /**
    * Recma plugins that should be used to process files.
    */

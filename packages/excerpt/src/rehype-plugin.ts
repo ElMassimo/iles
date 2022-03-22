@@ -44,30 +44,6 @@ export const rehypePlugin: Plugin<[Options], Element> = ({ extract, isSeparator,
   if (maxLength && excerpt.length > maxLength)
     excerpt = `${excerpt.slice(0, maxLength - 1)}…`
 
-  const assignments = [
-    assignment('meta', 'excerpt', '=', excerpt),
-  ]
-
-  children.unshift({
-    type: 'mdxjsEsm',
-    data: {
-      estree: { type: 'Program', sourceType: 'module', body: assignments },
-    },
-  } as any)
-}
-
-function assignment (identifier: string, property: string, operator: string, value: any) {
-  return {
-    type: 'ExpressionStatement',
-    expression: {
-      type: 'AssignmentExpression',
-      operator,
-      left: {
-        type: 'MemberExpression',
-        object: { type: 'Identifier', name: identifier },
-        property: { type: 'Identifier', name: property },
-      },
-      right: { type: 'Literal', value, raw: JSON.stringify(value) },
-    },
-  }
+  // The @islands/mdx plugin will expose all data in `meta`.
+  vfile.data.excerpt = excerpt
 }

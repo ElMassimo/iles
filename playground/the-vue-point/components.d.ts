@@ -6,17 +6,12 @@ declare module 'vue' {
   export interface GlobalComponents {
     Author: typeof import('./src/components/Author.vue')['default']
     BackLink: typeof import('./src/components/BackLink.tsx')['default']
-    CarbonWarning: typeof import('~icons/carbon/warning')['default']
-    DebugPanel: typeof import('./../../packages/iles/dist/client/app/components/DebugPanel.vue')['default']
     DefaultLayout: typeof import('./src/layouts/default.vue')['default']
     Head: typeof import('@vueuse/head')['Head']
-    IconCarbonWarning: typeof import('~icons/carbon/warning')['default']
     Island: typeof import('./../../packages/iles/dist/client/app/components/Island.vue')['default']
     MetaTags: typeof import('./src/components/MetaTags.vue')['default']
     NavBarLinks: typeof import('./src/components/NavBarLinks.svelte')['default']
-    Picture: typeof import('./../../packages/images/src/Picture.vue')['default']
     PostDate: typeof import('./src/components/PostDate.vue')['default']
-    RenderFeed: typeof import('./../../packages/feed/dist/render-feed')['RenderFeed']
   }
 }
 
