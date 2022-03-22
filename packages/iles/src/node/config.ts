@@ -237,9 +237,8 @@ function appConfigDefaults (appConfig: AppConfig, userConfig: UserConfig, env: C
     extendRoutes (routes) {
       if (isDevelopment)
         return [...routes, { path: '/:zzz(.*)*', name: 'NotFoundInDev', componentFilename: '@islands/components/NotFound' }]
-      else if (!drafts) {
+      else if (!drafts)
         return routes.filter(route => !route.frontmatter?.draft)
-      }
     },
     markdown: {
       jsxRuntime: 'automatic',
