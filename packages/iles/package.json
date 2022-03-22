@@ -66,8 +66,7 @@
     "unplugin-vue-components": "^0.18.3",
     "vite": "^2.8.2",
     "vue": "^3.2.30",
-    "vue-router": "^4.0.12",
-    "xdm": "3.3.1"
+    "vue-router": "^4.0.12"
   },
   "devDependencies": {
     "@antfu/install-pkg": "^0.1.0",
