@@ -247,12 +247,17 @@ export interface RequiredConfig {
 }
 
 export interface UserConfig extends Partial<RequiredConfig>, Partial<IlesModule> {
+  /**
+   * Whether to display drafts in documents and pages.
+   */
+  drafts?: boolean
   modules?: IlesModuleOption[]
 }
 
 export interface AppConfig extends RequiredConfig, Omit<BaseIlesConfig, 'pagesDir'> {
   base: string
   root: string
+  drafts: boolean
   configPath: string
   modules: IlesModule[]
   namedPlugins: NamedPlugins

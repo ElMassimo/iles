@@ -8,6 +8,7 @@
 [mdxComponents]: /config#mdxcomponents
 [frameworks]: /guide/frameworks
 [enhanceApp]: /config#enhanceapp
+[drafts]: /config#drafts
 
 # Markdown 📖
 
@@ -57,6 +58,19 @@ The `filename` and the page `href` can be accessed through [`meta`][meta].
 ```mdx
 <SuggestChangesLink filename={ meta.filename }/>
 ```
+
+### Markdown Drafts 📝
+
+You can mark an individual document as _unpublished_ by using `draft: true`.
+
+```mdx
+---
+title: Still not ready
+draft: true
+---
+```
+
+By default, draft pages and documents will be displayed in development, but will be excluded when building the site. Use <kbd>[drafts]</kbd> to override this behavior.
 
 ## Components in Markdown 🧱
 

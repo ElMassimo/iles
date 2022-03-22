@@ -20,7 +20,7 @@ interface DocumentModule {
 }
 
 export default function documentsPlugin (config: AppConfig): Plugin {
-  const { root, namedPlugins: { pages } } = config
+  const { root, drafts, namedPlugins: { pages } } = config
 
   let server: ViteDevServer
 
@@ -52,13 +52,21 @@ export default function documentsPlugin (config: AppConfig): Plugin {
 
       // Obtain files matching the specified pattern and extract frontmatter.
       const files = await glob(pattern, { cwd: root })
-      const data = await Promise.all(files.map(file => pages.api.frontmatterForPageOrFile(file)))
-
       debug.documents('%s %O', rawPath, { path, pattern, files })
+
+      let data = await Promise.all(files.map(async (file) => {
+        const frontmatter = await pages.api.frontmatterForPageOrFile(file)
+        frontmatter.meta.filename ||= file
+        return frontmatter
+      }))
+
+      // Filter drafts from documents if needed.
+      if (!drafts)
+        data = data.filter(page => !page.draft)
+      debug.documents(`${files.length} files, ${data.length} documents, drafts: ${drafts}`)
 
       // Create the structure of each document in the default export.
       const documents = data.map(({ route: _, meta, layout, ...frontmatter }, index) => {
-        meta.filename ||= files[index]
         return { ...meta, ...frontmatter, meta, frontmatter, component: `${index}_component` }
       })
 
