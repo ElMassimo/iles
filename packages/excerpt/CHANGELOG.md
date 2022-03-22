@@ -1,3 +1,12 @@
+## [0.1.3](https://github.com/ElMassimo/iles/compare/excerpt@0.1.2...excerpt@0.1.3) (2022-03-22)
+
+
+### Features
+
+* expose remark and rehype vfile data in `meta` ([11a7741](https://github.com/ElMassimo/iles/commit/11a77412b30c72d98ad967f644e0ae4b5afc32f8))
+
+
+
 ## [0.1.2](https://github.com/ElMassimo/iles/compare/excerpt@0.1.1...excerpt@0.1.2) (2021-12-28)
 
 
