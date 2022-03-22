@@ -1,3 +1,13 @@
+## [0.7.33](https://github.com/ElMassimo/iles/compare/v0.7.32...v0.7.33) (2022-03-22)
+
+
+### Features
+
+* add built-in support for drafts in pages and documents ([#105](https://github.com/ElMassimo/iles/issues/105)) ([90a5948](https://github.com/ElMassimo/iles/commit/90a5948853111a71ffd8019d4624c6d9c9f620dc))
+* expose remark and rehype vfile data in `meta` ([11a7741](https://github.com/ElMassimo/iles/commit/11a77412b30c72d98ad967f644e0ae4b5afc32f8))
+
+
+
 ## [0.7.32](https://github.com/ElMassimo/iles/compare/v0.7.31...v0.7.32) (2022-02-22)
 
 
