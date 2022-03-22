@@ -1,3 +1,12 @@
+## [0.7.34](https://github.com/ElMassimo/iles/compare/v0.7.33...v0.7.34) (2022-03-22)
+
+
+### Bug Fixes
+
+* drop xdm as a dependency ([9108cfe](https://github.com/ElMassimo/iles/commit/9108cfe9f8216e093efd6b06fd1f113dd2ed22cf))
+
+
+
 ## [0.7.33](https://github.com/ElMassimo/iles/compare/v0.7.32...v0.7.33) (2022-03-22)
 
 
