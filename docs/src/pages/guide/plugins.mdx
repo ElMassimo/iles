@@ -3,7 +3,7 @@ tocLevel: 3
 ---
 
 [pages]: /guide/development#pages
-[mdx]: /guide/markdown
+[markdown]: /guide/markdown
 [configuring them as usual]: /config#configuring-vite
 [config]: /config#configuring-%C3%AEles
 [components]: /guide/development#components
@@ -12,7 +12,7 @@ tocLevel: 3
 
 [@vitejs/plugin-vue]: https://www.npmjs.com/package/@vitejs/plugin-vue
 [unplugin-vue-components]: https://github.com/antfu/unplugin-vue-components
-[xdm]: https://github.com/wooorm/xdm
+[MDX]: https://github.com/mdx-js/mdx
 
 [vite-plugin-solid]: https://github.com/solidjs/vite-plugin-solid
 [@preact/preset-vite]: https://github.com/preactjs/preset-vite
@@ -110,11 +110,11 @@ which is used to instantiate the module when the user provides it as a string.
 
 ### <kbd>[@islands/excerpt]</kbd>
 
-A module to extract an excerpt from [MDX documents][mdx]:
+A module to extract an excerpt from [MDX documents][markdown]:
 
 - 📖 sets `meta.excerpt`, useful for [SEO tags] and [RSS feeds]
 
-- 🏷 can render HTML by using the `excerpt` prop in an [MDX component][mdx]
+- 🏷 can render HTML by using the `excerpt` prop in an [MDX component][markdown]
 
 - ⚙️ `maxLength`, `separator`, and `extract` options to customize excerpt
 
@@ -136,7 +136,7 @@ const { meta } = usePage()
 const text = meta.excerpt
 ```
 
-When importing [MDX components][mdx], you use the `excerpt` prop to render HTML:
+When importing [MDX components][markdown], you use the `excerpt` prop to render HTML:
 
 ```vue
 <script setup>
@@ -155,7 +155,7 @@ const pages = useDocuments('~/pages/posts')
 
 ### <kbd>[@islands/headings]</kbd>
 
-A module that injects a [rehype] plugin to parse headings in [MDX documents][mdx]:
+A module that injects a [rehype] plugin to parse headings in [MDX documents][markdown]:
 
 - 🔗 adds an id to headings and injects an anchor tag to link them
 
@@ -196,7 +196,7 @@ A module that configures [`vite-plugin-image-presets`][vite-plugin-image-presets
 
 - 🖼 define [presets][vite-plugin-image-presets] once, apply everywhere
 
-- 🔗 use presets directly in `img`, `source`, and in [markdown][MDX]!
+- 🔗 use presets directly in `img`, `source`, and in [markdown]!
 
 - 🖥 customize formats, srcset, & sizes
 
@@ -222,7 +222,7 @@ A module to [generate RSS and Atom feeds][rss], powered by <kbd>[feed]</kbd>:
 
 ### <kbd>[@islands/prism]</kbd>
 
-A module that injects a [remark] plugin to highlight code blocks in [MDX documents][mdx]:
+A module that injects a [remark] plugin to highlight code blocks in [MDX documents][markdown]:
 
 - 💎 uses [prismjs] supporting a wide variety of programming languages
 
@@ -242,10 +242,11 @@ Check the [readme][@islands/prism] for more information.
 
 ### <kbd>[@islands/mdx]</kbd>
 
-Shipped inside <Iles/> to provides [MDX support][mdx], powered by <kbd>[xdm]</kbd>.
+Shipped inside <Iles/> to provide [MDX support][mdx].
 
 - 🧩 fully customizable with [remark] and [rehype] plugins
 - 🧱 components are [resolved automatically][components]
+- 📝 exposes data from plugins to [`meta`][markdown]
 
 ```ts
   markdown: {

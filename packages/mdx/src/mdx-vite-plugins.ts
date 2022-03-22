@@ -17,7 +17,7 @@ export default function IlesMdx (options: MarkdownOptions = {}): Plugin[] {
     return markdownProcessor.extnames.includes(extname(path))
   }
 
-  async function createXDM (sourcemap: string | boolean) {
+  async function createMdxProcessor (sourcemap: string | boolean) {
     const { createFormatAwareProcessors } = await import('@mdx-js/mdx/lib/util/create-format-aware-processors.js')
     markdownProcessor = createFormatAwareProcessors({
       remarkPlugins: await resolvePlugins(remarkPlugins),
@@ -34,7 +34,7 @@ export default function IlesMdx (options: MarkdownOptions = {}): Plugin[] {
 
       async configResolved (config) {
         isDevelopment = config.mode === 'development'
-        await createXDM(isDevelopment || config.build.sourcemap)
+        await createMdxProcessor(isDevelopment || config.build.sourcemap)
       },
 
       async transform (value, path) {

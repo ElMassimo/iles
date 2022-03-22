@@ -82,14 +82,14 @@ Visit the [documentation website][docs] to check out the [guides][guide] and sea
 
 - [Vite] and [Vue]: for enabling an amazing development experience
 - [Astro](https://astro.build): for sharing a novel way to define islands
-- [xdm]: provides amazing flexibility when processing Markdown
+- [MDX]: provides amazing flexibility when processing Markdown
 - [vue-router], [@vueuse/head], and [vite-plugin-pages]: the backbone of this library
 - [unplugin-vue-components]: allows you to avoid the boilerplate
 - [VitePress] and [vite-ssg]: for their different ideas on SSR
 
 [Vite]: https://vitejs.dev/
 [Vue]: https://v3.vuejs.org/
-[xdm]: https://github.com/wooorm/xdm
+[MDX]: https://github.com/mdx-js/mdx
 [Astro]: https://docs.astro.build/core-concepts/component-hydration
 [vite-plugin-pages]: https://github.com/hannoeru/vite-plugin-pages
 [unplugin-vue-components]: https://github.com/antfu/unplugin-vue-components

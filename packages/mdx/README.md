@@ -20,15 +20,16 @@
 
 [îles]: https://github.com/ElMassimo/iles
 [docs]: https://iles-docs.netlify.app
-[xdm]: https://github.com/wooorm/xdm
+[MDX]: https://github.com/mdx-js/mdx
 [frontmatter]: https://iles-docs.netlify.app/guide/markdown#frontmatter-and-meta
 [mdx documents]: https://iles-docs.netlify.app/guide/markdown
 [resolveComponent]: https://v3.vuejs.org/api/global-api.html#resolvecomponent
 [unplugin-vue-components]: https://github.com/antfu/unplugin-vue-components
 
-An [îles] module that adds support for [MDX documents], powered by [XDM].
+An [îles] module that adds support for [MDX documents], powered by [MDX].
 
-It also injects a [recma][xdm] plugin to resolve Vue components in [MDX documents]:
+It also injects a [recma][MDX] plugin to resolve Vue components in [MDX documents]:
 
 - 🌎 you can use globally registered components
 - 🧱 [`unplugin-vue-components`][unplugin-vue-components] can statically resolve and import components, so you don't need to manually provide components
+- 📝 exposes data from plugins to [`meta`][mdx documents]
