@@ -15,6 +15,9 @@ sidebar: auto
 [deployment]: /guide/deployment 
 [VitePress]: /faqs#vitepress
 [turbo]: /guide/turbo
+[documents]: /guide/documents
+[drafts]: /guide/markdown
+[useDocuments]: /guide/documents
 
 # Configuration
 
@@ -55,6 +58,17 @@ export default defineConfig({
   jsx: 'preact',
 })
 ```
+
+### `drafts`
+
+- **Type:** `boolean`
+- **Default:** `true` in development, `false` when building
+
+Whether to include [drafts] in pages and [documents].
+
+By default drafts will be displayed during development, but will be excluded when building the site.
+
+> When disabled, drafts will also be excluded from <kbd>[useDocuments]</kbd>.
 
 ### `modules`
 

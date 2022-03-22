@@ -16,7 +16,8 @@ export function onLoad () {
     if (open) {
       bg.classList.remove('hidden')
       bg.classList.remove('opacity-0')
-    } else {
+    }
+    else {
       bg.classList.add('opacity-0')
       panel.addEventListener('transitionend', e => bg.classList.add('hidden'), { once: true })
     }

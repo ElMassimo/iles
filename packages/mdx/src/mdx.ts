@@ -1,11 +1,11 @@
 import remarkFrontmatter from 'remark-frontmatter'
 
+import type { VFile } from '@mdx-js/mdx/lib/plugin/recma-stringify'
 import recmaPlugin from './recma-plugin'
 import mdxPlugins from './mdx-vite-plugins'
 import { remarkInternalHrefs } from './remark-internal-hrefs'
 import { remarkMdxImages } from './remark-mdx-images'
 import { rehypeRawExpressions } from './rehype-raw-expressions'
-import type { VFile } from '@mdx-js/mdx/lib/plugin/recma-stringify'
 
 /**
  * An iles module that injects a recma plugin that transforms MDX to allow
