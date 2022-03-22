@@ -1,3 +1,14 @@
+## [0.1.2](https://github.com/ElMassimo/iles/compare/headings@0.1.1...headings@0.1.2) (2022-03-22)
+
+
+### Features
+
+* add typings for meta.headings ([0ca6cde](https://github.com/ElMassimo/iles/commit/0ca6cdef836293aff2d5415b8cd0afdc8172dafd))
+* expose remark and rehype vfile data in `meta` ([11a7741](https://github.com/ElMassimo/iles/commit/11a77412b30c72d98ad967f644e0ae4b5afc32f8))
+* new @islands/prism module with code and line highlighting ([f7416ec](https://github.com/ElMassimo/iles/commit/f7416ec8ea45b10fd199bdb2806ea54373ec2bf9))
+
+
+
 ## [0.1.1](https://github.com/ElMassimo/iles/compare/headings@0.1.0...headings@0.1.1) (2021-11-03)
 
 
