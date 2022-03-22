@@ -97,11 +97,11 @@ async function visitSFCNode (node: ElementNode | TemplateChildNode, s: MagicStri
 
     // Replace opening tag.
     s.overwrite(start.offset + 1, start.offset + 1 + tag.length,
-      `Island ${componentProps.replace(/\n\s*/g, ' ')}`)
+      `Island ${componentProps.replace(/\n\s*/g, ' ')}`, { contentOnly: true })
 
     // Replace closing tag.
     if (!node.isSelfClosing)
-      s.overwrite(end.offset - 1 - tag.length, end.offset - 1, 'Island')
+      s.overwrite(end.offset - 1 - tag.length, end.offset - 1, 'Island', { contentOnly: true })
   }
 
   if ('children' in node) {

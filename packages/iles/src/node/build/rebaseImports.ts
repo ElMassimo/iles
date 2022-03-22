@@ -15,7 +15,7 @@ export default async function rebaseImports ({ base, assetsDir }: AppConfig, cod
         s += 1
         e -= 1
       }
-      code.overwrite(s, e, posix.join(assetsBase, code.slice(s, e)))
+      code.overwrite(s, e, posix.join(assetsBase, code.slice(s, e)), { contentOnly: true })
     })
     return code.toString()
   }
