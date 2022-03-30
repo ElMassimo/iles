@@ -187,7 +187,7 @@ importers:
       '@types/micromatch': ^4.0.2
       '@types/node': ^15.14.9
       '@types/unist': ^2.0.6
-      '@vitejs/plugin-vue': ^2.0.0
+      '@vitejs/plugin-vue': ^2.3.0
       '@vue/devtools-api': ^6.0.0-beta.20.1
       '@vue/server-renderer': ^3.2.31
       '@vueuse/head': ^0.7.3
@@ -227,7 +227,7 @@ importers:
       '@islands/pages': link:../pages
       '@islands/prerender': link:../prerender
       '@nuxt/devalue': 2.0.0
-      '@vitejs/plugin-vue': 2.0.0_vite@2.9.0+vue@3.2.31
+      '@vitejs/plugin-vue': 2.3.0_vite@2.9.0+vue@3.2.31
       '@vue/devtools-api': 6.0.0-beta.20.1
       '@vue/server-renderer': 3.2.31_vue@3.2.31
       '@vueuse/head': 0.7.3_vue@3.2.31
@@ -2438,11 +2438,11 @@ packages:
       eslint-visitor-keys: 2.1.0
     dev: true
 
-  /@vitejs/plugin-vue/2.0.0_vite@2.9.0+vue@3.2.31:
-    resolution: {integrity: sha512-4Xn1h9OcaAf7KYrvz2oEi52fCCCLcCzyr3pDOrzYTWrs0DrzNOXt9fT5IiGb1f/uoNTdX3aAkXVGNXrGkzF/zw==}
+  /@vitejs/plugin-vue/2.3.0_vite@2.9.0+vue@3.2.31:
+    resolution: {integrity: sha512-3j4lppvOMAYyX5mpmwm8GN1ZuqGzmkOCDGDzwwQKU5aJ3pTodaWhprZatuDB2cAtAcNe+IiGBCllBkJSLUDFYw==}
     engines: {node: '>=12.0.0'}
     peerDependencies:
-      vite: ^2.5.10
+      vite: ^2.9.0
       vue: ^3.2.25
     dependencies:
       vite: 2.9.0
