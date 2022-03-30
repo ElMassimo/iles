@@ -52,7 +52,7 @@
     "@nuxt/devalue": "^2.0.0",
     "@vitejs/plugin-vue": "^2.0.0",
     "@vue/devtools-api": "^6.0.0-beta.20.1",
-    "@vue/server-renderer": "^3.2.30",
+    "@vue/server-renderer": "^3.2.31",
     "@vueuse/head": "^0.7.3",
     "debug": "^4.3.2",
     "deep-equal": "^2.0.5",
@@ -64,8 +64,8 @@
     "picocolors": "^1.0.0",
     "unist-util-visit": "^4.1.0",
     "unplugin-vue-components": "^0.18.3",
-    "vite": "^2.8.2",
-    "vue": "^3.2.30",
+    "vite": "^2.9.0",
+    "vue": "^3.2.31",
     "vue-router": "^4.0.12"
   },
   "devDependencies": {
