@@ -1,3 +1,17 @@
+## [0.7.36](https://github.com/ElMassimo/iles/compare/v0.7.35...v0.7.36) (2022-03-30)
+
+
+### Bug Fixes
+
+* prevent hmr issue when first adding slots to an island without slots ([1bb5e40](https://github.com/ElMassimo/iles/commit/1bb5e402a1587ccd59853138f2feb33821c56a74))
+
+
+### Features
+
+* upgrade to vite 2.9 🚀 ([f47b6b3](https://github.com/ElMassimo/iles/commit/f47b6b346ef2efc88590749e2d8c8a2fbba7a42a))
+
+
+
 ## [0.7.35](https://github.com/ElMassimo/iles/compare/v0.7.34...v0.7.35) (2022-03-30)
 
 
