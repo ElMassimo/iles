@@ -9,6 +9,15 @@ import { useRenderer } from '../composables/renderer'
 import { useAppConfig } from '../composables/appConfig'
 import { useVueRenderer } from '../composables/vueRenderer'
 
+function trackIsland (this: any, { __ILE_DEVTOOLS__ }: any = window) {
+  __ILE_DEVTOOLS__?.addIslandToDevtools(this)
+}
+
+function disposeIsland (this: any, { __ILE_DEVTOOLS__, __ILE_DISPOSE__ }: any = window) {
+  __ILE_DEVTOOLS__?.removeIslandFromDevtools(this)
+  __ILE_DISPOSE__?.get(this.id)?.()
+}
+
 function inspectMediaQuery (query: string) {
   if (!query.includes('(') && query.includes(': '))
     console.warn('You might need to add parenthesis to the following media query.\n\t', query, '\n', 'https://developer.mozilla.org/en-US/docs/Web/CSS/Media_Queries/Using_media_queries#targeting_media_features')
@@ -56,13 +65,10 @@ export default defineComponent({
       prerender: import.meta.env.SSR ? useRenderer(framework) : undefined,
     }
   },
-  mounted () {
-    (window as any).__ILE_DEVTOOLS__?.addIslandToDevtools(this)
-  },
-  unmounted () {
-    (window as any).__ILE_DEVTOOLS__?.removeIslandFromDevtools(this)
-    ;(window as any).__ILE_DISPOSE__?.get(this.id)?.()
-  },
+  mounted: trackIsland,
+  beforeUpdate: disposeIsland,
+  updated: trackIsland,
+  unmounted: disposeIsland,
   render () {
     const isSSR = import.meta.env.SSR
 
@@ -106,8 +112,10 @@ hydrate(framework, component, '${this.id}', ${serialize(props)}, ${serialize(slo
 
       if (this.framework === 'vanilla') return undefined
 
-      if (this.framework === 'vue')
-        return h(this.component, this.$attrs, this.$slots)
+      if (this.framework === 'vue') {
+        const vnode = h(this.component, this.$attrs, this.$slots)
+        return isSSR ? vnode : h(defineAsyncComponent(async () => createStaticVNode(await this.renderVNodes(vnode), undefined as any)))
+      }
 
       const prerender = this.prerender
       if (!prerender) return undefined
