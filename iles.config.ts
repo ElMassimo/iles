@@ -1,5 +1,5 @@
 import { defineConfig } from 'iles'
-import { join } from 'pathe'
+import { join, resolve } from 'pathe'
 
 // NOTE: This config is used when running tests.
 export default defineConfig({
@@ -12,6 +12,7 @@ export default defineConfig({
         '@node/': `${__dirname}/packages/iles/src/node/`,
         '@mdx/': `${__dirname}/packages/mdx/src/`,
         '@pages/': `${__dirname}/playground/the-vue-point/src/pages/`,
+        [resolve('src/layouts/default.vue')]: `${__dirname}/playground/the-vue-point/src/layouts/default.vue`,
       },
     },
   },
