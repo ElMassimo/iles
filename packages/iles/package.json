@@ -1,7 +1,7 @@
 {
   "name": "iles",
   "description": "Vite & Vue powered static site generator with partial hydration",
-  "version": "0.7.34",
+  "version": "0.7.35",
   "main": "dist/node/index.js",
   "types": "types/index.d.ts",
   "bin": {

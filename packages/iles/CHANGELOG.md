@@ -1,3 +1,13 @@
+## [0.7.35](https://github.com/ElMassimo/iles/compare/v0.7.34...v0.7.35) (2022-03-30)
+
+
+### Bug Fixes
+
+* prevent hmr errors when using islands with multiple root nodes (fragments) (close [#108](https://github.com/ElMassimo/iles/issues/108)) ([e694034](https://github.com/ElMassimo/iles/commit/e694034f63d8f31ee7adb8276a4b9dcb2fc3d5c6))
+* setting srcDir should also affect the default dir for components (discussion [#113](https://github.com/ElMassimo/iles/issues/113)) ([d170b4d](https://github.com/ElMassimo/iles/commit/d170b4d4d54d0152e723c347f96f465b197a42ad))
+
+
+
 ## [0.7.34](https://github.com/ElMassimo/iles/compare/v0.7.33...v0.7.34) (2022-03-22)
 
 
