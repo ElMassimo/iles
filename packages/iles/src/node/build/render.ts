@@ -1,11 +1,10 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 import { join } from 'pathe'
 import { renderHeadToString } from '@vueuse/head'
-import type { RollupOutput } from 'rollup'
 import { renderers } from '@islands/prerender'
 import { IslandDefinition } from 'iles'
 import type { Awaited, AppConfig, CreateAppFactory, IslandsByPath, RouteToRender } from '../shared'
-import type { bundle } from './bundle'
+import { bundle, CssDeps } from './bundle'
 import { withSpinner } from './utils'
 import { getRoutesToRender } from './routes'
 
@@ -14,18 +13,16 @@ const commentsRegex = /<!--\[-->|<!--]-->|<!---->/g
 export async function renderPages (
   config: AppConfig,
   islandsByPath: IslandsByPath,
-  { clientResult }: Awaited<ReturnType<typeof bundle>>,
+  { cssDependencies }: Awaited<ReturnType<typeof bundle>>,
 ) {
   const { createApp }: { createApp: CreateAppFactory} = require(join(config.tempDir, 'app.js'))
 
   const routesToRender = await withSpinner('resolving static paths', async () =>
     await getRoutesToRender(config, createApp))
 
-  const clientChunks = clientResult.output
-
   await withSpinner('rendering pages', async () => {
     for (const route of routesToRender)
-      route.rendered = await renderPage(config, islandsByPath, clientChunks, route, createApp)
+      route.rendered = await renderPage(config, islandsByPath, cssDependencies, route, createApp)
   })
 
   return { routesToRender }
@@ -34,7 +31,7 @@ export async function renderPages (
 export async function renderPage (
   config: AppConfig,
   islandsByPath: IslandsByPath,
-  clientChunks: RollupOutput['output'],
+  cssDependencies: CssDeps,
   route: RouteToRender,
   createApp: CreateAppFactory,
 ) {
@@ -48,14 +45,18 @@ export async function renderPage (
   if (!route.outputFilename.endsWith('.html'))
     return content
 
-  const { headTags, htmlAttrs, bodyAttrs } = renderHeadToString(head)
+  let { headTags, htmlAttrs, bodyAttrs } = renderHeadToString(head)
+
+  const islands = islandsByPath[route.path] || []
+  if (islands.length)
+    headTags += `<style>ile-root{display:contents}</style>`
 
   return `<!DOCTYPE html>
 <html ${htmlAttrs}>
   <head>
     ${headTags}
-    ${stylesheetTagsFrom(config, clientChunks)}
-    ${await scriptTagsFrom(config, islandsByPath[route.path])}
+    ${stylesheetTagsFrom(config, cssDependencies[route.path] || [])}
+    ${scriptTagsFrom(config, islands)}
   </head>
   <body ${bodyAttrs}>
     <div id="app">${content}</div>
@@ -63,15 +64,14 @@ export async function renderPage (
 </html>`
 }
 
-function stylesheetTagsFrom (config: AppConfig, clientChunks: RollupOutput['output']) {
-  return clientChunks
-    .filter(chunk => chunk.type === 'asset' && chunk.fileName.endsWith('.css'))
-    .map(chunk => `<link rel="stylesheet" href="${config.base}${chunk.fileName}">`)
+function stylesheetTagsFrom ({ base }: AppConfig, cssFiles: string[]) {
+  return cssFiles
+    .map(fileName => `<link rel="stylesheet" href="${base}${fileName}">`)
     .join('\n')
 }
 
-async function scriptTagsFrom (config: AppConfig, islands: undefined | IslandDefinition[]) {
-  const anySolid = islands?.some(island => island.script.includes('@islands/hydration/solid'))
+function scriptTagsFrom (config: AppConfig, islands: IslandDefinition[]) {
+  const anySolid = islands.some(island => island.script.includes('@islands/hydration/solid'))
   if (!anySolid) return ''
   return '<script>window._$HY={events:[],completed:new WeakSet(),r:{}}</script>'
 }

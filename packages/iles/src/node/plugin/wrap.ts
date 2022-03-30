@@ -26,7 +26,11 @@ export async function wrapLayout (code: string, filename: string) {
 
 const scriptClientRE = /<script\b([^>]*\bclient:[^>]*)>([^]*?)<\/script>/
 
-export async function wrapIslandsInSFC (config: AppConfig, code: string, filename: string) {
+function isEagerStategy (strategy: string) {
+  return strategy === 'client:load' || strategy === 'client:none'
+}
+
+export async function wrapIslandsInSFC (config: AppConfig, code: string, filename: string, isSSR: boolean | undefined) {
   code = code.replace(scriptClientRE, (_, attrs, content) =>
     `<scriptClient${attrs}>${content}</scriptClient>`)
 
@@ -66,7 +70,12 @@ export async function wrapIslandsInSFC (config: AppConfig, code: string, filenam
     debug.detect(`<${tagName} ${strategy}>`)
     if (imports[tagName]) return await resolveImportPath(config, imports[tagName], filename)
     const info = await resolveComponent(components, tagName, filename, componentCounter++)
-    if (strategy !== 'client:only') injectComponentImport(info)
+
+    // NOTE: Avoid importing the component to enable CSS code-splitting.
+    if (strategy === 'client:only' || config.isBuild && !isSSR && !isEagerStategy(strategy))
+      info.name = null as any
+    else
+      injectComponentImport(info)
     return info
   }
 
@@ -89,7 +98,7 @@ async function visitSFCNode (node: ElementNode | TemplateChildNode, s: MagicStri
 
     const importMeta = await resolveComponentImport(strategy, tag)
     const componentProps = `
-      :component="${strategy === 'client:only' ? null : importMeta.name}"
+      :component="${importMeta.name}"
       componentName="${tag}"
       importName="${importMeta.importName}"
       importPath="${importMeta.path}"

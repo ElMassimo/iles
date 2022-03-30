@@ -1,4 +1,5 @@
 node_modules/
+tmp/
 dist/
 .iles-ssg-temp/
 .vite-islands-temp/

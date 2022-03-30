@@ -190,6 +190,7 @@ function inferJSX (config: UserConfig) {
 
 function appConfigDefaults (appConfig: AppConfig, userConfig: UserConfig, env: ConfigEnv): AppConfig {
   const { root } = appConfig
+  const isBuild = env.command === 'build'
   const isDevelopment = env.mode === 'development'
   const { drafts = isDevelopment, jsx = inferJSX(userConfig), srcDir = 'src' } = userConfig
 
@@ -205,6 +206,8 @@ function appConfigDefaults (appConfig: AppConfig, userConfig: UserConfig, env: C
     ssg: {
       sitemap: true,
     },
+    isDevelopment,
+    isBuild,
     configPath: resolve(root, 'iles.config.ts'),
     assetsDir: 'assets',
     pagesDir: 'pages',
@@ -273,10 +276,7 @@ function viteConfigDefaults (root: string, userConfig: UserConfig): ViteOptions 
     server: {
       fs: { allow: [root, DIST_CLIENT_PATH, HYDRATION_DIST_PATH] },
     },
-    build: {
-      brotliSize: false,
-      cssCodeSplit: false,
-    },
+    build: {},
     define: {},
     optimizeDeps: {
       include: [

@@ -40,3 +40,7 @@
 .navbar-actions {
   @apply gap-2;
 }
+
+.DocSearch-Button.DocSearch-Button {
+  display: none!important;
+}

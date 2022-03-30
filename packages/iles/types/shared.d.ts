@@ -258,6 +258,8 @@ export interface AppConfig extends RequiredConfig, Omit<BaseIlesConfig, 'pagesDi
   base: string
   root: string
   drafts: boolean
+  isBuild: boolean
+  isDevelopment: boolean
   configPath: string
   modules: IlesModule[]
   namedPlugins: NamedPlugins

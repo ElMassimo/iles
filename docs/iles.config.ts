@@ -32,6 +32,9 @@ export default defineConfig({
     },
   },
   vite: {
+    build: {
+      cssCodeSplit: false,
+    },
     resolve: {
       alias: {
         '~images': resolve(__dirname, 'images'),

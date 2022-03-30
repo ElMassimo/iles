@@ -83,7 +83,7 @@ export const createApp: CreateAppFactory = async (options = {}) => {
   return context
 }
 
-if (!import.meta.env.SSR) {
+if (!import.meta.env.SSR && import.meta.env.DEV) {
   (async () => {
     const { app, router } = await createApp()
 

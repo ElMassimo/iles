@@ -1,7 +1,7 @@
 /* eslint-disable no-restricted-syntax */
 import { promises as fs } from 'fs'
 import { basename, resolve, relative } from 'pathe'
-import type { PluginOption, ResolvedConfig, ViteDevServer } from 'vite'
+import type { PluginOption, ViteDevServer } from 'vite'
 import { transformWithEsbuild } from 'vite'
 
 import MagicString from 'magic-string'
@@ -32,11 +32,9 @@ const templateLayoutRegex = /<template.*?\slayout=\s*['"](\w+)['"].*?>/
 export default function IslandsPlugins (appConfig: AppConfig): PluginOption[] {
   debug.config(appConfig)
 
-  let base: ResolvedConfig['base']
-  let root: ResolvedConfig['root']
-  let isBuild: boolean
   let server: ViteDevServer
 
+  const { root, isBuild } = appConfig
   const appPath = resolve(appConfig.srcDir, 'app.ts')
   const sitePath = resolve(appConfig.srcDir, 'site.ts')
   const layoutsRoot = `/${relative(appConfig.root, appConfig.layoutsDir)}`
@@ -53,13 +51,10 @@ export default function IslandsPlugins (appConfig: AppConfig): PluginOption[] {
       name: 'iles',
       enforce: 'pre',
       configResolved (config) {
-        if (base) return
-        base = config.base
-        root = config.root
-        isBuild = config.command === 'build'
-        appConfig.resolvePath = config.createResolver()
+        appConfig.resolvePath ||= config.createResolver()
 
-        writeComposablesDTS(root)
+        if (appConfig.isDevelopment)
+          writeComposablesDTS(root)
       },
       async resolveId (id) {
         if (id === ILES_APP_ENTRY)
@@ -117,14 +112,14 @@ export default function IslandsPlugins (appConfig: AppConfig): PluginOption[] {
     {
       name: 'iles:detect-islands-in-vue',
       enforce: 'pre',
-      async transform (code, id) {
+      async transform (code, id, { ssr } = {}) {
         const { path, query } = parseId(id)
 
         if (query.vue !== undefined && query.type === 'scriptClient')
           return 'export default {}; if (import.meta.hot) import.meta.hot.accept()'
 
         if (isSFCMain(path, query) && code.includes('client:') && code.includes('<template'))
-          return wrapIslandsInSFC(appConfig, code, path)
+          return wrapIslandsInSFC(appConfig, code, path, ssr)
       },
     },
     {
@@ -202,9 +197,13 @@ export default function IslandsPlugins (appConfig: AppConfig): PluginOption[] {
 
         if (isPage) {
           appendToSfc('layoutName', serialize(layout))
+
+          const layoutPath = `'${layoutsRoot}/${layout}.vue'`
           appendToSfc('layoutFn', String(layout) === 'false'
             ? 'false'
-            : `() => import('${layoutsRoot}/${layout}.vue').then(m => m.default)`)
+            : isBuild
+              ? `() => ${s.prepend(`import __layout from ${layoutPath};`) && '__layout'}`
+              : `() => import(${layoutPath}).then(m => m.default)`)
         }
 
         return s.toString()

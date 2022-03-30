@@ -46,6 +46,11 @@ blockquote {
     position: absolute;
     top: 0;
   }
+
+  &.warn {
+    --bg-primary: #f6c973;
+    --bg-highlight: rgba(246, 201, 115, 0.2);
+  }
 }
 
 kbd {

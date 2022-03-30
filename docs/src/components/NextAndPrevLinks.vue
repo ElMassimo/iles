@@ -22,13 +22,3 @@ const { next, prev } = $(useSideBarLinks())
     </div>
   </div>
 </template>
-
-<style scoped lang="postcss">
-.nav-link {
-  @apply
-    inline-flex items-center px-1 md:px-3
-    font-semibold
-    text-cool-gray-500 dark:text-gray-400
-    hover:(text-gray-800 dark:text-white);
-}
-</style>

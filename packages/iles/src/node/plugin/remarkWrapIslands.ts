@@ -64,9 +64,9 @@ async function wrapWithIsland (strategy: string, node: MDXJsxFlowElement | MDXJs
   const importMeta = await resolveComponentImport(strategy, tagName)
 
   node.attributes.unshift(...jsxAttributes({
-    component: jsxExpression(strategy === 'client:only'
-      ? { type: 'Literal', value: null, raw: 'null' }
-      : { type: 'Identifier', name: importMeta.name! }),
+    component: jsxExpression(importMeta.name
+      ? { type: 'Identifier', name: importMeta.name }
+      : { type: 'Literal', value: null, raw: 'null' }),
     componentName: tagName,
     importName: importMeta.importName,
     importPath: importMeta.path,

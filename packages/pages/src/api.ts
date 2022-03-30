@@ -22,6 +22,9 @@ export function createApi (options: ResolvedOptions) {
     pageForFilename (file: string) {
       return pagesByFile.get(resolve(root, file))
     },
+    get pageRoutes () {
+      return Array.from(pagesByFile.values())
+    },
     async forceAddAllPages () {
       const files = await glob(`${options.pagesDir}/**/*.{${pageExtensions.join(',')}}`, { onlyFiles: true })
       await Promise.all(files.map(async file => await this.addPage(slash(file))))
@@ -70,7 +73,7 @@ export function createApi (options: ResolvedOptions) {
       return route
     },
     async generateRoutesModule () {
-      const routes = Array.from(pagesByFile.values()).sort(byDynamicParams)
+      const routes = this.pageRoutes.sort(byDynamicParams)
       const userRoutes = await options.extendRoutes?.(routes) || routes
       return `export default ${stringifyRoutes(userRoutes)}`
     },
