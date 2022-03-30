@@ -76,7 +76,8 @@ export default defineComponent({
     if (this.strategy === Hydrate.MediaQuery)
       props._mediaQuery = inspectMediaQuery(this.$props[Hydrate.MediaQuery] as string)
 
-    const slotVNodes = mapObject(this.$slots, slotFn => slotFn?.())
+    const { _, ...slots } = this.$slots
+    const slotVNodes = mapObject(slots, slotFn => slotFn?.())
     const hydrationPkg = `${isSSR ? '' : '/@id/'}@islands/hydration`
     let renderedSlots: Record<string, string>
 
