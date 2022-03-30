@@ -12,7 +12,7 @@ import { APP_PATH, APP_COMPONENT_PATH, USER_APP_REQUEST_PATH, USER_SITE_REQUEST_
 import { configureMiddleware, ILES_APP_ENTRY } from './middleware'
 import { serialize, pascalCase, exists, debug } from './utils'
 import { parseId } from './parse'
-import { wrapIslandsInSFC, wrapLayout } from './wrap'
+import { wrapIslandsInSFC, wrapWithLayout } from './wrap'
 import { extendSite } from './site'
 import { detectMDXComponents } from './markdown'
 import { autoImportComposables, writeComposablesDTS } from './composables'
@@ -130,12 +130,20 @@ export default function IslandsPlugins (appConfig: AppConfig): PluginOption[] {
     {
       name: 'iles:layouts',
       enforce: 'pre',
-      transform (code, id) {
+      async transform (code, id) {
         const { path, query } = parseId(id)
-        if (!isSFCMain(path, query) || !isLayout(path)) return
-        const layoutName = code.match(templateLayoutRegex)?.[1] || false
-        if (String(layoutName) === 'false') return
-        return wrapLayout(code, path)
+        if (!isSFCMain(path, query)) return
+
+        let layoutName: string | false = false
+
+        if (isLayout(path))
+          layoutName = code.match(templateLayoutRegex)?.[1] || false
+
+        if (plugins.pages.api.isPage(path))
+          layoutName = (await plugins.pages.api.frontmatterForPageOrFile(path, code)).layout ?? 'default'
+
+        if (String(layoutName) !== 'false')
+          return wrapWithLayout(code, path, layoutName as string)
       },
     },
 
@@ -202,7 +210,7 @@ export default function IslandsPlugins (appConfig: AppConfig): PluginOption[] {
 
         if (isPage) {
           appendToSfc('layoutName', serialize(layout))
-          appendToSfc('layoutFn', String(layout) === 'false'
+          appendToSfc('layoutFn', !isMdx || String(layout) === 'false'
             ? 'false'
             : `() => import('${layoutsRoot}/${layout}.vue').then(m => m.default)`)
         }

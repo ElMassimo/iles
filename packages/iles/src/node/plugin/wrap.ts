@@ -8,15 +8,15 @@ import { parseImports, parseExports } from './parse'
 
 export const unresolvedIslandKey = '__viteIslandComponent'
 
-export async function wrapLayout (code: string, filename: string) {
+export async function wrapWithLayout (code: string, filename: string, layoutName: string) {
   const { descriptor: { template }, errors } = parse(code, { filename })
-  if (errors.length > 0 || !template || !isString(template.attrs.layout)) return
+  if (errors.length > 0 || !template || !isString(layoutName)) return
 
   const s = new MagicString(code)
   const nodes = template.ast.children
-  const Layout = `${pascalCase(template.attrs.layout as string)}Layout`
+  const Layout = `${pascalCase(layoutName)}Layout`
 
-  debug.layout(`${template.attrs.layout} ${filename}`)
+  debug.layout(`${layoutName} ${filename}`)
 
   s.appendLeft(nodes[0].loc.start.offset, `<${Layout}>`)
   s.appendRight(nodes[nodes.length - 1].loc.end.offset, `</${Layout}>`)
