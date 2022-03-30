@@ -36,7 +36,7 @@
   "dependencies": {
     "@docsearch/css": "^3.0.0-alpha.42",
     "@mussi/docsearch": "^3.0.0-alpha.42",
-    "preact": "^10.6.5"
+    "preact": "^10.7.0"
   },
   "eslintConfig": {
     "rules": {
