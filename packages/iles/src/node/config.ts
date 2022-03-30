@@ -191,7 +191,7 @@ function inferJSX (config: UserConfig) {
 function appConfigDefaults (appConfig: AppConfig, userConfig: UserConfig, env: ConfigEnv): AppConfig {
   const { root } = appConfig
   const isDevelopment = env.mode === 'development'
-  const { drafts = isDevelopment, jsx = inferJSX(userConfig) } = userConfig
+  const { drafts = isDevelopment, jsx = inferJSX(userConfig), srcDir = 'src' } = userConfig
 
   return {
     debug: true,
@@ -208,7 +208,7 @@ function appConfigDefaults (appConfig: AppConfig, userConfig: UserConfig, env: C
     configPath: resolve(root, 'iles.config.ts'),
     assetsDir: 'assets',
     pagesDir: 'pages',
-    srcDir: 'src',
+    srcDir,
     outDir: 'dist',
     layoutsDir: 'layouts',
     tempDir: '.iles-ssg-temp',
@@ -253,6 +253,7 @@ function appConfigDefaults (appConfig: AppConfig, userConfig: UserConfig, env: C
       dts: true,
       extensions: ['vue', 'jsx', 'tsx', 'js', 'ts', 'mdx', 'svelte'],
       include: [/\.vue$/, /\.vue\?vue/, /\.mdx?/],
+      dirs: `${srcDir}/components`,
       resolvers: [
         IlesComponentResolver,
         IlesLayoutResolver(appConfig),
