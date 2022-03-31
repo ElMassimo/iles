@@ -20,7 +20,7 @@ export async function writePages (
   await Promise.all(routesToRender.map(async route =>
     await writeRoute(config, manifest, route, islandsByPath[route.path])))
 
-  const tempIslandFiles = await glob(join(config.outDir, `**/${VIRTUAL_PREFIX}*.js`))
+  const tempIslandFiles = await glob(`**/${VIRTUAL_PREFIX}*.js`, { cwd: config.outDir, absolute: true })
   // Remove temporary island script files.
   for (const temp of tempIslandFiles) await fs.unlink(temp)
 }

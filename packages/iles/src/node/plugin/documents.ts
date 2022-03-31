@@ -51,7 +51,7 @@ export default function documentsPlugin (config: AppConfig): Plugin {
         modulesById[id] = { pattern, hasDocument: path => isMatch(path, pattern) }
 
       // Obtain files matching the specified pattern and extract frontmatter.
-      const files = await glob(pattern, { cwd: root })
+      const files = await glob(pattern, { cwd: root, ignore: ['node_modules/**'] })
       debug.documents('%s %O', rawPath, { path, pattern, files })
 
       let data = await Promise.all(files.map(async (file) => {

@@ -28,8 +28,7 @@ export async function bundle (config: AppConfig) {
 }
 
 async function bundleHtmlEntrypoints (config: AppConfig) {
-  const entrypoints = glob.sync(resolve(config.pagesDir, './**/*.html'),
-    { cwd: config.root, ignore: ['node_modules/**'] })
+  const entrypoints = await glob('**/*.html', { cwd: resolve(config.pagesDir), absolute: true })
 
   if (entrypoints.length > 0)
     await bundleWithVite(config, entrypoints, { htmlBuild: true, ssr: false })
