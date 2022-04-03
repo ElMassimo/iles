@@ -59,12 +59,10 @@ function virtualEntrypointsPlugin (root: string, entrypoints: Record<string, str
   return {
     name: 'iles:entrypoints',
     resolveId (id, importer) {
-      const entryFilename = relative(root, id.split('?', 2)[0])
+      if (id in entrypoints)
+        return VIRTUAL_PREFIX + id
 
-      if (entryFilename in entrypoints)
-        return VIRTUAL_PREFIX + entryFilename
-
-      if (entryFilename === VIRTUAL_TURBO_ID)
+      if (relative(root, id.split('?', 2)[0]) === VIRTUAL_TURBO_ID)
         return VIRTUAL_TURBO_ID
     },
     async load (id) {
