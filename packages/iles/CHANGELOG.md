@@ -1,3 +1,12 @@
+## [0.7.37](https://github.com/ElMassimo/iles/compare/v0.7.36...v0.7.37) (2022-04-03)
+
+
+### Bug Fixes
+
+* windows incompatibility when resolving virtual modules for islands ([1fc626d](https://github.com/ElMassimo/iles/commit/1fc626d9edc52ccf3de5e8cece1ef0e9a4f3ffb1)), closes [#107](https://github.com/ElMassimo/iles/issues/107)
+
+
+
 ## [0.7.36](https://github.com/ElMassimo/iles/compare/v0.7.35...v0.7.36) (2022-03-30)
 
 
