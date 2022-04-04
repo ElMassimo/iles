@@ -11,6 +11,9 @@
 
 [prettyUrls]: /config#prettyurls
 
+[directus]: https://github.com/ElMassimo/iles-directus-example/tree/main/iles
+[obtains articles]: https://github.com/ElMassimo/iles-directus-example/blob/main/iles/src/pages/articles/%5Bid%5D.vue#L5-L15
+
 # Routing 🛣
 
 <Iles/> provides file-based routing, powered by <kbd>[@islands/pages]</kbd>
@@ -68,6 +71,13 @@ can be used to generate many different paths based on custom logic.
 
 <Tip warn>
 Pages with dynamic parameters must define <kbd>[getStaticPaths]</kbd>.
+</Tip>
+
+<Tip title="Fetching Data from APIs">
+Use <kbd>[getStaticPaths]</kbd> to generate pages for data fetched
+from an API or a CMS.
+
+[See this full example][directus] for a blog that [obtains articles] from an API.
 </Tip>
 
 ### Named Parameters
