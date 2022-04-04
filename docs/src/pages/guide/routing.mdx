@@ -2,15 +2,17 @@
 [Pages]: /guide/development#pages
 [frontmatter]: /guide/markdown#frontmatter-and-meta
 [Vue Router]: https://next.router.vuejs.org/
-[getStaticPaths]: /guide/routing#getstaticpaths
-[pagination demo]: https://the-vue-point-with-iles.netlify.app/posts/1
+[getStaticPaths]: #generating-dynamic-routes
+[pagination demo in a blog]: https://the-vue-point-with-iles.netlify.app/posts/1
 [pagination source]: https://github.com/ElMassimo/iles/blob/main/playground/the-vue-point/src/pages/posts/%5Bpage%5D.vue
 [dynamic source]: https://github.com/ElMassimo/iles/blob/main/docs/src/pages/dynamic/%5Bsection%5D.vue
+[dynamic parameters]: #dynamic-routes
 
 [@islands/pages]: /guide/plugins#islandspages
 
 [prettyUrls]: /config#prettyurls
 
+[cms]: https://directus.io
 [directus]: https://github.com/ElMassimo/iles-directus-example/tree/main/iles
 [obtains articles]: https://github.com/ElMassimo/iles-directus-example/blob/main/iles/src/pages/articles/%5Bid%5D.vue#L5-L15
 
@@ -73,13 +75,6 @@ can be used to generate many different paths based on custom logic.
 Pages with dynamic parameters must define <kbd>[getStaticPaths]</kbd>.
 </Tip>
 
-<Tip title="Fetching Data from APIs">
-Use <kbd>[getStaticPaths]</kbd> to generate pages for data fetched
-from an API or a CMS.
-
-[See this full example][directus] for a blog that [obtains articles] from an API.
-</Tip>
-
 ### Named Parameters
 
 Named parameters are denoted using square brackets:
@@ -95,49 +90,49 @@ Catch-all routes are denoted with square brackets containing an ellipsis:
 The text after the ellipsis will be used both to name the route, and as the name
 of the prop in which the route parameters are passed.
 
-## `getStaticPaths`
+## Generating Dynamic Routes
 
-[Pages] with dynamic params must provide a `getStaticPaths` function.
+[Pages] with _[dynamic parameters]_ must provide a <kbd>getStaticPaths</kbd> function, which specifies the paths that should be generated at build time.
 
-`getStaticPaths` should return an array of objects to determine which paths should be
-statically generated at build time.
+It must return an array of objects, where each object specifies:
 
-<Tip>
-It must be specified in the default export of a Vue component. You may use the
-`definePageComponent` helper to provide intellisense, it will be automatically imported.
-</Tip>
+- `params`: the parameters to interpolate in the path
+- `props`: optional, any data needed to render the page
 
 ```vue
 <script lang="ts">
+import { fetchArticles } from '~/logic/articles'
+
 export default definePageComponent({
-  getStaticPaths () {
-    return [
-      { params: { section: 'one' }, props: { message: '...' } },
-      { params: { section: 'two' }, props: { message: '...' } },
-    ]
-  ],
+  async getStaticPaths () {
+    const articles = await fetchArticles()
+
+    return articles.map(article => ({
+      // Specify the parameters for the page.
+      params: { id: String(article.id) },
+
+      // Pass any data needed to render the page.
+      props: { article },
+    }))
+  },
 })
 </script>
 
 <script setup lang="ts">
-defineProps<{ message: string }>()
+import { Article } from '~/logic/articles'
+
+defineProps<{ article: Article }>()
 </script>
 
 <template>
-  <p>{{ message }}</p>
+  <p>{{ article.title }}</p>
 </template>
 ```
-<Caption>`src/pages/dynamic/[section].vue`</Caption>
-
-<Tip title="Demos">
-See the generated examples: [one](/dynamic/one) and [two](/dynamic/two), and the [source code][dynamic source].
-
-See a [pagination demo], and the [source code][pagination source].
-</Tip>
+<Caption>`src/pages/articles/[id].vue`</Caption>
 
 ### `params`
 
-The `params` key of each path will be used to resolve any named and rest parameters in the [page] filename, similar to how you would provide named parameters when using [Vue Router].
+The `params` of each path object will be used to resolve any named and rest parameters in the [page] filename, similar to how you would provide named parameters when using [Vue Router].
 
 You can access them in the [page] component using `$route.params`, or by specifying them
 in `defineProps`.
@@ -145,6 +140,25 @@ in `defineProps`.
 ### `props`
 
 You can pass additional data to each generated page by using `props` in each
-path object, and they will be provided as props in the [page] component.
+path object, and they will be provided as Vue props in the [page] component.
 
-You can access them using `defineProps` as in the example above, or as `props` in `usePage`.
+You can access them using `defineProps` as in the example above, or as `props` in `usePage` if you need to access them in a parent layout.
+
+<Tip title="Common Gotchas" warn>
+<kbd>getStaticPaths</kbd> must be specified inside the default export of a Vue component. 
+
+Use `definePageComponent` to provide intellisense, it will be automatically imported.
+</Tip>
+
+<Tip title="Using External Data">
+<kbd>[getStaticPaths]</kbd> can be `async` you can generate paths using
+data from an API or CMS.
+
+[See this example][directus] that [generates pages][obtains articles] for articles obtained using a [Directus][cms] API.
+</Tip>
+
+<Tip title="More Demos">
+See examples of dynamic paths in this site: [one](/dynamic/one) and [two](/dynamic/two), and the [source code][dynamic source].
+
+See a [pagination demo in a blog], and the [source code][pagination source].
+</Tip>
