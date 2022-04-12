@@ -1,3 +1,12 @@
+## [0.7.38](https://github.com/ElMassimo/iles/compare/v0.7.37...v0.7.38) (2022-04-12)
+
+
+### Bug Fixes
+
+* explicitly export types from composable ([#116](https://github.com/ElMassimo/iles/issues/116)) ([a5f05af](https://github.com/ElMassimo/iles/commit/a5f05af197cb89d088ddd396b494a2187f82677a))
+
+
+
 ## [0.7.37](https://github.com/ElMassimo/iles/compare/v0.7.36...v0.7.37) (2022-04-03)
 
 
