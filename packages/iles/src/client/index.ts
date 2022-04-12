@@ -3,12 +3,13 @@
 
 // Generic Types
 export type { Router, RouteRecordRaw } from './shared'
+export type { VueRenderable } from './app/composables/vueRenderer'
 
 // Composables
 export { useAppConfig } from './app/composables/appConfig'
 export { usePage, computedInPage } from './app/composables/pageData'
 export { useMDXComponents, provideMDXComponents } from './app/composables/mdxComponents'
-export { useVueRenderer, VueRenderable } from './app/composables/vueRenderer'
+export { useVueRenderer } from './app/composables/vueRenderer'
 export { useRouter, useRoute } from 'vue-router'
 export { useHead } from '@vueuse/head'
 
