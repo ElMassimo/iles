@@ -33,7 +33,7 @@
     "minimist": "^1.2.5",
     "semver": "^7.3.5",
     "typescript": "4.4.4",
-    "vitest": "^0.3.5"
+    "vitest": "^0.8.5"
   },
   "resolutions": {
     "eslint-plugin-vue": "7.17.0",
