@@ -67,7 +67,7 @@ __[Official Vue.js Blog][blog]__
 ## Installation 💿
 
 ```bash
-pnpm init iles@next # or npm or yarn
+pnpm create iles@next # or npm or yarn
 ```
 
 ## Documentation 📖
