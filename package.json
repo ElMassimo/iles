@@ -4,7 +4,7 @@
   "scripts": {
     "build:all": "pnpm nx run-many --target=build --all --exclude docs --exclude vue-blog",
     "lint:all": "pnpm nx run-many --target=lint --all",
-    "dev": "pnpm -r --parallel --filter packages run dev",
+    "dev": "pnpm -r --parallel --filter ./packages/** run dev",
     "docs": "npm -C docs run dev",
     "docs:build": "npm -C docs run build",
     "docs:now": "npm -C docs run now",
