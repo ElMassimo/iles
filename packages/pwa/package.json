@@ -1,0 +1,36 @@
+{
+  "name": "@islands/pwa",
+  "version": "0.0.0",
+  "scripts": {
+    "dev": "npm run build -- --watch",
+    "build": "tsup src/pwa.ts",
+    "lint": "eslint ."
+  },
+  "files": [
+    "dist",
+    "src"
+  ],
+  "types": "dist/pwa.d.ts",
+  "type": "module",
+  "exports": {
+    ".": {
+      "import": "./src/pwa.mjs",
+      "require": "./dist/pwa.cjs"
+    },
+    "./package.json": "./package.json"
+  },
+  "funding": "https://github.com/sponsors/ElMassimo",
+  "author": "Máximo Mussini <maximomussini@gmail.com>",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ElMassimo/iles"
+  },
+  "homepage": "https://github.com/ElMassimo/iles",
+  "bugs": "https://github.com/ElMassimo/iles/issues",
+  "dependencies": {
+    "vite-plugin-pwa": "^0.12.0"
+  },
+  "devDependencies": {
+    "iles": "workspace:*"
+  }
+}

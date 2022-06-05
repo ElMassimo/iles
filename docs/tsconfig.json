@@ -14,6 +14,7 @@
     "skipLibCheck": true,
     "esModuleInterop": true,
     "lib": ["ESNext", "DOM"],
+    "types": ["vite-plugin-pwa/client"],
     "paths": {
       "~/*": ["src/*"]
     },

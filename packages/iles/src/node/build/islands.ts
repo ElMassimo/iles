@@ -33,7 +33,7 @@ export async function bundleIslands (config: AppConfig, islandsByPath: IslandsBy
   if (Object.keys(entryFiles).length === 0) return
 
   await viteBuild(mergeViteConfig(config.vite, {
-    logLevel: 'warn',
+    logLevel: config.vite.logLevel ?? 'warn',
     publicDir: false,
     build: {
       emptyOutDir: false,

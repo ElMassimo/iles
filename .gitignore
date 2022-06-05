@@ -11,3 +11,5 @@ components.d.ts
 composables.d.ts
 
 packages/iles/tests/renderAsync.ts
+
+.idea/

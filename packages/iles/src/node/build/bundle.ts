@@ -41,7 +41,7 @@ async function bundleWithVite (config: AppConfig, entrypoints: string[] | Entryp
   const { htmlBuild = false, ssr } = options
 
   return await build(mergeViteConfig(config.vite, {
-    logLevel: 'warn',
+    logLevel: config.vite.logLevel ?? 'warn',
     ssr: {
       external: ['vue', '@vue/server-renderer'],
       noExternal: ['iles'],

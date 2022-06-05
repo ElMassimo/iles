@@ -10,5 +10,6 @@ packages:
   - packages/pages/
   - packages/prism/
   - packages/iles/
+  - packages/pwa/
   - playground/the-vue-point/
   - docs

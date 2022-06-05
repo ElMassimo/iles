@@ -4,10 +4,14 @@ import { defineConfig } from 'iles'
 import headings from '@islands/headings'
 import icons from '@islands/icons'
 import prism from '@islands/prism'
+import pwa from '@islands/pwa'
 
 import windicss from 'vite-plugin-windicss'
 import inspect from 'vite-plugin-inspect'
 import lastUpdated from './modules/lastUpdated'
+import site from './src/site'
+
+const { title, description } = site
 
 export default defineConfig({
   siteUrl: 'https://iles-docs.netlify.app',
@@ -19,6 +23,77 @@ export default defineConfig({
     icons(),
     prism(),
     lastUpdated(),
+    pwa({
+      // injectRegister to false prevents registerSW.js generation
+      injectRegister: false,
+      registerType: 'autoUpdate',
+      manifestFilename: 'pwa-manifest.json',
+      manifest: {
+        id: '/',
+        name: title,
+        short_name: title,
+        description,
+        theme_color: '#5C7E8F',
+        icons: [
+          {
+            src: 'pwa-192x192.png',
+            sizes: '192x192',
+            type: 'image/png',
+          },
+          {
+            src: 'pwa-512x512.png',
+            sizes: '512x512',
+            type: 'image/png',
+          },
+          {
+            src: 'pwa-192x192.png',
+            sizes: '192x192',
+            type: 'image/png',
+            purpose: 'any maskable',
+          },
+        ],
+      },
+      workbox: {
+        // should enable this: injectRegister to false prevents enable this option
+        skipWaiting: true,
+        // should enable this: injectRegister to false prevents also enable this option
+        clientsClaim: true,
+        // we use route names
+        navigateFallback: '/',
+        // exclude html files here: the pwa module will calculate their hash and add them to the sw precache
+        globPatterns: ['**/*.{js,css,svg,ico,png,avif,webmanifest,xml}'],
+        runtimeCaching: [
+          {
+            urlPattern: new RegExp('https://unpkg.com/.*', 'i'),
+            handler: 'CacheFirst',
+            options: {
+              cacheName: 'unpkg-cache',
+              expiration: {
+                maxEntries: 10,
+                maxAgeSeconds: 60 * 60 * 24 * 365, // <== 365 days
+              },
+              cacheableResponse: {
+                statuses: [0, 200],
+              },
+            },
+          },
+          {
+            urlPattern: new RegExp('https://pixel.thesemetrics.org/.*', 'i'),
+            handler: 'CacheFirst',
+            options: {
+              cacheName: 'thesemetrics-cache',
+              expiration: {
+                maxEntries: 10,
+                maxAgeSeconds: 60 * 60 * 24 * 365, // <== 365 days
+              },
+              cacheableResponse: {
+                statuses: [0, 200],
+              },
+            },
+          },
+        ],
+      },
+    }),
   ],
   markdown: {
     rehypePlugins: [
