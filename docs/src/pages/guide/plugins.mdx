@@ -26,6 +26,7 @@ tocLevel: 3
 [rehype]: https://github.com/rehypejs/rehype
 
 [unplugin-icons]: https://github.com/antfu/unplugin-icons
+[vite-plugin-pwa]: https://github.com/antfu/vite-plugin-pwa
 
 [prismjs]: https://prismjs.com/
 [@islands/excerpt]: https://github.com/ElMassimo/iles/tree/main/packages/excerpt
@@ -36,6 +37,7 @@ tocLevel: 3
 [@islands/pages]: https://github.com/ElMassimo/iles/tree/main/packages/pages
 [@islands/prism]: https://github.com/ElMassimo/iles/tree/main/packages/prism
 [@islands/feed]: https://github.com/ElMassimo/iles/tree/main/packages/feed
+[@islands/pwa]: https://github.com/ElMassimo/iles/tree/main/packages/pwa
 
 [feed]: https://github.com/jpmonette/feed
 
@@ -90,7 +92,7 @@ the development dependencies. Otherwise, add the package manually and run instal
 ## Authoring a Module
 
 Modules in <Iles/> have access to the [same configuration options][config] as in
-`iles.config.ts`, and can make use of the `config` and `configResolved` hooks 
+`iles.config.ts`, and can make use of the `config` and `configResolved` hooks
 that work similarly to [those in Vite](https://vitejs.dev/guide/api-plugin.html#config).
 
 You can start your own module package by running:
@@ -285,6 +287,10 @@ Shipped inside <Iles/> to provide support for [pages].
 - Set a different layout for all pages in a specific dir
 - Provide additional data to use in the page, such as `gitLastUpdated`
 </Tip>
+
+### <kbd>[@islands/pwa]</kbd>
+
+A module to add and configure [vite-plugin-pwa]: WIP
 
 ## Vite Plugins <ViteLogo/>
 
