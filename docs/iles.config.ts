@@ -24,8 +24,6 @@ export default defineConfig({
     prism(),
     lastUpdated(),
     pwa({
-      // injectRegister to false prevents registerSW.js generation
-      injectRegister: false,
       registerType: 'autoUpdate',
       manifestFilename: 'pwa-manifest.json',
       manifest: {
@@ -34,6 +32,7 @@ export default defineConfig({
         short_name: title,
         description,
         theme_color: '#5C7E8F',
+        background_color: '#ffffff',
         icons: [
           {
             src: 'pwa-192x192.png',
@@ -54,14 +53,8 @@ export default defineConfig({
         ],
       },
       workbox: {
-        // should enable this: injectRegister to false prevents enable this option
-        skipWaiting: true,
-        // should enable this: injectRegister to false prevents also enable this option
-        clientsClaim: true,
-        // we use route names
-        navigateFallback: '/',
         // exclude html files here: the pwa module will calculate their hash and add them to the sw precache
-        globPatterns: ['**/*.{js,css,svg,ico,png,avif,webmanifest,xml}'],
+        globPatterns: ['**/*.{js,css,svg,ico,png,avif,json,xml}'],
         runtimeCaching: [
           {
             urlPattern: new RegExp('https://unpkg.com/.*', 'i'),
