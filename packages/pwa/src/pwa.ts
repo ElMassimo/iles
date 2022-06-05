@@ -1,11 +1,17 @@
 import fs from 'fs'
 import crypto from 'crypto'
 import { resolve } from 'path'
-import type { IlesModule } from 'iles'
+import { performance } from 'perf_hooks'
+import type { IlesModule, UserConfig } from 'iles'
 import type { VitePluginPWAAPI, VitePWAOptions } from 'vite-plugin-pwa'
 import type { Plugin, PluginOption, LogLevel } from 'vite'
 import type { ManifestEntry } from 'workbox-build'
 import { VitePWA } from 'vite-plugin-pwa'
+
+function timeSince (start: number): string {
+  const diff = performance.now() - start
+  return diff < 750 ? `${Math.round(diff)}ms` : `${(diff / 1000).toFixed(1)}s`
+}
 
 function lookupPWAVitePlugin (plugins: PluginOption[]): Plugin | undefined {
   for (const p of plugins) {
@@ -27,6 +33,39 @@ function lookupPWAVitePlugin (plugins: PluginOption[]): Plugin | undefined {
   }
 
   return undefined
+}
+
+function configureDefaults (config: UserConfig, options: Partial<VitePWAOptions> = {}): Partial<VitePWAOptions> {
+  const {
+    strategies = 'generateSW',
+    registerType = 'prompt',
+    workbox = {},
+    ...rest
+  } = options
+
+  if (strategies === 'generateSW') {
+    const useWorkbox = { ...workbox }
+    const newOptions: Partial<VitePWAOptions> = { ...rest, strategies, registerType }
+    // we use route names: use Vite base or its default
+    if (!useWorkbox.navigateFallback || useWorkbox.navigateFallback.endsWith('.html'))
+      useWorkbox.navigateFallback = config.vite?.base || '/'
+
+    if (registerType === 'autoUpdate') {
+      // we don't need registerSW.js
+      newOptions.injectRegister = null
+      if (useWorkbox.clientsClaim === undefined)
+        useWorkbox.clientsClaim = true
+
+      if (useWorkbox.skipWaiting === undefined)
+        useWorkbox.skipWaiting = true
+    }
+
+    newOptions.workbox = useWorkbox
+
+    return newOptions
+  }
+
+  return options
 }
 
 function buildManifestEntry (
@@ -65,13 +104,11 @@ export default function IlesPWA (options: Partial<VitePWAOptions> = {}): IlesMod
       const plugins = config.vite?.plugins
       const plugin = plugins ? lookupPWAVitePlugin(plugins) : undefined
 
-      // todo@userquin: handle here skipWaiting, clientsClaim, navigateFallback and injectRegister
-      // todo@maximo: it providing the plugin there is no way to access/change the pwa plugin configuration
       if (plugin) {
-        throw new Error('Provide vite-plugin-pwa options on @islands/pwa module, remove vite-plugin-pwa from vite.plugins')
+        api = plugin.api
       }
       else {
-        const pluginPWA = VitePWA(options)
+        const pluginPWA = VitePWA(configureDefaults(config, options))
         api = pluginPWA.find(p => p.name === 'vite-plugin-pwa')?.api
         return {
           vite: {
@@ -83,7 +120,8 @@ export default function IlesPWA (options: Partial<VitePWAOptions> = {}): IlesMod
     ssg: {
       async onSiteRendered ({ pages, config: { outDir } }) {
         if (api && !api.disabled) {
-          // todo@userquin: remove dynamic pages
+          console.info('Regenerating PWA service worker...')
+          const startTime = performance.now()
           const addRoutes = await Promise.all(pages.map((r) => {
             return buildManifestEntry(r.path, resolve(outDir, r.outputFilename))
           }))
@@ -95,6 +133,7 @@ export default function IlesPWA (options: Partial<VitePWAOptions> = {}): IlesMod
           api.generateBundle()
           // regenerate the sw
           await api.generateSW()
+          console.info(`\n√  PWA done in ${timeSince(startTime)}\n`)
         }
       },
     },
