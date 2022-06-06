@@ -24,7 +24,6 @@ export default defineConfig({
     prism(),
     lastUpdated(),
     pwa({
-      registerType: 'autoUpdate',
       manifestFilename: 'pwa-manifest.json',
       manifest: {
         id: '/',
