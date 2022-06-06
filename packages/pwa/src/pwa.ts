@@ -17,20 +17,25 @@ function configureDefaults (config: UserConfig, options: Partial<VitePWAOptions>
   const {
     strategies = 'generateSW',
     registerType = 'prompt',
+    injectRegister,
     workbox = {},
+    injectManifest = {},
     ...rest
   } = options
 
   if (strategies === 'generateSW') {
     const useWorkbox = { ...workbox }
-    const newOptions: Partial<VitePWAOptions> = { ...rest, strategies, registerType }
+    const newOptions: Partial<VitePWAOptions> = {
+      ...rest,
+      strategies,
+      registerType,
+      injectRegister,
+    }
     // we use route names: use Vite base or its default
     if (!useWorkbox.navigateFallback || useWorkbox.navigateFallback.endsWith('.html'))
       useWorkbox.navigateFallback = config.vite?.base || '/'
 
     if (registerType === 'autoUpdate') {
-      // we don't need registerSW.js
-      newOptions.injectRegister = null
       if (useWorkbox.clientsClaim === undefined)
         useWorkbox.clientsClaim = true
 
@@ -38,10 +43,18 @@ function configureDefaults (config: UserConfig, options: Partial<VitePWAOptions>
         useWorkbox.skipWaiting = true
     }
 
+    // we don't need registerSW.js if not configured
+    if (injectRegister === undefined)
+      newOptions.injectRegister = null
+
     newOptions.workbox = useWorkbox
 
     return newOptions
   }
+
+  // we don't need registerSW.js if not configured
+  if (injectRegister === undefined)
+    return { ...rest, strategies, registerType, injectManifest, injectRegister: null }
 
   return options
 }
