@@ -13,28 +13,6 @@ function timeSince (start: number): string {
   return diff < 750 ? `${Math.round(diff)}ms` : `${(diff / 1000).toFixed(1)}s`
 }
 
-function lookupPWAVitePlugin (plugins: PluginOption[]): Plugin | undefined {
-  for (const p of plugins) {
-    if (p) {
-      if (Array.isArray(p)) {
-        const pwa = p.find(p1 =>
-          p1
-            && !Array.isArray(p1)
-            && p1.name === 'vite-plugin-pwa',
-        )
-        if (pwa)
-          return pwa as Plugin
-      }
-      else {
-        if (p.name === 'vite-plugin-pwa')
-          return p
-      }
-    }
-  }
-
-  return undefined
-}
-
 function configureDefaults (config: UserConfig, options: Partial<VitePWAOptions> = {}): Partial<VitePWAOptions> {
   const {
     strategies = 'generateSW',
@@ -102,8 +80,7 @@ export default function IlesPWA (options: Partial<VitePWAOptions> = {}): IlesMod
     name: '@islands/pwa',
     config (config) {
       const plugins = config.vite?.plugins
-      const plugin = plugins ? lookupPWAVitePlugin(plugins) : undefined
-
+      const plugin = plugins?.flat(Infinity).find(p => p.name === 'vite-plugin-pwa')
       if (plugin) {
         api = plugin.api
       }

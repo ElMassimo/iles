@@ -180,23 +180,14 @@ async function createIlesModule (pkgName: string, ...options: any[]): Promise<Il
 }
 
 function inferJSX (config: UserConfig) {
-  const plugins = config.vite?.plugins?.flat() || []
+  const plugins = config.vite?.plugins?.flat(Infinity) || []
   for (const plugin of plugins) {
     if (!plugin)
       continue
 
-    if (Array.isArray(plugin)) {
-      for (const plugin2 of plugin) {
-        const { name = '' } = plugin2 && !Array.isArray(plugin2) ? plugin2 : {}
-        if (name.includes('preact')) return 'preact'
-        if (name.includes('solid')) return 'solid'
-      }
-    }
-    else {
-      const { name = '' } = plugin || {}
-      if (name.includes('preact')) return 'preact'
-      if (name.includes('solid')) return 'solid'
-    }
+    const { name = '' } = plugin || {}
+    if (name.includes('preact')) return 'preact'
+    if (name.includes('solid')) return 'solid'
   }
 }
 
