@@ -45,10 +45,10 @@ export const onLoad: OnLoadFn = () => {
     pwaCloseBtn.addEventListener('click', () => hidePwaDialog(true))
     refreshSW = registerSW({
       immediate: true,
-      onOfflineReady () {
-        pwaToastMessage.innerHTML = 'Application ready to work offline.'
-        showPwaDialog(true)
-      },
+      // onOfflineReady () {
+      //   pwaToastMessage.innerHTML = 'Application ready to work offline.'
+      //   showPwaDialog(true)
+      // },
       onNeedRefresh () {
         pwaToastMessage.innerHTML = 'New content available, click on reload button to update.'
         showPwaDialog(false)
