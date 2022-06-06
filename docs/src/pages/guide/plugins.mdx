@@ -9,6 +9,8 @@ tocLevel: 3
 [components]: /guide/development#components
 [routing]: /guide/routing
 [rss]: /guide/rss
+[îles docs configuration]: https://github.com/ElMassimo/iles/blob/main/docs/iles.config.ts
+[ReloadPrompt component]: https://github.com/ElMassimo/iles/blob/main/docs/components/ReloadPrompt.vue
 
 [@vitejs/plugin-vue]: https://www.npmjs.com/package/@vitejs/plugin-vue
 [unplugin-vue-components]: https://github.com/antfu/unplugin-vue-components
@@ -290,13 +292,64 @@ Shipped inside <Iles/> to provide support for [pages].
 
 ### <kbd>[@islands/pwa]</kbd>
 
-A module to add and configure [vite-plugin-pwa].
+A module to add and configure [vite-plugin-pwa] to make your app work offline.
 
 This module will configure [vite-plugin-pwa] properly with some defaults:
 - when using `generateWS` strategy with `autoUpdate`, the module will configure `clientsClaim` and `skipWaiting` to `true` and disable the generation of `registerSW.js` if you don't enable it explicitly.
 - when using `generateWS` strategy with `prompt`, the module will disable the generation of `registerSW.js` if you don't enable it explicitly.
 
-You can still use [vite-plugin-pwa] as a `Vite` plugin instead using [@islands/pwa] module, but you will need to configure its options properly.
+```ts
+// iles.config.ts
+import { defineConfig } from 'iles'
+import pwa from '@islands/pwa'
+
+export default defineConfig({
+  ...
+  modules: [
+    pwa({pwa options}),
+  ],
+  ...
+})
+```
+
+You can take a look at the source code of this website using `generateSW` strategy and `prompt` for update:
+- [îles docs configuration]
+- [ReloadPrompt component]
+
+<Tip title="Register service worker generated with generareSW strategy with auto update">
+To register the service worker generated using `generateSW` strategy with `autoUpdate` add these client entries to the base layout on your application:
+
+```ts
+  // src/layouts/base.vue
+  <script client:load lang="ts">
+  import { registerSW } from 'virtual:pwa-register'
+
+  registerSW({ immediate: true })
+  </script>
+```
+</Tip>
+
+You can still configure [vite-plugin-pwa] as a `Vite` plugin instead using [@islands/pwa] module: to make your app work offline you will also need to add [@islands/pwa] module.
+
+In the case you want to configure [vite-plugin-pwa] as a `Vite` plugin, [@islands/pwa] module will use it, you will need to configure its options properly.
+
+```ts
+// iles.config.ts
+import { defineConfig } from 'iles'
+import pwa from '@islands/pwa'
+import { VitePWA } from 'vite-plugin-pwa'
+
+export default defineConfig({
+  ...
+  modules: [
+    pwa({pwa options will be ignored by the module}),
+  ],
+  vite: {
+    plugins: [VitePWA({pwa options})]
+  }
+  ...
+})
+```
 
 ## Vite Plugins <ViteLogo/>
 
