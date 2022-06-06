@@ -290,7 +290,13 @@ Shipped inside <Iles/> to provide support for [pages].
 
 ### <kbd>[@islands/pwa]</kbd>
 
-A module to add and configure [vite-plugin-pwa]: WIP
+A module to add and configure [vite-plugin-pwa].
+
+This module will configure [vite-plugin-pwa] properly with some defaults:
+- when using `generateWS` strategy with `autoUpdate`, the module will configure `clientsClaim` and `skipWaiting` to `true` and disable the generation of `registerSW.js` if you don't enable it explicitly.
+- when using `generateWS` strategy with `prompt`, the module will disable the generation of `registerSW.js` if you don't enable it explicitly.
+
+You can still use [vite-plugin-pwa] as a `Vite` plugin instead using [@islands/pwa] module, but you will need to configure its options properly.
 
 ## Vite Plugins <ViteLogo/>
 
