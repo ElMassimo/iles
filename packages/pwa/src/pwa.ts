@@ -4,7 +4,6 @@ import { resolve } from 'path'
 import { performance } from 'perf_hooks'
 import type { IlesModule, UserConfig } from 'iles'
 import type { VitePluginPWAAPI, VitePWAOptions } from 'vite-plugin-pwa'
-import type { Plugin, PluginOption, LogLevel } from 'vite'
 import type { ManifestEntry } from 'workbox-build'
 import { VitePWA } from 'vite-plugin-pwa'
 
@@ -33,7 +32,7 @@ function configureDefaults (config: UserConfig, options: Partial<VitePWAOptions>
     }
     // we use route names: use Vite base or its default
     if (!useWorkbox.navigateFallback || useWorkbox.navigateFallback.endsWith('.html'))
-      useWorkbox.navigateFallback = config.vite?.base || '/'
+      useWorkbox.navigateFallback = config.vite?.base ?? '/'
 
     if (registerType === 'autoUpdate') {
       if (useWorkbox.clientsClaim === undefined)
@@ -53,8 +52,15 @@ function configureDefaults (config: UserConfig, options: Partial<VitePWAOptions>
   }
 
   // we don't need registerSW.js if not configured
-  if (injectRegister === undefined)
-    return { ...rest, strategies, registerType, injectManifest, injectRegister: null }
+  if (injectRegister === undefined) {
+    return {
+      ...rest,
+      strategies,
+      registerType,
+      injectManifest,
+      injectRegister: null,
+    }
+  }
 
   return options
 }
@@ -92,8 +98,7 @@ export default function IlesPWA (options: Partial<VitePWAOptions> = {}): IlesMod
   return {
     name: '@islands/pwa',
     config (config) {
-      const plugins = config.vite?.plugins
-      const plugin = plugins?.flat(Infinity).find(p => p.name === 'vite-plugin-pwa')
+      const plugin = config.vite?.plugins?.flat(Infinity).find(p => p.name === 'vite-plugin-pwa')
       if (plugin) {
         api = plugin.api
       }
@@ -116,8 +121,9 @@ export default function IlesPWA (options: Partial<VitePWAOptions> = {}): IlesMod
             return buildManifestEntry(r.path, resolve(outDir, r.outputFilename))
           }))
           api.extendManifestEntries((manifestEntries) => {
+            // just add the routes: the returned value will override existing entry
             manifestEntries.push(...addRoutes)
-            return manifestEntries
+            return undefined
           })
           // generate the manifest.webmanifest file
           api.generateBundle()
