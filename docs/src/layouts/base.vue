@@ -7,4 +7,5 @@ if (import.meta.env.PROD)
   <MetaTags/>
   <TheNavBar/>
   <slot/>
+  <ReloadPrompt/>
 </template>

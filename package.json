@@ -1,6 +1,7 @@
 {
   "name": "root",
   "private": true,
+  "packageManager": "pnpm@7.1.3",
   "scripts": {
     "build:all": "pnpm nx run-many --target=build --all --exclude docs --exclude vue-blog",
     "lint:all": "pnpm nx run-many --target=lint --all",
@@ -31,6 +32,7 @@
     "eslint": "^7.32.0",
     "execa": "^5.1.1",
     "minimist": "^1.2.5",
+    "pkg-dir": "^6.0.1",
     "semver": "^7.3.5",
     "typescript": "4.4.4",
     "vitest": "^0.8.5"

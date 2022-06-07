@@ -1,3 +1,19 @@
+/
+  x-frame-options: DENY
+  x-xss-protection: 1; mode=block
+
+/faqs/*
+  x-frame-options: DENY
+  x-xss-protection: 1; mode=block
+
+/guide/*
+  x-frame-options: DENY
+  x-xss-protection: 1; mode=block
+
+/*.html
+  x-frame-options: DENY
+  x-xss-protection: 1; mode=block
+
 /assets/*
   cache-control: max-age=31536000
   cache-control: immutable
@@ -11,4 +27,7 @@
   cache-control: immutable
 
 /*
+  x-content-type-options: nosniff
+  referrer-policy: no-referrer
+  strict-transport-security: max-age=31536000; includeSubDomains
   content-security-policy-report-only: default-src 'self'; font-src 'self'; img-src 'self' data: pixel.thesemetrics.org developer.stackblitz.com; script-src 'self' 'unsafe-inline' unpkg.com; connect-src 'self' 'unsafe-inline' pixel.thesemetrics.org; style-src 'self'

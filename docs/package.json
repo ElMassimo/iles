@@ -20,6 +20,7 @@
     "@islands/headings": "workspace:*",
     "@islands/icons": "workspace:*",
     "@islands/prism": "workspace:*",
+    "@islands/pwa": "workspace:*",
     "@preact/preset-vite": "^2.1.5",
     "@types/cross-spawn": "^6.0.2",
     "@vueuse/core": "^6.9.2",
