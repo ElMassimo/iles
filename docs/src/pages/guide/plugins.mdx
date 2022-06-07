@@ -9,8 +9,8 @@ tocLevel: 3
 [components]: /guide/development#components
 [routing]: /guide/routing
 [rss]: /guide/rss
-[îles docs configuration]: https://github.com/ElMassimo/iles/blob/main/docs/iles.config.ts
-[ReloadPrompt component]: https://github.com/ElMassimo/iles/blob/main/docs/components/ReloadPrompt.vue
+[pwa]: /guide/pwa
+[@userquin]: https://twitter.com/userquin
 
 [@vitejs/plugin-vue]: https://www.npmjs.com/package/@vitejs/plugin-vue
 [unplugin-vue-components]: https://github.com/antfu/unplugin-vue-components
@@ -61,7 +61,6 @@ features such as `frontmatter` and `meta` information for [pages].
 Use the <kbd>modules</kbd> option in [`iles.config.ts`][config] to add modules to your application.
 
 ```ts
-// iles.config.ts
 import { defineConfig } from 'iles'
 
 import icons from '@islands/icons'
@@ -87,6 +86,7 @@ export default defineConfig({
   ],
 })
 ```
+<Caption>`iles.config.ts`</Caption>
 
 When providing a string, <Iles/> will automatically add the specified module to
 the development dependencies. Otherwise, add the package manually and run install.
@@ -123,7 +123,6 @@ A module to extract an excerpt from [MDX documents][markdown]:
 - ⚙️ `maxLength`, `separator`, and `extract` options to customize excerpt
 
 ```ts
-// iles.config.ts
 import { defineConfig } from 'iles'
 
 export default defineConfig({
@@ -132,6 +131,7 @@ export default defineConfig({
   ],
 })
 ```
+<Caption>`iles.config.ts`</Caption>
 
 Use <kbd>[meta][pageData]</kbd> to access a plain-text version of the excerpt for the current page:
 
@@ -168,7 +168,6 @@ A module that injects a [rehype] plugin to parse headings in [MDX documents][mar
 - 📖 sets `meta.headings` to enable rendering sidebars and table of contents
 
 ```ts
-// iles.config.ts
 import { defineConfig } from 'iles'
 
 export default defineConfig({
@@ -177,6 +176,7 @@ export default defineConfig({
   ],
 })
 ```
+<Caption>`iles.config.ts`</Caption>
 
 ### <kbd>[@islands/icons]</kbd>
 
@@ -244,6 +244,25 @@ Check the [readme][@islands/prism] for more information.
   ],
 ```
 
+### <kbd>[@islands/pwa]</kbd>
+
+A module to add and configure <kbd>[vite-plugin-pwa]</kbd> to make your website
+work offline, created by <kbd>[@userquin]</kbd>.
+
+```ts
+import { defineConfig } from 'iles'
+import pwa from '@islands/pwa'
+
+export default defineConfig({
+  modules: [
+    pwa(options),
+  ],
+})
+```
+<Caption>`iles.config.ts`</Caption>
+
+See the [_PWA_][pwa] guide for more information.
+
 ### <kbd>[@islands/mdx]</kbd>
 
 Shipped inside <Iles/> to provide [MDX support][mdx].
@@ -290,67 +309,6 @@ Shipped inside <Iles/> to provide support for [pages].
 - Provide additional data to use in the page, such as `gitLastUpdated`
 </Tip>
 
-### <kbd>[@islands/pwa]</kbd>
-
-A module to add and configure [vite-plugin-pwa] to make your app work offline.
-
-This module will configure [vite-plugin-pwa] properly with some defaults:
-- when using `generateWS` strategy with `autoUpdate`, the module will configure `clientsClaim` and `skipWaiting` to `true` and disable the generation of `registerSW.js` if you don't enable it explicitly.
-- when using `generateWS` strategy with `prompt`, the module will disable the generation of `registerSW.js` if you don't enable it explicitly.
-
-```ts
-// iles.config.ts
-import { defineConfig } from 'iles'
-import pwa from '@islands/pwa'
-
-export default defineConfig({
-  ...
-  modules: [
-    pwa({pwa options}),
-  ],
-  ...
-})
-```
-
-You can take a look at the source code of this website using `generateSW` strategy and `prompt` for update:
-- [îles docs configuration]
-- [ReloadPrompt component]
-
-<Tip title="Register service worker generated with generareSW strategy with auto update">
-To register the service worker generated using `generateSW` strategy with `autoUpdate` add these client entries to the base layout on your application:
-
-```ts
-  // src/layouts/base.vue
-  <script client:load lang="ts">
-  import { registerSW } from 'virtual:pwa-register'
-
-  registerSW({ immediate: true })
-  </script>
-```
-</Tip>
-
-You can still configure [vite-plugin-pwa] as a `Vite` plugin instead using [@islands/pwa] module: to make your app work offline you will also need to add [@islands/pwa] module.
-
-In the case you want to configure [vite-plugin-pwa] as a `Vite` plugin, [@islands/pwa] module will use it, you will need to configure its options properly.
-
-```ts
-// iles.config.ts
-import { defineConfig } from 'iles'
-import pwa from '@islands/pwa'
-import { VitePWA } from 'vite-plugin-pwa'
-
-export default defineConfig({
-  ...
-  modules: [
-    pwa({pwa options will be ignored by the module}),
-  ],
-  vite: {
-    plugins: [VitePWA({pwa options})]
-  }
-  ...
-})
-```
-
 ## Vite Plugins <ViteLogo/>
 
 You can use any Vite.js plugins by [configuring them as usual], but note that
@@ -365,7 +323,6 @@ The examples list some of the defaults for each plugin.
 Provides support for Single File Components with Vue 3.
 
 ```ts
-// iles.config.ts
 import { defineConfig } from 'iles'
 
 export default defineConfig({
@@ -374,6 +331,7 @@ export default defineConfig({
   },
 })
 ```
+<Caption>`iles.config.ts`</Caption>
 
 ### <kbd>[unplugin-vue-components]</kbd>
 

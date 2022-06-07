@@ -1,0 +1,83 @@
+[module]: /guide/plugins
+[@islands/pwa]: https://github.com/ElMassimo/iles/tree/main/packages/pwa
+[vite-plugin-pwa]: https://github.com/antfu/vite-plugin-pwa
+[generateSW]: https://vite-plugin-pwa.netlify.app/workbox/generate-sw.html
+[prompt]: https://vite-plugin-pwa.netlify.app/guide/prompt-for-update.html
+[autoUpdate]: https://vite-plugin-pwa.netlify.app/guide/auto-update.html
+[PWA configuration]: https://github.com/ElMassimo/iles/blob/main/docs/iles.config.ts
+[ReloadPrompt component]: https://github.com/ElMassimo/iles/blob/main/docs/components/ReloadPrompt.vue
+[client script block]: /guide/client-scripts
+[@userquin]: https://twitter.com/userquin
+
+# PWA (Progressive Web Application)
+
+<Iles/> provides the <kbd>[@islands/pwa]</kbd> [module], created by <kbd>[@userquin]</kbd>,
+which will add and configure <kbd>[vite-plugin-pwa]</kbd> to make your
+website work offline.
+
+```ts
+// iles.config.ts
+import { defineConfig } from 'iles'
+import pwa from '@islands/pwa'
+
+export default defineConfig({
+  modules: [
+    pwa(options),
+  ],
+})
+```
+
+## Defaults
+
+By default, it will use the <kbd>[generateSW]</kbd> strategy, and it will [prompt for updates][prompt].
+
+- When using <kbd>[generateSW]</kbd> with [`prompt`][prompt]:
+  - `registerSW.js` won't be generated unless explicitly enabled
+
+- When using <kbd>[generateSW]</kbd> with [`autoUpdate`][autoUpdate]:
+  - `clientsClaim` and `skipWaiting` will be enabled
+  - `registerSW.js` won't be generated unless explicitly enabled
+
+## Using a `prompt` for updates
+
+When using the <kbd>[generateSW]</kbd> strategy with [`prompt`][prompt], you
+should register the service worker using a [client script block] in a component
+that is rendered in every page of your site (included in every layout).
+
+See the [PWA configuration] for this website, which uses a dialog component
+[to display a prompt][ReloadPrompt component] to update the site.
+
+## Using `autoUpdate`
+
+When using the <kbd>[generateSW]</kbd> strategy with [`autoUpdate`][autoUpdate],
+you should register the service worker using a [client script block] in a component
+that is rendered in every page of your site (included in every layout).
+
+```vue
+<script client:load lang="ts">
+import { registerSW } from 'virtual:pwa-register'
+
+registerSW({ immediate: true })
+</script>
+```
+<Caption>`src/layouts/base.vue`</Caption>
+
+## Specifying the Vite plugin manually
+
+When specifying <kbd>[vite-plugin-pwa]</kbd> manually, <kbd>[@islands/pwa]</kbd>
+will detect it and use it:
+
+```ts
+import { defineConfig } from 'iles'
+import { VitePWA } from 'vite-plugin-pwa'
+
+export default defineConfig({
+  modules: [
+    '@islands/pwa',
+  ],
+  vite: {
+    plugins: [VitePWA(options)],
+  },
+})
+```
+<Caption>`iles.config.ts`</Caption>

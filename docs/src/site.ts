@@ -41,6 +41,7 @@ const site = {
         { text: 'Turbo', link: '/guide/turbo' },
         { text: 'RSS Feeds', link: '/guide/rss' },
         { text: 'Plugins', link: '/guide/plugins' },
+        { text: 'PWA', link: '/guide/pwa' },
         { text: 'Deployment', link: '/guide/deployment' },
       ],
     },

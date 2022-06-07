@@ -5,12 +5,12 @@ defineProps({
 </script>
 
 <template>
-  <a class="app-button font-medium" :class="{ outline, colored: !outline }">
+  <component :is="$attrs.href ? 'a' : 'button'" class="app-button font-medium" :class="{ outline, colored: !outline }">
     <div v-if="$slots.icon" class="inline-block mr-1">
       <slot name="icon"/>
     </div>
     <slot/>
-  </a>
+  </component>
 </template>
 
 <style lang="postcss" scoped>
