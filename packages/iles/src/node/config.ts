@@ -277,7 +277,6 @@ function viteConfigDefaults (root: string, userConfig: UserConfig): ViteOptions 
       fs: { allow: [root, DIST_CLIENT_PATH, HYDRATION_DIST_PATH] },
     },
     build: {
-      brotliSize: false,
       cssCodeSplit: false,
     },
     define: {},
