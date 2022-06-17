@@ -151,7 +151,12 @@ function activateScript (el) {
 
 function hasPrefetch (link) {
   link = createElement()
-  return link.relList && link.relList.supports && link.relList.supports('prefetch')
+  return (
+    !/firefox/i.test(navigator.userAgent) &&
+    link.relList &&
+    link.relList.supports &&
+    link.relList.supports('prefetch')
+  );
 }
 
 function prefetchWithLinkTag (url, link) {
