@@ -1,3 +1,18 @@
+## [0.7.39](https://github.com/ElMassimo/iles/compare/v0.7.38...v0.7.39) (2022-06-22)
+
+
+### Bug Fixes
+
+* outDir in islands build ([#134](https://github.com/ElMassimo/iles/issues/134)) ([6e5e9db](https://github.com/ElMassimo/iles/commit/6e5e9db8003911bb1bc369fdb2097d56c22a7492))
+* remove brotliSize setting which is deprecated ([21dbfaa](https://github.com/ElMassimo/iles/commit/21dbfaab2a6ee7e2609a3bb38786aacac43a808d))
+
+
+### Features
+
+* add pwa module by [@userquin](https://github.com/userquin) ([#127](https://github.com/ElMassimo/iles/issues/127)) ([8d9c2bf](https://github.com/ElMassimo/iles/commit/8d9c2bfb12ae5326815b34699b3c75e03bb7a2de))
+
+
+
 ## [0.7.38](https://github.com/ElMassimo/iles/compare/v0.7.37...v0.7.38) (2022-04-12)
 
 
