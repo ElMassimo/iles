@@ -37,6 +37,7 @@ export async function bundleIslands (config: AppConfig, islandsByPath: IslandsBy
     publicDir: false,
     build: {
       emptyOutDir: false,
+      outDir: config.outDir,
       manifest: true,
       minify: 'esbuild',
       rollupOptions: {
