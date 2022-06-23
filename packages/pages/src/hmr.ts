@@ -1,8 +1,8 @@
-import { ViteDevServer } from 'vite'
+import type { ViteDevServer, Plugin } from 'vite'
 import { debug, slash } from './utils'
 import { Awaitable, MODULE_ID, ResolvedOptions, PagesApi } from './types'
 
-export function handleHMR (api: PagesApi, options: ResolvedOptions, clearRoutes: () => void) {
+export function handleHMR (api: PagesApi, options: ResolvedOptions, clearRoutes: () => void): Plugin['handleHotUpdate'] {
   const server = options.server!
 
   onPage('add', async (path) => {
@@ -17,14 +17,14 @@ export function handleHMR (api: PagesApi, options: ResolvedOptions, clearRoutes:
     return true
   })
 
-  onPage('change', async (path) => {
-    const { changed, needsReload } = await api.updatePage(path)
-    if (changed) {
-      invalidatePageFiles(path, server)
-      debug.hmr('change', path)
-      return needsReload
+  return async (ctx) => {
+    const path = slash(ctx.file)
+    if (api.isPage(path)) {
+      const { changed, needsReload } = await api.updatePage(path)
+      if (changed) debug.hmr('change', path)
+      if (needsReload) fullReload()
     }
-  })
+  }
 
   function onPage (eventName: string, handler: (path: string) => Awaitable<void | boolean>) {
     server.watcher.on(eventName, async (path) => {
