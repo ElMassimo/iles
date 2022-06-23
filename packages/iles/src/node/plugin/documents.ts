@@ -6,6 +6,7 @@ import { relative } from 'pathe'
 import type { AppConfig } from '../shared'
 import { parseId } from './parse'
 import { debug, serialize } from './utils'
+import { resolve } from 'path'
 
 const definitionRegex = /(function|const|let|var)[\s\n]+\buseDocuments\b/
 const usageRegex = /\buseDocuments[\s\n]*\(([^)]+)\)/g
@@ -111,12 +112,9 @@ export default function documentsPlugin (config: AppConfig): Plugin {
       `
     },
     async transform (code, id) {
-      // Ensure Vite keeps track of files imported by the documents pattern.
+      // Ensure Vite keeps track of files with the documents pattern that are added or removed.
       if (server && id.startsWith(DOCS_VIRTUAL_ID)) {
-        (server as any)._globImporters[id] = {
-          module: server.moduleGraph.getModuleById(id),
-          importGlobs: [{ base: root, pattern: modulesById[id].pattern }],
-        }
+        (server as any)._importGlobMap.set(id, [resolve(root, modulesById[id].pattern)])
         return
       }
 
