@@ -14,7 +14,7 @@ export { useRouter, useRoute } from 'vue-router'
 export { useHead } from '@vueuse/head'
 
 import type { ComponentOptionsWithoutProps, ComputedRef } from 'vue'
-import { UserApp, GetStaticPaths, Document } from '../../types/shared'
+import type { UserApp, GetStaticPaths, Document } from '../../types/shared'
 
 export function useDocuments<T = void> (globPattern: string): ComputedRef<Document<T>[]> {
   throw new Error(`Unresolved useDocuments('${globPattern}')`)
