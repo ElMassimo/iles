@@ -1,3 +1,12 @@
+## [0.7.40](https://github.com/ElMassimo/iles/compare/v0.7.39...v0.7.40) (2022-06-23)
+
+
+### Bug Fixes
+
+* use type imports for imports not used as values ([#139](https://github.com/ElMassimo/iles/issues/139)) ([22bfcb2](https://github.com/ElMassimo/iles/commit/22bfcb28adb6a647a01095642de2669eb6336ac0))
+
+
+
 ## [0.7.39](https://github.com/ElMassimo/iles/compare/v0.7.38...v0.7.39) (2022-06-22)
 
 
