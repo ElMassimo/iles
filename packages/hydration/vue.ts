@@ -14,7 +14,7 @@ export default function createVueIsland (component: Component, id: string, el: E
   const appDefinition: App = { render: () => h(component, props, slotFns) }
 
   if (import.meta.env.DEV)
-    appDefinition.name = 'Island: ' + nameFromFile(component.__file)
+    appDefinition.name = `Island: ${nameFromFile(component.__file)}`
 
   const app = createVueApp(appDefinition)
   app.mount(el!, Boolean(slots))
