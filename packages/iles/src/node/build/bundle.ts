@@ -51,7 +51,7 @@ async function bundleWithVite (config: AppConfig, entrypoints: string[] | Entryp
       htmlBuild
         ? moveHtmlPagesPlugin(config)
         : !ssr && removeJsPlugin(),
-      ssr && addCommonJsPackagePlugin(config),
+      ssr && addESMPackagePlugin(config),
     ],
     build: {
       ssr,
@@ -104,12 +104,12 @@ function moveHtmlPagesPlugin (config: AppConfig): Plugin {
   }
 }
 
-// Internal: Add a `package.json` file specifying the type of files as CJS.
-function addCommonJsPackagePlugin (config: AppConfig) {
+// Internal: Add a `package.json` file specifying the type of files as MJS.
+function addESMPackagePlugin (config: AppConfig) {
   return {
     name: 'iles:add-common-js-package-plugin',
     async writeBundle () {
-      await fs.writeFile(join(config.tempDir, 'package.json'), JSON.stringify({ type: 'commonjs' }))
+      await fs.writeFile(join(config.tempDir, 'package.json'), JSON.stringify({ type: 'module' }))
     },
   }
 }

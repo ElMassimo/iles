@@ -8,15 +8,17 @@ import type { Awaited, AppConfig, CreateAppFactory, IslandsByPath, RouteToRender
 import type { bundle } from './bundle'
 import { withSpinner } from './utils'
 import { getRoutesToRender } from './routes'
+import { importModule } from '../modules'
 
 const commentsRegex = /<!--\[-->|<!--]-->|<!---->/g
+
 
 export async function renderPages (
   config: AppConfig,
   islandsByPath: IslandsByPath,
   { clientResult }: Awaited<ReturnType<typeof bundle>>,
 ) {
-  const { createApp }: { createApp: CreateAppFactory} = require(join(config.tempDir, 'app.js'))
+  const { createApp }: { createApp: CreateAppFactory} = await importModule(join(config.tempDir, 'app.mjs'))
 
   const routesToRender = await withSpinner('resolving static paths', async () =>
     await getRoutesToRender(config, createApp))
