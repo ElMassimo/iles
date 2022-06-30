@@ -109,19 +109,6 @@ function configureDefaults (
     if (!useWorkbox.navigateFallback && prettyUrls)
       useWorkbox.navigateFallback = config.vite?.base ?? '/'
 
-    // TODO: remove this when https://github.com/antfu/vite-plugin-pwa/pull/306 released
-    if (registerType === 'autoUpdate') {
-      if (useWorkbox.clientsClaim === undefined)
-        useWorkbox.clientsClaim = true
-
-      if (useWorkbox.skipWaiting === undefined)
-        useWorkbox.skipWaiting = true
-    }
-
-    // we don't need registerSW.js if not configured
-    if (injectRegister === undefined)
-      newOptions.injectRegister = null
-
     newOptions.workbox = useWorkbox
 
     newOptions.workbox.manifestTransforms = newOptions.workbox.manifestTransforms ?? []
@@ -167,6 +154,7 @@ export default function IlesPWA (options: Partial<VitePWAOptions> = {}): IlesMod
       const plugin = config.vite?.plugins?.flat(Infinity).find(p => p.name === 'vite-plugin-pwa')
       if (plugin) {
         api = plugin.api
+        console.warn('You should configure the Vite Plugin PWA using @island/pwa module!')
       }
       else {
         enableManifestTransform = () => {

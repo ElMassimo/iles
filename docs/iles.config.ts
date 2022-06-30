@@ -52,7 +52,6 @@ export default defineConfig({
         ],
       },
       workbox: {
-        // exclude html files here: the pwa module will calculate their hash and add them to the sw precache
         globPatterns: ['**/*.{js,css,svg,ico,png,avif,json,xml,html}'],
         runtimeCaching: [
           {

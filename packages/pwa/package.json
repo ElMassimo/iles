@@ -30,7 +30,7 @@
   "homepage": "https://github.com/ElMassimo/iles",
   "bugs": "https://github.com/ElMassimo/iles/issues",
   "dependencies": {
-    "vite-plugin-pwa": "^0.12.0"
+    "vite-plugin-pwa": "^0.12.2"
   },
   "devDependencies": {
     "iles": "workspace:*"
