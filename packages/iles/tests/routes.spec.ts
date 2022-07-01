@@ -12,6 +12,8 @@ describe('app routes', () => {
       '/404',
       '/feed.rss',
       '/posts/hello-2021',
+      '/posts/vue-2-7-beta',
+      '/posts/vue-2-7-naruto',
       '/posts/vue-3-2',
       '/posts/vue-3-as-the-new-default',
       '/posts/vue-3-one-piece',
