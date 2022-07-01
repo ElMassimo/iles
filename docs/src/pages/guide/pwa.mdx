@@ -65,19 +65,5 @@ registerSW({ immediate: true })
 ## Specifying the Vite plugin manually
 
 When specifying <kbd>[vite-plugin-pwa]</kbd> manually, <kbd>[@islands/pwa]</kbd>
-will detect it and use it:
+will detect it and will throw an error, you must configure it using <kbd>[@islands/pwa]</kbd>.
 
-```ts
-import { defineConfig } from 'iles'
-import { VitePWA } from 'vite-plugin-pwa'
-
-export default defineConfig({
-  modules: [
-    '@islands/pwa',
-  ],
-  vite: {
-    plugins: [VitePWA(options)],
-  },
-})
-```
-<Caption>`iles.config.ts`</Caption>

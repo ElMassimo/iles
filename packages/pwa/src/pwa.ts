@@ -46,35 +46,33 @@ function buildManifestEntry (
   })
 }
 
-function buildManifestEntryTransform (
-  url: string,
+async function buildManifestEntryTransform (
+  ssgUrl: string,
   path: string,
 ): Promise<ManifestEntry & { size: number }> {
-  return buildManifestEntry(url, path).then(({ url, revision }) => {
-    return new Promise((resolve, reject) => {
-      try {
-        const { size } = fs.statSync(path)
-        return resolve({ url, revision, size })
-      }
-      catch (e) {
-        reject(e)
-      }
-    })
-  })
+  const [size, { url, revision }] = await Promise.all([
+    new Promise<number>((resolve, reject) => {
+      fs.lstat(path, (err, stats) => {
+        if (err)
+          reject(err)
+        else
+          resolve(stats.size)
+      })
+    }),
+    buildManifestEntry(ssgUrl, path),
+  ])
+  return { url, revision, size }
 }
 
 function createManifestTransform (enableManifestTransform: EnableManifestTransform): ManifestTransform {
   return async (entries) => {
     const { enable, data } = enableManifestTransform()
-    console.log(`Calling ManifestTransform: ${enable}`)
     if (enable && data) {
       const { outDir, pages } = data
-      console.log(entries.filter(e => e.url.endsWith('.html')))
       const manifest = entries.filter(e => !e.url.endsWith('.html'))
       const addRoutes = await Promise.all(pages.map((r) => {
         return buildManifestEntryTransform(r.path, resolve(outDir, r.outputFilename))
       }))
-      console.log(addRoutes)
       manifest.push(...addRoutes)
       return { manifest }
     }
@@ -153,8 +151,7 @@ export default function IlesPWA (options: Partial<VitePWAOptions> = {}): IlesMod
     config (config) {
       const plugin = config.vite?.plugins?.flat(Infinity).find(p => p.name === 'vite-plugin-pwa')
       if (plugin) {
-        api = plugin.api
-        console.warn('You should configure the Vite Plugin PWA using @island/pwa module!')
+        throw new Error('Remove the vite-plugin-pwa plugin from Vite plugins entry in iles config file, configure it via @islands/pwa plugin')
       }
       else {
         enableManifestTransform = () => {
@@ -174,21 +171,8 @@ export default function IlesPWA (options: Partial<VitePWAOptions> = {}): IlesMod
         if (api && !api.disabled) {
           console.info('Regenerating PWA service worker...')
           const startTime = performance.now()
-          if (enableManifestTransform) {
-            enable = true
-            data = { outDir, pages }
-          }
-          else {
-            // TODO: we can do this only if prettyURL is enabled: the downside is the html and the logic route added twice (/about and about.html)
-            const addRoutes = await Promise.all(pages.map((r) => {
-              return buildManifestEntry(r.path, resolve(outDir, r.outputFilename))
-            }))
-            api.extendManifestEntries((manifestEntries) => {
-              // just add the routes: the returned value will override existing entry
-              manifestEntries.push(...addRoutes)
-              return undefined
-            })
-          }
+          enable = true
+          data = { outDir, pages }
           // generate the manifest.webmanifest file
           api.generateBundle()
           // regenerate the sw
