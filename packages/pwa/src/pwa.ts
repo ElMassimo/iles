@@ -12,12 +12,7 @@ interface ManifestTransformData {
   pages: RouteToRender[]
 }
 
-interface EnableManifestTransformData {
-  enable: boolean
-  data?: ManifestTransformData
-}
-
-type EnableManifestTransform = () => EnableManifestTransformData
+type EnableManifestTransform = () => ManifestTransformData
 
 function timeSince (start: number): string {
   const diff = performance.now() - start
@@ -66,8 +61,8 @@ async function buildManifestEntryTransform (
 
 function createManifestTransform (enableManifestTransform: EnableManifestTransform): ManifestTransform {
   return async (entries) => {
-    const { enable, data } = enableManifestTransform()
-    if (enable && data) {
+    const data = enableManifestTransform()
+    if (data) {
       const { outDir, pages } = data
       const manifest = entries.filter(e => !e.url.endsWith('.html'))
       const addRoutes = await Promise.all(pages.map((r) => {
@@ -115,19 +110,6 @@ function configureDefaults (
     return newOptions
   }
 
-  // we don't need registerSW.js if not configured
-  if (injectRegister === undefined) {
-    injectManifest.manifestTransforms = injectManifest.manifestTransforms ?? []
-    injectManifest.manifestTransforms.push(createManifestTransform(enableManifestTransform))
-    return {
-      ...rest,
-      strategies,
-      registerType,
-      injectManifest,
-      injectRegister: null,
-    }
-  }
-
   options.injectManifest = options.injectManifest ?? {}
   options.injectManifest.manifestTransforms = injectManifest.manifestTransforms ?? []
   options.injectManifest.manifestTransforms.push(createManifestTransform(enableManifestTransform))
@@ -143,9 +125,10 @@ function configureDefaults (
  */
 export default function IlesPWA (options: Partial<VitePWAOptions> = {}): IlesModule {
   let api: VitePluginPWAAPI | undefined
-  let enable = false
   let data: ManifestTransformData | undefined
-  let enableManifestTransform: EnableManifestTransform | undefined
+  const enableManifestTransform: EnableManifestTransform = () => {
+    return data!
+  }
   return {
     name: '@islands/pwa',
     config (config) {
@@ -154,9 +137,6 @@ export default function IlesPWA (options: Partial<VitePWAOptions> = {}): IlesMod
         throw new Error('Remove the vite-plugin-pwa plugin from Vite plugins entry in iles config file, configure it via @islands/pwa plugin')
       }
       else {
-        enableManifestTransform = () => {
-          return { enable, data }
-        }
         const pluginPWA = VitePWA(configureDefaults(config, enableManifestTransform, options))
         api = pluginPWA.find(p => p.name === 'vite-plugin-pwa')?.api
         return {
@@ -171,7 +151,6 @@ export default function IlesPWA (options: Partial<VitePWAOptions> = {}): IlesMod
         if (api && !api.disabled) {
           console.info('Regenerating PWA service worker...')
           const startTime = performance.now()
-          enable = true
           data = { outDir, pages }
           // generate the manifest.webmanifest file
           api.generateBundle()
