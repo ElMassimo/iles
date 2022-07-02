@@ -8,6 +8,9 @@ export default defineConfig({
   vite: {
     resolve: {
       alias: {
+        'iles/jsx-runtime': `${__dirname}/packages/iles/jsx-runtime.js`,
+        'iles/turbo': `${__dirname}/packages/iles/turbo.js`,
+        'iles': `${__dirname}/packages/iles/src/client/index.ts`,
         '@components/': `${__dirname}/packages/iles/src/client/app/components/`,
         '@node/': `${__dirname}/packages/iles/src/node/`,
         '@mdx/': `${__dirname}/packages/mdx/src/`,
