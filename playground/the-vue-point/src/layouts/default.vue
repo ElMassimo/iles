@@ -1,9 +1,9 @@
 <script setup lang="ts">
-  useHead({
-    script: [
-      { async: true, children: 'console.log("Powered by îles 🏝", "https://iles-docs.netlify.app")' },
-    ],
-  })
+useHead({
+  script: [
+    { async: true, children: 'console.log("Powered by îles 🏝", "https://iles-docs.netlify.app")' },
+  ],
+})
 </script>
 
 <template>
