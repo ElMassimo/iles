@@ -12,8 +12,8 @@ pnpx wait-on http-get://localhost:3050 --delay 1000 --timeout 15000
 
 echo '== Server ready! =='
 
-if which cypress >/dev/null; then
-  cypress run && echo '== Finished! =='
-else
+if [ -z "$CI" ]; then
   pnpx cypress@10.3.0 run && echo '== Finished! =='
+else
+  cypress run && echo '== Finished! =='
 fi
