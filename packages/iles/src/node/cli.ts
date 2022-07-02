@@ -9,10 +9,9 @@ const command = argv._[0]
 const root = argv._[command ? 1 : 0]
 if (root) argv.root = root
 
-const getVersion = async () => pc.cyan(`iles v${version}`)
-  + pc.yellow(` vite v${viteVersion}`)
+const getVersion = () => pc.cyan(`iles v${version}`) + pc.yellow(` vite v${viteVersion}`)
 
-const printVersion = async () => console.info(await getVersion())
+const printVersion = () => console.info(getVersion())
 
 executeCommand(!command || command === 'dev' ? 'serve' : command)
   .catch((error) => { throw error })
@@ -24,7 +23,7 @@ async function executeCommand (command: string) {
       .then(async ({ server }) => {
         await server.listen()
         const { config: { logger } } = server
-        logger.info(await getVersion() + pc.green(' dev server running at:\n'), { clear: !logger.hasWarned })
+        logger.info(getVersion() + pc.green(' dev server running at:\n'), { clear: !logger.hasWarned })
         server.printUrls()
       })
       .catch((err: any) => {
@@ -33,7 +32,7 @@ async function executeCommand (command: string) {
       })
   }
   else if (command === 'build') {
-    await printVersion()
+    printVersion()
     const { build } = await import('./build/build')
     build(root).catch((err: any) => {
       console.error(pc.red('build error:\n'), err)
@@ -41,7 +40,7 @@ async function executeCommand (command: string) {
     })
   }
   else if (command === 'preview') {
-    await printVersion()
+    printVersion()
     const { preview } = await import('./preview')
     preview(root, argv).catch((err: any) => {
       console.error(pc.red('error starting preview:\n'), err)
@@ -49,7 +48,7 @@ async function executeCommand (command: string) {
     })
   }
   else if (command === 'info') {
-    await printVersion()
+    printVersion()
   }
   else if (command === 'test') {
     const { CONFIG_PATH } = await import('./alias')
