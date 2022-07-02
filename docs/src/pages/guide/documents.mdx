@@ -31,6 +31,10 @@ Changes to each document and its `frontmatter` are instantly reflected.
 It does not require a full page reload when files matching the pattern are added or removed.
 </Tip>
 
+<Tip title="Only String Literals" warn>
+Just like [glob imports][glob] in Vite.js, you need to provide a string pattern directly, variables are not supported as it wouldn't be possible to perform static analysis and infer which files to build.
+</Tip>
+
 ## Using Data in Documents
 
 You can access each file's [`frontmatter` and `meta`][pageData] directly:

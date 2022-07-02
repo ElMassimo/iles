@@ -1,6 +1,6 @@
 {
   "name": "@islands/pwa",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "scripts": {
     "dev": "npm run build -- --watch",
     "build": "tsup src/pwa.ts",
@@ -30,7 +30,7 @@
   "homepage": "https://github.com/ElMassimo/iles",
   "bugs": "https://github.com/ElMassimo/iles/issues",
   "dependencies": {
-    "vite-plugin-pwa": "^0.12.0"
+    "vite-plugin-pwa": "^0.12.2"
   },
   "devDependencies": {
     "iles": "workspace:*"

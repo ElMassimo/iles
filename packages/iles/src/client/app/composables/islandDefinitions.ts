@@ -1,6 +1,7 @@
 import { useSSRContext } from 'vue'
 import { useRoute } from 'vue-router'
-import { IslandDefinition } from '../../shared'
+
+import type { IslandDefinition } from '../../shared'
 
 export function useIslandsForPath<T = any> (): IslandDefinition[] {
   const context = useSSRContext()

@@ -1,5 +1,7 @@
-import { App, InjectionKey, inject } from 'vue'
-import { AppClientConfig } from '../../shared'
+import { inject } from 'vue'
+
+import type { App, InjectionKey } from 'vue'
+import type { AppClientConfig } from '../../shared'
 
 export const appConfigSymbol: InjectionKey<AppClientConfig> = Symbol('[iles-app-config]')
 

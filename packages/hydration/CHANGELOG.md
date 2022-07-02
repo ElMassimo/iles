@@ -1,3 +1,14 @@
+## [0.3.9](https://github.com/ElMassimo/iles/compare/hydration@0.3.8...hydration@0.3.9) (2022-06-24)
+
+
+### Features
+
+* add pwa module by [@userquin](https://github.com/userquin) ([#127](https://github.com/ElMassimo/iles/issues/127)) ([8d9c2bf](https://github.com/ElMassimo/iles/commit/8d9c2bfb12ae5326815b34699b3c75e03bb7a2de))
+* display nice app name for islands in vue devtools (closes [#140](https://github.com/ElMassimo/iles/issues/140)) ([#141](https://github.com/ElMassimo/iles/issues/141)) ([af74635](https://github.com/ElMassimo/iles/commit/af74635967d7136ce46ef16c83b3ea453a141e17))
+* upgrade to vite 2.9 🚀 ([f47b6b3](https://github.com/ElMassimo/iles/commit/f47b6b346ef2efc88590749e2d8c8a2fbba7a42a))
+
+
+
 ## [0.3.8](https://github.com/ElMassimo/iles/compare/hydration@0.3.7...hydration@0.3.8) (2022-02-22)
 
 

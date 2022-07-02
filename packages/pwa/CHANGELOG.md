@@ -1,3 +1,12 @@
+# [0.2.0](https://github.com/ElMassimo/iles/compare/pwa@0.1.1...pwa@0.2.0) (2022-07-02)
+
+
+### Features
+
+* use `ManifestTransform` when using `@islands/pwa` ([#144](https://github.com/ElMassimo/iles/issues/144)) ([84b641b](https://github.com/ElMassimo/iles/commit/84b641be2ddb242162c2e670d7cbe95496c1a182))
+
+
+
 ## [0.1.1](https://github.com/ElMassimo/iles/compare/pwa@0.1.0...pwa@0.1.1) (2022-06-07)
 
 
