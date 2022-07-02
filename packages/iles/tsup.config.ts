@@ -10,6 +10,8 @@ export const tsup: Options = {
     '@vue/runtime-dom/dist/runtime-dom.esm-bundler.js',
     'solid-js/web',
     'esbuild',
+    'rollup',
+    'vite',
     'preact',
     '@antfu/install-pkg',
     'fast-glob',
