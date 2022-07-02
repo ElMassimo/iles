@@ -1,8 +1,8 @@
+import { fileURLToPath } from 'url'
+import { createRequire } from 'module'
 import { join, dirname, resolve } from 'pathe'
 import { Alias, AliasOptions } from 'vite'
 import type { UserConfig } from './shared'
-import { fileURLToPath } from 'url'
-import { createRequire } from 'module'
 
 const _dirname = dirname(fileURLToPath(import.meta.url))
 const require = createRequire(import.meta.url)

@@ -1,3 +1,4 @@
+import { resolve } from 'path'
 import { Plugin, ViteDevServer } from 'vite'
 
 import glob from 'fast-glob'
@@ -6,7 +7,6 @@ import { relative } from 'pathe'
 import type { AppConfig } from '../shared'
 import { parseId } from './parse'
 import { debug, serialize } from './utils'
-import { resolve } from 'path'
 
 const definitionRegex = /(function|const|let|var)[\s\n]+\buseDocuments\b/
 const usageRegex = /\buseDocuments[\s\n]*\(([^)]+)\)/g

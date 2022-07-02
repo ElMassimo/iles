@@ -1,10 +1,10 @@
 import { promises as fs, constants as fsConstants } from 'fs'
+import { createRequire } from 'module'
 import createDebugger from 'debug'
 import { dirname } from 'pathe'
 import newSpinner from 'mico-spinner'
 import { installPackage } from '@antfu/install-pkg'
 import { importModule } from '../modules'
-import { createRequire } from 'module'
 const require = createRequire(import.meta.url)
 
 export { default as serialize } from '@nuxt/devalue'

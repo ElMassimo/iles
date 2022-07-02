@@ -1,18 +1,17 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
+import { existsSync } from 'fs'
 import { join } from 'pathe'
 import { renderHeadToString } from '@vueuse/head'
 import type { RollupOutput } from 'rollup'
 import { renderers } from '@islands/prerender'
 import { IslandDefinition } from 'iles'
+import { renderToString } from '@vue/server-renderer'
 import type { Awaited, AppConfig, CreateAppFactory, IslandsByPath, RouteToRender } from '../shared'
 import type { bundle } from './bundle'
 import { withSpinner } from './utils'
 import { getRoutesToRender } from './routes'
-import { renderToString } from '@vue/server-renderer'
-import { existsSync } from 'fs'
 
 const commentsRegex = /<!--\[-->|<!--]-->|<!---->/g
-
 
 export async function renderPages (
   config: AppConfig,
