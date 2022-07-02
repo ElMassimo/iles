@@ -54,7 +54,7 @@ describe('page data', () => {
     const doc = notFound
 
     expect(typeof doc.render).toEqual('function')
-    expect(typeof doc.__hmrId).toEqual('string')
+    expect(typeof doc.__file).toEqual('string')
 
     const { layoutName } = doc
     expect(layoutName).toEqual('default')

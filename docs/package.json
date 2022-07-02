@@ -2,6 +2,7 @@
   "name": "docs",
   "version": "1.0.0",
   "private": true,
+  "type": "module",
   "scripts": {
     "dev": "iles --open",
     "build": "iles build",
@@ -28,16 +29,16 @@
     "cross-spawn": "^7.0.3",
     "iles": "workspace:*",
     "postcss-nesting": "^8.0.1",
-    "preact-render-to-string": "^5.1.19",
+    "preact": "^10.8.2",
+    "preact-render-to-string": "^5.2.0",
     "rehype-external-links": "^1.0.0",
-    "vite-plugin-inspect": "^0.3.11",
+    "vite-plugin-inspect": "^0.5.1",
     "vite-plugin-windicss": "^1.6.3",
     "vue-tsc": "^0.29.8"
   },
   "dependencies": {
-    "@docsearch/css": "^3.0.0-alpha.42",
-    "@mussi/docsearch": "^3.0.0-alpha.42",
-    "preact": "^10.7.0"
+    "@docsearch/css": "^3.1.1",
+    "@mussi/docsearch": "^3.1.2-beta.0"
   },
   "eslintConfig": {
     "rules": {

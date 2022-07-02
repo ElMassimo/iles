@@ -1,5 +1,5 @@
-const fs = require('fs-extra')
-const glob = require('globby')
+import fs from 'fs-extra'
+import glob from 'globby'
 
 function toDest (file) {
   return file.replace(/^src\//, 'dist/')

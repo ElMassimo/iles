@@ -1,5 +1,5 @@
-const fs = require('fs-extra')
-const chokidar = require('chokidar')
+import fs from 'fs-extra'
+import chokidar from 'chokidar'
 
 function toClientAndNode (method, file) {
   if (method === 'copy') {

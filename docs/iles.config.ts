@@ -107,13 +107,5 @@ export default defineConfig({
       windicss(),
       Boolean(process.env.DEBUG) && inspect(),
     ],
-    optimizeDeps: {
-      include: ['@vueuse/core', '@mussi/docsearch', 'preact', 'preact/debug'],
-    },
-    ...{
-      ssr: {
-        noExternal: ['@mussi/docsearch'],
-      },
-    } as any,
   },
 })

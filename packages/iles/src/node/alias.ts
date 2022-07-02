@@ -1,11 +1,16 @@
+import { fileURLToPath } from 'url'
+import { createRequire } from 'module'
 import { join, dirname, resolve } from 'pathe'
 import { Alias, AliasOptions } from 'vite'
 import type { UserConfig } from './shared'
 
-const PKG_ROOT = join(__dirname, '../../')
+const _dirname = dirname(fileURLToPath(import.meta.url))
+const require = createRequire(import.meta.url)
+
+const PKG_ROOT = join(_dirname, '../../')
 export const CONFIG_PATH = join(PKG_ROOT, 'config.js')
 export const TURBO_SCRIPT_PATH = join(PKG_ROOT, 'turbo.js')
-export const DIST_CLIENT_PATH = join(__dirname, '../client')
+export const DIST_CLIENT_PATH = join(_dirname, '../client')
 export const SHARED_PATH = join(DIST_CLIENT_PATH, 'shared')
 export const APP_PATH = join(DIST_CLIENT_PATH, 'app', 'index.js')
 
@@ -52,7 +57,7 @@ export function resolveAliases (root: string, userConfig: UserConfig): AliasOpti
     },
     {
       find: /^iles$/,
-      replacement: join(__dirname, '../client/index'),
+      replacement: join(DIST_CLIENT_PATH, 'index'),
     },
     { find: /^iles\//, replacement: `${PKG_ROOT}/` },
     // make sure it always use the same vue dependency that comes with

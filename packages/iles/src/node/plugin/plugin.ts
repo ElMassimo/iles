@@ -8,8 +8,9 @@ import MagicString from 'magic-string'
 
 import { shouldTransformRef, transformRef } from 'vue/compiler-sfc'
 import type { AppConfig, AppClientConfig } from '../shared'
+import { ILES_APP_ENTRY } from '../constants'
 import { APP_PATH, APP_COMPONENT_PATH, USER_APP_REQUEST_PATH, USER_SITE_REQUEST_PATH, APP_CONFIG_REQUEST_PATH, NOT_FOUND_COMPONENT_PATH, NOT_FOUND_REQUEST_PATH, DEBUG_COMPONENT_PATH } from '../alias'
-import { configureMiddleware, ILES_APP_ENTRY } from './middleware'
+import { configureMiddleware } from './middleware'
 import { serialize, pascalCase, exists, debug } from './utils'
 import { parseId } from './parse'
 import { wrapIslandsInSFC, wrapLayout } from './wrap'
@@ -24,6 +25,10 @@ function isMarkdown (path: string) {
 
 function isSFCMain (path: string, query: Record<string, any>) {
   return path.endsWith('.vue') && query.vue === undefined
+}
+
+function isSFCSetup (path: string, query: Record<string, any>) {
+  return path.endsWith('.vue') && query.setup !== undefined
 }
 
 const templateLayoutRegex = /<template.*?\slayout=\s*['"](\w+)['"].*?>/
@@ -152,7 +157,7 @@ export default function IslandsPlugins (appConfig: AppConfig): PluginOption[] {
         if (!id.startsWith(appConfig.srcDir)) return
 
         const { path, query } = parseId(id)
-        if (isSFCMain(path, query) || /\.[tj]sx?/.test(path))
+        if (isSFCSetup(path, query) || isSFCMain(path, query) || /\.[tj]sx?/.test(path))
           return await autoImportComposables(code, id)
       },
     },
@@ -169,9 +174,15 @@ export default function IslandsPlugins (appConfig: AppConfig): PluginOption[] {
         const isPage = plugins.pages.api.isPage(path)
         if (!isMdx && !isLayoutFile && !isPage) return
 
+        let sfcConstIndex = code.indexOf('const _sfc_main = ')
+        if (sfcConstIndex === -1) {
+          code = code.replace('export default _sfc_main', 'export default Object.assign(_sfc_main, {})')
+          sfcConstIndex = code.indexOf('export default Object.assign(_sfc_main, ')
+        }
         const s = new MagicString(code)
-        const sfcIndex = code.indexOf('{', code.indexOf('const _sfc_main = ')) + 1
-        const appendToSfc = (key: string, value?: string) => s.appendRight(sfcIndex, value ? `${key}:${value},` : `${key},`)
+        const sfcIndex = code.indexOf('{', sfcConstIndex) + 1
+        const appendToSfc = (key: string, value?: string) =>
+          s.appendRight(sfcIndex, value ? `${key}:${value},` : `${key},`)
 
         if (isLayoutFile) {
           appendToSfc('name', `'${pascalCase(basename(path).replace('.vue', 'Layout'))}'`)

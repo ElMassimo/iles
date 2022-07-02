@@ -58,7 +58,7 @@ export default function IlesPages (): any {
       },
       async configureServer (server) {
         options.server = server
-        handleHMR(api, options, () => { generatedRoutes = undefined })
+        this.handleHotUpdate = handleHMR(api, options, () => { generatedRoutes = undefined })
       },
       async buildStart () {
         await api.addAllPages()

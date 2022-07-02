@@ -1,18 +1,11 @@
 // NOTE: This helper file allows to provide it as a config path to Vite or
 // Vitest without using the iles executable.
-module.exports = async (env, root = process.cwd()) => {
-  const { resolve } = require('path')
-  const { mergeConfig } = require('vite')
-  const { default: IslandsPlugins, resolveConfig } = require('./dist/node')
+export default async (env, root = process.cwd()) => {
+  const { default: IslandsPlugins, resolveConfig, mergeConfig } = await import('./dist/node/index.js')
 
   const config = await resolveConfig(root)
 
   return mergeConfig(config.vite, {
-    resolve: {
-      alias: {
-        'lib/modules': resolve(__dirname, 'lib/modules.mjs'),
-      },
-    },
     plugins: IslandsPlugins(config),
   })
 }

@@ -8,7 +8,7 @@ export type PrerenderFn =
 const _imports: {
   preact?: [
     typeof import('@islands/hydration/preact'),
-    typeof import('preact-render-to-string').renderToString,
+    typeof import('preact-render-to-string'),
   ]
   solid?: typeof import('solid-js/web')
 } = {}
@@ -17,11 +17,11 @@ export const renderers: Record<Framework, PrerenderFn> = {
   async preact (component, props, slots) {
     const [
       { createElement },
-      renderToString,
-    ] = _imports.preact ||= [
-      await import('@islands/hydration/preact'),
-      require('preact-render-to-string') as typeof import('preact-render-to-string').renderToString,
-    ]
+      { renderToString },
+    ] = _imports.preact ||= await Promise.all([
+      import('@islands/hydration/preact'),
+      import('preact-render-to-string'),
+    ])
     return renderToString(createElement(component, props, slots))
   },
   async solid (component, props, slots, renderId) {

@@ -1,16 +1,14 @@
 import { existsSync } from 'fs'
 import pc from 'picocolors'
 import { resolve, relative, extname } from 'pathe'
-import type { ViteDevServer } from 'vite'
-import type { NextHandleFunction } from 'connect'
+import type { ViteDevServer, Connect } from 'vite'
 import createDebugger from 'debug'
 
 import type { AppConfig } from '../shared'
+import { ILES_APP_ENTRY } from '../constants'
 import { createServer } from '../server'
 import { pathToHtmlFilename } from '../utils'
 import { exists } from './utils'
-
-export const ILES_APP_ENTRY = '/@iles-entry'
 
 const supportedExtensions = new Set(['.html', '.xml', '.json', '.rss', '.atom'])
 
@@ -19,7 +17,7 @@ const debug = createDebugger('iles:html-page-fallback')
 export function configureMiddleware (config: AppConfig, server: ViteDevServer, defaultLayoutPath: string) {
   restartOnConfigChanges(config, server)
 
-  const htmlPagesMiddleware: NextHandleFunction = function ilesHtmlPagesMiddleware (req, res, next) {
+  const htmlPagesMiddleware: Connect.NextHandleFunction = function ilesHtmlPagesMiddleware (req, res, next) {
     let { url = '' } = req
 
     url = pathToHtmlFilename(url)

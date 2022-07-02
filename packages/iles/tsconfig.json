@@ -4,6 +4,7 @@
     "module": "es2020",
     "target": "es2020",
     "moduleResolution": "node",
+    "resolveJsonModule": true,
     "strict": true,
     "declaration": true,
     "noUnusedLocals": true,

@@ -1,9 +1,11 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
+import { existsSync } from 'fs'
 import { join } from 'pathe'
 import { renderHeadToString } from '@vueuse/head'
 import type { RollupOutput } from 'rollup'
 import { renderers } from '@islands/prerender'
 import { IslandDefinition } from 'iles'
+import { renderToString } from '@vue/server-renderer'
 import type { Awaited, AppConfig, CreateAppFactory, IslandsByPath, RouteToRender } from '../shared'
 import type { bundle } from './bundle'
 import { withSpinner } from './utils'
@@ -16,7 +18,11 @@ export async function renderPages (
   islandsByPath: IslandsByPath,
   { clientResult }: Awaited<ReturnType<typeof bundle>>,
 ) {
-  const { createApp }: { createApp: CreateAppFactory} = require(join(config.tempDir, 'app.js'))
+  const appPath = ['js', 'mjs', 'cjs'].map(ext => join(config.tempDir, `app.${ext}`)).find(existsSync)
+  if (!appPath)
+    throw new Error(`Could not find the SSR build for the app in ${config.tempDir}`)
+
+  const { createApp }: { createApp: CreateAppFactory } = await import(appPath)
 
   const routesToRender = await withSpinner('resolving static paths', async () =>
     await getRoutesToRender(config, createApp))
@@ -39,7 +45,7 @@ export async function renderPage (
   createApp: CreateAppFactory,
 ) {
   const { app, head } = await createApp({ routePath: route.path, ssrProps: route.ssrProps })
-  let content = await require('@vue/server-renderer').renderToString(app, { islandsByPath, renderers })
+  let content = await renderToString(app, { islandsByPath, renderers })
 
   // Remove comments from Vue renderer to allow plain text, RSS, or JSON output.
   content = content.replace(commentsRegex, '')

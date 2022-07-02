@@ -34,7 +34,7 @@
   },
   "devDependencies": {
     "iles": "workspace:*",
-    "tsup": "5.5.0",
+    "tsup": "6.1.2",
     "typescript": "^4.4.4"
   }
 }

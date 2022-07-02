@@ -3,7 +3,7 @@ export const tsup: Options = {
   clean: true,
   dts: true,
   target: 'node14',
-  format: ['esm', 'cjs'],
+  format: ['esm'],
   external: [
     'vue',
     'preact',
