@@ -17,9 +17,9 @@
     "types": ["vite-plugin-pwa/client"],
     "paths": {
       "~/*": ["src/*"]
-    },
-    "exclude": [
-      "node_modules/cypress"
-    ]
-  }
+    }
+  },
+  "exclude": [
+    "node_modules/cypress"
+  ]
 }
