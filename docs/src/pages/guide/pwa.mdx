@@ -62,8 +62,7 @@ registerSW({ immediate: true })
 ```
 <Caption>`src/layouts/base.vue`</Caption>
 
-## Specifying the Vite plugin manually
-
-When specifying <kbd>[vite-plugin-pwa]</kbd> manually, <kbd>[@islands/pwa]</kbd>
-will detect it and will throw an error, you must configure it using <kbd>[@islands/pwa]</kbd>.
+<Tip warn title="Don't specify the Vite plugin manually">
+You should provide any configuration for <kbd>[vite-plugin-pwa]</kbd> in the <kbd>[@islands/pwa]</kbd> module.
+</Tip>
 
