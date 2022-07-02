@@ -13,7 +13,7 @@ export default () => ({
 function lastUpdatedFromGit (filename: string) {
   try {
     const result = spawn('git', ['log', '-1', '--format=%at', filename])
-    const date = new Date(parseInt(result.stdout) * 1000)
+    const date = new Date(parseInt(result.stdout as any) * 1000)
     return isNaN(Number(date)) ? null : date
   }
   catch {
