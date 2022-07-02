@@ -1,5 +1,5 @@
 import { sync as spawn } from 'cross-spawn'
-import { IlesModule } from 'iles'
+import type { IlesModule } from 'iles'
 
 export default () => ({
   name: 'git-last-updated-at',
