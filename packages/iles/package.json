@@ -34,14 +34,14 @@
     "dev": "rimraf -rf dist && npm run dev-shared && npm run dev-start",
     "dev-start": "run-p dev-client dev-node dev-cjs dev-watch",
     "dev-client": "npm run build-client -- --watch",
-    "dev-node": "npm run build-node -- --watch --ignore-watch tests --ignore-watch src/client",
+    "dev-node": "npm run build-node -- --watch",
     "dev-cjs": "npm run build-cjs -- --watch",
     "dev-shared": "node scripts/copyShared",
     "dev-watch": "node scripts/watchAndCopy",
     "build-node": "tsup src/node",
-    "build-cjs": "tsup src/node/publicUtils.ts --format cjs --outDir dist/node-cjs",
+    "build-cjs": "tsup src/node/publicUtils.ts --config tsup-cjs.config.ts",
     "build-client": "tsc -p src/client",
-    "build": "rimraf -rf dist && node scripts/copyShared && npm run build-client && npm run build-node && node scripts/copyClient",
+    "build": "rimraf -rf dist && node scripts/copyShared && npm run build-client && npm run build-node && npm run build-cjs && node scripts/copyClient",
     "lint": "eslint . --ext .ts,.js,.vue,.html"
   },
   "engines": {

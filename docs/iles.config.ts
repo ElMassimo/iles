@@ -108,9 +108,5 @@ export default defineConfig({
       windicss(),
       Boolean(process.env.DEBUG) && inspect(),
     ],
-    ssr: {
-      external: ['preact', 'preact-render-to-string'],
-      noExternal: ['@mussi/docsearch'],
-    },
   },
 })

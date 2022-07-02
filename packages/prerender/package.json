@@ -8,17 +8,14 @@
   ],
   "types": "dist/prerender.d.ts",
   "module": "dist/prerender.js",
-  "main": "dist/prerender.cjs",
+  "main": "dist/prerender.js",
   "scripts": {
     "dev": "npm run build -- --watch",
     "build": "tsup prerender.ts",
     "lint": "eslint ."
   },
   "exports": {
-    ".": {
-      "import": "./dist/prerender.js",
-      "require": "./dist/prerender.cjs"
-    },
+    ".": "./dist/prerender.js",
     "./package.json": "./package.json"
   },
   "keywords": [

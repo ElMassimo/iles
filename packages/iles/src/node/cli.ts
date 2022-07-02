@@ -1,10 +1,7 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 import pc from 'picocolors'
 import minimist from 'minimist'
-import { version as viteVersion } from 'vite'
-
-import { createRequire } from 'module'
-const require = createRequire(import.meta.url)
+import { version, viteVersion } from './publicUtils'
 
 const argv: any = minimist(process.argv.slice(2))
 
@@ -12,7 +9,7 @@ const command = argv._[0]
 const root = argv._[command ? 1 : 0]
 if (root) argv.root = root
 
-const getVersion = async () => pc.cyan(`iles v${require('../../package.json').version}`)
+const getVersion = async () => pc.cyan(`iles v${version}`)
   + pc.yellow(` vite v${viteVersion}`)
 
 const printVersion = async () => console.info(await getVersion())

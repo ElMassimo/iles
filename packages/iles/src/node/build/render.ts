@@ -8,8 +8,8 @@ import type { Awaited, AppConfig, CreateAppFactory, IslandsByPath, RouteToRender
 import type { bundle } from './bundle'
 import { withSpinner } from './utils'
 import { getRoutesToRender } from './routes'
-import { importModule } from '../modules'
 import { renderToString } from '@vue/server-renderer'
+import { existsSync } from 'fs'
 
 const commentsRegex = /<!--\[-->|<!--]-->|<!---->/g
 
@@ -19,7 +19,11 @@ export async function renderPages (
   islandsByPath: IslandsByPath,
   { clientResult }: Awaited<ReturnType<typeof bundle>>,
 ) {
-  const { createApp }: { createApp: CreateAppFactory} = await importModule(join(config.tempDir, 'app.mjs'))
+  const appPath = ['js', 'mjs', 'cjs'].map(ext => join(config.tempDir, `app.${ext}`)).find(existsSync)
+  if (!appPath)
+    throw new Error(`Could not find the SSR build for the app in ${config.tempDir}`)
+
+  const { createApp }: { createApp: CreateAppFactory } = await import(appPath)
 
   const routesToRender = await withSpinner('resolving static paths', async () =>
     await getRoutesToRender(config, createApp))

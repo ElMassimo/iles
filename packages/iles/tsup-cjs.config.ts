@@ -2,14 +2,13 @@ import type { Options } from 'tsup'
 export const tsup: Options = {
   dts: true,
   target: 'node14',
-  splitting: true,
+  splitting: false,
   sourcemap: false,
-  format: ['esm'],
-  outDir: 'dist/node',
+  format: ['cjs'],
+  outDir: 'dist/node-cjs',
   external: [
     '@vue/runtime-dom/dist/runtime-dom.esm-bundler.js',
     'solid-js/web',
-    'esbuild',
     'preact',
     '@antfu/install-pkg',
     'fast-glob',
