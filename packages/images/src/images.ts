@@ -7,15 +7,21 @@ import imagePresets from 'vite-plugin-image-presets'
 
 export * from 'vite-plugin-image-presets'
 
-const __dirname = dirname(fileURLToPath(import.meta.url))
-export const PICTURE_COMPONENT_PATH = resolve(__dirname, '../src/Picture.vue')
+const _dirname = typeof __dirname === undefined
+  ? dirname(fileURLToPath(import.meta.url))
+  : __dirname
+
+export const PICTURE_COMPONENT_PATH = resolve(_dirname, '../src/Picture.vue')
+
+const imagePresetsPlugin: typeof import('vite-plugin-image-presets').default
+  = (imagePresets as any).default ?? imagePresets
 
 /**
  * An iles module that configures vite-plugin-image-presets to easily optimize
  * and transform images in an iles site.
  */
 export default function IlesImagePresets (presets: ImagePresets, options?: Options): IlesModule & { api: ImageApi } {
-  const plugin = imagePresets(presets, { ...options, writeToBundle: false })
+  const plugin = imagePresetsPlugin(presets, { ...options, writeToBundle: false })
 
   return {
     name: '@islands/images',
