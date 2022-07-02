@@ -1,7 +1,7 @@
 import { Plugin, ViteDevServer } from 'vite'
 
 import glob from 'fast-glob'
-import { isMatch } from 'micromatch'
+import micromatch from 'micromatch'
 import { relative } from 'pathe'
 import type { AppConfig } from '../shared'
 import { parseId } from './parse'
@@ -49,7 +49,7 @@ export default function documentsPlugin (config: AppConfig): Plugin {
 
       // Allow Vite to automatically detect added or removed files.
       if (server)
-        modulesById[id] = { pattern, hasDocument: path => isMatch(path, pattern) }
+        modulesById[id] = { pattern, hasDocument: path => micromatch.isMatch(path, pattern) }
 
       // Obtain files matching the specified pattern and extract frontmatter.
       const files = await glob(pattern, { cwd: root })

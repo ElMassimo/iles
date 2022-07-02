@@ -12,8 +12,19 @@ import mdx from '@islands/mdx'
 import type { ComponentResolver } from 'unplugin-vue-components/types'
 import type { UserConfig } from 'iles'
 
-import { importModule } from 'lib/modules'
-import type { AppConfig, ConfigEnv, ViteOptions, IlesModule, IlesModuleLike, IlesModuleOption, NamedPlugins } from './shared'
+import { importModule } from './modules'
+import type {
+  AppConfig,
+  ConfigEnv,
+  ViteOptions,
+  IlesModule,
+  IlesModuleLike,
+  IlesModuleOption,
+  NamedPlugins,
+  PreactOptions,
+  SolidOptions,
+  SvelteOptions,
+} from './shared'
 
 import { camelCase, tryInstallModule, importLibrary, uncapitalize, isString, isStringPlugin, compact } from './plugin/utils'
 import { resolveAliases, DIST_CLIENT_PATH, HYDRATION_DIST_PATH, ISLAND_COMPONENT_PATH } from './alias'
@@ -127,18 +138,25 @@ async function setNamedPlugins (config: AppConfig, env: ConfigEnv, plugins: Name
   plugins.components = components(config.components)
   plugins.vue = vue(config.vue)
 
-  const optionalPlugins: [keyof AppConfig, string, (mod: any, options: any) => any][] = [
-    ['solid', 'vite-plugin-solid', (mod, options) => mod({ ssr: true, ...options })],
-    ['preact', '@preact/preset-vite', (mod, options) => mod(options)],
-    ['svelte', '@sveltejs/vite-plugin-svelte', (mod, options) =>
-      mod.svelte({ ...options, compilerOptions: { hydratable: true, ...options?.compilerOptions } }),
-    ],
-  ]
-  for (const [optionName, pluginName, createPlugin] of optionalPlugins) {
-    const addPlugin = config[optionName] || config.jsx === optionName
+  const optionalPlugins = {
+    async solid (options: SolidOptions) {
+      const solid = await importLibrary<typeof import('vite-plugin-solid')['default']>('vite-plugin-solid')
+      return solid({ ssr: true, ...options })
+    },
+    async preact (options: PreactOptions) {
+      const preact = await importLibrary<typeof import('@preact/preset-vite')['default']>('@preact/preset-vite')
+      return preact(options)
+    },
+    async svelte (options: SvelteOptions) {
+      const { svelte } = await importLibrary<typeof import('@sveltejs/vite-plugin-svelte')>('@sveltejs/vite-plugin-svelte')
+      return svelte({ ...options, compilerOptions: { hydratable: true, ...options?.compilerOptions } })
+    },
+  }
+  for (const [optionName, createPlugin] of Object.entries(optionalPlugins)) {
+    const addPlugin = config[optionName as keyof AppConfig] || config.jsx === optionName
     if (addPlugin) {
       const options = isObject(addPlugin) ? addPlugin : {}
-      config.vitePlugins.push(createPlugin(await importLibrary(pluginName), options))
+      config.vitePlugins.push(await createPlugin(options as any) as Plugin)
       if (optionName === 'preact')
         await tryInstallModule('preact-render-to-string')
     }

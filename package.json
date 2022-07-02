@@ -35,7 +35,7 @@
     "pkg-dir": "^6.0.1",
     "semver": "^7.3.5",
     "typescript": "4.4.4",
-    "vitest": "^0.8.5"
+    "vitest": "^0.16.0"
   },
   "resolutions": {
     "eslint-plugin-vue": "7.17.0",

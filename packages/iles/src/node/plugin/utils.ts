@@ -3,7 +3,9 @@ import createDebugger from 'debug'
 import { dirname } from 'pathe'
 import newSpinner from 'mico-spinner'
 import { installPackage } from '@antfu/install-pkg'
-import { unwrapDefault } from 'lib/modules'
+import { importModule } from '../modules'
+import { createRequire } from 'module'
+const require = createRequire(import.meta.url)
 
 export { default as serialize } from '@nuxt/devalue'
 
@@ -40,7 +42,7 @@ export async function tryInstallModule (name: string) {
 
 export async function importLibrary<T> (pkgName: string) {
   const pkgPath = await tryInstallModule(pkgName)
-  return unwrapDefault(require(pkgPath))
+  return await importModule(pkgPath)
 }
 
 async function withSpinner<T> (message: string, fn: () => Promise<T>) {

@@ -1,6 +1,10 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 import pc from 'picocolors'
 import minimist from 'minimist'
+import { version as viteVersion } from 'vite'
+
+import { createRequire } from 'module'
+const require = createRequire(import.meta.url)
 
 const argv: any = minimist(process.argv.slice(2))
 
@@ -8,10 +12,10 @@ const command = argv._[0]
 const root = argv._[command ? 1 : 0]
 if (root) argv.root = root
 
-const getVersion = () => pc.cyan(`iles v${require('../../package.json').version}`)
-  // + pc.yellow(` vite v${require('vite/package.json').version}`)
+const getVersion = async () => pc.cyan(`iles v${require('../../package.json').version}`)
+  + pc.yellow(` vite v${viteVersion}`)
 
-const printVersion = () => console.info(getVersion())
+const printVersion = async () => console.info(await getVersion())
 
 executeCommand(!command || command === 'dev' ? 'serve' : command)
   .catch((error) => { throw error })
@@ -23,7 +27,7 @@ async function executeCommand (command: string) {
       .then(async ({ server }) => {
         await server.listen()
         const { config: { logger } } = server
-        logger.info(getVersion() + pc.green(' dev server running at:\n'), { clear: !logger.hasWarned })
+        logger.info(await getVersion() + pc.green(' dev server running at:\n'), { clear: !logger.hasWarned })
         server.printUrls()
       })
       .catch((err: any) => {
@@ -32,7 +36,7 @@ async function executeCommand (command: string) {
       })
   }
   else if (command === 'build') {
-    printVersion()
+    await printVersion()
     const { build } = await import('./build/build')
     build(root).catch((err: any) => {
       console.error(pc.red('build error:\n'), err)
@@ -40,7 +44,7 @@ async function executeCommand (command: string) {
     })
   }
   else if (command === 'preview') {
-    printVersion()
+    await printVersion()
     const { preview } = await import('./preview')
     preview(root, argv).catch((err: any) => {
       console.error(pc.red('error starting preview:\n'), err)
@@ -48,7 +52,7 @@ async function executeCommand (command: string) {
     })
   }
   else if (command === 'info') {
-    printVersion()
+    await printVersion()
   }
   else if (command === 'test') {
     const { CONFIG_PATH } = await import('./alias')

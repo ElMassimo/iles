@@ -6,7 +6,7 @@ import type VuePlugin, { Options as VueOptions } from '@vitejs/plugin-vue'
 import type ComponentsPlugin from 'unplugin-vue-components/vite'
 import type { Options as ComponentOptions } from 'unplugin-vue-components/types'
 
-import type { Options as SolidOptions } from 'vite-plugin-solid'
+import type { Options as RequiredSolidOptions } from 'vite-plugin-solid'
 import type { Options as SvelteOptions } from '@sveltejs/vite-plugin-svelte'
 import type { PreactPluginOptions as PreactOptions } from '@preact/preset-vite'
 
@@ -25,6 +25,14 @@ export type { RouteLocationNormalizedLoaded } from 'vue-router'
 export type RouterOptions = VueRouterOptions & { base?: string }
 
 export interface PageProps extends Record<string, any> {}
+
+type SolidOptions = Partial<RequiredSolidOptions>
+
+export type {
+  PreactOptions,
+  SolidOptions,
+  SvelteOptions,
+}
 
 interface WithFrontmatter extends PageFrontmatter, PageMeta {
   frontmatter: PageFrontmatter

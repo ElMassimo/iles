@@ -9,6 +9,7 @@ import type { bundle } from './bundle'
 import { withSpinner } from './utils'
 import { getRoutesToRender } from './routes'
 import { importModule } from '../modules'
+import { renderToString } from '@vue/server-renderer'
 
 const commentsRegex = /<!--\[-->|<!--]-->|<!---->/g
 
@@ -41,7 +42,7 @@ export async function renderPage (
   createApp: CreateAppFactory,
 ) {
   const { app, head } = await createApp({ routePath: route.path, ssrProps: route.ssrProps })
-  let content = await require('@vue/server-renderer').renderToString(app, { islandsByPath, renderers })
+  let content = await renderToString(app, { islandsByPath, renderers })
 
   // Remove comments from Vue renderer to allow plain text, RSS, or JSON output.
   content = content.replace(commentsRegex, '')

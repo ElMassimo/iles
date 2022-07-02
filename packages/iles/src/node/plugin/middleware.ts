@@ -5,11 +5,10 @@ import type { ViteDevServer, Connect } from 'vite'
 import createDebugger from 'debug'
 
 import type { AppConfig } from '../shared'
+import { ILES_APP_ENTRY } from '../constants'
 import { createServer } from '../server'
 import { pathToHtmlFilename } from '../utils'
 import { exists } from './utils'
-
-export const ILES_APP_ENTRY = '/@iles-entry'
 
 const supportedExtensions = new Set(['.html', '.xml', '.json', '.rss', '.atom'])
 
