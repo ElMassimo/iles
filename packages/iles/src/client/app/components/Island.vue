@@ -31,7 +31,7 @@ export default defineComponent({
     component: { type: [Object, Function, null] as PropType<DefineComponent>, required: true },
     componentName: { type: String, required: true },
     importName: { type: String, required: true },
-    importPath: { type: String, required: true },
+    importFrom: { type: String, required: true },
     using: { type: String as PropType<Framework>, default: undefined },
     [Hydrate.WhenIdle]: { type: Boolean, default: false },
     [Hydrate.OnLoad]: { type: Boolean, default: false },
@@ -47,7 +47,7 @@ export default defineComponent({
       strategy = Hydrate.OnLoad
     }
 
-    const ext = props.importPath.split('.')[1]
+    const ext = props.importFrom.split('.')[1]
     const appConfig = useAppConfig()
     const framework: Framework = props.using
       || (ext === 'svelte' && 'svelte')
@@ -86,7 +86,7 @@ export default defineComponent({
 
     const renderScript = async () => {
       const slots = await renderSlots()
-      const componentPath = this.importPath.replace(this.appConfig.root, '')
+      const componentPath = this.importFrom.replace(this.appConfig.root, '')
       const frameworkPath = `${hydrationPkg}/${this.framework}`
 
       return `import { ${hydrationFns[this.strategy]} as hydrate } from '${hydrationPkg}'
@@ -103,7 +103,7 @@ hydrate(framework, component, '${this.id}', ${serialize(props)}, ${serialize(slo
     const renderPlaceholder = async () => {
       const placeholder = `ISLAND_HYDRATION_PLACEHOLDER_${this.id}`
       const script = await renderScript()
-      const componentPath = this.importPath
+      const componentPath = this.importFrom
       this.islandsForPath!.push({ id: this.id, script, componentPath, placeholder })
       return placeholder
     }

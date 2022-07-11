@@ -66,10 +66,10 @@ async function wrapWithIsland (strategy: string, node: MDXJsxFlowElement | MDXJs
   node.attributes.unshift(...jsxAttributes({
     component: jsxExpression(strategy === 'client:only'
       ? { type: 'Literal', value: null, raw: 'null' }
-      : { type: 'Identifier', name: importMeta.name! }),
+      : { type: 'Identifier', name: importMeta.as! }),
     componentName: tagName,
-    importName: importMeta.importName,
-    importPath: importMeta.path,
+    importName: importMeta.name,
+    importFrom: importMeta.from,
   }))
 }
 
@@ -77,11 +77,11 @@ function extractImports (nodes: MDXJSEsm[]) {
   const imports: ImportsMetadata = Object.create(null)
   const declarations = nodes.flatMap(node => node.data?.estree?.body?.filter(isImport) as ImportDeclaration[])
 
-  declarations.forEach(({ specifiers, source: { value: path } }) => {
-    if (isString(path)) {
+  declarations.forEach(({ specifiers, source: { value: from } }) => {
+    if (isString(from)) {
       specifiers.forEach((specifier) => {
-        const name = specifier.local.name
-        imports[name] = { name, importName: importedName(specifier), path }
+        const as = specifier.local.name
+        imports[as] = { as, name: importedName(specifier), from }
       })
     }
   })
@@ -128,11 +128,11 @@ function defineImports (components: ComponentInfo[]) {
           specifiers: [
             {
               type: 'ImportSpecifier',
-              imported: { type: 'Identifier', name: component.importName! },
-              local: { type: 'Identifier', name: component.name! },
+              imported: { type: 'Identifier', name: component.name! },
+              local: { type: 'Identifier', name: component.as! },
             },
           ],
-          source: { type: 'Literal', value: component.path, raw: `'${component.path}'` },
+          source: { type: 'Literal', value: component.from, raw: `'${component.from}'` },
         })),
       } as Program,
     },

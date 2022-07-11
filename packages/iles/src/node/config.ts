@@ -9,7 +9,7 @@ import components from 'unplugin-vue-components/vite'
 import pages from '@islands/pages'
 import mdx from '@islands/mdx'
 
-import type { ComponentResolver } from 'unplugin-vue-components/types'
+import type { ComponentResolverFunction } from 'unplugin-vue-components/types'
 import type { UserConfig } from 'iles'
 
 import { importModule } from './modules'
@@ -36,24 +36,24 @@ const debug = creatDebugger('iles:config')
 
 export type { AppConfig }
 
-export const IlesComponentResolver: ComponentResolver = (name) => {
-  if (name === 'Island') return { path: ISLAND_COMPONENT_PATH }
-  if (name === 'Head') return { importName: 'Head', path: '@vueuse/head' }
+export const IlesComponentResolver: ComponentResolverFunction = (name) => {
+  if (name === 'Island') return { from: ISLAND_COMPONENT_PATH }
+  if (name === 'Head') return { name: 'Head', from: '@vueuse/head' }
 }
 
-export function IlesLayoutResolver (config: AppConfig): ComponentResolver {
+export function IlesLayoutResolver (config: AppConfig): ComponentResolverFunction {
   return (name) => {
     const [layoutName, isLayout] = name.split('Layout', 2)
     if (layoutName && isLayout === '') {
       const layoutFile = `${uncapitalize(camelCase(layoutName))}.vue`
-      return { importName: 'default', path: join(config.layoutsDir, layoutFile) }
+      return { name: 'default', from: join(config.layoutsDir, layoutFile) }
     }
   }
 }
 
 export async function resolveConfig (root?: string, env?: ConfigEnv): Promise<AppConfig> {
   if (!root) root = process.cwd()
-  if (!env) env = { mode: 'development', command: 'serve' }
+  if (!env) env = { mode: 'development', command: 'serve', ssrBuild: false }
 
   const appConfig = await resolveUserConfig(root, env)
 

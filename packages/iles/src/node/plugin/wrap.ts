@@ -89,10 +89,10 @@ async function visitSFCNode (node: ElementNode | TemplateChildNode, s: MagicStri
 
     const importMeta = await resolveComponentImport(strategy, tag)
     const componentProps = `
-      :component="${strategy === 'client:only' ? null : importMeta.name}"
+      :component="${strategy === 'client:only' ? null : importMeta.as}"
       componentName="${tag}"
-      importName="${importMeta.importName}"
-      importPath="${importMeta.path}"
+      importName="${importMeta.name}"
+      importFrom="${importMeta.from}"
     `
 
     // Replace opening tag.
@@ -111,13 +111,13 @@ async function visitSFCNode (node: ElementNode | TemplateChildNode, s: MagicStri
 }
 
 export async function resolveComponent (components: ComponentsApi, tag: string, filename: string, counter: number): Promise<ComponentInfo> {
-  const info = await components.findComponent(tag, filename)
+  const info = await components.findComponent(pascalCase(tag), filename)
   if (!info) throw new Error(`Could not resolve ${tag} in ${filename}. Make sure to import it explicitly, or add a component resolver.`)
-  return { importName: 'default', ...info, name: `__ile_components_${counter}` }
+  return { name: 'default', ...info, as: `__ile_components_${counter}` }
 }
 
 export async function resolveImportPath (config: AppConfig, info: ComponentInfo, importer: string) {
-  info.path = (await config.resolvePath(info.path, importer)) || info.path
+  info.from = (await config.resolvePath(info.from, importer)) || info.from
   return info
 }
 
@@ -126,7 +126,7 @@ async function injectClientScript (node: ElementNode, s: MagicString, filename: 
   const { lang = 'ts', ...props } = attrs
 
   // NOTE: Faking the extension ensures it's processed by esbuild.
-  const importPath = `${filename}?vue&index=${index}&clientScript=true&lang.${lang}`
+  const importFrom = `${filename}?vue&index=${index}&clientScript=true&lang.${lang}`
 
   const exported = await parseExports(content)
   if (!exported.includes('onLoad')) {
@@ -154,6 +154,6 @@ async function injectClientScript (node: ElementNode, s: MagicString, filename: 
       componentName: 'clientScript',
       importName: 'onLoad',
       using: 'vanilla',
-      importPath,
+      importFrom,
     })}'/>\n`)
 }

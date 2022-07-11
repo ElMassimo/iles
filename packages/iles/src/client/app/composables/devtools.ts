@@ -173,7 +173,7 @@ export function installDevtools (app: App & { __app: true }, config: AppClientCo
           { key: 'framework', value: island.framework },
           { key: 'props', value: island.$attrs },
           { key: 'importName', value: island.importName },
-          { key: 'importPath', value: island.importPath.replace(island.appConfig.root, '') },
+          { key: 'importFrom', value: island.importFrom.replace(island.appConfig.root, '') },
         ].filter(x => x),
       }
     })
