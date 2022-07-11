@@ -1,11 +1,14 @@
 import type { AppContext, Component, VNode, AsyncComponentLoader } from 'vue'
-import { h, getCurrentInstance, createApp, createSSRApp, ssrContextKey, withCtx } from 'vue'
+import { h, getCurrentInstance, createSSRApp, ssrContextKey, withCtx } from 'vue'
 
-const newApp = import.meta.env.SSR ? createApp : createSSRApp
+const newApp = createSSRApp
 
 export type Nodes = undefined | VNode<any, any, any> | VNode<any, any, any>[]
 export type VueRenderable = AsyncComponentLoader | Component | Nodes | ((props?: any) => Nodes | Promise<Nodes>)
 export type VNodeRenderer = (content: VueRenderable) => Promise<string>
+
+const commentStartRegex = /^(<!--\[-->|<!--]-->|<!---->)/g
+const commentEndRegex = /(<!--\[-->|<!--]-->|<!---->)$/
 
 export function useVueRenderer (): VNodeRenderer {
   return withCtx((async (content) => {
@@ -29,7 +32,11 @@ export function useVueRenderer (): VNodeRenderer {
     Object.assign(proxyApp._context, { ...appContext, provides })
 
     const { renderToString } = await import('@vue/server-renderer')
-    return await renderToString(proxyApp, ssrContext)
+    const str = await renderToString(proxyApp, ssrContext)
+
+    return import.meta.env.DEV
+      ? str.replace(commentStartRegex, '').replace(commentEndRegex, '')
+      : str
   }) as VNodeRenderer, getCurrentInstance()) as VNodeRenderer
 }
 

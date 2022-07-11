@@ -48,7 +48,7 @@ export async function renderPage (
   let content = await renderToString(app, { islandsByPath, renderers })
 
   // Remove comments from Vue renderer to allow plain text, RSS, or JSON output.
-  content = content.replace(commentsRegex, '')
+  // content = content.replace(commentsRegex, '')
 
   // Skip HTML shell to allow Vue to render plain text, RSS, or JSON output.
   if (!route.outputFilename.endsWith('.html'))
