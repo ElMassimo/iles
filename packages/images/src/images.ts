@@ -37,7 +37,7 @@ export default function IlesImagePresets (presets: ImagePresets, options?: Optio
       resolvers: [
         (name) => {
           if (name === 'Picture')
-            return { path: PICTURE_COMPONENT_PATH }
+            return { from: PICTURE_COMPONENT_PATH }
         },
       ],
     },
