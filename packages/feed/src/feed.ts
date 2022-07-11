@@ -16,7 +16,7 @@ export default function IlesFeed (): IlesModule {
       resolvers: [
         (name) => {
           if (name === 'RenderFeed')
-            return { importName: 'RenderFeed', path: join(__dirname, 'render-feed') }
+            return { name: 'RenderFeed', from: join(__dirname, 'render-feed') }
         },
       ],
     },

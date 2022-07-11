@@ -6,9 +6,9 @@ describe('parsing component imports', () => {
   test('default imports', async () => {
     expect(await parseImports('import __unplugin_components_0 from \'/absolute/path\'')).toEqual({
       __unplugin_components_0: {
-        importName: 'default',
-        name: '__unplugin_components_0',
-        path: '/absolute/path',
+        name: 'default',
+        as: '__unplugin_components_0',
+        from: '/absolute/path',
       },
     })
   })
@@ -16,9 +16,9 @@ describe('parsing component imports', () => {
   test('named imports', async () => {
     expect(await parseImports('import { Button as __unplugin_components_1 } from \'ant-design-vue/es\'')).toEqual({
       __unplugin_components_1: {
-        importName: 'Button',
-        name: '__unplugin_components_1',
-        path: 'ant-design-vue/es',
+        name: 'Button',
+        as: '__unplugin_components_1',
+        from: 'ant-design-vue/es',
       },
     })
   })

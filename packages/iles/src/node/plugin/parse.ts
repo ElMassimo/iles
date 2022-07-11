@@ -30,11 +30,11 @@ export async function parseImports (code: string) {
 
     const imports = parseESModules(code)[0]
     const importMap: ImportsMetadata = Object.create(null)
-    imports.forEach(({ d: isDynamic, n: path, ss: statementStart, s: importPathStart }) => {
-      if (isDynamic > -1 || !path) return
+    imports.forEach(({ d: isDynamic, n: from, ss: statementStart, s: importPathStart }) => {
+      if (isDynamic > -1 || !from) return
       const importFragment = code.substring(statementStart, importPathStart)
-      parseImportVariables(importFragment).forEach(([importName, name = importName]) => {
-        importMap[name] = { importName, name, path }
+      parseImportVariables(importFragment).forEach(([name, as = name]) => {
+        importMap[as] = { name, as, from }
       })
     })
     return importMap
