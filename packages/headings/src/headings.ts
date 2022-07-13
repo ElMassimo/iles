@@ -50,12 +50,19 @@ export default function IlesHeadings (): IlesModule {
 export const rehypePlugin: HeadingPlugin = ({ slug = generateSlug } = {}) => (ast, vfile) => {
   const { children } = ast as Parent
 
+  const counter = new Map<string, number>()
+  // add id in the counter first because when id is set it is used as slug
+  children.forEach(({ properties }) => {
+    const { id } = properties
+    if (id) counter.set(id, 1)
+  })
+
   const headings: Heading[] = []
   children.forEach((node: any) => {
     const level = headingRank(node)
     if (level) {
       const title = toString(node)
-      headings.push({ level, title, slug: slug(node, title, level) })
+      headings.push({ level, title, slug: slug(node, title, level, counter) })
     }
   })
 
@@ -69,9 +76,24 @@ export const rehypePlugin: HeadingPlugin = ({ slug = generateSlug } = {}) => (as
 const emojiRegex = /(?:⚡️|[\u2700-\u27BF]|(?:\uD83C[\uDDE6-\uDDFF]){2}|[\uD800-\uDBFF][\uDC00-\uDFFF])[\uFE0E\uFE0F]?(?:[\u0300-\u036F\uFE20-\uFE23\u20D0-\u20F0]|\uD83C[\uDFFB-\uDFFF])?(?:\u200D(?:[^\uD800-\uDFFF]|(?:\uD83C[\uDDE6-\uDDFF]){2}|[\uD800-\uDBFF][\uDC00-\uDFFF])[\uFE0E\uFE0F]?(?:[\u0300-\u036F\uFE20-\uFE23\u20D0-\u20F0]|\uD83C[\uDFFB-\uDFFF])?)*/g
 const hyphens = /(^-+)|(-+$)/g
 
-function toSlug (val: string) {
+function toSlug (val: string, counter: Map<string, number>) {
   if (typeof val !== 'string') return ''
-  return slugo(val.replace(emojiRegex, '-')).replace(hyphens, '')
+
+  const originalSlug = slugo(val.replace(emojiRegex, '-')).replace(hyphens, '')
+  let slug = originalSlug
+
+  if (counter.has(originalSlug)) {
+    // counter.get(originalSlug) cannot be undefined, used `|| 1` instead of `!` for TypeScript to be safer
+    let count = (counter.get(originalSlug) || 1) + 1
+    while (counter.has(`${originalSlug}-${count}`)) count += 1
+    counter.set(originalSlug, count)
+    slug = `${originalSlug}-${count}`
+  }
+
+  // no matter counter.has(originalSlug) or not, (slug, 1) should be added in the counter
+  counter.set(slug, 1)
+
+  return slug
 }
 
 const anchorTag = (properties: any) => ({
@@ -81,8 +103,8 @@ const anchorTag = (properties: any) => ({
   children: [],
 })
 
-function generateSlug ({ children, properties }: any, title: string, level: number): string {
-  const slug = properties.id ||= toSlug(title)
+function generateSlug ({ children, properties }: any, title: string, level: number, counter: Map<string, number>): string {
+  const slug = properties.id ||= toSlug(title, counter)
 
   properties.className = properties.className ? `${properties.className} heading` : 'heading'
 
