@@ -27,8 +27,8 @@ function isSFCMain (path: string, query: Record<string, any>) {
   return path.endsWith('.vue') && query.vue === undefined
 }
 
-function isSFCSetup (path: string, query: Record<string, any>) {
-  return path.endsWith('.vue') && query.setup !== undefined
+function isVueScript (path: string, query: Record<string, any>) {
+  return path.endsWith('.vue') && (!query.type || query.type === 'script')
 }
 
 const templateLayoutRegex = /<template.*?\slayout=\s*['"](\w+)['"].*?>/
@@ -157,7 +157,7 @@ export default function IslandsPlugins (appConfig: AppConfig): PluginOption[] {
         if (!id.startsWith(appConfig.srcDir)) return
 
         const { path, query } = parseId(id)
-        if (isSFCSetup(path, query) || isSFCMain(path, query) || /\.[tj]sx?/.test(path))
+        if (isVueScript(path, query) || /\.[tj]sx?/.test(path))
           return await autoImportComposables(code, id)
       },
     },
@@ -165,22 +165,20 @@ export default function IslandsPlugins (appConfig: AppConfig): PluginOption[] {
     {
       name: 'iles:page-data',
       enforce: 'post',
-      async transform (code, id) {
+      async transform (code, id, options) {
         const { path, query } = parseId(id)
         const isMdx = isMarkdown(path)
-        if (!isMdx && !isSFCMain(path, query)) return
+        if (!isMdx && !isVueScript(path, query)) return
 
         const isLayoutFile = isLayout(path)
         const isPage = plugins.pages.api.isPage(path)
         if (!isMdx && !isLayoutFile && !isPage) return
 
-        let sfcConstIndex = code.indexOf('const _sfc_main = ')
-        if (sfcConstIndex === -1) {
-          code = code.replace('export default _sfc_main', 'export default Object.assign(_sfc_main, {})')
-          sfcConstIndex = code.indexOf('export default Object.assign(_sfc_main, ')
-        }
+        const sfcIndex = indexOfVueComponentDefinition(code)
+        if (!sfcIndex || sfcIndex === -1)
+          return
+
         const s = new MagicString(code)
-        const sfcIndex = code.indexOf('{', sfcConstIndex) + 1
         const appendToSfc = (key: string, value?: string) =>
           s.appendRight(sfcIndex, value ? `${key}:${value},` : `${key},`)
 
@@ -254,4 +252,22 @@ import.meta.hot.accept('/${relative(root, path)}', (...args) => __ILES_PAGE_UPDA
       },
     },
   ]
+}
+
+// Internal: Inspect the code definition for a Vue SFC to locate the place where
+// the SFC is defined, in order to inject additional data.
+function indexOfVueComponentDefinition (code: string) {
+  let sfcConstIndex = code.indexOf('const _sfc_main = ')
+
+  if (sfcConstIndex === -1)
+    sfcConstIndex = code.indexOf('export default ')
+
+  if (sfcConstIndex === -1)
+    return // The main component definition lives in a different file.
+
+  const braceIndex = code.indexOf('{', sfcConstIndex)
+  if (braceIndex === -1)
+    return // The main component definition lives in a different file.
+
+  return braceIndex + 1
 }
