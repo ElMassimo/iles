@@ -6,6 +6,8 @@ import faviconSrc from '/images/favicon.ico'
 const { frontmatter, site } = usePage()
 
 let imageUrl = $computed(() => `${site.url}${frontmatter.image || bannerSrc}`)
+
+const isProd = import.meta.env.PROD
 </script>
 
 <template>
@@ -28,6 +30,6 @@ let imageUrl = $computed(() => `${site.url}${frontmatter.image || bannerSrc}`)
     <link rel="shortcut icon" :href="faviconSrc">
     <link rel="mask-icon" :href="logoSrc" color="#5C7E8F">
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180">
-    <link rel="manifest" href="/pwa-manifest.json">
+    <link v-if="isProd" rel="manifest" href="/pwa-manifest.json">
   </Head>
 </template>

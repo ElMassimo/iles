@@ -4,7 +4,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "iles --open",
+    "dev": "iles --open --port 3001",
     "build": "iles build",
     "preview": "iles preview --open --port 3050",
     "now": "npm run build && npm run preview",
