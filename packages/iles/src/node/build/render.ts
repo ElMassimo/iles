@@ -47,12 +47,12 @@ export async function renderPage (
   const { app, head } = await createApp({ routePath: route.path, ssrProps: route.ssrProps })
   let content = await renderToString(app, { islandsByPath, renderers })
 
-  // Remove comments from Vue renderer to allow plain text, RSS, or JSON output.
-  content = content.replace(commentsRegex, '')
-
   // Skip HTML shell to allow Vue to render plain text, RSS, or JSON output.
-  if (!route.outputFilename.endsWith('.html'))
+  if (!route.outputFilename.endsWith('.html')) {
+    // Remove comments from Vue renderer to allow plain text, RSS, or JSON output.
+    content = content.replace(commentsRegex, '')
     return content
+  }
 
   const { headTags, htmlAttrs, bodyAttrs } = renderHeadToString(head)
 

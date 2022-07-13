@@ -1,4 +1,4 @@
-import { createApp as createClientApp, createSSRApp, ref } from 'vue'
+import { createSSRApp as newApp, ref } from 'vue'
 import { createMemoryHistory, createRouter as createVueRouter, createWebHistory } from 'vue-router'
 import { createHead } from '@vueuse/head'
 
@@ -15,8 +15,6 @@ import { resetHydrationId } from './hydration'
 import { defaultHead } from './head'
 import { resolveLayout } from './layout'
 import { resolveProps } from './props'
-
-const newApp = import.meta.env.SSR ? createSSRApp : createClientApp
 
 function createRouter (base: string | undefined, routerOptions: Partial<RouterOptions>) {
   if (base === '/') base = undefined

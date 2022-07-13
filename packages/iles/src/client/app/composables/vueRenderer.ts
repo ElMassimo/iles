@@ -1,7 +1,5 @@
 import type { AppContext, Component, VNode, AsyncComponentLoader } from 'vue'
-import { h, getCurrentInstance, createApp, createSSRApp, ssrContextKey, withCtx } from 'vue'
-
-const newApp = import.meta.env.SSR ? createApp : createSSRApp
+import { h, getCurrentInstance, createSSRApp as newApp, ssrContextKey, withCtx } from 'vue'
 
 export type Nodes = undefined | VNode<any, any, any> | VNode<any, any, any>[]
 export type VueRenderable = AsyncComponentLoader | Component | Nodes | ((props?: any) => Nodes | Promise<Nodes>)
