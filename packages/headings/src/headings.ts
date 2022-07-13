@@ -14,7 +14,8 @@ export interface Heading {
 }
 
 export interface HeadingOptions {
-  slug?: typeof generateSlug
+  slug?: ({ children, properties }: any, title: string, level: number, data: any) => string
+  initData?: (ast: any) => any
 }
 
 export type HeadingPlugin = Plugin<[HeadingOptions?]>
@@ -47,22 +48,17 @@ export default function IlesHeadings (): IlesModule {
  *
  * @param options - Options to configure heading generation.
  */
-export const rehypePlugin: HeadingPlugin = ({ slug = generateSlug } = {}) => (ast, vfile) => {
+export const rehypePlugin: HeadingPlugin = ({ slug = generateSlug, initData = initCounter } = {}) => (ast, vfile) => {
   const { children } = ast as Parent
 
-  const counter = new Map<string, number>()
-  // add id in the counter first because when id is set it is used as slug
-  children.forEach(({ properties }) => {
-    const { id } = properties
-    if (id) counter.set(id, 1)
-  })
+  const data = initData(ast)
 
   const headings: Heading[] = []
   children.forEach((node: any) => {
     const level = headingRank(node)
     if (level) {
       const title = toString(node)
-      headings.push({ level, title, slug: slug(node, title, level, counter) })
+      headings.push({ level, title, slug: slug(node, title, level, data) })
     }
   })
 
@@ -71,6 +67,17 @@ export const rehypePlugin: HeadingPlugin = ({ slug = generateSlug } = {}) => (as
   // The @islands/mdx plugin will expose all data in `meta`.
   if (title) vfile.data.title = title
   vfile.data.headings = headings
+}
+
+function initCounter (ast: any) {
+  const { children } = ast as Parent
+  const counter = new Map<string, number>()
+  // add id in the counter first because when id is set it is used as slug
+  children.forEach((child: any) => {
+    const id = child.properties?.id
+    if (id) counter.set(id, 1)
+  })
+  return counter
 }
 
 const emojiRegex = /(?:⚡️|[\u2700-\u27BF]|(?:\uD83C[\uDDE6-\uDDFF]){2}|[\uD800-\uDBFF][\uDC00-\uDFFF])[\uFE0E\uFE0F]?(?:[\u0300-\u036F\uFE20-\uFE23\u20D0-\u20F0]|\uD83C[\uDFFB-\uDFFF])?(?:\u200D(?:[^\uD800-\uDFFF]|(?:\uD83C[\uDDE6-\uDDFF]){2}|[\uD800-\uDBFF][\uDC00-\uDFFF])[\uFE0E\uFE0F]?(?:[\u0300-\u036F\uFE20-\uFE23\u20D0-\u20F0]|\uD83C[\uDFFB-\uDFFF])?)*/g
