@@ -1,3 +1,19 @@
+# [0.8.0](https://github.com/ElMassimo/iles/compare/prerender@0.3.2...prerender@0.8.0) (2022-07-14)
+
+
+### Bug Fixes
+
+* cannot detect kebab-case components ([#152](https://github.com/ElMassimo/iles/issues/152)) ([30ea6d0](https://github.com/ElMassimo/iles/commit/30ea6d080bd4de84c9755be6239f80c1c7066529)), closes [#151](https://github.com/ElMassimo/iles/issues/151)
+
+
+### Features
+
+* add pwa module by [@userquin](https://github.com/userquin) ([#127](https://github.com/ElMassimo/iles/issues/127)) ([8d9c2bf](https://github.com/ElMassimo/iles/commit/8d9c2bfb12ae5326815b34699b3c75e03bb7a2de))
+* convert to ESM and add support for Vite 3 ([#147](https://github.com/ElMassimo/iles/issues/147)) ([7e397b9](https://github.com/ElMassimo/iles/commit/7e397b908746cd8ec875da2a636ae667ae98cb30))
+* upgrade to vite 2.9 🚀 ([f47b6b3](https://github.com/ElMassimo/iles/commit/f47b6b346ef2efc88590749e2d8c8a2fbba7a42a))
+
+
+
 ## [0.3.2](https://github.com/ElMassimo/iles/compare/prerender@0.3.1...prerender@0.3.2) (2022-02-22)
 
 

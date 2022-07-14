@@ -1,7 +1,7 @@
 {
   "name": "@islands/prerender",
   "description": "Prerender utilities for îles",
-  "version": "0.3.2",
+  "version": "0.8.0",
   "type": "module",
   "files": [
     "dist"
