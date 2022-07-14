@@ -15,8 +15,8 @@
     "blog:build": "npm run -C playground/the-vue-point build",
     "blog:now": "npm run -C playground/the-vue-point now",
     "blog:check": "npm -C playground/the-vue-point run check",
-    "release": "node scripts/release",
-    "changelog": "node scripts/changelog",
+    "release": "node scripts/release.cjs",
+    "changelog": "node scripts/changelog.cjs",
     "test": "packages/iles/bin/iles.js test"
   },
   "devDependencies": {

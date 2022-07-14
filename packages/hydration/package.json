@@ -1,7 +1,7 @@
 {
   "name": "@islands/hydration",
   "description": "Hydration utilities for îles",
-  "version": "0.3.9",
+  "version": "0.8.0",
   "scripts": {
     "dev": "npm run build -- --watch",
     "build": "tsup hydration.ts preact.ts vue.ts vanilla.ts solid.ts svelte.ts",
