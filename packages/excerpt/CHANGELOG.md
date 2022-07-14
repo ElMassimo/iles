@@ -1,3 +1,12 @@
+# [0.8.0](https://github.com/ElMassimo/iles/compare/excerpt@0.1.3...excerpt@0.8.0) (2022-07-14)
+
+
+### Features
+
+* convert to ESM and add support for Vite 3 ([#147](https://github.com/ElMassimo/iles/issues/147)) ([7e397b9](https://github.com/ElMassimo/iles/commit/7e397b908746cd8ec875da2a636ae667ae98cb30))
+
+
+
 ## [0.1.3](https://github.com/ElMassimo/iles/compare/excerpt@0.1.2...excerpt@0.1.3) (2022-03-22)
 
 
