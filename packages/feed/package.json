@@ -1,6 +1,6 @@
 {
   "name": "@islands/feed",
-  "version": "0.1.2",
+  "version": "0.8.0",
   "scripts": {
     "dev": "npm run build -- --watch",
     "build": "tsup src/types.ts src/feed.ts src/render-feed.ts",
@@ -32,7 +32,7 @@
     "vue": "^3.2.37"
   },
   "peerDependencies": {
-    "iles": "workspace:^0.7",
+    "iles": "workspace:^0.8",
     "vue": "^3.2.37"
   },
   "dependencies": {
