@@ -1,7 +1,7 @@
 {
   "name": "iles",
   "description": "Vite & Vue powered static site generator with partial hydration",
-  "version": "0.8.0-beta.1",
+  "version": "0.8.0",
   "type": "module",
   "bin": {
     "iles": "bin/iles.js"
@@ -62,8 +62,8 @@
   "dependencies": {
     "@antfu/install-pkg": "^0.1.0",
     "@islands/hydration": "workspace:^0.8.0",
-    "@islands/mdx": "workspace:^0.7.5",
-    "@islands/pages": "workspace:^0.7.9",
+    "@islands/mdx": "workspace:^0.8.0",
+    "@islands/pages": "workspace:^0.8.0",
     "@islands/prerender": "workspace:^0.8.0",
     "@nuxt/devalue": "^2.0.0",
     "@vitejs/plugin-vue": "^3.0.0",

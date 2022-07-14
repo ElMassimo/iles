@@ -1,3 +1,19 @@
+# [0.8.0](https://github.com/ElMassimo/iles/compare/v0.7.40...v0.8.0) (2022-07-14)
+
+
+### Bug Fixes
+
+* cannot detect kebab-case components ([#152](https://github.com/ElMassimo/iles/issues/152)) ([30ea6d0](https://github.com/ElMassimo/iles/commit/30ea6d080bd4de84c9755be6239f80c1c7066529)), closes [#151](https://github.com/ElMassimo/iles/issues/151)
+* ensure compatibility with vue 3.2.27 ([e4dbf0c](https://github.com/ElMassimo/iles/commit/e4dbf0c178953caf957933d7e4ec4b4361dd89c1))
+* use createSSRApp to enable more efficient hydration ([#156](https://github.com/ElMassimo/iles/issues/156)) ([49d4d9a](https://github.com/ElMassimo/iles/commit/49d4d9a2a26dd7662f9ae552e5a8c809512e96d1))
+
+
+### Features
+
+* convert to ESM and add support for Vite 3 ([#147](https://github.com/ElMassimo/iles/issues/147)) ([7e397b9](https://github.com/ElMassimo/iles/commit/7e397b908746cd8ec875da2a636ae667ae98cb30))
+
+
+
 ## [0.7.40](https://github.com/ElMassimo/iles/compare/v0.7.39...v0.7.40) (2022-06-23)
 
 
