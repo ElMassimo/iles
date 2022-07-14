@@ -1,3 +1,7 @@
+# [0.8.0](https://github.com/ElMassimo/iles/compare/icons@0.1.1...icons@0.8.0) (2022-07-14)
+
+
+
 ## [0.1.1](https://github.com/ElMassimo/iles/compare/icons@0.1.0...icons@0.1.1) (2021-11-03)
 
 
