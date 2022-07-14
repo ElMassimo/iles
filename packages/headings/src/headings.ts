@@ -69,15 +69,8 @@ export const rehypePlugin: HeadingPlugin = ({ slug = generateSlug, initData = in
   vfile.data.headings = headings
 }
 
-function initCounter (ast: any) {
-  const { children } = ast as Parent
-  const counter = new Map<string, number>()
-  // add id in the counter first because when id is set it is used as slug
-  children.forEach((child: any) => {
-    const id = child.properties?.id
-    if (id) counter.set(id, 1)
-  })
-  return counter
+function initCounter () {
+  return new Map<string, number>()
 }
 
 const emojiRegex = /(?:⚡️|[\u2700-\u27BF]|(?:\uD83C[\uDDE6-\uDDFF]){2}|[\uD800-\uDBFF][\uDC00-\uDFFF])[\uFE0E\uFE0F]?(?:[\u0300-\u036F\uFE20-\uFE23\u20D0-\u20F0]|\uD83C[\uDFFB-\uDFFF])?(?:\u200D(?:[^\uD800-\uDFFF]|(?:\uD83C[\uDDE6-\uDDFF]){2}|[\uD800-\uDBFF][\uDC00-\uDFFF])[\uFE0E\uFE0F]?(?:[\u0300-\u036F\uFE20-\uFE23\u20D0-\u20F0]|\uD83C[\uDFFB-\uDFFF])?)*/g
