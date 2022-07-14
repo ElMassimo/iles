@@ -1,3 +1,7 @@
+# [0.8.0](https://github.com/ElMassimo/iles/compare/pwa@0.2.0...pwa@0.8.0) (2022-07-14)
+
+
+
 # [0.2.0](https://github.com/ElMassimo/iles/compare/pwa@0.1.1...pwa@0.2.0) (2022-07-02)
 
 
