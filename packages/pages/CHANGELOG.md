@@ -1,3 +1,13 @@
+# [0.8.0](https://github.com/ElMassimo/iles/compare/pages@0.7.11...pages@0.8.0) (2022-07-14)
+
+
+### Features
+
+* convert to ESM and add support for Vite 3 ([#147](https://github.com/ElMassimo/iles/issues/147)) ([7e397b9](https://github.com/ElMassimo/iles/commit/7e397b908746cd8ec875da2a636ae667ae98cb30))
+* upgrade to vite 2.9 🚀 ([f47b6b3](https://github.com/ElMassimo/iles/commit/f47b6b346ef2efc88590749e2d8c8a2fbba7a42a))
+
+
+
 ## [0.7.11](https://github.com/ElMassimo/iles/compare/pages@0.7.10...pages@0.7.11) (2022-03-02)
 
 

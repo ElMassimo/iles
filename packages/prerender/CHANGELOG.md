@@ -1,8 +1,4 @@
-## [0.8.1](https://github.com/ElMassimo/iles/compare/prerender@0.8.0...prerender@0.8.1) (2022-07-14)
-
-
-
-# [0.8.0](https://github.com/ElMassimo/iles/compare/prerender@0.3.2...prerender@0.8.0) (2022-07-14)
+## [0.8.1](https://github.com/ElMassimo/iles/compare/prerender@0.3.2...prerender@0.8.1) (2022-07-14)
 
 
 ### Bug Fixes
