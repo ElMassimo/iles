@@ -1,3 +1,12 @@
+## [0.8.1](https://github.com/ElMassimo/iles/compare/images@0.8.0...images@0.8.1) (2022-07-20)
+
+
+### Bug Fixes
+
+* esm incompatibility in images module ([#164](https://github.com/ElMassimo/iles/issues/164)) ([000b265](https://github.com/ElMassimo/iles/commit/000b265f6aa4788f5fd150177a193a25f07dd176))
+
+
+
 # [0.8.0](https://github.com/ElMassimo/iles/compare/images@0.3.2...images@0.8.0) (2022-07-14)
 
 
