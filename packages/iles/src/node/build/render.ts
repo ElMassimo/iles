@@ -22,7 +22,7 @@ export async function renderPages (
   if (!appPath)
     throw new Error(`Could not find the SSR build for the app in ${config.tempDir}`)
 
-  const { createApp }: { createApp: CreateAppFactory } = await import(appPath)
+  const { createApp }: { createApp: CreateAppFactory } = await import(`file://${appPath}`)
 
   const routesToRender = await withSpinner('resolving static paths', async () =>
     await getRoutesToRender(config, createApp))
