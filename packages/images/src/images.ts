@@ -7,7 +7,7 @@ import imagePresets from 'vite-plugin-image-presets'
 
 export * from 'vite-plugin-image-presets'
 
-const _dirname = typeof __dirname === undefined
+const _dirname = typeof __dirname === 'undefined'
   ? dirname(fileURLToPath(import.meta.url))
   : __dirname
 
