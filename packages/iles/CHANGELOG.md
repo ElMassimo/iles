@@ -1,3 +1,12 @@
+## [0.8.1](https://github.com/ElMassimo/iles/compare/v0.8.0...v0.8.1) (2022-07-20)
+
+
+### Bug Fixes
+
+* windows incompatibility when rendering site (close [#161](https://github.com/ElMassimo/iles/issues/161)) ([#163](https://github.com/ElMassimo/iles/issues/163)) ([9e6a0c7](https://github.com/ElMassimo/iles/commit/9e6a0c77d61f2fe521a58211854976054a7c0f7b))
+
+
+
 # [0.8.0](https://github.com/ElMassimo/iles/compare/v0.7.40...v0.8.0) (2022-07-14)
 
 
