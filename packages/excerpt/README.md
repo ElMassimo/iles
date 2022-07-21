@@ -64,7 +64,7 @@ excerpt by passing an `excerpt: true` prop.
 <script setup>
 import Introduction from '~/pages/intro.mdx'
 
-const pages = Object.values(import.globEagerDefault('~/pages/posts/**/*.mdx'))
+const pages = useDocuments('~/pages/posts')
 </script>
 
 <template>
