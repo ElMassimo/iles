@@ -8,7 +8,7 @@
 When rendering index pages, it can be convenient to import multiple pages or
 [MDX documents].
 
-Although using [`import.meta.globEager`][glob] works well, <Iles/> provides a better option.
+Although using [`import.meta.glob('./dir/*.js', { eager: true })`][glob] works well, <Iles/> provides a better option.
 
 ## `useDocuments`
 
@@ -96,8 +96,8 @@ export function usePosts () {
 }
 ```
 
-## Comparison with `import.meta.globEager`
+## Comparison with `import.meta.glob`
 
-- Significantly __faster__ than `import.meta.globEager`, as it serves a single file
+- Significantly __faster__ than `import.meta.glob('./dir/*.js', { eager: true })`, as it serves a single file
 - Can use any __aliases__ you have defined in Vite, no need to use relative paths
 - Does not reload the page when files are added or removed
