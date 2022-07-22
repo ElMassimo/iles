@@ -40,7 +40,8 @@ export function flattenPath (path: string) {
 // Paths ending with '/' are represented with index.html files.
 export function pathToFilename (path: string, ext = '') {
   if (path.endsWith(ext)) ext = ''
-  return `${(path.endsWith('/') ? `${path}index` : path).replace(/^\//g, '')}${ext}`
+  const decodedPath = path.split('%2F').map(decodeURIComponent).join('%2F')
+  return `${(decodedPath.endsWith('/') ? `${decodedPath}index` : decodedPath).replace(/^\//g, '')}${ext}`
 }
 
 export async function replaceAsync (str: string, regex: RegExp, asyncFn: (...groups: string[]) => Promise<string>) {
