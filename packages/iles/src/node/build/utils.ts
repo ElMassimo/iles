@@ -40,7 +40,7 @@ export function flattenPath (path: string) {
 // Paths ending with '/' are represented with index.html files.
 export function pathToFilename (path: string, ext = '') {
   if (path.endsWith(ext)) ext = ''
-  const decodedPath = path.split('%2F').map(decodeURIComponent).join('%2F')
+  const decodedPath = decodeURIComponent(path)
   return `${(decodedPath.endsWith('/') ? `${decodedPath}index` : decodedPath).replace(/^\//g, '')}${ext}`
 }
 
