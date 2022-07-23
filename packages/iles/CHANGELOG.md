@@ -1,3 +1,12 @@
+## [0.8.2](https://github.com/ElMassimo/iles/compare/v0.8.1...v0.8.2) (2022-07-23)
+
+
+### Bug Fixes
+
+* do not encode file names of dynamic routes ([#168](https://github.com/ElMassimo/iles/issues/168)) ([4392600](https://github.com/ElMassimo/iles/commit/439260021f5a1e5a17b62bfca81e5dab774c50e0))
+
+
+
 ## [0.8.1](https://github.com/ElMassimo/iles/compare/v0.8.0...v0.8.1) (2022-07-20)
 
 
