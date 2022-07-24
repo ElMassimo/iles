@@ -1,14 +1,15 @@
 import type { AppContext, Component, VNode, AsyncComponentLoader } from 'vue'
-import { h, getCurrentInstance, createApp, createSSRApp, ssrContextKey, withCtx } from 'vue'
-
-const newApp = import.meta.env.SSR ? createApp : createSSRApp
+import { h, getCurrentInstance, createSSRApp as newApp, ssrContextKey, withCtx } from 'vue'
 
 export type Nodes = undefined | VNode<any, any, any> | VNode<any, any, any>[]
 export type VueRenderable = AsyncComponentLoader | Component | Nodes | ((props?: any) => Nodes | Promise<Nodes>)
-export type VNodeRenderer = (content: VueRenderable) => Promise<string>
+export type VNodeRenderer = (content: VueRenderable, options?: { hydratable: boolean }) => Promise<string>
+
+const commentsRegex = /<!--\[-->|<!--]-->|<!---->/g
+const outerCommentsRegex = /(^<!--\[-->)|(<!--]-->$)/g
 
 export function useVueRenderer (): VNodeRenderer {
-  return withCtx((async (content) => {
+  return withCtx((async (content, options) => {
     if (!content) return ''
 
     // Obtain the app context of the current app to enable nested renders.
@@ -29,7 +30,10 @@ export function useVueRenderer (): VNodeRenderer {
     Object.assign(proxyApp._context, { ...appContext, provides })
 
     const { renderToString } = await import('@vue/server-renderer')
-    return await renderToString(proxyApp, ssrContext)
+
+    const str = await renderToString(proxyApp, ssrContext)
+
+    return str.replace(options?.hydratable ? outerCommentsRegex : commentsRegex, '')
   }) as VNodeRenderer, getCurrentInstance()) as VNodeRenderer
 }
 

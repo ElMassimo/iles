@@ -8,6 +8,7 @@ import { useIslandsForPath } from '../composables/islandDefinitions'
 import { useRenderer } from '../composables/renderer'
 import { useAppConfig } from '../composables/appConfig'
 import { useVueRenderer } from '../composables/vueRenderer'
+import { renderers } from '@islands/prerender'
 
 function trackIsland (this: any, { __ILE_DEVTOOLS__ }: any = window) {
   __ILE_DEVTOOLS__?.addIslandToDevtools(this)
@@ -62,7 +63,7 @@ export default defineComponent({
       appConfig,
       islandsForPath: import.meta.env.SSR && strategy !== Hydrate.None ? useIslandsForPath() : undefined,
       renderVNodes: useVueRenderer(),
-      prerender: import.meta.env.SSR ? useRenderer(framework) : undefined,
+      prerender: import.meta.env.SSR || framework === 'vue' ? renderers[framework] : undefined,
     }
   },
   mounted: trackIsland,
@@ -113,17 +114,16 @@ hydrate(framework, component, '${this.id}', ${serialize(props)}, ${serialize(slo
 
       if (this.framework === 'vanilla') return undefined
 
-      if (this.framework === 'vue') {
-        const vnode = h(this.component, this.$attrs, this.$slots)
-        return isSSR ? vnode : h(defineAsyncComponent(async () => createStaticVNode(await this.renderVNodes(vnode), undefined as any)))
-      }
-
       const prerender = this.prerender
       if (!prerender) return undefined
 
       return h(defineAsyncComponent(async () => {
         const slots = await renderSlots()
-        const result = await prerender(this.component, this.$attrs, slots, this.id)
+        let result = await prerender(this.component, this.$attrs, slots, this.id)
+
+        if (result && typeof result !== 'string')
+          result = await this.renderVNodes(result, { hydratable: true })
+
         return createStaticVNode(result, undefined as any)
       }))
     }

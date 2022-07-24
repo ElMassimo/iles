@@ -1,16 +1,18 @@
 import type { Props, Slots, Framework } from '@islands/hydration'
+import type { VNode } from 'vue'
 
 export type { Framework }
 
 export type PrerenderFn =
-  (component: any, props: Props, slots: Slots | undefined, id: string) => Promise<string>
+  (component: any, props: Props, slots: Slots | undefined, id: string) => Promise<string | VNode>
 
 const _imports: {
   preact?: [
     typeof import('@islands/hydration/preact'),
     typeof import('preact-render-to-string'),
   ]
-  solid?: typeof import('solid-js/web')
+  solid?: typeof import('solid-js/web'),
+  vue?: typeof import('@islands/hydration/vue'),
 } = {}
 
 export const renderers: Record<Framework, PrerenderFn> = {
@@ -38,7 +40,8 @@ export const renderers: Record<Framework, PrerenderFn> = {
   async vanilla () {
     throw new Error('The vanilla strategy does not prerender islands.')
   },
-  async vue () {
-    throw new Error('The vue strategy prerenders islands directly in the main app.')
+  async vue (component, props, slots) {
+    const { h, slotsToFns } = _imports.vue ||= await import('@islands/hydration/vue')
+    return h(component, props, slotsToFns(slots))
   },
 }

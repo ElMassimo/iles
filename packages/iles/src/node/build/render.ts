@@ -3,7 +3,6 @@ import { existsSync } from 'fs'
 import { join } from 'pathe'
 import { renderHeadToString } from '@vueuse/head'
 import type { RollupOutput } from 'rollup'
-import { renderers } from '@islands/prerender'
 import { IslandDefinition } from 'iles'
 import { renderToString } from '@vue/server-renderer'
 import type { Awaited, AppConfig, CreateAppFactory, IslandsByPath, RouteToRender } from '../shared'
@@ -45,14 +44,11 @@ export async function renderPage (
   createApp: CreateAppFactory,
 ) {
   const { app, head } = await createApp({ routePath: route.path, ssrProps: route.ssrProps })
-  let content = await renderToString(app, { islandsByPath, renderers })
-
-  // Remove comments from Vue renderer to allow plain text, RSS, or JSON output.
-  content = content.replace(commentsRegex, '')
+  let content = await renderToString(app, { islandsByPath })
 
   // Skip HTML shell to allow Vue to render plain text, RSS, or JSON output.
   if (!route.outputFilename.endsWith('.html'))
-    return content
+    return content.replace(commentsRegex, '')
 
   const { headTags, htmlAttrs, bodyAttrs } = renderHeadToString(head)
 

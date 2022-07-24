@@ -16,7 +16,7 @@ import { defaultHead } from './head'
 import { resolveLayout } from './layout'
 import { resolveProps } from './props'
 
-const newApp = import.meta.env.SSR ? createSSRApp : createClientApp
+const newApp = import.meta.env.DEV ? createClientApp : createSSRApp
 
 function createRouter (base: string | undefined, routerOptions: Partial<RouterOptions>) {
   if (base === '/') base = undefined
@@ -93,6 +93,6 @@ if (!import.meta.env.SSR) {
 
     router.afterEach(resetHydrationId) // reset island identifiers to match ssg.
     await router.isReady() // wait until page component is fetched before mounting
-    app.mount('#app', true)
+    app.mount('#app')
   })()
 }

@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import { watch, onBeforeUnmount } from 'vue'
+import { onMounted, onBeforeUnmount } from 'vue'
 
 const props = defineProps<{ date: Date }>()
 let { date } = $(props)
 
-let relativeTimeStr = $ref('')
+let timeEl = $ref<HTMLTimeElement>()
 let dateStr = $computed(() => date.toLocaleDateString('en-US', { day: 'numeric', month: 'long', year: 'numeric' }))
 let timeStr = $computed(() => date.toISOString())
 
@@ -19,15 +19,17 @@ if (!import.meta.env.SSR) {
     return date.toLocaleDateString('en-US', { day: 'numeric', month: 'long' })
   }
 
-  const updateRelativeTimeStr = () =>
-    relativeTimeStr = currentTime((Number(new Date()) - Number(date)) / (60 * 60 * 1000))
+  const updateRelativeTimeStr = () => {
+    if (timeEl)
+      timeEl.textContent = currentTime((Number(new Date()) - Number(date)) / (60 * 60 * 1000))
+  }
 
   let activeInterval = setInterval(updateRelativeTimeStr, 60 * 1000)
   onBeforeUnmount(() => clearInterval(activeInterval))
-  watch($$(date), updateRelativeTimeStr, { immediate: true })
+  onMounted(updateRelativeTimeStr)
 }
 </script>
 
 <template>
-  <time :title="dateStr" :date-time="timeStr">{{ relativeTimeStr || dateStr }}</time>
+  <time ref="timeEl" :title="dateStr" :date-time="timeStr">{{ dateStr }}</time>
 </template>
