@@ -11,6 +11,7 @@ import { withSpinner } from './utils'
 import { getRoutesToRender } from './routes'
 
 const commentsRegex = /<!--\[-->|<!--]-->|<!---->/g
+const outerCommentsRegex = /(<ile-root .*?>.*?<\/ile-root>)|<!--\[-->|<!--]-->|<!---->/g
 
 export async function renderPages (
   config: AppConfig,
@@ -49,6 +50,10 @@ export async function renderPage (
   // Skip HTML shell to allow Vue to render plain text, RSS, or JSON output.
   if (!route.outputFilename.endsWith('.html'))
     return content.replace(commentsRegex, '')
+
+  // Remove comments outside <ile-root>, Vue adds them for hydration purposes
+  // but they won't be used.
+  content = content.replace(outerCommentsRegex, '$1')
 
   const { headTags, htmlAttrs, bodyAttrs } = renderHeadToString(head)
 
