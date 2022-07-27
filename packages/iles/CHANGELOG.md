@@ -1,3 +1,12 @@
+## [0.8.3](https://github.com/ElMassimo/iles/compare/v0.8.2...v0.8.3) (2022-07-27)
+
+
+### Bug Fixes
+
+* vendor chunk categorization ([#173](https://github.com/ElMassimo/iles/issues/173)) ([cb0096d](https://github.com/ElMassimo/iles/commit/cb0096dbc9438e39a2d5b1127de6f0b276f6317d))
+
+
+
 ## [0.8.2](https://github.com/ElMassimo/iles/compare/v0.8.1...v0.8.2) (2022-07-23)
 
 
