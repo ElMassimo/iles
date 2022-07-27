@@ -45,8 +45,10 @@ function vendorPerFramework (
   }
 
   if (mod.isEntry) {
-    const queryIndex = id.indexOf('?')
-    const name = chunkForExtension[(queryIndex > -1 ? id.slice(0, queryIndex) : id).split('.')[1]]
+    const queryIndex = id.lastIndexOf('?')
+    const idWithoutQuery = queryIndex > -1 ? id.slice(0, queryIndex) : id
+    const extension = idWithoutQuery.slice(idWithoutQuery.lastIndexOf('.') + 1)
+    const name = chunkForExtension[extension]
     cache.set(id, name)
     return name
   }
