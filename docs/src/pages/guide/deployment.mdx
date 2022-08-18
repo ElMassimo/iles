@@ -121,3 +121,21 @@ and make sure to [manually enable `gh-pages`][actions] if it's the [first deploy
 
 [actions]: https://github.com/peaceiris/actions-gh-pages#%EF%B8%8F-first-deployment-with-github_token
 [actions-gh-pages]: https://github.com/peaceiris/actions-gh-pages
+
+## Buddy <BuddyLogo />
+You can deploy **Iles** using [Buddy](https://buddy.works), a CI/CD solution that can build your site and push it to many different deploy targets including FTP servers and cloud hosting providers.
+
+Buddy itself will not host your site. Instead, it helps you manage the build process and deliver the result to a deploy platform of your choice.
+1. Create a Buddy account [here](https://buddy.works).
+2. Create a new project and connect it with a git repository (GitHub, GitLab, BitBucket, any private Git Repository or you can use Buddy Git Hosting).
+3. Add a new pipeline.
+4. In the newly created pipeline add a [Node.js](https://buddy.works/actions/node-js) action.
+5. In this action add:
+```
+npm install
+npm run build
+```
+
+Of course, you can use `yarn` or `pnpm` if you prefer it.
+6. Add a deployment action — there are many to choose from, you can browse them [here](https://buddy.works/actions). Although their settings can differ, remember to set the Source path to dist.
+7. Press the **Run** button.
