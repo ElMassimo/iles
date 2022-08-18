@@ -59,7 +59,10 @@ export function resolveAliases (root: string, userConfig: UserConfig): AliasOpti
       find: /^iles$/,
       replacement: join(DIST_CLIENT_PATH, 'index'),
     },
-    { find: /^iles\//, replacement: `${PKG_ROOT}/` },
+    {
+      find: /^iles\//,
+      replacement: `${PKG_ROOT}/`,
+    },
     // make sure it always use the same vue dependency that comes with
     // iles itself
     {
@@ -86,14 +89,6 @@ export function resolveAliases (root: string, userConfig: UserConfig): AliasOpti
         '@vue/devtools-api/lib/esm/index.js',
       ),
     },
-    {
-      find: /^@islands\/hydration$/,
-      replacement: require.resolve('@islands/hydration'),
-    },
-    ...['vue', 'vanilla', 'svelte', 'preact', 'solid'].map(name => ({
-      find: new RegExp(`^@islands/hydration/${name}$`),
-      replacement: require.resolve(`@islands/hydration/${name}`),
-    })),
   ]
 
   return aliases
