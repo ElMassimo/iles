@@ -1,5 +1,5 @@
 <template>
-  <button class="nav-bar-button inline-flex text-xl mx-1.5 p-2">
+  <button class="nav-bar-button inline-flex text-xl p-2">
     <slot/>
   </button>
 </template>

@@ -18,7 +18,7 @@ describe('building docs site', () => {
     expect(files.sort()).toEqual(expect.arrayContaining([
       '404.html',
       '_headers',
-      'assets/style.b79cacf4.css',
+      'assets/style.2b5b3b35.css',
       'assets/turbo.a9e83070.js',
       'favicon.ico',
       'feed.rss',
@@ -45,7 +45,7 @@ describe('building docs site', () => {
   })
 
   test('styles', async () => {
-    await assertSnapshot('assets/style.b79cacf4.css')
+    await assertSnapshot('assets/style.2b5b3b35.css')
   })
   test('sitemap', async () => {
     await assertSnapshot('sitemap.xml')

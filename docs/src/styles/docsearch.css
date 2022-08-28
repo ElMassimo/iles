@@ -1,9 +1,5 @@
 @import '@docsearch/css/dist/style.css';
 
-.DocSearch-Button {
-  display: none;
-}
-
 .DocSearch {
   --docsearch-container-background: rgba(173, 181, 189, 0.7);
   --docsearch-modal-background: var(--bg-html);

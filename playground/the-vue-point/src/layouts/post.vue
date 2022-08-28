@@ -77,9 +77,7 @@ const author = $computed(() => {
             <a :href="prevPost.href">{{ prevPost.title }}</a>
           </div>
         </div>
-        <div class="pt-8">
-          <BackLink client:none href="/">Back to the blog</BackLink>
-        </div>
+        <BackLink class="block pt-8" client:none href="/">Back to the blog</BackLink>
       </footer>
     </div>
   </article>

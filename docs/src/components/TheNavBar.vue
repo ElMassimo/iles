@@ -1,6 +1,6 @@
 <template>
   <header class="nav-bar bg-html flex items-center border-b">
-    <div class="flex flex-1 h-full container !max-w-screen-2xl mx-auto px-2 md:px-6">
+    <div class="flex flex-1 h-full container !max-w-screen-2xl mx-auto px-3 md:px-6">
       <div class="flex items-center md:hidden">
         <SidebarToggle/>
       </div>
@@ -10,7 +10,7 @@
       <div class="hidden md:flex items-center flex-1 justify-end">
         <NavBarLinks/>
       </div>
-      <div class="flex items-center pl-6">
+      <div class="flex items-center pl-6 gap-3">
         <SearchButton/>
         <DarkModeSwitch client:load/>
       </div>

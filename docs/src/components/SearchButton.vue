@@ -8,7 +8,7 @@ export const onLoad: OnLoadFn = el =>
 </script>
 
 <template>
-  <DocSearch client:idle/>
+  <DocSearch class="hidden" client:idle/>
   <NavBarButton aria-label="Search">
     <IconBxBxSearch/>
   </NavBarButton>
