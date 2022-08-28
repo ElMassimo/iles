@@ -128,7 +128,11 @@ hydrate(framework, component, '${this.id}', ${serialize(props)}, ${serialize(slo
       }))
     }
 
-    const ileRoot = h('ile-root', { id: this.id }, prerenderIsland())
+    const ileAttrs: Record<string, any> = { id: this.id }
+    if (this.$attrs.class)
+      ileAttrs.class = this.$attrs.class
+
+    const ileRoot = h('ile-root', ileAttrs, prerenderIsland())
 
     if (isSSR && this.strategy === Hydrate.None)
       return ileRoot
