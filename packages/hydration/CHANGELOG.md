@@ -1,3 +1,12 @@
+## [0.8.1](https://github.com/ElMassimo/iles/compare/hydration@0.8.0...hydration@0.8.1) (2022-08-28)
+
+
+### Bug Fixes
+
+* expose dist files in @islands/hydration package ([56cbd45](https://github.com/ElMassimo/iles/commit/56cbd457df11c64298cd5fb6ee99226a116ed128))
+
+
+
 # [0.8.0](https://github.com/ElMassimo/iles/compare/hydration@0.3.9...hydration@0.8.0) (2022-07-14)
 
 
