@@ -1,3 +1,12 @@
+## [0.8.4](https://github.com/ElMassimo/iles/compare/v0.8.3...v0.8.4) (2022-08-28)
+
+
+### Features
+
+* also apply `class` to the `ile-root` wrapper (close [#150](https://github.com/ElMassimo/iles/issues/150)) ([ab4204a](https://github.com/ElMassimo/iles/commit/ab4204ad7933407283f31a9278ec562aabaea40b))
+
+
+
 ## [0.8.3](https://github.com/ElMassimo/iles/compare/v0.8.2...v0.8.3) (2022-07-27)
 
 
