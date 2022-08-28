@@ -1,3 +1,12 @@
+## [0.8.1](https://github.com/ElMassimo/iles/compare/pages@0.8.0...pages@0.8.1) (2022-08-28)
+
+
+### Bug Fixes
+
+* compatibility with vite@3.1.0-beta.0 after change in 9634 ([fa5dd33](https://github.com/ElMassimo/iles/commit/fa5dd335112ff789e62b22a97261b3b341c47e29)), closes [/github.com/vitejs/vite/pull/9634/files#diff-abb3345b6e3b2ec6d297c2ebc54cca85ae4487a31bac3cc9e78457f5114adb26L496-R497](https://github.com//github.com/vitejs/vite/pull/9634/files/issues/diff-abb3345b6e3b2ec6d297c2ebc54cca85ae4487a31bac3cc9e78457f5114adb26L496-R497)
+
+
+
 # [0.8.0](https://github.com/ElMassimo/iles/compare/pages@0.7.11...pages@0.8.0) (2022-07-14)
 
 
