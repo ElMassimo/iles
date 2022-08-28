@@ -47,7 +47,7 @@ export default function IlesPages (): any {
   function PagesPlugin (options: ResolvedOptions): Plugin {
     let generatedRoutes: string | undefined
 
-    return {
+    const plugin: Plugin = {
       name: 'iles:pages',
       enforce: 'pre',
       get api () {
@@ -58,7 +58,7 @@ export default function IlesPages (): any {
       },
       async configureServer (server) {
         options.server = server
-        this.handleHotUpdate = handleHMR(api, options, () => { generatedRoutes = undefined })
+        plugin.handleHotUpdate = handleHMR(api, options, () => { generatedRoutes = undefined })
       },
       async buildStart () {
         await api.addAllPages()
@@ -76,5 +76,7 @@ export default function IlesPages (): any {
           return 'export default {};'
       },
     }
+
+    return plugin
   }
 }
