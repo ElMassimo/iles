@@ -21,6 +21,7 @@
     "./svelte": "./dist/svelte.js",
     "./vanilla": "./dist/vanilla.js",
     "./vue": "./dist/vue.js",
+    "./dist/*": "./dist/*",
     "./package.json": "./package.json"
   },
   "keywords": [
