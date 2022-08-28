@@ -12,4 +12,4 @@ pnpx wait-on http-get://localhost:3050 --delay 1000 --timeout 15000
 
 echo '== Server ready! =='
 
-pnpx cypress@10.3.0 run && echo '== Finished! =='
+pnpx cypress@10.6.0 run && echo '== Finished! =='
