@@ -13,8 +13,11 @@ function trackIsland (this: any, { __ILE_DEVTOOLS__ }: any = window) {
   __ILE_DEVTOOLS__?.addIslandToDevtools(this)
 }
 
-function disposeIsland (this: any, { __ILE_DEVTOOLS__, __ILE_DISPOSE__ }: any = window) {
+function untrackIsland (this: any, { __ILE_DEVTOOLS__, __ILE_DISPOSE__ }: any = window) {
   __ILE_DEVTOOLS__?.removeIslandFromDevtools(this)
+}
+
+function disposeIsland (this: any, { __ILE_DEVTOOLS__, __ILE_DISPOSE__ }: any = window) {
   __ILE_DISPOSE__?.get(this.id)?.()
 }
 
@@ -68,6 +71,7 @@ export default defineComponent({
   mounted: trackIsland,
   beforeUpdate: disposeIsland,
   updated: trackIsland,
+  beforeUnmount: untrackIsland,
   unmounted: disposeIsland,
   render () {
     const isSSR = import.meta.env.SSR

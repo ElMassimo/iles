@@ -12,6 +12,8 @@ const componentStateTypes = [ISLAND_TYPE]
 const INSPECTOR_ID = 'iles'
 const HYDRATION_LAYER_ID = 'iles:hydration'
 
+// Internal: Used to present sequential island ids during development.
+let lastUsedIslandId = 0
 const islandsById = reactive<Record<string, ComponentPublicInstance>>({})
 const islands = computed(() => Object.values(islandsById))
 
@@ -54,7 +56,16 @@ const devtools = {
 
   removeIslandFromDevtools (island: any) {
     delete islandsById[island.id]
+
+    // NOTE: Vue could unmount ile-1 before ile-2, so check for unused ids.
+    while (lastUsedIslandId > 0 && !islandsById[`ile-${lastUsedIslandId}`])
+      lastUsedIslandId -= 1
+
     devtools.updateIslandsInspector()
+  },
+
+  nextIslandId () {
+    return `ile-${++lastUsedIslandId}`
   },
 
   onHydration ({ id, ...event }: any) {

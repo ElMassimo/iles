@@ -6,20 +6,14 @@ import {
   hydrateWhenVisible,
 } from '@islands/hydration'
 
-let idNumber = 0
-
-export function resetHydrationId () {
-  idNumber = 0
-}
-
 export function newHydrationId () {
   if (import.meta.env.SSR) {
     const context = useSSRContext()
     context!.hydrationSerialNumber ||= 1
     return `ile-${context!.hydrationSerialNumber++}`
   }
-  else {
-    return `ile-${++idNumber}`
+  else if (import.meta.env.DEV) {
+    return (window as any).__ILE_DEVTOOLS__.nextIslandId()
   }
 }
 

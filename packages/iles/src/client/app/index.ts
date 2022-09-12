@@ -11,7 +11,6 @@ import App from './components/App.vue'
 import { installPageData, forcePageUpdate } from './composables/pageData'
 import { installMDXComponents } from './composables/mdxComponents'
 import { installAppConfig } from './composables/appConfig'
-import { resetHydrationId } from './hydration'
 import { defaultHead } from './head'
 import { resolveLayout } from './layout'
 import { resolveProps } from './props'
@@ -91,7 +90,6 @@ if (!import.meta.env.SSR) {
     devtools.installDevtools(app as any, config)
     Object.assign(window, { __ILES_PAGE_UPDATE__: forcePageUpdate })
 
-    router.afterEach(resetHydrationId) // reset island identifiers to match ssg.
     await router.isReady() // wait until page component is fetched before mounting
     app.mount('#app', true)
   })()
