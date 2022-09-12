@@ -1,3 +1,12 @@
+## [0.8.5](https://github.com/ElMassimo/iles/compare/v0.8.4...v0.8.5) (2022-09-12)
+
+
+### Bug Fixes
+
+* incorrectly resetting islands ids in development (close [#193](https://github.com/ElMassimo/iles/issues/193)) ([8c4bca6](https://github.com/ElMassimo/iles/commit/8c4bca6154cfa0ad317e96466cf93d8f2617cd53))
+
+
+
 ## [0.8.4](https://github.com/ElMassimo/iles/compare/v0.8.3...v0.8.4) (2022-08-28)
 
 
