@@ -1,3 +1,12 @@
+## [0.8.1](https://github.com/ElMassimo/iles/compare/headings@0.8.0...headings@0.8.1) (2022-09-19)
+
+
+### Bug Fixes
+
+* prevent duplicated slugs for headings with the same title ([#155](https://github.com/ElMassimo/iles/issues/155)) ([b156ecc](https://github.com/ElMassimo/iles/commit/b156eccd4e089082f51af11802c33b69d25df200))
+
+
+
 # [0.8.0](https://github.com/ElMassimo/iles/compare/headings@0.1.2...headings@0.8.0) (2022-07-14)
 
 
