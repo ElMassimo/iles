@@ -23,7 +23,7 @@
     "@islands/prism": "workspace:*",
     "iles": "workspace:*",
     "remark-gfm": "^3.0.1",
-    "vite-plugin-windicss": "^1.6.3",
+    "vite-plugin-windicss": "^1.8.8",
     "vue-tsc": "^0.29.8"
   }
 }
