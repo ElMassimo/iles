@@ -18,7 +18,7 @@ describe('building docs site', () => {
     expect(files.sort()).toEqual(expect.arrayContaining([
       '404.html',
       '_headers',
-      'assets/style.3eecd53b.css',
+      'assets/style.6f5a3ac7.css',
       'assets/turbo.a9e83070.js',
       'favicon.ico',
       'feed.rss',
@@ -28,6 +28,7 @@ describe('building docs site', () => {
       'posts/1.html',
       'posts/2.html',
       'posts/hello-2021.html',
+      'posts/volar-1-0.html',
       'posts/vue-3-2.html',
       'posts/vue-3-one-piece.html',
       'sitemap.xml',
@@ -45,7 +46,7 @@ describe('building docs site', () => {
   })
 
   test('styles', async () => {
-    await assertSnapshot('assets/style.3eecd53b.css')
+    await assertSnapshot('assets/style.6f5a3ac7.css')
   })
   test('sitemap', async () => {
     await assertSnapshot('sitemap.xml')

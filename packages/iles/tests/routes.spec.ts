@@ -12,6 +12,7 @@ describe('app routes', () => {
       '/404',
       '/feed.rss',
       '/posts/hello-2021',
+      '/posts/volar-1-0',
       '/posts/vue-2-7-beta',
       '/posts/vue-2-7-naruto',
       '/posts/vue-3-2',
