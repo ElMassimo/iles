@@ -1,3 +1,12 @@
+## [0.8.6](https://github.com/ElMassimo/iles/compare/v0.8.5...v0.8.6) (2022-10-16)
+
+
+### Features
+
+* bump vite to 3.1 ([652310d](https://github.com/ElMassimo/iles/commit/652310d32dc7574eab05008a358e3592487da0e7))
+
+
+
 ## [0.8.5](https://github.com/ElMassimo/iles/compare/v0.8.4...v0.8.5) (2022-09-12)
 
 
