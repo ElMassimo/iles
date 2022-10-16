@@ -37,7 +37,7 @@ export default defineConfig({
   prettyUrls: false,
   svelte: true,
   modules: [
-    excerpt(),
+    excerpt({ separator: ['hr', 'h2', 'excerpt', 'Excerpt'] }),
     feed(),
     headings(),
     icons(),

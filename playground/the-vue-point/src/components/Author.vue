@@ -1,5 +1,5 @@
 <script setup lang="ts">
-defineProps<{ twitter: string; gravatar: string; author: string }>()
+defineProps<{ twitter: string; gravatar?: string; avatar?: string; author: string }>()
 </script>
 
 <template>
@@ -23,6 +23,12 @@ defineProps<{ twitter: string; gravatar: string; author: string }>()
             alt="author image"
             class="w-10 h-10 rounded-full"
           >
+          <img
+            v-else-if="avatar"
+            :src="avatar"
+            alt="author image"
+            class="w-10 h-10 rounded-full"
+          />
           <dl class="text-sm font-medium leading-5 whitespace-nowrap">
             <dt class="sr-only">Name</dt>
             <dd class="text-gray-900">{{ author }}</dd>
@@ -31,7 +37,7 @@ defineProps<{ twitter: string; gravatar: string; author: string }>()
               <a
                 :href="'https://twitter.com/' + twitter"
                 target="_blank"
-                rel="noopnener noreferrer"
+                rel="noopener noreferrer"
                 class="link"
               >{{ twitter }}</a>
             </dd>

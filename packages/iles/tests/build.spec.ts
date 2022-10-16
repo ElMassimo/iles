@@ -18,7 +18,7 @@ describe('building docs site', () => {
     expect(files.sort()).toEqual(expect.arrayContaining([
       '404.html',
       '_headers',
-      'assets/style.2b5b3b35.css',
+      'assets/style.3eecd53b.css',
       'assets/turbo.a9e83070.js',
       'favicon.ico',
       'feed.rss',
@@ -45,7 +45,7 @@ describe('building docs site', () => {
   })
 
   test('styles', async () => {
-    await assertSnapshot('assets/style.2b5b3b35.css')
+    await assertSnapshot('assets/style.3eecd53b.css')
   })
   test('sitemap', async () => {
     await assertSnapshot('sitemap.xml')
@@ -101,7 +101,7 @@ async function assertHTML (path: string, { title }: any = {}) {
 
   expectContent.toContain('<ile-root id="ile-1">'
     + '<div class="text-sm text-gray-500 leading-5">'
-    + '<a class="hover:text-gray-700" href="https://github.com/ElMassimo/iles/tree/main/playground/the-vue-point" target="_blank" rel="noopener">'
+    + '<a class="hover:text-gray-700" href="https://github.com/ElMassimo/iles/tree/main/playground/the-vue-point" target="_blank" rel="noopener noreferrer">'
     + '<span class="hidden sm:inline">GitHub </span>Source</a>')
 
   if (path.includes('/posts/'))

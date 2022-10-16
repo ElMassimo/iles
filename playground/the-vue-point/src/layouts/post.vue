@@ -12,8 +12,8 @@ const nextPost = $computed(() => posts[currentIndex - 1])
 const prevPost = $computed(() => posts[currentIndex + 1])
 
 const author = $computed(() => {
-  const { twitter, gravatar, author } = post
-  return { twitter, gravatar, author }
+  const { twitter, avatar, gravatar, author } = post
+  return { twitter, avatar, gravatar, author }
 })
 </script>
 
@@ -77,7 +77,7 @@ const author = $computed(() => {
             <a :href="prevPost.href">{{ prevPost.title }}</a>
           </div>
         </div>
-        <BackLink class="block pt-8" client:none href="/">Back to the blog</BackLink>
+        <BackLink class="block pt-8" client:idle href="/">Back to the blog</BackLink>
       </footer>
     </div>
   </article>

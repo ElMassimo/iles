@@ -3,7 +3,7 @@
     class="hover:text-gray-700"
     href="https://github.com/ElMassimo/iles/tree/main/playground/the-vue-point"
     target="_blank"
-    rel="noopener"
+    rel="noopener noreferrer"
     ><span class="hidden sm:inline">GitHub </span>Source</a
   >
   <span class="mr-1 ml-1">·</span>
@@ -13,7 +13,7 @@
     class="hover:text-gray-700"
     href="https://vuejs.org"
     target="_blank"
-    rel="noopener"
+    rel="noopener noreferrer"
     >Vuejs.org →</a
   >
 </div>
