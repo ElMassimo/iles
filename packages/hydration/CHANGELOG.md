@@ -1,3 +1,17 @@
+## [0.8.2](https://github.com/ElMassimo/iles/compare/hydration@0.8.1...hydration@0.8.2) (2022-10-16)
+
+
+### Bug Fixes
+
+* use `render` instead of `hydrate` in development for solid islands ([a88039f](https://github.com/ElMassimo/iles/commit/a88039fd38f6b5f12cf525905b1efb116c0a4def))
+
+
+### Features
+
+* bump vite to 3.1 ([652310d](https://github.com/ElMassimo/iles/commit/652310d32dc7574eab05008a358e3592487da0e7))
+
+
+
 ## [0.8.1](https://github.com/ElMassimo/iles/compare/hydration@0.8.0...hydration@0.8.1) (2022-08-28)
 
 
