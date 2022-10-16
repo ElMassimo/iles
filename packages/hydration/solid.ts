@@ -1,4 +1,4 @@
-import { hydrate, createComponent } from 'solid-js/web'
+import { hydrate, render, createComponent } from 'solid-js/web'
 import type { Component } from 'solid-js'
 import type { Props, Slots } from './types'
 import { onDispose } from './hydration'
@@ -8,7 +8,7 @@ export default function createIsland (component: Component, id: string, el: Elem
     // @ts-ignore
     window._$HY ||= { events: [], completed: new WeakSet(), r: {} }
 
-  const dispose = hydrate(() => createComponent(component, { ...props, children: createContent(slots) }), el, { renderId: id })
+  const dispose = (import.meta.env.DEV ? render : hydrate)(() => createComponent(component, { ...props, children: createContent(slots) }), el, { renderId: id })
 
   if (import.meta.env.DISPOSE_ISLANDS)
     onDispose(id, dispose)
