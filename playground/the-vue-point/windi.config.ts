@@ -6,6 +6,6 @@ export default defineConfig({
     safelist: ['blockquote', 'figure', 'code', 'p', 'a'],
   },
   plugins: [
-    typography(),
+    typography() as any,
   ],
 })
