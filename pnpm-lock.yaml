@@ -154,7 +154,7 @@ importers:
       svelte: ^3.52.0
       tsup: 6.1.2
       typescript: 4.4.4
-      vite: ^3.1.0
+      vite: ^3.2.0
       vue: ^3.2.37
     devDependencies:
       preact: 10.11.2
@@ -163,7 +163,7 @@ importers:
       svelte: 3.52.0
       tsup: 6.1.2_typescript@4.4.4
       typescript: 4.4.4
-      vite: 3.1.8
+      vite: 3.2.0
       vue: 3.2.37
 
   packages/icons:
@@ -190,7 +190,7 @@ importers:
       '@types/micromatch': ^4.0.2
       '@types/node': ^17.0.42
       '@types/unist': ^2.0.6
-      '@vitejs/plugin-vue': ^3.1.0
+      '@vitejs/plugin-vue': ^3.2.0
       '@vue/devtools-api': ^6.0.0-beta.20.1
       '@vue/server-renderer': ^3.2.37
       '@vueuse/head': ^0.7.3
@@ -222,7 +222,7 @@ importers:
       unist-util-visit: ^4.1.0
       unplugin-vue-components: ^0.21.1
       vfile: ^5.2.0
-      vite: ^3.1.0
+      vite: ^3.2.0
       vite-plugin-solid: ^2.3.9
       vue: ^3.2.37
       vue-router: ^4.0.12
@@ -233,7 +233,7 @@ importers:
       '@islands/pages': link:../pages
       '@islands/prerender': link:../prerender
       '@nuxt/devalue': 2.0.0
-      '@vitejs/plugin-vue': 3.1.2_vite@3.1.8+vue@3.2.37
+      '@vitejs/plugin-vue': 3.2.0_vite@3.2.0+vue@3.2.37
       '@vue/devtools-api': 6.0.0-beta.20.1
       '@vue/server-renderer': 3.2.37_vue@3.2.37
       '@vueuse/head': 0.7.3_vue@3.2.37
@@ -248,13 +248,13 @@ importers:
       pathe: 0.2.0
       picocolors: 1.0.0
       unist-util-visit: 4.1.0
-      unplugin-vue-components: 0.21.1_ird3yvzjkujpgxhjx536dohvby
-      vite: 3.1.8
+      unplugin-vue-components: 0.21.1_zikqhrjqvenuidxnsgj4kweaxy
+      vite: 3.2.0
       vue: 3.2.37
       vue-router: 4.0.12_vue@3.2.37
     devDependencies:
-      '@preact/preset-vite': 2.4.0_vite@3.1.8
-      '@sveltejs/vite-plugin-svelte': 1.0.9_vite@3.1.8
+      '@preact/preset-vite': 2.4.0_vite@3.2.0
+      '@sveltejs/vite-plugin-svelte': 1.0.9_vite@3.2.0
       '@types/debug': 4.1.7
       '@types/fs-extra': 9.0.12
       '@types/micromatch': 4.0.2
@@ -276,7 +276,7 @@ importers:
       tsup: 6.1.2_typescript@4.4.4
       typescript: 4.4.4
       vfile: 5.2.0
-      vite-plugin-solid: 2.3.9_vite@3.1.8
+      vite-plugin-solid: 2.3.9_vite@3.2.0
 
   packages/images:
     specifiers:
@@ -366,7 +366,7 @@ importers:
       svelte: ^3.52.0
       tsup: 6.1.2
       typescript: 4.4.4
-      vite: ^3.1.0
+      vite: ^3.2.0
       vue: ^3.2.37
     dependencies:
       '@islands/hydration': link:../hydration
@@ -377,7 +377,7 @@ importers:
       svelte: 3.52.0
       tsup: 6.1.2_typescript@4.4.4
       typescript: 4.4.4
-      vite: 3.1.8
+      vite: 3.2.0
       vue: 3.2.37
 
   packages/prism:
@@ -3249,7 +3249,7 @@ packages:
       - supports-color
     dev: true
 
-  /@preact/preset-vite/2.4.0_vite@3.1.8:
+  /@preact/preset-vite/2.4.0_vite@3.2.0:
     resolution: {integrity: sha512-EiUMHuiCThuTuK+eH2r5uDg+CJbbt4aWJGePuszrHuXUpRv6WAeO4S+/DTJsEHtPtGmPRR3cLQ68N5097eOSRA==}
     peerDependencies:
       '@babel/core': 7.x
@@ -3257,13 +3257,13 @@ packages:
     dependencies:
       '@babel/plugin-transform-react-jsx': 7.18.6
       '@babel/plugin-transform-react-jsx-development': 7.18.6
-      '@prefresh/vite': 2.2.8_vite@3.1.8
+      '@prefresh/vite': 2.2.8_vite@3.2.0
       '@rollup/pluginutils': 4.2.1
       babel-plugin-transform-hook-names: 1.0.2
       debug: 4.3.4
       kolorist: 1.5.1
       resolve: 1.22.1
-      vite: 3.1.8
+      vite: 3.2.0
     transitivePeerDependencies:
       - preact
       - supports-color
@@ -3315,7 +3315,7 @@ packages:
       - supports-color
     dev: true
 
-  /@prefresh/vite/2.2.8_vite@3.1.8:
+  /@prefresh/vite/2.2.8_vite@3.2.0:
     resolution: {integrity: sha512-yGGa+PKPYPTzMlxgQ8aBgxw9K69I8X4iQ0E6KOcIvls96WKqKLLOYZW9SUgCve446jpUXvc9udviPBZjCeZIIQ==}
     peerDependencies:
       preact: ^10.4.0
@@ -3326,7 +3326,7 @@ packages:
       '@prefresh/core': 1.3.4
       '@prefresh/utils': 1.1.3
       '@rollup/pluginutils': 4.2.1
-      vite: 3.1.8
+      vite: 3.2.0
     transitivePeerDependencies:
       - supports-color
     dev: true
@@ -3421,7 +3421,7 @@ packages:
       string.prototype.matchall: 4.0.7
     dev: false
 
-  /@sveltejs/vite-plugin-svelte/1.0.9_vite@3.1.8:
+  /@sveltejs/vite-plugin-svelte/1.0.9_vite@3.2.0:
     resolution: {integrity: sha512-+SDrAnT7TDi8sdj4OfD2SC4s9DNrpNVBrue8fT2PmKks9Ddu0JIfSeX91wXZb/1xHz4EkGb+rli8GTRI0yGOjg==}
     engines: {node: ^14.18.0 || >= 16}
     peerDependencies:
@@ -3438,7 +3438,7 @@ packages:
       kleur: 4.1.5
       magic-string: 0.26.7
       svelte-hmr: 0.15.0
-      vite: 3.1.8
+      vite: 3.2.0
     transitivePeerDependencies:
       - supports-color
     dev: true
@@ -3965,14 +3965,14 @@ packages:
       eslint-visitor-keys: 2.1.0
     dev: true
 
-  /@vitejs/plugin-vue/3.1.2_vite@3.1.8+vue@3.2.37:
-    resolution: {integrity: sha512-3zxKNlvA3oNaKDYX0NBclgxTQ1xaFdL7PzwF6zj9tGFziKwmBa3Q/6XcJQxudlT81WxDjEhHmevvIC4Orc1LhQ==}
+  /@vitejs/plugin-vue/3.2.0_vite@3.2.0+vue@3.2.37:
+    resolution: {integrity: sha512-E0tnaL4fr+qkdCNxJ+Xd0yM31UwMkQje76fsDVBBUCoGOUPexu2VDUYHL8P4CwV+zMvWw6nlRw19OnRKmYAJpw==}
     engines: {node: ^14.18.0 || >=16.0.0}
     peerDependencies:
       vite: ^3.0.0
       vue: ^3.2.25
     dependencies:
-      vite: 3.1.8
+      vite: 3.2.0
       vue: 3.2.37
     dev: false
 
@@ -10570,6 +10570,7 @@ packages:
     hasBin: true
     optionalDependencies:
       fsevents: 2.3.2
+    dev: true
 
   /rollup/2.79.1:
     resolution: {integrity: sha512-uKxbd0IhMZOhjAiD5oAFp7BqvkA4Dv47qpOCtaNvng4HBwdbWtdOh8f5nZNuk2rp51PMGk3bzfWu5oayNEuYnw==}
@@ -10577,7 +10578,6 @@ packages:
     hasBin: true
     optionalDependencies:
       fsevents: 2.3.2
-    dev: false
 
   /run-parallel/1.2.0:
     resolution: {integrity: sha512-5l4VyZR86LZ/lDxZTR6jqL8AFE2S0IFLMP26AbjsLVADxHdhB/c0GUsH+y39UfCi3dzz8OlQuPmnaJOMoDHQBA==}
@@ -11752,7 +11752,7 @@ packages:
       - webpack
     dev: false
 
-  /unplugin-vue-components/0.21.1_ird3yvzjkujpgxhjx536dohvby:
+  /unplugin-vue-components/0.21.1_zikqhrjqvenuidxnsgj4kweaxy:
     resolution: {integrity: sha512-8MhIT323q1EUu7rz6NfQeiHqDrZKtygy6s9jzcQAuuZUM2T38SHlPT5YJjBOZmM0Bau6YuNTKfBBX4iHzeusaQ==}
     engines: {node: '>=14'}
     peerDependencies:
@@ -11771,7 +11771,7 @@ packages:
       magic-string: 0.26.2
       minimatch: 5.1.0
       resolve: 1.22.1
-      unplugin: 0.7.1_rollup@2.59.0+vite@3.1.8
+      unplugin: 0.7.1_rollup@2.59.0+vite@3.2.0
       vue: 3.2.37
     transitivePeerDependencies:
       - esbuild
@@ -11798,7 +11798,7 @@ packages:
       webpack-virtual-modules: 0.4.3
     dev: false
 
-  /unplugin/0.7.1_rollup@2.59.0+vite@3.1.8:
+  /unplugin/0.7.1_rollup@2.59.0+vite@3.2.0:
     resolution: {integrity: sha512-Z6hNDXDNh9aimMkPU1mEjtk+2ova8gh0y7rJeJdGH1vWZOHwF2lLQiQ/R97rv9ymmzEQXsR2fyMet72T8jy6ew==}
     peerDependencies:
       esbuild: '>=0.13'
@@ -11818,7 +11818,7 @@ packages:
       acorn: 8.7.1
       chokidar: 3.5.3
       rollup: 2.59.0
-      vite: 3.1.8
+      vite: 3.2.0
       webpack-sources: 3.2.3
       webpack-virtual-modules: 0.4.4
     dev: false
@@ -11977,7 +11977,7 @@ packages:
       - supports-color
     dev: false
 
-  /vite-plugin-solid/2.3.9_vite@3.1.8:
+  /vite-plugin-solid/2.3.9_vite@3.2.0:
     resolution: {integrity: sha512-+lprsYgt9DVNp0kbDj2d2HWAPI13L8ff5xslk9SjiPBcsY/YUZ/1Wj0J/Oj5aiVAhwfPm8IcM3bzyHJUPlmc8w==}
     peerDependencies:
       solid-js: ^1.3.17
@@ -11988,7 +11988,7 @@ packages:
       babel-preset-solid: 1.5.7_@babel+core@7.19.3
       merge-anything: 5.0.2
       solid-refresh: 0.4.1
-      vite: 3.1.8
+      vite: 3.2.0
     transitivePeerDependencies:
       - supports-color
     dev: true
@@ -12066,6 +12066,36 @@ packages:
       postcss: 8.4.18
       resolve: 1.22.1
       rollup: 2.78.1
+    optionalDependencies:
+      fsevents: 2.3.2
+    dev: true
+
+  /vite/3.2.0:
+    resolution: {integrity: sha512-Ovj7+cqIdM1I0LPCk2CWxzgADXMix3NLXpUT6g7P7zg/a9grk/TaC3qn9YMg7w7M0POIVCBOp1aBANJW+RH7oA==}
+    engines: {node: ^14.18.0 || >=16.0.0}
+    hasBin: true
+    peerDependencies:
+      less: '*'
+      sass: '*'
+      stylus: '*'
+      sugarss: '*'
+      terser: ^5.4.0
+    peerDependenciesMeta:
+      less:
+        optional: true
+      sass:
+        optional: true
+      stylus:
+        optional: true
+      sugarss:
+        optional: true
+      terser:
+        optional: true
+    dependencies:
+      esbuild: 0.15.11
+      postcss: 8.4.18
+      resolve: 1.22.1
+      rollup: 2.79.1
     optionalDependencies:
       fsevents: 2.3.2
 
