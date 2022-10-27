@@ -1,3 +1,12 @@
+## [0.8.7](https://github.com/ElMassimo/iles/compare/v0.8.6...v0.8.7) (2022-10-27)
+
+
+### Features
+
+* upgrade to vite@3.2.0 ([0b6cec8](https://github.com/ElMassimo/iles/commit/0b6cec84f7669b40b8dcb299ca6f6947f9fbcfae))
+
+
+
 ## [0.8.6](https://github.com/ElMassimo/iles/compare/v0.8.5...v0.8.6) (2022-10-16)
 
 
