@@ -32,7 +32,8 @@ export default defineConfig({
 By default, it will use the <kbd>[generateSW]</kbd> strategy, and it will [prompt for updates][prompt].
 
 - When using <kbd>[generateSW]</kbd>:
-  - if `workbox.navigationFallback` is not configured, it will be set to `404` or `404.html` based on `prettyUrls` configuration option.
+  - if `workbox.navigationFallback` is not configured and `404.vue` or `404.mdx` is found under `src/pages` folder, it will be set to `<base>404` or `<base>404.html` based on `prettyUrls` and `base` configuration options.
+  - if `workbox.navigationFallback` is not configured, it will be set to `<base>` (where `<base>` is the `base` configuration option).
 
 - When using <kbd>[generateSW]</kbd> with [`prompt`][prompt]:
   - `registerSW.js` won't be generated unless explicitly enabled
