@@ -31,12 +31,16 @@ export default defineConfig({
 
 By default, it will use the <kbd>[generateSW]</kbd> strategy, and it will [prompt for updates][prompt].
 
+- When using <kbd>[generateSW]</kbd>:
+  - if `workbox.navigationFallback` is not configured, it will be set to `404` or `404.html` based on `prettyUrls` configuration option.
+
 - When using <kbd>[generateSW]</kbd> with [`prompt`][prompt]:
   - `registerSW.js` won't be generated unless explicitly enabled
 
 - When using <kbd>[generateSW]</kbd> with [`autoUpdate`][autoUpdate]:
   - `clientsClaim` and `skipWaiting` will be enabled
   - `registerSW.js` won't be generated unless explicitly enabled
+
 
 ## Using a `prompt` for updates
 
