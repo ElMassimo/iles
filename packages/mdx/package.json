@@ -29,13 +29,13 @@
   "homepage": "https://github.com/ElMassimo/iles",
   "bugs": "https://github.com/ElMassimo/iles/issues",
   "dependencies": {
+    "@mdx-js/mdx": "2.1.5",
     "estree-walker": "^3.0",
     "hash-sum": "^2.0",
     "hast-util-to-html": "^8.0.3",
     "remark-frontmatter": "^4.0.1",
     "source-map": "^0.7.3",
-    "unist-util-visit": "^4.1.0",
-    "@mdx-js/mdx": "2.1.0"
+    "unist-util-visit": "^4.1.0"
   },
   "devDependencies": {
     "@types/estree-jsx": "^0.0.1",
@@ -46,6 +46,7 @@
     "tsup": "6.1.2",
     "typescript": "^4.4.4",
     "unified": "^10.1",
-    "vite": "^3.1.0"
+    "vfile": "^5.2.0",
+    "vite": "^4.0.0"
   }
 }

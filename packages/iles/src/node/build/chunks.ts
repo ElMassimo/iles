@@ -1,4 +1,4 @@
-import type { GetManualChunk, GetManualChunkApi } from 'rollup'
+import type { GetManualChunk, ManualChunkMeta } from 'rollup'
 import type { AppConfig } from '../shared'
 
 export function extendManualChunks (config: AppConfig): GetManualChunk {
@@ -26,7 +26,7 @@ export function extendManualChunks (config: AppConfig): GetManualChunk {
 function vendorPerFramework (
   chunkForExtension: Record<string, string>,
   id: string,
-  api: GetManualChunkApi,
+  api: ManualChunkMeta,
   cache: Map<string, string | undefined>,
   importStack: string[] = [],
 ): string | undefined {

@@ -18,8 +18,8 @@ describe('building docs site', () => {
     expect(files.sort()).toEqual(expect.arrayContaining([
       '404.html',
       '_headers',
-      'assets/style.6f5a3ac7.css',
-      'assets/turbo.a9e83070.js',
+      'assets/style-c296cd23.css',
+      'assets/turbo.e8cd2c90.js',
       'favicon.ico',
       'feed.rss',
       'index.html',
@@ -46,7 +46,7 @@ describe('building docs site', () => {
   })
 
   test('styles', async () => {
-    await assertSnapshot('assets/style.6f5a3ac7.css')
+    await assertSnapshot('assets/style-c296cd23.css')
   })
   test('sitemap', async () => {
     await assertSnapshot('sitemap.xml')
@@ -75,7 +75,7 @@ describe('building docs site', () => {
 
 async function expectFileContent (path: string, transform?: (val: string) => string) {
   let content = await fs.readFile(`${vuePoint}/dist/${path}`, 'utf-8')
-  content = content.replace(/\/assets\/([^.]+)\.\w+\.(\w+)\b/g, '/assets/$1.$2')
+  content = content.replace(/\/assets\/([^.]+)(?:[.-])\w+\.(\w+)\b/g, '/assets/$1.$2')
   return expect(transform ? transform(content) : content)
 }
 
