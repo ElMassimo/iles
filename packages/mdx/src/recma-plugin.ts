@@ -33,19 +33,16 @@ function resolveMissingComponents (tree: Program) {
       if (node.type !== 'FunctionDeclaration')
         return this.skip()
 
-      if (node.id?.name === 'MDXContent') {
-        const createMdxContent = node.body.body.find(s =>
-          s.type === 'FunctionDeclaration' && s.id?.name === '_createMdxContent',
-        ) as FunctionDeclaration | undefined
-
-        if (createMdxContent)
-          rewriteMdxContentComponents(createMdxContent.body.body)
-
+      if (node.id?.name === '_createMdxContent') {
+        rewriteMdxContentComponents(node.body.body)
         return this.skip()
       }
-      else if (node.id?.name === '_missingMdxReference') {
+
+      if (node.id?.name === 'MDXContent')
+        return this.skip()
+
+      if (node.id?.name === '_missingMdxReference')
         return this.remove()
-      }
     },
   })
 
@@ -81,9 +78,9 @@ function rewriteMdxContentComponents (statements: Statement[]) {
         // Replace _missingMdxReference with _resolveComponents
         missingReferenceCall.callee.name = '_resolveComponent'
 
-        // Remove second argument to allow unplugin-vue-components to statically
-        // replace the method call with a resolved component.
-        missingReferenceCall.arguments.splice(1, 1)
+        // Keep only the first argument to allow unplugin-vue-components to
+        // statically replace the method call with a resolved component.
+        missingReferenceCall.arguments.splice(1)
 
         statement.consequent.expression = {
           type: 'AssignmentExpression',

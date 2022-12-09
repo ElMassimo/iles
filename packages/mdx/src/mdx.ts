@@ -1,6 +1,6 @@
 import remarkFrontmatter from 'remark-frontmatter'
 
-import type { VFile } from '@mdx-js/mdx/lib/plugin/recma-stringify'
+import type { VFile } from 'vfile'
 import recmaPlugin from './recma-plugin'
 import mdxPlugins from './mdx-vite-plugins'
 import { remarkInternalHrefs } from './remark-internal-hrefs'
