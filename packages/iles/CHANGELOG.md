@@ -1,3 +1,18 @@
+# [0.9.0](https://github.com/ElMassimo/iles/compare/v0.8.7...v0.9.0) (2022-12-09)
+
+
+### Bug Fixes
+
+* get ext from the end of the file name ([#206](https://github.com/ElMassimo/iles/issues/206)) ([f37f90f](https://github.com/ElMassimo/iles/commit/f37f90f77b212214874883c895bba2ad4915477b))
+
+
+### Features
+
+* **pwa:** refactor pwa module ([#203](https://github.com/ElMassimo/iles/issues/203)) ([ab4f031](https://github.com/ElMassimo/iles/commit/ab4f031bb28ef1b98776439fbe6b4999abf0a430))
+* upgrade to vite 4, rollup 3, mdx 2.1.5, vue 3.2.45 ([#208](https://github.com/ElMassimo/iles/issues/208)) ([74a0e51](https://github.com/ElMassimo/iles/commit/74a0e511c71e990cf5a123cc31989095ef76477f))
+
+
+
 ## [0.8.7](https://github.com/ElMassimo/iles/compare/v0.8.6...v0.8.7) (2022-10-27)
 
 
