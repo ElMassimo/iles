@@ -50,7 +50,7 @@ export default defineComponent({
       strategy = Hydrate.OnLoad
     }
 
-    const ext = props.importFrom.split('.')[1]
+    const ext = props.importFrom.split('.').slice(-1)[0]
     const appConfig = useAppConfig()
     const framework: Framework = props.using
       || (ext === 'svelte' && 'svelte')
