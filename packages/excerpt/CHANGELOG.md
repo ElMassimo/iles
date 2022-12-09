@@ -1,3 +1,12 @@
+# [0.9.0](https://github.com/ElMassimo/iles/compare/excerpt@0.8.0...excerpt@0.9.0) (2022-12-09)
+
+
+### Features
+
+* upgrade to vite 4, rollup 3, mdx 2.1.5, vue 3.2.45 ([#208](https://github.com/ElMassimo/iles/issues/208)) ([74a0e51](https://github.com/ElMassimo/iles/commit/74a0e511c71e990cf5a123cc31989095ef76477f))
+
+
+
 # [0.8.0](https://github.com/ElMassimo/iles/compare/excerpt@0.1.3...excerpt@0.8.0) (2022-07-14)
 
 
