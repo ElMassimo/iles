@@ -68,7 +68,7 @@
     "@nuxt/devalue": "^2.0.0",
     "@vitejs/plugin-vue": "^4.0.0",
     "@vue/devtools-api": "^6.4.5",
-    "@vue/server-renderer": "^3.2.37",
+    "@vue/server-renderer": "^3.2.45",
     "@vueuse/head": "^0.7.3",
     "debug": "^4.3.2",
     "deep-equal": "^2.0.5",
@@ -83,7 +83,7 @@
     "unist-util-visit": "^4.1.0",
     "unplugin-vue-components": "^0.21.1",
     "vite": "^4.0.0",
-    "vue": "^3.2.37",
+    "vue": "^3.2.45",
     "vue-router": "^4.0.12"
   },
   "devDependencies": {
