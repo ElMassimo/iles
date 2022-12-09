@@ -6,6 +6,7 @@ import creatDebugger from 'debug'
 import { loadConfigFromFile, mergeConfig as mergeViteConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import components from 'unplugin-vue-components/vite'
+import composables from 'unplugin-auto-import/vite'
 import pages from '@islands/pages'
 import mdx from '@islands/mdx'
 
@@ -136,6 +137,7 @@ async function setNamedPlugins (config: AppConfig, env: ConfigEnv, plugins: Name
     tagName.startsWith('ile-') || ceChecks.some(fn => fn!(tagName))
 
   plugins.components = components(config.components)
+  plugins.composables = composables(config.composables)
   plugins.vue = vue(config.vue)
 
   const optionalPlugins = {
@@ -280,6 +282,20 @@ function appConfigDefaults (appConfig: AppConfig, userConfig: UserConfig, env: C
         IlesLayoutResolver(appConfig),
       ],
       transformer: 'vue3',
+    },
+    composables: {
+      dts: resolve(root, 'composables.d.ts'),
+      imports: [
+        {
+          iles: [
+            'definePageComponent',
+            'useDocuments',
+            'useHead',
+            'usePage',
+            'useRoute',
+          ],
+        },
+      ],
     },
   }
 }

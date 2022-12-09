@@ -5,6 +5,8 @@ import type { App, Ref, DefineComponent, VNode, AsyncComponentLoader } from 'vue
 import type VuePlugin, { Options as VueOptions } from '@vitejs/plugin-vue'
 import type ComponentsPlugin from 'unplugin-vue-components/vite'
 import type { Options as ComponentOptions } from 'unplugin-vue-components/types'
+import type composablesPlugin from 'unplugin-auto-import/vite'
+import type { Options as composablesOptions } from 'unplugin-auto-import/types'
 
 import type { Options as RequiredSolidOptions } from 'vite-plugin-solid'
 import type { Options as SvelteOptions } from '@sveltejs/vite-plugin-svelte'
@@ -107,6 +109,7 @@ export interface NamedPlugins {
   pages: { api: PagesApi }
   vue: ReturnType<typeof VuePlugin>
   components: ReturnType<typeof ComponentsPlugin>
+  composables: ReturnType<typeof composablesPlugin>
 }
 
 export interface SSGContext {
@@ -128,6 +131,7 @@ export interface BaseIlesConfig extends PagesOptions {
    * imports for components in Vue and MDX files.
    */
   components: ComponentOptions
+  composables: composablesOptions
   /**
    * Configuration options for @preact/preset-vite
    */
