@@ -87,7 +87,7 @@ if (!import.meta.env.SSR) {
     const { app, router } = await createApp()
 
     const devtools = await import('./composables/devtools')
-    devtools.installDevtools(app as any, config)
+    devtools.installDevtools(app, config)
     Object.assign(window, { __ILES_PAGE_UPDATE__: forcePageUpdate })
 
     await router.isReady() // wait until page component is fetched before mounting

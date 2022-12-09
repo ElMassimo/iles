@@ -46,6 +46,6 @@
     "tsup": "6.1.2",
     "typescript": "^4.4.4",
     "unified": "^10.1",
-    "vite": "^4.0.0-alpha.6"
+    "vite": "^4.0.0"
   }
 }

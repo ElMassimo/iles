@@ -91,7 +91,7 @@ const devtools = {
 
 ;(window as any).__ILE_DEVTOOLS__ = devtools
 
-export function installDevtools (app: App & { __app: true }, config: AppClientConfig) {
+export function installDevtools (app: App, config: AppClientConfig) {
   appConfig = config
   const pageData = usePage(app)
   route = pageData.route
@@ -108,7 +108,7 @@ export function installDevtools (app: App & { __app: true }, config: AppClientCo
     packageName: 'iles',
     homepage: 'https://github.com/ElMassimo/iles',
     componentStateTypes,
-    app,
+    app: app as any,
   }, (api) => {
     devtoolsApi = api
 
