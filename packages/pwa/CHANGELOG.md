@@ -1,3 +1,12 @@
+# [0.9.0](https://github.com/ElMassimo/iles/compare/pwa@0.8.1...pwa@0.9.0) (2022-12-09)
+
+
+### Features
+
+* **pwa:** refactor pwa module ([#203](https://github.com/ElMassimo/iles/issues/203)) ([ab4f031](https://github.com/ElMassimo/iles/commit/ab4f031bb28ef1b98776439fbe6b4999abf0a430))
+
+
+
 ## [0.8.1](https://github.com/ElMassimo/iles/compare/pwa@0.8.0...pwa@0.8.1) (2022-10-16)
 
 
