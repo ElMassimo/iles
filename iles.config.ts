@@ -1,6 +1,16 @@
 import { defineConfig } from 'iles'
 import { join } from 'pathe'
 
+const testConfig = {
+  test: {
+    deps: {
+      inline: [
+        "@vue/devtools-api",
+      ],
+    },
+  },
+}
+
 // NOTE: This config is used when running tests.
 export default defineConfig({
   siteUrl: 'https://example.com/',
@@ -17,5 +27,6 @@ export default defineConfig({
         '@pages/': `${__dirname}/playground/the-vue-point/src/pages/`,
       },
     },
+    ...(testConfig as any),
   },
 })
