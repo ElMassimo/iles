@@ -15,13 +15,8 @@ export const recmaPlugin: Plugin<[], Program> = function recmaExcerpt () {
     walk(tree, {
       // @ts-ignore
       enter (node: Node) {
-        if (node.type === 'FunctionDeclaration' && node.id?.name === 'MDXContent') {
-          const createMdxContent = node.body.body.find(s =>
-            s.type === 'FunctionDeclaration' && s.id?.name === '_createMdxContent',
-          ) as FunctionDeclaration | undefined
-
-          if (createMdxContent)
-            splitOnExcerptSeparator(createMdxContent.body.body)
+        if (node.type === 'FunctionDeclaration' && node.id?.name === '_createMdxContent') {
+          splitOnExcerptSeparator(node.body.body)
 
           done = true
         }
