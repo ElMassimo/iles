@@ -60,7 +60,7 @@
     "url": "https://github.com/ElMassimo/iles/issues"
   },
   "dependencies": {
-    "@antfu/install-pkg": "^0.1.0",
+    "@antfu/install-pkg": "^0.1.1",
     "@islands/hydration": "workspace:^0.8.0",
     "@islands/mdx": "workspace:^0.9.0",
     "@islands/pages": "workspace:^0.8.0",
@@ -69,7 +69,7 @@
     "@vitejs/plugin-vue": "^4.0.0",
     "@vue/devtools-api": "^6.4.5",
     "@vue/server-renderer": "^3.2.45",
-    "@vueuse/head": "^0.7.3",
+    "@vueuse/head": "^1.0.22",
     "debug": "^4.3.2",
     "deep-equal": "^2.0.5",
     "es-module-lexer": "^0.7.1",
@@ -81,14 +81,14 @@
     "pathe": "^0.2.0",
     "picocolors": "^1.0.0",
     "unist-util-visit": "^4.1.0",
-    "unplugin-vue-components": "^0.21.1",
-    "vite": "^4.0.0",
+    "unplugin-vue-components": "^0.22.12",
+    "vite": "^4.0.1",
     "vue": "^3.2.45",
     "vue-router": "^4.0.12"
   },
   "devDependencies": {
     "@preact/preset-vite": "^2.4.0",
-    "@sveltejs/vite-plugin-svelte": "^1.0.9",
+    "@sveltejs/vite-plugin-svelte": "^2.0.2",
     "@types/debug": "^4.1.7",
     "@types/fs-extra": "^9.0.12",
     "@types/micromatch": "^4.0.2",
@@ -111,7 +111,7 @@
     "tsup": "6.1.2",
     "typescript": "^4.4.4",
     "vfile": "^5.2.0",
-    "vite-plugin-solid": "^2.3.9"
+    "vite-plugin-solid": "^2.5.0"
   },
   "pnpm": {
     "overrides": {

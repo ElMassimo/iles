@@ -37,13 +37,13 @@
     "url": "https://github.com/ElMassimo/iles/issues"
   },
   "devDependencies": {
-    "preact": "^10.11.2",
+    "preact": "^10.11.3",
     "preact-render-to-string": "^5.2.0",
-    "solid-js": "^1.5.7",
-    "svelte": "^3.52.0",
+    "solid-js": "^1.6.4",
+    "svelte": "^3.54.0",
     "tsup": "6.1.2",
     "typescript": "^4.4.4",
-    "vite": "^4.0.0",
+    "vite": "^4.0.1",
     "vue": "^3.2.45"
   }
 }

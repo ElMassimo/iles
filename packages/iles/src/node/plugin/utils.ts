@@ -28,10 +28,13 @@ export async function tryInstallModule (name: string) {
     return require.resolve(name)
   }
   catch (error) {
+    if (error.code === 'ERR_PACKAGE_PATH_NOT_EXPORTED')
+      return name
+
     if (error.code !== 'MODULE_NOT_FOUND')
       throw error
 
-    console.info(`\n${name} not found. Proceeding to auto-install.\n`)
+    console.info(`\n${error.code}\n${name} not found. Proceeding to auto-install.\n`)
 
     await withSpinner(`Installing ${name}`, async () =>
       await installPackage(name, { dev: true, preferOffline: true, silent: true }))

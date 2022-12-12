@@ -54,7 +54,7 @@ export async function renderPage (
   if (!route.outputFilename.endsWith('.html'))
     return content
 
-  const { headTags, htmlAttrs, bodyAttrs } = renderHeadToString(head)
+  const { headTags, htmlAttrs, bodyAttrs } = await renderHeadToString(head)
 
   return `<!DOCTYPE html>
 <html ${htmlAttrs}>
