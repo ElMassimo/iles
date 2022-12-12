@@ -1,3 +1,12 @@
+## [0.9.1](https://github.com/ElMassimo/iles/compare/pwa@0.9.0...pwa@0.9.1) (2022-12-12)
+
+
+### Features
+
+* bump vite-plugin-pwa dependency ([8346d11](https://github.com/ElMassimo/iles/commit/8346d11e5c188bfccae5fcce102b7834d1c513f1))
+
+
+
 # [0.9.0](https://github.com/ElMassimo/iles/compare/pwa@0.8.1...pwa@0.9.0) (2022-12-09)
 
 
