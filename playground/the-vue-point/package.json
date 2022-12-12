@@ -15,7 +15,7 @@
   },
   "devDependencies": {
     "@iconify-json/carbon": "^1.0.14",
-    "@islands/excerpt": "workspace:^0.8",
+    "@islands/excerpt": "workspace:^0.9",
     "@islands/feed": "workspace:*",
     "@islands/headings": "workspace:^0.8",
     "@islands/icons": "workspace:*",
