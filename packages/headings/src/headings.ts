@@ -70,7 +70,9 @@ export const rehypePlugin: HeadingPlugin = ({ slug = generateSlug, initData = in
 }
 
 function initCounter () {
-  return new Map<string, number>()
+  const counter = new Map<string, number>()
+  counter.set('app', 1)
+  return counter
 }
 
 const emojiRegex = /(?:⚡️|[\u2700-\u27BF]|(?:\uD83C[\uDDE6-\uDDFF]){2}|[\uD800-\uDBFF][\uDC00-\uDFFF])[\uFE0E\uFE0F]?(?:[\u0300-\u036F\uFE20-\uFE23\u20D0-\u20F0]|\uD83C[\uDFFB-\uDFFF])?(?:\u200D(?:[^\uD800-\uDFFF]|(?:\uD83C[\uDDE6-\uDDFF]){2}|[\uD800-\uDBFF][\uDC00-\uDFFF])[\uFE0E\uFE0F]?(?:[\u0300-\u036F\uFE20-\uFE23\u20D0-\u20F0]|\uD83C[\uDFFB-\uDFFF])?)*/g
