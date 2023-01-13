@@ -69,7 +69,7 @@
     "@vitejs/plugin-vue": "^4.0.0",
     "@vue/devtools-api": "^6.4.5",
     "@vue/server-renderer": "^3.2.45",
-    "@vueuse/head": "^0.7.3",
+    "@vueuse/head": "^1.0.22",
     "debug": "^4.3.2",
     "deep-equal": "^2.0.5",
     "es-module-lexer": "^0.7.1",
