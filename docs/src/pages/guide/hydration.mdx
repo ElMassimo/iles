@@ -97,4 +97,52 @@ Because it's not pre-rendered it could cause [layout shift] and affect the user 
 Prefer one of the previous strategies whenever possible.
 </Tip>
 
+## Limitations
+
+It's important to keep in mind that your Vue templates in <Iles /> can contain either islands *or*
+interactive Vue logic but not both. This navbar/drawer template, for example, violates this
+restriction because the toggler button uses both interactive Vue logic (in the template's setup
+script) *and* a hydrated island (the `Drawer` component):
+
+```vue {3-6,9-12}
+<template>
+  <nav>
+    <!-- Interactive logic -->
+    <button @click="toggleDrawer">
+      Toggle drawer
+    </button>
+  </nav>
+
+  <div v-if="drawerIsOpen">
+    <!-- Island -->
+    <Drawer client:load />
+  </div>
+</template>
+
+<!-- Interactive logic -->
+<script setup lang="rs">
+import { ref } from "vue";
+
+const drawerIsOpen = ref<boolean>(false);
+
+const toggleDrawer = () => {
+  drawerIsOpen.value = !drawerIsOpen.value;
+}
+</script>
+```
+
+In this case, <Iles /> would successfully render the `Drawer` component but the toggler button would
+be rendered as static&mdash;as in non-interactive&mdash;HTML. One way to resolve this would be to
+make the toggler button an island and change the template accordingly:
+
+```vue
+<template>
+  <nav>
+    <Toggler client:load />
+  </nav>
+
+  <Drawer client:load />
+</template>
+```
+
 [layout shift]: https://web.dev/cls/
