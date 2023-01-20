@@ -54,7 +54,7 @@ export async function renderPage (
   if (!route.outputFilename.endsWith('.html'))
     return content
 
-  const { headTags, htmlAttrs, bodyTags, bodyAttrs } = await renderHeadToString(head)
+  const { headTags, htmlAttrs, bodyTagsOpen, bodyTags, bodyAttrs } = await renderHeadToString(head)
 
   return `<!DOCTYPE html>
 <html ${htmlAttrs}>
@@ -64,6 +64,7 @@ export async function renderPage (
     ${await scriptTagsFrom(config, islandsByPath[route.path])}
   </head>
   <body ${bodyAttrs}>
+    ${bodyTagsOpen}
     <div id="app">${content}</div>
     ${bodyTags}
   </body>
