@@ -1,3 +1,13 @@
+## [0.9.1](https://github.com/ElMassimo/iles/compare/v0.9.0...v0.9.1) (2023-01-23)
+
+
+### Features
+
+* bump vite-plugin-pwa dependency ([8346d11](https://github.com/ElMassimo/iles/commit/8346d11e5c188bfccae5fcce102b7834d1c513f1))
+* update version of @vueuse/head ([#219](https://github.com/ElMassimo/iles/issues/219)) ([353aa2f](https://github.com/ElMassimo/iles/commit/353aa2fc498797bdff3bfc19a8b60c2120c87082)), closes [#191](https://github.com/ElMassimo/iles/issues/191)
+
+
+
 # [0.9.0](https://github.com/ElMassimo/iles/compare/v0.8.7...v0.9.0) (2022-12-09)
 
 
