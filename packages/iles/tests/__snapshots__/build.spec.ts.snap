@@ -17,13 +17,32 @@ exports[`building docs site > headers 1`] = `
 
 exports[`building docs site > html files 1`] = `
 "<!DOCTYPE html>
-<html  lang=\\"en-US\\" data-head-attrs=\\"lang\\">
+<html  lang=\\"en-US\\">
   <head>
-    <title>Not Found · The Vue Point</title><meta charset=\\"UTF-8\\"><meta name=\\"viewport\\" content=\\"width=device-width, initial-scale=1.0\\"><meta name=\\"description\\" content=\\"Updates, tips &amp; opinions from the maintainers of Vue.js.\\"><meta property=\\"og:url\\" content=\\"https://the-vue-point-with-iles.netlify.app/404.html\\"><meta property=\\"og:site_name\\" content=\\"The Vue Point\\"><meta property=\\"og:title\\" content=\\"Not Found · The Vue Point\\"><meta property=\\"og:description\\" content=\\"Updates, tips &amp; opinions from the maintainers of Vue.js.\\"><meta property=\\"twitter:domain\\" content=\\"the-vue-point-with-iles.netlify.app\\"><meta property=\\"twitter:title\\" content=\\"Not Found · The Vue Point\\"><meta property=\\"twitter:description\\" content=\\"Updates, tips &amp; opinions from the maintainers of Vue.js.\\"><meta property=\\"twitter:url\\" content=\\"https://the-vue-point-with-iles.netlify.app/404.html\\"><link rel=\\"sitemap\\" href=\\"https://the-vue-point-with-iles.netlify.app/sitemap.xml\\"><meta property=\\"generator\\" content=\\"îles\\"><script async>console.log(\\"Powered by îles 🏝\\", \\"https://iles-docs.netlify.app\\")</script><meta property=\\"twitter:image\\" content=\\"https://vuejs.org/images/logo.png\\"><meta property=\\"twitter:image:alt\\" content=\\"Vue\\"><meta property=\\"twitter:site\\" content=\\"@vuejs\\"><meta property=\\"twitter:card\\" content=\\"summary\\"><link rel=\\"icon\\" type=\\"image/x-icon\\" href=\\"/favicon.ico\\"><meta name=\\"head:count\\" content=\\"19\\">
+    <meta charset=\\"UTF-8\\">
+<title>Not Found · The Vue Point</title>
+<meta name=\\"viewport\\" content=\\"width=device-width, initial-scale=1.0\\">
+<meta name=\\"description\\" content=\\"Updates, tips & opinions from the maintainers of Vue.js.\\">
+<meta property=\\"og:url\\" content=\\"https://the-vue-point-with-iles.netlify.app/404.html\\">
+<meta property=\\"og:site_name\\" content=\\"The Vue Point\\">
+<meta property=\\"og:title\\" content=\\"Not Found · The Vue Point\\">
+<meta property=\\"og:description\\" content=\\"Updates, tips & opinions from the maintainers of Vue.js.\\">
+<meta property=\\"twitter:domain\\" content=\\"the-vue-point-with-iles.netlify.app\\">
+<meta property=\\"twitter:title\\" content=\\"Not Found · The Vue Point\\">
+<meta property=\\"twitter:description\\" content=\\"Updates, tips & opinions from the maintainers of Vue.js.\\">
+<meta property=\\"twitter:url\\" content=\\"https://the-vue-point-with-iles.netlify.app/404.html\\">
+<link rel=\\"sitemap\\" href=\\"https://the-vue-point-with-iles.netlify.app/sitemap.xml\\">
+<meta property=\\"generator\\" content=\\"îles\\">
+<script async=\\"\\">console.log(\\"Powered by îles 🏝\\", \\"https://iles-docs.netlify.app\\")</script>
+<meta property=\\"twitter:image\\" content=\\"https://vuejs.org/images/logo.png\\">
+<meta property=\\"twitter:image:alt\\" content=\\"Vue\\">
+<meta property=\\"twitter:site\\" content=\\"@vuejs\\">
+<meta property=\\"twitter:card\\" content=\\"summary\\">
+<link rel=\\"icon\\" type=\\"image/x-icon\\" href=\\"/favicon.ico\\">
     <link rel=\\"stylesheet\\" href=\\"/assets/style.css\\">
     
   <script type=\\"module\\" async src=\\"/assets/turbo.js\\"></script></head>
-  <body  data-head-attrs=\\"\\">
+  <body >
     <div id=\\"app\\"><div class=\\"antialiased\\"><div class=\\"max-w-3xl mx-auto px-4 sm:px-6 xl:max-w-5xl xl:px-0\\"><nav class=\\"flex justify-between items-center py-10 font-bold\\"><a class=\\"sm:text-xl flex items-center h-8\\" href=\\"/\\" aria-label=\\"The Vue Point\\"><img class=\\"inline-block h-8\\" height=\\"32\\" alt=\\"logo\\" src=\\"/logo.svg\\"><span class=\\"hidden md:inline mx-2\\">The Vue Point with</span><span class=\\"md:hidden mx-2\\">+</span><img class=\\"inline-block h-7 -mt-2.5\\" height=\\"28\\" alt=\\"logo\\" src=\\"/iles.svg\\"></a><ile-root id=\\"ile-1\\"><div class=\\"text-sm text-gray-500 leading-5\\"><a class=\\"hover:text-gray-700\\" href=\\"https://github.com/ElMassimo/iles/tree/main/playground/the-vue-point\\" target=\\"_blank\\" rel=\\"noopener noreferrer\\"><span class=\\"hidden sm:inline\\">GitHub </span>Source</a>
   <span class=\\"mr-1 ml-1\\">·</span>
   <a class=\\"hover:text-gray-700\\" href=\\"/feed.rss\\">RSS <span class=\\"hidden sm:inline\\">Feed</span></a>
@@ -35,13 +54,32 @@ exports[`building docs site > html files 1`] = `
 
 exports[`building docs site > html files 2`] = `
 "<!DOCTYPE html>
-<html  lang=\\"en-US\\" data-head-attrs=\\"lang\\">
+<html  lang=\\"en-US\\">
   <head>
-    <title>The Vue Point</title><meta charset=\\"UTF-8\\"><meta name=\\"viewport\\" content=\\"width=device-width, initial-scale=1.0\\"><meta name=\\"description\\" content=\\"Updates, tips &amp; opinions from the maintainers of Vue.js.\\"><meta property=\\"og:url\\" content=\\"https://the-vue-point-with-iles.netlify.app/\\"><meta property=\\"og:site_name\\" content=\\"The Vue Point\\"><meta property=\\"og:title\\" content=\\"The Vue Point\\"><meta property=\\"og:description\\" content=\\"Updates, tips &amp; opinions from the maintainers of Vue.js.\\"><meta property=\\"twitter:domain\\" content=\\"the-vue-point-with-iles.netlify.app\\"><meta property=\\"twitter:title\\" content=\\"The Vue Point\\"><meta property=\\"twitter:description\\" content=\\"Updates, tips &amp; opinions from the maintainers of Vue.js.\\"><meta property=\\"twitter:url\\" content=\\"https://the-vue-point-with-iles.netlify.app/\\"><link rel=\\"sitemap\\" href=\\"https://the-vue-point-with-iles.netlify.app/sitemap.xml\\"><meta property=\\"generator\\" content=\\"îles\\"><script async>console.log(\\"Powered by îles 🏝\\", \\"https://iles-docs.netlify.app\\")</script><meta property=\\"twitter:image\\" content=\\"https://vuejs.org/images/logo.png\\"><meta property=\\"twitter:image:alt\\" content=\\"Vue\\"><meta property=\\"twitter:site\\" content=\\"@vuejs\\"><meta property=\\"twitter:card\\" content=\\"summary\\"><link rel=\\"icon\\" type=\\"image/x-icon\\" href=\\"/favicon.ico\\"><meta name=\\"head:count\\" content=\\"19\\">
+    <meta charset=\\"UTF-8\\">
+<title>The Vue Point</title>
+<meta name=\\"viewport\\" content=\\"width=device-width, initial-scale=1.0\\">
+<meta name=\\"description\\" content=\\"Updates, tips & opinions from the maintainers of Vue.js.\\">
+<meta property=\\"og:url\\" content=\\"https://the-vue-point-with-iles.netlify.app/\\">
+<meta property=\\"og:site_name\\" content=\\"The Vue Point\\">
+<meta property=\\"og:title\\" content=\\"The Vue Point\\">
+<meta property=\\"og:description\\" content=\\"Updates, tips & opinions from the maintainers of Vue.js.\\">
+<meta property=\\"twitter:domain\\" content=\\"the-vue-point-with-iles.netlify.app\\">
+<meta property=\\"twitter:title\\" content=\\"The Vue Point\\">
+<meta property=\\"twitter:description\\" content=\\"Updates, tips & opinions from the maintainers of Vue.js.\\">
+<meta property=\\"twitter:url\\" content=\\"https://the-vue-point-with-iles.netlify.app/\\">
+<link rel=\\"sitemap\\" href=\\"https://the-vue-point-with-iles.netlify.app/sitemap.xml\\">
+<meta property=\\"generator\\" content=\\"îles\\">
+<script async=\\"\\">console.log(\\"Powered by îles 🏝\\", \\"https://iles-docs.netlify.app\\")</script>
+<meta property=\\"twitter:image\\" content=\\"https://vuejs.org/images/logo.png\\">
+<meta property=\\"twitter:image:alt\\" content=\\"Vue\\">
+<meta property=\\"twitter:site\\" content=\\"@vuejs\\">
+<meta property=\\"twitter:card\\" content=\\"summary\\">
+<link rel=\\"icon\\" type=\\"image/x-icon\\" href=\\"/favicon.ico\\">
     <link rel=\\"stylesheet\\" href=\\"/assets/style.css\\">
     
   <script type=\\"module\\" async src=\\"/assets/turbo.js\\"></script></head>
-  <body  data-head-attrs=\\"\\">
+  <body >
     <div id=\\"app\\"><div class=\\"antialiased\\"><div class=\\"max-w-3xl mx-auto px-4 sm:px-6 xl:max-w-5xl xl:px-0\\"><nav class=\\"flex justify-between items-center py-10 font-bold\\"><a class=\\"sm:text-xl flex items-center h-8\\" href=\\"/\\" aria-label=\\"The Vue Point\\"><img class=\\"inline-block h-8\\" height=\\"32\\" alt=\\"logo\\" src=\\"/logo.svg\\"><span class=\\"mx-1 sm:mx-2\\">+</span><img class=\\"inline-block h-7 -mt-2.5\\" height=\\"28\\" alt=\\"logo\\" src=\\"/iles.svg\\"></a><ile-root id=\\"ile-1\\"><div class=\\"text-sm text-gray-500 leading-5\\"><a class=\\"hover:text-gray-700\\" href=\\"https://github.com/ElMassimo/iles/tree/main/playground/the-vue-point\\" target=\\"_blank\\" rel=\\"noopener noreferrer\\"><span class=\\"hidden sm:inline\\">GitHub </span>Source</a>
   <span class=\\"mr-1 ml-1\\">·</span>
   <a class=\\"hover:text-gray-700\\" href=\\"/feed.rss\\">RSS <span class=\\"hidden sm:inline\\">Feed</span></a>
@@ -66,13 +104,32 @@ exports[`building docs site > html files 2`] = `
 
 exports[`building docs site > html files 3`] = `
 "<!DOCTYPE html>
-<html  lang=\\"en-US\\" data-head-attrs=\\"lang\\">
+<html  lang=\\"en-US\\">
   <head>
-    <title>The Vue Point</title><meta charset=\\"UTF-8\\"><meta name=\\"viewport\\" content=\\"width=device-width, initial-scale=1.0\\"><meta name=\\"description\\" content=\\"Updates, tips &amp; opinions from the maintainers of Vue.js.\\"><meta property=\\"og:url\\" content=\\"https://the-vue-point-with-iles.netlify.app/posts/1.html\\"><meta property=\\"og:site_name\\" content=\\"The Vue Point\\"><meta property=\\"og:title\\" content=\\"The Vue Point\\"><meta property=\\"og:description\\" content=\\"Updates, tips &amp; opinions from the maintainers of Vue.js.\\"><meta property=\\"twitter:domain\\" content=\\"the-vue-point-with-iles.netlify.app\\"><meta property=\\"twitter:title\\" content=\\"The Vue Point\\"><meta property=\\"twitter:description\\" content=\\"Updates, tips &amp; opinions from the maintainers of Vue.js.\\"><meta property=\\"twitter:url\\" content=\\"https://the-vue-point-with-iles.netlify.app/posts/1.html\\"><link rel=\\"sitemap\\" href=\\"https://the-vue-point-with-iles.netlify.app/sitemap.xml\\"><meta property=\\"generator\\" content=\\"îles\\"><script async>console.log(\\"Powered by îles 🏝\\", \\"https://iles-docs.netlify.app\\")</script><meta property=\\"twitter:image\\" content=\\"https://vuejs.org/images/logo.png\\"><meta property=\\"twitter:image:alt\\" content=\\"Vue\\"><meta property=\\"twitter:site\\" content=\\"@vuejs\\"><meta property=\\"twitter:card\\" content=\\"summary\\"><link rel=\\"icon\\" type=\\"image/x-icon\\" href=\\"/favicon.ico\\"><meta name=\\"head:count\\" content=\\"19\\">
+    <meta charset=\\"UTF-8\\">
+<title>The Vue Point</title>
+<meta name=\\"viewport\\" content=\\"width=device-width, initial-scale=1.0\\">
+<meta name=\\"description\\" content=\\"Updates, tips & opinions from the maintainers of Vue.js.\\">
+<meta property=\\"og:url\\" content=\\"https://the-vue-point-with-iles.netlify.app/posts/1.html\\">
+<meta property=\\"og:site_name\\" content=\\"The Vue Point\\">
+<meta property=\\"og:title\\" content=\\"The Vue Point\\">
+<meta property=\\"og:description\\" content=\\"Updates, tips & opinions from the maintainers of Vue.js.\\">
+<meta property=\\"twitter:domain\\" content=\\"the-vue-point-with-iles.netlify.app\\">
+<meta property=\\"twitter:title\\" content=\\"The Vue Point\\">
+<meta property=\\"twitter:description\\" content=\\"Updates, tips & opinions from the maintainers of Vue.js.\\">
+<meta property=\\"twitter:url\\" content=\\"https://the-vue-point-with-iles.netlify.app/posts/1.html\\">
+<link rel=\\"sitemap\\" href=\\"https://the-vue-point-with-iles.netlify.app/sitemap.xml\\">
+<meta property=\\"generator\\" content=\\"îles\\">
+<script async=\\"\\">console.log(\\"Powered by îles 🏝\\", \\"https://iles-docs.netlify.app\\")</script>
+<meta property=\\"twitter:image\\" content=\\"https://vuejs.org/images/logo.png\\">
+<meta property=\\"twitter:image:alt\\" content=\\"Vue\\">
+<meta property=\\"twitter:site\\" content=\\"@vuejs\\">
+<meta property=\\"twitter:card\\" content=\\"summary\\">
+<link rel=\\"icon\\" type=\\"image/x-icon\\" href=\\"/favicon.ico\\">
     <link rel=\\"stylesheet\\" href=\\"/assets/style.css\\">
     
   <script type=\\"module\\" async src=\\"/assets/turbo.js\\"></script></head>
-  <body  data-head-attrs=\\"\\">
+  <body >
     <div id=\\"app\\"><div class=\\"antialiased\\"><div class=\\"max-w-3xl mx-auto px-4 sm:px-6 xl:max-w-5xl xl:px-0\\"><nav class=\\"flex justify-between items-center py-10 font-bold\\"><a class=\\"sm:text-xl flex items-center h-8\\" href=\\"/\\" aria-label=\\"The Vue Point\\"><img class=\\"inline-block h-8\\" height=\\"32\\" alt=\\"logo\\" src=\\"/logo.svg\\"><span class=\\"hidden md:inline mx-2\\">The Vue Point with</span><span class=\\"md:hidden mx-2\\">+</span><img class=\\"inline-block h-7 -mt-2.5\\" height=\\"28\\" alt=\\"logo\\" src=\\"/iles.svg\\"></a><ile-root id=\\"ile-1\\"><div class=\\"text-sm text-gray-500 leading-5\\"><a class=\\"hover:text-gray-700\\" href=\\"https://github.com/ElMassimo/iles/tree/main/playground/the-vue-point\\" target=\\"_blank\\" rel=\\"noopener noreferrer\\"><span class=\\"hidden sm:inline\\">GitHub </span>Source</a>
   <span class=\\"mr-1 ml-1\\">·</span>
   <a class=\\"hover:text-gray-700\\" href=\\"/feed.rss\\">RSS <span class=\\"hidden sm:inline\\">Feed</span></a>
@@ -89,13 +146,32 @@ exports[`building docs site > html files 3`] = `
 
 exports[`building docs site > html files 4`] = `
 "<!DOCTYPE html>
-<html  lang=\\"en-US\\" data-head-attrs=\\"lang\\">
+<html  lang=\\"en-US\\">
   <head>
-    <title>The Vue Point</title><meta charset=\\"UTF-8\\"><meta name=\\"viewport\\" content=\\"width=device-width, initial-scale=1.0\\"><meta name=\\"description\\" content=\\"Updates, tips &amp; opinions from the maintainers of Vue.js.\\"><meta property=\\"og:url\\" content=\\"https://the-vue-point-with-iles.netlify.app/posts/2.html\\"><meta property=\\"og:site_name\\" content=\\"The Vue Point\\"><meta property=\\"og:title\\" content=\\"The Vue Point\\"><meta property=\\"og:description\\" content=\\"Updates, tips &amp; opinions from the maintainers of Vue.js.\\"><meta property=\\"twitter:domain\\" content=\\"the-vue-point-with-iles.netlify.app\\"><meta property=\\"twitter:title\\" content=\\"The Vue Point\\"><meta property=\\"twitter:description\\" content=\\"Updates, tips &amp; opinions from the maintainers of Vue.js.\\"><meta property=\\"twitter:url\\" content=\\"https://the-vue-point-with-iles.netlify.app/posts/2.html\\"><link rel=\\"sitemap\\" href=\\"https://the-vue-point-with-iles.netlify.app/sitemap.xml\\"><meta property=\\"generator\\" content=\\"îles\\"><script async>console.log(\\"Powered by îles 🏝\\", \\"https://iles-docs.netlify.app\\")</script><meta property=\\"twitter:image\\" content=\\"https://vuejs.org/images/logo.png\\"><meta property=\\"twitter:image:alt\\" content=\\"Vue\\"><meta property=\\"twitter:site\\" content=\\"@vuejs\\"><meta property=\\"twitter:card\\" content=\\"summary\\"><link rel=\\"icon\\" type=\\"image/x-icon\\" href=\\"/favicon.ico\\"><meta name=\\"head:count\\" content=\\"19\\">
+    <meta charset=\\"UTF-8\\">
+<title>The Vue Point</title>
+<meta name=\\"viewport\\" content=\\"width=device-width, initial-scale=1.0\\">
+<meta name=\\"description\\" content=\\"Updates, tips & opinions from the maintainers of Vue.js.\\">
+<meta property=\\"og:url\\" content=\\"https://the-vue-point-with-iles.netlify.app/posts/2.html\\">
+<meta property=\\"og:site_name\\" content=\\"The Vue Point\\">
+<meta property=\\"og:title\\" content=\\"The Vue Point\\">
+<meta property=\\"og:description\\" content=\\"Updates, tips & opinions from the maintainers of Vue.js.\\">
+<meta property=\\"twitter:domain\\" content=\\"the-vue-point-with-iles.netlify.app\\">
+<meta property=\\"twitter:title\\" content=\\"The Vue Point\\">
+<meta property=\\"twitter:description\\" content=\\"Updates, tips & opinions from the maintainers of Vue.js.\\">
+<meta property=\\"twitter:url\\" content=\\"https://the-vue-point-with-iles.netlify.app/posts/2.html\\">
+<link rel=\\"sitemap\\" href=\\"https://the-vue-point-with-iles.netlify.app/sitemap.xml\\">
+<meta property=\\"generator\\" content=\\"îles\\">
+<script async=\\"\\">console.log(\\"Powered by îles 🏝\\", \\"https://iles-docs.netlify.app\\")</script>
+<meta property=\\"twitter:image\\" content=\\"https://vuejs.org/images/logo.png\\">
+<meta property=\\"twitter:image:alt\\" content=\\"Vue\\">
+<meta property=\\"twitter:site\\" content=\\"@vuejs\\">
+<meta property=\\"twitter:card\\" content=\\"summary\\">
+<link rel=\\"icon\\" type=\\"image/x-icon\\" href=\\"/favicon.ico\\">
     <link rel=\\"stylesheet\\" href=\\"/assets/style.css\\">
     
   <script type=\\"module\\" async src=\\"/assets/turbo.js\\"></script></head>
-  <body  data-head-attrs=\\"\\">
+  <body >
     <div id=\\"app\\"><div class=\\"antialiased\\"><div class=\\"max-w-3xl mx-auto px-4 sm:px-6 xl:max-w-5xl xl:px-0\\"><nav class=\\"flex justify-between items-center py-10 font-bold\\"><a class=\\"sm:text-xl flex items-center h-8\\" href=\\"/\\" aria-label=\\"The Vue Point\\"><img class=\\"inline-block h-8\\" height=\\"32\\" alt=\\"logo\\" src=\\"/logo.svg\\"><span class=\\"hidden md:inline mx-2\\">The Vue Point with</span><span class=\\"md:hidden mx-2\\">+</span><img class=\\"inline-block h-7 -mt-2.5\\" height=\\"28\\" alt=\\"logo\\" src=\\"/iles.svg\\"></a><ile-root id=\\"ile-1\\"><div class=\\"text-sm text-gray-500 leading-5\\"><a class=\\"hover:text-gray-700\\" href=\\"https://github.com/ElMassimo/iles/tree/main/playground/the-vue-point\\" target=\\"_blank\\" rel=\\"noopener noreferrer\\"><span class=\\"hidden sm:inline\\">GitHub </span>Source</a>
   <span class=\\"mr-1 ml-1\\">·</span>
   <a class=\\"hover:text-gray-700\\" href=\\"/feed.rss\\">RSS <span class=\\"hidden sm:inline\\">Feed</span></a>
@@ -110,13 +186,32 @@ exports[`building docs site > html files 4`] = `
 
 exports[`building docs site > html files 5`] = `
 "<!DOCTYPE html>
-<html  lang=\\"en-US\\" data-head-attrs=\\"lang\\">
+<html  lang=\\"en-US\\">
   <head>
-    <title>Reflections for 2020-2021 · The Vue Point</title><meta charset=\\"UTF-8\\"><meta name=\\"viewport\\" content=\\"width=device-width, initial-scale=1.0\\"><meta name=\\"description\\" content=\\"Updates, tips &amp; opinions from the maintainers of Vue.js.\\"><meta property=\\"og:url\\" content=\\"https://the-vue-point-with-iles.netlify.app/posts/hello-2021.html\\"><meta property=\\"og:site_name\\" content=\\"The Vue Point\\"><meta property=\\"og:title\\" content=\\"Reflections for 2020-2021 · The Vue Point\\"><meta property=\\"og:description\\" content=\\"Updates, tips &amp; opinions from the maintainers of Vue.js.\\"><meta property=\\"twitter:domain\\" content=\\"the-vue-point-with-iles.netlify.app\\"><meta property=\\"twitter:title\\" content=\\"Reflections for 2020-2021 · The Vue Point\\"><meta property=\\"twitter:description\\" content=\\"Updates, tips &amp; opinions from the maintainers of Vue.js.\\"><meta property=\\"twitter:url\\" content=\\"https://the-vue-point-with-iles.netlify.app/posts/hello-2021.html\\"><link rel=\\"sitemap\\" href=\\"https://the-vue-point-with-iles.netlify.app/sitemap.xml\\"><meta property=\\"generator\\" content=\\"îles\\"><script async>console.log(\\"Powered by îles 🏝\\", \\"https://iles-docs.netlify.app\\")</script><meta property=\\"twitter:image\\" content=\\"https://vuejs.org/images/logo.png\\"><meta property=\\"twitter:image:alt\\" content=\\"Vue\\"><meta property=\\"twitter:site\\" content=\\"@vuejs\\"><meta property=\\"twitter:card\\" content=\\"summary\\"><link rel=\\"icon\\" type=\\"image/x-icon\\" href=\\"/favicon.ico\\"><meta name=\\"head:count\\" content=\\"19\\">
+    <meta charset=\\"UTF-8\\">
+<title>Reflections for 2020-2021 · The Vue Point</title>
+<meta name=\\"viewport\\" content=\\"width=device-width, initial-scale=1.0\\">
+<meta name=\\"description\\" content=\\"Updates, tips & opinions from the maintainers of Vue.js.\\">
+<meta property=\\"og:url\\" content=\\"https://the-vue-point-with-iles.netlify.app/posts/hello-2021.html\\">
+<meta property=\\"og:site_name\\" content=\\"The Vue Point\\">
+<meta property=\\"og:title\\" content=\\"Reflections for 2020-2021 · The Vue Point\\">
+<meta property=\\"og:description\\" content=\\"Updates, tips & opinions from the maintainers of Vue.js.\\">
+<meta property=\\"twitter:domain\\" content=\\"the-vue-point-with-iles.netlify.app\\">
+<meta property=\\"twitter:title\\" content=\\"Reflections for 2020-2021 · The Vue Point\\">
+<meta property=\\"twitter:description\\" content=\\"Updates, tips & opinions from the maintainers of Vue.js.\\">
+<meta property=\\"twitter:url\\" content=\\"https://the-vue-point-with-iles.netlify.app/posts/hello-2021.html\\">
+<link rel=\\"sitemap\\" href=\\"https://the-vue-point-with-iles.netlify.app/sitemap.xml\\">
+<meta property=\\"generator\\" content=\\"îles\\">
+<script async=\\"\\">console.log(\\"Powered by îles 🏝\\", \\"https://iles-docs.netlify.app\\")</script>
+<meta property=\\"twitter:image\\" content=\\"https://vuejs.org/images/logo.png\\">
+<meta property=\\"twitter:image:alt\\" content=\\"Vue\\">
+<meta property=\\"twitter:site\\" content=\\"@vuejs\\">
+<meta property=\\"twitter:card\\" content=\\"summary\\">
+<link rel=\\"icon\\" type=\\"image/x-icon\\" href=\\"/favicon.ico\\">
     <link rel=\\"stylesheet\\" href=\\"/assets/style.css\\">
     
   <script type=\\"module\\" async src=\\"/assets/turbo.js\\"></script></head>
-  <body  data-head-attrs=\\"\\">
+  <body >
     <div id=\\"app\\"><div class=\\"antialiased\\"><div class=\\"max-w-3xl mx-auto px-4 sm:px-6 xl:max-w-5xl xl:px-0\\"><nav class=\\"flex justify-between items-center py-10 font-bold\\"><a class=\\"sm:text-xl flex items-center h-8\\" href=\\"/\\" aria-label=\\"The Vue Point\\"><img class=\\"inline-block h-8\\" height=\\"32\\" alt=\\"logo\\" src=\\"/logo.svg\\"><span class=\\"hidden md:inline mx-2\\">The Vue Point with</span><span class=\\"md:hidden mx-2\\">+</span><img class=\\"inline-block h-7 -mt-2.5\\" height=\\"28\\" alt=\\"logo\\" src=\\"/iles.svg\\"></a><ile-root id=\\"ile-1\\"><div class=\\"text-sm text-gray-500 leading-5\\"><a class=\\"hover:text-gray-700\\" href=\\"https://github.com/ElMassimo/iles/tree/main/playground/the-vue-point\\" target=\\"_blank\\" rel=\\"noopener noreferrer\\"><span class=\\"hidden sm:inline\\">GitHub </span>Source</a>
   <span class=\\"mr-1 ml-1\\">·</span>
   <a class=\\"hover:text-gray-700\\" href=\\"/feed.rss\\">RSS <span class=\\"hidden sm:inline\\">Feed</span></a>
@@ -166,13 +261,32 @@ exports[`building docs site > html files 5`] = `
 
 exports[`building docs site > html files 6`] = `
 "<!DOCTYPE html>
-<html  lang=\\"en-US\\" data-head-attrs=\\"lang\\">
+<html  lang=\\"en-US\\">
   <head>
-    <title>Vue 3.2 Released! · The Vue Point</title><meta charset=\\"UTF-8\\"><meta name=\\"viewport\\" content=\\"width=device-width, initial-scale=1.0\\"><meta name=\\"description\\" content=\\"Updates, tips &amp; opinions from the maintainers of Vue.js.\\"><meta property=\\"og:url\\" content=\\"https://the-vue-point-with-iles.netlify.app/posts/vue-3-2.html\\"><meta property=\\"og:site_name\\" content=\\"The Vue Point\\"><meta property=\\"og:title\\" content=\\"Vue 3.2 Released! · The Vue Point\\"><meta property=\\"og:description\\" content=\\"Updates, tips &amp; opinions from the maintainers of Vue.js.\\"><meta property=\\"twitter:domain\\" content=\\"the-vue-point-with-iles.netlify.app\\"><meta property=\\"twitter:title\\" content=\\"Vue 3.2 Released! · The Vue Point\\"><meta property=\\"twitter:description\\" content=\\"Updates, tips &amp; opinions from the maintainers of Vue.js.\\"><meta property=\\"twitter:url\\" content=\\"https://the-vue-point-with-iles.netlify.app/posts/vue-3-2.html\\"><link rel=\\"sitemap\\" href=\\"https://the-vue-point-with-iles.netlify.app/sitemap.xml\\"><meta property=\\"generator\\" content=\\"îles\\"><script async>console.log(\\"Powered by îles 🏝\\", \\"https://iles-docs.netlify.app\\")</script><meta property=\\"twitter:image\\" content=\\"https://vuejs.org/images/logo.png\\"><meta property=\\"twitter:image:alt\\" content=\\"Vue\\"><meta property=\\"twitter:site\\" content=\\"@vuejs\\"><meta property=\\"twitter:card\\" content=\\"summary\\"><link rel=\\"icon\\" type=\\"image/x-icon\\" href=\\"/favicon.ico\\"><meta name=\\"head:count\\" content=\\"19\\">
+    <meta charset=\\"UTF-8\\">
+<title>Vue 3.2 Released! · The Vue Point</title>
+<meta name=\\"viewport\\" content=\\"width=device-width, initial-scale=1.0\\">
+<meta name=\\"description\\" content=\\"Updates, tips & opinions from the maintainers of Vue.js.\\">
+<meta property=\\"og:url\\" content=\\"https://the-vue-point-with-iles.netlify.app/posts/vue-3-2.html\\">
+<meta property=\\"og:site_name\\" content=\\"The Vue Point\\">
+<meta property=\\"og:title\\" content=\\"Vue 3.2 Released! · The Vue Point\\">
+<meta property=\\"og:description\\" content=\\"Updates, tips & opinions from the maintainers of Vue.js.\\">
+<meta property=\\"twitter:domain\\" content=\\"the-vue-point-with-iles.netlify.app\\">
+<meta property=\\"twitter:title\\" content=\\"Vue 3.2 Released! · The Vue Point\\">
+<meta property=\\"twitter:description\\" content=\\"Updates, tips & opinions from the maintainers of Vue.js.\\">
+<meta property=\\"twitter:url\\" content=\\"https://the-vue-point-with-iles.netlify.app/posts/vue-3-2.html\\">
+<link rel=\\"sitemap\\" href=\\"https://the-vue-point-with-iles.netlify.app/sitemap.xml\\">
+<meta property=\\"generator\\" content=\\"îles\\">
+<script async=\\"\\">console.log(\\"Powered by îles 🏝\\", \\"https://iles-docs.netlify.app\\")</script>
+<meta property=\\"twitter:image\\" content=\\"https://vuejs.org/images/logo.png\\">
+<meta property=\\"twitter:image:alt\\" content=\\"Vue\\">
+<meta property=\\"twitter:site\\" content=\\"@vuejs\\">
+<meta property=\\"twitter:card\\" content=\\"summary\\">
+<link rel=\\"icon\\" type=\\"image/x-icon\\" href=\\"/favicon.ico\\">
     <link rel=\\"stylesheet\\" href=\\"/assets/style.css\\">
     
   <script type=\\"module\\" async src=\\"/assets/turbo.js\\"></script></head>
-  <body  data-head-attrs=\\"\\">
+  <body >
     <div id=\\"app\\"><div class=\\"antialiased\\"><div class=\\"max-w-3xl mx-auto px-4 sm:px-6 xl:max-w-5xl xl:px-0\\"><nav class=\\"flex justify-between items-center py-10 font-bold\\"><a class=\\"sm:text-xl flex items-center h-8\\" href=\\"/\\" aria-label=\\"The Vue Point\\"><img class=\\"inline-block h-8\\" height=\\"32\\" alt=\\"logo\\" src=\\"/logo.svg\\"><span class=\\"hidden md:inline mx-2\\">The Vue Point with</span><span class=\\"md:hidden mx-2\\">+</span><img class=\\"inline-block h-7 -mt-2.5\\" height=\\"28\\" alt=\\"logo\\" src=\\"/iles.svg\\"></a><ile-root id=\\"ile-1\\"><div class=\\"text-sm text-gray-500 leading-5\\"><a class=\\"hover:text-gray-700\\" href=\\"https://github.com/ElMassimo/iles/tree/main/playground/the-vue-point\\" target=\\"_blank\\" rel=\\"noopener noreferrer\\"><span class=\\"hidden sm:inline\\">GitHub </span>Source</a>
   <span class=\\"mr-1 ml-1\\">·</span>
   <a class=\\"hover:text-gray-700\\" href=\\"/feed.rss\\">RSS <span class=\\"hidden sm:inline\\">Feed</span></a>
@@ -255,13 +369,32 @@ customElements<span class=\\"token punctuation\\">.</span><span class=\\"token f
 
 exports[`building docs site > html files 7`] = `
 "<!DOCTYPE html>
-<html  lang=\\"en-US\\" data-head-attrs=\\"lang\\">
+<html  lang=\\"en-US\\">
   <head>
-    <title>Announcing Vue 3.0 \\"One Piece\\" · The Vue Point</title><meta charset=\\"UTF-8\\"><meta name=\\"viewport\\" content=\\"width=device-width, initial-scale=1.0\\"><meta name=\\"description\\" content=\\"Updates, tips &amp; opinions from the maintainers of Vue.js.\\"><meta property=\\"og:url\\" content=\\"https://the-vue-point-with-iles.netlify.app/posts/vue-3-one-piece.html\\"><meta property=\\"og:site_name\\" content=\\"The Vue Point\\"><meta property=\\"og:title\\" content=\\"Announcing Vue 3.0 &quot;One Piece&quot; · The Vue Point\\"><meta property=\\"og:description\\" content=\\"Updates, tips &amp; opinions from the maintainers of Vue.js.\\"><meta property=\\"twitter:domain\\" content=\\"the-vue-point-with-iles.netlify.app\\"><meta property=\\"twitter:title\\" content=\\"Announcing Vue 3.0 &quot;One Piece&quot; · The Vue Point\\"><meta property=\\"twitter:description\\" content=\\"Updates, tips &amp; opinions from the maintainers of Vue.js.\\"><meta property=\\"twitter:url\\" content=\\"https://the-vue-point-with-iles.netlify.app/posts/vue-3-one-piece.html\\"><link rel=\\"sitemap\\" href=\\"https://the-vue-point-with-iles.netlify.app/sitemap.xml\\"><meta property=\\"generator\\" content=\\"îles\\"><script async>console.log(\\"Powered by îles 🏝\\", \\"https://iles-docs.netlify.app\\")</script><meta property=\\"twitter:image\\" content=\\"https://vuejs.org/images/logo.png\\"><meta property=\\"twitter:image:alt\\" content=\\"Vue\\"><meta property=\\"twitter:site\\" content=\\"@vuejs\\"><meta property=\\"twitter:card\\" content=\\"summary\\"><link rel=\\"icon\\" type=\\"image/x-icon\\" href=\\"/favicon.ico\\"><meta name=\\"head:count\\" content=\\"19\\">
+    <meta charset=\\"UTF-8\\">
+<title>Announcing Vue 3.0 \\"One Piece\\" · The Vue Point</title>
+<meta name=\\"viewport\\" content=\\"width=device-width, initial-scale=1.0\\">
+<meta name=\\"description\\" content=\\"Updates, tips & opinions from the maintainers of Vue.js.\\">
+<meta property=\\"og:url\\" content=\\"https://the-vue-point-with-iles.netlify.app/posts/vue-3-one-piece.html\\">
+<meta property=\\"og:site_name\\" content=\\"The Vue Point\\">
+<meta property=\\"og:title\\" content=\\"Announcing Vue 3.0 &quot;One Piece&quot; · The Vue Point\\">
+<meta property=\\"og:description\\" content=\\"Updates, tips & opinions from the maintainers of Vue.js.\\">
+<meta property=\\"twitter:domain\\" content=\\"the-vue-point-with-iles.netlify.app\\">
+<meta property=\\"twitter:title\\" content=\\"Announcing Vue 3.0 &quot;One Piece&quot; · The Vue Point\\">
+<meta property=\\"twitter:description\\" content=\\"Updates, tips & opinions from the maintainers of Vue.js.\\">
+<meta property=\\"twitter:url\\" content=\\"https://the-vue-point-with-iles.netlify.app/posts/vue-3-one-piece.html\\">
+<link rel=\\"sitemap\\" href=\\"https://the-vue-point-with-iles.netlify.app/sitemap.xml\\">
+<meta property=\\"generator\\" content=\\"îles\\">
+<script async=\\"\\">console.log(\\"Powered by îles 🏝\\", \\"https://iles-docs.netlify.app\\")</script>
+<meta property=\\"twitter:image\\" content=\\"https://vuejs.org/images/logo.png\\">
+<meta property=\\"twitter:image:alt\\" content=\\"Vue\\">
+<meta property=\\"twitter:site\\" content=\\"@vuejs\\">
+<meta property=\\"twitter:card\\" content=\\"summary\\">
+<link rel=\\"icon\\" type=\\"image/x-icon\\" href=\\"/favicon.ico\\">
     <link rel=\\"stylesheet\\" href=\\"/assets/style.css\\">
     
   <script type=\\"module\\" async src=\\"/assets/turbo.js\\"></script></head>
-  <body  data-head-attrs=\\"\\">
+  <body >
     <div id=\\"app\\"><div class=\\"antialiased\\"><div class=\\"max-w-3xl mx-auto px-4 sm:px-6 xl:max-w-5xl xl:px-0\\"><nav class=\\"flex justify-between items-center py-10 font-bold\\"><a class=\\"sm:text-xl flex items-center h-8\\" href=\\"/\\" aria-label=\\"The Vue Point\\"><img class=\\"inline-block h-8\\" height=\\"32\\" alt=\\"logo\\" src=\\"/logo.svg\\"><span class=\\"hidden md:inline mx-2\\">The Vue Point with</span><span class=\\"md:hidden mx-2\\">+</span><img class=\\"inline-block h-7 -mt-2.5\\" height=\\"28\\" alt=\\"logo\\" src=\\"/iles.svg\\"></a><ile-root id=\\"ile-1\\"><div class=\\"text-sm text-gray-500 leading-5\\"><a class=\\"hover:text-gray-700\\" href=\\"https://github.com/ElMassimo/iles/tree/main/playground/the-vue-point\\" target=\\"_blank\\" rel=\\"noopener noreferrer\\"><span class=\\"hidden sm:inline\\">GitHub </span>Source</a>
   <span class=\\"mr-1 ml-1\\">·</span>
   <a class=\\"hover:text-gray-700\\" href=\\"/feed.rss\\">RSS <span class=\\"hidden sm:inline\\">Feed</span></a>

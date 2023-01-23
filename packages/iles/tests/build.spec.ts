@@ -95,7 +95,7 @@ async function assertHTML (path: string, { title }: any = {}) {
   expectContent.toMatchSnapshot()
   expectContent.toContain(`<title>${`${title ? `${title} · ` : ''}The Vue Point`}</title>`)
   expectContent.toContain('<meta charset="UTF-8">')
-  expectContent.toContain('<meta name="description" content="Updates, tips &amp; opinions from the maintainers of Vue.js.">')
+  expectContent.toContain('<meta name="description" content="Updates, tips & opinions from the maintainers of Vue.js.">')
   expectContent.toContain('<link rel="sitemap" href="https://the-vue-point-with-iles.netlify.app/sitemap.xml">')
   expectContent.toContain(`<meta property="og:url" content="https://the-vue-point-with-iles.netlify.app/${path.replace('index.html', '')}">`)
   expectContent.toContain('<link rel="stylesheet" href="/assets/style.css">')

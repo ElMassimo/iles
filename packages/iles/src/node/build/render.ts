@@ -64,9 +64,7 @@ export async function renderPage (
     ${await scriptTagsFrom(config, islandsByPath[route.path])}
   </head>
   <body ${bodyAttrs}>
-    ${bodyTagsOpen}
-    <div id="app">${content}</div>
-    ${bodyTags}
+    ${bodyTagsOpen}<div id="app">${content}</div>${bodyTags}
   </body>
 </html>`
 }
