@@ -1,3 +1,12 @@
+## [0.8.2](https://github.com/ElMassimo/iles/compare/images@0.8.1...images@0.8.2) (2023-01-23)
+
+
+### Bug Fixes
+
+* rendering MDX images in development ([#221](https://github.com/ElMassimo/iles/issues/221)) ([6dd712c](https://github.com/ElMassimo/iles/commit/6dd712c01eb4af2e9962979984c36a5d2f0ebf9a))
+
+
+
 ## [0.8.1](https://github.com/ElMassimo/iles/compare/images@0.8.0...images@0.8.1) (2022-07-20)
 
 
