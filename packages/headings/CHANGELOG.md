@@ -1,3 +1,12 @@
+## [0.8.2](https://github.com/ElMassimo/iles/compare/headings@0.8.1...headings@0.8.2) (2023-01-23)
+
+
+### Bug Fixes
+
+* prevent heading slugs from being "app" ([#218](https://github.com/ElMassimo/iles/issues/218)) ([3d1cd32](https://github.com/ElMassimo/iles/commit/3d1cd328c6232432ca5d53554b4dd76afcbe54c8))
+
+
+
 ## [0.8.1](https://github.com/ElMassimo/iles/compare/headings@0.8.0...headings@0.8.1) (2022-09-19)
 
 
