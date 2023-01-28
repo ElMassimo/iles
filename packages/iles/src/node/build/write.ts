@@ -52,11 +52,11 @@ async function writeRoute (config: AppConfig, manifest: Manifest, route: RouteTo
       content = content.replace(`<!--${island.placeholder}-->`,
         // TODO: Remove additional script tag once Firefox is fixed
         // https://bugzilla.mozilla.org/show_bug.cgi?id=1737882
-        `<script></script><script type="module" async>${rebasedCode}</script>`)
+        () => `<script></script><script type="module" async>${rebasedCode}</script>`)
     }
 
     // Preload scripts for islands in the page.
-    route.rendered = content.replace('</head>', `${stringifyScripts(config, manifest, preloadScripts)}</head>`)
+    route.rendered = content.replace('</head>', () => `${stringifyScripts(config, manifest, preloadScripts)}</head>`)
   }
 
   route = await config.ssg.beforePageRender?.(route, config) || route
