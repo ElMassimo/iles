@@ -1,3 +1,12 @@
+## [0.9.2](https://github.com/ElMassimo/iles/compare/v0.9.1...v0.9.2) (2023-01-30)
+
+
+### Bug Fixes
+
+* use functions instead of variables for String.prototype.replace ([#225](https://github.com/ElMassimo/iles/issues/225)) ([fd05eed](https://github.com/ElMassimo/iles/commit/fd05eedf1677aaa5c1f54c439adda7aa1e48cfc9))
+
+
+
 ## [0.9.1](https://github.com/ElMassimo/iles/compare/v0.9.0...v0.9.1) (2023-01-23)
 
 
