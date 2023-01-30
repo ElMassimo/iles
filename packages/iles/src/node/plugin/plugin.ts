@@ -108,7 +108,7 @@ export default function IslandsPlugins (appConfig: AppConfig): PluginOption[] {
       },
       transform (code, id) {
         if (id === APP_COMPONENT_PATH && !isBuild && appConfig.debug)
-          return code.replace('const DebugPanel = () => null', `import DebugPanel from '${DEBUG_COMPONENT_PATH}'`)
+          return code.replace('const DebugPanel = () => null', () => `import DebugPanel from '${DEBUG_COMPONENT_PATH}'`)
       },
       handleHotUpdate ({ file, server }) {
         if (file === appPath) return [server.moduleGraph.getModuleById(USER_APP_REQUEST_PATH)!]

@@ -50,7 +50,7 @@ export default function IlesMdx (options: MarkdownOptions = {}): Plugin[] {
       async transform (code, path) {
         if (!shouldTransform(path)) return
 
-        return code.replace('export default MDXContent', `
+        return code.replace('export default MDXContent', () => `
 import { defineComponent as $defineComponent } from 'iles/jsx-runtime'
 
 const _sfc_main = /* @__PURE__ */ $defineComponent(MDXContent, {${
