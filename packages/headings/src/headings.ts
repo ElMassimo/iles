@@ -2,7 +2,7 @@ import type { Plugin } from 'unified'
 import type { Parent } from 'unist'
 import type { IlesModule } from 'iles'
 
-import { toString } from 'hast-util-to-string'
+import { Element, toString } from 'hast-util-to-string'
 import { headingRank } from 'hast-util-heading-rank'
 import slugo from 'slugo'
 
@@ -20,11 +20,17 @@ export interface Heading {
    * to uniquely identify a heading.
    */
   indices: number[]
+
   /**
    * reference to the heading's parent; This field is removed after the tree
    * has been compiled to have a data structure without cyclic references.
    */
   parent?: Heading
+  /**
+   * reference to the `<h_>` element; This field is removed after data
+   * attributes are set to have a simpler data structure.
+   */
+  elem?: Element
 }
 
 export interface HeadingOptions {
@@ -82,9 +88,15 @@ export const rehypePlugin = (isNested: boolean = false): HeadingPlugin => ({ slu
     const level = headingRank(node)
     if (!level) return
 
-    // `node` is a heading element.
-    const title = toString(node)
-    let currHeading: Heading = { level, title, slug: slug(node, title, level, data), children: [], indices: [] }
+    const elem = <Element>node // `node` is a heading element.
+    const title = toString(elem)
+    let currHeading: Heading = {
+      level,
+      elem,
+      title, slug: slug(elem, title, level, data),
+      children: [],
+      indices: [],
+    }
 
     if (!isNested) {
       headings.push(currHeading)
@@ -107,6 +119,12 @@ export const rehypePlugin = (isNested: boolean = false): HeadingPlugin => ({ slu
   })
 
   allHeadings.forEach(heading => {
+    if (heading.elem)
+      heading.elem.properties = {
+        ...heading.elem.properties ?? {},
+        dataIndices: heading.indices.join('.')
+      }
+    delete heading.elem
     delete heading.parent
   })
 
