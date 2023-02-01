@@ -11,6 +11,21 @@ export interface Heading {
   level: number
   title: string
   slug: string
+  /**
+   * all direct descendants of this heading; This field is only populated if
+   * the `isNested` option is set to `true`.
+   */
+  children: Heading[]
+  /**
+   * the 1-based index of this heading and all its ancestors; This can be used
+   * to uniquely identify a heading.
+   */
+  indices: number[]
+  /**
+   * reference to the heading's parent; This field is removed after the tree
+   * has been compiled to have a data structure without cyclic references.
+   */
+  parent?: Heading
 }
 
 export interface HeadingOptions {
@@ -23,21 +38,28 @@ export type HeadingPlugin = Plugin<[HeadingOptions?]>
 declare module 'iles' {
   interface PageMeta {
     /**
-     * Headings for MDX documents.
+     * Headings for MDX documents. This will include all headings if `isNested`
+     * is `false` and only top-level headings if `isNested` is `true`.
      */
     headings?: Heading[]
   }
+}
+
+interface ModuleOptions {
+  isNested: boolean
 }
 
 /**
  * An iles module that injects a rehype plugin to auto-link headings and expose
  * them in `meta`.
  */
-export default function IlesHeadings (): IlesModule {
+export default function IlesHeadings (options?: ModuleOptions): IlesModule {
+  const {isNested = false} = options || {}
+
   return {
     name: '@islands/headings',
     markdown: {
-      rehypePlugins: [rehypePlugin],
+      rehypePlugins: [rehypePlugin(isNested)],
     },
   }
 }
@@ -48,18 +70,45 @@ export default function IlesHeadings (): IlesModule {
  *
  * @param options - Options to configure heading generation.
  */
-export const rehypePlugin: HeadingPlugin = ({ slug = generateSlug, initData = initCounter } = {}) => (ast, vfile) => {
+export const rehypePlugin = (isNested: boolean = false): HeadingPlugin => ({ slug = generateSlug, initData = initCounter } = {}) => (ast, vfile) => {
   const { children } = ast as Parent
 
   const data = initData(ast)
 
   const headings: Heading[] = []
+  const allHeadings: Heading[] = []
+  let lastHeading: Heading | undefined = undefined
+
   children.forEach((node: any) => {
     const level = headingRank(node)
-    if (level) {
-      const title = toString(node)
-      headings.push({ level, title, slug: slug(node, title, level, data) })
+    if (!level) return
+
+    // `node` is a heading element.
+    const title = toString(node)
+    let currHeading: Heading = { level, title, slug: slug(node, title, level, data), children: [], indices: [] }
+
+    if (!isNested) {
+      headings.push(currHeading)
+      return
     }
+
+    allHeadings.push(currHeading)
+    while(lastHeading && lastHeading.level >= currHeading.level)
+      lastHeading = lastHeading.parent
+
+    if (lastHeading) {
+      lastHeading.children.push(currHeading)
+      currHeading.parent = lastHeading
+      currHeading.indices = [...lastHeading.indices, lastHeading.children.length]
+    } else {
+      headings.push(currHeading)
+      currHeading.indices = [headings.length]
+    }
+    lastHeading = currHeading
+  })
+
+  allHeadings.forEach(heading => {
+    delete heading.parent
   })
 
   const title = headings.length && headings[0].level === 1 && headings[0].title
