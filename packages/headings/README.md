@@ -32,6 +32,10 @@ An [îles] module that injects a [rehype] plugin to parse headings in
 
 - 📖 sets `meta.headings` to enable rendering sidebars and table of contents
 
+- 🔢 sets `data-indices` on headings for numbered sections (e.g. §4.20)
+
+- 🌲 supports nested headings:wq
+
 ### Usage 🚀
 
 ```ts
