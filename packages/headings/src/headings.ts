@@ -1,9 +1,8 @@
-import type { Program, VariableDeclarator } from 'estree'
-import type { Pluggable, Plugin } from 'unified'
-import type { Data, Parent } from 'unist'
+import type { Plugin } from 'unified'
+import type { Parent } from 'unist'
 import type { IlesModule } from 'iles'
 
-import { Node, toString } from 'hast-util-to-string'
+import { toString } from 'hast-util-to-string'
 import { headingRank } from 'hast-util-heading-rank'
 import slugo from 'slugo'
 
