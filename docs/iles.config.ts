@@ -19,7 +19,7 @@ export default defineConfig({
   jsx: 'preact',
   debug: false,
   modules: [
-    headings(),
+    headings({ isNested: true }),
     icons(),
     prism(),
     lastUpdated(),
