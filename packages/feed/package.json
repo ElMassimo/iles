@@ -32,7 +32,7 @@
     "vue": "^3.2.45"
   },
   "peerDependencies": {
-    "iles": "workspace:^0.8",
+    "iles": "workspace:*",
     "vue": "^3.2.45"
   },
   "dependencies": {
