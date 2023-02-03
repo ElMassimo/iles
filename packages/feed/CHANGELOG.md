@@ -1,3 +1,17 @@
+## [0.8.1](https://github.com/ElMassimo/iles/compare/feed@0.8.0...feed@0.8.1) (2023-02-03)
+
+
+### Bug Fixes
+
+* relax @islands/feed pinned version of îles ([#231](https://github.com/ElMassimo/iles/issues/231)) ([f016b3b](https://github.com/ElMassimo/iles/commit/f016b3b10f8b2ce611c788cc9abf7b0308069902))
+
+
+### Features
+
+* upgrade to vite 4, rollup 3, mdx 2.1.5, vue 3.2.45 ([#208](https://github.com/ElMassimo/iles/issues/208)) ([74a0e51](https://github.com/ElMassimo/iles/commit/74a0e511c71e990cf5a123cc31989095ef76477f))
+
+
+
 # [0.8.0](https://github.com/ElMassimo/iles/compare/feed@0.1.2...feed@0.8.0) (2022-07-14)
 
 
