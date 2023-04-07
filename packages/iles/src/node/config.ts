@@ -1,5 +1,5 @@
 /* eslint-disable no-restricted-syntax */
-import { promises as fs } from 'fs'
+import { promises as fs, existsSync } from 'fs'
 import { join, resolve } from 'pathe'
 import pc from 'picocolors'
 import creatDebugger from 'debug'
@@ -45,8 +45,9 @@ export function IlesLayoutResolver (config: AppConfig): ComponentResolverFunctio
   return (name) => {
     const [layoutName, isLayout] = name.split('Layout', 2)
     if (layoutName && isLayout === '') {
-      const layoutFile = `${uncapitalize(camelCase(layoutName))}.vue`
-      return { name: 'default', from: join(config.layoutsDir, layoutFile) }
+      const layoutFile = join(config.layoutsDir, `${uncapitalize(camelCase(layoutName))}.vue`)
+      if (existsSync(layoutFile))
+        return { name: 'default', from: layoutFile }
     }
   }
 }
