@@ -1,3 +1,12 @@
+## [0.9.5](https://github.com/ElMassimo/iles/compare/v0.9.4...v0.9.5) (2023-04-07)
+
+
+### Bug Fixes
+
+* ensure that pure esm modules without `main` can be imported (close [#239](https://github.com/ElMassimo/iles/issues/239)) ([f48530c](https://github.com/ElMassimo/iles/commit/f48530c321bdda1034285fdcab899a8f8c394377))
+
+
+
 ## [0.9.4](https://github.com/ElMassimo/iles/compare/v0.9.3...v0.9.4) (2023-04-07)
 
 
