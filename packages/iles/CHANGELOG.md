@@ -1,3 +1,12 @@
+## [0.9.4](https://github.com/ElMassimo/iles/compare/v0.9.3...v0.9.4) (2023-04-07)
+
+
+### Bug Fixes
+
+* only resolve layout components if the file exists (close [#235](https://github.com/ElMassimo/iles/issues/235)) ([706469f](https://github.com/ElMassimo/iles/commit/706469fdb9b592645b304ca78addfc5730bab8a3))
+
+
+
 ## [0.9.3](https://github.com/ElMassimo/iles/compare/v0.9.2...v0.9.3) (2023-04-07)
 
 
