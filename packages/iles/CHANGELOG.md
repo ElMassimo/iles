@@ -1,3 +1,12 @@
+## [0.9.3](https://github.com/ElMassimo/iles/compare/v0.9.2...v0.9.3) (2023-04-07)
+
+
+### Bug Fixes
+
+* mdxComponents not being auto-detected at build time (close [#245](https://github.com/ElMassimo/iles/issues/245)) ([bec22ad](https://github.com/ElMassimo/iles/commit/bec22adb724a67fee7b4832cf7531ee2657f1126))
+
+
+
 ## [0.9.2](https://github.com/ElMassimo/iles/compare/v0.9.1...v0.9.2) (2023-01-30)
 
 
