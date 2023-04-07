@@ -5,7 +5,7 @@ import type { AppConfig } from '../shared'
 let originalTags: string[]
 
 // Internal: Detects markdown components overriden in the app.
-export function detectMDXComponents (code: string, config: AppConfig, server: ViteDevServer | undefined) {
+export function detectMDXComponents (code: string, config: AppConfig, server?: ViteDevServer | undefined) {
   const mdxComponents = code.match(/\bmdxComponents\b(?:.*?){(.*?)}/s)?.[1]
   if (!mdxComponents) return
 

@@ -31,6 +31,12 @@ function isVueScript (path: string, query: Record<string, any>) {
   return path.endsWith('.vue') && (!query.type || query.type === 'script')
 }
 
+async function transformUserFile (path: string) {
+  return await exists(path)
+    ? await transformWithEsbuild(await fs.readFile(path, 'utf-8'), path, { sourcemap: false })
+    : { code: 'export default {}' }
+}
+
 const templateLayoutRegex = /<template.*?\slayout=\s*['"](\w+)['"].*?>/
 
 // Public: Configures MDX, Vue, Components, and Islands plugins.
@@ -57,7 +63,7 @@ export default function IslandsPlugins (appConfig: AppConfig): PluginOption[] {
     {
       name: 'iles',
       enforce: 'pre',
-      configResolved (config) {
+      async configResolved (config) {
         if (base) return
         base = config.base
         root = config.root
@@ -65,6 +71,10 @@ export default function IslandsPlugins (appConfig: AppConfig): PluginOption[] {
         appConfig.resolvePath = config.createResolver()
 
         writeComposablesDTS(root)
+
+        // Detect mdxComponents in app.ts to ensure MDX files are compiled accordingly.
+        const result = await transformUserFile(appPath)
+        detectMDXComponents(result.code, appConfig, undefined)
       },
       async resolveId (id) {
         if (id === ILES_APP_ENTRY)
@@ -90,9 +100,7 @@ export default function IslandsPlugins (appConfig: AppConfig): PluginOption[] {
           || (id === USER_SITE_REQUEST_PATH && sitePath)
         if (userFilename) {
           this.addWatchFile(userFilename)
-          const result = await exists(userFilename)
-            ? await transformWithEsbuild(await fs.readFile(userFilename, 'utf-8'), userFilename, { sourcemap: false })
-            : { code: 'export default {}' }
+          const result = await transformUserFile(userFilename)
 
           if (id === USER_APP_REQUEST_PATH)
             detectMDXComponents(result.code, appConfig, server)
