@@ -41,8 +41,12 @@ export async function tryInstallModule (name: string) {
 }
 
 export async function importLibrary<T> (pkgName: string) {
-  const pkgPath = await tryInstallModule(pkgName)
-  return await importModule(pkgPath)
+  try {
+    const pkgPath = await tryInstallModule(pkgName)
+    return await importModule(pkgPath)
+  } catch (error) {
+    return await importModule(pkgName)
+  }
 }
 
 async function withSpinner<T> (message: string, fn: () => Promise<T>) {
