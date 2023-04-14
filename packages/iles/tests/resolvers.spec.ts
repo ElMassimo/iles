@@ -1,7 +1,11 @@
 import { test, describe, expect } from 'vitest'
+import path from 'path'
 
 import { IlesComponentResolver, IlesLayoutResolver } from '@node/config'
 import { ISLAND_COMPONENT_PATH } from '@node/alias'
+
+const projectRoot = path.resolve(__dirname, '../../..')
+const vuePoint = `${projectRoot}/playground/the-vue-point`
 
 describe('resolvers', () => {
   test('can resolve Island and Head', async () => {
@@ -12,13 +16,17 @@ describe('resolvers', () => {
   })
 
   test('can resolve layouts', async () => {
-    const resolve = IlesLayoutResolver({ layoutsDir: '/layouts' })
+    const layoutsDir = path.resolve(vuePoint, 'src/layouts')
+    const resolve = IlesLayoutResolver({ layoutsDir })
 
     expect(resolve('DefaultLayout'))
-      .toEqual({ name: 'default', from: '/layouts/default.vue' })
+      .toEqual({ name: 'default', from: `${layoutsDir}/default.vue` })
+
+    expect(resolve('PostLayout'))
+      .toEqual({ name: 'default', from: `${layoutsDir}/post.vue` })
 
     expect(resolve('SomethingElseLayout'))
-      .toEqual({ name: 'default', from: '/layouts/somethingElse.vue' })
+      .toEqual(undefined)
 
     expect(resolve('Layout')).toEqual(undefined)
   })
