@@ -1,3 +1,4 @@
+// @ts-ignore
 import { create_ssr_component, missing_component, validate_component } from 'svelte/internal'
 
 export default create_ssr_component(($$result: any, $$props: any) => {

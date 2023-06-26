@@ -29,11 +29,11 @@
   "bugs": "https://github.com/ElMassimo/iles/issues",
   "devDependencies": {
     "iles": "workspace:*",
-    "vue": "^3.2.45"
+    "vue": "^3.3.4"
   },
   "peerDependencies": {
     "iles": "workspace:*",
-    "vue": "^3.2.45"
+    "vue": "^3.3.4"
   },
   "dependencies": {
     "feed": "^4.2",

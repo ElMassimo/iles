@@ -310,7 +310,7 @@ function viteConfigDefaults (root: string, userConfig: UserConfig): ViteOptions 
         'iles',
         '@nuxt/devalue',
         '@islands/hydration',
-        '@vue/server-renderer',
+        'vue/server-renderer',
       ],
     },
   }
@@ -330,7 +330,7 @@ function mergeConfig<T = Record<string, any>> (a: T, b: T, isRoot = true): AppCo
     }
     if (isObject(existing) && isObject(value)) {
       if (isRoot && key === 'vite')
-        merged[key] = mergeViteConfig(existing, value)
+        merged[key] = mergeViteConfig(existing, value as any)
       else
         merged[key] = mergeConfig(existing, value, false)
 

@@ -16,7 +16,7 @@ export function parseId (id: string) {
 export async function parseExports (code: string) {
   try {
     await initESLexer
-    return parseESModules(code)[1]
+    return parseESModules(code)[1].map(spec => spec.n)
   }
   catch (error) {
     console.error(error)

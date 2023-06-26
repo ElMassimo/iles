@@ -28,7 +28,7 @@ export function useVueRenderer (): VNodeRenderer {
     // Set the external app context to the temporary app.
     Object.assign(proxyApp._context, { ...appContext, provides })
 
-    const { renderToString } = await import('@vue/server-renderer')
+    const { renderToString } = await import('vue/server-renderer')
     return await renderToString(proxyApp, ssrContext)
   }) as VNodeRenderer, getCurrentInstance()) as VNodeRenderer
 }

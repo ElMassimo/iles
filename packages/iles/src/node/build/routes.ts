@@ -36,8 +36,9 @@ async function resolveRoutesToRender (router: Router) {
 }
 
 async function getDynamicPaths (route: RouteRecordNormalized) {
-  const { components: { default: component }, path } = route
+  const { components, path } = route
   const file = path
+  const { default: component } = components || {}
 
   const page: PageComponent | undefined = isLazy(component)
     ? await component().then(m => 'default' in m ? m.default : m)
@@ -55,7 +56,7 @@ async function getDynamicPaths (route: RouteRecordNormalized) {
     ({ name: route.name, params, ssrProps: { ...params, ...props } }))
 }
 
-function isLazy (value: RouteRecordNormalized['components']['default']): value is () => Promise<RouteComponent> {
+function isLazy (value: NonNullable<RouteRecordNormalized['components']>['default']): value is () => Promise<RouteComponent> {
   return typeof value === 'function'
 }
 

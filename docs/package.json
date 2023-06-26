@@ -22,7 +22,7 @@
     "@islands/icons": "workspace:*",
     "@islands/prism": "workspace:*",
     "@islands/pwa": "workspace:*",
-    "@preact/preset-vite": "^2.1.5",
+    "@preact/preset-vite": "^2.5.0",
     "@types/cross-spawn": "^6.0.2",
     "@vueuse/core": "^6.9.2",
     "autoprefixer": "^10.4.0",
@@ -30,10 +30,10 @@
     "iles": "workspace:*",
     "postcss-nesting": "^8.0.1",
     "preact": "^10.11.2",
-    "preact-render-to-string": "^5.2.0",
+    "preact-render-to-string": "^6.1.0",
     "rehype-external-links": "^1.0.0",
-    "vite-plugin-inspect": "^0.5.1",
-    "vite-plugin-windicss": "^1.6.3",
+    "vite-plugin-inspect": "^0.7.29",
+    "vite-plugin-windicss": "^1.9.0",
     "vue-tsc": "^0.29.8"
   },
   "dependencies": {

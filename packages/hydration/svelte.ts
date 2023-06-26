@@ -1,3 +1,4 @@
+// @ts-ignore
 import { HtmlTag, empty, insert, detach } from 'svelte/internal'
 import type { Props, Slots } from './types'
 import { onDispose } from './hydration'
