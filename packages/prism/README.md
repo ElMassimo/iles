@@ -151,7 +151,11 @@ pre.line-numbers {
 If you wish to display the language, you can use the value of the `data-lang` attribute by using the [`attr` CSS function](https://developer.mozilla.org/en-US/docs/Web/CSS/attr()):
 
 ```css
-div[class*='language-']:before {
+div[class*='language-'] {
+  position: relative;
+}
+
+div[class*='language-']::before {
   content: attr(data-lang);
   color: #888;
   font-size: 0.8rem;
