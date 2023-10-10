@@ -38,7 +38,7 @@ export type { AppConfig }
 
 export const IlesComponentResolver: ComponentResolverFunction = (name) => {
   if (name === 'Island') return { from: ISLAND_COMPONENT_PATH }
-  if (name === 'Head') return { name: 'Head', from: '@vueuse/head' }
+  if (name === 'Head') return { name: 'Head', from: '@unhead/vue/components' }
 }
 
 export function IlesLayoutResolver (config: AppConfig): ComponentResolverFunction {

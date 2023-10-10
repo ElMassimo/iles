@@ -28,15 +28,15 @@
   "homepage": "https://github.com/ElMassimo/iles",
   "bugs": "https://github.com/ElMassimo/iles/issues",
   "dependencies": {
-    "hast-util-heading-rank": "^2.1.0",
-    "hast-util-to-string": "^2.0.0"
+    "hast-util-heading-rank": "^3.0.0",
+    "hast-util-to-string": "^3.0.0"
   },
   "devDependencies": {
-    "@types/estree": "^0.0.46",
+    "@types/estree": "^1.0.2",
     "iles": "workspace:*",
     "slugo": "^0.4.0",
-    "tsup": "6.1.2",
-    "typescript": "^4.4.4",
-    "unified": "^10.1.0"
+    "tsup": "7.2.0",
+    "typescript": "^5.2.2",
+    "unified": "^11.0.0"
   }
 }
