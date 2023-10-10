@@ -22,7 +22,8 @@ export const renderers: Record<Framework, PrerenderFn> = {
       import('@islands/hydration/preact'),
       import('preact-render-to-string'),
     ])
-    return renderToString(createElement(component, props, slots))
+    const node = createElement(component, props, slots)
+    return renderToString(node as any)
   },
   async solid (component, props, slots, renderId) {
     const { ssr, renderToString, createComponent } = _imports.solid ||= await import('solid-js/web')

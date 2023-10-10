@@ -29,12 +29,12 @@
     "cross-spawn": "^7.0.3",
     "iles": "workspace:*",
     "postcss-nesting": "^8.0.1",
-    "preact": "^10.11.2",
-    "preact-render-to-string": "^6.1.0",
-    "rehype-external-links": "^1.0.0",
-    "vite-plugin-inspect": "^0.7.29",
+    "preact": "^10.18.1",
+    "preact-render-to-string": "^6.2.2",
+    "rehype-external-links": "^3.0.0",
+    "vite-plugin-inspect": "^0.7.40",
     "vite-plugin-windicss": "^1.9.0",
-    "vue-tsc": "^0.29.8"
+    "vue-tsc": "^1.8.18"
   },
   "dependencies": {
     "@docsearch/css": "^3.1.1",

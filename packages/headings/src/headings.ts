@@ -3,7 +3,8 @@ import type { Pluggable, Plugin } from 'unified'
 import type { Data, Parent } from 'unist'
 import type { IlesModule } from 'iles'
 
-import { Node, toString } from 'hast-util-to-string'
+import type { Node } from 'hast'
+import { toString } from 'hast-util-to-string'
 import { headingRank } from 'hast-util-heading-rank'
 import slugo from 'slugo'
 

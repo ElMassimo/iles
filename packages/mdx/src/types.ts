@@ -6,15 +6,15 @@ import type { VFile } from 'vfile'
 export type PluginLike = null | undefined | false | Pluggable
 export type PluginOption = PluginLike | Promise<PluginLike> | string | [string, any]
 
-import type { MDXFlowExpression } from 'mdast-util-mdx-expression'
+import type { MdxFlowExpression } from 'mdast-util-mdx-expression'
 
 declare module 'hast' {
   interface RootContentMap {
-    mdxFlowExpression: MDXFlowExpression
+    mdxFlowExpression: MdxFlowExpression
   }
 
   interface ElementContentMap {
-    mdxFlowExpression: MDXFlowExpression
+    mdxFlowExpression: MdxFlowExpression
   }
 }
 

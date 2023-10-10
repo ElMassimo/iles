@@ -74,12 +74,12 @@ export function resolveAliases (root: string, userConfig: UserConfig): AliasOpti
         'vue-router/dist/vue-router.esm-bundler.js',
       ),
     },
-    {
-      find: /^@vueuse\/head$/,
-      replacement: require.resolve(
-        '@vueuse/head/dist/index.mjs',
-      ),
-    },
+    // {
+    //   find: /^@unhead\/vue$/,
+    //   replacement: require.resolve(
+    //     '@unhead/vue/dist/index.mjs',
+    //   ),
+    // },
     {
       find: /^@vue\/devtools-api$/,
       replacement: require.resolve(

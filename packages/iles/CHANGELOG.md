@@ -40,7 +40,7 @@
 ### Features
 
 * bump vite-plugin-pwa dependency ([8346d11](https://github.com/ElMassimo/iles/commit/8346d11e5c188bfccae5fcce102b7834d1c513f1))
-* update version of @vueuse/head ([#219](https://github.com/ElMassimo/iles/issues/219)) ([353aa2f](https://github.com/ElMassimo/iles/commit/353aa2fc498797bdff3bfc19a8b60c2120c87082)), closes [#191](https://github.com/ElMassimo/iles/issues/191)
+* update version of @unhead/vue ([#219](https://github.com/ElMassimo/iles/issues/219)) ([353aa2f](https://github.com/ElMassimo/iles/commit/353aa2fc498797bdff3bfc19a8b60c2120c87082)), closes [#191](https://github.com/ElMassimo/iles/issues/191)
 
 
 
@@ -975,7 +975,7 @@ This release added support for Preact, SolidJS, and Svelte islands.
 * ensure iles dependencies are resolved without shamefully hoisting ([1cf863b](https://github.com/ElMassimo/iles/commit/1cf863b9d8310c89f4c289d07153e5720e84585d))
 * explicitly import `performance` to support Node 14 (close [#7](https://github.com/ElMassimo/iles/issues/7)) ([66b22ff](https://github.com/ElMassimo/iles/commit/66b22ff43706d30550943d10a5d3b6224e5fbc95))
 * frontmatter is always available and can be used to define head refs ([fad2eef](https://github.com/ElMassimo/iles/commit/fad2eef6aaec45689b820fdfe760cc0e6593e153))
-* import vueuse/head explicitly in App.vue ([47b50e3](https://github.com/ElMassimo/iles/commit/47b50e38f3eb2b7b6bdf34036fe63ee98a931ac8))
+* import @unhead/vue explicitly in App.vue ([47b50e3](https://github.com/ElMassimo/iles/commit/47b50e38f3eb2b7b6bdf34036fe63ee98a931ac8))
 * inline JSX elements in MDX with client directives should be wrapped ([8f36e23](https://github.com/ElMassimo/iles/commit/8f36e23c93fca10721984f5133424d71c2191cd4))
 * move esm dependencies to exclude ([9fd7e46](https://github.com/ElMassimo/iles/commit/9fd7e468fabac1d86b7a3fc98c69258bbc3e1500))
 * prevent dep scan on layouts file ([170b79d](https://github.com/ElMassimo/iles/commit/170b79d7e9e75a2fa477433b60463e722a5c91b7))
@@ -1088,7 +1088,7 @@ This release added support for Preact, SolidJS, and Svelte islands.
 
 ### Bug Fixes
 
-* import vueuse/head explicitly in App.vue ([47b50e3](https://github.com/ElMassimo/iles/commit/47b50e38f3eb2b7b6bdf34036fe63ee98a931ac8))
+* import @unhead/vue explicitly in App.vue ([47b50e3](https://github.com/ElMassimo/iles/commit/47b50e38f3eb2b7b6bdf34036fe63ee98a931ac8))
 
 
 ### Features

@@ -83,7 +83,7 @@ Visit the [documentation website][docs] to check out the [guides][guide] and sea
 - [Vite] and [Vue]: for enabling an amazing development experience
 - [Astro](https://astro.build): for sharing a novel way to define islands
 - [MDX]: provides amazing flexibility when processing Markdown
-- [vue-router], [@vueuse/head], and [vite-plugin-pages]: the backbone of this library
+- [vue-router], [@unhead/vue], and [vite-plugin-pages]: the backbone of this library
 - [unplugin-vue-components]: allows you to avoid the boilerplate
 - [VitePress] and [vite-ssg]: for their different ideas on SSR
 
@@ -96,5 +96,5 @@ Visit the [documentation website][docs] to check out the [guides][guide] and sea
 [VitePress]: https://vitepress.vuejs.org/
 [vite-ssg]: https://github.com/antfu/vite-ssg
 [vue-router]: https://next.router.vuejs.org/
-[@vueuse/head]: https://github.com/vueuse/head
+[@unhead/vue]: https://github.com/unjs/unhead
 

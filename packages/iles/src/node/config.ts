@@ -3,7 +3,7 @@ import { promises as fs, existsSync } from 'fs'
 import { join, resolve } from 'pathe'
 import pc from 'picocolors'
 import creatDebugger from 'debug'
-import { loadConfigFromFile, mergeConfig as mergeViteConfig } from 'vite'
+import { loadConfigFromFile, mergeConfig as mergeViteConfig, type Plugin } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import components from 'unplugin-vue-components/vite'
 import pages from '@islands/pages'
@@ -199,7 +199,8 @@ async function createIlesModule (pkgName: string, ...options: any[]): Promise<Il
 }
 
 function inferJSX (config: UserConfig) {
-  const plugins = config.vite?.plugins?.flat(Infinity) ?? []
+  // @ts-ignore
+  const plugins: Plugin[] = config.vite?.plugins?.flat(Infinity as any) ?? []
   for (const plugin of plugins) {
     if (!plugin)
       continue
@@ -290,7 +291,7 @@ function viteConfigDefaults (root: string, userConfig: UserConfig): ViteOptions 
     root,
     resolve: {
       alias: resolveAliases(root, userConfig),
-      dedupe: ['vue', 'vue-router', '@vueuse/head', '@vue/devtools-api'],
+      dedupe: ['vue', 'vue-router', '@unhead/vue', '@vue/devtools-api'],
     },
     server: {
       fs: { allow: [root, DIST_CLIENT_PATH, HYDRATION_DIST_PATH] },
@@ -303,7 +304,7 @@ function viteConfigDefaults (root: string, userConfig: UserConfig): ViteOptions 
       include: [
         'vue',
         'vue-router',
-        '@vueuse/head',
+        '@unhead/vue',
         '@vue/devtools-api',
       ],
       exclude: [
@@ -317,7 +318,7 @@ function viteConfigDefaults (root: string, userConfig: UserConfig): ViteOptions 
 }
 
 function mergeConfig<T = Record<string, any>> (a: T, b: T, isRoot = true): AppConfig {
-  const merged: Record<string, any> = { ...a }
+  const merged: Record<string, any> = { ...a as any }
   for (const key in b) {
     const value = b[key as keyof T]
     if (value == null)

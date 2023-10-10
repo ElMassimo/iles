@@ -1,6 +1,6 @@
 import { createApp as createClientApp, createSSRApp, ref } from 'vue'
 import { createMemoryHistory, createRouter as createVueRouter, createWebHistory } from 'vue-router'
-import { createHead } from '@vueuse/head'
+import { createHead, useHead } from '@unhead/vue'
 
 import routes from '@islands/routes'
 import config from '@islands/app-config'
@@ -72,10 +72,10 @@ export const createApp: CreateAppFactory = async (options = {}) => {
     router,
     routes,
   }
-  head.addHeadObjs(ref(defaultHead(context, userApp.socialTags)))
+  useHead(ref(defaultHead(context, userApp.socialTags)))
 
   // Apply any configuration added by the user in app.ts
-  if (headConfig) head.addHeadObjs(ref(typeof headConfig === 'function' ? headConfig(context) : headConfig))
+  if (headConfig) useHead(ref(typeof headConfig === 'function' ? headConfig(context) : headConfig))
   if (enhanceApp) await enhanceApp(context)
   await installMDXComponents(context, userApp)
 

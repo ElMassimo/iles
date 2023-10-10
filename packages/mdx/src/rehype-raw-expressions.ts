@@ -1,7 +1,6 @@
-import type { Raw } from 'hast-util-raw'
 import type { Identifier, CallExpression, VariableDeclarator, Expression, ExpressionStatement } from 'estree'
-import type { MDXFlowExpression } from 'mdast-util-mdx-expression'
-import type { MDXJSEsm } from 'mdast-util-mdxjs-esm'
+import type { MdxFlowExpression } from 'mdast-util-mdx-expression'
+import type { MdxjsEsm } from 'mdast-util-mdxjs-esm'
 import type { Plugin } from 'unified'
 import type { Parent, Content, Element } from 'hast'
 import { toHtml as hastToHtml, Options as ToHtmlOptions } from 'hast-util-to-html'
@@ -72,7 +71,7 @@ export const rehypeRawExpressions: RawPlugin = options => (ast, vfile) => {
           ],
         },
       },
-    } as MDXJSEsm as any)
+    } as MdxjsEsm as any)
   }
 }
 
@@ -111,7 +110,7 @@ function setDynamic (node: Node) {
   (node.data ||= {})._createVNode = true
 }
 
-function hoistRawNodes (hoisted: Hoisted, nodes: Child[]): MDXFlowExpression {
+function hoistRawNodes (hoisted: Hoisted, nodes: Child[]): MdxFlowExpression {
   let expression: Expression
   if (nodes.length === 1 && nodes[0].type === 'text') {
     const { value } = nodes[0]

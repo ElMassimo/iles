@@ -1,7 +1,8 @@
 import type { Node } from 'unist'
 import type { ComponentInfo } from 'unplugin-vue-components/types'
-import type { MDXJsxFlowElement, MDXJsxTextElement, MDXJsxAttribute, MDXJsxExpressionAttribute, MDXJsxAttributeValueExpression, Program } from 'mdast-util-mdx-jsx'
-import type { MDXJSEsm } from 'mdast-util-mdxjs-esm'
+import type { Program } from 'estree-jsx'
+import type { MdxJsxFlowElement, MdxJsxTextElement, MdxJsxAttribute, MdxJsxExpressionAttribute, MdxJsxAttributeValueExpression } from 'mdast-util-mdx-jsx'
+import type { MdxjsEsm } from 'mdast-util-mdxjs-esm'
 import type { ImportDeclaration } from 'estree'
 import { importModule } from '../modules'
 import { AppConfig } from '../shared'
@@ -41,11 +42,11 @@ export default ({ config }: { config: AppConfig }) => async (ast: any, file: any
   }
 }
 
-function isJsxElement (node: Node): node is MDXJsxFlowElement | MDXJsxTextElement {
+function isJsxElement (node: Node): node is MdxJsxFlowElement | MdxJsxTextElement {
   return node.type === 'mdxJsxFlowElement' || node.type === 'mdxJsxTextElement'
 }
 
-function isClientDirective (attr: MDXJsxAttribute | MDXJsxExpressionAttribute): attr is MDXJsxAttribute {
+function isClientDirective (attr: MdxJsxAttribute | MdxJsxExpressionAttribute): attr is MdxJsxAttribute {
   return 'name' in attr && attr.name.startsWith('client:')
 }
 
@@ -55,7 +56,7 @@ function isImport (statement: any): statement is ImportDeclaration {
 
 // Internal: Replaces the JSX element with an Island, and sets an attribute to
 // enable future resolution.
-async function wrapWithIsland (strategy: string, node: MDXJsxFlowElement | MDXJsxTextElement, resolveComponentImport: (strategy: string, name: string) => Promise<ComponentInfo>) {
+async function wrapWithIsland (strategy: string, node: MdxJsxFlowElement | MdxJsxTextElement, resolveComponentImport: (strategy: string, name: string) => Promise<ComponentInfo>) {
   const tagName = node.name
   if (!tagName) return
 
@@ -73,7 +74,7 @@ async function wrapWithIsland (strategy: string, node: MDXJsxFlowElement | MDXJs
   }))
 }
 
-function extractImports (nodes: MDXJSEsm[]) {
+function extractImports (nodes: MdxjsEsm[]) {
   const imports: ImportsMetadata = Object.create(null)
   const declarations = nodes.flatMap(node => node.data?.estree?.body?.filter(isImport) as ImportDeclaration[])
 
@@ -96,7 +97,7 @@ function importedName (specifier: ImportDeclaration['specifiers'][number]) {
   }
 }
 
-function jsxExpression (expression: any): MDXJsxAttributeValueExpression {
+function jsxExpression (expression: any): MdxJsxAttributeValueExpression {
   return {
     type: 'mdxJsxAttributeValueExpression',
     value: expression.name || expression.raw,
@@ -110,7 +111,7 @@ function jsxExpression (expression: any): MDXJsxAttributeValueExpression {
   }
 }
 
-function jsxAttributes (val: Record<string, MDXJsxAttribute['value']>): MDXJsxAttribute[] {
+function jsxAttributes (val: Record<string, MdxJsxAttribute['value']>): MdxJsxAttribute[] {
   return Object.entries(val).map(([name, value]) => (
     { type: 'mdxJsxAttribute', name, value }
   ))

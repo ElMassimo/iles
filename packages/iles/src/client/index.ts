@@ -11,7 +11,7 @@ export { usePage, computedInPage } from './app/composables/pageData'
 export { useMDXComponents, provideMDXComponents } from './app/composables/mdxComponents'
 export { useVueRenderer } from './app/composables/vueRenderer'
 export { useRouter, useRoute } from 'vue-router'
-export { useHead } from '@vueuse/head'
+export { useHead } from '@unhead/vue'
 
 import type { ComponentOptionsWithoutProps, ComputedRef } from 'vue'
 import type { UserApp, GetStaticPaths, Document } from '../../types/shared'
