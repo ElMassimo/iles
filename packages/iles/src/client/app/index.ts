@@ -72,10 +72,12 @@ export const createApp: CreateAppFactory = async (options = {}) => {
     router,
     routes,
   }
-  useHead(ref(defaultHead(context, userApp.socialTags)))
+  head.push(defaultHead(context, userApp.socialTags))
+  // useHead(ref(defaultHead(context, userApp.socialTags)))
 
   // Apply any configuration added by the user in app.ts
-  if (headConfig) useHead(ref(typeof headConfig === 'function' ? headConfig(context) : headConfig))
+  // if (headConfig) useHead(ref(typeof headConfig === 'function' ? headConfig(context) : headConfig))
+  if (headConfig) head.push(ref(typeof headConfig === 'function' ? headConfig(context) : headConfig))
   if (enhanceApp) await enhanceApp(context)
   await installMDXComponents(context, userApp)
 

@@ -16,6 +16,7 @@
       "require": "./index.cjs"
     },
     "./jsx-runtime": "./jsx-runtime.js",
+    "./jsx-dev-runtime": "./jsx-runtime.js",
     "./dist/client/*": "./dist/client/*",
     "./package.json": "./package.json"
   },
