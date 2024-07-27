@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { computed } from 'vue'
 import type { Heading } from '@islands/headings'
 import type { SideBarItem } from '~/logic/config'
 
@@ -12,19 +13,19 @@ let level = computed(() => frontmatter.tocLevel || (frontmatter.sidebar === 'aut
 let headings = computed(() => resolveHeaders(meta.headings || []))
 
 function resolveHeaders (headings: Heading[]): SideBarItem[] {
-  return mapHeaders(groupHeaders(headings.value))
+  return mapHeaders(groupHeaders(headings))
 }
 
 function groupHeaders (headings: Heading[]): HeadingWithChildren[] {
-  headings.value = headings.value.map(h => Object.assign({}, h))
+  headings = headings.map(h => Object.assign({}, h))
   let lastHeading: HeadingWithChildren
-  headings.value.forEach((h) => {
-    if (h.level === level)
+  headings.forEach((h) => {
+    if (h.level === level.value)
       lastHeading = h
     else if (lastHeading)
       (lastHeading.children || (lastHeading.children = [])).push(h)
   })
-  return headings.value.filter(h => h.level === level.value)
+  return headings.filter(h => h.level === level.value)
 }
 
 function mapHeaders (headings: HeadingWithChildren[]): SideBarItem[] {

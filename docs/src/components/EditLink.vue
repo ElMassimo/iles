@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { computed } from 'vue'
+
 let { meta, site } = usePage()
 
 let url = computed(() => `${site.github}/edit/main/docs/${meta.filename}`)
