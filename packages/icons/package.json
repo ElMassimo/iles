@@ -10,7 +10,7 @@
     "dist",
     "src"
   ],
-  "types": "dist/icons.d.ts",
+  "types": "dist/icons.d.cts",
   "type": "module",
   "exports": {
     ".": {

@@ -10,7 +10,7 @@
     "dist",
     "src"
   ],
-  "types": "dist/pwa.d.ts",
+  "types": "dist/pwa.d.cts",
   "type": "module",
   "exports": {
     ".": {
