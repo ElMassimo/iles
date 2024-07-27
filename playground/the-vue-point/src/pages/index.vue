@@ -5,7 +5,7 @@ alias: ['/posts']
 <script setup lang="ts">
 import { getPosts } from '~/logic/posts'
 
-let posts = $(getPosts())
+let posts = getPosts()
 </script>
 
 <template>

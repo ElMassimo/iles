@@ -5,6 +5,7 @@ path: /feed.rss
 <script setup lang="ts">
 import type { FeedOptions, FeedItem } from '@islands/feed'
 import { getPosts } from '~/logic/posts'
+import { computed } from 'vue'
 
 const { site } = usePage()
 const url = site.url
@@ -21,8 +22,8 @@ const options: FeedOptions = {
     'Copyright (c) 2021-present, Yuxi (Evan) You and blog contributors',
 }
 
-const posts = $(getPosts())
-const items = $computed(() => posts.map(async (doc) => {
+const posts = getPosts()
+const items = computed(() => posts.value.map(async (doc) => {
   const post = await doc.component()
   return {
     title: post.title,

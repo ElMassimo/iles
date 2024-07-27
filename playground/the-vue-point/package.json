@@ -21,7 +21,6 @@
     "@islands/icons": "workspace:*",
     "@islands/images": "workspace:*",
     "@islands/prism": "workspace:*",
-    "@vue-macros/reactivity-transform": "^1.0.0",
     "iles": "workspace:*",
     "remark-gfm": "^4.0.0",
     "vite-plugin-windicss": "^1.9.3",

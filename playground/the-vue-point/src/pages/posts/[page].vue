@@ -5,8 +5,8 @@ import { paginate } from '~/logic/pagination'
 
 export default definePageComponent({
   getStaticPaths () {
-    const posts = $(getPosts())
-    return paginate(posts, { pageSize: 2 })
+    const posts = getPosts()
+    return paginate(posts.value, { pageSize: 2 })
   },
 })
 </script>

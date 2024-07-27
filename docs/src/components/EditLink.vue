@@ -1,7 +1,7 @@
 <script setup lang="ts">
 let { meta, site } = usePage()
 
-let url = $computed(() => `${site.github}/edit/main/docs/${meta.filename}`)
+let url = computed(() => `${site.github}/edit/main/docs/${meta.filename}`)
 </script>
 
 <template>

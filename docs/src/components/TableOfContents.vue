@@ -7,24 +7,24 @@ interface HeadingWithChildren extends Heading {
 }
 
 let { meta, frontmatter } = usePage()
-let level = $computed(() => frontmatter.tocLevel || (frontmatter.sidebar === 'auto' ? 3 : 2))
+let level = computed(() => frontmatter.tocLevel || (frontmatter.sidebar === 'auto' ? 3 : 2))
 
-let headings = $computed(() => resolveHeaders(meta.headings || []))
+let headings = computed(() => resolveHeaders(meta.headings || []))
 
 function resolveHeaders (headings: Heading[]): SideBarItem[] {
-  return mapHeaders(groupHeaders(headings))
+  return mapHeaders(groupHeaders(headings.value))
 }
 
 function groupHeaders (headings: Heading[]): HeadingWithChildren[] {
-  headings = headings.map(h => Object.assign({}, h))
+  headings.value = headings.value.map(h => Object.assign({}, h))
   let lastHeading: HeadingWithChildren
-  headings.forEach((h) => {
+  headings.value.forEach((h) => {
     if (h.level === level)
       lastHeading = h
     else if (lastHeading)
       (lastHeading.children || (lastHeading.children = [])).push(h)
   })
-  return headings.filter(h => h.level === level)
+  return headings.value.filter(h => h.level === level.value)
 }
 
 function mapHeaders (headings: HeadingWithChildren[]): SideBarItem[] {

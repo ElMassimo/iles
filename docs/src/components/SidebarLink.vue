@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { computed } from 'vue'
 import type { PropType } from 'vue'
 import type { SideBarItem, SideBarGroup } from '~/logic/config'
 
@@ -9,7 +10,7 @@ const props = defineProps({
   },
 })
 
-let children = $computed(() => (props.item as SideBarGroup).children)
+let children = computed(() => (props.item as SideBarGroup).children)
 </script>
 
 <template>

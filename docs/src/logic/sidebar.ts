@@ -8,13 +8,13 @@ import { normalize } from '~/logic/utils'
 export function useSideBarLinks () {
   const { route, site } = usePage()
 
-  const currentPath = $computed(() => normalize(route.path))
-  const links = $computed(() => site.sidebar.flatMap(group => group.children || group))
-  const index = $computed(() => links.findIndex(item => normalize(item.link) === currentPath))
+  const currentPath = computed(() => normalize(route.path))
+  const links = computed(() => site.sidebar.flatMap(group => group.children || group))
+  const index = computed(() => links.value.findIndex(item => normalize(item.link) === currentPath.value))
 
   return {
-    next: computed(() => index > -1 && links[index + 1]),
-    prev: computed(() => index > -1 && links[index - 1]),
+    next: computed(() => index.value > -1 && links.value[index.value + 1]),
+    prev: computed(() => index.value > -1 && links.value[index.value - 1]),
   }
 }
 

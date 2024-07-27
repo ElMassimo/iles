@@ -16,11 +16,6 @@ export default [{
 }, ...compat.extends("@mussi/eslint-config"), {
     languageOptions: {
         globals: {
-            $ref: "readonly",
-            $computed: "readonly",
-            $shallowRef: "readonly",
-            $$: "readonly",
-            $: "readonly",
             usePage: "readonly",
             useRoute: "readonly",
             useHead: "readonly",

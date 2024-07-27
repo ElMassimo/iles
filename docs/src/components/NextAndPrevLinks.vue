@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useSideBarLinks } from '~/logic/sidebar'
 
-const { next, prev } = $(useSideBarLinks())
+const { next, prev } = useSideBarLinks()
 </script>
 
 <template>
