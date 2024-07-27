@@ -3,7 +3,7 @@ import { promises as fs, existsSync } from 'fs'
 import { join, resolve } from 'pathe'
 import pc from 'picocolors'
 import creatDebugger from 'debug'
-import { loadConfigFromFile, mergeConfig as mergeViteConfig, type Plugin } from 'vite'
+import { loadConfigFromFile, mergeConfig as mergeViteConfig, type Plugin, PluginOption } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import components from 'unplugin-vue-components/vite'
 import pages from '@islands/pages'
@@ -54,7 +54,7 @@ export function IlesLayoutResolver (config: AppConfig): ComponentResolverFunctio
 
 export async function resolveConfig (root?: string, env?: ConfigEnv): Promise<AppConfig> {
   if (!root) root = process.cwd()
-  if (!env) env = { mode: 'development', command: 'serve', ssrBuild: false }
+  if (!env) env = { mode: 'development', command: 'serve', isSsrBuild: false }
 
   const appConfig = await resolveUserConfig(root, env)
 
@@ -199,8 +199,8 @@ async function createIlesModule (pkgName: string, ...options: any[]): Promise<Il
 }
 
 function inferJSX (config: UserConfig) {
-  // @ts-ignore
-  const plugins: Plugin[] = config.vite?.plugins?.flat(Infinity as any) ?? []
+  const pluginsNested: PluginOption[] = config.vite?.plugins ?? []
+  const plugins: Plugin[] = pluginsNested.flat() as Plugin[];
   for (const plugin of plugins) {
     if (!plugin)
       continue
@@ -241,7 +241,6 @@ function appConfigDefaults (appConfig: AppConfig, userConfig: UserConfig, env: C
     vitePlugins: [],
     vite: viteConfigDefaults(root, userConfig),
     vue: {
-      reactivityTransform: true,
       template: {
         compilerOptions: {},
       },

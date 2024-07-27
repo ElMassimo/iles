@@ -9,6 +9,7 @@ import prism from '@islands/prism'
 
 import windicss from 'vite-plugin-windicss'
 import inspect from 'vite-plugin-inspect'
+import ReactivityTransform from '@vue-macros/reactivity-transform/vite'
 
 const presets = {
   narrow: hdPreset({
@@ -59,6 +60,7 @@ export default defineConfig({
   },
   vite: {
     plugins: [
+      ReactivityTransform(),
       windicss(),
       Boolean(process.env.DEBUG) && inspect(),
     ],

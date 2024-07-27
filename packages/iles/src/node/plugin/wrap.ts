@@ -13,6 +13,7 @@ export async function wrapLayout (code: string, filename: string) {
   if (errors.length > 0 || !template || !isString(template.attrs.layout)) return
 
   const s = new MagicString(code)
+  // @ts-ignore
   const nodes = template.ast.children
   const Layout = `${pascalCase(template.attrs.layout as string)}Layout`
 
@@ -46,6 +47,7 @@ export async function wrapIslandsInSFC (config: AppConfig, code: string, filenam
   const s = new MagicString(code)
   const components: ComponentsApi = config.namedPlugins.components.api
 
+  // @ts-ignore
   if (scriptClient) await injectClientScript(template.ast, s, filename, scriptClientIndex, scriptClient)
 
   const jsCode = scriptSetup?.loc?.source || script?.loc?.source
@@ -54,6 +56,7 @@ export async function wrapIslandsInSFC (config: AppConfig, code: string, filenam
   let componentCounter = 0
   let injectionOffset = scriptSetup?.loc?.start?.offset
 
+  // @ts-ignore
   await visitSFCNode(template.ast, s, resolveComponentImport)
 
   // Close script setup tag if any component was injected.

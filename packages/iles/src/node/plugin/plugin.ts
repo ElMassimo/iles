@@ -6,7 +6,6 @@ import { transformWithEsbuild } from 'vite'
 
 import MagicString from 'magic-string'
 
-import { shouldTransformRef, transformRef } from 'vue/compiler-sfc'
 import type { AppConfig, AppClientConfig } from '../shared'
 import { ILES_APP_ENTRY } from '../constants'
 import { APP_PATH, APP_COMPONENT_PATH, USER_APP_REQUEST_PATH, USER_SITE_REQUEST_PATH, APP_CONFIG_REQUEST_PATH, NOT_FOUND_COMPONENT_PATH, NOT_FOUND_REQUEST_PATH, DEBUG_COMPONENT_PATH } from '../alias'
@@ -240,16 +239,6 @@ export default function IslandsPlugins (appConfig: AppConfig): PluginOption[] {
 import.meta.hot.accept('/${relative(root, path)}', (...args) => __ILES_PAGE_UPDATE__(args))
 `
         }
-      },
-    },
-
-    typeof shouldTransformRef === 'function' && {
-      name: 'iles:client-scripts',
-      enforce: 'post',
-      async transform (code, id) {
-        const { path: filename, query } = parseId(id)
-        if (query.clientScript && shouldTransformRef(code))
-          return transformRef(code, { filename, sourceMap: true })
       },
     },
 

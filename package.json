@@ -20,66 +20,24 @@
     "test": "packages/iles/bin/iles.js test"
   },
   "devDependencies": {
+    "@eslint/eslintrc": "^3.1.0",
+    "@eslint/js": "^9.8.0",
     "@mussi/eslint-config": "^0.5.1",
     "@mussi/stylelint-config": "^0.1.1",
-    "@nrwl/cli": "^13.10.6",
-    "@nrwl/nx-cloud": "^13.3.1",
-    "@nrwl/tao": "^13.10.6",
-    "@nrwl/workspace": "^13.10.6",
-    "concurrently": "^6.5.1",
-    "conventional-changelog-cli": "^2.2.2",
+    "@nrwl/cli": "^15.9.3",
+    "@nrwl/nx-cloud": "^19.0.0",
+    "@nrwl/tao": "^19.5.3",
+    "@nrwl/workspace": "^19.5.3",
+    "concurrently": "^8.2.2",
+    "conventional-changelog-cli": "^5.0.0",
     "enquirer": "^2.4.1",
-    "eslint": "^8.51.0",
-    "execa": "^5.1.1",
-    "iles": "^0.9.5",
+    "eslint": "^9.8.0",
+    "execa": "^9.3.0",
+    "iles": "*",
     "minimist": "^1.2.8",
-    "pkg-dir": "^6.0.1",
-    "semver": "^7.5.4",
-    "typescript": "5.2.2",
-    "vitest": "^0.16.0"
-  },
-  "resolutions": {
-    "eslint-plugin-vue": "7.17.0",
-    "typescript": "5.2.2"
-  },
-  "eslintConfig": {
-    "extends": "@mussi/eslint-config",
-    "globals": {
-      "$ref": "readonly",
-      "$computed": "readonly",
-      "$shallowRef": "readonly",
-      "$$": "readonly",
-      "$": "readonly",
-      "usePage": "readonly",
-      "useRoute": "readonly",
-      "useHead": "readonly",
-      "definePageComponent": "readonly"
-    },
-    "ignorePatterns": [
-      "dist",
-      "node_modules",
-      "packages/iles/turbo.js",
-      "docs/cypress"
-    ],
-    "rules": {
-      "prefer-const": "off",
-      "no-unused-vars": "off",
-      "import/named": "off",
-      "import/first": "off",
-      "no-restricted-syntax": "off",
-      "no-use-before-define": "off",
-      "react/react-in-jsx-scope": "off",
-      "@typescript-eslint/no-var-requires": "off",
-      "@typescript-eslint/no-unused-vars": "off",
-      "vue/attribute-hyphenation": [
-        "warn",
-        "never",
-        {
-          "ignore": [
-            "http-equiv"
-          ]
-        }
-      ]
-    }
+    "pkg-dir": "^8.0.0",
+    "semver": "^7.6.3",
+    "typescript": "5.5.4",
+    "vitest": "^2.0.4"
   }
 }

@@ -33,7 +33,7 @@ const frameworkColors: Record<any, any> = {
   vue: { backgroundColor: 0x42B983, textColor: 0xFFFFFF },
 }
 
-let devtoolsApi: DevtoolsPluginApi<unknown>
+let devtoolsApi: DevtoolsPluginApi<any>
 let appConfig: AppClientConfig
 
 let page = {} as PageData['page']

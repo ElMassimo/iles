@@ -10,6 +10,7 @@ import windicss from 'vite-plugin-windicss'
 import inspect from 'vite-plugin-inspect'
 import lastUpdated from './modules/lastUpdated'
 import site from './src/site'
+import ReactivityTransform from '@vue-macros/reactivity-transform/vite'
 
 const { title, description } = site
 
@@ -104,6 +105,7 @@ export default defineConfig({
       },
     },
     plugins: [
+      ReactivityTransform(),
       windicss(),
       Boolean(process.env.DEBUG) && inspect(),
     ],

@@ -29,12 +29,12 @@
   "homepage": "https://github.com/ElMassimo/iles",
   "bugs": "https://github.com/ElMassimo/iles/issues",
   "dependencies": {
-    "pathe": "^1.1.1",
-    "vite-plugin-image-presets": "^0.3.1"
+    "pathe": "^1.1.2",
+    "vite-plugin-image-presets": "^0.3.4"
   },
   "devDependencies": {
     "iles": "workspace:*",
-    "tsup": "7.2.0",
-    "typescript": "^5.2.2"
+    "tsup": "8.2.3",
+    "typescript": "^5.5.4"
   }
 }
