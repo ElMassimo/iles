@@ -43,7 +43,8 @@
     "build-cjs": "tsup src/node/publicUtils.ts --config tsup-cjs.config.ts",
     "build-client": "tsc -p src/client",
     "build": "rimraf -rf dist && node scripts/copyShared && npm run build-client && npm run build-node && npm run build-cjs && node scripts/copyClient",
-    "lint": "eslint . --ext .ts,.js,.vue,.html"
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix"
   },
   "engines": {
     "node": "^18.0.0 || >=20.0.0"

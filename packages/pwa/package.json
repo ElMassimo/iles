@@ -4,7 +4,8 @@
   "scripts": {
     "dev": "npm run build -- --watch",
     "build": "tsup src/pwa.ts",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix"
   },
   "files": [
     "dist",

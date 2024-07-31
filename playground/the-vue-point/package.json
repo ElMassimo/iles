@@ -6,9 +6,10 @@
     "dev": "iles",
     "build": "iles build",
     "preview": "iles preview --open",
+    "now": "npm run build && npm run preview",
     "check": "vue-tsc --noEmit",
-    "lint": "eslint . --ext .ts,.js,.vue,.html",
-    "now": "npm run build && npm run preview"
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix"
   },
   "engines": {
     "node": "^14.18 || >= 16.0.0"

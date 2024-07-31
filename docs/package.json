@@ -8,7 +8,8 @@
     "build": "iles build",
     "preview": "iles preview --open --port 3050",
     "now": "npm run build && npm run preview",
-    "lint": "eslint . --ext .ts,.js,.vue,.html",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
     "check": "vue-tsc --noEmit",
     "cy:run": "scripts/test-cypress"
   },

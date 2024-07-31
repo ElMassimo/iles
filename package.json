@@ -1,11 +1,12 @@
 {
   "name": "root",
+  "type": "module",
   "private": true,
   "packageManager": "pnpm@8.8.0",
-  "type": "module",
   "scripts": {
     "build:all": "pnpm nx run-many --target=build --all --exclude docs --exclude vue-blog",
     "lint:all": "pnpm nx run-many --target=lint --all",
+    "lint:fix:all": "pnpm nx run-many --target=lint:fix --all",
     "dev": "pnpm -r --parallel --filter './packages/**' run dev",
     "docs": "npm -C docs run dev",
     "docs:build": "npm -C docs run build",
@@ -20,10 +21,7 @@
     "test": "packages/iles/bin/iles.js test"
   },
   "devDependencies": {
-    "@eslint/eslintrc": "^3.1.0",
-    "@eslint/js": "^9.8.0",
-    "@mussi/eslint-config": "^0.5.1",
-    "@mussi/stylelint-config": "^0.1.1",
+    "@antfu/eslint-config": "^2.24.0",
     "@nrwl/cli": "^15.9.3",
     "@nrwl/nx-cloud": "^19.0.0",
     "@nrwl/tao": "^19.5.3",
@@ -32,6 +30,7 @@
     "conventional-changelog-cli": "^5.0.0",
     "enquirer": "^2.4.1",
     "eslint": "^9.8.0",
+    "eslint-plugin-format": "^0.1.2",
     "execa": "^9.3.0",
     "iles": "*",
     "minimist": "^1.2.8",
@@ -39,5 +38,12 @@
     "semver": "^7.6.3",
     "typescript": "5.5.4",
     "vitest": "^2.0.4"
+  },
+  "pnpm": {
+    "peerDependencyRules": {
+      "allowedVersions": {
+        "eslint": "9"
+      }
+    }
   }
 }

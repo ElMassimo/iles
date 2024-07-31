@@ -5,7 +5,8 @@
   "scripts": {
     "dev": "npm run build -- --watch",
     "build": "tsup hydration.ts preact.ts vue.ts vanilla.ts solid.ts svelte.ts",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix"
   },
   "type": "module",
   "files": [

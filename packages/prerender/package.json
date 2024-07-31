@@ -12,7 +12,8 @@
   "scripts": {
     "dev": "npm run build -- --watch",
     "build": "tsup prerender.ts",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix"
   },
   "exports": {
     ".": "./dist/prerender.js",
