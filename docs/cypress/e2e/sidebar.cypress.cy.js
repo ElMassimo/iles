@@ -1,4 +1,6 @@
-import { visit, navigateTo, goBackHome, assertPage, waitForHydration } from './helpers'
+import { describe, it, test } from 'vitest'
+import { cy } from 'cypress'
+import { assertPage, visit, visitHome, waitForHydration } from './helpers'
 
 describe('Sidebar Toggle', () => {
   const sidebar = () =>

@@ -1,14 +1,20 @@
 {
   "name": "iles",
-  "description": "Vite & Vue powered static site generator with partial hydration",
-  "version": "0.9.5",
   "type": "module",
-  "bin": {
-    "iles": "bin/iles.js"
+  "version": "0.9.5",
+  "description": "Vite & Vue powered static site generator with partial hydration",
+  "author": "Máximo Mussini",
+  "license": "MIT",
+  "homepage": "https://github.com/ElMassimo/iles",
+  "bugs": {
+    "url": "https://github.com/ElMassimo/iles/issues"
   },
-  "main": "./dist/node/index.js",
-  "module": "./dist/node/index.js",
-  "types": "./types/index.d.ts",
+  "keywords": [
+    "vite",
+    "vue",
+    "islands",
+    "ssg"
+  ],
   "exports": {
     ".": {
       "types": "./types/index.d.ts",
@@ -20,17 +26,26 @@
     "./dist/client/*": "./dist/client/*",
     "./package.json": "./package.json"
   },
+  "main": "./dist/node/index.js",
+  "module": "./dist/node/index.js",
+  "types": "./types/index.d.ts",
+  "bin": {
+    "iles": "bin/iles.js"
+  },
   "files": [
     "bin",
-    "dist",
-    "lib",
-    "types",
     "config.js",
-    "turbo.js",
+    "dist",
     "index.cjs",
     "jsx-runtime.js",
-    "tsconfig.json"
+    "lib",
+    "tsconfig.json",
+    "turbo.js",
+    "types"
   ],
+  "engines": {
+    "node": "^18.0.0 || >=20.0.0"
+  },
   "scripts": {
     "dev": "rimraf -rf dist && npm run dev-shared && npm run dev-start",
     "dev-start": "run-p dev-client dev-node dev-cjs dev-watch",
@@ -46,21 +61,6 @@
     "lint": "eslint .",
     "lint:fix": "eslint . --fix"
   },
-  "engines": {
-    "node": "^18.0.0 || >=20.0.0"
-  },
-  "keywords": [
-    "vite",
-    "vue",
-    "islands",
-    "ssg"
-  ],
-  "author": "Máximo Mussini",
-  "license": "MIT",
-  "homepage": "https://github.com/ElMassimo/iles",
-  "bugs": {
-    "url": "https://github.com/ElMassimo/iles/issues"
-  },
   "dependencies": {
     "@antfu/install-pkg": "^0.3.3",
     "@islands/hydration": "workspace:^0.8.0",
@@ -68,10 +68,10 @@
     "@islands/pages": "workspace:^0.8.0",
     "@islands/prerender": "workspace:^0.8.0",
     "@nuxt/devalue": "^2.0.2",
+    "@unhead/ssr": "^1.9.16",
+    "@unhead/vue": "^1.9.16",
     "@vitejs/plugin-vue": "^5.1.0",
     "@vue/devtools-api": "^6.6.3",
-    "@unhead/vue": "^1.9.16",
-    "@unhead/ssr": "^1.9.16",
     "debug": "^4.3.5",
     "deep-equal": "^2.2.3",
     "es-module-lexer": "^1.5.4",
@@ -94,6 +94,7 @@
     "@types/debug": "^4.1.12",
     "@types/fs-extra": "^11.0.4",
     "@types/micromatch": "^4.0.9",
+    "@types/minimist": "^1.2.5",
     "@types/node": "^20.14.12",
     "@types/unist": "^3.0.2",
     "chokidar": "^3",

@@ -1,18 +1,20 @@
 import MagicString from 'magic-string'
-import { parse, SFCBlock } from 'vue/compiler-sfc'
-import type { PublicPluginAPI as ComponentsApi, ComponentInfo } from 'unplugin-vue-components/types'
+import type { SFCBlock } from 'vue/compiler-sfc'
+import { parse } from 'vue/compiler-sfc'
+import type { ComponentInfo, PublicPluginAPI as ComponentsApi } from 'unplugin-vue-components/types'
 import type { ElementNode, TemplateChildNode } from '@vue/compiler-core'
 import type { AppConfig } from '../shared'
-import { pascalCase, isString, debug } from './utils'
-import { parseImports, parseExports } from './parse'
+import { debug, isString, pascalCase } from './utils'
+import { parseExports, parseImports } from './parse'
 
 export const unresolvedIslandKey = '__viteIslandComponent'
 
-export async function wrapLayout (code: string, filename: string) {
+export async function wrapLayout(code: string, filename: string) {
   const { descriptor: { template }, errors } = parse(code, { filename })
-  if (errors.length > 0 || !template || !isString(template.attrs.layout)) return
+  if (errors.length > 0 || !template || !isString(template.attrs.layout)) { return }
 
   const s = new MagicString(code)
+  // eslint-disable-next-line ts/ban-ts-comment
   // @ts-ignore
   const nodes = template.ast.children
   const Layout = `${pascalCase(template.attrs.layout as string)}Layout`
@@ -25,30 +27,31 @@ export async function wrapLayout (code: string, filename: string) {
   return { code: s.toString(), map: s.generateMap({ hires: true }) }
 }
 
-const scriptClientRE = /<script\b([^>]*\bclient:[^>]*)>([^]*?)<\/script>/
+// eslint-disable-next-line regexp/no-contradiction-with-assertion
+const scriptClientRE = /<script\b([^>]*\bclient:[^>]*)>([\s\S]*?)<\/script>/
 
-export async function wrapIslandsInSFC (config: AppConfig, code: string, filename: string) {
+export async function wrapIslandsInSFC(config: AppConfig, code: string, filename: string) {
   code = code.replace(scriptClientRE, (_, attrs, content) =>
     `<scriptClient${attrs}>${content}</scriptClient>`)
 
   const { descriptor: { template, script, scriptSetup, customBlocks }, errors } = parse(code, { filename })
   const scriptClientIndex = customBlocks.findIndex(b => b.type === 'scriptClient')
   const scriptClient = scriptClientIndex > -1 && customBlocks[scriptClientIndex]
-  if (errors.length > 0) return
+  if (errors.length > 0) { return }
 
-  if ((scriptClient && 'setup' in scriptClient.attrs) || (scriptSetup && Object.keys(scriptSetup.attrs).some(attr => attr.startsWith('client:'))))
-    throw new Error('Incorrect usage of hydration strategy in script setup.\nSee https://iles-docs.netlify.app/guide/client-scripts#client-script-block')
+  if ((scriptClient && 'setup' in scriptClient.attrs) || (scriptSetup && Object.keys(scriptSetup.attrs).some(attr => attr.startsWith('client:')))) { throw new Error('Incorrect usage of hydration strategy in script setup.\nSee https://iles-docs.netlify.app/guide/client-scripts#client-script-block') }
 
   if (!template) {
-    if (scriptClient) throw new Error(`Vue components with <script client:...> must define a template. No template found in ${filename}`)
+    if (scriptClient) { throw new Error(`Vue components with <script client:...> must define a template. No template found in ${filename}`) }
     return
   }
 
   const s = new MagicString(code)
   const components: ComponentsApi = config.namedPlugins.components.api
 
+  // eslint-disable-next-line ts/ban-ts-comment
   // @ts-ignore
-  if (scriptClient) await injectClientScript(template.ast, s, filename, scriptClientIndex, scriptClient)
+  if (scriptClient) { await injectClientScript(template.ast, s, filename, scriptClientIndex, scriptClient) }
 
   const jsCode = scriptSetup?.loc?.source || script?.loc?.source
   const imports = jsCode ? await parseImports(jsCode) : {}
@@ -56,24 +59,24 @@ export async function wrapIslandsInSFC (config: AppConfig, code: string, filenam
   let componentCounter = 0
   let injectionOffset = scriptSetup?.loc?.start?.offset
 
+  // eslint-disable-next-line ts/ban-ts-comment
   // @ts-ignore
   await visitSFCNode(template.ast, s, resolveComponentImport)
 
   // Close script setup tag if any component was injected.
-  if (!scriptSetup && injectionOffset === 0)
-    s.appendRight(0, '\n</script>\n')
+  if (!scriptSetup && injectionOffset === 0) { s.appendRight(0, '\n</script>\n') }
 
   return { code: s.toString(), map: s.generateMap({ hires: true }) }
 
-  async function resolveComponentImport (strategy: string, tagName: string): Promise<ComponentInfo> {
+  async function resolveComponentImport(strategy: string, tagName: string): Promise<ComponentInfo> {
     debug.detect(`<${tagName} ${strategy}>`)
-    if (imports[tagName]) return await resolveImportPath(config, imports[tagName], filename)
+    if (imports[tagName]) { return await resolveImportPath(config, imports[tagName], filename) }
     const info = await resolveComponent(components, tagName, filename, componentCounter++)
-    if (strategy !== 'client:only') injectComponentImport(info)
+    if (strategy !== 'client:only') { injectComponentImport(info) }
     return info
   }
 
-  function injectComponentImport (info: ComponentInfo) {
+  function injectComponentImport(info: ComponentInfo) {
     if (injectionOffset === undefined) {
       const opening = `<script setup lang="${script?.attrs?.lang || 'ts'}">`
       s.prepend(opening)
@@ -83,7 +86,7 @@ export async function wrapIslandsInSFC (config: AppConfig, code: string, filenam
   }
 }
 
-async function visitSFCNode (node: ElementNode | TemplateChildNode, s: MagicString, resolveComponentImport: (strategy: string, tag: string) => Promise<ComponentInfo>) {
+async function visitSFCNode(node: ElementNode | TemplateChildNode, s: MagicString, resolveComponentImport: (strategy: string, tag: string) => Promise<ComponentInfo>) {
   const strategy = 'props' in node
     && node.props.find(prop => prop.name.startsWith('client:'))?.name
 
@@ -99,32 +102,29 @@ async function visitSFCNode (node: ElementNode | TemplateChildNode, s: MagicStri
     `
 
     // Replace opening tag.
-    s.overwrite(start.offset + 1, start.offset + 1 + tag.length,
-      `Island ${componentProps.replace(/\n\s*/g, ' ')}`, { contentOnly: true })
+    s.overwrite(start.offset + 1, start.offset + 1 + tag.length, `Island ${componentProps.replace(/\n\s*/g, ' ')}`, { contentOnly: true })
 
     // Replace closing tag.
-    if (!node.isSelfClosing)
-      s.overwrite(end.offset - 1 - tag.length, end.offset - 1, 'Island', { contentOnly: true })
+    if (!node.isSelfClosing) { s.overwrite(end.offset - 1 - tag.length, end.offset - 1, 'Island', { contentOnly: true }) }
   }
 
   if ('children' in node) {
-    for (const child of node.children)
-      await visitSFCNode(child as any, s, resolveComponentImport)
+    for (const child of node.children) { await visitSFCNode(child as any, s, resolveComponentImport) }
   }
 }
 
-export async function resolveComponent (components: ComponentsApi, tag: string, filename: string, counter: number): Promise<ComponentInfo> {
+export async function resolveComponent(components: ComponentsApi, tag: string, filename: string, counter: number): Promise<ComponentInfo> {
   const info = await components.findComponent(pascalCase(tag), filename)
-  if (!info) throw new Error(`Could not resolve ${tag} in ${filename}. Make sure to import it explicitly, or add a component resolver.`)
+  if (!info) { throw new Error(`Could not resolve ${tag} in ${filename}. Make sure to import it explicitly, or add a component resolver.`) }
   return { name: 'default', ...info, as: `__ile_components_${counter}` }
 }
 
-export async function resolveImportPath (config: AppConfig, info: ComponentInfo, importer: string) {
+export async function resolveImportPath(config: AppConfig, info: ComponentInfo, importer: string) {
   info.from = (await config.resolvePath(info.from, importer)) || info.from
   return info
 }
 
-async function injectClientScript (node: ElementNode, s: MagicString, filename: string, index: number, block: SFCBlock) {
+async function injectClientScript(node: ElementNode, s: MagicString, filename: string, index: number, block: SFCBlock) {
   const { attrs, content, loc: { end } } = block
   const { lang = 'ts', ...props } = attrs
 
@@ -146,12 +146,10 @@ async function injectClientScript (node: ElementNode, s: MagicString, filename: 
   const elements = node.children.filter((n: any) => n.tag) as ElementNode[]
   if (elements.length === 1) {
     const el = elements[0]
-    if (!el.props.some(prop => prop.name === 'bind' && prop.loc.source.includes('$attrs')))
-      s.appendRight(el.loc.start.offset + 1 + el.tag.length, ' v-bind="$attrs"')
+    if (!el.props.some(prop => prop.name === 'bind' && prop.loc.source.includes('$attrs'))) { s.appendRight(el.loc.start.offset + 1 + el.tag.length, ' v-bind="$attrs"') }
   }
 
-  s.appendLeft(node.loc.end.offset - 3 - node.tag.length,
-    `  <Island v-bind='${JSON.stringify({
+  s.appendLeft(node.loc.end.offset - 3 - node.tag.length, `  <Island v-bind='${JSON.stringify({
       ...props,
       component: {},
       componentName: 'clientScript',

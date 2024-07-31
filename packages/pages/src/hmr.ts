@@ -1,8 +1,9 @@
-import type { ViteDevServer, Plugin } from 'vite'
+import type { Plugin, ViteDevServer } from 'vite'
 import { debug, slash } from './utils'
-import { Awaitable, MODULE_ID, ResolvedOptions, PagesApi } from './types'
+import type { Awaitable, PagesApi, ResolvedOptions } from './types'
+import { MODULE_ID } from './types'
 
-export function handleHMR (api: PagesApi, options: ResolvedOptions, clearRoutes: () => void): Plugin['handleHotUpdate'] {
+export function handleHMR(api: PagesApi, options: ResolvedOptions, clearRoutes: () => void): Plugin['handleHotUpdate'] {
   const server = options.server!
 
   onPage('add', async (path) => {
@@ -21,32 +22,31 @@ export function handleHMR (api: PagesApi, options: ResolvedOptions, clearRoutes:
     const path = slash(ctx.file)
     if (api.isPage(path)) {
       const { changed, needsReload } = await api.updatePage(path)
-      if (changed) debug.hmr('change', path)
-      if (needsReload) fullReload()
+      if (changed) { debug.hmr('change', path) }
+      if (needsReload) { fullReload() }
     }
   }
 
-  function onPage (eventName: string, handler: (path: string) => Awaitable<void | boolean>) {
+  function onPage(eventName: string, handler: (path: string) => Awaitable<void | boolean>) {
     server.watcher.on(eventName, async (path) => {
       path = slash(path)
-      if (api.isPage(path) && await handler(path))
-        fullReload()
+      if (api.isPage(path) && await handler(path)) { fullReload() }
     })
   }
 
-  function fullReload () {
+  function fullReload() {
     invalidatePagesModule(server)
     clearRoutes()
     server.ws.send({ type: 'full-reload' })
   }
 }
 
-function invalidatePageFiles (path: string, { moduleGraph }: ViteDevServer) {
+function invalidatePageFiles(path: string, { moduleGraph }: ViteDevServer) {
   moduleGraph.getModulesByFile(path)
     ?.forEach(mod => moduleGraph.invalidateModule(mod))
 }
 
-function invalidatePagesModule ({ moduleGraph }: ViteDevServer) {
+function invalidatePagesModule({ moduleGraph }: ViteDevServer) {
   const mod = moduleGraph.getModuleById(MODULE_ID)
-  if (mod) moduleGraph.invalidateModule(mod)
+  if (mod) { moduleGraph.invalidateModule(mod) }
 }

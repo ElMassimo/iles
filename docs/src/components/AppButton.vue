@@ -7,9 +7,9 @@ defineProps({
 <template>
   <component :is="$attrs.href ? 'a' : 'button'" class="app-button font-medium" :class="{ outline, colored: !outline }">
     <div v-if="$slots.icon" class="inline-block mr-1">
-      <slot name="icon"/>
+      <slot name="icon" />
     </div>
-    <slot/>
+    <slot />
   </component>
 </template>
 
@@ -64,7 +64,7 @@ html.dark {
     top: -1px;
     margin-left: 2px;
     fill: currentColor;
-    transition: transform .2s;
+    transition: transform 0.2s;
   }
 
   &:hover :deep(.icon) {

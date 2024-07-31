@@ -5,7 +5,7 @@ import type { Grammar } from 'prismjs'
 
 import prism from 'prismjs'
 import loadLanguages from 'prismjs/components/index.js'
-import { visit, SKIP } from 'unist-util-visit'
+import { SKIP, visit } from 'unist-util-visit'
 
 const defaultLanguageShortcuts: Record<string, string> = {
   vue: 'markup',
@@ -23,26 +23,12 @@ export interface PrismOptions {
 }
 
 /**
- * An iles module that injects a remark plugin to to provide syntax highlighting.
- */
-export default function IlesPrism (options?: PrismOptions): IlesModule {
-  return {
-    name: '@islands/prism',
-    markdown: {
-      remarkPlugins: [
-        [remarkPlugin, options],
-      ],
-    },
-  }
-}
-
-/**
  * A remark plugin to provide syntax highlighting for code blocks, supporting
  * line numbers and line highlighting.
  *
  * @param options - Options to configure PrismJS.
  */
-const remarkPlugin: Plugin<[PrismOptions], Root> = function RemarkPrismPlugin (options: PrismOptions = {}) {
+const remarkPlugin: Plugin<[PrismOptions], Root> = function RemarkPrismPlugin(options: PrismOptions = {}) {
   const languageShortcuts = { ...defaultLanguageShortcuts, ...options.alias }
 
   return (ast) => {
@@ -58,7 +44,21 @@ const remarkPlugin: Plugin<[PrismOptions], Root> = function RemarkPrismPlugin (o
   }
 }
 
-function highlightCode (code: string, grammar: Grammar, lang: string, meta: string, options: PrismOptions) {
+/**
+ * An iles module that injects a remark plugin to to provide syntax highlighting.
+ */
+export default function IlesPrism(options?: PrismOptions): IlesModule {
+  return {
+    name: '@islands/prism',
+    markdown: {
+      remarkPlugins: [
+        [remarkPlugin, options],
+      ],
+    },
+  }
+}
+
+function highlightCode(code: string, grammar: Grammar, lang: string, meta: string, options: PrismOptions) {
   code = prism.highlight(code, grammar, lang)
 
   const highlightLine = extractLineNumbers(meta)
@@ -79,28 +79,28 @@ function highlightCode (code: string, grammar: Grammar, lang: string, meta: stri
   return `<div class="${classes}" data-lang="${lang === 'text' ? '' : lang}">${innerHtml}</div>`
 }
 
-function highlightLines (lines: string[], highlighted: (line: number) => boolean) {
+function highlightLines(lines: string[], highlighted: (line: number) => boolean) {
   return lines
     .map((_, index) => highlighted(index + 1) ? '<div class="highlighted">&nbsp;</div>' : '<br>')
     .join('')
 }
 
-function addLineNumbers (lines: string[]) {
+function addLineNumbers(lines: string[]) {
   return lines
     .map((_, index) => `<span class="line-number">${index + 1}</span><br>`)
     .join('')
 }
 
-function extractLineNumbers (meta: string) {
+function extractLineNumbers(meta: string) {
   const rangesStr = meta.match(/\{(.*?)\}/)?.[1]
   if (rangesStr) {
-    const ranges = rangesStr.split(',').map(v => v.split('-').map(v => parseInt(v, 10)))
+    const ranges = rangesStr.split(',').map(v => v.split('-').map(v => Number.parseInt(v, 10)))
     return (line: number) =>
       ranges.some(([start, end]) => end ? line >= start && line <= end : line === start)
   }
 }
 
-function languageGrammarFor (lang: string): undefined | Grammar {
+function languageGrammarFor(lang: string): undefined | Grammar {
   if (!prism.languages[lang]) {
     try {
       loadLanguages([lang])

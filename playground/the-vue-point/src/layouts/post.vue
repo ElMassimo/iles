@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { usePage } from 'iles'
-import { getPosts } from '~/logic/posts'
 import { computed } from 'vue'
+import { getPosts } from '~/logic/posts'
 
 const posts = getPosts()
 
@@ -21,7 +21,7 @@ const author = computed(() => {
 <template layout="default">
   <article class="xl:divide-y xl:divide-gray-200">
     <header class="pt-6 xl:pb-10 space-y-1 text-center">
-      <PostDate :date="post.date"/>
+      <PostDate :date="post.date" />
       <h1
         class="
           text-3xl
@@ -32,7 +32,9 @@ const author = computed(() => {
           sm:text-4xl sm:leading-10
           md:text-5xl
         "
-      >{{ post.title }}</h1>
+      >
+        {{ post.title }}
+      </h1>
     </header>
 
     <div
@@ -46,10 +48,10 @@ const author = computed(() => {
       "
       style="grid-template-rows: auto 1fr"
     >
-      <Author v-bind="author"/>
+      <Author v-bind="author" />
       <div class="divide-y divide-gray-200 xl:pb-0 xl:col-span-3 xl:row-span-2">
         <div class="prose max-w-none pt-10 pb-8">
-          <slot/>
+          <slot />
         </div>
       </div>
 
@@ -78,7 +80,9 @@ const author = computed(() => {
             <a :href="prevPost.href">{{ prevPost.title }}</a>
           </div>
         </div>
-        <BackLink class="block pt-8" client:none href="/">Back to the blog</BackLink>
+        <BackLink class="block pt-8" client:none href="/">
+          Back to the blog
+        </BackLink>
       </footer>
     </div>
   </article>

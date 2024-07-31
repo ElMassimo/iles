@@ -11,13 +11,13 @@ import { rehypeRawExpressions } from './rehype-raw-expressions'
  * An iles module that injects a recma plugin that transforms MDX to allow
  * resolving Vue components statically or at runtime.
  */
-export function vueMdx (): any {
+export function vueMdx(): any {
   return {
     name: '@islands/mdx',
     markdown: {
       recmaPlugins: [recmaPlugin],
     },
-    configResolved (config: any) {
+    configResolved(config: any) {
       const { markdown, prettyUrls, namedPlugins } = config
 
       markdown.remarkPlugins.unshift(
@@ -34,7 +34,7 @@ export function vueMdx (): any {
         // NOTE: Expose VFile data added by remark and rehype plugins.
         () => (_ast: any, vfile: VFile) => {
           const page = namedPlugins.pages.api.pageForFilename(vfile.path)
-          if (page) Object.assign(page.frontmatter.meta, vfile.data)
+          if (page) { Object.assign(page.frontmatter.meta, vfile.data) }
         },
       )
 

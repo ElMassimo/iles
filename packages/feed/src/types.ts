@@ -1,4 +1,4 @@
-import type { FeedOptions, Item as ResolvedItem, Author, Extension } from 'feed'
+import type { Author, Extension, FeedOptions, Item as ResolvedItem } from 'feed'
 import type { VueRenderable } from 'iles'
 
 export type AsyncContent = string | VueRenderable

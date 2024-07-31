@@ -1,6 +1,6 @@
 import type { App, ComponentPublicInstance } from 'vue'
-import { reactive, computed } from 'vue'
-import type { InspectorNodeTag, DevtoolsPluginApi } from '@vue/devtools-api'
+import { computed, reactive } from 'vue'
+import type { DevtoolsPluginApi, InspectorNodeTag } from '@vue/devtools-api'
 import { setupDevtoolsPlugin } from '@vue/devtools-api'
 import { usePage } from 'iles'
 import type { AppClientConfig, PageData } from '../../shared'
@@ -44,34 +44,33 @@ let props = {} as PageData['props']
 let site = {} as PageData['site']
 
 const devtools = {
-  updateIslandsInspector () {
+  updateIslandsInspector() {
     devtoolsApi?.sendInspectorTree(INSPECTOR_ID)
   },
 
-  addIslandToDevtools (island: any) {
+  addIslandToDevtools(island: any) {
     islandsById[island.id] = island
     devtools.updateIslandsInspector()
     devtoolsApi?.selectInspectorNode(INSPECTOR_ID, route?.path)
   },
 
-  removeIslandFromDevtools (island: any) {
+  removeIslandFromDevtools(island: any) {
     delete islandsById[island.id]
 
     // NOTE: Vue could unmount ile-1 before ile-2, so check for unused ids.
-    while (lastUsedIslandId > 0 && !islandsById[`ile-${lastUsedIslandId}`])
-      lastUsedIslandId -= 1
+    while (lastUsedIslandId > 0 && !islandsById[`ile-${lastUsedIslandId}`]) { lastUsedIslandId -= 1 }
 
     devtools.updateIslandsInspector()
   },
 
-  nextIslandId () {
+  nextIslandId() {
     return `ile-${++lastUsedIslandId}`
   },
 
-  onHydration ({ id, ...event }: any) {
+  onHydration({ id, ...event }: any) {
     const time = Date.now()
     const island: any = islandsById[id]
-    if (!island) return
+    if (!island) { return }
     const hydrated = getStrategy(island)
     const mediaQuery = getMediaQuery(island)
     const component = island.componentName
@@ -91,7 +90,7 @@ const devtools = {
 
 ;(window as any).__ILE_DEVTOOLS__ = devtools
 
-export function installDevtools (app: App, config: AppClientConfig) {
+export function installDevtools(app: App, config: AppClientConfig) {
   appConfig = config
   const pageData = usePage(app)
   route = pageData.route
@@ -127,12 +126,12 @@ export function installDevtools (app: App, config: AppClientConfig) {
 
     api.on.inspectComponent(({ componentInstance, instanceData }) => {
       const island = findIsland(componentInstance?.proxy)
-      if (!island) return
+      if (!island) { return }
       instanceData.state.push({ type: ISLAND_TYPE, key: 'within', value: island })
     })
 
     api.on.getInspectorTree(async (payload) => {
-      if (payload.app !== app || payload.inspectorId !== INSPECTOR_ID) return
+      if (payload.app !== app || payload.inspectorId !== INSPECTOR_ID) { return }
       const userFilter = payload.filter?.toLowerCase() || ''
       const islandNodes = islands.value
         .filter((island: any) => island.id.includes(userFilter) || island.componentName.toLowerCase().includes(userFilter))
@@ -156,7 +155,7 @@ export function installDevtools (app: App, config: AppClientConfig) {
     })
 
     api.on.getInspectorState((payload, ctx) => {
-      if (payload.app !== app || payload.inspectorId !== INSPECTOR_ID) return
+      if (payload.app !== app || payload.inspectorId !== INSPECTOR_ID) { return }
 
       if (payload.nodeId === route.path) {
         payload.state = {
@@ -173,7 +172,7 @@ export function installDevtools (app: App, config: AppClientConfig) {
       }
 
       const island = islandsById[payload.nodeId] as any
-      if (!island) return
+      if (!island) { return }
       const ileRoot = island.$el?.nextSibling
       payload.state = {
         props: [
@@ -191,16 +190,16 @@ export function installDevtools (app: App, config: AppClientConfig) {
   })
 }
 
-function findIsland (component: any): any {
-  if (!component) return null
-  if (component.strategy?.startsWith('client:')) return component
+function findIsland(component: any): any {
+  if (!component) { return null }
+  if (component.strategy?.startsWith('client:')) { return component }
   return findIsland(component.$parent)
 }
 
-function getStrategy (island: any) {
+function getStrategy(island: any) {
   return strategyLabels[island.strategy]
 }
 
-function getMediaQuery (island: any) {
-  if (island.strategy === 'client:media') return island['client:media']
+function getMediaQuery(island: any) {
+  if (island.strategy === 'client:media') { return island['client:media'] }
 }

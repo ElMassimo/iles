@@ -1,8 +1,11 @@
 {
   "name": "docs",
+  "type": "module",
   "version": "1.0.0",
   "private": true,
-  "type": "module",
+  "engines": {
+    "node": "^14.18 || >= 16.0.0"
+  },
   "scripts": {
     "dev": "iles --open --port 3001",
     "build": "iles build",
@@ -13,8 +16,9 @@
     "check": "vue-tsc --noEmit",
     "cy:run": "scripts/test-cypress"
   },
-  "engines": {
-    "node": "^14.18 || >= 16.0.0"
+  "dependencies": {
+    "@docsearch/css": "^3.6.1",
+    "@mussi/docsearch": "3.1.2-beta.0"
   },
   "devDependencies": {
     "@iconify-json/bx": "^1.1.10",
@@ -36,9 +40,5 @@
     "vite-plugin-inspect": "^0.8.5",
     "vite-plugin-windicss": "^1.9.3",
     "vue-tsc": "^2.0.29"
-  },
-  "dependencies": {
-    "@docsearch/css": "^3.6.1",
-    "@mussi/docsearch": "3.1.2-beta.0"
   }
 }

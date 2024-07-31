@@ -1,16 +1,16 @@
-import { test, describe, expect } from 'vitest'
+import { describe, expect, it } from 'vitest'
 
 import { extendSite } from '@node/plugin/site'
 
 describe('site', () => {
-  test('without data', () => {
+  it('without data', () => {
     const extended = extendSite(`
 export default {}
 `, { siteUrl: 'http://example.com', base: '/' })
     expect(extended).toMatchSnapshot()
   })
 
-  test('without site url', () => {
+  it('without site url', () => {
     const extended = extendSite(`
 const site = {
   title: 'îles',
@@ -21,7 +21,7 @@ export default site
     expect(extended).toMatchSnapshot()
   })
 
-  test('with site url', () => {
+  it('with site url', () => {
     const extended = extendSite(`
 export default {
   title: 'îles',

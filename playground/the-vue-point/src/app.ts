@@ -5,7 +5,7 @@ import 'virtual:windi-devtools'
 import '~/style.css'
 
 export default defineApp({
-  enhanceApp ({ app, head, router }) {
+  enhanceApp({ app, head, router }) {
     // Configure the Vue app
   },
 })

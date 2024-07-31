@@ -1,11 +1,11 @@
 import type { Node } from 'unist'
 import type { ComponentInfo } from 'unplugin-vue-components/types'
 import type { Program } from 'estree-jsx'
-import type { MdxJsxFlowElement, MdxJsxTextElement, MdxJsxAttribute, MdxJsxExpressionAttribute, MdxJsxAttributeValueExpression } from 'mdast-util-mdx-jsx'
+import type { MdxJsxAttribute, MdxJsxAttributeValueExpression, MdxJsxExpressionAttribute, MdxJsxFlowElement, MdxJsxTextElement } from 'mdast-util-mdx-jsx'
 import type { MdxjsEsm } from 'mdast-util-mdxjs-esm'
 import type { ImportDeclaration } from 'estree'
 import { importModule } from '../modules'
-import { AppConfig } from '../shared'
+import type { AppConfig } from '../shared'
 import { resolveComponent, resolveImportPath } from './wrap'
 import type { ImportsMetadata } from './parse'
 import { debug, isString } from './utils'
@@ -29,36 +29,35 @@ export default ({ config }: { config: AppConfig }) => async (ast: any, file: any
   })
 
   const componentsToImport = await Promise.all(componentPromises)
-  if (componentsToImport.length > 0)
-    ast.children.unshift(defineImports(componentsToImport))
+  if (componentsToImport.length > 0) { ast.children.unshift(defineImports(componentsToImport)) }
 
-  async function resolveComponentImport (strategy: string, tagName: string) {
+  async function resolveComponentImport(strategy: string, tagName: string) {
     debug.detect(`<${tagName} ${strategy}>`)
-    if (!imports) imports = extractImports(ast.children.filter((node: Node) => node.type === 'mdxjsEsm'))
-    if (imports[tagName]) return await resolveImportPath(config, imports[tagName], file.path)
+    if (!imports) { imports = extractImports(ast.children.filter((node: Node) => node.type === 'mdxjsEsm')) }
+    if (imports[tagName]) { return await resolveImportPath(config, imports[tagName], file.path) }
     const info = resolveComponent(components, tagName, file.path, componentCounter++)
-    if (strategy !== 'client:only') componentPromises.push(info)
+    if (strategy !== 'client:only') { componentPromises.push(info) }
     return await info
   }
 }
 
-function isJsxElement (node: Node): node is MdxJsxFlowElement | MdxJsxTextElement {
+function isJsxElement(node: Node): node is MdxJsxFlowElement | MdxJsxTextElement {
   return node.type === 'mdxJsxFlowElement' || node.type === 'mdxJsxTextElement'
 }
 
-function isClientDirective (attr: MdxJsxAttribute | MdxJsxExpressionAttribute): attr is MdxJsxAttribute {
+function isClientDirective(attr: MdxJsxAttribute | MdxJsxExpressionAttribute): attr is MdxJsxAttribute {
   return 'name' in attr && attr.name.startsWith('client:')
 }
 
-function isImport (statement: any): statement is ImportDeclaration {
+function isImport(statement: any): statement is ImportDeclaration {
   return statement.type === 'ImportDeclaration'
 }
 
 // Internal: Replaces the JSX element with an Island, and sets an attribute to
 // enable future resolution.
-async function wrapWithIsland (strategy: string, node: MdxJsxFlowElement | MdxJsxTextElement, resolveComponentImport: (strategy: string, name: string) => Promise<ComponentInfo>) {
+async function wrapWithIsland(strategy: string, node: MdxJsxFlowElement | MdxJsxTextElement, resolveComponentImport: (strategy: string, name: string) => Promise<ComponentInfo>) {
   const tagName = node.name
-  if (!tagName) return
+  if (!tagName) { return }
 
   node.name = 'Island'
 
@@ -74,7 +73,7 @@ async function wrapWithIsland (strategy: string, node: MdxJsxFlowElement | MdxJs
   }))
 }
 
-function extractImports (nodes: MdxjsEsm[]) {
+function extractImports(nodes: MdxjsEsm[]) {
   const imports: ImportsMetadata = Object.create(null)
   const declarations = nodes.flatMap(node => node.data?.estree?.body?.filter(isImport) as ImportDeclaration[])
 
@@ -89,7 +88,7 @@ function extractImports (nodes: MdxjsEsm[]) {
   return imports
 }
 
-function importedName (specifier: ImportDeclaration['specifiers'][number]) {
+function importedName(specifier: ImportDeclaration['specifiers'][number]) {
   switch (specifier.type) {
     case 'ImportDefaultSpecifier': return 'default'
     case 'ImportNamespaceSpecifier': return '*'
@@ -97,7 +96,7 @@ function importedName (specifier: ImportDeclaration['specifiers'][number]) {
   }
 }
 
-function jsxExpression (expression: any): MdxJsxAttributeValueExpression {
+function jsxExpression(expression: any): MdxJsxAttributeValueExpression {
   return {
     type: 'mdxJsxAttributeValueExpression',
     value: expression.name || expression.raw,
@@ -111,13 +110,13 @@ function jsxExpression (expression: any): MdxJsxAttributeValueExpression {
   }
 }
 
-function jsxAttributes (val: Record<string, MdxJsxAttribute['value']>): MdxJsxAttribute[] {
+function jsxAttributes(val: Record<string, MdxJsxAttribute['value']>): MdxJsxAttribute[] {
   return Object.entries(val).map(([name, value]) => (
     { type: 'mdxJsxAttribute', name, value }
   ))
 }
 
-function defineImports (components: ComponentInfo[]) {
+function defineImports(components: ComponentInfo[]) {
   return {
     type: 'mdxjsEsm',
     data: {

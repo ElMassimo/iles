@@ -1,12 +1,12 @@
 <template layout="base">
   <MainContainer>
-    <TheSidebar class="md:hidden"/>
+    <TheSidebar class="md:hidden" />
     <div class="px-6 md:px-8 viewport">
-      <HomeHero/>
-      <HomeFeatures/>
+      <HomeHero />
+      <HomeFeatures />
     </div>
   </MainContainer>
-  <TheFooter/>
+  <TheFooter />
 </template>
 
 <style scoped>

@@ -1,11 +1,11 @@
 import { computed } from 'vue'
 import type { AppContext, HeadConfig } from '../shared'
 
-function notEmpty<T> (val: T | boolean | undefined | null): val is T {
+function notEmpty<T>(val: T | boolean | undefined | null): val is T {
   return Boolean(val)
 }
 
-export function defaultHead ({ frontmatter, meta, route, config, site }: AppContext, includeSocialTags: boolean | undefined): HeadConfig {
+export function defaultHead({ frontmatter, meta, route, config, site }: AppContext, includeSocialTags: boolean | undefined): HeadConfig {
   const title = computed(() => {
     const title = frontmatter.title ?? meta.title
     return title ? `${title} · ${site.title}` : site.title

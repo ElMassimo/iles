@@ -1,12 +1,13 @@
-import type { Identifier, CallExpression, VariableDeclarator, Expression, ExpressionStatement } from 'estree'
+import type { CallExpression, Expression, Identifier, VariableDeclarator } from 'estree'
 import type { MdxFlowExpression } from 'mdast-util-mdx-expression'
 import type { MdxjsEsm } from 'mdast-util-mdxjs-esm'
 import type { Plugin } from 'unified'
-import type { Parent, Content, Element } from 'hast'
-import { toHtml as hastToHtml, Options as ToHtmlOptions } from 'hast-util-to-html'
+import type { Element, Parent, RootContent } from 'hast'
+import type { Options as ToHtmlOptions } from 'hast-util-to-html'
+import { toHtml as hastToHtml } from 'hast-util-to-html'
 import type { MarkdownOptions } from './types'
 
-type Child = Content
+type Child = RootContent
 type Node = Parent | Child
 
 type RawPlugin = Plugin<[MarkdownOptions], Parent, Parent>
@@ -26,31 +27,29 @@ export const rehypeRawExpressions: RawPlugin = options => (ast, vfile) => {
   dynamicElements.add('excerpt')
 
   const enter: Visitor = (node) => {
-    if (node.type === 'mdxFlowExpression' && node.data?.raw)
-      // @ts-ignore
+    if (node.type === 'mdxFlowExpression' && node.data?.raw) {
+      // eslint-disable-next-line ts/ban-ts-comment
+    // @ts-ignore
       node.type = 'raw'
+    }
 
-    if (node.type.startsWith('mdx') || dynamicElements.has((node as Element).tagName))
-      setDynamic(node)
+    if (node.type.startsWith('mdx') || dynamicElements.has((node as Element).tagName)) { setDynamic(node) }
   }
 
   const leave: Visitor = (node, parent) => {
     if (isDynamic(node)) {
-      if (parent)
-        setDynamic(parent)
+      if (parent) { setDynamic(parent) }
 
-      if ('children' in node)
-        node.children = stringifyNodes(hoisted, node.children) as any
+      if ('children' in node) { node.children = stringifyNodes(hoisted, node.children) as any }
     }
   }
 
   const visit: Visitor = (node, parent) => {
-    if (!node) return
+    if (!node) { return }
 
     enter(node, parent)
 
-    if ('children' in node)
-      node.children.forEach(child => visit(child, node))
+    if ('children' in node) { node.children.forEach(child => visit(child, node)) }
 
     leave(node, parent)
   }
@@ -58,6 +57,7 @@ export const rehypeRawExpressions: RawPlugin = options => (ast, vfile) => {
   setDynamic(ast)
   visit(ast as any)
 
+  const NOT_USED = '_not_used_'
   if (hoisted.length) {
     ast.children.unshift({
       type: 'mdxjsEsm',
@@ -75,9 +75,7 @@ export const rehypeRawExpressions: RawPlugin = options => (ast, vfile) => {
   }
 }
 
-const NOT_USED = '_not_used_'
-
-function stringifyNodes (hoisted: Hoisted, nodes: Child[]) {
+function stringifyNodes(hoisted: Hoisted, nodes: Child[]) {
   const result: Child[] = []
   let rawNodes: Child[] = []
 
@@ -90,8 +88,9 @@ function stringifyNodes (hoisted: Hoisted, nodes: Child[]) {
 
   nodes.forEach((node) => {
     if (isDynamic(node)) {
+      // eslint-disable-next-line ts/ban-ts-comment
       // @ts-ignore
-      if (node.type !== 'mdxjsEsm') flushRawNodes()
+      if (node.type !== 'mdxjsEsm') { flushRawNodes() }
       result.push(node)
     }
     else {
@@ -102,15 +101,15 @@ function stringifyNodes (hoisted: Hoisted, nodes: Child[]) {
   return result
 }
 
-function isDynamic (node: Node) {
+function isDynamic(node: Node) {
   return node.data?._createVNode
 }
 
-function setDynamic (node: Node) {
+function setDynamic(node: Node) {
   (node.data ||= {})._createVNode = true
 }
 
-function hoistRawNodes (hoisted: Hoisted, nodes: Child[]): MdxFlowExpression {
+function hoistRawNodes(hoisted: Hoisted, nodes: Child[]): MdxFlowExpression {
   let expression: Expression
   if (nodes.length === 1 && nodes[0].type === 'text') {
     const { value } = nodes[0]
@@ -122,6 +121,7 @@ function hoistRawNodes (hoisted: Hoisted, nodes: Child[]): MdxFlowExpression {
     expression = id
   }
 
+  const NOT_USED = '_not_used_'
   return {
     type: 'mdxFlowExpression',
     value: NOT_USED,
@@ -137,7 +137,7 @@ function hoistRawNodes (hoisted: Hoisted, nodes: Child[]): MdxFlowExpression {
   }
 }
 
-function toHtml (nodes: Child[]) {
+function toHtml(nodes: Child[]) {
   try {
     return hastToHtml(nodes, toHtmlOptions)
   }
@@ -149,7 +149,7 @@ function toHtml (nodes: Child[]) {
 }
 
 // Internal: Returns a variable definition that calls `raw` with the specified html.
-function variableForRawNodes (id: Identifier, html: string, count: number): VariableDeclarator {
+function variableForRawNodes(id: Identifier, html: string, count: number): VariableDeclarator {
   const rawExpression: CallExpression = {
     type: 'CallExpression',
     callee: { type: 'Identifier', name: '_raw' },

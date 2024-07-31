@@ -5,7 +5,7 @@ import type { SideBarItem } from '~/logic/config'
 import { joinUrl } from '~/logic/utils'
 import { useActive } from '~/logic/sidebar'
 
-const props = defineProps<{ item: SideBarItem; header?: boolean; table?: boolean }>()
+const props = defineProps<{ item: SideBarItem, header?: boolean, table?: boolean }>()
 const { item, header, table } = props
 
 const { base } = useAppConfig()
@@ -21,7 +21,6 @@ const style = computed(() => ([
       : 'sidebar-link',
   { active: !table && active.value },
 ]))
-
 </script>
 
 <template>

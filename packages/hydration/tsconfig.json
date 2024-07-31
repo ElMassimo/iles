@@ -1,13 +1,13 @@
 {
   "compilerOptions": {
-    "module": "ESNext",
     "target": "es2020",
     "lib": ["ESNext", "DOM"],
-    "esModuleInterop": true,
-    "strict": true,
-    "strictNullChecks": true,
+    "module": "ESNext",
     "moduleResolution": "Node",
     "resolveJsonModule": true,
+    "strict": true,
+    "strictNullChecks": true,
+    "esModuleInterop": true,
     "skipLibCheck": true
   }
 }

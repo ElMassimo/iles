@@ -5,10 +5,10 @@ import Plugin from '../dist/node/plugin/plugin'
 import type {
   PageFrontmatter,
   PageMeta,
-  UserSite,
-  StaticPath,
-  Router,
   RouteLocationNormalizedLoaded,
+  Router,
+  StaticPath,
+  UserSite,
 } from './shared'
 
 export default Plugin

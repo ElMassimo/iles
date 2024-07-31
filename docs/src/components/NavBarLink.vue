@@ -21,6 +21,6 @@ let isActive = computed(() => props.href && route.path.includes(props.href))
     v-bind="attrs"
   >
     <slot>{{ text }}</slot>
-    <OutboundLink v-if="external && text"/>
+    <OutboundLink v-if="external && text" />
   </component>
 </template>

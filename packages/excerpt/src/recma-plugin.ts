@@ -1,27 +1,28 @@
 import { walk } from 'estree-walker'
-import type { Node, Statement, ImportSpecifier, FunctionDeclaration, Program } from 'estree-jsx'
+import type { Node, Program, Statement } from 'estree-jsx'
 import type { Plugin } from 'unified'
 
-import { ArrayExpression, CallExpression, ConditionalExpression, Expression, Identifier, ObjectExpression, Property, VariableDeclaration } from 'estree'
+import type { ArrayExpression, ConditionalExpression, Identifier, ObjectExpression, Property, VariableDeclaration } from 'estree'
 
 /**
  * A plugin that splits MDXContent into before/after excerpt separator, and
  * toggles rendering with an `excerpt` prop.
  */
-export const recmaPlugin: Plugin<[], Program> = function recmaExcerpt () {
+export const recmaPlugin: Plugin<[], Program> = function recmaExcerpt() {
   return (tree) => {
     let done = false
 
     walk(tree, {
+      // eslint-disable-next-line ts/ban-ts-comment
       // @ts-ignore
-      enter (node: Node) {
+      enter(node: Node) {
         if (node.type === 'FunctionDeclaration' && node.id?.name === '_createMdxContent') {
           splitOnExcerptSeparator(node.body.body)
 
           done = true
         }
 
-        if (done) return this.skip()
+        if (done) { return this.skip() }
       },
     })
 
@@ -29,7 +30,7 @@ export const recmaPlugin: Plugin<[], Program> = function recmaExcerpt () {
   }
 }
 
-function splitOnExcerptSeparator (statements: Statement[]) {
+function splitOnExcerptSeparator(statements: Statement[]) {
   for (let index = statements.length - 1; index >= 0; index--) {
     const s = statements[index]
 
@@ -46,7 +47,7 @@ function splitOnExcerptSeparator (statements: Statement[]) {
   }
 }
 
-function splitExcerptElements (childrenExpr: ArrayExpression) {
+function splitExcerptElements(childrenExpr: ArrayExpression) {
   const excerptIndex = childrenExpr.elements.findIndex(node =>
     node?.type === 'CallExpression' && (node.arguments[0] as any)?.property?.name === 'excerpt')
   return [
@@ -57,7 +58,7 @@ function splitExcerptElements (childrenExpr: ArrayExpression) {
 
 const excerptIdentifier: Identifier = { type: 'Identifier', name: '_excerpt' }
 
-function declareExcerpt (elements: ArrayExpression['elements']): VariableDeclaration {
+function declareExcerpt(elements: ArrayExpression['elements']): VariableDeclaration {
   return {
     kind: 'const',
     type: 'VariableDeclaration',
@@ -71,7 +72,7 @@ function declareExcerpt (elements: ArrayExpression['elements']): VariableDeclara
   }
 }
 
-function conditionalExcerpt (elements: ArrayExpression['elements']): ConditionalExpression {
+function conditionalExcerpt(elements: ArrayExpression['elements']): ConditionalExpression {
   return {
     type: 'ConditionalExpression',
     test: {

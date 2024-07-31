@@ -1,5 +1,5 @@
 import fs from 'fs-extra'
-import {globbySync} from 'globby'
+import { globbySync } from 'globby'
 
 function toDest(file) {
   return file.replace(/^src\//, 'dist/')

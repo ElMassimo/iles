@@ -1,18 +1,14 @@
 {
   "name": "@islands/pwa",
-  "version": "0.9.1",
-  "scripts": {
-    "dev": "npm run build -- --watch",
-    "build": "tsup src/pwa.ts",
-    "lint": "eslint .",
-    "lint:fix": "eslint . --fix"
-  },
-  "files": [
-    "dist",
-    "src"
-  ],
-  "types": "dist/pwa.d.cts",
   "type": "module",
+  "version": "0.9.1",
+  "funding": "https://github.com/sponsors/userquin",
+  "homepage": "https://github.com/ElMassimo/iles",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ElMassimo/iles"
+  },
+  "bugs": "https://github.com/ElMassimo/iles/issues",
   "exports": {
     ".": {
       "import": "./src/pwa.mjs",
@@ -20,16 +16,20 @@
     },
     "./package.json": "./package.json"
   },
-  "funding": "https://github.com/sponsors/userquin",
+  "types": "dist/pwa.d.cts",
+  "files": [
+    "dist",
+    "src"
+  ],
+  "scripts": {
+    "dev": "npm run build -- --watch",
+    "build": "tsup src/pwa.ts",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix"
+  },
   "authors": [
     "Joaquín Sánchez <userquin@gmail.com>"
   ],
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/ElMassimo/iles"
-  },
-  "homepage": "https://github.com/ElMassimo/iles",
-  "bugs": "https://github.com/ElMassimo/iles/issues",
   "dependencies": {
     "vite-plugin-pwa": "^0.20.1"
   },

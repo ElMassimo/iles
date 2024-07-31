@@ -1,19 +1,15 @@
 {
   "name": "@islands/mdx",
-  "version": "0.9.0",
-  "scripts": {
-    "dev": "npm run build -- --watch",
-    "build": "tsup src/mdx.ts",
-    "lint": "eslint .",
-    "lint:fix": "eslint . --fix"
-  },
   "type": "module",
-  "files": [
-    "dist",
-    "src"
-  ],
-  "types": "dist/mdx.d.ts",
-  "main": "dist/mdx.js",
+  "version": "0.9.0",
+  "author": "Máximo Mussini <maximomussini@gmail.com>",
+  "funding": "https://github.com/sponsors/ElMassimo",
+  "homepage": "https://github.com/ElMassimo/iles",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ElMassimo/iles"
+  },
+  "bugs": "https://github.com/ElMassimo/iles/issues",
   "exports": {
     ".": {
       "import": "./dist/mdx.js",
@@ -21,14 +17,18 @@
     },
     "./package.json": "./package.json"
   },
-  "funding": "https://github.com/sponsors/ElMassimo",
-  "author": "Máximo Mussini <maximomussini@gmail.com>",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/ElMassimo/iles"
+  "main": "dist/mdx.js",
+  "types": "dist/mdx.d.ts",
+  "files": [
+    "dist",
+    "src"
+  ],
+  "scripts": {
+    "dev": "npm run build -- --watch",
+    "build": "tsup src/mdx.ts",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix"
   },
-  "homepage": "https://github.com/ElMassimo/iles",
-  "bugs": "https://github.com/ElMassimo/iles/issues",
   "dependencies": {
     "@mdx-js/mdx": "3.0.1",
     "estree-walker": "^3.0",

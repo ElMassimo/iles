@@ -1,18 +1,20 @@
-import { visitHome, navigateTo, goBackHome, assertPage } from './helpers'
+import { describe, expect, it } from 'vitest'
+import { cy } from 'cypress'
+import { assertPage, goBackHome, navigateTo, visitHome } from './helpers'
 
 describe('Dark Mode', () => {
   const toggleTheme = () => {
     cy.get(`[aria-label="Toggle theme"]`).click()
   }
 
-  const assertTheme = (theme) =>
+  const assertTheme = theme =>
     cy.get('html').then(html =>
       expect(html.hasClass('dark')).to.equal(theme === 'dark'))
 
   it('can toggle on and off', () => {
     visitHome()
-    cy.get('html').then(html => {
-      if (html.hasClass('dark')) toggleTheme()
+    cy.get('html').then((html) => {
+      if (html.hasClass('dark')) { toggleTheme() }
       assertTheme('light')
     })
 
