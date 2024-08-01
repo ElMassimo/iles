@@ -1,5 +1,6 @@
 {
   "name": "vue-blog",
+  "type": "module",
   "version": "1.0.0",
   "private": true,
   "engines": {
@@ -24,7 +25,7 @@
     "@islands/prism": "workspace:*",
     "iles": "workspace:*",
     "remark-gfm": "^4.0.0",
-    "vite-plugin-windicss": "^1.9.3",
+    "unocss": "^0.61.8",
     "vue-tsc": "^2.0.29"
   }
 }

@@ -7,7 +7,7 @@ import icons from '@islands/icons'
 import images, { hdPreset } from '@islands/images'
 import prism from '@islands/prism'
 
-import windicss from 'vite-plugin-windicss'
+import UnoCSS from 'unocss/vite'
 import inspect from 'vite-plugin-inspect'
 
 const presets = {
@@ -57,7 +57,7 @@ export default defineConfig({
   },
   vite: {
     plugins: [
-      windicss(),
+      UnoCSS(),
       Boolean(process.env.DEBUG) && inspect(),
     ],
   },

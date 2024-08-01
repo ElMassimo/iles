@@ -37,8 +37,8 @@
     "preact": "^10.23.1",
     "preact-render-to-string": "^6.5.7",
     "rehype-external-links": "^3.0.0",
+    "unocss": "^0.61.8",
     "vite-plugin-inspect": "^0.8.5",
-    "vite-plugin-windicss": "^1.9.3",
     "vue-tsc": "^2.0.29"
   }
 }

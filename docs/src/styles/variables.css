@@ -1,4 +1,6 @@
 :root {
+  /* https://github.com/unocss/unocss/blob/main/packages/reset/tailwind.md */
+  --un-default-border-color: var(--br-normal);
   --navbar-height: 3.5rem;
   --footer-height: 172px;
   --full-viewport: calc(100vh - var(--navbar-height));
@@ -16,9 +18,9 @@
   --fc: theme('colors.gray.700');
   --fc-hard: theme('colors.gray.800');
   --fc-intense: theme('colors.gray.900');
-  --fc-primary-soft: theme('colors.light-blue.500');
-  --fc-primary: theme('colors.light-blue.600');
-  --fc-primary-intense: theme('colors.light-blue.700');
+  --fc-primary-soft: theme('colors.lightblue.500');
+  --fc-primary: theme('colors.lightblue.600');
+  --fc-primary-intense: theme('colors.lightblue.700');
   --w-container: 1376px;
 }
 
@@ -29,16 +31,16 @@
 }
 
 html.dark {
-  --bg-html: theme('colors.warm-gray.900');
+  --bg-html: theme('colors.warmgray.900');
   --br-normal: rgba(226, 235, 255, 0.15);
   --bg-soft: rgba(195, 185, 185, 0.15);
-  --fc-softer: theme('colors.warm-gray.500');
-  --fc-soft: theme('colors.warm-gray.500');
-  --fc: theme('colors.warm-gray.300');
-  --fc-hard: theme('colors.warm-gray.200');
-  --fc-intense: theme('colors.warm-gray.100');
-  --fc-primary-soft: theme('colors.light-blue.500');
-  --fc-primary-intense: theme('colors.light-blue.500');
+  --fc-softer: theme('colors.warmgray.500');
+  --fc-soft: theme('colors.warmgray.500');
+  --fc: theme('colors.warmgray.300');
+  --fc-hard: theme('colors.warmgray.200');
+  --fc-intense: theme('colors.warmgray.100');
+  --fc-primary-soft: theme('colors.lightblue.500');
+  --fc-primary-intense: theme('colors.lightblue.500');
 
   color-scheme: dark;
 }
