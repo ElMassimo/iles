@@ -18,7 +18,7 @@ export async function bundle(config: AppConfig) {
   const entrypoints = resolveEntrypoints(config)
 
   const [clientResult, serverResult] = await Promise.all([
-    bundleWithVite(config, entrypoints, { ssr: false }),
+    bundleWithVite(config, entrypoints, { ssr: false, htmlBuild: true }),
     bundleWithVite(config, entrypoints, { ssr: true }),
     bundleHtmlEntrypoints(config),
   ])
@@ -29,7 +29,7 @@ export async function bundle(config: AppConfig) {
 async function bundleHtmlEntrypoints(config: AppConfig) {
   const entrypoints = glob.sync(resolve(config.pagesDir, './**/*.html'), { cwd: config.root, ignore: ['node_modules/**'] })
 
-  if (entrypoints.length > 0) { await bundleWithVite(config, entrypoints, { htmlBuild: true, ssr: false }) }
+  if (entrypoints.length > 0) { await bundleWithVite(config, entrypoints, { ssr: false, htmlBuild: true }) }
 }
 
 // Internal: Creates a client and server bundle.
