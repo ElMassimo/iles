@@ -37,7 +37,7 @@
     "iles": "workspace:*",
     "slugo": "^0.4.0",
     "tsup": "8.2.3",
-    "typescript": "^5.5.4",
+    "typescript": "5.2.2",
     "unified": "^11.0.5"
   }
 }

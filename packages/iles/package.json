@@ -112,7 +112,7 @@
     "rollup": "^4.19.0",
     "semver": "^7.6.3",
     "tsup": "8.2.3",
-    "typescript": "^5.5.4",
+    "typescript": "5.2.2",
     "vfile": "^6.0.2",
     "vite-plugin-solid": "^2.10.2"
   }
