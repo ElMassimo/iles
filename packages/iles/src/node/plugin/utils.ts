@@ -1,12 +1,14 @@
 import { promises as fs, constants as fsConstants } from 'node:fs'
-import { createRequire } from 'node:module'
+import process from 'node:process'
+import { resolve } from 'node:path'
+import childProcess from 'node:child_process'
+import util from 'node:util'
 import createDebugger from 'debug'
-import { dirname } from 'pathe'
 import newSpinner from 'mico-spinner'
-import { installPackage } from '@antfu/install-pkg'
+import { detectPackageManager } from '@antfu/install-pkg'
 import { importModule } from '../modules'
 
-const require = createRequire(import.meta.url)
+const exec = util.promisify(childProcess.exec)
 
 export { default as serialize } from '@nuxt/devalue'
 
@@ -24,9 +26,55 @@ export function sleep(ms: number) {
   return new Promise<void>((resolve) => { setTimeout(resolve, ms) })
 }
 
-export async function tryInstallModule(name: string) {
+export interface InstallPackageOptions {
+  cwd?: string
+  dev?: boolean
+  silent?: boolean
+  packageManager?: string
+  packageManagerVersion?: string
+  preferOffline?: boolean
+  additionalArgs?: string[]
+}
+
+// Inspired from https://github.com/antfu/install-pkg/blob/main/src/install.ts
+export async function installPackage(names: string | string[], options: InstallPackageOptions = {}) {
+  const detectedAgent = options.packageManager || await detectPackageManager(options.cwd) || 'npm'
+  const [agent] = detectedAgent.split('@')
+
+  if (!Array.isArray(names)) { names = [names] }
+
+  const args = options.additionalArgs || []
+
+  if (options.preferOffline) {
+    // yarn berry uses --cached option instead of --prefer-offline
+    if (detectedAgent === 'yarn@berry') { args.unshift('--cached') }
+    else { args.unshift('--prefer-offline') }
+  }
+
+  if (agent === 'pnpm' && await exists(resolve(options.cwd ?? process.cwd(), 'pnpm-workspace.yaml'))) { args.unshift('-w') }
+
+  const command = `${agent} ${agent === 'yarn' ? 'add' : 'install'} ${options.dev ? '-D' : ''} ${names.join(' ')} ${args.join(' ')}`
+
   try {
-    return require.resolve(name)
+    await exec(command, {
+      cwd: options.cwd || process.cwd(),
+    })
+  }
+  catch (error) {
+    const { stderr, stdout } = error
+    if (stdout) {
+      console.log(stdout)
+    }
+    if (stderr) {
+      console.error(stderr)
+    }
+    throw new Error(`Auto-install of ${names.join(' ')} failed, install manually and try again!`)
+  }
+}
+
+export async function tryImportOrInstallModule(name: string) {
+  try {
+    return await importModule(name)
   }
   catch (error) {
     if (error.code !== 'MODULE_NOT_FOUND') { throw error }
@@ -36,18 +84,12 @@ export async function tryInstallModule(name: string) {
     await withSpinner(`Installing ${name}`, async () =>
       await installPackage(name, { dev: true, preferOffline: true, silent: true }))
 
-    return dirname(require.resolve(`${name}/package.json`))
+    return await importModule(name)
   }
 }
 
 export async function importLibrary<T>(pkgName: string) {
-  try {
-    const pkgPath = await tryInstallModule(pkgName)
-    return await importModule(pkgPath)
-  }
-  catch (error) {
-    return await importModule(pkgName)
-  }
+  return await tryImportOrInstallModule(pkgName)
 }
 
 async function withSpinner<T>(message: string, fn: () => Promise<T>) {

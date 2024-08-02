@@ -12,7 +12,6 @@ import mdx from '@islands/mdx'
 import type { ComponentResolverFunction } from 'unplugin-vue-components/types'
 import type { UserConfig } from 'iles'
 
-import { importModule } from './modules'
 import type {
   AppConfig,
   ConfigEnv,
@@ -26,7 +25,7 @@ import type {
   ViteOptions,
 } from './shared'
 
-import { camelCase, compact, importLibrary, isString, isStringPlugin, tryInstallModule, uncapitalize } from './plugin/utils'
+import { camelCase, compact, importLibrary, isString, isStringPlugin, tryImportOrInstallModule, uncapitalize } from './plugin/utils'
 import { DIST_CLIENT_PATH, HYDRATION_DIST_PATH, ISLAND_COMPONENT_PATH, resolveAliases } from './alias'
 import remarkWrapIslands from './plugin/remarkWrapIslands'
 
@@ -155,7 +154,7 @@ async function setNamedPlugins(config: AppConfig, env: ConfigEnv, plugins: Named
     if (addPlugin) {
       const options = isObject(addPlugin) ? addPlugin : {}
       config.vitePlugins.push(await createPlugin(options as any) as Plugin)
-      if (optionName === 'preact') { await tryInstallModule('preact-render-to-string') }
+      if (optionName === 'preact') { await tryImportOrInstallModule('preact-render-to-string') }
     }
   }
 }
@@ -188,8 +187,7 @@ async function resolveModule(mod: IlesModuleOption): Promise<IlesModuleLike> {
 }
 
 async function createIlesModule(pkgName: string, ...options: any[]): Promise<IlesModule> {
-  await tryInstallModule(pkgName)
-  const fn = await importModule(pkgName)
+  const fn = await tryImportOrInstallModule(pkgName)
   return fn(...options)
 }
 
