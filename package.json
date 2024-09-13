@@ -42,6 +42,9 @@
     "vitest": "^2.0.4"
   },
   "pnpm": {
+    "overrides": {
+      "@typescript-eslint/typescript-estree": "8.5.0"
+    },
     "peerDependencyRules": {
       "allowedVersions": {
         "eslint": "9"

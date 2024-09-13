@@ -15,7 +15,7 @@ describe('DocSearch', () => {
   const searchModal = () =>
     cy.get('.DocSearch-Modal')
 
-  const closeSearchModal = () =>{
+  const closeSearchModal = () => {
     cy.get('body').type('{esc}')
     searchModal().should('not.exist')
   }
