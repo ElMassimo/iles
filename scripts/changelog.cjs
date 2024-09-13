@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-var-requires */
 const path = require('path')
 const fs = require('fs')
 const args = require('minimist')(process.argv.slice(2))

@@ -5,7 +5,7 @@ const testConfig = {
   test: {
     deps: {
       inline: [
-        "@vue/devtools-api",
+        '@vue/devtools-api',
       ],
     },
   },

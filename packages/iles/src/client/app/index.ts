@@ -1,6 +1,6 @@
 import { createApp as createClientApp, createSSRApp, ref } from 'vue'
 import { createMemoryHistory, createRouter as createVueRouter, createWebHistory } from 'vue-router'
-import { createHead, useHead } from '@unhead/vue'
+import { createHead } from '@unhead/vue'
 
 import routes from '@islands/routes'
 import config from '@islands/app-config'

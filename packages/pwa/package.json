@@ -4,13 +4,14 @@
   "scripts": {
     "dev": "npm run build -- --watch",
     "build": "tsup src/pwa.ts",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix"
   },
   "files": [
     "dist",
     "src"
   ],
-  "types": "dist/pwa.d.ts",
+  "types": "dist/pwa.d.cts",
   "type": "module",
   "exports": {
     ".": {
@@ -30,7 +31,7 @@
   "homepage": "https://github.com/ElMassimo/iles",
   "bugs": "https://github.com/ElMassimo/iles/issues",
   "dependencies": {
-    "vite-plugin-pwa": "^0.16.4"
+    "vite-plugin-pwa": "^0.20.1"
   },
   "devDependencies": {
     "iles": "workspace:*"

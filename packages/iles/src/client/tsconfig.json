@@ -11,5 +11,8 @@
       "iles": ["index.ts"]
     }
   },
-  "include": [".", "../../types/index.d.ts"]
+  "include": [".", "../../types/index.d.ts"],
+  "exclude": [
+    "./dist/**/*"
+  ]
 }

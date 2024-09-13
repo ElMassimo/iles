@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-var-requires */
-
 /**
  * modified from https://github.com/vuejs/vue-next/blob/master/scripts/release.js
  */
