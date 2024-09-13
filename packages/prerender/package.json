@@ -1,13 +1,23 @@
 {
   "name": "@islands/prerender",
-  "type": "module",
-  "version": "0.8.1",
   "description": "Prerender utilities for îles",
-  "author": "Máximo Mussini",
-  "license": "MIT",
-  "homepage": "https://github.com/ElMassimo/iles",
-  "bugs": {
-    "url": "https://github.com/ElMassimo/iles/issues"
+  "version": "0.8.1",
+  "type": "module",
+  "files": [
+    "dist"
+  ],
+  "types": "dist/prerender.d.ts",
+  "module": "dist/prerender.js",
+  "main": "dist/prerender.js",
+  "scripts": {
+    "dev": "npm run build -- --watch",
+    "build": "tsup prerender.ts",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix"
+  },
+  "exports": {
+    ".": "./dist/prerender.js",
+    "./package.json": "./package.json"
   },
   "keywords": [
     "vite",
@@ -15,21 +25,11 @@
     "islands",
     "ssg"
   ],
-  "exports": {
-    ".": "./dist/prerender.js",
-    "./package.json": "./package.json"
-  },
-  "main": "dist/prerender.js",
-  "module": "dist/prerender.js",
-  "types": "dist/prerender.d.ts",
-  "files": [
-    "dist"
-  ],
-  "scripts": {
-    "dev": "npm run build -- --watch",
-    "build": "tsup prerender.ts",
-    "lint": "eslint .",
-    "lint:fix": "eslint . --fix"
+  "author": "Máximo Mussini",
+  "license": "MIT",
+  "homepage": "https://github.com/ElMassimo/iles",
+  "bugs": {
+    "url": "https://github.com/ElMassimo/iles/issues"
   },
   "dependencies": {
     "@islands/hydration": "workspace:^0.8.0"

@@ -1,6 +1,4 @@
-import { describe, it } from 'vitest'
-import { cy } from 'cypress'
-import { assertPage, goBackHome, navigateTo, visitHome } from './helpers'
+import { visitHome, navigateTo, goBackHome, assertPage } from './helpers'
 
 describe('DocSearch', () => {
   const openSearchModal = () => {
@@ -17,7 +15,7 @@ describe('DocSearch', () => {
   const searchModal = () =>
     cy.get('.DocSearch-Modal')
 
-  const closeSearchModal = () => {
+  const closeSearchModal = () =>{
     cy.get('body').type('{esc}')
     searchModal().should('not.exist')
   }

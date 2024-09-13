@@ -37,7 +37,7 @@
   ul > li::before {
     background-color: var(--bg-primary);
     border-radius: 50%;
-    content: '';
+    content: "";
     height: 0.375em;
     left: 0.25em;
     position: absolute;
@@ -59,7 +59,7 @@
     margin-bottom: 2rem;
     font-size: 38px;
     line-height: 1.4;
-    letter-spacing: -0.02em;
+    letter-spacing: -.02em;
     font-weight: 700;
   }
 
@@ -160,12 +160,12 @@
 a.heading-anchor {
   @apply text-primary;
   float: left;
-  margin-top: 0.125em;
-  margin-left: -0.87em;
-  padding-right: 0.23em;
-  font-size: 0.85em;
+  margin-top: .125em;
+  margin-left: -.87em;
+  padding-right: .23em;
+  font-size: .85em;
   opacity: 0;
-  text-decoration: none !important;
+  text-decoration: none!important;
 
   &::before {
     content: '#';
@@ -176,15 +176,14 @@ a.heading-anchor {
   &::before {
     --offset: calc(var(--navbar-height) + 1rem);
     display: block;
-    content: ' ';
+    content: " ";
     margin-top: calc(var(--offset) * -1);
     height: var(--offset);
     visibility: hidden;
     pointer-events: none;
   }
 
-  &:focus,
-  &:hover {
+  &:focus, &:hover {
     a.heading-anchor {
       opacity: 1;
     }

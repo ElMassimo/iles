@@ -1,4 +1,4 @@
-import { describe, expect, it } from 'vitest'
+import { test, describe, expect } from 'vitest'
 
 import routes from '@islands/routes'
 
@@ -6,7 +6,7 @@ import vue32 from '@pages/posts/vue-3-2.mdx'
 import notFound from '@pages/404.vue'
 
 describe('app routes', () => {
-  it('empty', async () => {
+  test('empty', async () => {
     expect(routes.map(route => route.path)).toEqual([
       '/',
       '/404',
@@ -25,7 +25,7 @@ describe('app routes', () => {
 })
 
 describe('page data', () => {
-  it('for markdown file', async () => {
+  test('for markdown file', async () => {
     const doc = vue32
 
     expect(typeof doc.render).toEqual('function')
@@ -51,7 +51,7 @@ describe('page data', () => {
     expect(route).toEqual(undefined)
   })
 
-  it('for vue file', async () => {
+  test('for vue file', async () => {
     const doc = notFound
 
     expect(typeof doc.render).toEqual('function')

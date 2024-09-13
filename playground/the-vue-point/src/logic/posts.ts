@@ -8,11 +8,11 @@ export interface Post extends PageComponent {
   twitter: string
 }
 
-function byDate(a: Document<Post>, b: Document<Post>) {
+function byDate (a: Document<Post>, b: Document<Post>) {
   return Number(new Date(b.date)) - Number(new Date(a.date))
 }
 
-export function getPosts() {
+export function getPosts () {
   const posts = useDocuments<Post>('~/pages/posts')
   return computed(() => posts.value.sort(byDate))
 }

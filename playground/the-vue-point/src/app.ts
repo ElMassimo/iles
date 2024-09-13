@@ -6,7 +6,7 @@ import '~/style.css'
 import 'prismjs/themes/prism-tomorrow.css'
 
 export default defineApp({
-  enhanceApp({ app, head, router }) {
+  enhanceApp ({ app, head, router }) {
     // Configure the Vue app
   },
 })

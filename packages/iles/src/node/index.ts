@@ -5,6 +5,6 @@ export { resolveConfig } from './config'
 export { mergeConfig } from 'vite'
 import type { UserConfig } from '../../types/shared'
 
-export function defineConfig(config: UserConfig) {
+export function defineConfig (config: UserConfig) {
   return config
 }

@@ -1,9 +1,9 @@
-import { describe, expect, it } from 'vitest'
+import { test, describe, expect } from 'vitest'
 
 import emptyApp from '@islands/user-app'
 
 describe('user app', () => {
-  it('can import empty app', () => {
+  test('can import empty app', () => {
     expect(emptyApp).toEqual({})
   })
 })

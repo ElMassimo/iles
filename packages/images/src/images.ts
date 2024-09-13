@@ -1,4 +1,4 @@
-import { fileURLToPath } from 'node:url'
+import { fileURLToPath } from 'url'
 import { dirname, resolve } from 'pathe'
 import type { IlesModule } from 'iles'
 import type { ImageApi, ImagePresets, Options } from 'vite-plugin-image-presets'
@@ -20,23 +20,24 @@ const imagePresetsPlugin: typeof import('vite-plugin-image-presets').default
  * An iles module that configures vite-plugin-image-presets to easily optimize
  * and transform images in an iles site.
  */
-export default function IlesImagePresets(presets: ImagePresets, options?: Options): IlesModule & { api: ImageApi } {
+export default function IlesImagePresets (presets: ImagePresets, options?: Options): IlesModule & { api: ImageApi } {
   const plugin = imagePresetsPlugin(presets, { ...options, writeToBundle: false })
 
   return {
     name: '@islands/images',
-    get api() {
+    get api () {
       return plugin.api
     },
     ssg: {
-      async onSiteRendered({ config }) {
+      async onSiteRendered ({ config }) {
         await plugin.api.writeImages(config.outDir)
       },
     },
     components: {
       resolvers: [
         (name) => {
-          if (name === 'Picture') { return { from: PICTURE_COMPONENT_PATH } }
+          if (name === 'Picture')
+            return { from: PICTURE_COMPONENT_PATH }
         },
       ],
     },
@@ -45,7 +46,7 @@ export default function IlesImagePresets(presets: ImagePresets, options?: Option
         plugin,
         {
           name: '@islands/images:inject-mdx-component',
-          transform(code, id) {
+          transform (code, id) {
             if (id.includes('/composables/mdxComponents.js')) {
               code = code.replace('inject(mdxComponentsKey)', '{ img: _Picture, ...inject(mdxComponentsKey) }')
               return `import _Picture from '${PICTURE_COMPONENT_PATH}'\n${code}`

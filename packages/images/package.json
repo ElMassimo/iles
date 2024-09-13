@@ -1,34 +1,34 @@
 {
   "name": "@islands/images",
-  "type": "module",
   "version": "0.8.2",
-  "author": "Máximo Mussini <maximomussini@gmail.com>",
-  "funding": "https://github.com/sponsors/ElMassimo",
-  "homepage": "https://github.com/ElMassimo/iles",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/ElMassimo/iles"
-  },
-  "bugs": "https://github.com/ElMassimo/iles/issues",
-  "exports": {
-    ".": {
-      "types": "./dist/images.d.ts",
-      "import": "./dist/images.js",
-      "require": "./dist/images.cjs"
-    },
-    "./package.json": "./package.json"
-  },
-  "types": "dist/images.d.ts",
-  "files": [
-    "dist",
-    "src/Picture.vue"
-  ],
   "scripts": {
     "dev": "npm run build -- --watch",
     "build": "tsup src/images.ts",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix"
   },
+  "type": "module",
+  "files": [
+    "dist",
+    "src/Picture.vue"
+  ],
+  "types": "dist/images.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/images.js",
+      "require": "./dist/images.cjs",
+      "types": "./dist/images.d.ts"
+    },
+    "./package.json": "./package.json"
+  },
+  "funding": "https://github.com/sponsors/ElMassimo",
+  "author": "Máximo Mussini <maximomussini@gmail.com>",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ElMassimo/iles"
+  },
+  "homepage": "https://github.com/ElMassimo/iles",
+  "bugs": "https://github.com/ElMassimo/iles/issues",
   "dependencies": {
     "pathe": "^1.1.2",
     "vite-plugin-image-presets": "^0.3.4"

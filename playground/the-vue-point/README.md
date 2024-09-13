@@ -28,6 +28,6 @@
 
 This is the source code of [the îles port][demo] of the [Vue.js official blog].
 
-Since it doesn't contain any interactive components, it ships **no JS**.
+Since it doesn't contain any interactive components, it ships __no JS__.
 
-[**Live Website**][demo]
+[__Live Website__][demo]

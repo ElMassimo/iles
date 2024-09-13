@@ -1,28 +1,29 @@
 <script lang="ts">
-import { createCommentVNode, createStaticVNode, defineAsyncComponent, defineComponent, h } from 'vue'
-import type { DefineComponent, PropType } from 'vue'
+import { defineAsyncComponent, defineComponent, h, createCommentVNode, createStaticVNode } from 'vue'
+import type { PropType, DefineComponent } from 'vue'
 import type { Framework } from '@islands/hydration'
 import { asyncMapObject, mapObject, serialize } from '../utils'
-import { Hydrate, hydrationFns, isEager, newHydrationId } from '../hydration'
+import { isEager, newHydrationId, Hydrate, hydrationFns } from '../hydration'
 import { useIslandsForPath } from '../composables/islandDefinitions'
 import { useRenderer } from '../composables/renderer'
 import { useAppConfig } from '../composables/appConfig'
 import { useVueRenderer } from '../composables/vueRenderer'
 
-function trackIsland(this: any, { __ILE_DEVTOOLS__ }: any = window) {
+function trackIsland (this: any, { __ILE_DEVTOOLS__ }: any = window) {
   __ILE_DEVTOOLS__?.addIslandToDevtools(this)
 }
 
-function untrackIsland(this: any, { __ILE_DEVTOOLS__, __ILE_DISPOSE__ }: any = window) {
+function untrackIsland (this: any, { __ILE_DEVTOOLS__, __ILE_DISPOSE__ }: any = window) {
   __ILE_DEVTOOLS__?.removeIslandFromDevtools(this)
 }
 
-function disposeIsland(this: any, { __ILE_DEVTOOLS__, __ILE_DISPOSE__ }: any = window) {
+function disposeIsland (this: any, { __ILE_DEVTOOLS__, __ILE_DISPOSE__ }: any = window) {
   __ILE_DISPOSE__?.get(this.id)?.()
 }
 
-function inspectMediaQuery(query: string) {
-  if (!query.includes('(') && query.includes(': ')) { console.warn('You might need to add parenthesis to the following media query.\n\t', query, '\n', 'https://developer.mozilla.org/en-US/docs/Web/CSS/Media_Queries/Using_media_queries#targeting_media_features') }
+function inspectMediaQuery (query: string) {
+  if (!query.includes('(') && query.includes(': '))
+    console.warn('You might need to add parenthesis to the following media query.\n\t', query, '\n', 'https://developer.mozilla.org/en-US/docs/Web/CSS/Media_Queries/Using_media_queries#targeting_media_features')
   return query
 }
 
@@ -42,7 +43,7 @@ export default defineComponent({
     [Hydrate.WhenVisible]: { type: Boolean, default: false },
     [Hydrate.None]: { type: Boolean, default: false },
   },
-  setup(props, { attrs }) {
+  setup (props, { attrs }) {
     let strategy = Object.values(Hydrate).find(s => props[s])
     if (!strategy) {
       console.warn('Unknown hydration strategy, falling back to client:load. Received:', { ...attrs })
@@ -72,11 +73,12 @@ export default defineComponent({
   updated: trackIsland,
   beforeUnmount: untrackIsland,
   unmounted: disposeIsland,
-  render() {
+  render () {
     const isSSR = import.meta.env.SSR
 
     const props = { ...this.$attrs }
-    if (this.strategy === Hydrate.MediaQuery) { props._mediaQuery = inspectMediaQuery(this.$props[Hydrate.MediaQuery] as string) }
+    if (this.strategy === Hydrate.MediaQuery)
+      props._mediaQuery = inspectMediaQuery(this.$props[Hydrate.MediaQuery] as string)
 
     const { _, ...slots } = this.$slots
     const slotVNodes = mapObject(slots, slotFn => slotFn?.())
@@ -111,9 +113,9 @@ hydrate(framework, component, '${this.id}', ${serialize(props)}, ${serialize(slo
     }
 
     const prerenderIsland = () => {
-      if (this.strategy === Hydrate.SkipPrerender) { return undefined }
+      if (this.strategy === Hydrate.SkipPrerender) return undefined
 
-      if (this.framework === 'vanilla') { return undefined }
+      if (this.framework === 'vanilla') return undefined
 
       if (this.framework === 'vue') {
         const vnode = h(this.component, this.$attrs, this.$slots)
@@ -121,7 +123,7 @@ hydrate(framework, component, '${this.id}', ${serialize(props)}, ${serialize(slo
       }
 
       const prerender = this.prerender
-      if (!prerender) { return undefined }
+      if (!prerender) return undefined
 
       return h(defineAsyncComponent(async () => {
         const slots = await renderSlots()
@@ -131,11 +133,13 @@ hydrate(framework, component, '${this.id}', ${serialize(props)}, ${serialize(slo
     }
 
     const ileAttrs: Record<string, any> = { id: this.id }
-    if (this.$attrs.class) { ileAttrs.class = this.$attrs.class }
+    if (this.$attrs.class)
+      ileAttrs.class = this.$attrs.class
 
     const ileRoot = h('ile-root', ileAttrs, prerenderIsland())
 
-    if (isSSR && this.strategy === Hydrate.None) { return ileRoot }
+    if (isSSR && this.strategy === Hydrate.None)
+      return ileRoot
 
     return [
       ileRoot,

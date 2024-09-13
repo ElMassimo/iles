@@ -4,18 +4,16 @@ import '~/styles/all.css'
 
 import { defineApp } from 'iles'
 
-import type { Script } from '@unhead/schema'
 import Image from '~/components/Image.vue'
 
 import checkDarkTheme from '~/logic/dark-color-scheme-check?raw'
+import type { Script } from '@unhead/schema'
 
 type TurboScript = Script & { once: true }
 
-const prodScripts = import.meta.env.PROD
-  ? [
-      { src: 'https://unpkg.com/thesemetrics@latest', async: true, once: true, crossorigin: 'anonymous' } as TurboScript,
-    ]
-  : []
+const prodScripts = import.meta.env.PROD ? [
+  { src: 'https://unpkg.com/thesemetrics@latest', async: true, once: true, crossorigin: 'anonymous' } as TurboScript,
+] : []
 
 export default defineApp({
   head: {

@@ -3,9 +3,9 @@ path: /feed.rss
 </page>
 
 <script setup lang="ts">
-import type { FeedItem, FeedOptions } from '@islands/feed'
-import { computed } from 'vue'
+import type { FeedOptions, FeedItem } from '@islands/feed'
 import { getPosts } from '~/logic/posts'
+import { computed } from 'vue'
 
 const { site } = usePage()
 const url = site.url
@@ -44,5 +44,5 @@ const items = computed(() => posts.value.map(async (doc) => {
 </script>
 
 <template>
-  <RenderFeed format="rss" v-bind="{ options, items }" />
+  <RenderFeed format="rss" v-bind="{ options, items }"/>
 </template>

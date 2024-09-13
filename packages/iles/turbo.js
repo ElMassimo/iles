@@ -39,7 +39,7 @@ const prefetchWhenIdle = hasPrefetch()
 const hasFetched = new Set()
 hasFetched.add(normalizeURL(location.href))
 
-function prefetch(url) {
+function prefetch (url) {
   if (!saveData && !hasFetched.has(url)) {
     hasFetched.add(url)
     prefetchWhenIdle(url)
@@ -48,14 +48,15 @@ function prefetch(url) {
 
 watchLinks()
 addEventListener('popstate', (e) => {
-  if (currentPath !== location.pathname) { replacePage(location.href, (e.state && e.state.scrollPosition) || 0) }
+  if (currentPath !== location.pathname)
+    replacePage(location.href, (e.state && e.state.scrollPosition) || 0)
 })
 
 /**
  * Detect links in the viewport and prefetch them, and intercept clicks to them
  * to perform a turbolinks-style replacement of the page.
  */
-function watchLinks() {
+function watchLinks () {
   window.__ILE_DISPOSE__ = new Map()
   observer?.disconnect()
 
@@ -72,18 +73,20 @@ function watchLinks() {
   whenIdle(() => {
     queryAll('a').forEach((link) => {
       const extMatch = link.pathname.match(/\.\w+$/)
-      if ((!extMatch || extMatch[0] === '.html') && link.hostname === location.hostname) { observer.observe(link) }
+      if ((!extMatch || extMatch[0] === '.html') && link.hostname === location.hostname)
+        observer.observe(link)
     })
   })
 }
 
-function onLinkClick(e) {
+function onLinkClick (e) {
   const link = e.target.closest('a')
   if (!e.ctrlKey && !e.shiftKey && !e.altKey && !e.metaKey && event.which <= 1 && link.target !== '_blank') {
     const sameLocation = link.pathname === location.pathname
     const sameHash = link.hash === location.hash
 
-    if (!sameLocation || sameHash) { e.preventDefault() }
+    if (!sameLocation || sameHash)
+      e.preventDefault()
 
     if (!sameLocation) {
       replacePage(link.href, 0, () => {
@@ -94,7 +97,7 @@ function onLinkClick(e) {
   }
 }
 
-function replacePage(url, scrollPosition, callback) {
+function replacePage (url, scrollPosition, callback) {
   url = normalizeURL(url)
   prefetchNow(url).then(p => p.text()).then((html) => {
     callback?.()
@@ -109,7 +112,7 @@ function replacePage(url, scrollPosition, callback) {
     })
 }
 
-function replaceHtml(html) {
+function replaceHtml (html) {
   const { head, body } = new DOMParser().parseFromString(html, 'text/html')
 
   const prevHead = dom.head
@@ -117,24 +120,23 @@ function replaceHtml(html) {
 
   const prevHeadHrefs = new Set(queryAll('link', prevHead).map(el => el.href))
   toArray(head.children).forEach((el) => {
-    if (el.tagName !== 'LINK' || el.rel !== 'stylesheet' || !prevHeadHrefs.has(el.href)) {
+    if (el.tagName !== 'LINK' || el.rel !== 'stylesheet' || !prevHeadHrefs.has(el.href)){
       adoptNode(el)
       prevHead.appendChild(el)
     }
   })
   adoptNode(body)
-  // eslint-disable-next-line no-undef
   toArray(__ILE_DISPOSE__).forEach(([_id, fn]) => fn())
   dom.body.replaceWith(body)
   activateScripts(head)
   activateScripts(body)
 }
 
-function activateScripts(el) {
+function activateScripts (el) {
   queryAll('script', el).forEach(activateScript)
 }
 
-function activateScript(el) {
+function activateScript (el) {
   if (el.getAttribute('once') === null) {
     const script = createElement('script')
 
@@ -147,12 +149,12 @@ function activateScript(el) {
   }
 }
 
-function hasPrefetch(link) {
+function hasPrefetch (link) {
   link = createElement()
   return link.relList && link.relList.supports && link.relList.supports('prefetch')
 }
 
-function prefetchWithLinkTag(url, link) {
+function prefetchWithLinkTag (url, link) {
   link = createElement()
   link.rel = 'prefetch'
   link.href = url

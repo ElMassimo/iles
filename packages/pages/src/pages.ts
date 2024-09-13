@@ -12,12 +12,12 @@ export * from './types'
  * An iles module that injects remark plugins to parse pages and expose it
  * to the MDX JS expressions as `meta` and `pages`.
  */
-export default function IlesPages(): any {
+export default function IlesPages (): any {
   let api: PagesApi
 
   return {
     name: '@islands/pages',
-    configResolved(config: any) {
+    configResolved (config: any) {
       let {
         root,
         base,
@@ -44,33 +44,36 @@ export default function IlesPages(): any {
     },
   }
 
-  function PagesPlugin(options: ResolvedOptions): Plugin {
+  function PagesPlugin (options: ResolvedOptions): Plugin {
     let generatedRoutes: string | undefined
 
     const plugin: Plugin = {
       name: 'iles:pages',
       enforce: 'pre',
-      get api() {
+      get api () {
         return api
       },
-      async configResolved(config) {
+      async configResolved (config) {
         api ||= createApi(options) // NOTE: Reuse API between client and SSR build.
       },
-      async configureServer(server) {
+      async configureServer (server) {
         options.server = server
         plugin.handleHotUpdate = handleHMR(api, options, () => { generatedRoutes = undefined })
       },
-      async buildStart() {
+      async buildStart () {
         await api.addAllPages()
       },
-      async resolveId(id) {
-        if (id === MODULE_ID) { return MODULE_ID }
+      async resolveId (id) {
+        if (id === MODULE_ID)
+          return MODULE_ID
       },
-      async load(id) {
-        if (id === MODULE_ID) { return generatedRoutes ||= await api.generateRoutesModule() }
+      async load (id) {
+        if (id === MODULE_ID)
+          return generatedRoutes ||= await api.generateRoutesModule()
       },
-      async transform(_code, id) {
-        if (id.includes('vue&type=page')) { return 'export default {};' }
+      async transform (_code, id) {
+        if (id.includes('vue&type=page'))
+          return 'export default {};'
       },
     }
 

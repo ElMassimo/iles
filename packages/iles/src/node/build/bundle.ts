@@ -1,11 +1,12 @@
-import { promises as fs } from 'node:fs'
+/* eslint-disable no-restricted-syntax */
+import { promises as fs } from 'fs'
 import type { RollupOutput } from 'rollup'
-import type { Plugin, UserConfig as ViteUserConfig } from 'vite'
+import type { Plugin } from 'vite'
 import glob from 'fast-glob'
-import { dirname, join, relative, resolve } from 'pathe'
-import { build, mergeConfig as mergeViteConfig } from 'vite'
+import { relative, dirname, resolve, join } from 'pathe'
+import { build, mergeConfig as mergeViteConfig, UserConfig as ViteUserConfig } from 'vite'
 import { APP_PATH } from '../alias'
-import type { AppConfig } from '../shared'
+import { AppConfig } from '../shared'
 import IslandsPlugins from '../plugin/plugin'
 import { rm } from './utils'
 
@@ -14,7 +15,7 @@ type Entrypoints = Record<string, string>
 // Internal: Bundles the Islands app for both client and server.
 //
 // Multi-entry build: every page is considered an entry chunk.
-export async function bundle(config: AppConfig) {
+export async function bundle (config: AppConfig) {
   const entrypoints = resolveEntrypoints(config)
 
   const [clientResult, serverResult] = await Promise.all([
@@ -26,15 +27,17 @@ export async function bundle(config: AppConfig) {
   return { clientResult, serverResult }
 }
 
-async function bundleHtmlEntrypoints(config: AppConfig) {
-  const entrypoints = glob.sync(resolve(config.pagesDir, './**/*.html'), { cwd: config.root, ignore: ['node_modules/**'] })
+async function bundleHtmlEntrypoints (config: AppConfig) {
+  const entrypoints = glob.sync(resolve(config.pagesDir, './**/*.html'),
+    { cwd: config.root, ignore: ['node_modules/**'] })
 
-  if (entrypoints.length > 0) { await bundleWithVite(config, entrypoints, { ssr: false, htmlBuild: true }) }
+  if (entrypoints.length > 0)
+    await bundleWithVite(config, entrypoints, { htmlBuild: true, ssr: false })
 }
 
 // Internal: Creates a client and server bundle.
 // NOTE: The client bundle is used only to obtain styles, JS is discarded.
-async function bundleWithVite(config: AppConfig, entrypoints: string[] | Entrypoints, options: { ssr: boolean, htmlBuild?: boolean }) {
+async function bundleWithVite (config: AppConfig, entrypoints: string[] | Entrypoints, options: { ssr: boolean; htmlBuild?: boolean }) {
   const { htmlBuild = false, ssr } = options
 
   return await build(mergeViteConfig(config.vite, {
@@ -67,26 +70,27 @@ async function bundleWithVite(config: AppConfig, entrypoints: string[] | Entrypo
 }
 
 // Internal: Currently SSG supports a single stylesheet for all pages.
-function resolveEntrypoints(config: AppConfig): Entrypoints {
+function resolveEntrypoints (config: AppConfig): Entrypoints {
   return { app: APP_PATH }
 }
 
 // Internal: Removes any client JS files from the bundle, islands will be used
 // instead, which are bundled in a separate build.
-function removeJsPlugin(): Plugin {
+function removeJsPlugin (): Plugin {
   return {
     name: 'iles:client-js-removal',
-    generateBundle(_, bundle) {
-      for (const name in bundle) { if (bundle[name].fileName.endsWith('.js')) { delete bundle[name] } }
+    generateBundle (_, bundle) {
+      for (const name in bundle)
+        if (bundle[name].fileName.endsWith('.js')) delete bundle[name]
     },
   }
 }
 
 // Internal: Moves any HTML entrypoints to the correct location in the output dir.
-function moveHtmlPagesPlugin(config: AppConfig): Plugin {
+function moveHtmlPagesPlugin (config: AppConfig): Plugin {
   return {
     name: 'iles:html-pages',
-    async writeBundle(options, bundle) {
+    async writeBundle (options, bundle) {
       const outDir = resolve(config.root, config.outDir)
       await Promise.all(Object.entries(bundle).map(async ([name, chunk]) => {
         if (name.endsWith('.html')) {
@@ -101,10 +105,10 @@ function moveHtmlPagesPlugin(config: AppConfig): Plugin {
 }
 
 // Internal: Add a `package.json` file specifying the type of files as MJS.
-function addESMPackagePlugin(config: AppConfig) {
+function addESMPackagePlugin (config: AppConfig) {
   return {
     name: 'iles:add-common-js-package-plugin',
-    async writeBundle() {
+    async writeBundle () {
       await fs.writeFile(join(config.tempDir, 'package.json'), JSON.stringify({ type: 'module' }))
     },
   }

@@ -1,12 +1,11 @@
-import type { Ref } from 'vue'
-import { computed } from 'vue'
+import { Ref, computed } from 'vue'
 
 import type { Heading } from '@islands/headings'
-import type { SideBarGroup, SideBarItem } from '~/logic/config'
+import type { SideBarItem, SideBarGroup } from '~/logic/config'
 
 import { normalize } from '~/logic/utils'
 
-export function useSideBarLinks() {
+export function useSideBarLinks () {
   const { route, site } = usePage()
 
   const currentPath = computed(() => normalize(route.path))
@@ -19,7 +18,7 @@ export function useSideBarLinks() {
   }
 }
 
-export function useSideBar() {
+export function useSideBar () {
   const { frontmatter, meta, site, route } = usePage()
 
   return computed(() => {
@@ -28,21 +27,24 @@ export function useSideBar() {
     return site.sidebar.map(({ children, link, ...group }) => {
       link = normalize(link)
 
-      if (!path.includes(link)) { children = [] }
-      else if (frontmatter.sidebar === 'auto') { children = linksFromHeadings(meta.headings, 2, 1) }
+      if (!path.includes(link))
+        children = []
+      else if (frontmatter.sidebar === 'auto')
+        children = linksFromHeadings(meta.headings, 2, 1)
 
       return { ...group, link, children } as SideBarGroup
     })
   })
 }
 
-export function useActive(itemRef: Ref<SideBarItem>) {
+export function useActive (itemRef: Ref<SideBarItem>) {
   const { route } = usePage()
 
   return computed(() => {
     const { link, ...item } = itemRef.value
 
-    if (link === undefined) { return false }
+    if (link === undefined)
+      return false
 
     const routePath = normalize(route.path)
     const pagePath = normalize(link)
@@ -52,13 +54,14 @@ export function useActive(itemRef: Ref<SideBarItem>) {
   })
 }
 
-function linksFromHeadings(heading: undefined | Heading[], topLevel: number, depth: number): SideBarItem[] {
-  if (heading === undefined) { return [] }
+function linksFromHeadings (heading: undefined | Heading[], topLevel: number, depth: number): SideBarItem[] {
+  if (heading === undefined) return []
 
   const ret: SideBarItem[] = []
   let lastTopHeading: SideBarItem | undefined
   heading.forEach(({ level, title, slug }) => {
-    if (level - 1 > depth) { return }
+    if (level - 1 > depth)
+      return
 
     const item: SideBarItem = {
       text: title,

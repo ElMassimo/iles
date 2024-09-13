@@ -1,20 +1,20 @@
 {
   "name": "@islands/hydration",
-  "type": "module",
-  "version": "0.8.2",
   "description": "Hydration utilities for îles",
-  "author": "Máximo Mussini",
-  "license": "MIT",
-  "homepage": "https://github.com/ElMassimo/iles",
-  "bugs": {
-    "url": "https://github.com/ElMassimo/iles/issues"
+  "version": "0.8.2",
+  "scripts": {
+    "dev": "npm run build -- --watch",
+    "build": "tsup hydration.ts preact.ts vue.ts vanilla.ts solid.ts svelte.ts",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix"
   },
-  "keywords": [
-    "vite",
-    "vue",
-    "islands",
-    "ssg"
+  "type": "module",
+  "files": [
+    "dist",
+    "island.svelte"
   ],
+  "types": "dist/hydration.d.ts",
+  "module": "dist/hydration.js",
   "exports": {
     ".": "./dist/hydration.js",
     "./preact": "./dist/preact.js",
@@ -25,17 +25,17 @@
     "./dist/*": "./dist/*",
     "./package.json": "./package.json"
   },
-  "module": "dist/hydration.js",
-  "types": "dist/hydration.d.ts",
-  "files": [
-    "dist",
-    "island.svelte"
+  "keywords": [
+    "vite",
+    "vue",
+    "islands",
+    "ssg"
   ],
-  "scripts": {
-    "dev": "npm run build -- --watch",
-    "build": "tsup hydration.ts preact.ts vue.ts vanilla.ts solid.ts svelte.ts",
-    "lint": "eslint .",
-    "lint:fix": "eslint . --fix"
+  "author": "Máximo Mussini",
+  "license": "MIT",
+  "homepage": "https://github.com/ElMassimo/iles",
+  "bugs": {
+    "url": "https://github.com/ElMassimo/iles/issues"
   },
   "devDependencies": {
     "preact": "^10.23.1",

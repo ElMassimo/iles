@@ -1,12 +1,12 @@
-import type { PageComponent } from 'iles'
+import { PageComponent } from 'iles'
 import { extname } from 'pathe'
 import type { RouteComponent, RouteRecordNormalized } from 'vue-router'
-import type { AppConfig, CreateAppFactory, RouteToRender, Router } from '../shared'
+import type { AppConfig, CreateAppFactory, Router, RouteToRender } from '../shared'
 import { pathToFilename } from './utils'
 
 const DYNAMIC_PARAM = '/:'
 
-export async function getRoutesToRender(config: AppConfig, createApp: CreateAppFactory) {
+export async function getRoutesToRender (config: AppConfig, createApp: CreateAppFactory) {
   const routesToRender = new Map<string, RouteToRender>()
   const { router } = await createApp()
 
@@ -19,7 +19,7 @@ export async function getRoutesToRender(config: AppConfig, createApp: CreateAppF
   return Array.from(routesToRender.values())
 }
 
-async function resolveRoutesToRender(router: Router) {
+async function resolveRoutesToRender (router: Router) {
   const toResolvedPath = (route: any) => {
     try {
       return { path: router.resolve(route).fullPath, ssrProps: route.ssrProps }
@@ -35,7 +35,7 @@ async function resolveRoutesToRender(router: Router) {
   }))).flat()
 }
 
-async function getDynamicPaths(route: RouteRecordNormalized) {
+async function getDynamicPaths (route: RouteRecordNormalized) {
   const { components, path } = route
   const file = path
   const { default: component } = components || {}
@@ -49,18 +49,20 @@ async function getDynamicPaths(route: RouteRecordNormalized) {
     console.warn(`'getStaticPaths' is not defined for ${file} so ${path} it won't be generated.`)
     return []
   }
-  if (!Array.isArray(variants)) { throw new TypeError(`Expected array from 'getStaticPaths' in ${file}, got: ${JSON.stringify(variants)}`) }
+  if (!Array.isArray(variants))
+    throw new Error(`Expected array from 'getStaticPaths' in ${file}, got: ${JSON.stringify(variants)}`)
 
   return variants.map(({ params, props }) =>
     ({ name: route.name, params, ssrProps: { ...params, ...props } }))
 }
 
-function isLazy(value: NonNullable<RouteRecordNormalized['components']>['default']): value is () => Promise<RouteComponent> {
+function isLazy (value: NonNullable<RouteRecordNormalized['components']>['default']): value is () => Promise<RouteComponent> {
   return typeof value === 'function'
 }
 
-export function toArray<T>(array?: T | T[]): T[] {
+export function toArray<T> (array?: T | T[]): T[] {
   array = array || []
-  if (Array.isArray(array)) { return array }
+  if (Array.isArray(array))
+    return array
   return [array]
 }

@@ -1,5 +1,5 @@
-import { resolve } from 'node:path'
-import type { Plugin, ViteDevServer } from 'vite'
+import { resolve } from 'path'
+import { Plugin, ViteDevServer } from 'vite'
 
 import glob from 'fast-glob'
 import micromatch from 'micromatch'
@@ -8,11 +8,9 @@ import type { AppConfig } from '../shared'
 import { parseId } from './parse'
 import { debug, serialize } from './utils'
 
-// eslint-disable-next-line regexp/no-unused-capturing-group, regexp/no-useless-assertions
-const definitionRegex = /(function|const|let|var)\s+\buseDocuments\b/
-const usageRegex = /\buseDocuments\s*\(([^)]+)\)/g
+const definitionRegex = /(function|const|let|var)[\s\n]+\buseDocuments\b/
+const usageRegex = /\buseDocuments[\s\n]*\(([^)]+)\)/g
 
-// eslint-disable-next-line regexp/no-unused-capturing-group
 const fileCanUseDocuments = /(\.vue|\.[tj]sx?)$/
 
 const DOCS_VIRTUAL_ID = '/@islands/documents'
@@ -22,7 +20,7 @@ interface DocumentModule {
   hasDocument: (path: string) => boolean
 }
 
-export default function documentsPlugin(config: AppConfig): Plugin {
+export default function documentsPlugin (config: AppConfig): Plugin {
   const { root, drafts, namedPlugins: { pages } } = config
 
   let server: ViteDevServer
@@ -31,16 +29,17 @@ export default function documentsPlugin(config: AppConfig): Plugin {
 
   return {
     name: 'iles:documents',
-    configureServer(devServer) {
+    configureServer (devServer) {
       server = devServer
     },
-    resolveId(id) {
-      if (id.startsWith(DOCS_VIRTUAL_ID)) { return id }
+    resolveId (id) {
+      if (id.startsWith(DOCS_VIRTUAL_ID))
+        return id
     },
     // Extract frontmatter for each file in the matching pattern, and create a
     // module where the default export is an array with each matching document.
-    async load(id, options) {
-      if (!id.startsWith(DOCS_VIRTUAL_ID)) { return }
+    async load (id, options) {
+      if (!id.startsWith(DOCS_VIRTUAL_ID)) return
 
       const { query: { pattern: rawPath } } = parseId(id)
 
@@ -49,7 +48,8 @@ export default function documentsPlugin(config: AppConfig): Plugin {
       const pattern = path.includes('*') ? path : `${path}/**/*.{md,mdx}`
 
       // Allow Vite to automatically detect added or removed files.
-      if (server) { modulesById[id] = { pattern, hasDocument: path => micromatch.isMatch(path, pattern) } }
+      if (server)
+        modulesById[id] = { pattern, hasDocument: path => micromatch.isMatch(path, pattern) }
 
       // Obtain files matching the specified pattern and extract frontmatter.
       const files = await glob(pattern, { cwd: root })
@@ -62,7 +62,8 @@ export default function documentsPlugin(config: AppConfig): Plugin {
       }))
 
       // Filter drafts from documents if needed.
-      if (!drafts) { data = data.filter(page => !page.draft) }
+      if (!drafts)
+        data = data.filter(page => !page.draft)
       debug.documents(`${files.length} files, ${data.length} documents, drafts: ${drafts}`)
 
       // Create the structure of each document in the default export.
@@ -110,7 +111,7 @@ export default function documentsPlugin(config: AppConfig): Plugin {
         }
       `
     },
-    async transform(code, id) {
+    async transform (code, id) {
       // Ensure Vite keeps track of files with the documents pattern that are added or removed.
       if (server && id.startsWith(DOCS_VIRTUAL_ID)) {
         (server as any)._importGlobMap.set(id, [resolve(root, modulesById[id].pattern)])
@@ -134,11 +135,12 @@ export default function documentsPlugin(config: AppConfig): Plugin {
         }
       }
     },
-    handleHotUpdate(ctx) {
+    handleHotUpdate (ctx) {
       const file = relative(root, ctx.file)
 
       for (const id in modulesById) {
-        if (modulesById[id].hasDocument(file)) { ctx.modules.push(server.moduleGraph.getModuleById(id)!) }
+        if (modulesById[id].hasDocument(file))
+          ctx.modules.push(server.moduleGraph.getModuleById(id)!)
       }
     },
   }

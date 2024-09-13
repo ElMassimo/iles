@@ -1,6 +1,4 @@
-import { describe, it } from 'vitest'
-import { cy } from 'cypress'
-import { assertPage, goBackHome, navigateTo, visitHome } from './helpers'
+import { visitHome, navigateTo, assertPage, goBackHome } from './helpers'
 
 describe('The Home Page', () => {
   it('successfully loads', () => {

@@ -1,11 +1,11 @@
 <script lang="ts">
-import { computed, defineComponent } from 'vue'
+import { defineComponent, computed } from 'vue'
 import { useRoute, useRouter } from 'iles'
 
 export default defineComponent({
   name: 'NotFound',
   layoutFn: false,
-  setup() {
+  setup () {
     const route = useRoute()
     const router = useRouter()
     const routes = computed(() => {
@@ -52,7 +52,7 @@ dt {
 
 dl,
 dd {
-  font-size: 0.9rem;
+  font-size: .9rem;
 }
 
 dd {

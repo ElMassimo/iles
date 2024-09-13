@@ -1,9 +1,9 @@
-import { describe, expect, it } from 'vitest'
+import { test, describe, expect } from 'vitest'
 
-import { parseImportVariables, parseImports } from '@node/plugin/parse'
+import { parseImports, parseImportVariables } from '@node/plugin/parse'
 
 describe('parsing component imports', () => {
-  it('default imports', async () => {
+  test('default imports', async () => {
     expect(await parseImports('import __unplugin_components_0 from \'/absolute/path\'')).toEqual({
       __unplugin_components_0: {
         name: 'default',
@@ -13,7 +13,7 @@ describe('parsing component imports', () => {
     })
   })
 
-  it('named imports', async () => {
+  test('named imports', async () => {
     expect(await parseImports('import { Button as __unplugin_components_1 } from \'ant-design-vue/es\'')).toEqual({
       __unplugin_components_1: {
         name: 'Button',
@@ -25,7 +25,7 @@ describe('parsing component imports', () => {
 })
 
 describe('parseImportVariables', () => {
-  it('parse import statements', () => {
+  test('parse import statements', () => {
     expect(parseImportVariables('import \''))
       .toEqual([])
     expect(parseImportVariables('import Button from \''))

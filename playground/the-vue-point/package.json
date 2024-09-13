@@ -3,9 +3,6 @@
   "type": "module",
   "version": "1.0.0",
   "private": true,
-  "engines": {
-    "node": "^14.18 || >= 16.0.0"
-  },
   "scripts": {
     "dev": "iles",
     "build": "iles build",
@@ -14,6 +11,9 @@
     "check": "vue-tsc --noEmit",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix"
+  },
+  "engines": {
+    "node": "^14.18 || >= 16.0.0"
   },
   "devDependencies": {
     "@iconify-json/carbon": "^1.1.36",

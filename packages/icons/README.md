@@ -30,6 +30,7 @@ An [îles] module to add and configure [unplugin-icons]:
 
 - 🎨 files in the `/icons` dir available as the `app` collection, `<IconApp...`
 
+
 ### Usage 🚀
 
 ```ts

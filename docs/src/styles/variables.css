@@ -42,5 +42,5 @@ html.dark {
   --fc-primary-soft: theme('colors.lightblue.500');
   --fc-primary-intense: theme('colors.lightblue.500');
 
-  color-scheme: dark;
+  color-scheme: dark
 }

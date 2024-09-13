@@ -1,10 +1,10 @@
 <script lang="ts">
-import { computed, defineComponent, ref, watch } from 'vue'
+import { defineComponent, computed, watch, ref } from 'vue'
 import { usePage } from '../composables/pageData'
 
 export default defineComponent({
   name: 'DebugPanel',
-  setup() {
+  setup () {
     const { page, meta, frontmatter, props } = usePage()
     const message = ref<string | undefined>(undefined)
     const el = ref<HTMLElement | null>(null)
@@ -18,16 +18,16 @@ export default defineComponent({
     })
 
     let timeoutId: any
-    function copyIfSelected() {
-      if (!getSelection()?.toString()) { return }
+    function copyIfSelected () {
+      if (!getSelection()?.toString()) return
       document.execCommand('copy')
       message.value = 'Copied!'
       timeoutId = setTimeout(() => { message.value = undefined }, 3000)
     }
 
-    function copyAll(el: HTMLElement | null) {
+    function copyAll (el: HTMLElement | null) {
       const selection = getSelection()
-      if (!selection || !el) { return }
+      if (!selection || !el) return
       const range = document.createRange()
       range.selectNode(el)
       selection.removeAllRanges()
@@ -61,13 +61,9 @@ export default defineComponent({
 
 <template>
   <div ref="el" class="debug" :class="{ open }" @click="open = !open" @mouseup="copyIfSelected">
-    <p class="title">
-      {{ buttonLabel }}<span class="info">Open DevTools to inspect <b>islands</b> 🏝</span>
-    </p>
+    <p class="title">{{ buttonLabel }}<span class="info">Open DevTools to inspect <b>islands</b> 🏝</span></p>
     <pre ref="content" class="block">{{ cleanPage }}</pre>
-    <button v-show="open" class="debug title" @click="copyAll(content)">
-      Copy to Clipboard
-    </button>
+    <button v-show="open" class="debug title" @click="copyAll(content)">Copy to Clipboard</button>
   </div>
 </template>
 
@@ -76,7 +72,7 @@ export default defineComponent({
   --debug-rgba: 0, 0, 0;
   --debug-opacity: 0.75;
   --debug-bg: rgba(var(--debug-rgba), var(--debug-opacity));
-  --debug-color: #eee;
+  --debug-color: #EEE;
 
   box-sizing: border-box;
   position: fixed;
@@ -94,7 +90,7 @@ export default defineComponent({
 }
 
 .info {
-  display: none;
+  display: none
 }
 
 .debug:not(.open):hover {
@@ -120,14 +116,14 @@ export default defineComponent({
 
 .debug.open .info {
   display: inline;
-  float: right;
+  float:  right;
 }
 
 @media (prefers-color-scheme: light) {
   .debug.open {
     --debug-rgba: 255, 255, 255;
     --debug-color: #444;
-    border-left: 1px solid #ddd;
+    border-left: 1px solid #DDD;
   }
 }
 
@@ -155,7 +151,7 @@ export default defineComponent({
 
 .block {
   margin: 2px 0 0;
-  border-top: 1px solid #ddd;
+  border-top: 1px solid #DDD;
   padding: 8px 16px;
   font-family: Hack, monospace;
   font-size: 13px;

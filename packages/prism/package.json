@@ -1,15 +1,18 @@
 {
   "name": "@islands/prism",
-  "type": "module",
   "version": "0.8.0",
-  "author": "Máximo Mussini <maximomussini@gmail.com>",
-  "funding": "https://github.com/sponsors/ElMassimo",
-  "homepage": "https://github.com/ElMassimo/iles",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/ElMassimo/iles"
+  "scripts": {
+    "dev": "npm run build -- --watch",
+    "build": "tsup src/prism.ts",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix"
   },
-  "bugs": "https://github.com/ElMassimo/iles/issues",
+  "type": "module",
+  "files": [
+    "dist",
+    "src"
+  ],
+  "types": "dist/prism.d.ts",
   "exports": {
     ".": {
       "import": "./dist/prism.js",
@@ -17,17 +20,14 @@
     },
     "./package.json": "./package.json"
   },
-  "types": "dist/prism.d.ts",
-  "files": [
-    "dist",
-    "src"
-  ],
-  "scripts": {
-    "dev": "npm run build -- --watch",
-    "build": "tsup src/prism.ts",
-    "lint": "eslint .",
-    "lint:fix": "eslint . --fix"
+  "funding": "https://github.com/sponsors/ElMassimo",
+  "author": "Máximo Mussini <maximomussini@gmail.com>",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ElMassimo/iles"
   },
+  "homepage": "https://github.com/ElMassimo/iles",
+  "bugs": "https://github.com/ElMassimo/iles/issues",
   "dependencies": {
     "prismjs": "^1.29.0",
     "unist-util-visit": "^5.0.0"

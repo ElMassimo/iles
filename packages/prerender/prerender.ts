@@ -1,4 +1,4 @@
-import type { Framework, Props, Slots } from '@islands/hydration'
+import type { Props, Slots, Framework } from '@islands/hydration'
 
 export type { Framework }
 
@@ -14,7 +14,7 @@ const _imports: {
 } = {}
 
 export const renderers: Record<Framework, PrerenderFn> = {
-  async preact(component, props, slots) {
+  async preact (component, props, slots) {
     const [
       { createElement },
       { renderToString },
@@ -25,21 +25,21 @@ export const renderers: Record<Framework, PrerenderFn> = {
     const node = createElement(component, props, slots)
     return renderToString(node as any)
   },
-  async solid(component, props, slots, renderId) {
+  async solid (component, props, slots, renderId) {
     const { ssr, renderToString, createComponent } = _imports.solid ||= await import('solid-js/web')
     return renderToString(() => {
       const children = slots?.default && ssr(slots.default)
       return createComponent(component, { ...props, children })
     }, { renderId })
   },
-  async svelte(component, props, slots) {
+  async svelte (component, props, slots) {
     const Svelte = (await import('./svelte')).default
     return Svelte.render({ component, props, slots })?.html
   },
-  async vanilla() {
+  async vanilla () {
     throw new Error('The vanilla strategy does not prerender islands.')
   },
-  async vue() {
+  async vue () {
     throw new Error('The vue strategy prerenders islands directly in the main app.')
   },
 }

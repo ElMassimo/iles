@@ -1,10 +1,12 @@
 import type { MDXJsxFlowElement, MDXJsxTextElement } from 'mdast-util-mdx-jsx'
-import type { Root } from 'mdast'
+import type { MDXJSEsm } from 'mdast-util-mdxjs-esm'
+import type { Root, Link } from 'mdast'
 import type { Plugin, Transformer } from 'unified'
+import type { Parent, Node } from 'unist'
 
-import { SKIP, visit } from 'unist-util-visit'
+import { visit, SKIP } from 'unist-util-visit'
 
-import { isJsxElement, isString, toExplicitHtmlPath } from './utils'
+import { isExternal, isJsxElement, isString, toExplicitHtmlPath } from './utils'
 
 export interface HrefOptions {
   prettyUrls?: boolean
@@ -17,12 +19,15 @@ type HrefProcessor = Transformer<Root, Root>
  * A Remark plugin for converting Markdown images to MDX images using imports
  * for the image source.
  */
+export const remarkInternalHrefs: HrefPlugin = (options) => {
+  if (!options?.prettyUrls) return remarkProcessor
+}
 
 const remarkProcessor: HrefProcessor = (ast, vfile) => {
   visit(ast, (node) => {
     if (node.type === 'link') {
       const { url } = node
-      if (url) { node.url = toExplicitHtmlPath(url) }
+      if (url) node.url = toExplicitHtmlPath(url)
       return SKIP
     }
 
@@ -32,16 +37,12 @@ const remarkProcessor: HrefProcessor = (ast, vfile) => {
     }
   })
 
-  function replaceHrefAttribute(node: MDXJsxTextElement | MDXJsxFlowElement) {
+  function replaceHrefAttribute (node: MDXJsxTextElement | MDXJsxFlowElement) {
     for (const attr of node.attributes) {
       if (attr.type === 'mdxJsxAttribute' && attr.name === 'href') {
-        if (isString(attr.value) && attr.value) { attr.value = toExplicitHtmlPath(attr.value) }
+        if (isString(attr.value) && attr.value) attr.value = toExplicitHtmlPath(attr.value)
         break
       }
     }
   }
-}
-
-export const remarkInternalHrefs: HrefPlugin = (options) => {
-  if (!options?.prettyUrls) { return remarkProcessor }
 }

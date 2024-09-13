@@ -1,6 +1,6 @@
 <template>
   <button class="nav-bar-button inline-flex text-xl p-2">
-    <slot />
+    <slot/>
   </button>
 </template>
 

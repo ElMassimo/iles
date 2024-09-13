@@ -1,3 +1,5 @@
+/* eslint-disable import/no-duplicates */
+/* eslint-disable import/order */
 declare module '*.vue' {
   const comp: import('./shared').PageComponent
   export default comp
@@ -10,7 +12,6 @@ declare module '*.mdx' {
 
 declare module '@islands/routes' {
   import type { RouteRecordRaw } from 'vue-router'
-
   const routes: RouteRecordRaw[]
   export default routes
 }

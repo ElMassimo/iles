@@ -1,8 +1,6 @@
-import { cy } from 'cypress'
-
 export const assertPage = ({ title, content }) => {
   cy.get('h1').should('contain', title)
-  if (content) { cy.get('p').should('contain', content) }
+  if (content) cy.get('p').should('contain', content)
 }
 
 export const navigateTo = (title) => {

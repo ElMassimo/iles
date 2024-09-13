@@ -1,7 +1,7 @@
 import fs from 'fs-extra'
 import chokidar from 'chokidar'
 
-function toClientAndNode(method, file) {
+function toClientAndNode (method, file) {
   if (method === 'copy') {
     fs.copy(file, file.replace(/^src\/shared\//, 'src/node/'))
     fs.copy(file, file.replace(/^src\/shared\//, 'src/client/'))
@@ -12,7 +12,7 @@ function toClientAndNode(method, file) {
   }
 }
 
-function toDist(file) {
+function toDist (file) {
   return file.replace(/^src\//, 'dist/')
 }
 

@@ -1,9 +1,9 @@
-import { describe, expect, it } from 'vitest'
+import { test, describe, expect } from 'vitest'
 
 import config from '@islands/app-config'
 
 describe('app config', () => {
-  it('site url', async () => {
+  test('site url', async () => {
     expect(config.root).toEqual(process.cwd())
     expect(config.base).toEqual('/')
     expect(config.siteUrl).toEqual('https://example.com')

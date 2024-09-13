@@ -4,17 +4,16 @@ import type { Awaited } from '../shared'
 
 export type ImportsMetadata = Record<string, ComponentInfo>
 
-export function parseId(id: string) {
+export function parseId (id: string) {
   const index = id.indexOf('?')
-  if (index < 0) { return { path: id, query: {} } }
+  if (index < 0) return { path: id, query: {} }
 
-  // eslint-disable-next-line ts/ban-ts-comment
   // @ts-ignore
   const query = Object.fromEntries(new URLSearchParams(id.slice(index)))
   return { path: id.slice(0, index), query }
 }
 
-export async function parseExports(code: string) {
+export async function parseExports (code: string) {
   try {
     await initESLexer
     return parseESModules(code)[1].map(spec => spec.n)
@@ -25,14 +24,14 @@ export async function parseExports(code: string) {
   }
 }
 
-export async function parseImports(code: string) {
+export async function parseImports (code: string) {
   try {
     await initESLexer
 
     const imports = parseESModules(code)[0]
     const importMap: ImportsMetadata = Object.create(null)
     imports.forEach(({ d: isDynamic, n: from, ss: statementStart, s: importPathStart }) => {
-      if (isDynamic > -1 || !from) { return }
+      if (isDynamic > -1 || !from) return
       const importFragment = code.substring(statementStart, importPathStart)
       parseImportVariables(importFragment).forEach(([name, as = name]) => {
         importMap[as] = { name, as, from }
@@ -48,19 +47,17 @@ export async function parseImports(code: string) {
 
 export type ParsedImports = Awaited<ReturnType<typeof parseImports>>
 
-// eslint-disable-next-line regexp/no-super-linear-backtracking
 const importStatementRegex = /import\s*(.*?)\s*from['"\s]+$/s
-// eslint-disable-next-line regexp/no-super-linear-backtracking
-const importVarRegex = /(?:\{\s*((?:[^,}]+(?:,[,\s]*)?)+)\}|([^,]+))(?:[,\s]?|\s*$)+/g
+const importVarRegex = /(?:\{\s*((?:[^,}]+[,\s]*)+)\}|([^,]+))(?:[,\s]*|\s*$)+/sg
 const trim = (s: string) => s.trim()
 
-export function parseImportVariables(partialStatement: string) {
+export function parseImportVariables (partialStatement: string) {
   const variablesStr = partialStatement.match(importStatementRegex)?.[1].trim()
-  if (!variablesStr) { return [] } // Example: import '~/styles/main.css'
+  if (!variablesStr) return [] // Example: import '~/styles/main.css'
 
   const variables = Array.from(variablesStr.matchAll(importVarRegex))
     .flatMap(([, inBrackets, outer]) => {
-      if (inBrackets) { return inBrackets.split(',').map(trim).filter(x => x) }
+      if (inBrackets) return inBrackets.split(',').map(trim).filter(x => x)
       outer = outer.trim()
       return outer.includes(' as ') ? outer : `default as ${outer}`
     })

@@ -1,15 +1,16 @@
-import { promises as fs } from 'node:fs'
-import { dirname, join, resolve } from 'pathe'
+/* eslint-disable no-restricted-syntax */
+import { promises as fs } from 'fs'
+import { join, resolve, dirname } from 'pathe'
 import glob from 'fast-glob'
 import type { Manifest } from 'vite'
-import type { AppConfig, Awaited, IslandDefinition, IslandsByPath, RouteToRender } from '../shared'
+import type { Awaited, AppConfig, IslandsByPath, IslandDefinition, RouteToRender } from '../shared'
 import rebaseImports from './rebaseImports'
 import { uniq } from './utils'
 import type { renderPages } from './render'
 
 import { VIRTUAL_PREFIX, VIRTUAL_TURBO_ID } from './islands'
 
-export async function writePages(
+export async function writePages (
   config: AppConfig,
   islandsByPath: IslandsByPath,
   { routesToRender }: Awaited<ReturnType<typeof renderPages>>,
@@ -21,10 +22,10 @@ export async function writePages(
 
   const tempIslandFiles = await glob(join(config.outDir, `**/${VIRTUAL_PREFIX}*.js`))
   // Remove temporary island script files.
-  for (const temp of tempIslandFiles) { await fs.unlink(temp) }
+  for (const temp of tempIslandFiles) await fs.unlink(temp)
 }
 
-async function writeRoute(config: AppConfig, manifest: Manifest, route: RouteToRender, islands: IslandDefinition[] = []) {
+async function writeRoute (config: AppConfig, manifest: Manifest, route: RouteToRender, islands: IslandDefinition[] = []) {
   let content = route.rendered
 
   if (route.outputFilename.endsWith('.html')) {
@@ -40,7 +41,7 @@ async function writeRoute(config: AppConfig, manifest: Manifest, route: RouteToR
         throw new Error(message)
       }
 
-      if (entry.imports) { preloadScripts.push(...entry.imports) }
+      if (entry.imports) preloadScripts.push(...entry.imports)
 
       // Read the compiled code for the island.
       const filename = resolve(config.outDir, entry.file)
@@ -65,38 +66,38 @@ async function writeRoute(config: AppConfig, manifest: Manifest, route: RouteToR
   await fs.writeFile(filename, route.rendered, 'utf-8')
 }
 
-function stringifyScripts({ turbo, base }: AppConfig, manifest: Manifest, hrefs: string[]) {
+function stringifyScripts ({ turbo, base }: AppConfig, manifest: Manifest, hrefs: string[]) {
   return [
     turbo && injectNavigation(base, manifest),
     stringifyPreload(base, manifest, hrefs),
   ].filter(x => x).join('')
 }
 
-function injectNavigation(base: string, manifest: Manifest) {
+function injectNavigation (base: string, manifest: Manifest) {
   const src = manifest[VIRTUAL_TURBO_ID]?.file
   return src && `<script type="module" async src="${base}${src}"></script>`
 }
 
-function stringifyPreload(base: string, manifest: Manifest, hrefs: string[]) {
+function stringifyPreload (base: string, manifest: Manifest, hrefs: string[]) {
   return uniq(resolveManifestEntries(manifest, hrefs))
     .map(href => `<link rel="modulepreload" href="${base}${href}" crossorigin/>`)
     .join('')
 }
 
-function resolveManifestEntries(manifest: Manifest, entryNames: string[]): string[] {
+function resolveManifestEntries (manifest: Manifest, entryNames: string[]): string[] {
   return entryNames.flatMap((entryName) => {
     const entry = manifest[entryName]
     return [entry.file, ...resolveManifestEntries(manifest, entry.imports || [])]
   })
 }
 
-async function parseManifest(outDir: string, islandsByPath: IslandsByPath) {
+async function parseManifest (outDir: string, islandsByPath: IslandsByPath) {
   const manifestPath = join(outDir, '.vite', 'manifest.json')
   try {
     return JSON.parse(await fs.readFile(manifestPath, 'utf-8'))
   }
   catch (err) {
-    if (Object.keys(islandsByPath).length > 0) { throw err }
+    if (Object.keys(islandsByPath).length > 0) throw err
     return {}
   }
 }

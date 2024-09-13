@@ -1,21 +1,20 @@
 <script lang="ts">
-import { computed, defineComponent, watch } from 'vue'
+import { defineComponent, computed, watch } from 'vue'
 import { Head } from '@unhead/vue/components'
 import { usePage } from '../composables/pageData'
 import { useRouterLinks } from '../composables/routerLinks'
 import { resolveLayout } from '../layout'
-
 const DebugPanel = () => null
 
 export default defineComponent({
   name: 'îles',
   components: {
     DebugPanel,
-    // eslint-disable-next-line vue/no-reserved-component-names
     Head,
   },
-  setup() {
-    if (import.meta.env.DEV && !import.meta.env.SSR) { useRouterLinks() }
+  setup () {
+    if (import.meta.env.DEV && !import.meta.env.SSR)
+      useRouterLinks()
 
     const { page, route, props } = usePage()
 
@@ -24,7 +23,7 @@ export default defineComponent({
     if (import.meta.env.DEV) {
       // HMR for layout changes
       watch([page, layoutName], async ([page], [oldPage]) => {
-        if (page === oldPage) { await resolveLayout(route) }
+        if (page === oldPage) await resolveLayout(route)
       })
     }
 
@@ -34,7 +33,7 @@ export default defineComponent({
       props,
     }
   },
-  mounted() {
+  mounted () {
     (window as any).__ILE_DISPOSE__ ||= new Map()
   },
 })
@@ -46,13 +45,13 @@ export default defineComponent({
   </Head>
   <Suspense>
     <router-view>
-      <component :is="page" v-if="layout === false" v-bind="props" />
+      <component :is="page" v-if="layout === false" v-bind="props"/>
       <component :is="layout" v-else>
         <template #default="layoutProps">
-          <component :is="page" v-bind="{ ...layoutProps, ...props }" />
+          <component :is="page" v-bind="{ ...layoutProps, ...props }"/>
         </template>
       </component>
     </router-view>
   </Suspense>
-  <DebugPanel />
+  <DebugPanel/>
 </template>

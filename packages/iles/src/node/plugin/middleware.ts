@@ -1,7 +1,7 @@
-import { existsSync } from 'node:fs'
+import { existsSync } from 'fs'
 import pc from 'picocolors'
-import { extname, relative, resolve } from 'pathe'
-import type { Connect, ViteDevServer } from 'vite'
+import { resolve, relative, extname } from 'pathe'
+import type { ViteDevServer, Connect } from 'vite'
 import createDebugger from 'debug'
 
 import type { AppConfig } from '../shared'
@@ -14,10 +14,10 @@ const supportedExtensions = new Set(['.html', '.xml', '.json', '.rss', '.atom'])
 
 const debug = createDebugger('iles:html-page-fallback')
 
-export function configureMiddleware(config: AppConfig, server: ViteDevServer, defaultLayoutPath: string) {
+export function configureMiddleware (config: AppConfig, server: ViteDevServer, defaultLayoutPath: string) {
   restartOnConfigChanges(config, server)
 
-  const htmlPagesMiddleware: Connect.NextHandleFunction = function ilesHtmlPagesMiddleware(req, res, next) {
+  const htmlPagesMiddleware: Connect.NextHandleFunction = function ilesHtmlPagesMiddleware (req, res, next) {
     let { url = '' } = req
 
     url = pathToHtmlFilename(url)
@@ -42,9 +42,9 @@ export function configureMiddleware(config: AppConfig, server: ViteDevServer, de
       const url = req.url || ''
 
       // Let Vite process existing files.
-      if (url.startsWith('/@fs/')) { return next() }
+      if (url.startsWith('/@fs/')) return next()
       const filename = resolve(config.root, url.slice(1))
-      if (await exists(filename)) { return next() }
+      if (await exists(filename)) return next()
 
       // Fallback when the user has not created a default layout.
       if (url.includes(defaultLayoutPath)) {
@@ -77,7 +77,7 @@ export function configureMiddleware(config: AppConfig, server: ViteDevServer, de
   }
 }
 
-async function restartOnConfigChanges(config: AppConfig, server: ViteDevServer) {
+async function restartOnConfigChanges (config: AppConfig, server: ViteDevServer) {
   const restartIfConfigChanged = async (path: string) => {
     if (path === config.configPath) {
       server.config.logger.info(
@@ -87,9 +87,7 @@ async function restartOnConfigChanges(config: AppConfig, server: ViteDevServer) 
         { clear: true, timestamp: true },
       )
       await server.close()
-      // eslint-disable-next-line ts/ban-ts-comment
       // @ts-ignore
-      // eslint-disable-next-line no-restricted-globals
       global.__vite_start_time = Date.now()
       const { server: newServer } = await createServer(server.config.root, server.config.server)
       await newServer.listen()

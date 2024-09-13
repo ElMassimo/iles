@@ -22,7 +22,7 @@ export const debug = {
   build: createDebugger('iles:build'),
 }
 
-export function sleep(ms: number) {
+export function sleep (ms: number) {
   return new Promise<void>((resolve) => { setTimeout(resolve, ms) })
 }
 
@@ -37,7 +37,7 @@ export interface InstallPackageOptions {
 }
 
 // Inspired from https://github.com/antfu/install-pkg/blob/main/src/install.ts
-export async function installPackage(names: string | string[], options: InstallPackageOptions = {}) {
+export async function installPackage (names: string | string[], options: InstallPackageOptions = {}) {
   const detectedAgent = options.packageManager || await detectPackageManager(options.cwd) || 'npm'
   const [agent] = detectedAgent.split('@')
 
@@ -77,7 +77,8 @@ export async function tryImportOrInstallModule(name: string) {
     return await importModule(name)
   }
   catch (error) {
-    if (error.code !== 'MODULE_NOT_FOUND') { throw error }
+    if (error.code !== 'MODULE_NOT_FOUND')
+      throw error
 
     console.info(`\n${name} not found. Proceeding to auto-install.\n`)
 
@@ -88,11 +89,11 @@ export async function tryImportOrInstallModule(name: string) {
   }
 }
 
-export async function importLibrary<T>(pkgName: string) {
+export async function importLibrary<T> (pkgName: string) {
   return await tryImportOrInstallModule(pkgName)
 }
 
-async function withSpinner<T>(message: string, fn: () => Promise<T>) {
+async function withSpinner<T> (message: string, fn: () => Promise<T>) {
   const spinner = newSpinner(message).start()
   try {
     const result = await fn()
@@ -105,49 +106,49 @@ async function withSpinner<T>(message: string, fn: () => Promise<T>) {
   }
 }
 
-export function isString(val: any): val is string {
+export function isString (val: any): val is string {
   return typeof val === 'string'
 }
 
-export function isStringPlugin(val: any): val is [string, any] {
+export function isStringPlugin (val: any): val is [string, any] {
   return Array.isArray(val) && isString(val[0])
 }
 
-export function uniq<T>(arr: Array<T>) {
+export function uniq<T> (arr: Array<T>) {
   return [...new Set(arr.filter(x => x))]
 }
 
-export function escapeRegex(str: string) {
+export function escapeRegex (str: string) {
   return str.replace(/[-/\\^$*+?.()|[\]{}]/g, '\\$&')
 }
 
-export function pascalCase(str: string) {
+export function pascalCase (str: string) {
   return capitalize(camelCase(str))
 }
 
-export function camelCase(str: string) {
-  return str.replace(/\W+(\w)/g, (_, c) => c ? c.toUpperCase() : '')
+export function camelCase (str: string) {
+  return str.replace(/[^\w_]+(\w)/g, (_, c) => c ? c.toUpperCase() : '')
 }
 
-export function uncapitalize(str: string) {
+export function uncapitalize (str: string) {
   return str.charAt(0).toLowerCase() + str.slice(1)
 }
 
-export function capitalize(str: string) {
+export function capitalize (str: string) {
   return str.charAt(0).toUpperCase() + str.slice(1)
 }
 
-export async function replaceAsync(str: string, regex: RegExp, asyncFn: (...groups: string[]) => Promise<string>) {
+export async function replaceAsync (str: string, regex: RegExp, asyncFn: (...groups: string[]) => Promise<string>) {
   const promises = Array.from(str.matchAll(regex))
     .map(([match, ...args]) => asyncFn(match, ...args))
   const replacements = await Promise.all(promises)
   return str.replace(regex, () => replacements.shift()!)
 }
 
-export async function exists(filePath: string) {
+export async function exists (filePath: string) {
   return await fs.access(filePath, fsConstants.F_OK).then(() => true, () => false)
 }
 
-export function compact<T>(val: (false | undefined | null | T)[]): T[] {
+export function compact<T> (val: (false | undefined | null | T)[]): T[] {
   return val.filter(x => x) as T[]
 }

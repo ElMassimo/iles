@@ -14,16 +14,16 @@ export { useRouter, useRoute } from 'vue-router'
 export { useHead } from '@unhead/vue'
 
 import type { ComponentOptionsWithoutProps, ComputedRef } from 'vue'
-import type { Document, GetStaticPaths, UserApp } from '../../types/shared'
+import type { UserApp, GetStaticPaths, Document } from '../../types/shared'
 
-export function useDocuments<T = void>(globPattern: string): ComputedRef<Document<T>[]> {
+export function useDocuments<T = void> (globPattern: string): ComputedRef<Document<T>[]> {
   throw new Error(`Unresolved useDocuments('${globPattern}')`)
 }
 
-export function defineApp(app: UserApp) {
+export function defineApp (app: UserApp) {
   return app
 }
 
-export function definePageComponent<T>(page: ComponentOptionsWithoutProps<T> & { getStaticPaths?: GetStaticPaths<T> }) {
+export function definePageComponent<T> (page: ComponentOptionsWithoutProps<T> & { getStaticPaths?: GetStaticPaths<T> }) {
   return page
 }

@@ -1,12 +1,10 @@
 <script setup lang="ts">
-defineProps<{ twitter: string, gravatar?: string, avatar?: string, author: string }>()
+defineProps<{ twitter: string; gravatar?: string; avatar?: string; author: string }>()
 </script>
 
 <template>
   <dl class="pt-6 pb-10 xl:pt-11 xl:border-b xl:border-gray-200">
-    <dt class="sr-only">
-      Authors
-    </dt>
+    <dt class="sr-only">Authors</dt>
     <dd>
       <ul
         class="
@@ -21,7 +19,7 @@ defineProps<{ twitter: string, gravatar?: string, avatar?: string, author: strin
         <li class="flex items-center space-x-2">
           <img
             v-if="gravatar"
-            :src="`https://gravatar.com/avatar/${gravatar}`"
+            :src="'https://gravatar.com/avatar/' + gravatar"
             alt="author image"
             class="w-10 h-10 rounded-full"
           >
@@ -30,20 +28,14 @@ defineProps<{ twitter: string, gravatar?: string, avatar?: string, author: strin
             :src="avatar"
             alt="author image"
             class="w-10 h-10 rounded-full"
-          >
+          />
           <dl class="text-sm font-medium leading-5 whitespace-nowrap">
-            <dt class="sr-only">
-              Name
-            </dt>
-            <dd class="text-gray-900">
-              {{ author }}
-            </dd>
-            <dt v-if="twitter" class="sr-only">
-              Twitter
-            </dt>
+            <dt class="sr-only">Name</dt>
+            <dd class="text-gray-900">{{ author }}</dd>
+            <dt v-if="twitter" class="sr-only">Twitter</dt>
             <dd v-if="twitter">
               <a
-                :href="`https://twitter.com/${twitter}`"
+                :href="'https://twitter.com/' + twitter"
                 target="_blank"
                 rel="noopener noreferrer"
                 class="link"

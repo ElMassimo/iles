@@ -1,9 +1,9 @@
-import { describe, expect, it } from 'vitest'
+import { test, describe, expect } from 'vitest'
 
 import { pascalCase, serialize } from '@node/plugin/utils'
 
 describe('case conversions', () => {
-  it('pascalCase', () => {
+  test('pascalCase', () => {
     expect(pascalCase('AudioPlayer')).toEqual('AudioPlayer')
     expect(pascalCase('audio-player')).toEqual('AudioPlayer')
     expect(pascalCase('bx:bx-sun')).toEqual('BxBxSun')
@@ -11,7 +11,7 @@ describe('case conversions', () => {
 })
 
 describe('serialize', () => {
-  it('to string', () => {
+  test('to string', () => {
     const audio = '/song.mp3'
     const recordedAt = new Date()
     const value = { audio, recordedAt }

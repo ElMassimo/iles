@@ -46,12 +46,14 @@ export default defineConfig({
   ],
   // Example: Configure all posts to use a different layout without having to
   // add `layout: 'post'` in every file.
-  extendFrontmatter(frontmatter, filename) {
-    if (filename.includes('/posts/')) { frontmatter.layout ||= 'post' }
+  extendFrontmatter (frontmatter, filename) {
+    if (filename.includes('/posts/'))
+      frontmatter.layout ||= 'post'
   },
   markdown: {
-    withImageSrc(src) {
-      if (!src.includes('?')) { return `${src}?preset=post` }
+    withImageSrc (src) {
+      if (!src.includes('?'))
+        return `${src}?preset=post`
     },
     remarkPlugins: ['remark-gfm'],
   },

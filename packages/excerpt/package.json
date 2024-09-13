@@ -1,15 +1,18 @@
 {
   "name": "@islands/excerpt",
-  "type": "module",
   "version": "0.9.0",
-  "author": "Máximo Mussini <maximomussini@gmail.com>",
-  "funding": "https://github.com/sponsors/ElMassimo",
-  "homepage": "https://github.com/ElMassimo/iles",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/ElMassimo/iles"
+  "scripts": {
+    "dev": "npm run build -- --watch",
+    "build": "tsup src/excerpt.ts",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix"
   },
-  "bugs": "https://github.com/ElMassimo/iles/issues",
+  "type": "module",
+  "files": [
+    "dist",
+    "src"
+  ],
+  "types": "dist/excerpt.d.ts",
   "exports": {
     ".": {
       "import": "./dist/excerpt.js",
@@ -17,17 +20,14 @@
     },
     "./package.json": "./package.json"
   },
-  "types": "dist/excerpt.d.ts",
-  "files": [
-    "dist",
-    "src"
-  ],
-  "scripts": {
-    "dev": "npm run build -- --watch",
-    "build": "tsup src/excerpt.ts",
-    "lint": "eslint .",
-    "lint:fix": "eslint . --fix"
+  "funding": "https://github.com/sponsors/ElMassimo",
+  "author": "Máximo Mussini <maximomussini@gmail.com>",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ElMassimo/iles"
   },
+  "homepage": "https://github.com/ElMassimo/iles",
+  "bugs": "https://github.com/ElMassimo/iles/issues",
   "dependencies": {
     "estree-walker": "^3.0",
     "hast-util-to-string": "^3.0.0"

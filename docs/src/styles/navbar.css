@@ -28,9 +28,7 @@
   & > a {
     @apply opacity-80 pt-1 border-transparent border-bottom-2;
 
-    transition:
-      opacity 80ms ease,
-      border-color 80ms ease;
+    transition: opacity 80ms ease, border-color 80ms ease;
 
     &:hover,
     &:active,

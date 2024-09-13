@@ -133,7 +133,7 @@ pre.line-numbers {
 }
 
 .line-highlight > .highlighted {
-  background: rgba(0, 0, 0, 0.1);
+  background: rgba(0,0,0,0.1);
 }
 
 div[class*='language-'].line-numbers-mode {
@@ -142,13 +142,13 @@ div[class*='language-'].line-numbers-mode {
 }
 
 pre.line-numbers {
-  border-right: 1px solid rgba(0, 0, 0, 0.1);
+  border-right: 1px solid rgba(0,0,0,0.1);
   text-align: center;
   width: var(--gutter-width);
 }
 ```
 
-If you wish to display the language, you can use the value of the `data-lang` attribute by using the [`attr` CSS function](<https://developer.mozilla.org/en-US/docs/Web/CSS/attr()>):
+If you wish to display the language, you can use the value of the `data-lang` attribute by using the [`attr` CSS function](https://developer.mozilla.org/en-US/docs/Web/CSS/attr()):
 
 ```css
 div[class*='language-'] {

@@ -13,7 +13,7 @@
               :alt="$frontmatter.heroAlt"
             >
           </picture>
-          <IconAppText class="grid-item banner-text text-white fill-current" />
+          <IconAppText class="grid-item banner-text text-white fill-current"/>
         </figure>
 
         <div class="text-center">
@@ -27,7 +27,7 @@
           <div class="flex mt-8 justify-center">
             <AppButton :href="$frontmatter.actionLink">
               {{ $frontmatter.actionText }}
-              <IconAppArrowRight class="icon" />
+              <IconAppArrowRight class="icon"/>
             </AppButton>
             <AppButton class="ml-6" :href="$frontmatter.altActionLink" outline>
               {{ $frontmatter.altActionText }}
@@ -49,7 +49,6 @@
   width: 22%;
   padding-left: 1%;
   padding-bottom: 3.8%;
-  filter: drop-shadow(0 4px 3px rgba(0, 0, 0, 0.2))
-    drop-shadow(0 2px 2px rgba(0, 0, 0, 0.2));
+  filter: drop-shadow(0 4px 3px rgba(0, 0, 0, 0.2)) drop-shadow(0 2px 2px rgba(0, 0, 0, 0.2));
 }
 </style>

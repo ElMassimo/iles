@@ -1,5 +1,5 @@
 <script client:load lang="ts">
-import type { OnLoadFn } from 'iles'
+import { OnLoadFn } from 'iles'
 import { registerSW } from 'virtual:pwa-register'
 
 let refreshSW: ((reloadPage?: boolean) => Promise<void>) | undefined
@@ -25,20 +25,14 @@ export const onLoad: OnLoadFn = () => {
     aria-labelledby="pwa-message"
     class="border rounded-md flex items-center p-4 m-4"
   >
-    <div id="pwa-message" class="mr-6">
-      New content is available
-    </div>
-    <AppButton id="pwa-cancel" outline>
-      Close
-    </AppButton>
-    <AppButton id="pwa-refresh">
-      Reload
-    </AppButton>
+    <div id="pwa-message" class="mr-6">New content is available</div>
+    <AppButton id="pwa-cancel" outline>Close</AppButton>
+    <AppButton id="pwa-refresh">Reload</AppButton>
   </div>
 </template>
 
 <style scoped>
-#pwa-dialog[aria-hidden='true'] {
+#pwa-dialog[aria-hidden="true"] {
   display: none;
 }
 

@@ -1,4 +1,4 @@
-import { resolve } from 'node:path'
+import { resolve } from 'path'
 import { defineConfig } from 'iles'
 
 import headings from '@islands/headings'
@@ -55,7 +55,6 @@ export default defineConfig({
         globPatterns: ['**/*.{js,css,svg,ico,png,avif,json,xml,html}'],
         runtimeCaching: [
           {
-            // eslint-disable-next-line prefer-regex-literals
             urlPattern: new RegExp('https://unpkg.com/.*', 'i'),
             handler: 'CacheFirst',
             options: {
@@ -70,7 +69,6 @@ export default defineConfig({
             },
           },
           {
-            // eslint-disable-next-line prefer-regex-literals
             urlPattern: new RegExp('https://pixel.thesemetrics.org/.*', 'i'),
             handler: 'CacheFirst',
             options: {
@@ -94,8 +92,9 @@ export default defineConfig({
     ],
   },
   ssg: {
-    manualChunks(id, api) {
-      if (id.includes('preact') || id.includes('algolia') || id.toLowerCase().includes('docsearch')) { return 'docsearch' }
+    manualChunks (id, api) {
+      if (id.includes('preact') || id.includes('algolia') || id.toLowerCase().includes('docsearch'))
+        return 'docsearch'
     },
   },
   vite: {
