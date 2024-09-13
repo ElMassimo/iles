@@ -1,11 +1,12 @@
 <script setup lang="ts">
-const props = defineProps({
+const { heading, small } = defineProps({
   heading: { type: Boolean, default: false },
   small: { type: Boolean, default: false },
   noText: { type: Boolean, default: false },
 })
-const marginTop = props.heading ? '-mt-3 mx-1' : props.small ? '-mt-2.3 mx-0.5' : '-mt-4.8'
-const size = props.small ? 'h-6' : 'h-10'
+
+const marginTop = heading ? '-mt-3 mx-1' : small ? '-mt-2.3 mx-0.5' : '-mt-4.8'
+const size = small ? 'h-6' : 'h-10'
 </script>
 
 <template>

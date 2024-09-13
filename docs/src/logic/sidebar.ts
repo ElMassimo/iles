@@ -1,4 +1,4 @@
-import { Ref, computed } from 'vue'
+import { MaybeRefOrGetter, computed, toValue } from 'vue'
 
 import type { Heading } from '@islands/headings'
 import type { SideBarItem, SideBarGroup } from '~/logic/config'
@@ -37,11 +37,11 @@ export function useSideBar () {
   })
 }
 
-export function useActive (itemRef: Ref<SideBarItem>) {
+export function useActive (itemRef: MaybeRefOrGetter<SideBarItem>) {
   const { route } = usePage()
 
   return computed(() => {
-    const { link, ...item } = itemRef.value
+    const { link, ...item } = toValue(itemRef)
 
     if (link === undefined)
       return false

@@ -1,8 +1,7 @@
 <script setup lang="ts">
 import { watch, onBeforeUnmount, computed, ref } from 'vue'
 
-const props = defineProps<{ date: Date }>()
-let { date } = props
+const { date } = defineProps<{ date: Date }>()
 
 let relativeTimeStr = ref('')
 let dateStr = computed(() => date.toLocaleDateString('en-US', { day: 'numeric', month: 'long', year: 'numeric' }))

@@ -1,15 +1,15 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 
-const props = defineProps({
+const { href, external } = defineProps({
   href: { type: String, default: undefined },
   external: { type: Boolean, default: false },
   text: { type: String, default: '' },
 })
 
 const route = useRoute()
-let attrs = computed(() => props.external ? { rel: 'noreferrer', target: '_blank' } : {})
-let isActive = computed(() => props.href && route.path.includes(props.href))
+let attrs = computed(() => external ? { rel: 'noreferrer', target: '_blank' } : {})
+let isActive = computed(() => href && route.path.includes(href))
 </script>
 
 <template>
