@@ -158,8 +158,8 @@ importers:
         specifier: workspace:*
         version: link:../iles
       tsup:
-        specifier: 8.2.3
-        version: 8.2.3(postcss@8.4.45)(tsx@4.16.3)(typescript@5.2.2)(yaml@2.5.0)
+        specifier: 8.2.4
+        version: 8.2.4(postcss@8.4.45)(tsx@4.16.3)(typescript@5.2.2)(yaml@2.5.0)
       typescript:
         specifier: 5.2.2
         version: 5.2.2
@@ -202,8 +202,8 @@ importers:
         specifier: ^0.4.0
         version: 0.4.0
       tsup:
-        specifier: 8.2.3
-        version: 8.2.3(postcss@8.4.45)(tsx@4.16.3)(typescript@5.2.2)(yaml@2.5.0)
+        specifier: 8.2.4
+        version: 8.2.4(postcss@8.4.45)(tsx@4.16.3)(typescript@5.2.2)(yaml@2.5.0)
       typescript:
         specifier: 5.2.2
         version: 5.2.2
@@ -226,8 +226,8 @@ importers:
         specifier: ^4.2.18
         version: 4.2.18
       tsup:
-        specifier: 8.2.3
-        version: 8.2.3(postcss@8.4.45)(tsx@4.16.3)(typescript@5.2.2)(yaml@2.5.0)
+        specifier: 8.2.4
+        version: 8.2.4(postcss@8.4.45)(tsx@4.16.3)(typescript@5.2.2)(yaml@2.5.0)
       typescript:
         specifier: 5.2.2
         version: 5.2.2
@@ -384,8 +384,8 @@ importers:
         specifier: 0.2.6
         version: 0.2.6
       tsup:
-        specifier: 8.2.3
-        version: 8.2.3(postcss@8.4.45)(tsx@4.16.3)(typescript@5.2.2)(yaml@2.5.0)
+        specifier: 8.2.4
+        version: 8.2.4(postcss@8.4.45)(tsx@4.16.3)(typescript@5.2.2)(yaml@2.5.0)
       typescript:
         specifier: 5.2.2
         version: 5.2.2
@@ -409,8 +409,8 @@ importers:
         specifier: workspace:*
         version: link:../iles
       tsup:
-        specifier: 8.2.3
-        version: 8.2.3(postcss@8.4.45)(tsx@4.16.3)(typescript@5.2.2)(yaml@2.5.0)
+        specifier: 8.2.4
+        version: 8.2.4(postcss@8.4.45)(tsx@4.16.3)(typescript@5.2.2)(yaml@2.5.0)
       typescript:
         specifier: 5.2.2
         version: 5.2.2
@@ -455,8 +455,8 @@ importers:
         specifier: ^2.0.0
         version: 2.0.0
       tsup:
-        specifier: 8.2.3
-        version: 8.2.3(postcss@8.4.45)(tsx@4.16.3)(typescript@5.2.2)(yaml@2.5.0)
+        specifier: 8.2.4
+        version: 8.2.4(postcss@8.4.45)(tsx@4.16.3)(typescript@5.2.2)(yaml@2.5.0)
       typescript:
         specifier: 5.2.2
         version: 5.2.2
@@ -495,8 +495,8 @@ importers:
         specifier: ^4.0.9
         version: 4.0.9
       tsup:
-        specifier: 8.2.3
-        version: 8.2.3(postcss@8.4.45)(tsx@4.16.3)(typescript@5.2.2)(yaml@2.5.0)
+        specifier: 8.2.4
+        version: 8.2.4(postcss@8.4.45)(tsx@4.16.3)(typescript@5.2.2)(yaml@2.5.0)
       typescript:
         specifier: 5.2.2
         version: 5.2.2
@@ -526,8 +526,8 @@ importers:
         specifier: ^4.2.18
         version: 4.2.18
       tsup:
-        specifier: 8.2.3
-        version: 8.2.3(postcss@8.4.45)(tsx@4.16.3)(typescript@5.2.2)(yaml@2.5.0)
+        specifier: 8.2.4
+        version: 8.2.4(postcss@8.4.45)(tsx@4.16.3)(typescript@5.2.2)(yaml@2.5.0)
       typescript:
         specifier: 5.2.2
         version: 5.2.2
@@ -557,8 +557,8 @@ importers:
         specifier: workspace:*
         version: link:../iles
       tsup:
-        specifier: 8.2.3
-        version: 8.2.3(postcss@8.4.45)(tsx@4.16.3)(typescript@5.2.2)(yaml@2.5.0)
+        specifier: 8.2.4
+        version: 8.2.4(postcss@8.4.45)(tsx@4.16.3)(typescript@5.2.2)(yaml@2.5.0)
       typescript:
         specifier: 5.2.2
         version: 5.2.2
@@ -3334,7 +3334,7 @@ packages:
     resolution: {integrity: sha512-7CEBgcMjVmitjYo5q8JTJVra6X5mQ20uTThdK+0kR7UEaDrAWEQcRiBtWJzga4eRpP6afNwwLsX2SET2JhVB1Q==}
 
   concat-map@0.0.1:
-    resolution: {integrity: sha512-/Srv4dswyQNBfohGpz9o6Yb3Gz3SrUDqBH5rTuhGR7ahtlbYKnVxw2bCFMRljaA7EXHaXZ8wsHdodFvbkhKmqg==}
+    resolution: {integrity: sha1-2Klr13/Wjfd5OnMDajug1UBdR3s=}
 
   concurrently@8.2.2:
     resolution: {integrity: sha512-1dP4gpXFhei8IOtlXRE/T/4H88ElHgTiUzh71YUmtjTEHMSRS2Z/fgOxHSxxusGHogsRfxNq1vyAwxSC+EVyDg==}
@@ -4235,7 +4235,7 @@ packages:
     hasBin: true
 
   github-from-package@0.0.0:
-    resolution: {integrity: sha512-SyHy3T1v2NUXn29OsWdxmK6RwHD+vkj3v8en8AOBZ1wBQ/hCAQ5bAQTD02kW4W9tUp/3Qh6J8r9EvntiyCmOOw==}
+    resolution: {integrity: sha1-l/tdlr/eiXMxPyDoKI75oWf6ZM4=}
 
   glob-parent@5.1.2:
     resolution: {integrity: sha512-AOIgSQCepiJYwP3ARnGx+5VnTu2HBYdzbGP45eLw1vr3zB3vZLeyed1sC9hnbcOc9/SrMyM5RPQrkGz4aS9Zow==}
@@ -6487,8 +6487,8 @@ packages:
   tslib@2.6.2:
     resolution: {integrity: sha512-AEYxH93jGFPn/a2iVAwW87VuUIkR1FVUKB77NwMF7nBTDkDrrT/Hpt/IrCJ0QXhW27jTBDcf5ZY7w6RiqTMw2Q==}
 
-  tsup@8.2.3:
-    resolution: {integrity: sha512-6YNT44oUfXRbZuSMNmN36GzwPPIlD2wBccY7looM2fkTcxkf2NEmwr3OZuDZoySklnrIG4hoEtzy8yUXYOqNcg==}
+  tsup@8.2.4:
+    resolution: {integrity: sha512-akpCPePnBnC/CXgRrcy72ZSntgIEUa1jN0oJbbvpALWKNOz1B7aM+UVDWGRGIO/T/PZugAESWDJUAb5FD48o8Q==}
     engines: {node: '>=18'}
     hasBin: true
     peerDependencies:
@@ -11565,7 +11565,7 @@ snapshots:
       array-union: 2.1.0
       dir-glob: 3.0.1
       fast-glob: 3.3.2
-      ignore: 5.2.4
+      ignore: 5.3.1
       merge2: 1.4.1
       slash: 3.0.0
 
@@ -13310,7 +13310,7 @@ snapshots:
   nx-cloud@19.1.0:
     dependencies:
       '@nrwl/nx-cloud': 19.1.0
-      axios: 1.7.2
+      axios: 1.7.7
       chalk: 4.1.2
       dotenv: 10.0.0
       fs-extra: 11.2.0
@@ -14330,7 +14330,7 @@ snapshots:
 
   sucrase@3.35.0:
     dependencies:
-      '@jridgewell/gen-mapping': 0.3.3
+      '@jridgewell/gen-mapping': 0.3.5
       commander: 4.1.1
       glob: 10.4.5
       lines-and-columns: 1.2.4
@@ -14505,13 +14505,13 @@ snapshots:
 
   tslib@2.6.2: {}
 
-  tsup@8.2.3(postcss@8.4.45)(tsx@4.16.3)(typescript@5.2.2)(yaml@2.5.0):
+  tsup@8.2.4(postcss@8.4.45)(tsx@4.16.3)(typescript@5.2.2)(yaml@2.5.0):
     dependencies:
       bundle-require: 5.0.0(esbuild@0.23.0)
       cac: 6.7.14
       chokidar: 3.6.0
       consola: 3.2.3
-      debug: 4.3.5
+      debug: 4.3.6
       esbuild: 0.23.0
       execa: 5.1.1
       globby: 11.1.0

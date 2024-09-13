@@ -3,7 +3,7 @@
   "npmScope": "undetermined",
   "tasksRunnerOptions": {
     "default": {
-      "runner": "@nrwl/nx-cloud",
+      "runner": "nx-cloud",
       "options": {
         "cacheableOperations": [
           "build",
@@ -12,7 +12,7 @@
           "package",
           "prepare"
         ],
-        "accessToken": "YmU4YTBjNWQtNGZiNi00MDMyLWI0MDUtM2FiMDQzYTIwY2RhfHJlYWQtd3JpdGU="
+        "accessToken": "MDYzN2MxNTAtMzYzYy00ZjNjLWEwZGQtZWJmODExY2NkNGM2fHJlYWQtd3JpdGU="
       }
     }
   },
