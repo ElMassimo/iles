@@ -3,6 +3,7 @@
     "baseUrl": ".",
     "module": "es2020",
     "target": "es2020",
+    "outDir": "dist/client",
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "strict": true,
