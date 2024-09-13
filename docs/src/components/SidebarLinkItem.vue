@@ -45,7 +45,7 @@ const style = $computed(() => ([
     text-gray-500
     text-sm
     font-medium
-    dark:warm-gray-400
+    dark:warmgray-400
     hover:(text-primary dark:text-primary bg-$bg-highlight);
 }
 
@@ -59,7 +59,7 @@ const style = $computed(() => ([
     text-gray-500
     text-sm
     font-medium
-    dark:warm-gray-400
+    dark:warmgray-400
     hover:(text-primary dark:text-primary);
 }
 

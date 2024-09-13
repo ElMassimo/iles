@@ -1,5 +1,5 @@
-import 'virtual:windi.css'
-import 'virtual:windi-devtools'
+import 'virtual:uno.css'
+import '@unocss/reset/tailwind-compat.css'
 import '~/styles/all.css'
 
 import { defineApp } from 'iles'

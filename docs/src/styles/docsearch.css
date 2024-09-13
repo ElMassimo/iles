@@ -11,8 +11,8 @@
   --docsearch-hit-shadow: none;
   --docsearch-primary-color: var(--fc-primary);
   --docsearch-highlight-color: var(--fc-primary);
-  --docsearch-searchbox-background: theme('colors['blue-gray'].100');
-  --docsearch-searchbox-focus-background: theme('colors['blue-gray'].200');
+  --docsearch-searchbox-background: theme('colors.bluegray.100');
+  --docsearch-searchbox-focus-background: theme('colors.bluegray.200');
   --docsearch-searchbox-shadow: none;
   --docsearch-searchbox-height: 3rem;
   --docsearch-text-color: var(--fc);
