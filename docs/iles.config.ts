@@ -5,8 +5,9 @@ import headings from '@islands/headings'
 import icons from '@islands/icons'
 import prism from '@islands/prism'
 import pwa from '@islands/pwa'
+import reactivityTransform from '@vue-macros/reactivity-transform/vite'
 
-import windicss from 'vite-plugin-windicss'
+import UnoCSS from 'unocss/vite'
 import inspect from 'vite-plugin-inspect'
 import lastUpdated from './modules/lastUpdated'
 import site from './src/site'
@@ -104,7 +105,8 @@ export default defineConfig({
       },
     },
     plugins: [
-      windicss(),
+      reactivityTransform(),
+      UnoCSS(),
       Boolean(process.env.DEBUG) && inspect(),
     ],
   },

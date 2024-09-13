@@ -32,7 +32,7 @@
     "tsconfig.json"
   ],
   "scripts": {
-    "dev": "rimraf -rf dist && npm run dev-shared && npm run dev-start",
+    "dev": "rm -rf dist && npm run dev-shared && npm run dev-start",
     "dev-start": "run-p dev-client dev-node dev-cjs dev-watch",
     "dev-client": "npm run build-client -- --watch",
     "dev-node": "npm run build-node -- --watch",
@@ -42,7 +42,7 @@
     "build-node": "tsup src/node",
     "build-cjs": "tsup src/node/publicUtils.ts --config tsup-cjs.config.ts",
     "build-client": "tsc -p src/client",
-    "build": "rimraf -rf dist && node scripts/copyShared && npm run build-client && npm run build-node && npm run build-cjs && node scripts/copyClient",
+    "build": "rm -rf dist && node scripts/copyShared && npm run build-client && npm run build-node && npm run build-cjs && node scripts/copyClient",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix"
   },
@@ -102,12 +102,11 @@
     "execa": "^9",
     "find-up": "7.0.0",
     "fs-extra": "^11",
-    "globby": "^14",
+    "tinyglobby": "0.2.6",
     "mdast-util-mdx-jsx": "^3.1.2",
     "mdast-util-mdxjs-esm": "^2.0.1",
     "micromatch": "^4.0.7",
     "npm-run-all": "^4.1.5",
-    "rimraf": "^6.0.1",
     "rollup": "^4.19.0",
     "semver": "^7.6.3",
     "tsup": "8.2.3",

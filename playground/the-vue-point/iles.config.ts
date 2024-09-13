@@ -6,8 +6,9 @@ import headings from '@islands/headings'
 import icons from '@islands/icons'
 import images, { hdPreset } from '@islands/images'
 import prism from '@islands/prism'
+import reactivityTransform from '@vue-macros/reactivity-transform/vite'
 
-import windicss from 'vite-plugin-windicss'
+import UnoCSS from 'unocss/vite'
 import inspect from 'vite-plugin-inspect'
 
 const presets = {
@@ -59,7 +60,8 @@ export default defineConfig({
   },
   vite: {
     plugins: [
-      windicss(),
+      reactivityTransform(),
+      UnoCSS(),
       Boolean(process.env.DEBUG) && inspect(),
     ],
   },

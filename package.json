@@ -23,9 +23,8 @@
   "devDependencies": {
     "@antfu/eslint-config": "^2.24.0",
     "@nrwl/cli": "^15.9.3",
-    "@nrwl/nx-cloud": "^19.0.0",
-    "@nrwl/tao": "^19.5.3",
-    "@nrwl/workspace": "^19.5.3",
+    "@nrwl/nx-cloud": "^19.1.0",
+    "@nx/workspace": "^19.7.3",
     "concurrently": "^8.2.2",
     "conventional-changelog-cli": "^5.0.0",
     "enquirer": "^2.4.1",
