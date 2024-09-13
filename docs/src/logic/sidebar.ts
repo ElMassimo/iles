@@ -1,4 +1,4 @@
-import { Ref, computed } from 'vue'
+import { MaybeRefOrGetter, computed, toValue } from 'vue'
 
 import type { Heading } from '@islands/headings'
 import type { SideBarItem, SideBarGroup } from '~/logic/config'
@@ -8,13 +8,13 @@ import { normalize } from '~/logic/utils'
 export function useSideBarLinks () {
   const { route, site } = usePage()
 
-  const currentPath = $computed(() => normalize(route.path))
-  const links = $computed(() => site.sidebar.flatMap(group => group.children || group))
-  const index = $computed(() => links.findIndex(item => normalize(item.link) === currentPath))
+  const currentPath = computed(() => normalize(route.path))
+  const links = computed(() => site.sidebar.flatMap(group => group.children || group))
+  const index = computed(() => links.value.findIndex(item => normalize(item.link) === currentPath.value))
 
   return {
-    next: computed(() => index > -1 && links[index + 1]),
-    prev: computed(() => index > -1 && links[index - 1]),
+    next: computed(() => index.value > -1 && links.value[index.value + 1]),
+    prev: computed(() => index.value > -1 && links.value[index.value - 1]),
   }
 }
 
@@ -37,11 +37,11 @@ export function useSideBar () {
   })
 }
 
-export function useActive (itemRef: Ref<SideBarItem>) {
+export function useActive (itemRef: MaybeRefOrGetter<SideBarItem>) {
   const { route } = usePage()
 
   return computed(() => {
-    const { link, ...item } = itemRef.value
+    const { link, ...item } = toValue(itemRef)
 
     if (link === undefined)
       return false

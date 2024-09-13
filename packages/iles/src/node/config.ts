@@ -3,7 +3,7 @@ import { promises as fs, existsSync } from 'fs'
 import { join, resolve } from 'pathe'
 import pc from 'picocolors'
 import creatDebugger from 'debug'
-import { loadConfigFromFile, mergeConfig as mergeViteConfig, type Plugin } from 'vite'
+import { loadConfigFromFile, mergeConfig as mergeViteConfig, type Plugin, PluginOption } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import components from 'unplugin-vue-components/vite'
 import pages from '@islands/pages'
@@ -12,7 +12,6 @@ import mdx from '@islands/mdx'
 import type { ComponentResolverFunction } from 'unplugin-vue-components/types'
 import type { UserConfig } from 'iles'
 
-import { importModule } from './modules'
 import type {
   AppConfig,
   ConfigEnv,
@@ -26,8 +25,8 @@ import type {
   SvelteOptions,
 } from './shared'
 
-import { camelCase, tryInstallModule, importLibrary, uncapitalize, isString, isStringPlugin, compact } from './plugin/utils'
-import { resolveAliases, DIST_CLIENT_PATH, HYDRATION_DIST_PATH, ISLAND_COMPONENT_PATH } from './alias'
+import { camelCase, compact, importLibrary, isString, isStringPlugin, tryImportOrInstallModule, uncapitalize } from './plugin/utils'
+import { DIST_CLIENT_PATH, HYDRATION_DIST_PATH, ISLAND_COMPONENT_PATH, resolveAliases } from './alias'
 import remarkWrapIslands from './plugin/remarkWrapIslands'
 
 import { explicitHtmlPath } from './utils'
@@ -54,7 +53,7 @@ export function IlesLayoutResolver (config: AppConfig): ComponentResolverFunctio
 
 export async function resolveConfig (root?: string, env?: ConfigEnv): Promise<AppConfig> {
   if (!root) root = process.cwd()
-  if (!env) env = { mode: 'development', command: 'serve', ssrBuild: false }
+  if (!env) env = { mode: 'development', command: 'serve', isSsrBuild: false }
 
   const appConfig = await resolveUserConfig(root, env)
 
@@ -159,7 +158,7 @@ async function setNamedPlugins (config: AppConfig, env: ConfigEnv, plugins: Name
       const options = isObject(addPlugin) ? addPlugin : {}
       config.vitePlugins.push(await createPlugin(options as any) as Plugin)
       if (optionName === 'preact')
-        await tryInstallModule('preact-render-to-string')
+        await tryImportOrInstallModule('preact-render-to-string')
     }
   }
 }
@@ -193,14 +192,13 @@ async function resolveModule (mod: IlesModuleOption): Promise<IlesModuleLike> {
 }
 
 async function createIlesModule (pkgName: string, ...options: any[]): Promise<IlesModule> {
-  await tryInstallModule(pkgName)
-  const fn = await importModule(pkgName)
+  const fn = await tryImportOrInstallModule(pkgName)
   return fn(...options)
 }
 
 function inferJSX (config: UserConfig) {
-  // @ts-ignore
-  const plugins: Plugin[] = config.vite?.plugins?.flat(Infinity as any) ?? []
+  const pluginsNested: PluginOption[] = config.vite?.plugins ?? []
+  const plugins: Plugin[] = pluginsNested.flat() as Plugin[];
   for (const plugin of plugins) {
     if (!plugin)
       continue
@@ -241,7 +239,6 @@ function appConfigDefaults (appConfig: AppConfig, userConfig: UserConfig, env: C
     vitePlugins: [],
     vite: viteConfigDefaults(root, userConfig),
     vue: {
-      reactivityTransform: true,
       template: {
         compilerOptions: {},
       },

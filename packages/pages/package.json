@@ -4,7 +4,8 @@
   "scripts": {
     "dev": "npm run build -- --watch",
     "build": "tsup src/pages.ts",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix"
   },
   "type": "module",
   "files": [
@@ -29,21 +30,21 @@
   "homepage": "https://github.com/ElMassimo/iles",
   "bugs": "https://github.com/ElMassimo/iles/issues",
   "dependencies": {
-    "debug": "^4.3.3",
-    "deep-equal": "^2.0.5",
-    "fast-glob": "^3.2.11",
+    "debug": "^4.3.5",
+    "deep-equal": "^2.2.3",
+    "fast-glob": "^3.3.2",
     "gray-matter": "^4.0.3",
-    "pathe": "^1.1.1"
+    "pathe": "^1.1.2"
   },
   "peerDependencies": {
     "vue": "^3.3.4"
   },
   "devDependencies": {
-    "@types/deep-equal": "^1.0.1",
-    "@types/js-yaml": "^4.0.0",
-    "tsup": "7.2.0",
-    "typescript": "^5.2.2",
-    "unified": "^11.0.0",
-    "vue": "^3.3.4"
+    "@types/deep-equal": "^1.0.4",
+    "@types/js-yaml": "^4.0.9",
+    "tsup": "8.2.3",
+    "typescript": "5.2.2",
+    "unified": "^11.0.5",
+    "vue": "^3.4.34"
   }
 }

@@ -4,7 +4,8 @@
   "scripts": {
     "dev": "npm run build -- --watch",
     "build": "tsup src/headings.ts",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix"
   },
   "type": "module",
   "files": [
@@ -32,11 +33,11 @@
     "hast-util-to-string": "^3.0.0"
   },
   "devDependencies": {
-    "@types/estree": "^1.0.2",
+    "@types/estree": "^1.0.5",
     "iles": "workspace:*",
     "slugo": "^0.4.0",
-    "tsup": "7.2.0",
-    "typescript": "^5.2.2",
-    "unified": "^11.0.0"
+    "tsup": "8.2.3",
+    "typescript": "5.2.2",
+    "unified": "^11.0.5"
   }
 }

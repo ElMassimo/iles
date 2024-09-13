@@ -82,9 +82,9 @@ which are convenient to enable intellisense and type-checking for the feed optio
 ```ts
 import type { FeedItem } from '@islands/feed'
 
-const posts = $(useDocuments('~/pages/posts'))
+const posts = useDocuments('~/pages/posts')
 
-const items = posts.map<FeedItem>((post) => ({
+const items = posts.value.map<FeedItem>((post) => ({
   link: url + post.href,
   date: post.date,
   title: post.title,

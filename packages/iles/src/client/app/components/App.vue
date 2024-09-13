@@ -1,5 +1,6 @@
 <script lang="ts">
 import { defineComponent, computed, watch } from 'vue'
+import { Head } from '@unhead/vue/components'
 import { usePage } from '../composables/pageData'
 import { useRouterLinks } from '../composables/routerLinks'
 import { resolveLayout } from '../layout'
@@ -9,6 +10,7 @@ export default defineComponent({
   name: 'îles',
   components: {
     DebugPanel,
+    Head,
   },
   setup () {
     if (import.meta.env.DEV && !import.meta.env.SSR)

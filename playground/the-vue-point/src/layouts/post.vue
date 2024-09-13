@@ -1,18 +1,19 @@
 <script setup lang="ts">
 import { usePage } from 'iles'
 import { getPosts } from '~/logic/posts'
+import { computed } from 'vue'
 
-const posts = $(getPosts())
+const posts = getPosts()
 
-const { page } = $(usePage())
+const { page } = usePage()
 
-const currentIndex = $computed(() => posts.findIndex(p => p.href === page.href))
-const post = $computed(() => posts[currentIndex])
-const nextPost = $computed(() => posts[currentIndex - 1])
-const prevPost = $computed(() => posts[currentIndex + 1])
+const currentIndex = computed(() => posts.value.findIndex(p => p.href === page.value.href))
+const post = computed(() => posts.value[currentIndex.value])
+const nextPost = computed(() => posts.value[currentIndex.value - 1])
+const prevPost = computed(() => posts.value[currentIndex.value + 1])
 
-const author = $computed(() => {
-  const { twitter, avatar, gravatar, author } = post
+const author = computed(() => {
+  const { twitter, avatar, gravatar, author } = post.value
   return { twitter, avatar, gravatar, author }
 })
 </script>

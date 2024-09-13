@@ -4,7 +4,8 @@
   "scripts": {
     "dev": "npm run build -- --watch",
     "build": "tsup src/prism.ts",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix"
   },
   "type": "module",
   "files": [
@@ -28,15 +29,15 @@
   "homepage": "https://github.com/ElMassimo/iles",
   "bugs": "https://github.com/ElMassimo/iles/issues",
   "dependencies": {
-    "prismjs": "^1.25.0",
-    "unist-util-visit": "^4.1.0"
+    "prismjs": "^1.29.0",
+    "unist-util-visit": "^5.0.0"
   },
   "devDependencies": {
-    "@types/mdast": "^4.0.0",
-    "@types/prismjs": "^1.16.6",
+    "@types/mdast": "^4.0.4",
+    "@types/prismjs": "^1.26.4",
     "iles": "workspace:*",
-    "tsup": "7.2.0",
-    "typescript": "^5.2.2",
-    "unified": "^11.0.0"
+    "tsup": "8.2.3",
+    "typescript": "5.2.2",
+    "unified": "^11.0.5"
   }
 }

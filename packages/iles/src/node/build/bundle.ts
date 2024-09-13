@@ -19,7 +19,7 @@ export async function bundle (config: AppConfig) {
   const entrypoints = resolveEntrypoints(config)
 
   const [clientResult, serverResult] = await Promise.all([
-    bundleWithVite(config, entrypoints, { ssr: false }),
+    bundleWithVite(config, entrypoints, { ssr: false, htmlBuild: true }),
     bundleWithVite(config, entrypoints, { ssr: true }),
     bundleHtmlEntrypoints(config),
   ])

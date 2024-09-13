@@ -3,6 +3,7 @@ import { resolve as resolvePath } from 'path'
 import { performance } from 'perf_hooks'
 import type { IlesModule, UserConfig } from 'iles'
 import type { VitePluginPWAAPI, VitePWAOptions } from 'vite-plugin-pwa'
+import type { Plugin, PluginOption } from 'vite'
 import type { ManifestTransform } from 'workbox-build'
 import { VitePWA } from 'vite-plugin-pwa'
 
@@ -25,8 +26,12 @@ export default function IlesPWA (options: Partial<VitePWAOptions> = {}): IlesMod
   }
   return {
     name: '@islands/pwa',
-    config (config) {
-      const plugin = config.vite?.plugins?.flat(Infinity).find(p => p.name === 'vite-plugin-pwa')
+    config(config) {
+      
+      const pluginsNested:PluginOption[]  = config.vite?.plugins ?? [];
+      const pluginsFlattened: Plugin[] = pluginsNested.flat() as Plugin[];
+      const plugin = pluginsFlattened.find(p => p.name === 'vite-plugin-pwa');
+
       if (plugin)
         throw new Error('Remove the vite-plugin-pwa plugin from Vite plugins entry in iles config file, configure it via @islands/pwa plugin')
 
