@@ -94,7 +94,8 @@ export default defineComponent({
       const frameworkPath = `${hydrationPkg}/${this.framework}`
 
       return `import { ${hydrationFns[this.strategy]} as hydrate } from '${hydrationPkg}'
-import { enhanceIslands } from '/@id/virtual:enhance-islands'
+import userApp from '/@id/virtual:user-app'
+const { enhanceIslands } = userApp
 ${isEager(this.strategy)
     ? `import framework from '${frameworkPath}'
 import { ${this.importName} as component } from '${componentPath}'`

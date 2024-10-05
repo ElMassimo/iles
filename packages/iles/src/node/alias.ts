@@ -31,7 +31,7 @@ export const APP_CONFIG_REQUEST_PATH = `/${APP_CONFIG_ID}`
 export const USER_APP_ID = '@islands/user-app'
 export const USER_APP_REQUEST_PATH = `/${USER_APP_ID}`
 
-export const USER_APP_ENHANCE_ISLANDS = 'virtual:enhance-islands'
+export const USER_APP_ENHANCE_ISLANDS = 'virtual:user-app'
 export const USER_APP_ENHANCE_ISLANDS_RESOLVED = `\0${USER_APP_ENHANCE_ISLANDS}`
 
 export const USER_SITE_ID = '@islands/user-site'
@@ -77,6 +77,10 @@ export function resolveAliases (root: string, userConfig: UserConfig): AliasOpti
       replacement: require.resolve(
         'vue-router/dist/vue-router.esm-bundler.js',
       ),
+    },
+    {
+      find: /^\/@id\/virtual:user-app$/,
+      replacement: require.resolve(`${resolve(root, srcDir)}/app.ts`),
     },
     {
       find: /^@islands\/hydration$/,

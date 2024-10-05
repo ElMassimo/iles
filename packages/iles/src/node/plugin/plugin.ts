@@ -158,8 +158,8 @@ export default function IslandsPlugins (appConfig: AppConfig): PluginOption[] {
       },
       load(id) {
         if (id === USER_APP_ENHANCE_ISLANDS_RESOLVED) {
-          return `import userApp from '@islands/user-app'
-export const { enhanceIslands } = userApp`
+          return `import userApp from "${appPath.replace('.ts', '')}"
+export default userApp`
         }
       },
     },
