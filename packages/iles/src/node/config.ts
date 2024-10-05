@@ -300,6 +300,7 @@ function viteConfigDefaults(root: string, userConfig: UserConfig): ViteOptions {
         '@nuxt/devalue',
         '@islands/hydration',
         'vue/server-renderer',
+        'virtual:user-app',
       ],
     },
   }
