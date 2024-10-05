@@ -18,6 +18,7 @@ sidebar: auto
 [documents]: /guide/documents
 [drafts]: /guide/markdown
 [useDocuments]: /guide/documents
+[discussion]: https://github.com/ElMassimo/iles/discussions/6#discussioncomment-1479755
 
 # Configuration
 
@@ -158,16 +159,23 @@ Whether to output more information about islands and hydration in development.
 
 ## Your App
 
-<Iles/> will pre-configure a Vue 3 app that will load any [pages] defined in the
-site.
+<Iles/> will pre-configure a Vue 3 shell app to enhance your development experience that will load any [pages] defined in your site.
 
-You may provide additional configuration in `src/app.ts`, and leverage
-intellisense by using the `defineApp` helper.
+Note that this "outer" shell app is used only during development and is not available once your site is built.
+
+You may provide additional configuration in `src/app.ts` by using the `defineApp` helper. These additional configuration can be for the shell app to customise your development/build logic, as well as for your whole site and the islands within your site.
 
 ```ts
 import { defineApp } from 'iles'
 
 export default defineApp({
+  enhanceApp ({ app, head, router }) {
+    // Configure the shell app to customise with development/build logic
+  },
+  enhanceIslands ({ app }) {
+    // Configure all Vue Islands to add Vue plugins
+    app.use(pinia)
+  },
   head ({ frontmatter, site }) {
     return {
       meta: [
@@ -176,13 +184,55 @@ export default defineApp({
       ]
     }
   },
-  enhanceApp ({ app, head, router }) {
-    // Configure the app to add plugins.
-  },
   router: {
     scrollBehavior (current, previous, savedPosition) {
       // Configure the scroll behavior
     }, 
+  },
+  mdxComponents: {
+    b: 'strong',
+    img: Image,
+  },
+  socialTags: true // default
+})
+```
+
+### `enhanceApp` (Development only)
+
+- **Type:** `(context: AppContext) => void | Promise<void>`
+
+A hook where you can add additional development/build logic. See this [discussion] thread for few suggestions.
+
+### `enhanceIslands` (Vue Islands only)
+
+- **Type:** `(context: IslandContext) => void | Promise<void>`
+
+A hook where you can extend all your Vue Islands in your site with plugins such as pinia, i18n, vuetify, etc.
+
+The hook will be invoked for every Vue Island in your site.
+
+```ts
+import { defineApp } from 'iles'
+import { createI18n } from 'vue-i18n'
+import { createPinia } from 'pinia'
+import { createVuetify } from 'vuetify'
+
+const i18n = createI18n({
+  // vue-i18n options ...
+})
+const pinia = createPinia()
+const vuetify = createVuetify({
+  // vuetify options ...
+})
+
+export default defineApp({
+  enhanceIslands({ app }) {
+    app.use(i18n)
+    app.use(pinia)
+    if(app._component.name === 'Island: ChatboxIsland') {
+      // To initialise Vuetify only within ChatboxIsland.vue
+      app.use(vuetify)
+    }
   },
 })
 ```
@@ -193,12 +243,11 @@ export default defineApp({
 
 Set the page title, meta tags, additional CSS, or scripts using [`@unhead/vue`][@unhead/vue].
 
-### `enhanceApp`
+### `router`
 
-- **Type:** `(context: AppContext) => Promise<void>`
+- **Type:** `RouterOptions`
 
-A hook where you can add plugins to the Vue app, or do anything else prior to
-the app being mounted.
+Configure [`vue-router`][vue-router] by providing options such as `scrollBehavior` and `linkActiveClass`.
 
 ### `mdxComponents`
 
@@ -217,12 +266,6 @@ export default defineApp({
   },
 })
 ```
-
-### `router`
-
-- **Type:** `RouterOptions`
-
-Configure [`vue-router`][vue-router] by providing options such as `scrollBehavior` and `linkActiveClass`.
 
 ### `socialTags`
 
