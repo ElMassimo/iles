@@ -1,7 +1,7 @@
 import type { AppConfig } from '../shared'
 
 // Internal: Adds the url to the site for convenience, and enables HMR.
-export function extendSite (code: string, config: AppConfig) {
+export function extendSite(code: string, config: AppConfig) {
   return `${code.replace('export default ', 'let __site = ')}
 __site.url = '${config.siteUrl}${config.base.slice(0, config.base.length - 1)}'
 __site.canonical = '${config.siteUrl.split('//', 2)[1] ?? ''}'

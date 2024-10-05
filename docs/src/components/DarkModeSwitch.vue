@@ -5,8 +5,8 @@ import { isDark, toggleDark } from '~/logic/dark'
 <template>
   <NavBarButton aria-label="Toggle theme" @click="toggleDark()">
     <transition name="slide" mode="out-in">
-      <IconBxBxMoon v-if="isDark"/>
-      <IconBxBxSun v-else/>
+      <IconBxBxMoon v-if="isDark" />
+      <IconBxBxSun v-else />
     </transition>
   </NavBarButton>
 </template>

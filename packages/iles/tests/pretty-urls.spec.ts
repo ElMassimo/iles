@@ -1,17 +1,17 @@
 import { toExplicitHtmlPath } from '@mdx/utils'
-import { test, describe, expect, beforeAll } from 'vitest'
+import { describe, expect, it } from 'vitest'
 
 describe('prettyUrls', () => {
   const expectExplicitPath = (path: string) => expect(toExplicitHtmlPath(path))
 
-  test('internal urls', () => {
+  it('internal urls', () => {
     expectExplicitPath('/about/').toEqual('/about/')
     expectExplicitPath('/about').toEqual('/about.html')
     expectExplicitPath('/about/index.html').toEqual('/about/')
     expectExplicitPath('/about/nested.html').toEqual('/about/nested.html')
   })
 
-  test('anchor tags', () => {
+  it('anchor tags', () => {
     expectExplicitPath('#contact').toEqual('#contact')
 
     expectExplicitPath('/about#contact').toEqual('/about.html#contact')
@@ -21,11 +21,11 @@ describe('prettyUrls', () => {
     expectExplicitPath('https://example.com/#contact').toEqual('https://example.com/#contact')
   })
 
-  test('internal assets', () => {
+  it('internal assets', () => {
     expectExplicitPath('/assets/picture.gif').toEqual('/assets/picture.gif')
   })
 
-  test('external urls', () => {
+  it('external urls', () => {
     expectExplicitPath('https://example.com').toEqual('https://example.com')
     expectExplicitPath('https://example.com/').toEqual('https://example.com/')
     expectExplicitPath('http://example.com/').toEqual('http://example.com/')

@@ -87,15 +87,6 @@ export function usePosts () {
 }
 ```
 
-If you want to avoid using `value`, you can use [ref sugar] by wrapping it with `$()`:
-
-```ts
-export function usePosts () {
-  const posts = $(useDocuments('~/pages/posts'))
-  return computed(() => posts.sort(byDate))
-}
-```
-
 ## Comparison with `import.meta.glob`
 
 - Significantly __faster__ than `import.meta.glob('./dir/*.mdx', { eager: true })`, as it serves a single file

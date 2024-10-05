@@ -1,12 +1,12 @@
 import { useSSRContext } from 'vue'
 import {
-  hydrateWhenIdle,
   hydrateNow,
   hydrateOnMediaQuery,
+  hydrateWhenIdle,
   hydrateWhenVisible,
 } from '@islands/hydration'
 
-export function newHydrationId () {
+export function newHydrationId() {
   if (import.meta.env.SSR) {
     const context = useSSRContext()
     context!.hydrationSerialNumber ||= 1
@@ -36,6 +36,6 @@ export const hydrationFns = {
 }
 
 // Internal: Strategies that will hydrate instantly and don't need dynamic imports.
-export function isEager (strategy: string) {
+export function isEager(strategy: string) {
   return strategy === Hydrate.OnLoad || strategy === Hydrate.SkipPrerender || strategy === Hydrate.None
 }

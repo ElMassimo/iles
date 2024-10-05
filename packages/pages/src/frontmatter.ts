@@ -2,11 +2,11 @@ import { basename, extname } from 'pathe'
 import grayMatter from 'gray-matter'
 import { parse as parseSFC } from 'vue/compiler-sfc'
 
-import type { RawPageMatter, PageMeta } from './types'
+import type { RawPageMatter } from './types'
 
 const dateRegex = /^(?<year>\d{4})-(?<month>\d{2})-(?<day>\d{2})-(?<slug>.*)(?<ext>\.\w+)$/
 
-export async function parsePageMatter (filename: string, content: string) {
+export async function parsePageMatter(filename: string, content: string) {
   const parse = extname(filename) === '.vue' ? parsePageBlock : parseFrontmatter
   const matter = await parse(filename, content)
   return preparePageMatter(filename, matter)
@@ -16,7 +16,7 @@ export async function parsePageMatter (filename: string, content: string) {
  * Parses a <page> block in a Vue SFC.
  * Supports extracting the layout from `<template layout="default">`.
  */
-async function parsePageBlock (filename: string, content: string) {
+async function parsePageBlock(filename: string, content: string) {
   const parsed = await parseSFC(content, { pad: 'space' }).descriptor
 
   const block = parsed.customBlocks.find(block => block.type === 'page')
@@ -28,7 +28,7 @@ async function parsePageBlock (filename: string, content: string) {
   return { templateAttrs, ...templateAttrs, ...frontmatter }
 }
 
-function parseFrontmatter (filename: string, content: string, language?: string) {
+function parseFrontmatter(filename: string, content: string, language?: string) {
   try {
     return grayMatter(content, { language }).data || {}
   }
@@ -39,7 +39,7 @@ function parseFrontmatter (filename: string, content: string, language?: string)
 }
 
 // Internal: Extracts layout, route, and meta data from the frontmatter.
-function preparePageMatter (filename: string, matter: Record<string, any>): RawPageMatter {
+function preparePageMatter(filename: string, matter: Record<string, any>): RawPageMatter {
   let { templateAttrs, layout, meta: rawMeta, route, ...frontmatter } = matter
 
   // Users can explicitly provide route to avoid unwanted behavior.
@@ -68,12 +68,11 @@ function preparePageMatter (filename: string, matter: Record<string, any>): RawP
 /**
  * Clear undefined fields from an object. It mutates the object
  */
-export function clearUndefined<T extends object> (obj: T): T {
-  for (const key in obj)
-    if (obj[key] === undefined) delete obj[key]
+export function clearUndefined<T extends object>(obj: T): T {
+  for (const key in obj) { if (obj[key] === undefined) { delete obj[key] } }
   return obj
 }
 
-function extractGroups (val: string, regex: RegExp): any {
+function extractGroups(val: string, regex: RegExp): any {
   return regex.exec(val)?.groups as any || {}
 }

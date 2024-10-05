@@ -1,23 +1,23 @@
 import { walk } from 'estree-walker'
-import type { Node, Statement, ImportSpecifier, FunctionDeclaration, Program } from 'estree-jsx'
+import type { ImportSpecifier, Node, Program, Statement } from 'estree-jsx'
 import type { Plugin } from 'unified'
 
 /**
  * A plugin that replaces _missingMDXReference with Vue's resolveComponent,
  * allowing components to be resolved statically or at runtime.
  */
-const recmaPlugin: Plugin<[], Program> = function recmaVueResolveComponents () {
+const recmaPlugin: Plugin<[], Program> = function recmaVueResolveComponents() {
   return tree => resolveMissingComponents(tree)
 }
 
 export default recmaPlugin
 
-function resolveMissingComponents (tree: Program) {
+function resolveMissingComponents(tree: Program) {
   walk(tree, {
+    // eslint-disable-next-line ts/ban-ts-comment
     // @ts-ignore
-    enter (node: Node) {
-      if (node.type === 'Program')
-        return
+    enter(node: Node) {
+      if (node.type === 'Program') { return }
 
       if (node.type === 'ImportDeclaration') {
         const importSource = node.source?.value
@@ -30,19 +30,16 @@ function resolveMissingComponents (tree: Program) {
         return this.skip()
       }
 
-      if (node.type !== 'FunctionDeclaration')
-        return this.skip()
+      if (node.type !== 'FunctionDeclaration') { return this.skip() }
 
       if (node.id?.name === '_createMdxContent') {
         rewriteMdxContentComponents(node.body.body)
         return this.skip()
       }
 
-      if (node.id?.name === 'MDXContent')
-        return this.skip()
+      if (node.id?.name === 'MDXContent') { return this.skip() }
 
-      if (node.id?.name === '_missingMdxReference')
-        return this.remove()
+      if (node.id?.name === '_missingMdxReference') { return this.remove() }
     },
   })
 
@@ -52,7 +49,7 @@ function resolveMissingComponents (tree: Program) {
 /**
  * Converts all _missingMdxReference assertions into _resolveComponent assignments.
  */
-function rewriteMdxContentComponents (statements: Statement[]) {
+function rewriteMdxContentComponents(statements: Statement[]) {
   for (let i = 0; i < statements.length; i++) {
     const statement = statements[i]
 
@@ -98,7 +95,7 @@ function rewriteMdxContentComponents (statements: Statement[]) {
   }
 }
 
-function importSpecifier (name: string): ImportSpecifier {
+function importSpecifier(name: string): ImportSpecifier {
   return {
     type: 'ImportSpecifier',
     imported: { type: 'Identifier', name },

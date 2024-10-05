@@ -1,7 +1,6 @@
-/* eslint-disable no-use-before-define */
-import type { ResolveFn, UserConfig as ViteOptions, ConfigEnv, PluginOption as VitePluginOption } from 'vite'
+import type { ConfigEnv, ResolveFn, UserConfig as ViteOptions, PluginOption as VitePluginOption } from 'vite'
 import type { GetManualChunk } from 'rollup'
-import type { App, Ref, DefineComponent, VNode, AsyncComponentLoader } from 'vue'
+import type { App, AsyncComponentLoader, DefineComponent, Ref, VNode } from 'vue'
 import type VuePlugin, { Options as VueOptions } from '@vitejs/plugin-vue'
 import type ComponentsPlugin from 'unplugin-vue-components/vite'
 import type { Options as ComponentOptions } from 'unplugin-vue-components/types'
@@ -10,9 +9,10 @@ import type { Options as RequiredSolidOptions } from 'vite-plugin-solid'
 import type { Options as SvelteOptions } from '@sveltejs/vite-plugin-svelte'
 import type { PreactPluginOptions as PreactOptions } from '@preact/preset-vite'
 
-import type { Router, RouteRecordRaw, RouteMeta, RouterOptions as VueRouterOptions, RouteComponent, RouteRecordNormalized, RouteLocationNormalizedLoaded, RouteParams } from 'vue-router'
+import type { RouteComponent, RouteLocationNormalizedLoaded, RouteMeta, RouteParams, RouteRecordNormalized, RouteRecordRaw, Router, RouterOptions as VueRouterOptions } from 'vue-router'
 import type { HeadClient, HeadObject } from '@unhead/vue'
-import type { PagesApi, PagesOptions, PageFrontmatter, PageMeta } from '@islands/pages'
+import type { PageFrontmatter, PageMeta, PagesApi, PagesOptions } from '@islands/pages'
+
 export type { RawPageMatter, PageFrontmatter, PageMeta } from '@islands/pages'
 export type { OnLoadFn } from '@islands/hydration/dist/vanilla'
 
@@ -79,6 +79,10 @@ export interface AppContext extends PageData {
   head: HeadClient
   router: Router
   routes: RouteRecordRaw[]
+}
+
+export interface IslandContext {
+  app: App
 }
 
 export interface StaticPath<T = Record<string, any>> {
@@ -182,11 +186,15 @@ export interface IlesModule extends Partial<BaseIlesConfig> {
 }
 
 export type EnhanceAppContext = AppContext
+export type EnhanceApp = (ctx: EnhanceAppContext) => void | Promise<void>
+export type EnhanceIslandContext = IslandContext
+export type EnhanceIslands = (ctx: EnhanceIslandContext) => void | Promise<void>
 export type MDXComponents = Record<string, any>
 
 export interface UserApp {
   head?: HeadConfig | ((ctx: EnhanceAppContext) => HeadConfig)
-  enhanceApp?: (ctx: EnhanceAppContext) => void | Promise<void>
+  enhanceApp?: EnhanceApp
+  enhanceIslands?: EnhanceIslands
   mdxComponents?: MDXComponents | ((ctx: EnhanceAppContext) => MDXComponents | Promise<MDXComponents>)
   router?: Omit<VueRouterOptions, 'history', 'routes'>
   socialTags?: boolean

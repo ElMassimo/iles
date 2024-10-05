@@ -1,5 +1,6 @@
 node_modules
 dist
+.iles-ssg-temp
 .vitepress/metadata.json
 cypress/videos
 cypress/screenshots

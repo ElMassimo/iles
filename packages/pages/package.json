@@ -1,18 +1,15 @@
 {
   "name": "@islands/pages",
-  "version": "0.8.1",
-  "scripts": {
-    "dev": "npm run build -- --watch",
-    "build": "tsup src/pages.ts",
-    "lint": "eslint ."
-  },
   "type": "module",
-  "files": [
-    "dist",
-    "src"
-  ],
-  "types": "dist/pages.d.ts",
-  "main": "dist/pages.js",
+  "version": "0.8.1",
+  "author": "Máximo Mussini <maximomussini@gmail.com>",
+  "funding": "https://github.com/sponsors/ElMassimo",
+  "homepage": "https://github.com/ElMassimo/iles",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ElMassimo/iles"
+  },
+  "bugs": "https://github.com/ElMassimo/iles/issues",
   "exports": {
     ".": {
       "import": "./dist/pages.js",
@@ -20,30 +17,34 @@
     },
     "./package.json": "./package.json"
   },
-  "funding": "https://github.com/sponsors/ElMassimo",
-  "author": "Máximo Mussini <maximomussini@gmail.com>",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/ElMassimo/iles"
-  },
-  "homepage": "https://github.com/ElMassimo/iles",
-  "bugs": "https://github.com/ElMassimo/iles/issues",
-  "dependencies": {
-    "debug": "^4.3.3",
-    "deep-equal": "^2.0.5",
-    "fast-glob": "^3.2.11",
-    "gray-matter": "^4.0.3",
-    "pathe": "^1.1.1"
+  "main": "dist/pages.js",
+  "types": "dist/pages.d.ts",
+  "files": [
+    "dist",
+    "src"
+  ],
+  "scripts": {
+    "dev": "npm run build -- --watch",
+    "build": "tsup src/pages.ts",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix"
   },
   "peerDependencies": {
     "vue": "^3.3.4"
   },
+  "dependencies": {
+    "debug": "^4.3.5",
+    "deep-equal": "^2.2.3",
+    "fast-glob": "^3.3.2",
+    "gray-matter": "^4.0.3",
+    "pathe": "^1.1.2"
+  },
   "devDependencies": {
-    "@types/deep-equal": "^1.0.1",
-    "@types/js-yaml": "^4.0.0",
-    "tsup": "7.2.0",
-    "typescript": "^5.2.2",
-    "unified": "^11.0.0",
-    "vue": "^3.3.4"
+    "@types/deep-equal": "^1.0.4",
+    "@types/js-yaml": "^4.0.9",
+    "tsup": "8.2.3",
+    "typescript": "5.2.2",
+    "unified": "^11.0.5",
+    "vue": "^3.4.34"
   }
 }

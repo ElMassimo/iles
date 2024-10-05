@@ -1,18 +1,10 @@
 {
   "compilerOptions": {
+    "target": "es2020",
+    "lib": ["ESNext", "DOM"],
     "baseUrl": ".",
     "module": "es2020",
-    "target": "es2020",
     "moduleResolution": "node",
-    "resolveJsonModule": true,
-    "strict": true,
-    "declaration": true,
-    "noUnusedLocals": true,
-    "skipLibCheck": true,
-    "esModuleInterop": true,
-    "useUnknownInCatchVariables": false,
-    "lib": ["ESNext", "DOM"],
-    "types": ["node", "vitest"],
     "paths": {
       "src/*": ["src/*"],
       "@components/*": ["src/client/app/components/*"],
@@ -24,7 +16,15 @@
       "tests/*": ["__tests__/*"],
       "/@shared/*": ["src/client/shared/*"],
       "iles": ["types/index.d.ts"]
-    }
+    },
+    "resolveJsonModule": true,
+    "types": ["node", "vitest"],
+    "strict": true,
+    "noUnusedLocals": true,
+    "useUnknownInCatchVariables": false,
+    "declaration": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true
   },
   "include": ["src", "tests", "types"]
 }

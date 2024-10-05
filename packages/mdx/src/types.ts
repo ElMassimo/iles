@@ -1,5 +1,4 @@
 import type { CompileOptions } from '@mdx-js/mdx'
-import type { Plugin } from 'vite'
 import type { Pluggable } from 'unified'
 import type { VFile } from 'vfile'
 

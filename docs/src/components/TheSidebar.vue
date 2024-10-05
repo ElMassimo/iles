@@ -3,7 +3,7 @@ import { ref, watch } from 'vue'
 
 const doc = document
 
-export function onLoad () {
+export function onLoad() {
   const openSideBar = ref(false)
 
   watch(openSideBar, (open) => {
@@ -32,7 +32,7 @@ export function onLoad () {
 <template>
   <aside class="fixed z-50 md:z-0 border-r md:static">
     <div class="h-full pointer-events-none">
-      <SidebarBackground id="sidebar-background" data-sidebar="close"/>
+      <SidebarBackground id="sidebar-background" data-sidebar="close" />
       <div
         id="sidebar-panel"
         data-sidebar="close"
@@ -47,9 +47,9 @@ export function onLoad () {
         <div
           class="w-auto h-full bg-html md:bg-transparent"
         >
-          <SidebarHeader/>
+          <SidebarHeader />
           <div class="sticky top-$navbar-height h-$full-viewport overflow-y-auto">
-            <SidebarNav/>
+            <SidebarNav />
           </div>
         </div>
       </div>
@@ -59,8 +59,8 @@ export function onLoad () {
 
 <style scoped>
 #sidebar-background {
-  background: rgba(0,0,0,.6);
-  transition: opacity .5s;
+  background: rgba(0, 0, 0, 0.6);
+  transition: opacity 0.5s;
 
   &.hidden {
     display: block;
@@ -69,6 +69,6 @@ export function onLoad () {
 }
 
 #sidebar-panel {
-  transition: transform .5s cubic-bezier(.19,1,.22,1);
+  transition: transform 0.5s cubic-bezier(0.19, 1, 0.22, 1);
 }
 </style>

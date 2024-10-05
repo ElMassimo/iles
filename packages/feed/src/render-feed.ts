@@ -1,6 +1,7 @@
-import { createStaticVNode, defineComponent, PropType, defineAsyncComponent, h } from 'vue'
+import type { PropType } from 'vue'
+import { createStaticVNode, defineAsyncComponent, defineComponent, h } from 'vue'
 import { useVueRenderer } from 'iles'
-import type { FeedOptions, FeedFormat, FeedItem, Author, Extension, ResolvedItem } from './types'
+import type { Author, Extension, FeedFormat, FeedItem, FeedOptions, ResolvedItem } from './types'
 
 const formats: Record<string, FeedFormat> = {
   atom: 'atom1',
@@ -29,13 +30,13 @@ export const RenderFeed = defineComponent({
     contributors: { type: Array as PropType<Author[]>, default: undefined },
     extensions: { type: Array as PropType<Extension[]>, default: undefined },
   },
-  setup (props) {
+  setup(props) {
     const renderContent = useVueRenderer()
     const renderComponent = import.meta.env.SSR ? renderFeed : renderRaw
 
     return () => {
       const format = formats[props.format || 'atom']
-      if (!format) throw new Error(`@islands/feed: Unknown format '${props.format}'`)
+      if (!format) { throw new Error(`@islands/feed: Unknown format '${props.format}'`) }
 
       return h(defineAsyncComponent(async () => {
         const maybeItems = props.items || []
@@ -55,12 +56,11 @@ export const RenderFeed = defineComponent({
   },
 })
 
-async function renderFeed (format: FeedFormat, { options, ...props }: FeedProps<ResolvedItem>) {
+async function renderFeed(format: FeedFormat, { options, ...props }: FeedProps<ResolvedItem>) {
   const { Feed } = await import('feed')
   const feed = new Feed(options)
 
-  if (props.items)
-    (await Promise.all(props.items)).forEach(feed.addItem)
+  if (props.items) { (await Promise.all(props.items)).forEach(feed.addItem) }
   props.categories?.forEach(feed.addCategory)
   props.contributors?.forEach(feed.addContributor)
   props.extensions?.forEach(feed.addExtension)
@@ -68,12 +68,12 @@ async function renderFeed (format: FeedFormat, { options, ...props }: FeedProps<
   return createStaticVNode(feed[format](), 1)
 }
 
-function renderRaw (_format: FeedFormat, { options, ...props }: FeedProps) {
+function renderRaw(_format: FeedFormat, { options, ...props }: FeedProps) {
   const json = JSON.stringify({ ...options, ...props }, null, 2)
   const style = 'word-break: break-word; white-space: pre-wrap;'
   return h('pre', { style }, h('code', null, json))
 }
 
-function skipRender (content: any): content is string | undefined {
+function skipRender(content: any): content is string | undefined {
   return content === undefined || typeof content === 'string'
 }

@@ -8,9 +8,11 @@ defineProps({
 <template>
   <blockquote class="tip" :class="{ warn }">
     <div v-if="title || $slots.title" class="-mt-1 mb-2 font-semibold">
-      <slot name="title">{{ title }}</slot>
+      <slot name="title">
+        {{ title }}
+      </slot>
     </div>
-    <slot/>
+    <slot />
   </blockquote>
 </template>
 

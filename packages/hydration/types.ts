@@ -2,6 +2,8 @@
 
 import type Vue from './vue'
 
+export type { EnhanceIslands } from '../iles/types/shared'
+
 export type Framework = 'vue' | 'preact' | 'solid' | 'svelte' | 'vanilla'
 export type FrameworkFn = typeof Vue
 export type AsyncFrameworkFn = () => Promise<FrameworkFn>

@@ -7,7 +7,7 @@ import icons from '@islands/icons'
 import images, { hdPreset } from '@islands/images'
 import prism from '@islands/prism'
 
-import windicss from 'vite-plugin-windicss'
+import UnoCSS from 'unocss/vite'
 import inspect from 'vite-plugin-inspect'
 
 const presets = {
@@ -46,20 +46,18 @@ export default defineConfig({
   ],
   // Example: Configure all posts to use a different layout without having to
   // add `layout: 'post'` in every file.
-  extendFrontmatter (frontmatter, filename) {
-    if (filename.includes('/posts/'))
-      frontmatter.layout ||= 'post'
+  extendFrontmatter(frontmatter, filename) {
+    if (filename.includes('/posts/')) { frontmatter.layout ||= 'post' }
   },
   markdown: {
-    withImageSrc (src) {
-      if (!src.includes('?'))
-        return `${src}?preset=post`
+    withImageSrc(src) {
+      if (!src.includes('?')) { return `${src}?preset=post` }
     },
     remarkPlugins: ['remark-gfm'],
   },
   vite: {
     plugins: [
-      windicss(),
+      UnoCSS(),
       Boolean(process.env.DEBUG) && inspect(),
     ],
   },

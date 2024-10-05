@@ -1,4 +1,4 @@
-import { resolve } from 'path'
+import { resolve } from 'node:path'
 import { defineConfig } from 'iles'
 
 import headings from '@islands/headings'
@@ -6,7 +6,7 @@ import icons from '@islands/icons'
 import prism from '@islands/prism'
 import pwa from '@islands/pwa'
 
-import windicss from 'vite-plugin-windicss'
+import UnoCSS from 'unocss/vite'
 import inspect from 'vite-plugin-inspect'
 import lastUpdated from './modules/lastUpdated'
 import site from './src/site'
@@ -55,6 +55,7 @@ export default defineConfig({
         globPatterns: ['**/*.{js,css,svg,ico,png,avif,json,xml,html}'],
         runtimeCaching: [
           {
+            // eslint-disable-next-line prefer-regex-literals
             urlPattern: new RegExp('https://unpkg.com/.*', 'i'),
             handler: 'CacheFirst',
             options: {
@@ -69,6 +70,7 @@ export default defineConfig({
             },
           },
           {
+            // eslint-disable-next-line prefer-regex-literals
             urlPattern: new RegExp('https://pixel.thesemetrics.org/.*', 'i'),
             handler: 'CacheFirst',
             options: {
@@ -92,9 +94,8 @@ export default defineConfig({
     ],
   },
   ssg: {
-    manualChunks (id, api) {
-      if (id.includes('preact') || id.includes('algolia') || id.toLowerCase().includes('docsearch'))
-        return 'docsearch'
+    manualChunks(id, api) {
+      if (id.includes('preact') || id.includes('algolia') || id.toLowerCase().includes('docsearch')) { return 'docsearch' }
     },
   },
   vite: {
@@ -104,7 +105,7 @@ export default defineConfig({
       },
     },
     plugins: [
-      windicss(),
+      UnoCSS(),
       Boolean(process.env.DEBUG) && inspect(),
     ],
   },

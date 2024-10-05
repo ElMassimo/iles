@@ -23,7 +23,6 @@
 [MDX]: https://iles-docs.netlify.app/guide/markdown
 [alias]: https://iles-docs.netlify.app/guide/development#default-app-structure
 [vite-plugin-image-presets]: https://github.com/ElMassimo/vite-plugin-image-presets
-
 [live]: https://the-vue-point-with-iles.netlify.app/
 [vuepoint]: https://github.com/ElMassimo/iles/tree/main/playground/the-vue-point/iles.config.ts
 
@@ -37,8 +36,8 @@ An [îles] module that configures [`vite-plugin-image-presets`][vite-plugin-imag
 
 - ⚡️ on-demand in dev, cached at build time 📦
 
-[__Demo__ 🖼][live]
-[__Source__ 💻][vuepoint]
+[**Demo** 🖼][live]
+[**Source** 💻][vuepoint]
 
 ### Configuration ⚙️
 
@@ -96,7 +95,6 @@ import srcset from '~/images/logo.jpg?preset=thumbnail&srcset'
 
 expect(srcset).toEqual('/assets/logo.063759b1.jpeg 48w, /assets/logo.81d93491.jpeg 96w')
 
-
 import src from '~/images/logo.jpg?preset=thumbnail&src'
 
 expect(src).toEqual('/assets/logo.81d93491.jpeg')
@@ -110,7 +108,7 @@ corresponding `source` and `img` tags.
 
 ```vue
 <template>
-  <Picture src="@/images/logo.jpg?preset=thumbnail"/>
+  <Picture src="@/images/logo.jpg?preset=thumbnail" />
 </template>
 ```
 
@@ -135,10 +133,9 @@ import { defineConfig } from 'iles'
 
 export default defineConfig({
   markdown: {
-    withImageSrc (src, file) {
+    withImageSrc(src, file) {
       // Example: If no preset was manually specified, use the `narrow` preset.
-      if (!src.includes('?'))
-        return `${src}?preset=narrow`
+      if (!src.includes('?')) { return `${src}?preset=narrow` }
     },
   }
 })

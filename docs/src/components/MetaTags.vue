@@ -2,10 +2,11 @@
 import bannerSrc from '/images/banner.png'
 import logoSrc from '/icons/logo.svg'
 import faviconSrc from '/images/favicon.ico'
+import { computed } from 'vue'
 
 const { frontmatter, site } = usePage()
 
-let imageUrl = $computed(() => `${site.url}${frontmatter.image || bannerSrc}`)
+let imageUrl = computed(() => `${site.url}${frontmatter.image || bannerSrc}`)
 
 const isProd = import.meta.env.PROD
 </script>

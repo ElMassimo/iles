@@ -31,6 +31,8 @@ An [îles] module that provides support for [pages], inspired by [vite-plugin-pa
 - 🎣 hooks to extend [frontmatter] and route data
 - 📄 adds support for a [`<page>` block][pages] in Vue single-file components
 
+<!-- eslint-skip -->
+
 ```ts
   extendFrontmatter (frontmatter, filename) {
     if (filename.includes('/posts/'))
@@ -41,7 +43,7 @@ An [îles] module that provides support for [pages], inspired by [vite-plugin-pa
       route.path = path.replace(/[\d-]+/, '') // remove date
   },
   extendRoutes (routes) {
-    routes.push({ path: '/custom', name: 'Custom', componentFilename: ... }))
+    routes.push({ path: '/custom', name: 'Custom', componentFilename: ... })
   },
 ```
 

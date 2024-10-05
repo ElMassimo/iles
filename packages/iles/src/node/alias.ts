@@ -1,7 +1,7 @@
-import { fileURLToPath } from 'url'
-import { createRequire } from 'module'
-import { join, dirname, resolve } from 'pathe'
-import { Alias, AliasOptions } from 'vite'
+import { fileURLToPath } from 'node:url'
+import { createRequire } from 'node:module'
+import { dirname, join, resolve } from 'pathe'
+import type { Alias, AliasOptions } from 'vite'
 import type { UserConfig } from './shared'
 
 const _dirname = dirname(fileURLToPath(import.meta.url))
@@ -31,15 +31,19 @@ export const APP_CONFIG_REQUEST_PATH = `/${APP_CONFIG_ID}`
 export const USER_APP_ID = '@islands/user-app'
 export const USER_APP_REQUEST_PATH = `/${USER_APP_ID}`
 
+export const USER_APP_ENHANCE_ISLANDS = 'virtual:user-app'
+export const USER_APP_ENHANCE_ISLANDS_RESOLVED = `\0${USER_APP_ENHANCE_ISLANDS}`
+
 export const USER_SITE_ID = '@islands/user-site'
 export const USER_SITE_REQUEST_PATH = `/${USER_SITE_ID}`
 
 export const NOT_FOUND_REQUEST_PATH = '@islands/components/NotFound'
 
-export function resolveAliases (root: string, userConfig: UserConfig): AliasOptions {
+export function resolveAliases(root: string, userConfig: UserConfig): AliasOptions {
   const paths: Record<string, string> = {
     '/@shared': SHARED_PATH,
     [USER_APP_ID]: USER_APP_REQUEST_PATH,
+    [USER_APP_ENHANCE_ISLANDS]: USER_APP_ENHANCE_ISLANDS_RESOLVED,
     [USER_SITE_ID]: USER_SITE_REQUEST_PATH,
     [APP_CONFIG_ID]: APP_CONFIG_REQUEST_PATH,
   }
@@ -85,6 +89,10 @@ export function resolveAliases (root: string, userConfig: UserConfig): AliasOpti
       replacement: require.resolve(
         '@vue/devtools-api/lib/esm/index.js',
       ),
+    },
+    {
+      find: /^\/@id\/virtual:user-app$/,
+      replacement: require.resolve(`${resolve(root, srcDir)}/app.ts`),
     },
     {
       find: /^@islands\/hydration$/,
