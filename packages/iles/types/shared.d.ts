@@ -80,6 +80,10 @@ export interface AppContext extends PageData {
   routes: RouteRecordRaw[]
 }
 
+export interface IslandContext {
+  app: App
+}
+
 export interface StaticPath<T = Record<string, any>> {
   params: RouteParams
   props: T
@@ -181,11 +185,15 @@ export interface IlesModule extends Partial<BaseIlesConfig> {
 }
 
 export type EnhanceAppContext = AppContext
+export type EnhanceApp = (ctx: EnhanceAppContext) => void | Promise<void>
+export type EnhanceIslandContext = IslandContext
+export type EnhanceIslands = (ctx: EnhanceIslandContext) => void | Promise<void>
 export type MDXComponents = Record<string, any>
 
 export interface UserApp {
   head?: HeadConfig | ((ctx: EnhanceAppContext) => HeadConfig)
-  enhanceApp?: (ctx: EnhanceAppContext) => void | Promise<void>
+  enhanceApp?: EnhanceApp
+  enhanceIslands?: EnhanceIslands
   mdxComponents?: MDXComponents | ((ctx: EnhanceAppContext) => MDXComponents | Promise<MDXComponents>)
   router?: Omit<VueRouterOptions, 'history', 'routes'>
   socialTags?: boolean

@@ -7,7 +7,7 @@ import MagicString from 'magic-string'
 
 import type { AppConfig, AppClientConfig } from '../shared'
 import { ILES_APP_ENTRY } from '../constants'
-import { APP_PATH, APP_COMPONENT_PATH, USER_APP_REQUEST_PATH, USER_SITE_REQUEST_PATH, APP_CONFIG_REQUEST_PATH, NOT_FOUND_COMPONENT_PATH, NOT_FOUND_REQUEST_PATH, DEBUG_COMPONENT_PATH } from '../alias'
+import { APP_COMPONENT_PATH, APP_CONFIG_REQUEST_PATH, APP_PATH, DEBUG_COMPONENT_PATH, NOT_FOUND_COMPONENT_PATH, NOT_FOUND_REQUEST_PATH, USER_APP_ENHANCE_ISLANDS, USER_APP_ENHANCE_ISLANDS_RESOLVED, USER_APP_REQUEST_PATH, USER_SITE_REQUEST_PATH } from '../alias'
 import { configureMiddleware } from './middleware'
 import { serialize, pascalCase, exists, debug } from './utils'
 import { parseId } from './parse'
@@ -147,6 +147,20 @@ export default function IslandsPlugins (appConfig: AppConfig): PluginOption[] {
         const layoutName = code.match(templateLayoutRegex)?.[1] || false
         if (String(layoutName) === 'false') return
         return wrapLayout(code, path)
+      },
+    },
+    {
+      name: 'iles:enhance-islands',
+      resolveId(id) {
+        if (id === USER_APP_ENHANCE_ISLANDS) {
+          return USER_APP_ENHANCE_ISLANDS_RESOLVED
+        }
+      },
+      load(id) {
+        if (id === USER_APP_ENHANCE_ISLANDS_RESOLVED) {
+          return `import userApp from '@islands/user-app'
+export const { enhanceIslands } = userApp`
+        }
       },
     },
 
