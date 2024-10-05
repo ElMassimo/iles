@@ -1,12 +1,12 @@
 import { createApp as createClientApp, createSSRApp, createStaticVNode, h } from 'vue'
 import type { Component as App, DefineComponent as Component } from 'vue'
-import type { Props, Slots } from './types'
+import type { EnhanceIslands, Props, Slots } from './types'
 import { onDispose } from './hydration'
 
 const createVueApp = import.meta.env.SSR ? createSSRApp : createClientApp
 
 // Internal: Creates a Vue app and mounts it on the specified island root.
-export default function createVueIsland(component: Component, id: string, el: Element, props: Props, slots: Slots | undefined) {
+export default async function createVueIsland(component: Component, id: string, el: Element, props: Props, slots: Slots | undefined, enhanceIslands: EnhanceIslands) {
   const slotFns = slots && Object.fromEntries(Object.entries(slots).map(([slotName, content]) => {
     return [slotName, () => (createStaticVNode as any)(content)]
   }))
@@ -16,6 +16,10 @@ export default function createVueIsland(component: Component, id: string, el: El
   if (import.meta.env.DEV) { appDefinition.name = `Island: ${nameFromFile(component.__file)}` }
 
   const app = createVueApp(appDefinition)
+  if (enhanceIslands) {
+    await enhanceIslands({ app })
+  }
+
   app.mount(el!, Boolean(slots))
 
   if (import.meta.env.DISPOSE_ISLANDS) { onDispose(id, app.unmount) }

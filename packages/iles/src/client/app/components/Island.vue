@@ -92,13 +92,14 @@ export default defineComponent({
       const frameworkPath = `${hydrationPkg}/${this.framework}`
 
       return `import { ${hydrationFns[this.strategy]} as hydrate } from '${hydrationPkg}'
+import { enhanceIslands } from '/@id/virtual:enhance-islands'
 ${isEager(this.strategy)
     ? `import framework from '${frameworkPath}'
 import { ${this.importName} as component } from '${componentPath}'`
     : `const framework = async () => (await import('${frameworkPath}')).default
 const component = async () => (await import('${componentPath}')).${this.importName}`
 }
-hydrate(framework, component, '${this.id}', ${serialize(props)}, ${serialize(slots)})
+hydrate(framework, component, '${this.id}', ${serialize(props)}, ${serialize(slots)}, enhanceIslands)
   `
     }
 
