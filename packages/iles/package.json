@@ -39,9 +39,9 @@
     "dev-cjs": "npm run build-cjs -- --watch",
     "dev-shared": "node scripts/copyShared",
     "dev-watch": "node scripts/watchAndCopy",
-    "build-node": "rm dist/client/shared.d.ts && tsup src/node && cp dist/node/shared.d.ts dist/client/shared.d.ts",
+    "build-node": "tsup --config tsup.config.ts src/node",
     "build-cjs": "tsup src/node/publicUtils.ts --config tsup-cjs.config.ts",
-    "build-client": "tsc -p src/client",
+    "build-client": "rm -rf dist/client && node scripts/copyClient && tsc -p src/client",
     "build": "rm -rf dist && node scripts/copyShared && npm run build-client && npm run build-node && npm run build-cjs && node scripts/copyClient",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix"

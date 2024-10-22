@@ -3,7 +3,6 @@
     "baseUrl": ".",
     "module": "es2020",
     "target": "es2020",
-    "outDir": "dist/client",
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "strict": true,
@@ -27,5 +26,6 @@
       "iles": ["types/index.d.ts"]
     }
   },
-  "include": ["src", "tests", "types"]
+  "include": ["src", "tests", "types"],
+  "exclude": ["dist"]
 }

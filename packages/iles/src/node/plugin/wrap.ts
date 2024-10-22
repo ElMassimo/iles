@@ -93,7 +93,7 @@ export async function wrapIslandsInSFC (config: AppConfig, code: string, filenam
       s.prepend(opening)
       injectionOffset = 0
     }
-    s.appendRight(injectionOffset, `\n${components.stringifyImport(info)}`)
+    s.appendRight(injectionOffset, `\n${components.stringifyImport(info)};`)
   }
 }
 

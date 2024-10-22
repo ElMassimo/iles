@@ -26,7 +26,7 @@ chokidar
 // copy non ts files, such as an html or css, to the dist directory whenever
 // they change.
 chokidar
-  .watch('src/client/**/!(*.ts|tsconfig.json)')
+  .watch('src/client/**/!(*.ts|tsconfig.json|*.vue)')
   .on('change', file => fs.copy(file, toDist(file)))
   .on('add', file => fs.copy(file, toDist(file)))
   .on('unlink', file => fs.remove(toDist(file)))

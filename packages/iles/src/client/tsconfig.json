@@ -1,7 +1,9 @@
 {
   "extends": "../../tsconfig.json",
   "compilerOptions": {
-    "baseUrl": "."
+    "baseUrl": ".",
+    "outDir": "../../dist/client",
   },
-  "include": [".", "../../**/*.d.ts", "../../types/shared.d.ts"]
+  "include": [".", "../../**/*.d.ts", "../../types/shared.d.ts"],
+  "exclude": ["dist", "../../dist/**/*"]
 }
