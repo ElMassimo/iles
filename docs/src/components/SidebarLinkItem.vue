@@ -1,16 +1,14 @@
 <script setup lang="ts">
 import { useAppConfig } from 'iles'
-import { toRef } from 'vue'
 import type { SideBarItem } from '~/logic/config'
 import { joinUrl } from '~/logic/utils'
 import { useActive } from '~/logic/sidebar'
 
-const props = defineProps<{ item: SideBarItem; header?: boolean; table?: boolean }>()
-const { item, header, table } = $(props)
+const { item, header, table } = defineProps<{ item: SideBarItem; header?: boolean; table?: boolean }>()
 
 const { base } = useAppConfig()
 
-const active = $(useActive(toRef(props, 'item')))
+const active = $(useActive(() => item))
 const link = $computed(() => item.link && joinUrl(base, item.link))
 
 const style = $computed(() => ([

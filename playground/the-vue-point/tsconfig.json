@@ -13,6 +13,9 @@
     "skipLibCheck": true,
     "esModuleInterop": true,
     "lib": ["ESNext", "DOM"],
+    "types": [
+      "@vue-macros/reactivity-transform/macros-global"
+    ],
     "paths": {
       "~/*": ["src/*"]
     }

@@ -14,7 +14,10 @@
     "skipLibCheck": true,
     "esModuleInterop": true,
     "lib": ["ESNext", "DOM"],
-    "types": ["vite-plugin-pwa/client"],
+    "types": [
+      "@vue-macros/reactivity-transform/macros-global",
+      "vite-plugin-pwa/client"
+    ],
     "paths": {
       "~/*": ["src/*"]
     }
