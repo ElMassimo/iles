@@ -55,7 +55,7 @@ async function bundleWithVite (config: AppConfig, entrypoints: string[] | Entryp
     ],
     build: {
       ssr,
-      cssCodeSplit: htmlBuild,
+      cssCodeSplit: htmlBuild || !ssr,
       minify: ssr ? false : 'esbuild',
       emptyOutDir: ssr,
       outDir: ssr ? config.tempDir : config.outDir,
