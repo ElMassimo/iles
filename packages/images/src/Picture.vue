@@ -4,7 +4,7 @@ const { src } = defineProps<{ src: string | any[] }>()
 
 const allSources = computed(() => Array.isArray(src) ? src : [{ srcset: src, src }])
 const sources = computed(() => allSources.value.slice(0, -1))
-const lastSource = computed(() => allSources[allSources.value.length - 1])
+const lastSource = computed(() => allSources.value[allSources.value.length - 1])
 </script>
 
 <script lang="ts">

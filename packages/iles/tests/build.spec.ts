@@ -2,7 +2,7 @@ import { resolve } from 'path'
 import { promises as fs } from 'fs'
 import { test, describe, expect, beforeAll } from 'vitest'
 
-import execa from 'execa'
+import { execa } from 'execa'
 import glob from 'fast-glob'
 
 const projectRoot = resolve(__dirname, '../../..')
@@ -24,7 +24,7 @@ describe('building docs site', () => {
       'feed.rss',
       'index.html',
       'logo.svg',
-      'manifest.json',
+      '.vite/manifest.json',
       'posts/1.html',
       'posts/2.html',
       'posts/hello-2021.html',
@@ -69,7 +69,7 @@ describe('building docs site', () => {
   })
 
   test('manifest', async () => {
-    await assertContent('manifest.json', '"iles/turbo":')
+    await assertContent('.vite/manifest.json', '"iles/turbo":')
   })
 })
 

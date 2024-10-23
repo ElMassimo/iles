@@ -33,7 +33,7 @@
     "eslint-plugin-solid": "^0.14.1",
     "eslint-plugin-svelte": "^2.43.0",
     "execa": "^9.3.0",
-    "iles": "*",
+    "iles": "workspace:*",
     "minimist": "^1.2.8",
     "pkg-dir": "^8.0.0",
     "semver": "^7.6.3",

@@ -11,7 +11,7 @@ describe('resolvers', () => {
   test('can resolve Island and Head', async () => {
     const resolve = IlesComponentResolver
     expect(resolve('Island')).toEqual({ from: ISLAND_COMPONENT_PATH })
-    expect(resolve('Head')).toEqual({ name: 'Head', from: '@unhead/vue' })
+    expect(resolve('Head')).toEqual({ name: 'Head', from: '@unhead/vue/components' })
     expect(resolve('Something')).toEqual(undefined)
   })
 
