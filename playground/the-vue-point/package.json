@@ -27,6 +27,6 @@
     "iles": "workspace:*",
     "remark-gfm": "^4.0.0",
     "unocss": "^0.61.8",
-    "vue-tsc": "^2.0.29"
+    "vue-tsc": "^2.1.10"
   }
 }

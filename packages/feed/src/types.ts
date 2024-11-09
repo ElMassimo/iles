@@ -3,7 +3,7 @@ import type { VueRenderable } from 'iles'
 
 export type AsyncContent = string | VueRenderable
 
-export { FeedOptions, ResolvedItem, Author, Extension }
+export type { FeedOptions, ResolvedItem, Author, Extension }
 
 export interface FeedItem extends Omit<ResolvedItem, 'description' | 'content'> {
   description?: AsyncContent

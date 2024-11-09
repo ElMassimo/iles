@@ -54,7 +54,7 @@ export async function wrapIslandsInSFC (config: AppConfig, code: string, filenam
     if (scriptClient) { throw new Error(`Vue components with <script client:...> must define a template containing at least one tag. No valid template found in ${filename}`) }
     return
   }
-  const sfcRootNode = template.ast as SfcRootNode
+  const sfcRootNode = template.ast as any as SfcRootNode
 
   const s = new MagicString(code)
   const components: ComponentsApi = config.namedPlugins.components.api

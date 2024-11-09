@@ -1,8 +1,8 @@
 {
   "compilerOptions": {
-    "module": "es2020",
-    "target": "es2020",
-    "lib": ["ESNext", "DOM"],
+    "module": "esnext",
+    "target": "esnext",
+    "lib": ["esnext", "DOM"],
     "esModuleInterop": true,
     "strict": true,
     "strictNullChecks": true,

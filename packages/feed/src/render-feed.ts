@@ -1,4 +1,4 @@
-import { createStaticVNode, defineComponent, PropType, defineAsyncComponent, h } from 'vue'
+import { createStaticVNode, defineComponent, type PropType, defineAsyncComponent, h } from 'vue'
 import { useVueRenderer } from 'iles'
 import type { FeedOptions, FeedFormat, FeedItem, Author, Extension, ResolvedItem } from './types'
 

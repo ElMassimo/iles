@@ -1,14 +1,16 @@
 {
   "compilerOptions": {
-    "module": "ESNext",
-    "target": "es2020",
-    "lib": ["ESNext", "DOM"],
+    "module": "esnext",
+    "target": "esnext",
+    "moduleResolution": "bundler",
     "esModuleInterop": true,
     "strict": true,
-    "strictNullChecks": true,
-    "moduleResolution": "Node",
+    "skipLibCheck": true,
+    "noUnusedLocals": true,
     "resolveJsonModule": true,
-    "skipLibCheck": true
+    "verbatimModuleSyntax": true,
+    "jsx": "preserve",
+    "lib": ["esnext", "dom", "dom.iterable"]
   },
   "exclude": [
     "**/dist",

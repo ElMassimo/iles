@@ -32,17 +32,18 @@
     "tsconfig.json"
   ],
   "scripts": {
-    "dev": "rm -rf dist && npm run dev-shared && npm run dev-start",
-    "dev-start": "run-p dev-client dev-node dev-cjs dev-watch",
-    "dev-client": "npm run build-client -- --watch",
-    "dev-node": "npm run build-node -- --watch",
-    "dev-cjs": "npm run build-cjs -- --watch",
-    "dev-shared": "node scripts/copyShared",
-    "dev-watch": "node scripts/watchAndCopy",
-    "build-node": "tsup --config tsup.config.ts src/node",
-    "build-cjs": "tsup src/node/publicUtils.ts --config tsup-cjs.config.ts",
-    "build-client": "rm -rf dist/client && node scripts/copyClient && tsc -p src/client",
-    "build": "rm -rf dist && node scripts/copyShared && npm run build-client && npm run build-node && npm run build-cjs && node scripts/copyClient",
+    "dev": "rm -rf dist && npm run dev:shared && npm run dev:start",
+    "dev:start": "run-p dev:client dev:node dev:cjs dev:watch",
+    "dev:client": "npm run build:client -- --watch",
+    "dev:node": "npm run build:node -- --watch",
+    "dev:cjs": "npm run build:cjs -- --watch",
+    "dev:shared": "node scripts/copyShared",
+    "dev:watch": "node scripts/watchAndCopy",
+    "build": "pnpm build:prepare && pnpm build:client && pnpm build:node && pnpm build:cjs",
+    "build:prepare": "rm -rf dist && node scripts/copyShared",
+    "build:client": "vue-tsc --noEmit -p src/client && tsc -p src/client && node scripts/copyClient",
+    "build:node": "tsup --config tsup.config.ts src/node",
+    "build:cjs": "tsup src/node/publicUtils.ts --config tsup-cjs.config.ts",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix"
   },
@@ -111,8 +112,9 @@
     "semver": "^7.6.3",
     "tinyglobby": "0.2.6",
     "tsup": "8.2.4",
-    "typescript": "5.2.2",
+    "typescript": "^5.6.3",
     "vfile": "^6.0.2",
-    "vite-plugin-solid": "^2.10.2"
+    "vite-plugin-solid": "^2.10.2",
+    "vue-tsc": "^2.1.10"
   }
 }

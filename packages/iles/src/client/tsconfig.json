@@ -3,7 +3,9 @@
   "compilerOptions": {
     "baseUrl": ".",
     "outDir": "../../dist/client",
+    "paths": {
+      "iles": ["index.ts"]
+    }
   },
-  "include": [".", "../../**/*.d.ts", "../../types/shared.d.ts"],
-  "exclude": ["dist", "../../dist/**/*"]
+  "include": ["."]
 }

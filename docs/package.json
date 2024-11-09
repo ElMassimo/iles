@@ -36,7 +36,7 @@
     "rehype-external-links": "^3.0.0",
     "unocss": "^0.61.8",
     "vite-plugin-inspect": "^0.8.5",
-    "vue-tsc": "^2.0.29"
+    "vue-tsc": "^2.1.10"
   },
   "dependencies": {
     "@docsearch/css": "^3.6.1",

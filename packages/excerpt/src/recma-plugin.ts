@@ -1,8 +1,8 @@
 import { walk } from 'estree-walker'
-import type { Node, Statement, ImportSpecifier, FunctionDeclaration, Program } from 'estree-jsx'
+import type { Node, Statement, Program } from 'estree-jsx'
 import type { Plugin } from 'unified'
 
-import { ArrayExpression, CallExpression, ConditionalExpression, Expression, Identifier, ObjectExpression, Property, VariableDeclaration } from 'estree'
+import type { ArrayExpression, ConditionalExpression, Identifier, ObjectExpression, Property, VariableDeclaration } from 'estree'
 
 /**
  * A plugin that splits MDXContent into before/after excerpt separator, and

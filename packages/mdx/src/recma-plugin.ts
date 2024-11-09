@@ -1,5 +1,5 @@
 import { walk } from 'estree-walker'
-import type { Node, Statement, ImportSpecifier, FunctionDeclaration, Program } from 'estree-jsx'
+import type { Node, Statement, ImportSpecifier, Program } from 'estree-jsx'
 import type { Plugin } from 'unified'
 
 /**

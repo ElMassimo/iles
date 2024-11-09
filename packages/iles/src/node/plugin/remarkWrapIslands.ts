@@ -89,11 +89,13 @@ function extractImports (nodes: MdxjsEsm[]) {
   return imports
 }
 
-function importedName (specifier: ImportDeclaration['specifiers'][number]) {
+function importedName (specifier: ImportDeclaration['specifiers'][number]): string {
   switch (specifier.type) {
     case 'ImportDefaultSpecifier': return 'default'
     case 'ImportNamespaceSpecifier': return '*'
-    default: return specifier.imported.name
+    default:
+      if ('name' in specifier.imported) return specifier.imported.name
+      throw Error(`Unpexected literal in import declaration: ${specifier.imported}`)
   }
 }
 
