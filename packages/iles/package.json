@@ -72,7 +72,7 @@
     "@unhead/ssr": "^1.9.16",
     "@unhead/vue": "^1.9.16",
     "@vitejs/plugin-vue": "^5.1.4",
-    "@vue/devtools-api": "^6.6.3",
+    "@vue/devtools-api": "^7.6.3",
     "debug": "^4.3.5",
     "deep-equal": "^2.2.3",
     "es-module-lexer": "^1.5.4",
@@ -85,7 +85,7 @@
     "picocolors": "^1.0.1",
     "unist-util-visit": "^5.0.0",
     "unplugin-vue-components": "^0.27.3",
-    "vite": "^6.0.0-beta.9",
+    "vite": "^5.4.10",
     "vue": "^3.5.12",
     "vue-router": "^4.4.0"
   },

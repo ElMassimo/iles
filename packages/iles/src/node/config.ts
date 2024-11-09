@@ -309,6 +309,7 @@ function viteConfigDefaults (root: string, userConfig: UserConfig): ViteOptions 
         'iles',
         '@nuxt/devalue',
         '@islands/hydration',
+        '@islands/prerender',
         'vue/server-renderer',
       ],
     },

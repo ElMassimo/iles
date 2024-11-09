@@ -74,18 +74,6 @@ export function resolveAliases (root: string, userConfig: UserConfig): AliasOpti
         'vue-router/dist/vue-router.esm-bundler.js',
       ),
     },
-    // {
-    //   find: /^@unhead\/vue$/,
-    //   replacement: require.resolve(
-    //     '@unhead/vue/dist/index.mjs',
-    //   ),
-    // },
-    {
-      find: /^@vue\/devtools-api$/,
-      replacement: require.resolve(
-        '@vue/devtools-api/lib/esm/index.js',
-      ),
-    },
     {
       find: /^@islands\/hydration$/,
       replacement: require.resolve('@islands/hydration'),
