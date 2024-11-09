@@ -35,13 +35,13 @@
     "@islands/hydration": "workspace:^0.8.0"
   },
   "devDependencies": {
-    "preact": "^10.23.1",
-    "preact-render-to-string": "^6.5.7",
-    "solid-js": "^1.8.19",
-    "svelte": "^4.2.18",
+    "preact": "^10.24.3",
+    "preact-render-to-string": "^6.5.11",
+    "solid-js": "^1.9.3",
+    "svelte": "^5.1.13",
     "tsup": "8.2.4",
     "typescript": "^5.6.3",
-    "vite": "^5.3.5",
-    "vue": "^3.4.34"
+    "vite": "^6.0.0-beta.9",
+    "vue": "^3.5.12"
   }
 }

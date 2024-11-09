@@ -32,9 +32,9 @@ export const renderers: Record<Framework, PrerenderFn> = {
       return createComponent(component, { ...props, children })
     }, { renderId })
   },
-  async svelte (component, props, slots) {
-    const Svelte = (await import('./svelte')).default
-    return Svelte.render({ component, props, slots })?.html
+  async svelte (component, props, slots, renderId) {
+    const renderSvelteComponent = (await import('./svelte')).default
+    return renderSvelteComponent(component, props, slots, renderId)
   },
   async vanilla () {
     throw new Error('The vanilla strategy does not prerender islands.')

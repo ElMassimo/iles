@@ -149,7 +149,8 @@ async function setNamedPlugins (config: AppConfig, env: ConfigEnv, plugins: Name
     },
     async svelte (options: SvelteOptions) {
       const { svelte } = await importLibrary<typeof import('@sveltejs/vite-plugin-svelte')>('@sveltejs/vite-plugin-svelte')
-      return svelte({ ...options, compilerOptions: { hydratable: true, ...options?.compilerOptions } })
+      const dev = env.mode === 'development'
+      return svelte({ emitCss: true, ...options, compilerOptions: { dev, ...options.compilerOptions } })
     },
   }
   for (const [optionName, createPlugin] of Object.entries(optionalPlugins)) {

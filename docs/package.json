@@ -31,11 +31,11 @@
     "cross-spawn": "^7.0.3",
     "iles": "workspace:*",
     "postcss-nesting": "^12.1.5",
-    "preact": "^10.23.1",
-    "preact-render-to-string": "^6.5.7",
+    "preact": "^10.24.3",
+    "preact-render-to-string": "^6.5.11",
     "rehype-external-links": "^3.0.0",
     "unocss": "^0.61.8",
-    "vite-plugin-inspect": "^0.8.5",
+    "vite-plugin-inspect": "^0.8.7",
     "vue-tsc": "^2.1.10"
   },
   "dependencies": {

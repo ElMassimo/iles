@@ -1,13 +1,33 @@
-// @ts-ignore
-import { create_ssr_component, missing_component, validate_component } from 'svelte/internal'
+import { createRawSnippet, type Snippet } from 'svelte'
+import { render } from 'svelte/server'
+import type { PrerenderFn } from './prerender'
 
-export default create_ssr_component(($$result: any, $$props: any) => {
-  const { component, slots, props } = $$props
+const renderSvelteComponent: PrerenderFn = async (Component, props, slots, _id) => {
+  let children = undefined;
+  let $$slots: Record<string, Snippet> & { default?: boolean } | undefined = undefined
+  let renderFns: Record<string, Snippet> = {}
 
-  const $$slots = slots ? Object.fromEntries(
-    Object.entries(slots).map(([name, content]) => [name, () => content]),
-  ) : {}
+  slots && Object.entries(slots).forEach(([slotName, html]) => {
+    const fnName = slotName === 'default' ? 'children' : slotName
+    renderFns[fnName] = createRawSnippet(() => ({ render: () => html }))
 
-  return validate_component(component || missing_component, 'svelte:component')
-    .$$render($$result, props, {}, $$slots)
-})
+    $$slots ??= {}
+    if (slotName === 'default') {
+      $$slots.default = true
+      children = renderFns[fnName]
+    } else {
+      $$slots[fnName] = renderFns[fnName]
+    }
+  })
+
+  return render(Component, {
+    props: {
+      ...props,
+      children,
+      $$slots,
+      ...renderFns,
+    },
+  }).body
+}
+
+export default renderSvelteComponent

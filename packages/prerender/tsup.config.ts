@@ -14,6 +14,6 @@ export const tsup: Options = {
     'solid-js/web/dist/web.js',
     'solid-js/web/dist/server.js',
     'svelte',
-    'svelte/internal',
+    'svelte/server',
   ],
 }
