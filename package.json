@@ -2,7 +2,7 @@
   "name": "root",
   "type": "module",
   "private": true,
-  "packageManager": "pnpm@9.6.0",
+  "packageManager": "pnpm@9.8.0",
   "scripts": {
     "build:all": "pnpm nx run-many --target=build --all --exclude docs --exclude vue-blog",
     "lint:all": "pnpm nx run-many --target=lint --all",
