@@ -1,6 +1,6 @@
 import type { App, ComponentPublicInstance } from 'vue'
 import { reactive, computed } from 'vue'
-import type { InspectorNodeTag, DevtoolsPluginApi } from '@vue/devtools-api'
+import type { InspectorNodeTag } from '@vue/devtools-kit'
 import { setupDevtoolsPlugin } from '@vue/devtools-api'
 import { usePage } from 'iles'
 import type { AppClientConfig, PageData } from '../../shared'
@@ -33,7 +33,8 @@ const frameworkColors: Record<any, any> = {
   vue: { backgroundColor: 0x42B983, textColor: 0xFFFFFF },
 }
 
-let devtoolsApi: DevtoolsPluginApi<any>
+type DevToolsPluginAPI = Parameters<Parameters<typeof setupDevtoolsPlugin>[1]>[0]
+let devtoolsApi: DevToolsPluginAPI
 let appConfig: AppClientConfig
 
 let page = {} as PageData['page']
@@ -155,7 +156,7 @@ export function installDevtools (app: App, config: AppClientConfig) {
       }]
     })
 
-    api.on.getInspectorState((payload, ctx) => {
+    api.on.getInspectorState((payload) => {
       if (payload.app !== app || payload.inspectorId !== INSPECTOR_ID) return
 
       if (payload.nodeId === route.path) {

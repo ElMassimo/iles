@@ -7,7 +7,7 @@ settings:
 overrides:
   '@typescript-eslint/typescript-estree': 8.5.0
   esbuild: 0.24.0
-  vite: ^5.4.10
+  vite: 5.4.10
 
 importers:
 
@@ -234,7 +234,7 @@ importers:
         specifier: ^5.6.3
         version: 5.6.3
       vite:
-        specifier: ^5.4.10
+        specifier: 5.4.10
         version: 5.4.10(@types/node@20.14.12)(terser@5.36.0)
       vue:
         specifier: ^3.5.12
@@ -319,7 +319,7 @@ importers:
         specifier: ^0.27.3
         version: 0.27.3(@babel/parser@7.26.2)(rollup@4.19.0)(vue@3.5.12(typescript@5.6.3))
       vite:
-        specifier: ^5.4.10
+        specifier: 5.4.10
         version: 5.4.10(@types/node@20.14.12)(terser@5.36.0)
       vue:
         specifier: ^3.5.12
@@ -475,7 +475,7 @@ importers:
         specifier: ^6.0.2
         version: 6.0.2
       vite:
-        specifier: ^5.4.10
+        specifier: 5.4.10
         version: 5.4.10(@types/node@20.14.12)(terser@5.36.0)
 
   packages/pages:
@@ -540,7 +540,7 @@ importers:
         specifier: ^5.6.3
         version: 5.6.3
       vite:
-        specifier: ^5.4.10
+        specifier: 5.4.10
         version: 5.4.10(@types/node@20.14.12)(terser@5.36.0)
       vue:
         specifier: ^3.5.12
@@ -2034,13 +2034,13 @@ packages:
     resolution: {integrity: sha512-B9yVT7AkR6owrt84K3pLNyaKSvlioKdw65VqE/zMiR6HMovPekpsrwBNs5DJhBFEd5cvLMtCjHNHZ9P7Oblveg==}
     peerDependencies:
       '@babel/core': 7.x
-      vite: ^5.4.10
+      vite: 5.4.10
 
   '@preact/preset-vite@2.9.1':
     resolution: {integrity: sha512-JecWzrOx7ogFhklSMhY+aH/24pajL0Vx+beEgau3WDMUUAo32cpUo/UqerPhLOyhCKXlxK9a3cRoa8g68ZAp5g==}
     peerDependencies:
       '@babel/core': 7.x
-      vite: ^5.4.10
+      vite: 5.4.10
 
   '@prefresh/babel-plugin@0.5.0':
     resolution: {integrity: sha512-joAwpkUDwo7ZqJnufXRGzUb+udk20RBgfA8oLPBh5aJH2LeStmV1luBfeJTztPdyCscC2j2SmZ/tVxFRMIxAEw==}
@@ -2057,7 +2057,7 @@ packages:
     resolution: {integrity: sha512-vthWmEqu8TZFeyrBNc9YE5SiC3DVSzPgsOCp/WQ7FqdHpOIJi7Z8XvCK06rBPOtG4914S52MjG9Ls22eVAiuqQ==}
     peerDependencies:
       preact: ^10.4.0
-      vite: ^5.4.10
+      vite: 5.4.10
 
   '@rollup/plugin-babel@5.3.1':
     resolution: {integrity: sha512-WFfdLWU/xVWKeRQnKmIAQULUI7Il0gZnBIH/ZFO069wYIfPu+8zrfp/KMW0atmELoRDq8FbiP3VCss9MhCut7Q==}
@@ -2339,14 +2339,14 @@ packages:
     peerDependencies:
       '@sveltejs/vite-plugin-svelte': ^4.0.0-next.0||^4.0.0
       svelte: ^5.0.0-next.96 || ^5.0.0
-      vite: ^5.4.10
+      vite: 5.4.10
 
   '@sveltejs/vite-plugin-svelte@4.0.0':
     resolution: {integrity: sha512-kpVJwF+gNiMEsoHaw+FJL76IYiwBikkxYU83+BpqQLdVMff19KeRKLd2wisS8niNBMJ2omv5gG+iGDDwd8jzag==}
     engines: {node: ^18.0.0 || ^20.0.0 || >=22}
     peerDependencies:
       svelte: ^5.0.0-next.96 || ^5.0.0
-      vite: ^5.4.10
+      vite: 5.4.10
 
   '@tybys/wasm-util@0.9.0':
     resolution: {integrity: sha512-6+7nlbMVX/PVDCwaIQ8nTOPveOcFLSt8GcXdx8hD0bt39uWxYT88uXzqTd4fTvqta7oeUJqudepapKNt2DYJFw==}
@@ -2589,7 +2589,7 @@ packages:
   '@unocss/astro@0.61.9':
     resolution: {integrity: sha512-adOXz4itYHxqhvQgJHlEU58EHDTtY2qrcEPVmQVk4qI1W+ezQV6nQMQvti8mS/HbFw3MOJhIY1MlJoZK36/cyw==}
     peerDependencies:
-      vite: ^5.4.10
+      vite: 5.4.10
     peerDependenciesMeta:
       vite:
         optional: true
@@ -2670,13 +2670,13 @@ packages:
   '@unocss/vite@0.61.9':
     resolution: {integrity: sha512-hP/sL9rq1DvVCbSSx05m+bwYqen1nHm9tW6elKFkfV7X5jBUywu24WRq551NZI33KmgHA525ApX++DSWye+0uw==}
     peerDependencies:
-      vite: ^5.4.10
+      vite: 5.4.10
 
   '@vitejs/plugin-vue@5.1.4':
     resolution: {integrity: sha512-N2XSI2n3sQqp5w7Y/AN/L2XDjBIRGqXko+eDp42sydYSBeJuSm5a1sLf8zakmo8u7tA8NmBgoDLA1HeOESjp9A==}
     engines: {node: ^18.0.0 || >=20.0.0}
     peerDependencies:
-      vite: ^5.4.10
+      vite: 5.4.10
       vue: ^3.2.25
 
   '@vitest/expect@2.1.4':
@@ -2686,7 +2686,7 @@ packages:
     resolution: {integrity: sha512-Ky/O1Lc0QBbutJdW0rqLeFNbuLEyS+mIPiNdlVlp2/yhJ0SbyYqObS5IHdhferJud8MbbwMnexg4jordE5cCoQ==}
     peerDependencies:
       msw: ^2.4.9
-      vite: ^5.4.10
+      vite: 5.4.10
     peerDependenciesMeta:
       msw:
         optional: true
@@ -6499,7 +6499,7 @@ packages:
     engines: {node: '>=14'}
     peerDependencies:
       '@unocss/webpack': 0.61.9
-      vite: ^5.4.10
+      vite: 5.4.10
     peerDependenciesMeta:
       '@unocss/webpack':
         optional: true
@@ -6611,7 +6611,7 @@ packages:
     engines: {node: '>=14'}
     peerDependencies:
       '@nuxt/kit': '*'
-      vite: ^5.4.10
+      vite: 5.4.10
     peerDependenciesMeta:
       '@nuxt/kit':
         optional: true
@@ -6621,7 +6621,7 @@ packages:
     engines: {node: '>=16.0.0'}
     peerDependencies:
       '@vite-pwa/assets-generator': ^0.2.6
-      vite: ^5.4.10
+      vite: 5.4.10
       workbox-build: ^7.1.0
       workbox-window: ^7.1.0
     peerDependenciesMeta:
@@ -6633,7 +6633,7 @@ packages:
     peerDependencies:
       '@testing-library/jest-dom': ^5.16.6 || ^5.17.0 || ^6.*
       solid-js: ^1.7.2
-      vite: ^5.4.10
+      vite: 5.4.10
     peerDependenciesMeta:
       '@testing-library/jest-dom':
         optional: true
@@ -6712,7 +6712,7 @@ packages:
   vitefu@0.2.5:
     resolution: {integrity: sha512-SgHtMLoqaeeGnd2evZ849ZbACbnwQCIwRH57t18FxcXoZop0uQu0uzlIhJBlF/eWVzuce0sHeqPcDo+evVcg8Q==}
     peerDependencies:
-      vite: ^5.4.10
+      vite: 5.4.10
     peerDependenciesMeta:
       vite:
         optional: true
@@ -6720,7 +6720,7 @@ packages:
   vitefu@1.0.3:
     resolution: {integrity: sha512-iKKfOMBHob2WxEJbqbJjHAkmYgvFDPhuqrO82om83S8RLk+17FtyMBfcyeH8GqD0ihShtkMW/zzJgiA51hCNCQ==}
     peerDependencies:
-      vite: ^5.4.10
+      vite: 5.4.10
     peerDependenciesMeta:
       vite:
         optional: true

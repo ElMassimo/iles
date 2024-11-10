@@ -26,8 +26,7 @@ export default function IlesPWA (options: Partial<VitePWAOptions> = {}): IlesMod
   }
   return {
     name: '@islands/pwa',
-    config(config) {
-      
+    config (config) {
       const pluginsNested:PluginOption[]  = config.vite?.plugins ?? [];
       const pluginsFlattened: Plugin[] = pluginsNested.flat() as Plugin[];
       const plugin = pluginsFlattened.find(p => p.name === 'vite-plugin-pwa');
@@ -39,7 +38,7 @@ export default function IlesPWA (options: Partial<VitePWAOptions> = {}): IlesMod
       api = pluginPWA.find(p => p.name === 'vite-plugin-pwa')?.api
       return {
         vite: {
-          plugins: [pluginPWA],
+          plugins: [pluginPWA] as any,
         },
       }
     },
