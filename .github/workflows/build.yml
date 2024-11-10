@@ -78,14 +78,14 @@ jobs:
       - name: Cypress
         run: pnpm -C docs run cy:run
 
-      - uses: actions/upload-artifact@v2
+      - uses: actions/upload-artifact@v4
         if: failure()
         with:
           name: cypress-screenshots
           path: docs/cypress/screenshots
           retention-days: 1
 
-      - uses: actions/upload-artifact@v2
+      - uses: actions/upload-artifact@v4
         if: failure()
         with:
           name: cypress-videos
