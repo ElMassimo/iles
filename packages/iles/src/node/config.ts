@@ -1,4 +1,3 @@
-/* eslint-disable no-restricted-syntax */
 import { promises as fs, existsSync } from 'fs'
 import { join, resolve } from 'pathe'
 import pc from 'picocolors'

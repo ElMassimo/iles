@@ -75,7 +75,7 @@ describe('building docs site', () => {
 
 async function expectFileContent (path: string, transform?: (val: string) => string) {
   let content = await fs.readFile(`${vuePoint}/dist/${path}`, 'utf-8')
-  content = content.replace(/\/assets\/([^.]+)(?:[.-]+)\w+\.(\w+)\b/g, '/assets/$1.$2')
+  content = content.replace(/\/assets\/([^.]+)(?:[.-])\w+\.(\w+)\b/g, '/assets/$1.$2')
   return expect(transform ? transform(content) : content)
 }
 

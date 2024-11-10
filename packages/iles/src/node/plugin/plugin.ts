@@ -1,4 +1,3 @@
-/* eslint-disable no-restricted-syntax */
 import { promises as fs } from 'fs'
 import { basename, resolve, relative } from 'pathe'
 import type { PluginOption, ResolvedConfig, ViteDevServer } from 'vite'

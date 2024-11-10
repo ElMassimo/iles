@@ -5,8 +5,8 @@ import { onDispose } from './hydration'
 type Component = any
 
 export default function createIsland (Component: Component, id: string, el: Element, props: Props, slots: Slots | undefined = {}) {
-  let children = undefined
-  let $$slots: Record<string, Snippet> & { default?: boolean } | undefined = undefined
+  let children
+  let $$slots: Record<string, Snippet> & { default?: boolean } | undefined
   let renderFns: Record<string, Snippet> = {}
 
   Object.entries(slots).forEach(([slotName, html]) => {
@@ -17,12 +17,13 @@ export default function createIsland (Component: Component, id: string, el: Elem
     if (slotName === 'default') {
       $$slots.default = true
       children = renderFns[fnName]
-    } else {
+    }
+    else {
       $$slots[fnName] = renderFns[fnName]
     }
   })
 
-  // eslint-disable-next-line no-new, new-cap
+   
   const component = mount(Component, {
     target: el,
     props: {

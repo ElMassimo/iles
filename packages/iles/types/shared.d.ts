@@ -1,4 +1,3 @@
-/* eslint-disable no-use-before-define */
 import type { ResolveFn, UserConfig as ViteOptions, ConfigEnv, PluginOption as VitePluginOption } from 'vite'
 import type { GetManualChunk } from 'rollup'
 import type { App, Ref, DefineComponent, VNode, AsyncComponentLoader } from 'vue'

@@ -3,8 +3,8 @@ import { render } from 'svelte/server'
 import type { PrerenderFn } from './prerender'
 
 const renderSvelteComponent: PrerenderFn = async (Component, props, slots, _id) => {
-  let children = undefined;
-  let $$slots: Record<string, Snippet> & { default?: boolean } | undefined = undefined
+  let children;
+  let $$slots: Record<string, Snippet> & { default?: boolean } | undefined
   let renderFns: Record<string, Snippet> = {}
 
   slots && Object.entries(slots).forEach(([slotName, html]) => {
@@ -15,7 +15,8 @@ const renderSvelteComponent: PrerenderFn = async (Component, props, slots, _id) 
     if (slotName === 'default') {
       $$slots.default = true
       children = renderFns[fnName]
-    } else {
+    }
+    else {
       $$slots[fnName] = renderFns[fnName]
     }
   })

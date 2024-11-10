@@ -23,7 +23,6 @@ export const forcePageUpdate = () => { _lastPageChange.value = new Date() }
 
 export const computedInPage = <T>(fn: () => T) => {
   return computed<T>(() => {
-    // eslint-disable-next-line ts/no-unused-expressions
     _lastPageChange.value // track dependency to recompute as needed.
     return fn()
   })

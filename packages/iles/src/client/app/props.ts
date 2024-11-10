@@ -1,4 +1,3 @@
-/* eslint-disable no-restricted-syntax */
 import type { RouteLocationNormalizedLoaded, RouteParams } from 'vue-router'
 import { shallowRef, watch } from 'vue'
 import { computedInPage, pageFromRoute } from './composables/pageData'

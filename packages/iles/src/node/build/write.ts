@@ -1,4 +1,3 @@
-/* eslint-disable no-restricted-syntax */
 import { promises as fs } from 'fs'
 import { join, resolve, dirname } from 'pathe'
 import glob from 'fast-glob'

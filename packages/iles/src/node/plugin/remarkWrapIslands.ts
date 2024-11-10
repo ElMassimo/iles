@@ -95,7 +95,7 @@ function importedName (specifier: ImportDeclaration['specifiers'][number]): stri
     case 'ImportNamespaceSpecifier': return '*'
     default:
       if ('name' in specifier.imported) return specifier.imported.name
-      throw Error(`Unpexected literal in import declaration: ${specifier.imported}`)
+      throw new Error(`Unpexected literal in import declaration: ${specifier.imported}`)
   }
 }
 

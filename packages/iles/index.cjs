@@ -1,5 +1,3 @@
-/* eslint-disable no-restricted-globals */
-
 // type utils
 module.exports.defineConfig = (config) => config
 
