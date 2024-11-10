@@ -1,6 +1,6 @@
 import { extname } from 'path'
 import type { Node } from 'unist'
-import type { MDXJsxTextElement, MDXJsxFlowElement } from 'mdast-util-mdx-jsx'
+import type { MdxJsxTextElement, MdxJsxFlowElement } from 'mdast-util-mdx-jsx'
 
 const urlPattern = /^(https?:)?\//
 const externalUrlPattern = /^(https?:)?\/\//
@@ -13,7 +13,7 @@ export function isExternal (url: string) {
   return externalUrlPattern.test(url)
 }
 
-export function isJsxElement (node: Node): node is MDXJsxTextElement | MDXJsxFlowElement {
+export function isJsxElement (node: Node): node is MdxJsxTextElement | MdxJsxFlowElement {
   return node.type === 'mdxJsxTextElement' || node.type === 'mdxJsxFlowElement'
 }
 
