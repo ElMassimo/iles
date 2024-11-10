@@ -25,6 +25,7 @@ export default defineConfig({
         '@node/': `${__dirname}/packages/iles/src/node/`,
         '@mdx/': `${__dirname}/packages/mdx/src/`,
         '@pages/': `${__dirname}/playground/the-vue-point/src/pages/`,
+        '~/': `${__dirname}/playground/the-vue-point/src/`,
       },
     },
     ...(testConfig as any),

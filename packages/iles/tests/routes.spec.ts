@@ -2,9 +2,6 @@ import { test, describe, expect } from 'vitest'
 
 import routes from '@islands/routes'
 
-import vue32 from '@pages/posts/vue-3-2.mdx'
-import notFound from '@pages/404.vue'
-
 describe('app routes', () => {
   test('empty', async () => {
     expect(routes.map(route => route.path)).toEqual([
@@ -26,7 +23,7 @@ describe('app routes', () => {
 
 describe('page data', () => {
   test('for markdown file', async () => {
-    const doc = vue32
+    const doc = (await import('@pages/posts/vue-3-2.mdx')).default
 
     expect(typeof doc.render).toEqual('function')
     expect(typeof doc.__hmrId).toEqual('string')
@@ -52,9 +49,9 @@ describe('page data', () => {
   })
 
   test('for vue file', async () => {
-    const doc = notFound
+    const doc = (await import('@pages/404.vue')).default
 
-    expect(typeof doc.render).toEqual('function')
+    expect(typeof doc.ssrRender).toEqual('function')
     expect(typeof doc.__file).toEqual('string')
 
     const { layoutName } = doc

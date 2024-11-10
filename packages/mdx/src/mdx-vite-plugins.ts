@@ -72,7 +72,7 @@ function MDXContent`)
         return `${code}
       _sfc_main.__hmrId = "${hmrId}"
       __VUE_HMR_RUNTIME__.createRecord("${hmrId}", _sfc_main)
-      import.meta.hot.accept(({ default: component } = {}) => {
+      import.meta.hot?.accept(({ default: component } = {}) => {
         if (component)
           __VUE_HMR_RUNTIME__.reload(component.__hmrId, component)
       })

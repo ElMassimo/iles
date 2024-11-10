@@ -236,7 +236,7 @@ export default function IslandsPlugins (appConfig: AppConfig): PluginOption[] {
         const { path } = parseId(id)
         if (isLayout(path) || plugins.pages.api.isPage(path)) {
           return `${code}
-import.meta.hot.accept('/${relative(root, path)}', (...args) => __ILES_PAGE_UPDATE__(args))
+import.meta.hot?.accept('/${relative(root, path)}', (...args) => __ILES_PAGE_UPDATE__(args))
 `
         }
       },

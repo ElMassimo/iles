@@ -18,13 +18,12 @@ describe('building docs site', () => {
     expect(files.sort()).toEqual(expect.arrayContaining([
       '404.html',
       '_headers',
-      'assets/style-b306c075.css',
-      'assets/turbo.e8cd2c90.js',
+      'assets/app-Y_77dvPh.css',
+      'assets/turbo.BkUC-S31.js',
       'favicon.ico',
       'feed.rss',
       'index.html',
       'logo.svg',
-      '.vite/manifest.json',
       'posts/1.html',
       'posts/2.html',
       'posts/hello-2021.html',
@@ -46,7 +45,8 @@ describe('building docs site', () => {
   })
 
   test('styles', async () => {
-    await assertSnapshot('assets/style-b306c075.css')
+    await assertSnapshot('assets/app-Y_77dvPh.css')
+    await assertSnapshot('assets/default--6gluetn.css')
   })
   test('sitemap', async () => {
     await assertSnapshot('sitemap.xml')
@@ -75,7 +75,7 @@ describe('building docs site', () => {
 
 async function expectFileContent (path: string, transform?: (val: string) => string) {
   let content = await fs.readFile(`${vuePoint}/dist/${path}`, 'utf-8')
-  content = content.replace(/\/assets\/([^.]+)(?:[.-])\w+\.(\w+)\b/g, '/assets/$1.$2')
+  content = content.replace(/\/assets\/([^.]+)(?:[.-]+)\w+\.(\w+)\b/g, '/assets/$1.$2')
   return expect(transform ? transform(content) : content)
 }
 
@@ -93,18 +93,18 @@ async function assertContent (path: string, content: string) {
 async function assertHTML (path: string, { title }: any = {}) {
   const expectContent = await expectFileContent(path)
   expectContent.toMatchSnapshot()
-  expectContent.toContain(`<title>${`${title ? `${title} · ` : ''}The Vue Point`}</title>`)
+  expectContent.toContain(`<title>${`${title ? `${title.replaceAll('"', '&quot;')} · ` : ''}The Vue Point`}</title>`)
   expectContent.toContain('<meta charset="UTF-8">')
   expectContent.toContain('<meta name="description" content="Updates, tips & opinions from the maintainers of Vue.js.">')
   expectContent.toContain('<link rel="sitemap" href="https://the-vue-point-with-iles.netlify.app/sitemap.xml">')
   expectContent.toContain(`<meta property="og:url" content="https://the-vue-point-with-iles.netlify.app/${path.replace('index.html', '')}">`)
-  expectContent.toContain('<link rel="stylesheet" href="/assets/style.css">')
+  expectContent.toContain('<link rel="stylesheet" href="/assets/default-.css">')
+  expectContent.toContain('<link rel="stylesheet" href="/assets/app.css">')
 
   expectContent.toContain('<ile-root id="ile-1">'
     + '<div class="text-sm text-gray-500 leading-5">'
     + '<a class="hover:text-gray-700" href="https://github.com/ElMassimo/iles/tree/main/playground/the-vue-point" target="_blank" rel="noopener noreferrer">'
-    + '<span class="hidden sm:inline">GitHub </span>Source</a>')
-
+    + '<span class="hidden sm:inline">GitHub</span> Source</a>')
   if (path.includes('/posts/'))
     expectContent.toContain('<ile-root id="ile-2"><a class="link" href="/">← <!--#-->Back to the blog<!--/--></a></ile-root>')
 }
