@@ -4,13 +4,14 @@
   "scripts": {
     "dev": "npm run build -- --watch",
     "build": "tsup src/icons.ts",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix"
   },
   "files": [
     "dist",
     "src"
   ],
-  "types": "dist/icons.d.ts",
+  "types": "dist/icons.d.cts",
   "type": "module",
   "exports": {
     ".": {
@@ -28,7 +29,7 @@
   "homepage": "https://github.com/ElMassimo/iles",
   "bugs": "https://github.com/ElMassimo/iles/issues",
   "dependencies": {
-    "unplugin-icons": "^0.12.17"
+    "unplugin-icons": "^0.19.0"
   },
   "devDependencies": {
     "iles": "workspace:*"

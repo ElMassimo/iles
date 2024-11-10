@@ -4,7 +4,7 @@
     href="https://github.com/ElMassimo/iles/tree/main/playground/the-vue-point"
     target="_blank"
     rel="noopener noreferrer"
-    ><span class="hidden sm:inline">GitHub </span>Source</a
+    ><span class="hidden sm:inline">GitHub</span> Source</a
   >
   <span class="mr-1 ml-1">·</span>
   <a class="hover:text-gray-700" href="/feed.rss">RSS <span class="hidden sm:inline">Feed</span></a>

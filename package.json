@@ -1,12 +1,12 @@
 {
   "name": "root",
-  "private": true,
-  "packageManager": "pnpm@7.1.3",
   "type": "module",
+  "private": true,
+  "packageManager": "pnpm@9.8.0",
   "scripts": {
     "build:all": "pnpm nx run-many --target=build --all --exclude docs --exclude vue-blog",
     "lint:all": "pnpm nx run-many --target=lint --all",
-    "dev": "pnpm -r --parallel --filter './packages/**' run dev",
+    "lint:fix:all": "pnpm nx run-many --target=lint:fix --all",
     "docs": "npm -C docs run dev",
     "docs:build": "npm -C docs run build",
     "docs:now": "npm -C docs run now",
@@ -20,66 +20,35 @@
     "test": "packages/iles/bin/iles.js test"
   },
   "devDependencies": {
-    "@mussi/eslint-config": "^0.5.1",
-    "@mussi/stylelint-config": "^0.1.1",
-    "@nrwl/cli": "^13.8.1",
-    "@nrwl/nx-cloud": "^13.1.4",
-    "@nrwl/tao": "^13.8.1",
-    "@nrwl/workspace": "^13.8.1",
-    "iles": "*",
-    "concurrently": "^6.4.0",
-    "conventional-changelog-cli": "^2.1.1",
-    "enquirer": "^2.3.6",
-    "eslint": "^7.32.0",
-    "execa": "^5.1.1",
-    "minimist": "^1.2.5",
-    "pkg-dir": "^6.0.1",
-    "semver": "^7.3.5",
-    "typescript": "4.4.4",
-    "vitest": "^0.16.0"
+    "@antfu/eslint-config": "^2.24.0",
+    "@nrwl/cli": "^15.9.3",
+    "@nrwl/nx-cloud": "^19.1.0",
+    "@nx/workspace": "^19.7.3",
+    "concurrently": "^8.2.2",
+    "conventional-changelog-cli": "^5.0.0",
+    "enquirer": "^2.4.1",
+    "eslint": "^9.8.0",
+    "eslint-plugin-format": "^0.1.2",
+    "eslint-plugin-solid": "^0.14.1",
+    "eslint-plugin-svelte": "^2.43.0",
+    "execa": "^9.3.0",
+    "iles": "workspace:*",
+    "minimist": "^1.2.8",
+    "pkg-dir": "^8.0.0",
+    "semver": "^7.6.3",
+    "typescript": "^5.6.3",
+    "vitest": "^2.1.4"
   },
-  "resolutions": {
-    "eslint-plugin-vue": "7.17.0",
-    "typescript": "4.4.4"
-  },
-  "eslintConfig": {
-    "extends": "@mussi/eslint-config",
-    "globals": {
-      "$ref": "readonly",
-      "$computed": "readonly",
-      "$shallowRef": "readonly",
-      "$$": "readonly",
-      "$": "readonly",
-      "usePage": "readonly",
-      "useRoute": "readonly",
-      "useHead": "readonly",
-      "definePageComponent": "readonly"
+  "pnpm": {
+    "overrides": {
+      "@typescript-eslint/typescript-estree": "8.5.0",
+      "esbuild": "0.24.0",
+      "vite": "5.4.10"
     },
-    "ignorePatterns": [
-      "dist",
-      "node_modules",
-      "packages/iles/turbo.js",
-      "docs/cypress"
-    ],
-    "rules": {
-      "prefer-const": "off",
-      "no-unused-vars": "off",
-      "import/named": "off",
-      "import/first": "off",
-      "no-restricted-syntax": "off",
-      "no-use-before-define": "off",
-      "react/react-in-jsx-scope": "off",
-      "@typescript-eslint/no-var-requires": "off",
-      "@typescript-eslint/no-unused-vars": "off",
-      "vue/attribute-hyphenation": [
-        "warn",
-        "never",
-        {
-          "ignore": [
-            "http-equiv"
-          ]
-        }
-      ]
+    "peerDependencyRules": {
+      "allowedVersions": {
+        "eslint": "9"
+      }
     }
   }
 }

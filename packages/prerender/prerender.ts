@@ -22,7 +22,8 @@ export const renderers: Record<Framework, PrerenderFn> = {
       import('@islands/hydration/preact'),
       import('preact-render-to-string'),
     ])
-    return renderToString(createElement(component, props, slots))
+    const node = createElement(component, props, slots)
+    return renderToString(node as any)
   },
   async solid (component, props, slots, renderId) {
     const { ssr, renderToString, createComponent } = _imports.solid ||= await import('solid-js/web')
@@ -31,9 +32,9 @@ export const renderers: Record<Framework, PrerenderFn> = {
       return createComponent(component, { ...props, children })
     }, { renderId })
   },
-  async svelte (component, props, slots) {
-    const Svelte = (await import('./svelte')).default
-    return Svelte.render({ component, props, slots })?.html
+  async svelte (component, props, slots, renderId) {
+    const renderSvelteComponent = (await import('./svelte')).default
+    return renderSvelteComponent(component, props, slots, renderId)
   },
   async vanilla () {
     throw new Error('The vanilla strategy does not prerender islands.')

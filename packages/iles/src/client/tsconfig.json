@@ -3,13 +3,9 @@
   "compilerOptions": {
     "baseUrl": ".",
     "outDir": "../../dist/client",
-    "target": "esnext",
-    "module": "esnext",
-    "lib": ["ESNext", "DOM"],
-    "types": ["vite/client"],
     "paths": {
       "iles": ["index.ts"]
     }
   },
-  "include": [".", "../../types/index.d.ts"]
+  "include": ["."]
 }

@@ -1,8 +1,8 @@
 {
   "compilerOptions": {
     "baseUrl": ".",
-    "module": "es2020",
-    "target": "es2020",
+    "module": "esnext",
+    "target": "esnext",
     "moduleResolution": "node",
     "jsx": "preserve",
     "jsxFactory": "h",
@@ -12,7 +12,10 @@
     "noUnusedLocals": true,
     "skipLibCheck": true,
     "esModuleInterop": true,
-    "lib": ["ESNext", "DOM"],
+    "lib": ["esnext", "DOM"],
+    "types": [
+      "@vue-macros/reactivity-transform/macros-global"
+    ],
     "paths": {
       "~/*": ["src/*"]
     }

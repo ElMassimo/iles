@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-var-requires */
 import pc from 'picocolors'
 import minimist from 'minimist'
 import { version, viteVersion } from './publicUtils'

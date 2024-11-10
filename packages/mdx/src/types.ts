@@ -1,22 +1,12 @@
+/// <reference types="mdast-util-mdx-expression" />
+/// <reference types="mdast-util-mdxjs-esm" />
+
 import type { CompileOptions } from '@mdx-js/mdx'
-import type { Plugin } from 'vite'
 import type { Pluggable } from 'unified'
 import type { VFile } from 'vfile'
 
 export type PluginLike = null | undefined | false | Pluggable
 export type PluginOption = PluginLike | Promise<PluginLike> | string | [string, any]
-
-import type { MDXFlowExpression } from 'mdast-util-mdx-expression'
-
-declare module 'hast' {
-  interface RootContentMap {
-    mdxFlowExpression: MDXFlowExpression
-  }
-
-  interface ElementContentMap {
-    mdxFlowExpression: MDXFlowExpression
-  }
-}
 
 export interface MarkdownOptions extends Omit<CompileOptions, 'remarkPlugins' | 'rehypePlugins' | 'recmaPlugins'> {
   /**

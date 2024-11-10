@@ -5,8 +5,9 @@ import headings from '@islands/headings'
 import icons from '@islands/icons'
 import prism from '@islands/prism'
 import pwa from '@islands/pwa'
+import reactivityTransform from '@vue-macros/reactivity-transform/vite'
 
-import windicss from 'vite-plugin-windicss'
+import UnoCSS from 'unocss/vite'
 import inspect from 'vite-plugin-inspect'
 import lastUpdated from './modules/lastUpdated'
 import site from './src/site'
@@ -53,36 +54,6 @@ export default defineConfig({
       },
       workbox: {
         globPatterns: ['**/*.{js,css,svg,ico,png,avif,json,xml,html}'],
-        runtimeCaching: [
-          {
-            urlPattern: new RegExp('https://unpkg.com/.*', 'i'),
-            handler: 'CacheFirst',
-            options: {
-              cacheName: 'unpkg-cache',
-              expiration: {
-                maxEntries: 10,
-                maxAgeSeconds: 60 * 60 * 24 * 365, // <== 365 days
-              },
-              cacheableResponse: {
-                statuses: [0, 200],
-              },
-            },
-          },
-          {
-            urlPattern: new RegExp('https://pixel.thesemetrics.org/.*', 'i'),
-            handler: 'CacheFirst',
-            options: {
-              cacheName: 'thesemetrics-cache',
-              expiration: {
-                maxEntries: 10,
-                maxAgeSeconds: 60 * 60 * 24 * 365, // <== 365 days
-              },
-              cacheableResponse: {
-                statuses: [0, 200],
-              },
-            },
-          },
-        ],
       },
     }),
   ],
@@ -104,8 +75,9 @@ export default defineConfig({
       },
     },
     plugins: [
-      windicss(),
-      Boolean(process.env.DEBUG) && inspect(),
+      reactivityTransform(),
+      UnoCSS() as any,
+      Boolean(process.env.DEBUG) && inspect() as any,
     ],
   },
 })

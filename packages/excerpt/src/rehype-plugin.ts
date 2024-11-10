@@ -1,7 +1,7 @@
 import type { IlesModule } from 'iles'
 import type { Element } from 'hast'
 import type { Plugin } from 'unified'
-import { Node, toString } from 'hast-util-to-string'
+import { toString } from 'hast-util-to-string'
 import type { Options, SeparatorFn } from './types'
 
 /**
@@ -31,14 +31,14 @@ export const rehypePlugin: Plugin<[Options], Element> = ({ extract, isSeparator,
       .filter(el => el.type !== 'element' || el.tagName !== 'h1')
 
     // Convert the elements of the excerpt to plain text.
-    excerpt = toString({ type: 'element', tagName: 'div', children: excerptElements })
+    excerpt = toString({ type: 'element', tagName: 'div', children: excerptElements, properties: {} })
 
     // Add marker for the recma plugin to split the excerpt and content.
     const separator = children[separatorIndex]
     children.splice(separatorIndex,
       // @ts-ignore replace <Excerpt/> with an `excerpt` HTML element
       separator?.type === 'mdxJsxFlowElement' ? 1 : 0,
-      { type: 'element', tagName: 'excerpt', children: [] })
+      { type: 'element', tagName: 'excerpt', children: [], properties: {} })
   }
 
   if (maxLength && excerpt.length > maxLength)

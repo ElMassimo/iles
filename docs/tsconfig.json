@@ -1,8 +1,8 @@
 {
   "compilerOptions": {
     "baseUrl": ".",
-    "module": "es2020",
-    "target": "es2020",
+    "module": "esnext",
+    "target": "esnext",
     "moduleResolution": "node",
     "allowJs": true,
     "jsx": "preserve",
@@ -13,8 +13,11 @@
     "noUnusedLocals": true,
     "skipLibCheck": true,
     "esModuleInterop": true,
-    "lib": ["ESNext", "DOM"],
-    "types": ["vite-plugin-pwa/client"],
+    "lib": ["esnext", "DOM"],
+    "types": [
+      "@vue-macros/reactivity-transform/macros-global",
+      "vite-plugin-pwa/client"
+    ],
     "paths": {
       "~/*": ["src/*"]
     }

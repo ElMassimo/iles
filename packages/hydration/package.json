@@ -5,7 +5,8 @@
   "scripts": {
     "dev": "npm run build -- --watch",
     "build": "tsup hydration.ts preact.ts vue.ts vanilla.ts solid.ts svelte.ts",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix"
   },
   "type": "module",
   "files": [
@@ -37,13 +38,13 @@
     "url": "https://github.com/ElMassimo/iles/issues"
   },
   "devDependencies": {
-    "preact": "^10.15.1",
-    "preact-render-to-string": "^6.1.0",
-    "solid-js": "^1.7.6",
-    "svelte": "^4.0.0",
-    "tsup": "6.1.2",
-    "typescript": "^4.4.4",
-    "vite": "^4.4.0-beta.3",
-    "vue": "^3.3.4"
+    "preact": "^10.24.3",
+    "preact-render-to-string": "^6.5.11",
+    "solid-js": "^1.9.3",
+    "svelte": "^5.1.13",
+    "tsup": "8.2.4",
+    "typescript": "^5.6.3",
+    "vite": "^5.4.10",
+    "vue": "^3.5.12"
   }
 }

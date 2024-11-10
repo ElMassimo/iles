@@ -1,5 +1,3 @@
-/* eslint-disable import/no-duplicates */
-/* eslint-disable import/order */
 declare module '*.vue' {
   const comp: import('./shared').PageComponent
   export default comp

@@ -1,7 +1,6 @@
-/* eslint-disable @typescript-eslint/no-var-requires */
 import { existsSync } from 'fs'
 import { join } from 'pathe'
-import { renderHeadToString } from '@vueuse/head'
+import { renderSSRHead } from '@unhead/ssr'
 import type { RollupOutput } from 'rollup'
 import { renderers } from '@islands/prerender'
 import { IslandDefinition } from 'iles'
@@ -54,7 +53,7 @@ export async function renderPage (
   if (!route.outputFilename.endsWith('.html'))
     return content
 
-  const { headTags, htmlAttrs, bodyTagsOpen, bodyTags, bodyAttrs } = await renderHeadToString(head)
+  const { headTags, htmlAttrs, bodyTagsOpen, bodyTags, bodyAttrs } = await renderSSRHead(head)
 
   return `<!DOCTYPE html>
 <html ${htmlAttrs}>

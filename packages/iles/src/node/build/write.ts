@@ -1,4 +1,3 @@
-/* eslint-disable no-restricted-syntax */
 import { promises as fs } from 'fs'
 import { join, resolve, dirname } from 'pathe'
 import glob from 'fast-glob'
@@ -92,7 +91,7 @@ function resolveManifestEntries (manifest: Manifest, entryNames: string[]): stri
 }
 
 async function parseManifest (outDir: string, islandsByPath: IslandsByPath) {
-  const manifestPath = join(outDir, 'manifest.json')
+  const manifestPath = join(outDir, '.vite', 'manifest.json')
   try {
     return JSON.parse(await fs.readFile(manifestPath, 'utf-8'))
   }

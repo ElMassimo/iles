@@ -1,15 +1,9 @@
 <script setup lang="ts">
-import type { PropType } from 'vue'
-import type { SideBarItem, SideBarGroup } from '~/logic/config'
+import type { SideBarGroup } from '~/logic/config'
 
-const props = defineProps({
-  item: {
-    type: Object as PropType<SideBarItem>,
-    required: true,
-  },
-})
+const { item } = defineProps<{ item: SideBarGroup }>()
 
-let children = $computed(() => (props.item as SideBarGroup).children)
+let children = $computed(() => item.children)
 </script>
 
 <template>

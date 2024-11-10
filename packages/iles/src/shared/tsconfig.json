@@ -1,7 +1,8 @@
 {
   "extends": "../../tsconfig.json",
   "compilerOptions": {
-    "baseUrl": "."
+    "baseUrl": ".",
+    "lib": ["esnext", "dom", "dom.iterable"]
   },
-  "include": [".", "../../**/*.d.ts", "../../types/shared.d.ts"]
+  "include": ["."]
 }

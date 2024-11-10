@@ -1,4 +1,3 @@
-/* eslint-disable no-restricted-syntax */
 export { default as serialize } from '@nuxt/devalue'
 
 export function mapObject<I, O> (obj: Record<string, I>, fn: (i: I, key?: string) => O): Record<string, O> {

@@ -10,7 +10,7 @@ export async function build (root: string) {
   const start = Date.now()
 
   process.env.NODE_ENV = 'production'
-  const appConfig = await resolveConfig(root, { command: 'build', mode: 'production', ssrBuild: false })
+  const appConfig = await resolveConfig(root, { command: 'build', mode: 'production', isSsrBuild: false })
 
   rm(appConfig.outDir)
 

@@ -4,7 +4,9 @@
   "scripts": {
     "dev": "npm run build -- --watch",
     "build": "tsup src/mdx.ts",
-    "lint": "eslint ."
+    "tsc": "tsc src/mdx.ts --noEmit --skipLibCheck",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix"
   },
   "type": "module",
   "files": [
@@ -29,24 +31,24 @@
   "homepage": "https://github.com/ElMassimo/iles",
   "bugs": "https://github.com/ElMassimo/iles/issues",
   "dependencies": {
-    "@mdx-js/mdx": "2.3.0",
+    "@mdx-js/mdx": "3.0.1",
     "estree-walker": "^3.0",
     "hash-sum": "^2.0",
-    "hast-util-to-html": "^8.0.3",
-    "remark-frontmatter": "^4.0.1",
-    "source-map": "^0.7.3",
-    "unist-util-visit": "^4.1.0"
+    "hast-util-to-html": "^9.0.1",
+    "remark-frontmatter": "^5.0.0",
+    "source-map": "^0.7.4",
+    "unist-util-visit": "^5.0.0"
   },
   "devDependencies": {
-    "@types/estree-jsx": "^0.0.1",
+    "@types/estree-jsx": "^1.0.5",
     "@types/hash-sum": "^1.0",
-    "hast": "^1.0.0",
-    "hast-util-raw": "^7.2.1",
-    "mdast-util-mdx-expression": "^1.1.1",
-    "tsup": "6.1.2",
-    "typescript": "^4.4.4",
-    "unified": "^10.1",
-    "vfile": "^5.2.0",
-    "vite": "^4.4.0-beta.3"
+    "@types/hast": "^3.0.4",
+    "hast-util-raw": "^9.0.4",
+    "mdast-util-mdx-expression": "^2.0.1",
+    "tsup": "8.2.4",
+    "typescript": "^5.6.3",
+    "unified": "^11.0.5",
+    "vfile": "^6.0.2",
+    "vite": "^5.4.10"
   }
 }

@@ -191,7 +191,7 @@ export default defineApp({
 
 - **Type:** `HeadObject | (context: AppContext) => HeadObject`
 
-Set the page title, meta tags, additional CSS, or scripts using [`@vueuse/head`][@vueuse/head].
+Set the page title, meta tags, additional CSS, or scripts using [`@unhead/vue`][@unhead/vue].
 
 ### `enhanceApp`
 
@@ -238,7 +238,7 @@ Set it to `false` to avoid adding social tags such as `og:title` and `twitter:de
 ```ts
 import { defineConfig } from 'iles'
 
-import windicss from 'vite-plugin-windicss'
+import UnoCSS from 'unocss/vite'
 
 export default defineConfig({
   siteUrl: 'https://iles-docs.netlify.app',
@@ -258,7 +258,7 @@ export default defineConfig({
   ],
   vite: {
     plugins: [
-      windicss(),
+      UnoCSS(),
     ],
   },
 })
@@ -266,5 +266,5 @@ export default defineConfig({
 
 
 [vue-router]: https://next.router.vuejs.org/
-[@vueuse/head]: https://github.com/vueuse/head
+[@unhead/vue]: https://github.com/@unhead/vue
 [site]: #the-site

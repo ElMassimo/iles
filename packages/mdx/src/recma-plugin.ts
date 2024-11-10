@@ -1,5 +1,5 @@
 import { walk } from 'estree-walker'
-import type { Node, Statement, ImportSpecifier, FunctionDeclaration, Program } from 'estree-jsx'
+import type { Node, Statement, ImportSpecifier, Program } from 'estree-jsx'
 import type { Plugin } from 'unified'
 
 /**
@@ -21,7 +21,7 @@ function resolveMissingComponents (tree: Program) {
 
       if (node.type === 'ImportDeclaration') {
         const importSource = node.source?.value
-        if (typeof importSource === 'string' && importSource.endsWith('jsx-runtime')) {
+        if (typeof importSource === 'string' && (importSource.endsWith('jsx-runtime') || importSource.endsWith('jsx-dev-runtime'))) {
           node.specifiers.push(
             importSpecifier('resolveComponent'),
             importSpecifier('raw'),

@@ -1,6 +1,6 @@
 <script lang="ts">
 import { defineComponent, computed, watch } from 'vue'
-import { Head } from '@vueuse/head'
+import { Head } from '@unhead/vue/components'
 import { usePage } from '../composables/pageData'
 import { useRouterLinks } from '../composables/routerLinks'
 import { resolveLayout } from '../layout'

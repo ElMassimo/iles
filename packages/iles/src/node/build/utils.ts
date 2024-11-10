@@ -52,8 +52,5 @@ export async function replaceAsync (str: string, regex: RegExp, asyncFn: (...gro
 }
 
 export function rm (dir: string) {
-  if ('rmSync' in fs)
-    fs.rmSync(dir, { recursive: true, force: true })
-  else
-    fs.rmdirSync(dir, { recursive: true })
+  fs.rmSync(dir, { recursive: true, force: true })
 }

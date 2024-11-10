@@ -2,7 +2,7 @@ import type { Options } from 'tsup'
 export const tsup: Options = {
   clean: true,
   dts: true,
-  target: 'es2020',
+  target: 'esnext',
   splitting: true,
   format: ['esm'],
   external: [
@@ -14,6 +14,6 @@ export const tsup: Options = {
     'solid-js/web/dist/web.js',
     'solid-js/web/dist/server.js',
     'svelte',
-    'svelte/internal',
+    'svelte/server',
   ],
 }

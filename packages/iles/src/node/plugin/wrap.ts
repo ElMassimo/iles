@@ -1,10 +1,17 @@
 import MagicString from 'magic-string'
-import { parse, SFCBlock } from 'vue/compiler-sfc'
-import type { PublicPluginAPI as ComponentsApi, ComponentInfo } from 'unplugin-vue-components/types'
-import type { ElementNode, TemplateChildNode } from '@vue/compiler-core'
+import type { SFCBlock } from 'vue/compiler-sfc'
+import { parse } from 'vue/compiler-sfc'
+import type { ComponentInfo, PublicPluginAPI as ComponentsApi } from 'unplugin-vue-components/types'
+import type { ElementNode, RootNode, TemplateChildNode } from '@vue/compiler-core'
 import type { AppConfig } from '../shared'
 import { pascalCase, isString, debug } from './utils'
 import { parseImports, parseExports } from './parse'
+
+interface SfcRootNode extends RootNode {
+  ast: {
+    children: [TemplateChildNode, ...Node[]] // SFC with a template tag containing at least one tag
+  }
+}
 
 export const unresolvedIslandKey = '__viteIslandComponent'
 
@@ -13,7 +20,12 @@ export async function wrapLayout (code: string, filename: string) {
   if (errors.length > 0 || !template || !isString(template.attrs.layout)) return
 
   const s = new MagicString(code)
-  const nodes = template.ast.children
+
+  const nodes = template.ast?.children
+  if (!nodes?.length) {
+    return
+  }
+
   const Layout = `${pascalCase(template.attrs.layout as string)}Layout`
 
   debug.layout(`${template.attrs.layout} ${filename}`)
@@ -28,25 +40,26 @@ const scriptClientRE = /<script\b([^>]*\bclient:[^>]*)>([^]*?)<\/script>/
 
 export async function wrapIslandsInSFC (config: AppConfig, code: string, filename: string) {
   code = code.replace(scriptClientRE, (_, attrs, content) =>
-    `<scriptClient${attrs}>${content}</scriptClient>`)
+    `<script-client${attrs}>${content}</script-client>`)
 
   const { descriptor: { template, script, scriptSetup, customBlocks }, errors } = parse(code, { filename })
-  const scriptClientIndex = customBlocks.findIndex(b => b.type === 'scriptClient')
+  const scriptClientIndex = customBlocks.findIndex(b => b.type === 'script-client')
   const scriptClient = scriptClientIndex > -1 && customBlocks[scriptClientIndex]
   if (errors.length > 0) return
 
   if ((scriptClient && 'setup' in scriptClient.attrs) || (scriptSetup && Object.keys(scriptSetup.attrs).some(attr => attr.startsWith('client:'))))
     throw new Error('Incorrect usage of hydration strategy in script setup.\nSee https://iles-docs.netlify.app/guide/client-scripts#client-script-block')
 
-  if (!template) {
-    if (scriptClient) throw new Error(`Vue components with <script client:...> must define a template. No template found in ${filename}`)
+  if (!template?.ast?.children.length) {
+    if (scriptClient) { throw new Error(`Vue components with <script client:...> must define a template containing at least one tag. No valid template found in ${filename}`) }
     return
   }
+  const sfcRootNode = template.ast as any as SfcRootNode
 
   const s = new MagicString(code)
   const components: ComponentsApi = config.namedPlugins.components.api
 
-  if (scriptClient) await injectClientScript(template.ast, s, filename, scriptClientIndex, scriptClient)
+  if (scriptClient) { await injectClientScript(sfcRootNode, s, filename, scriptClientIndex, scriptClient) }
 
   const jsCode = scriptSetup?.loc?.source || script?.loc?.source
   const imports = jsCode ? await parseImports(jsCode) : {}
@@ -54,7 +67,11 @@ export async function wrapIslandsInSFC (config: AppConfig, code: string, filenam
   let componentCounter = 0
   let injectionOffset = scriptSetup?.loc?.start?.offset
 
-  await visitSFCNode(template.ast, s, resolveComponentImport)
+  const elements = sfcRootNode.children.filter((n: any) => n.tag) as ElementNode[]
+
+  for (const child of elements) {
+    await visitSFCNode(child, s, resolveComponentImport)
+  }
 
   // Close script setup tag if any component was injected.
   if (!scriptSetup && injectionOffset === 0)
@@ -76,11 +93,11 @@ export async function wrapIslandsInSFC (config: AppConfig, code: string, filenam
       s.prepend(opening)
       injectionOffset = 0
     }
-    s.appendRight(injectionOffset, `\n${components.stringifyImport(info)}`)
+    s.appendRight(injectionOffset, `\n${components.stringifyImport(info)};`)
   }
 }
 
-async function visitSFCNode (node: ElementNode | TemplateChildNode, s: MagicString, resolveComponentImport: (strategy: string, tag: string) => Promise<ComponentInfo>) {
+async function visitSFCNode (node: ElementNode, s: MagicString, resolveComponentImport: (strategy: string, tag: string) => Promise<ComponentInfo>) {
   const strategy = 'props' in node
     && node.props.find(prop => prop.name.startsWith('client:'))?.name
 
@@ -121,7 +138,7 @@ export async function resolveImportPath (config: AppConfig, info: ComponentInfo,
   return info
 }
 
-async function injectClientScript (node: ElementNode, s: MagicString, filename: string, index: number, block: SFCBlock) {
+async function injectClientScript (node: SfcRootNode, s: MagicString, filename: string, index: number, block: SFCBlock) {
   const { attrs, content, loc: { end } } = block
   const { lang = 'ts', ...props } = attrs
 
@@ -147,13 +164,14 @@ async function injectClientScript (node: ElementNode, s: MagicString, filename: 
       s.appendRight(el.loc.start.offset + 1 + el.tag.length, ' v-bind="$attrs"')
   }
 
-  s.appendLeft(node.loc.end.offset - 3 - node.tag.length,
-    `  <Island v-bind='${JSON.stringify({
-      ...props,
-      component: {},
-      componentName: 'clientScript',
-      importName: 'onLoad',
-      using: 'vanilla',
-      importFrom,
-    })}'/>\n`)
+  const lastTemplateChildNode = elements[elements.length - 1]
+  s.appendRight(lastTemplateChildNode.loc.end.offset, `
+  <Island v-bind='${JSON.stringify({
+    ...props,
+    component: {},
+    componentName: 'clientScript',
+    importName: 'onLoad',
+    using: 'vanilla',
+    importFrom,
+  })}'/>`)
 }

@@ -75,18 +75,6 @@ export function resolveAliases (root: string, userConfig: UserConfig): AliasOpti
       ),
     },
     {
-      find: /^@vueuse\/head$/,
-      replacement: require.resolve(
-        '@vueuse/head/dist/index.mjs',
-      ),
-    },
-    {
-      find: /^@vue\/devtools-api$/,
-      replacement: require.resolve(
-        '@vue/devtools-api/lib/esm/index.js',
-      ),
-    },
-    {
       find: /^@islands\/hydration$/,
       replacement: require.resolve('@islands/hydration'),
     },

@@ -1,8 +1,7 @@
 <script setup lang="ts">
 import { watch, onBeforeUnmount } from 'vue'
 
-const props = defineProps<{ date: Date }>()
-let { date } = $(props)
+const { date } = defineProps<{ date: Date }>()
 
 let relativeTimeStr = $ref('')
 let dateStr = $computed(() => date.toLocaleDateString('en-US', { day: 'numeric', month: 'long', year: 'numeric' }))
@@ -19,12 +18,13 @@ if (!import.meta.env.SSR) {
     return date.toLocaleDateString('en-US', { day: 'numeric', month: 'long' })
   }
 
-  const updateRelativeTimeStr = () =>
+  const updateRelativeTimeStr = () => {
     relativeTimeStr = currentTime((Number(new Date()) - Number(date)) / (60 * 60 * 1000))
+  }
 
   let activeInterval = setInterval(updateRelativeTimeStr, 60 * 1000)
   onBeforeUnmount(() => clearInterval(activeInterval))
-  watch($$(date), updateRelativeTimeStr, { immediate: true })
+  watch(() => date, updateRelativeTimeStr, { immediate: true })
 }
 </script>
 

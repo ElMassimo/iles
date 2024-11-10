@@ -4,7 +4,8 @@
 }
 
 .navbar {
-  @apply p-4 gap-4 grid-cols-[min-content,1fr,min-content]
+  /* https://unocss.dev/presets/wind#bracket-syntax-spaces */
+  @apply p-4 gap-4 grid-cols-[min-content_1fr_min-content]
     sm:(py-8 text-lg)
     lg:py-12;
 

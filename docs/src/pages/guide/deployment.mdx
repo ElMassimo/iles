@@ -39,7 +39,7 @@ To deploy in Cloudflare Pages, you will need to [create a project](https://devel
 - __Output Directory__: <kbd>dist</kbd>
 
 Additionally, since the default version of node is `12.18.0`, you will need to
-set the `NODE_VERSION` environment variable to `14.18.1` or higher.
+set the `NODE_VERSION` environment variable to `20` or higher.
 
 ## Netlify <NetlifyLogo/>
 
@@ -51,7 +51,7 @@ Add a `netlify.toml` file to your project:
   command = "npm run build"
 
 [build.environment]
-  NODE_VERSION = "16"
+  NODE_VERSION = "20"
   # NPM_FLAGS = "--version" # uncomment if using pnpm to skip npm install
 ``` 
 
@@ -94,7 +94,7 @@ jobs:
       - name: Use Node.js
         uses: actions/setup-node@v1
         with:
-          node-version: 16.x
+          node-version: 20.x
 
       - uses: pnpm/action-setup@v1.2.1
         with:

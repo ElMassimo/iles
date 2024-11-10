@@ -1,9 +1,8 @@
-/* eslint-disable no-restricted-syntax */
 import { promises as fs, existsSync } from 'fs'
 import { join, resolve } from 'pathe'
 import pc from 'picocolors'
 import creatDebugger from 'debug'
-import { loadConfigFromFile, mergeConfig as mergeViteConfig } from 'vite'
+import { loadConfigFromFile, mergeConfig as mergeViteConfig, type Plugin, PluginOption } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import components from 'unplugin-vue-components/vite'
 import pages from '@islands/pages'
@@ -12,7 +11,6 @@ import mdx from '@islands/mdx'
 import type { ComponentResolverFunction } from 'unplugin-vue-components/types'
 import type { UserConfig } from 'iles'
 
-import { importModule } from './modules'
 import type {
   AppConfig,
   ConfigEnv,
@@ -26,8 +24,8 @@ import type {
   SvelteOptions,
 } from './shared'
 
-import { camelCase, tryInstallModule, importLibrary, uncapitalize, isString, isStringPlugin, compact } from './plugin/utils'
-import { resolveAliases, DIST_CLIENT_PATH, HYDRATION_DIST_PATH, ISLAND_COMPONENT_PATH } from './alias'
+import { camelCase, compact, importLibrary, isString, isStringPlugin, tryImportOrInstallModule, uncapitalize } from './plugin/utils'
+import { DIST_CLIENT_PATH, HYDRATION_DIST_PATH, ISLAND_COMPONENT_PATH, resolveAliases } from './alias'
 import remarkWrapIslands from './plugin/remarkWrapIslands'
 
 import { explicitHtmlPath } from './utils'
@@ -38,7 +36,7 @@ export type { AppConfig }
 
 export const IlesComponentResolver: ComponentResolverFunction = (name) => {
   if (name === 'Island') return { from: ISLAND_COMPONENT_PATH }
-  if (name === 'Head') return { name: 'Head', from: '@vueuse/head' }
+  if (name === 'Head') return { name: 'Head', from: '@unhead/vue/components' }
 }
 
 export function IlesLayoutResolver (config: AppConfig): ComponentResolverFunction {
@@ -54,7 +52,7 @@ export function IlesLayoutResolver (config: AppConfig): ComponentResolverFunctio
 
 export async function resolveConfig (root?: string, env?: ConfigEnv): Promise<AppConfig> {
   if (!root) root = process.cwd()
-  if (!env) env = { mode: 'development', command: 'serve', ssrBuild: false }
+  if (!env) env = { mode: 'development', command: 'serve', isSsrBuild: false }
 
   const appConfig = await resolveUserConfig(root, env)
 
@@ -150,7 +148,8 @@ async function setNamedPlugins (config: AppConfig, env: ConfigEnv, plugins: Name
     },
     async svelte (options: SvelteOptions) {
       const { svelte } = await importLibrary<typeof import('@sveltejs/vite-plugin-svelte')>('@sveltejs/vite-plugin-svelte')
-      return svelte({ ...options, compilerOptions: { hydratable: true, ...options?.compilerOptions } })
+      const dev = env.mode === 'development'
+      return svelte({ emitCss: true, ...options, compilerOptions: { dev, ...options.compilerOptions } })
     },
   }
   for (const [optionName, createPlugin] of Object.entries(optionalPlugins)) {
@@ -159,7 +158,7 @@ async function setNamedPlugins (config: AppConfig, env: ConfigEnv, plugins: Name
       const options = isObject(addPlugin) ? addPlugin : {}
       config.vitePlugins.push(await createPlugin(options as any) as Plugin)
       if (optionName === 'preact')
-        await tryInstallModule('preact-render-to-string')
+        await tryImportOrInstallModule('preact-render-to-string')
     }
   }
 }
@@ -193,13 +192,13 @@ async function resolveModule (mod: IlesModuleOption): Promise<IlesModuleLike> {
 }
 
 async function createIlesModule (pkgName: string, ...options: any[]): Promise<IlesModule> {
-  await tryInstallModule(pkgName)
-  const fn = await importModule(pkgName)
+  const fn = await tryImportOrInstallModule(pkgName)
   return fn(...options)
 }
 
 function inferJSX (config: UserConfig) {
-  const plugins = config.vite?.plugins?.flat(Infinity) ?? []
+  const pluginsNested: PluginOption[] = config.vite?.plugins ?? []
+  const plugins: Plugin[] = pluginsNested.flat() as Plugin[];
   for (const plugin of plugins) {
     if (!plugin)
       continue
@@ -240,7 +239,6 @@ function appConfigDefaults (appConfig: AppConfig, userConfig: UserConfig, env: C
     vitePlugins: [],
     vite: viteConfigDefaults(root, userConfig),
     vue: {
-      reactivityTransform: true,
       template: {
         compilerOptions: {},
       },
@@ -290,7 +288,7 @@ function viteConfigDefaults (root: string, userConfig: UserConfig): ViteOptions 
     root,
     resolve: {
       alias: resolveAliases(root, userConfig),
-      dedupe: ['vue', 'vue-router', '@vueuse/head', '@vue/devtools-api'],
+      dedupe: ['vue', 'vue-router', '@unhead/vue', '@vue/devtools-api'],
     },
     server: {
       fs: { allow: [root, DIST_CLIENT_PATH, HYDRATION_DIST_PATH] },
@@ -303,13 +301,14 @@ function viteConfigDefaults (root: string, userConfig: UserConfig): ViteOptions 
       include: [
         'vue',
         'vue-router',
-        '@vueuse/head',
+        '@unhead/vue',
         '@vue/devtools-api',
       ],
       exclude: [
         'iles',
         '@nuxt/devalue',
         '@islands/hydration',
+        '@islands/prerender',
         'vue/server-renderer',
       ],
     },
@@ -317,7 +316,7 @@ function viteConfigDefaults (root: string, userConfig: UserConfig): ViteOptions 
 }
 
 function mergeConfig<T = Record<string, any>> (a: T, b: T, isRoot = true): AppConfig {
-  const merged: Record<string, any> = { ...a }
+  const merged: Record<string, any> = { ...a as any }
   for (const key in b) {
     const value = b[key as keyof T]
     if (value == null)

@@ -1,10 +1,11 @@
-import fs from 'fs-extra'
-import glob from 'globby'
+import { copy } from 'fs-extra'
+import { globSync } from 'tinyglobby'
 
-function toDest (file) {
-  return file.replace(/^src\//, 'dist/')
+function toDest(file) {
+  return file.replace(/src\//, 'dist/')
 }
 
-glob.sync('src/client/**/!(*.ts|tsconfig.json)').forEach((file) => {
-  fs.copy(file, toDest(file))
+globSync(['src/client/**']).forEach((file) => {
+  if (/(\.ts|tsconfig\.json)$/.test(file)) return
+  copy(file, toDest(file))
 })

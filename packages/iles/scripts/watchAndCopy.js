@@ -1,32 +1,32 @@
-import fs from 'fs-extra'
-import chokidar from 'chokidar'
+import { copy, remove } from 'fs-extra'
+import { watch } from 'chokidar'
+import { normalizePath } from 'vite'
 
 function toClientAndNode (method, file) {
+  file = normalizePath(file)
   if (method === 'copy') {
-    fs.copy(file, file.replace(/^src\/shared\//, 'src/node/'))
-    fs.copy(file, file.replace(/^src\/shared\//, 'src/client/'))
+    copy(file, file.replace(/^src\/shared\//, 'src/node/'))
+    copy(file, file.replace(/^src\/shared\//, 'src/client/'))
   }
   else if (method === 'remove') {
-    fs.remove(file.replace(/^src\/shared\//, 'src/node/'))
-    fs.remove(file.replace(/^src\/shared\//, 'src/client/'))
+    remove(file.replace(/^src\/shared\//, 'src/node/'))
+    remove(file.replace(/^src\/shared\//, 'src/client/'))
   }
 }
 
 function toDist (file) {
-  return file.replace(/^src\//, 'dist/')
+  return normalizePath(file).replace(/^src\//, 'dist/')
 }
 
 // copy shared files to the client and node directory whenever they change.
-chokidar
-  .watch('src/shared/**/*.ts')
+watch('src/shared/**/*.ts')
   .on('change', file => toClientAndNode('copy', file))
   .on('add', file => toClientAndNode('copy', file))
   .on('unlink', file => toClientAndNode('remove', file))
 
 // copy non ts files, such as an html or css, to the dist directory whenever
 // they change.
-chokidar
-  .watch('src/client/**/!(*.ts|tsconfig.json)')
-  .on('change', file => fs.copy(file, toDist(file)))
-  .on('add', file => fs.copy(file, toDist(file)))
-  .on('unlink', file => fs.remove(toDist(file)))
+watch('src/client/**/!(*.ts|tsconfig.json)')
+  .on('change', file => copy(file, toDist(file)))
+  .on('add', file => copy(file, toDist(file)))
+  .on('unlink', file => remove(toDist(file)))

@@ -1,4 +1,4 @@
-import type { Node } from 'hast-util-to-string'
+import type { Node } from 'hast'
 import type { VFile } from 'vfile'
 
 export type ExtractFn = (content: string, vfile: VFile) => string | undefined

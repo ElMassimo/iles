@@ -1,5 +1,6 @@
 import type { IlesModule } from 'iles'
 import type { ExcerptOptions, Options, SeparatorFn } from './types'
+import type { Element, Comment } from 'hast'
 import { recmaPlugin } from './recma-plugin'
 import { rehypePlugin } from './rehype-plugin'
 
@@ -42,10 +43,10 @@ function separatorFnFrom (separator: string | string[] | SeparatorFn): Separator
   const separators = new Set(Array.isArray(separator) ? separator : [separator])
 
   return (node) => {
-    if (node.type === 'element') return separators.has(node.tagName)
+    if (node.type === 'element') return separators.has((node as Element).tagName)
     // @ts-ignore
     if (node.type === 'mdxJsxFlowElement') return separators.has(node.name)
-    if (node.type === 'comment') return separators.has(node.value.trim())
+    if (node.type === 'comment') return separators.has((node as Comment).value.trim())
     return false
   }
 }

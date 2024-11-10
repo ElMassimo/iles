@@ -4,7 +4,8 @@
   "scripts": {
     "dev": "npm run build -- --watch",
     "build": "tsup src/types.ts src/feed.ts src/render-feed.ts",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix"
   },
   "files": [
     "dist",
@@ -29,7 +30,7 @@
   "bugs": "https://github.com/ElMassimo/iles/issues",
   "devDependencies": {
     "iles": "workspace:*",
-    "vue": "^3.3.4"
+    "vue": "^3.5.12"
   },
   "peerDependencies": {
     "iles": "workspace:*",
@@ -37,6 +38,6 @@
   },
   "dependencies": {
     "feed": "^4.2",
-    "pathe": "^0.2.0"
+    "pathe": "^1.1.2"
   }
 }
