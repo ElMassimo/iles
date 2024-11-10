@@ -61,8 +61,8 @@ export default defineConfig({
   vite: {
     plugins: [
       reactivityTransform(),
-      UnoCSS(),
-      Boolean(process.env.DEBUG) && inspect(),
+      UnoCSS() as any,
+      Boolean(process.env.DEBUG) && inspect() as any,
     ],
   },
 })
