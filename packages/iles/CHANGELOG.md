@@ -1,3 +1,12 @@
+# [0.10.0-beta.1](https://github.com/ElMassimo/iles/compare/v0.9.5...v0.10.0-beta.1) (2024-12-04)
+
+
+### Features
+
+* update dependencies (latest vite) ([#281](https://github.com/ElMassimo/iles/issues/281)) ([c291852](https://github.com/ElMassimo/iles/commit/c29185255e41e63830236ceb4c67de599aae2012))
+
+
+
 ## [0.9.5](https://github.com/ElMassimo/iles/compare/v0.9.4...v0.9.5) (2023-04-07)
 
 
