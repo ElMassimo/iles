@@ -1,6 +1,6 @@
 {
   "name": "@islands/headings",
-  "version": "0.8.2",
+  "version": "0.10.0-beta.1",
   "scripts": {
     "dev": "npm run build -- --watch",
     "build": "tsup src/headings.ts",

@@ -1,6 +1,6 @@
 {
   "name": "@islands/pwa",
-  "version": "0.9.1",
+  "version": "0.10.0-beta.1",
   "scripts": {
     "dev": "npm run build -- --watch",
     "build": "tsup src/pwa.ts",

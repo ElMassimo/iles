@@ -61,6 +61,9 @@ importers:
       semver:
         specifier: ^7.6.3
         version: 7.6.3
+      tsx:
+        specifier: ^4.19.2
+        version: 4.19.2
       typescript:
         specifier: ^5.6.3
         version: 5.6.3
@@ -97,7 +100,7 @@ importers:
         version: link:../packages/pwa
       '@preact/preset-vite':
         specifier: ^2.9.0
-        version: 2.9.0(@babel/core@7.25.2)(preact@10.24.3)(vite@6.0.0-beta.9(@types/node@20.14.12)(jiti@1.21.6)(terser@5.36.0)(tsx@4.16.3)(yaml@2.5.0))
+        version: 2.9.0(@babel/core@7.25.2)(preact@10.24.3)(vite@6.0.0-beta.9(@types/node@20.14.12)(jiti@1.21.6)(terser@5.36.0)(tsx@4.19.2)(yaml@2.5.0))
       '@types/cross-spawn':
         specifier: ^6.0.6
         version: 6.0.6
@@ -130,10 +133,10 @@ importers:
         version: 3.0.0
       unocss:
         specifier: ^0.61.8
-        version: 0.61.9(postcss@8.4.47)(rollup@4.25.0)(vite@6.0.0-beta.9(@types/node@20.14.12)(jiti@1.21.6)(terser@5.36.0)(tsx@4.16.3)(yaml@2.5.0))
+        version: 0.61.9(postcss@8.4.47)(rollup@4.25.0)(vite@6.0.0-beta.9(@types/node@20.14.12)(jiti@1.21.6)(terser@5.36.0)(tsx@4.19.2)(yaml@2.5.0))
       vite-plugin-inspect:
         specifier: ^0.8.7
-        version: 0.8.7(rollup@4.25.0)(vite@6.0.0-beta.9(@types/node@20.14.12)(jiti@1.21.6)(terser@5.36.0)(tsx@4.16.3)(yaml@2.5.0))
+        version: 0.8.7(rollup@4.25.0)(vite@6.0.0-beta.9(@types/node@20.14.12)(jiti@1.21.6)(terser@5.36.0)(tsx@4.19.2)(yaml@2.5.0))
       vue-tsc:
         specifier: ^2.1.10
         version: 2.1.10(typescript@5.6.3)
@@ -161,7 +164,7 @@ importers:
         version: link:../iles
       tsup:
         specifier: 8.2.4
-        version: 8.2.4(jiti@1.21.6)(postcss@8.4.47)(tsx@4.16.3)(typescript@5.6.3)(yaml@2.5.0)
+        version: 8.2.4(jiti@1.21.6)(postcss@8.4.47)(tsx@4.19.2)(typescript@5.6.3)(yaml@2.5.0)
       typescript:
         specifier: ^5.6.3
         version: 5.6.3
@@ -205,7 +208,7 @@ importers:
         version: 0.4.0
       tsup:
         specifier: 8.2.4
-        version: 8.2.4(jiti@1.21.6)(postcss@8.4.47)(tsx@4.16.3)(typescript@5.6.3)(yaml@2.5.0)
+        version: 8.2.4(jiti@1.21.6)(postcss@8.4.47)(tsx@4.19.2)(typescript@5.6.3)(yaml@2.5.0)
       typescript:
         specifier: ^5.6.3
         version: 5.6.3
@@ -229,7 +232,7 @@ importers:
         version: 5.1.13
       tsup:
         specifier: 8.2.4
-        version: 8.2.4(jiti@1.21.6)(postcss@8.4.47)(tsx@4.16.3)(typescript@5.6.3)(yaml@2.5.0)
+        version: 8.2.4(jiti@1.21.6)(postcss@8.4.47)(tsx@4.19.2)(typescript@5.6.3)(yaml@2.5.0)
       typescript:
         specifier: ^5.6.3
         version: 5.6.3
@@ -256,16 +259,16 @@ importers:
         specifier: ^0.3.3
         version: 0.3.3
       '@islands/hydration':
-        specifier: workspace:^0.8.0
+        specifier: workspace:^0.10.0-beta.1
         version: link:../hydration
       '@islands/mdx':
-        specifier: workspace:^0.9.0
+        specifier: workspace:^0.10.0-beta.1
         version: link:../mdx
       '@islands/pages':
-        specifier: workspace:^0.8.0
+        specifier: workspace:^0.10.0-beta.1
         version: link:../pages
       '@islands/prerender':
-        specifier: workspace:^0.8.0
+        specifier: workspace:^0.10.0-beta.1
         version: link:../prerender
       '@nuxt/devalue':
         specifier: ^2.0.2
@@ -390,7 +393,7 @@ importers:
         version: 0.2.6
       tsup:
         specifier: 8.2.4
-        version: 8.2.4(jiti@1.21.6)(postcss@8.4.47)(tsx@4.16.3)(typescript@5.6.3)(yaml@2.5.0)
+        version: 8.2.4(jiti@1.21.6)(postcss@8.4.47)(tsx@4.19.2)(typescript@5.6.3)(yaml@2.5.0)
       typescript:
         specifier: ^5.6.3
         version: 5.6.3
@@ -418,7 +421,7 @@ importers:
         version: link:../iles
       tsup:
         specifier: 8.2.4
-        version: 8.2.4(jiti@1.21.6)(postcss@8.4.47)(tsx@4.16.3)(typescript@5.6.3)(yaml@2.5.0)
+        version: 8.2.4(jiti@1.21.6)(postcss@8.4.47)(tsx@4.19.2)(typescript@5.6.3)(yaml@2.5.0)
       typescript:
         specifier: ^5.6.3
         version: 5.6.3
@@ -464,7 +467,7 @@ importers:
         version: 2.0.1
       tsup:
         specifier: 8.2.4
-        version: 8.2.4(jiti@1.21.6)(postcss@8.4.47)(tsx@4.16.3)(typescript@5.6.3)(yaml@2.5.0)
+        version: 8.2.4(jiti@1.21.6)(postcss@8.4.47)(tsx@4.19.2)(typescript@5.6.3)(yaml@2.5.0)
       typescript:
         specifier: ^5.6.3
         version: 5.6.3
@@ -504,7 +507,7 @@ importers:
         version: 4.0.9
       tsup:
         specifier: 8.2.4
-        version: 8.2.4(jiti@1.21.6)(postcss@8.4.47)(tsx@4.16.3)(typescript@5.6.3)(yaml@2.5.0)
+        version: 8.2.4(jiti@1.21.6)(postcss@8.4.47)(tsx@4.19.2)(typescript@5.6.3)(yaml@2.5.0)
       typescript:
         specifier: ^5.6.3
         version: 5.6.3
@@ -518,7 +521,7 @@ importers:
   packages/prerender:
     dependencies:
       '@islands/hydration':
-        specifier: workspace:^0.8.0
+        specifier: workspace:^0.10.0-beta.1
         version: link:../hydration
     devDependencies:
       preact:
@@ -535,7 +538,7 @@ importers:
         version: 5.1.13
       tsup:
         specifier: 8.2.4
-        version: 8.2.4(jiti@1.21.6)(postcss@8.4.47)(tsx@4.16.3)(typescript@5.6.3)(yaml@2.5.0)
+        version: 8.2.4(jiti@1.21.6)(postcss@8.4.47)(tsx@4.19.2)(typescript@5.6.3)(yaml@2.5.0)
       typescript:
         specifier: ^5.6.3
         version: 5.6.3
@@ -566,7 +569,7 @@ importers:
         version: link:../iles
       tsup:
         specifier: 8.2.4
-        version: 8.2.4(jiti@1.21.6)(postcss@8.4.47)(tsx@4.16.3)(typescript@5.6.3)(yaml@2.5.0)
+        version: 8.2.4(jiti@1.21.6)(postcss@8.4.47)(tsx@4.19.2)(typescript@5.6.3)(yaml@2.5.0)
       typescript:
         specifier: ^5.6.3
         version: 5.6.3
@@ -578,7 +581,7 @@ importers:
     dependencies:
       vite-plugin-pwa:
         specifier: ^0.20.5
-        version: 0.20.5(vite@6.0.0-beta.9(@types/node@20.14.12)(jiti@1.21.6)(terser@5.36.0)(tsx@4.16.3)(yaml@2.5.0))(workbox-build@7.1.1(@types/babel__core@7.20.5))(workbox-window@7.1.0)
+        version: 0.20.5(vite@6.0.0-beta.9(@types/node@20.14.12)(jiti@1.21.6)(terser@5.36.0)(tsx@4.19.2)(yaml@2.5.0))(workbox-build@7.1.1(@types/babel__core@7.20.5))(workbox-window@7.1.0)
     devDependencies:
       iles:
         specifier: workspace:*
@@ -590,13 +593,13 @@ importers:
         specifier: ^1.1.36
         version: 1.1.36
       '@islands/excerpt':
-        specifier: workspace:^0.9
+        specifier: workspace:^0.10.0-beta.1
         version: link:../../packages/excerpt
       '@islands/feed':
         specifier: workspace:*
         version: link:../../packages/feed
       '@islands/headings':
-        specifier: workspace:^0.8
+        specifier: workspace:^0.10.0-beta.1
         version: link:../../packages/headings
       '@islands/icons':
         specifier: workspace:*
@@ -618,7 +621,7 @@ importers:
         version: 4.0.0
       unocss:
         specifier: ^0.61.8
-        version: 0.61.9(postcss@8.4.47)(rollup@4.25.0)(vite@6.0.0-beta.9(@types/node@20.14.12)(jiti@1.21.6)(terser@5.36.0)(tsx@4.16.3)(yaml@2.5.0))
+        version: 0.61.9(postcss@8.4.47)(rollup@4.25.0)(vite@6.0.0-beta.9(@types/node@20.14.12)(jiti@1.21.6)(terser@5.36.0)(tsx@4.19.2)(yaml@2.5.0))
       vue-tsc:
         specifier: ^2.1.10
         version: 2.1.10(typescript@5.6.3)
@@ -6345,6 +6348,11 @@ packages:
     engines: {node: '>=18.0.0'}
     hasBin: true
 
+  tsx@4.19.2:
+    resolution: {integrity: sha512-pOUl6Vo2LUq/bSa8S5q7b91cgNSjctn9ugq/+Mvow99qW6x/UZYwzxy/3NmqoT66eHYfCVvFvACC58UBPFf28g==}
+    engines: {node: '>=18.0.0'}
+    hasBin: true
+
   tunnel-agent@0.6.0:
     resolution: {integrity: sha512-McnNiV1l8RYeY8tBgEpuodCC1mLUdbSN+CYBL7kJsJNInOP8UjDDEwdk6Mw60vdLLrr5NHKZhMAOSrR2NZuQ+w==}
 
@@ -8697,13 +8705,13 @@ snapshots:
 
   '@polka/url@1.0.0-next.25': {}
 
-  '@preact/preset-vite@2.9.0(@babel/core@7.25.2)(preact@10.24.3)(vite@6.0.0-beta.9(@types/node@20.14.12)(jiti@1.21.6)(terser@5.36.0)(tsx@4.16.3)(yaml@2.5.0))':
+  '@preact/preset-vite@2.9.0(@babel/core@7.25.2)(preact@10.24.3)(vite@6.0.0-beta.9(@types/node@20.14.12)(jiti@1.21.6)(terser@5.36.0)(tsx@4.19.2)(yaml@2.5.0))':
     dependencies:
       '@babel/code-frame': 7.22.13
       '@babel/core': 7.25.2
       '@babel/plugin-transform-react-jsx': 7.22.15(@babel/core@7.25.2)
       '@babel/plugin-transform-react-jsx-development': 7.22.5(@babel/core@7.25.2)
-      '@prefresh/vite': 2.4.1(preact@10.24.3)(vite@6.0.0-beta.9(@types/node@20.14.12)(jiti@1.21.6)(terser@5.36.0)(tsx@4.16.3)(yaml@2.5.0))
+      '@prefresh/vite': 2.4.1(preact@10.24.3)(vite@6.0.0-beta.9(@types/node@20.14.12)(jiti@1.21.6)(terser@5.36.0)(tsx@4.19.2)(yaml@2.5.0))
       '@rollup/pluginutils': 4.2.1
       babel-plugin-transform-hook-names: 1.0.2(@babel/core@7.25.2)
       debug: 4.3.5
@@ -8713,7 +8721,7 @@ snapshots:
       resolve: 1.22.8
       source-map: 0.7.4
       stack-trace: 1.0.0-pre2
-      vite: 6.0.0-beta.9(@types/node@20.14.12)(jiti@1.21.6)(terser@5.36.0)(tsx@4.16.3)(yaml@2.5.0)
+      vite: 6.0.0-beta.9(@types/node@20.14.12)(jiti@1.21.6)(terser@5.36.0)(tsx@4.19.2)(yaml@2.5.0)
     transitivePeerDependencies:
       - preact
       - supports-color
@@ -8758,7 +8766,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@prefresh/vite@2.4.1(preact@10.24.3)(vite@6.0.0-beta.9(@types/node@20.14.12)(jiti@1.21.6)(terser@5.36.0)(tsx@4.16.3)(yaml@2.5.0))':
+  '@prefresh/vite@2.4.1(preact@10.24.3)(vite@6.0.0-beta.9(@types/node@20.14.12)(jiti@1.21.6)(terser@5.36.0)(tsx@4.19.2)(yaml@2.5.0))':
     dependencies:
       '@babel/core': 7.23.0
       '@prefresh/babel-plugin': 0.5.0
@@ -8766,7 +8774,7 @@ snapshots:
       '@prefresh/utils': 1.2.0
       '@rollup/pluginutils': 4.2.1
       preact: 10.24.3
-      vite: 6.0.0-beta.9(@types/node@20.14.12)(jiti@1.21.6)(terser@5.36.0)(tsx@4.16.3)(yaml@2.5.0)
+      vite: 6.0.0-beta.9(@types/node@20.14.12)(jiti@1.21.6)(terser@5.36.0)(tsx@4.19.2)(yaml@2.5.0)
     transitivePeerDependencies:
       - supports-color
 
@@ -9314,13 +9322,13 @@ snapshots:
       unhead: 1.9.16
       vue: 3.5.12(typescript@5.6.3)
 
-  '@unocss/astro@0.61.9(rollup@4.25.0)(vite@6.0.0-beta.9(@types/node@20.14.12)(jiti@1.21.6)(terser@5.36.0)(tsx@4.16.3)(yaml@2.5.0))':
+  '@unocss/astro@0.61.9(rollup@4.25.0)(vite@6.0.0-beta.9(@types/node@20.14.12)(jiti@1.21.6)(terser@5.36.0)(tsx@4.19.2)(yaml@2.5.0))':
     dependencies:
       '@unocss/core': 0.61.9
       '@unocss/reset': 0.61.9
-      '@unocss/vite': 0.61.9(rollup@4.25.0)(vite@6.0.0-beta.9(@types/node@20.14.12)(jiti@1.21.6)(terser@5.36.0)(tsx@4.16.3)(yaml@2.5.0))
+      '@unocss/vite': 0.61.9(rollup@4.25.0)(vite@6.0.0-beta.9(@types/node@20.14.12)(jiti@1.21.6)(terser@5.36.0)(tsx@4.19.2)(yaml@2.5.0))
     optionalDependencies:
-      vite: 6.0.0-beta.9(@types/node@20.14.12)(jiti@1.21.6)(terser@5.36.0)(tsx@4.16.3)(yaml@2.5.0)
+      vite: 6.0.0-beta.9(@types/node@20.14.12)(jiti@1.21.6)(terser@5.36.0)(tsx@4.19.2)(yaml@2.5.0)
     transitivePeerDependencies:
       - rollup
       - supports-color
@@ -9457,7 +9465,7 @@ snapshots:
     dependencies:
       '@unocss/core': 0.61.9
 
-  '@unocss/vite@0.61.9(rollup@4.25.0)(vite@6.0.0-beta.9(@types/node@20.14.12)(jiti@1.21.6)(terser@5.36.0)(tsx@4.16.3)(yaml@2.5.0))':
+  '@unocss/vite@0.61.9(rollup@4.25.0)(vite@6.0.0-beta.9(@types/node@20.14.12)(jiti@1.21.6)(terser@5.36.0)(tsx@4.19.2)(yaml@2.5.0))':
     dependencies:
       '@ampproject/remapping': 2.3.0
       '@rollup/pluginutils': 5.1.0(rollup@4.25.0)
@@ -9469,7 +9477,7 @@ snapshots:
       chokidar: 3.6.0
       fast-glob: 3.3.2
       magic-string: 0.30.11
-      vite: 6.0.0-beta.9(@types/node@20.14.12)(jiti@1.21.6)(terser@5.36.0)(tsx@4.16.3)(yaml@2.5.0)
+      vite: 6.0.0-beta.9(@types/node@20.14.12)(jiti@1.21.6)(terser@5.36.0)(tsx@4.19.2)(yaml@2.5.0)
     transitivePeerDependencies:
       - rollup
       - supports-color
@@ -13089,13 +13097,13 @@ snapshots:
     optionalDependencies:
       postcss: 8.4.40
 
-  postcss-load-config@6.0.1(jiti@1.21.6)(postcss@8.4.47)(tsx@4.16.3)(yaml@2.5.0):
+  postcss-load-config@6.0.1(jiti@1.21.6)(postcss@8.4.47)(tsx@4.19.2)(yaml@2.5.0):
     dependencies:
       lilconfig: 3.1.2
     optionalDependencies:
       jiti: 1.21.6
       postcss: 8.4.47
-      tsx: 4.16.3
+      tsx: 4.19.2
       yaml: 2.5.0
 
   postcss-nesting@12.1.5(postcss@8.4.47):
@@ -13994,7 +14002,7 @@ snapshots:
 
   tslib@2.6.2: {}
 
-  tsup@8.2.4(jiti@1.21.6)(postcss@8.4.47)(tsx@4.16.3)(typescript@5.6.3)(yaml@2.5.0):
+  tsup@8.2.4(jiti@1.21.6)(postcss@8.4.47)(tsx@4.19.2)(typescript@5.6.3)(yaml@2.5.0):
     dependencies:
       bundle-require: 5.0.0(esbuild@0.24.0)
       cac: 6.7.14
@@ -14006,7 +14014,7 @@ snapshots:
       globby: 11.1.0
       joycon: 3.1.1
       picocolors: 1.0.1
-      postcss-load-config: 6.0.1(jiti@1.21.6)(postcss@8.4.47)(tsx@4.16.3)(yaml@2.5.0)
+      postcss-load-config: 6.0.1(jiti@1.21.6)(postcss@8.4.47)(tsx@4.19.2)(yaml@2.5.0)
       resolve-from: 5.0.0
       rollup: 4.19.0
       source-map: 0.8.0-beta.0
@@ -14022,6 +14030,13 @@ snapshots:
       - yaml
 
   tsx@4.16.3:
+    dependencies:
+      esbuild: 0.24.0
+      get-tsconfig: 4.7.6
+    optionalDependencies:
+      fsevents: 2.3.3
+
+  tsx@4.19.2:
     dependencies:
       esbuild: 0.24.0
       get-tsconfig: 4.7.6
@@ -14207,9 +14222,9 @@ snapshots:
 
   universalify@2.0.1: {}
 
-  unocss@0.61.9(postcss@8.4.47)(rollup@4.25.0)(vite@6.0.0-beta.9(@types/node@20.14.12)(jiti@1.21.6)(terser@5.36.0)(tsx@4.16.3)(yaml@2.5.0)):
+  unocss@0.61.9(postcss@8.4.47)(rollup@4.25.0)(vite@6.0.0-beta.9(@types/node@20.14.12)(jiti@1.21.6)(terser@5.36.0)(tsx@4.19.2)(yaml@2.5.0)):
     dependencies:
-      '@unocss/astro': 0.61.9(rollup@4.25.0)(vite@6.0.0-beta.9(@types/node@20.14.12)(jiti@1.21.6)(terser@5.36.0)(tsx@4.16.3)(yaml@2.5.0))
+      '@unocss/astro': 0.61.9(rollup@4.25.0)(vite@6.0.0-beta.9(@types/node@20.14.12)(jiti@1.21.6)(terser@5.36.0)(tsx@4.19.2)(yaml@2.5.0))
       '@unocss/cli': 0.61.9(rollup@4.25.0)
       '@unocss/core': 0.61.9
       '@unocss/extractor-arbitrary-variants': 0.61.9
@@ -14228,9 +14243,9 @@ snapshots:
       '@unocss/transformer-compile-class': 0.61.9
       '@unocss/transformer-directives': 0.61.9
       '@unocss/transformer-variant-group': 0.61.9
-      '@unocss/vite': 0.61.9(rollup@4.25.0)(vite@6.0.0-beta.9(@types/node@20.14.12)(jiti@1.21.6)(terser@5.36.0)(tsx@4.16.3)(yaml@2.5.0))
+      '@unocss/vite': 0.61.9(rollup@4.25.0)(vite@6.0.0-beta.9(@types/node@20.14.12)(jiti@1.21.6)(terser@5.36.0)(tsx@4.19.2)(yaml@2.5.0))
     optionalDependencies:
-      vite: 6.0.0-beta.9(@types/node@20.14.12)(jiti@1.21.6)(terser@5.36.0)(tsx@4.16.3)(yaml@2.5.0)
+      vite: 6.0.0-beta.9(@types/node@20.14.12)(jiti@1.21.6)(terser@5.36.0)(tsx@4.19.2)(yaml@2.5.0)
     transitivePeerDependencies:
       - postcss
       - rollup
@@ -14360,7 +14375,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  vite-plugin-inspect@0.8.7(rollup@4.25.0)(vite@6.0.0-beta.9(@types/node@20.14.12)(jiti@1.21.6)(terser@5.36.0)(tsx@4.16.3)(yaml@2.5.0)):
+  vite-plugin-inspect@0.8.7(rollup@4.25.0)(vite@6.0.0-beta.9(@types/node@20.14.12)(jiti@1.21.6)(terser@5.36.0)(tsx@4.19.2)(yaml@2.5.0)):
     dependencies:
       '@antfu/utils': 0.7.10
       '@rollup/pluginutils': 5.1.0(rollup@4.25.0)
@@ -14371,17 +14386,17 @@ snapshots:
       perfect-debounce: 1.0.0
       picocolors: 1.1.1
       sirv: 2.0.4
-      vite: 6.0.0-beta.9(@types/node@20.14.12)(jiti@1.21.6)(terser@5.36.0)(tsx@4.16.3)(yaml@2.5.0)
+      vite: 6.0.0-beta.9(@types/node@20.14.12)(jiti@1.21.6)(terser@5.36.0)(tsx@4.19.2)(yaml@2.5.0)
     transitivePeerDependencies:
       - rollup
       - supports-color
 
-  vite-plugin-pwa@0.20.5(vite@6.0.0-beta.9(@types/node@20.14.12)(jiti@1.21.6)(terser@5.36.0)(tsx@4.16.3)(yaml@2.5.0))(workbox-build@7.1.1(@types/babel__core@7.20.5))(workbox-window@7.1.0):
+  vite-plugin-pwa@0.20.5(vite@6.0.0-beta.9(@types/node@20.14.12)(jiti@1.21.6)(terser@5.36.0)(tsx@4.19.2)(yaml@2.5.0))(workbox-build@7.1.1(@types/babel__core@7.20.5))(workbox-window@7.1.0):
     dependencies:
       debug: 4.3.6
       pretty-bytes: 6.1.1
       tinyglobby: 0.2.6
-      vite: 6.0.0-beta.9(@types/node@20.14.12)(jiti@1.21.6)(terser@5.36.0)(tsx@4.16.3)(yaml@2.5.0)
+      vite: 6.0.0-beta.9(@types/node@20.14.12)(jiti@1.21.6)(terser@5.36.0)(tsx@4.19.2)(yaml@2.5.0)
       workbox-build: 7.1.1(@types/babel__core@7.20.5)
       workbox-window: 7.1.0
     transitivePeerDependencies:
@@ -14410,7 +14425,7 @@ snapshots:
       fsevents: 2.3.3
       terser: 5.36.0
 
-  vite@6.0.0-beta.9(@types/node@20.14.12)(jiti@1.21.6)(terser@5.36.0)(tsx@4.16.3)(yaml@2.5.0):
+  vite@6.0.0-beta.9(@types/node@20.14.12)(jiti@1.21.6)(terser@5.36.0)(tsx@4.19.2)(yaml@2.5.0):
     dependencies:
       esbuild: 0.24.0
       postcss: 8.4.47
@@ -14419,7 +14434,7 @@ snapshots:
       '@types/node': 20.14.12
       jiti: 1.21.6
       terser: 5.36.0
-      tsx: 4.16.3
+      tsx: 4.19.2
       yaml: 2.5.0
 
   vitefu@0.2.5(vite@5.4.10(@types/node@20.14.12)(terser@5.36.0)):

@@ -1,6 +1,6 @@
 {
   "name": "@islands/prism",
-  "version": "0.8.0",
+  "version": "0.10.0-beta.1",
   "scripts": {
     "dev": "npm run build -- --watch",
     "build": "tsup src/prism.ts",

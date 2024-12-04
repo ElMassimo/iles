@@ -1,9 +1,12 @@
-const path = require('path')
-const fs = require('fs')
-const args = require('minimist')(process.argv.slice(2))
-const execa = require('execa')
+import path from 'node:path'
+import fs from 'node:fs'
+import minimist from 'minimist'
+import { execa } from 'execa'
+import { fileURLToPath } from 'url'
 
+const args = minimist(process.argv.slice(2))
 const name = args._[0]?.trim() || 'iles'
+const __dirname = path.dirname(fileURLToPath(import.meta.url))
 
 /**
  * @param {string} bin

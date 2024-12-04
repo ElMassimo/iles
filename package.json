@@ -15,8 +15,8 @@
     "blog:build": "npm run -C playground/the-vue-point build",
     "blog:now": "npm run -C playground/the-vue-point now",
     "blog:check": "npm -C playground/the-vue-point run check",
-    "release": "node scripts/release.cjs",
-    "changelog": "node scripts/changelog.cjs",
+    "release": "tsx scripts/release.ts",
+    "changelog": "tsx scripts/changelog.ts",
     "test": "packages/iles/bin/iles.js test"
   },
   "devDependencies": {
@@ -36,6 +36,7 @@
     "minimist": "^1.2.8",
     "pkg-dir": "^8.0.0",
     "semver": "^7.6.3",
+    "tsx": "^4.19.2",
     "typescript": "^5.6.3",
     "vitest": "^2.1.4"
   },

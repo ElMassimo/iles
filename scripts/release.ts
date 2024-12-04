@@ -1,14 +1,20 @@
 /**
  * modified from https://github.com/vuejs/vue-next/blob/master/scripts/release.js
  */
-const path = require('path')
-const fs = require('fs')
-const execa = require('execa')
-const args = require('minimist')(process.argv.slice(2))
-const semver = require('semver')
-const pc = require('picocolors')
-const { prompt } = require('enquirer')
+import path from 'node:path'
+import fs from 'node:fs'
+import { execa } from 'execa'
+import semver from 'semver'
+import pc from 'picocolors'
+import enquirer from 'enquirer'
+import minimist from 'minimist'
+import { fileURLToPath } from 'url'
+import { createRequire } from 'module'
 
+const __dirname = path.dirname(fileURLToPath(import.meta.url))
+const require = createRequire(import.meta.url)
+
+const args = minimist(process.argv.slice(2))
 const name = args._[0]?.trim() || 'iles'
 
 const pkg = jsPackage()
@@ -95,7 +101,7 @@ async function main () {
   /**
    * @type {{ release: string }}
    */
-  const { release } = await prompt({
+  const { release } = await enquirer.prompt<{ release: string }>({
     type: 'select',
     name: 'release',
     message: 'Select release type',
@@ -109,7 +115,7 @@ async function main () {
     /**
      * @type {{ version: string }}
      */
-    const res = await prompt({
+    const res = await enquirer.prompt<{ version: string }>({
       type: 'input',
       name: 'version',
       message: 'Input custom version',
@@ -128,7 +134,7 @@ async function main () {
   /**
    * @type {{ yes: boolean }}
    */
-  const { yes } = await prompt({
+  const { yes } = await enquirer.prompt<{ yes: boolean }>({
     type: 'confirm',
     name: 'yes',
     message: `Releasing ${tag}. Confirm?`,
