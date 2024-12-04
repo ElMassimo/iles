@@ -1,3 +1,12 @@
+# [0.10.0-beta.1](https://github.com/ElMassimo/iles/compare/headings@0.8.2...headings@0.10.0-beta.1) (2024-12-04)
+
+
+### Features
+
+* update dependencies (latest vite) ([#281](https://github.com/ElMassimo/iles/issues/281)) ([c291852](https://github.com/ElMassimo/iles/commit/c29185255e41e63830236ceb4c67de599aae2012))
+
+
+
 ## [0.8.2](https://github.com/ElMassimo/iles/compare/headings@0.8.1...headings@0.8.2) (2023-01-23)
 
 
