@@ -1,3 +1,14 @@
+# [0.10.0-beta.1](https://github.com/ElMassimo/iles/compare/hydration@0.8.2...hydration@0.10.0-beta.1) (2024-12-04)
+
+
+### Features
+
+* update dependencies (latest vite) ([#281](https://github.com/ElMassimo/iles/issues/281)) ([c291852](https://github.com/ElMassimo/iles/commit/c29185255e41e63830236ceb4c67de599aae2012))
+* upgrade to vite 4, rollup 3, mdx 2.1.5, vue 3.2.45 ([#208](https://github.com/ElMassimo/iles/issues/208)) ([74a0e51](https://github.com/ElMassimo/iles/commit/74a0e511c71e990cf5a123cc31989095ef76477f))
+* upgrade to vite@3.2.0 ([0b6cec8](https://github.com/ElMassimo/iles/commit/0b6cec84f7669b40b8dcb299ca6f6947f9fbcfae))
+
+
+
 ## [0.8.2](https://github.com/ElMassimo/iles/compare/hydration@0.8.1...hydration@0.8.2) (2022-10-16)
 
 
