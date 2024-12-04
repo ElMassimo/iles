@@ -1,3 +1,12 @@
+# [0.10.0-beta.1](https://github.com/ElMassimo/iles/compare/prism@0.8.0...prism@0.10.0-beta.1) (2024-12-04)
+
+
+### Features
+
+* update dependencies (latest vite) ([#281](https://github.com/ElMassimo/iles/issues/281)) ([c291852](https://github.com/ElMassimo/iles/commit/c29185255e41e63830236ceb4c67de599aae2012))
+
+
+
 # [0.8.0](https://github.com/ElMassimo/iles/compare/prism@0.1.1...prism@0.8.0) (2022-07-14)
 
 
