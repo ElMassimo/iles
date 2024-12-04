@@ -1,3 +1,13 @@
+# [0.10.0-beta.1](https://github.com/ElMassimo/iles/compare/pages@0.8.1...pages@0.10.0-beta.1) (2024-12-04)
+
+
+### Features
+
+* update dependencies (latest vite) ([#281](https://github.com/ElMassimo/iles/issues/281)) ([c291852](https://github.com/ElMassimo/iles/commit/c29185255e41e63830236ceb4c67de599aae2012))
+* upgrade to vite 4, rollup 3, mdx 2.1.5, vue 3.2.45 ([#208](https://github.com/ElMassimo/iles/issues/208)) ([74a0e51](https://github.com/ElMassimo/iles/commit/74a0e511c71e990cf5a123cc31989095ef76477f))
+
+
+
 ## [0.8.1](https://github.com/ElMassimo/iles/compare/pages@0.8.0...pages@0.8.1) (2022-08-28)
 
 
