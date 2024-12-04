@@ -1,3 +1,17 @@
+# [0.10.0-beta.1](https://github.com/ElMassimo/iles/compare/mdx@0.9.0...mdx@0.10.0-beta.1) (2024-12-04)
+
+
+### Bug Fixes
+
+* use functions instead of variables for String.prototype.replace ([#225](https://github.com/ElMassimo/iles/issues/225)) ([fd05eed](https://github.com/ElMassimo/iles/commit/fd05eedf1677aaa5c1f54c439adda7aa1e48cfc9))
+
+
+### Features
+
+* update dependencies (latest vite) ([#281](https://github.com/ElMassimo/iles/issues/281)) ([c291852](https://github.com/ElMassimo/iles/commit/c29185255e41e63830236ceb4c67de599aae2012))
+
+
+
 # [0.9.0](https://github.com/ElMassimo/iles/compare/mdx@0.8.0...mdx@0.9.0) (2022-12-09)
 
 
