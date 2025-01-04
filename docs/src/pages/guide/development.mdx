@@ -101,7 +101,7 @@ You may access information about the current page using the `usePage` compositio
 
 ```vue
 <script setup>
-import { usePage } from 'iles'
+import { usePage } from 'iles' // not needed
 
 const { frontmatter, meta } = usePage()
 </script>
@@ -172,16 +172,24 @@ Layout files must be lowercase, as in `post.vue` or `default.vue`.
 
 `src/site.ts` can be used to provide site-wide information such as `title`, `description`, etc.
 
-It can be accessed as `$site` in component instances, or by using `usePage`.
-
-It's also displayed in the page information in _Islands_ devtools.
-
 ```ts
 export default {
   title: 'About',
   description: 'Learn more about what we do',
 }
 ```
+
+It can be accessed as `$site` in component instances, or by using `usePage`.
+
+```vue
+<script setup>
+import { usePage } from 'iles' // not needed
+
+const { site } = usePage()
+</script>
+```
+
+It's also displayed in the page information in _Islands_ devtools.
 
 ### Sitemap 🗺
 
