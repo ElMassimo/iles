@@ -108,7 +108,8 @@ export default definePageComponent({
     const articles = await fetchArticles()
 
     return articles.map(article => ({
-      // Specify the parameters for the page.
+      // Specify the parameters for the page. 
+      // For example, `id` for `[id].vue` and `slug` for `[...slug].vue`
       params: { id: String(article.id) },
 
       // Pass any data needed to render the page.
@@ -148,6 +149,12 @@ You can access them using `defineProps` as in the example above, or as `props` i
 <kbd>getStaticPaths</kbd> must be specified inside the default export of a Vue component. 
 
 Use `definePageComponent` to provide intellisense, it will be automatically imported.
+</Tip>
+
+<Tip title="Matching Params" warn>
+Ensure that the `params` object includes the named route. For example, `params: { id: String(article.id) }` for a dynamic route `[id]`. 
+
+If no matching `params` are found in  <kbd>[getStaticPaths]</kbd>, then the route will not be generated during the build process.
 </Tip>
 
 <Tip title="Using External Data">
