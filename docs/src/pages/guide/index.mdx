@@ -1,6 +1,9 @@
 [introduction]: /guide/introduction
 [configuration reference]: /config
 [starter]: https://github.com/ElMassimo/create-iles
+[modules]: /guide/plugins
+[strategy]: /guide/hydration#clientload
+[vue vite devtools]: https://devtools.vuejs.org/guide/vite-plugin
 
 # Getting Started
 
@@ -16,29 +19,151 @@ import stackblitzSrc from '/images/stackblitz.svg'
   <a href="https://stackblitz.com/fork/iles?file=src%2Fcomponents%2FWelcome.vue" rel="noreferrer" target="_blank"><img src={stackblitzSrc} alt="Try it on StackBlitz"/></a>
 </p>
 
-## Installation 💿
+## New îles Project 💿
 
-Run the following command to create a new îles project.
+Run the following command to create a new îles project using the [starter] template.
 
 ```bash
-pnpm create iles@next # or npm or yarn
+npm create iles@latest # or pnpm, yarn, bun
 ```
 
-The [starter] comes with Vue components and examples. Once you have installed
-all dependencies, give it a try by running <kbd>npm run dev</kbd> to start the
-development server.
+## Add îles to Existing Project
 
-Alternatively, add `iles` to your `package.json` in an existing project.
+To add îles to your existing Vite-powered Vue project, refer to the [manual installation](#manual-installation) section. 
+
+New to Vue? Scaffold a new Vue project using <kbd>npm create vue@latest</kbd> and add îles to it. 
 
 ## Usage 🚀
 
-The `iles` executable provides the following commands:
+Open your project folder in Visual Studio Code and using the integrated terminal,
 
-- <kbd>iles dev</kbd>: Starts the development server
-- <kbd>iles build</kbd>: Creates a production build of the site
-- <kbd>iles preview</kbd>: Preview the site after building
+Install your dependencies:
 
-The following shortcuts are added by default when using the [starter]:
+```bash
+npm install # or pnpm, yarn, bun
+```
+
+Start your development server:
+
+```bash
+npm run dev # or pnpm, yarn, bun
+```
+
+Build for production:
+<Tip>
+Remember to provide `client:` [strategy] for interactive components that requires client-side hydration before building for production.
+</Tip>
+
+```bash
+npm run build # or pnpm, yarn, bun
+```
+
+Preview your site locally after building:
+
+```bash
+npm run preview # or pnpm, yarn, bun
+```
+
+## Manual Installation
+
+In your Vite-powered Vue project, install `iles` using:
+
+```bash
+npm add -D iles # or pnpm, yarn, bun
+```
+
+### 1. Add `iles.config.ts`
+
+Create an `iles.config.ts` file (mandatory) at your project root like this. 
+
+<Tip title="Migrating an existing Vite configuration">
+If you have an existing Vite configuration file, such as `vite.config.ts`, migrate your configuration under the vite key in the `iles.config.ts` file shown below. 
+
+<b>Important</b>: Skip adding `@vitejs/plugin-vue` (Vite plugin for Vue) as îles already ships it. Ensure it's not added as a Vite plugin in the `iles.config.ts` file shown below.
+
+Once you have completed the other installation steps, test your project to ensure it functions correctly. After a successful migration, you can safely remove your Vite configuration file.
+</Tip>
+
+```ts
+import { defineConfig } from 'iles'
+
+export default defineConfig({
+  siteUrl: 'https://myawesomeidea.com', // Your site URL
+  modules: [
+    // Add iles modules here, refer to Plugins page
+  ],
+  vite: {
+    plugins: [
+      // Add vite plugins here, for eg, vite-plugin-vue-devtools
+    ]
+  }
+})
+```
+
+### 2. Remove `index.html`
+
+îles automatically loads a shell page, so ensure you remove the `index.html` file from your project root.
+
+### 3. Add `site.ts`
+
+Create an `src/site.ts` (mandatory) file like this:
+
+```ts
+export default {
+  title: 'Cafe Bella Vista',
+  description: 'Sip, Savor, and Spark Ideas!',
+}
+```
+
+### 4. Add `app.ts`
+
+Create an `src/app.ts` (mandatory) file like this.
+
+```ts
+import { defineApp } from 'iles'
+
+export default defineApp({
+  enhanceApp ({ app, head, router }) {
+    // Configure the shell app to customise with development/build logic
+  },
+})
+```
+
+### 5. Add `pages` and `layouts`
+
+îles uses the `pages` and `layouts` folder conventions. Therefore, 
+- Rename the folder that contains all your pages (for eg, `src/views`) to `src/pages`.
+- Rename the `.vue` file of your home page (for eg, HomeView.vue) to `index.vue`.
+- Rename the `.vue` files of your other pages to follow kebab-case. For eg, `AboutView.vue` could be renamed to `about-us.vue`
+- Create your default layout (or convert your existing one) under `src/layouts/default.vue` like this: 
+
+```vue
+<script setup lang="ts">
+  // const { frontmatter, meta, site, route } = usePage()
+  // site-wide logic
+</script>
+
+<template>
+  <div>
+    <header>
+      <!-- NavBar vue island with client hydration strategy -->
+      <!-- SearchBar solid island with client hydration strategy -->
+    </header>
+    <main>
+      <!-- Pages are typically static with few dynamic islands -->
+      <!-- Pages using this default layout will load in this slot -->
+      <slot />
+    </main>
+    <footer>
+      <!-- TheFooter static vue component with no interactions -->
+    </footer>
+  </div>
+</template>
+```
+
+### 6. Add îles executables
+
+Add the `iles` executables in your `scripts` section of your `package.json`.
 
 ```json
   "scripts": {
@@ -48,8 +173,12 @@ The following shortcuts are added by default when using the [starter]:
   },
 ```
 
-- <kbd>npm run dev</kbd>: Starts the development server
-- <kbd>npm run build</kbd>: Creates a production build of the site
-- <kbd>npm run preview</kbd>: Preview the site after building
+### Other Updates: 
+Archive your root component (for eg, `App.vue`), entry file (for eg, `main.ts`) and your `router` folder.
+  - îles supports file-based routing, so your `router` folder is not required. Any custom logic might have to be migrated to `app.ts`.
+  - Contents of your root component (for eg, `App.vue`) and your entry file (for eg, `main.ts`) might have to be migrated to either your default layout, one of your Islands, or `src/app.ts`.
+
+
+Well Done! Now, follow to the [Usage](#usage) section to start your development server.
 
 <Contact/>
