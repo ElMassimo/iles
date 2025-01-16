@@ -77,9 +77,9 @@ npm add -D iles # or pnpm, yarn, bun
 Create an `iles.config.ts` file (mandatory) at your project root like this. 
 
 <Tip title="Migrating an existing Vite configuration">
-If you have an existing Vite configuration file, such as `vite.config.ts`, migrate your configuration under the vite key in the `iles.config.ts` file shown below. 
+If you have an existing Vite configuration file, such as `vite.config.ts`, migrate your configuration under the vite key in the `iles.config.ts` file. 
 
-<b>Important</b>: Skip adding `@vitejs/plugin-vue` (Vite plugin for Vue) as îles already ships it. Ensure it's not added as a Vite plugin in the `iles.config.ts` file shown below.
+<b>Important</b>: Skip adding `@vitejs/plugin-vue` (Vite plugin for Vue) as îles already ships it. Ensure it's not added as a Vite plugin in the `iles.config.ts` file.
 
 Once you have completed the other installation steps, test your project to ensure it functions correctly. After a successful migration, you can safely remove your Vite configuration file.
 </Tip>
@@ -133,7 +133,7 @@ export default defineApp({
 
 îles uses the `pages` and `layouts` folder conventions. Therefore, 
 - Rename the folder that contains all your pages (for eg, `src/views`) to `src/pages`.
-- Rename the `.vue` file of your home page (for eg, HomeView.vue) to `index.vue`.
+- Rename the `.vue` file of your home page (for eg, `HomeView.vue`) to `index.vue`.
 - Rename the `.vue` files of your other pages to follow kebab-case. For eg, `AboutView.vue` could be renamed to `about-us.vue`
 - Create your default layout (or convert your existing one) under `src/layouts/default.vue` like this: 
 
