@@ -25,15 +25,19 @@ Run the following command to create a new îles project using the [starter] temp
 npm create iles@latest # or pnpm, yarn, bun
 ```
 
-## Add îles to Existing Project
+## Add îles to an Existing Project
 
 To add îles to your existing Vite-powered Vue project, refer to the [manual installation](#manual-installation) section. 
 
-New to Vue? Scaffold a new Vue project using <kbd>npm create vue@latest</kbd> and add îles to it. 
+New to Vue? 💚 Scaffold a new Vue project using the following command. Then, add îles to it.
+
+```bash
+npm create vue@latest # or pnpm, yarn, bun
+```
 
 ## Usage 🚀
 
-Open your project folder in Visual Studio Code and using the integrated terminal,
+Open your project folder in Visual Studio Code and, using the integrated terminal,
 
 Install your dependencies:
 
@@ -41,7 +45,7 @@ Install your dependencies:
 npm install # or pnpm, yarn, bun
 ```
 <Tip>
-Learn about the [project structure] to simplify and optimize your project.
+Learn about the [project structure] to familiarize yourself with the various conventions and best practices in îles.
 </Tip>
 
 Start your development server:
@@ -52,7 +56,7 @@ npm run dev # or pnpm, yarn, bun
 
 Build for production:
 <Tip>
-Remember to provide `client:` [strategy] for interactive components that requires client-side hydration before building for production.
+Remember to provide a `client:` [strategy] for interactive components that requires client-side hydration before building for production.
 </Tip>
 
 ```bash
@@ -75,13 +79,13 @@ npm add -D iles # or pnpm, yarn, bun
 
 ### 1. Remove `index.html`
 
-îles automatically loads a shell page with it's own entry shell app (for an enhanced developer experience), so ensure you remove/archive the `index.html` file from your project root. 
+îles automatically loads a shell page with its own entry shell app to enhance your developer experience. Ensure you remove or archive the `index.html` file from your project root. 
 
-For eg, to archive, rename `index.html` to `!index.html`.
+For example, to archive, rename `index.html` to `!index.html`.
 
 ### 2. Add `iles.config.ts`
 
-Create an `iles.config.ts` file (mandatory) at your project root like this. 
+Create an `iles.config.ts` file (mandatory) at your project root as shown below. 
 
 ```ts
 import { defineConfig } from 'iles'
@@ -93,7 +97,7 @@ export default defineConfig({
   ],
   vite: {
     plugins: [
-      // Add vite plugins here, for eg, vite-plugin-vue-devtools
+      // Add Vite plugins here, e.g., vite-plugin-vue-devtools
     ]
   }
 })
@@ -101,13 +105,11 @@ export default defineConfig({
 
 ### 3. Migrate `vite.config.ts`
 
-If you have an existing Vite configuration file, such as `vite.config.ts`, migrate your Vite configuration into the `vite` key of your `iles.config.ts` file as shown below. 
+If you have an existing Vite configuration file, such as `vite.config.ts`, migrate its configuration into the `vite` key of `iles.config.ts` file as shown below.
 
 <b>Important</b>: Skip migrating `@vitejs/plugin-vue` (Vite plugin for Vue) as îles already ships it. Ensure it's not added as a Vite plugin in the `iles.config.ts` file.
 
-Once you have migrated your Vite configuration, ensure to remove/archive `vite.config.ts` file so that it doesn't interfere with îles development server workflow. 
-
-For eg, to archive, rename `vite.config.ts` to `!vite.config.ts`.
+After migration, remove or archive `vite.config.ts` to prevent interference with the îles workflow. For example, to archive, rename `vite.config.ts` to `!vite.config.ts`.
 
 ```ts
 import { defineConfig } from 'iles'
@@ -120,7 +122,7 @@ export default defineConfig({
   vite: {
     // Vite configuration goes here
     plugins: [
-      // Add vite plugins here, for eg, vite-plugin-vue-devtools
+      // Add vite plugins here, for example, vite-plugin-vue-devtools
     ]
   }
 })
@@ -128,21 +130,21 @@ export default defineConfig({
 
 ### 4. Add `app.ts`
 
-Create an `src/app.ts` (mandatory) file like this.
+Create an `src/app.ts` (mandatory) file as shown below.
 
 ```ts
 import { defineApp } from 'iles'
 
 export default defineApp({
   enhanceApp ({ app, head, router }) {
-    // Configure the shell app to customise with development/build logic
+    // Configure the shell app with custom development/build logic
   },
 })
 ```
 
 ### 5. Add `site.ts`
 
-Create an `src/site.ts` (mandatory) file like this:
+Create an `src/site.ts` (mandatory) file as shown below:
 
 ```ts
 export default {
@@ -153,7 +155,7 @@ export default {
 
 ### 6. Add `layouts`
 
-Create your default layout (or convert your existing one) as `src/layouts/default.vue` (mandatory) like this:
+Create your default layout (or convert your existing one) as `src/layouts/default.vue` (mandatory) as shown below:
 
 ```vue
 <script setup lang="ts">
@@ -192,10 +194,9 @@ body {
 
 <Tip>
 îles uses the `pages` and `layouts` folder conventions with filenames in kebab-case.
-- Rename the folder that contains all your pages (for eg, `src/views`) to `src/pages`.
-- Rename the `.vue` file of your home page (for eg, `HomeView.vue`) to `index.vue`.
-- Rename the `.vue` files of your other pages to follow kebab-case. For eg, `AboutView.vue` could be renamed to `about-us.vue`
-- Create your default layout (or convert your existing one) as `src/layouts/default.vue` like this: 
+- Rename the folder that contains all your pages (for example, `src/views`) to `src/pages`.
+- Rename the `.vue` file of your home page (for example, `HomeView.vue`) to `index.vue`.
+- Rename the `.vue` files of your other pages to follow kebab-case. For example, `AboutView.vue` could be renamed to `about-us.vue`
 </Tip>
 
 ```vue
@@ -265,11 +266,11 @@ Add the `iles` executables in your `scripts` section of your `package.json`.
 
 ### 8. Other Updates: 
 
-Archive your root component (for eg, `App.vue`), entry file (for eg, `main.ts`) and your `router` folder.
-  - îles supports file-based routing, so your `router` folder is not required. Any custom logic might have to be migrated to `app.ts`.
-  - Contents of your root component (for eg, `App.vue`) and your entry file (for eg, `main.ts`) might have to be migrated to either your default layout, one of your Islands, or `src/app.ts`.
+Remove or archive your root component and entry file (for example, `App.vue`, `main.ts`) as well as the router folder since îles uses file-based routing.
 
-If you migrated from a previous application, test your project to ensure it functions correctly. After a successful migration, you can safely remove your previous files such as your previous shell page and Vite configuration file (for eg, `!index.html` and `!vite.config.ts` from above steps).
+Any custom logic might need to be migrated to `app.ts`, your default layout, or one of your Islands.
+
+If you migrated from a previous application, thoroughly test your project to ensure it functions correctly. After a successful migration, remove your obsolete files such as the shell page and Vite configuration file (`!index.html` and `!vite.config.ts` from above steps).
 
 Well Done! Now, follow to the [usage](#usage) section to start your development server. 
 
