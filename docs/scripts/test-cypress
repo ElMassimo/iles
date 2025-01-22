@@ -14,4 +14,4 @@ echo '== Server ready! =='
 
 # Disable GPU to avoid CI-related rendering issues
 export ELECTRON_DISABLE_GPU=1
-pnpx cypress@10.6.0 run --browser chrome --headless --disable-gpu && echo '== Finished! =='
+pnpx cypress@10.6.0 run && echo '== Finished! =='
