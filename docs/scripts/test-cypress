@@ -12,4 +12,6 @@ pnpx wait-on http-get://[::1]:3050 --delay 1000 --timeout 15000
 
 echo '== Server ready! =='
 
-pnpx cypress@10.6.0 run && echo '== Finished! =='
+# Disable GPU to avoid CI-related rendering issues
+export ELECTRON_DISABLE_GPU=1
+pnpx cypress@10.6.0 run --browser chrome --headless --disable-gpu && echo '== Finished! =='
