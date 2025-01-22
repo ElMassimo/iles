@@ -8,7 +8,7 @@ echo '== Starting server =='
 pnpm run preview &
 
 echo '== Waiting for server to respond... =='
-pnpx wait-on http-get://localhost:3050 --delay 1000 --timeout 15000
+pnpx wait-on http-get://[::1]:3050 --delay 1000 --timeout 15000
 
 echo '== Server ready! =='
 
