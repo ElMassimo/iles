@@ -96,5 +96,5 @@ Visit the [documentation website][docs] to check out the [guides][guide] and sea
 [VitePress]: https://vitepress.vuejs.org/
 [vite-ssg]: https://github.com/antfu/vite-ssg
 [vue-router]: https://next.router.vuejs.org/
-[@unhead/vue]: https://github.com/unjs/unhead
+[@unhead/vue]: https://unhead.unjs.io/
 
