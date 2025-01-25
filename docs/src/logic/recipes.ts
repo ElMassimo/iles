@@ -6,7 +6,7 @@ export interface Post extends PageComponent {
   author: string
   title: string
   twitter: string
-  ogimage: string
+  image: string
 }
 
 function byDate(a: Document<Post>, b: Document<Post>) {

@@ -17,7 +17,7 @@ const recipes = getPosts()
       <article v-for="recipe in recipes" :key="recipe.href" class="dark:bg-[var(--bg-highlight)] overflow-hidden rounded-lg shadow-lg">
         <a class="!no-underline hover:!text-[var(--fc-intense)] active:!text-[var(--fc-intense)]" :href="recipe.href">
           <span class="w-full h-48 object-cover">
-            <Image :src="getImage(recipe.ogimage)" alt=""/>
+            <Image :src="getImage(recipe.image)" alt=""/>
           </span>
           <div class="px-6 pb-6">
             <h2>{{ recipe.title }}</h2>
