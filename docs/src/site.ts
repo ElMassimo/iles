@@ -34,6 +34,7 @@ const site = {
         { text: 'Documents', link: '/guide/documents' },
         { text: 'Markdown', link: '/guide/markdown' },
         { text: 'Meta Tags', link: '/guide/meta-tags' },
+        { text: 'Static Assets', link: '/guide/static-assets' },
         { text: 'Hydration', link: '/guide/hydration' },
         { text: 'Frameworks', link: '/guide/frameworks' },
         { text: 'Client Scripts', link: '/guide/client-scripts' },
