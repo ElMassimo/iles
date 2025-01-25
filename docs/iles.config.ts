@@ -59,7 +59,14 @@ export default defineConfig({
   ],
   markdown: {
     rehypePlugins: [
-      'rehype-external-links',
+      [
+        'rehype-external-links',
+        {
+          target: '_blank',
+          rel: ['noopener'],
+          test: (node: any) => /^https?:\/\//.test(node.properties.href),
+        },
+      ],
     ],
   },
   ssg: {
