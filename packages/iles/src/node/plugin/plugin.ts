@@ -7,7 +7,7 @@ import MagicString from 'magic-string'
 
 import type { AppConfig, AppClientConfig } from '../shared'
 import { ILES_APP_ENTRY } from '../constants'
-import { APP_PATH, APP_COMPONENT_PATH, USER_APP_REQUEST_PATH, USER_SITE_REQUEST_PATH, APP_CONFIG_REQUEST_PATH, NOT_FOUND_COMPONENT_PATH, NOT_FOUND_REQUEST_PATH, DEBUG_COMPONENT_PATH } from '../alias'
+import { APP_PATH, APP_COMPONENT_PATH, USER_APP_REQUEST_PATH, USER_SITE_REQUEST_PATH, APP_CONFIG_REQUEST_PATH, NOT_FOUND_COMPONENT_PATH, NOT_FOUND_REQUEST_PATH, USER_APP_ID_VIRTUAL, USER_APP_ID_VIRTUAL_RESOLVED, USER_SITE_ID_VIRTUAL, USER_SITE_ID_VIRTUAL_RESOLVED, DEBUG_COMPONENT_PATH } from '../alias'
 import { configureMiddleware } from './middleware'
 import { serialize, pascalCase, exists, debug } from './utils'
 import { parseId } from './parse'
@@ -125,6 +125,44 @@ export default function IslandsPlugins (appConfig: AppConfig): PluginOption[] {
         return configureMiddleware(appConfig, server, defaultLayoutPath)
       },
     },
+    {
+      // app.ts (optional) - use virtual if not user-provided
+      name: 'iles:user-app',
+      enforce: 'pre',
+      resolveId(id) {
+        if (id === USER_APP_ID_VIRTUAL) {
+          return USER_APP_ID_VIRTUAL_RESOLVED
+        }
+        // Prevent import analysis failure if user-app (app.ts) doesn't exist.
+        if (id === appPath) return resolve(root, id.slice(1))
+      },
+      async load(id) {
+        if (id === USER_APP_ID_VIRTUAL_RESOLVED) {
+          const userAppExists = await exists(appPath) 
+          return userAppExists ? `import userApp from "${appPath.replace('.ts', '')}"
+export default userApp`  : 'export default {}'
+        }
+      },
+    },
+    {
+      // site.ts (optional) - use virtual if not user-provided
+      name: 'iles:site-app',
+      enforce: 'pre',
+      resolveId(id) {
+        if (id === USER_SITE_ID_VIRTUAL) {
+          return USER_SITE_ID_VIRTUAL_RESOLVED
+        }
+        // Prevent import analysis failure if site-app (site.ts) doesn't exist.
+        if (id === sitePath) return resolve(root, id.slice(1))
+      },
+      async load(id) {
+        if (id === USER_SITE_ID_VIRTUAL_RESOLVED) {
+          const userSiteExists = await exists(sitePath) 
+          return userSiteExists ? `import siteRef from "${sitePath.replace('.ts', '')}"
+export default siteRef`  : 'export default {}'
+        }
+      },
+    },     
     {
       name: 'iles:detect-islands-in-vue',
       enforce: 'pre',

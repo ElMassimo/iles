@@ -4,9 +4,7 @@ import { createHead } from '@unhead/vue'
 
 import routes from '@islands/routes'
 import config from '@islands/app-config'
-import userApp from '@islands/user-app'
-import siteRef from '@islands/user-site'
-import type { CreateAppFactory, AppContext, RouterOptions } from '../shared'
+import type { CreateAppFactory, AppContext, RouterOptions, UserApp, UserSite } from '../shared'
 import App from './components/App.vue'
 import { installPageData, forcePageUpdate } from './composables/pageData'
 import { installMDXComponents } from './composables/mdxComponents'
@@ -32,7 +30,27 @@ function createRouter (base: string | undefined, routerOptions: Partial<RouterOp
   })
 }
 
+function unwrapModule (mod: any): any {
+  return mod && mod.default ? unwrapModule(mod.default) : mod
+}
+
 export const createApp: CreateAppFactory = async (options = {}) => {
+  let userApp: UserApp
+  try {
+    userApp = unwrapModule(await import('@islands/user-app'))
+  }
+  catch (err) {
+    userApp = {}
+  }
+  
+  let siteRef: UserSite
+  try {
+    siteRef = unwrapModule(await import('@islands/user-site'))
+  }
+  catch (err) {
+    siteRef = {}
+  }
+  
   const { head: headConfig, enhanceApp, router: routerOptions } = userApp
   const { routePath = config.base, ssrProps } = options
 

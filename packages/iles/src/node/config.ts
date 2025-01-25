@@ -310,6 +310,8 @@ function viteConfigDefaults (root: string, userConfig: UserConfig): ViteOptions 
         '@islands/hydration',
         '@islands/prerender',
         'vue/server-renderer',
+        'virtual:user-app',
+        'virtual:user-site',
       ],
     },
   }

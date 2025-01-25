@@ -30,9 +30,13 @@ export const APP_CONFIG_REQUEST_PATH = `/${APP_CONFIG_ID}`
 
 export const USER_APP_ID = '@islands/user-app'
 export const USER_APP_REQUEST_PATH = `/${USER_APP_ID}`
+export const USER_APP_ID_VIRTUAL = 'virtual:user-app'
+export const USER_APP_ID_VIRTUAL_RESOLVED = `\0${USER_APP_ID_VIRTUAL}`
 
 export const USER_SITE_ID = '@islands/user-site'
 export const USER_SITE_REQUEST_PATH = `/${USER_SITE_ID}`
+export const USER_SITE_ID_VIRTUAL = 'virtual:user-site'
+export const USER_SITE_ID_VIRTUAL_RESOLVED = `\0${USER_SITE_ID_VIRTUAL}`
 
 export const NOT_FOUND_REQUEST_PATH = '@islands/components/NotFound'
 
@@ -40,7 +44,9 @@ export function resolveAliases (root: string, userConfig: UserConfig): AliasOpti
   const paths: Record<string, string> = {
     '/@shared': SHARED_PATH,
     [USER_APP_ID]: USER_APP_REQUEST_PATH,
+    [USER_APP_ID_VIRTUAL]: USER_APP_ID_VIRTUAL_RESOLVED,
     [USER_SITE_ID]: USER_SITE_REQUEST_PATH,
+    [USER_SITE_ID_VIRTUAL]: USER_SITE_ID_VIRTUAL_RESOLVED,
     [APP_CONFIG_ID]: APP_CONFIG_REQUEST_PATH,
   }
 
