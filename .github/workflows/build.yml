@@ -54,7 +54,7 @@ jobs:
       CI: true
 
     runs-on: ubuntu-latest
-    container: cypress/included:9.2.0
+    container: cypress/included:13.13.2
     steps:
       - uses: actions/checkout@v2
 

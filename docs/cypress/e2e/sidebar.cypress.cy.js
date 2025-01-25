@@ -1,4 +1,4 @@
-import { visit, navigateTo, goBackHome, assertPage, waitForHydration } from './helpers'
+import { visit, visitHome, navigateTo, goBackHome, assertPage, waitForHydration } from './helpers'
 
 describe('Sidebar Toggle', () => {
   const sidebar = () =>
@@ -24,23 +24,26 @@ describe('Sidebar Toggle', () => {
     sidebarToggle().should('not.be.visible')
   })
 
-  test.skipIf(process.env.CI)('can open in mobile', () => {
-    visitHome()
-    cy.viewport(500, 720)
-    visit('/guide/frameworks')
-    openSidebar()
-    closeSidebar()
+  it('can open in mobile', () => {
+    cy.skipIf(process.env.CI)
+    it('can open in mobile', () => {
+      visitHome()
+      cy.viewport(500, 720)
+      visit('/guide/frameworks')
+      openSidebar()
+      closeSidebar()
 
-    // Ensure Turbo reactivates the islands.
-    openSidebar()
-    sidebar().contains('Config').click()
+      // Ensure Turbo reactivates the islands.
+      openSidebar()
+      sidebar().contains('Config').click()
 
-    // Give Turbo time to replace the body.
-    waitForHydration()
-    assertPage({ title: 'Config' })
-    sidebar().should('not.be.visible')
+      // Give Turbo time to replace the body.
+      waitForHydration()
+      assertPage({ title: 'Config' })
+      sidebar().should('not.be.visible')
 
-    openSidebar()
-    closeSidebar()
+      openSidebar()
+      closeSidebar()
+    })
   })
 })
