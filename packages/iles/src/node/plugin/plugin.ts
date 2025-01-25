@@ -216,12 +216,15 @@ export default function IslandsPlugins (appConfig: AppConfig): PluginOption[] {
         }
 
         if (isPage) {
+          const layoutPath = `${layoutsRoot}/${layout}.vue`
+          const layoutExists = await exists(resolve(root, layoutPath.slice(1)))
+
           appendToSfc('layoutName', serialize(layout))
-          appendToSfc('layoutFn', String(layout) === 'false'
+          appendToSfc('layoutFn', String(layout) === 'false' || !layoutExists
             ? 'false'
             : `() => import('${layoutsRoot}/${layout}.vue').then(m => m.default)`)
         }
-
+        
         return s.toString()
       },
     },
