@@ -10,6 +10,11 @@
 [siteUrl]: /config#siteurl
 [useDocuments]: /guide/documents
 [frameworks]: /guide/frameworks
+[head and meta tags]: /guide/meta-tags
+[discussion]: https://github.com/ElMassimo/iles/discussions/6#discussioncomment-1479755
+[`@unhead/vue`]: https://unhead.unjs.io/setup/vue/installation
+[shortcodes]: /guide/markdown#advanced-provide-components-shortcodes
+[vue-router]: https://next.router.vuejs.org/
 
 # Development 💻
 
@@ -35,8 +40,8 @@ In this section, we'll cover the basics to start building an <Iles/> application
   │    ├── about.vue
   │    └── index.mdx
   │
-  ├── <kbd><a href="/config#your-app">app.ts</a></kbd>
-  └── <kbd><a href="#site">site.ts</a></kbd></code>
+  ├── <kbd><a href="#site">site.ts</a></kbd>
+  └── <kbd><a href="#app-2">app.ts</a></kbd></code>
 </pre>
 </div>
 
@@ -55,6 +60,34 @@ import { useDark } from '~/logic/dark'
 Components in the <kbd>src/components</kbd> dir will be auto-imported on-demand, powered by [`unplugin-vue-components`](https://github.com/antfu/unplugin-vue-components).
 
 <Iles/> extends this so that you don't need to import components in [MDX files][mdx].
+
+## Layouts 📐
+
+Components in the <kbd>src/layouts</kbd> dir will be available as layouts, and they should provide a default `<slot/>`. 
+
+Pages may specify a layout using the `layout` property in frontmatter:
+
+```md
+---
+layout: post
+---
+```
+
+Layouts and Vue pages can also specify a parent layout using a `layout` attribute in the `template`:
+
+```vue
+<template layout="post">
+```
+
+> Layouts are optional; however, having a default layout is highly recommended.
+>
+> The `default` layout will be used for all pages unless specified.
+> 
+> Pages may opt-out by specifying `layout: false`
+
+<Tip warn>
+Layout files must be lowercase, as in `post.vue` or `default.vue`.
+</Tip>
 
 ## Pages 🛣
 
@@ -142,32 +175,6 @@ const posts = usePosts()
 </template>
 ```
 
-## Layouts 📐
-
-Components in the <kbd>src/layouts</kbd> dir will be available as layouts, and they should provide a default `<slot/>`.
-
-Pages may specify a layout using the `layout` property in frontmatter:
-
-```md
----
-layout: post
----
-```
-
-Layouts and Vue pages can also specify a parent layout using a `layout` attribute in the `template`:
-
-```vue
-<template layout="post">
-```
-
-> The `default` layout will be used for all pages unless specified.
->
-> Pages may opt-out by specifying `layout: false`
-
-<Tip warn>
-Layout files must be lowercase, as in `post.vue` or `default.vue`.
-</Tip>
-
 ## Site 🌐
 
 `src/site.ts` can be used to provide site-wide information such as `title`, `description`, etc.
@@ -183,10 +190,123 @@ export default {
 }
 ```
 
+It can be accessed as `$site` in component instances, or by using `usePage`.
+
+```vue
+<script setup>
+import { usePage } from 'iles' // not needed
+
+const { site } = usePage()
+</script>
+```
+
+It's also displayed in the page information in _Islands_ devtools.
+
+> Adding `src/site.ts` to your project is optional.
+> 
+> Alternatively, you can use composables from [`@unhead/vue`] to manage the [head and meta tags] of your page.
+
+## App 📱
+
+<Iles/> will pre-configure a Vue 3 shell that, during development, will load your site comprising of your [layouts](#layouts) and [pages](#pages) within it.
+
+`src/app.ts` can be used to provide additional configurations with the `defineApp` helper, allowing you to customize:
+- using `enhanceApp`, the development and build logic of this "outer" shell.
+- your site's head and meta tags, scroll behavior, etc.
+
+> This "outer" shell is loaded only during development and is not included in your built site.
+>
+> Adding `src/app.ts` to your project is optional.
+
+```ts
+import { defineApp } from 'iles'
+
+export default defineApp({
+  enhanceApp ({ app, head, router }) {
+    // Configure the "outer" shell to customize it's development/build logic
+  },
+  head ({ frontmatter, site }) {
+    return {
+      meta: [
+        { property: 'author', content: site.author },
+        { property: 'keywords', content: computed(() => frontmatter.tags) },
+      ]
+    }
+  },
+  router: {
+    scrollBehavior (current, previous, savedPosition) {
+      // Configure the scroll behavior
+    }, 
+  },
+  mdxComponents: {
+      // Options for tag mapping in MDX
+  },
+  socialTags: true // default
+})
+```
+
+### `enhanceApp` (Development only)
+
+- **Type:** `(context: AppContext) => void | Promise<void>`
+
+A hook where you can add additional development/build logic. See this [discussion] thread for few suggestions.
+
+### `head`
+
+- **Type:** `HeadObject | (context: AppContext) => HeadObject`
+
+Set the page title, meta tags, additional CSS, or scripts using [`@unhead/vue`].
+
+### `router`
+
+- **Type:** `RouterOptions`
+
+Configure [`vue-router`][vue-router] by providing options such as `scrollBehavior` and `linkActiveClass`.
+
+### `mdxComponents`
+
+- **Type:** `MDXComponents | (context: AppContext) => MDXComponents`
+
+Provide an object that [maps tag names in MDX to components][shortcodes] to render.
+
+```ts
+import { defineApp } from 'iles'
+import Image from '~/components/Image.vue'
+
+export default defineApp({
+  mdxComponents: {
+    b: 'strong',
+    img: Image,
+  },
+})
+```
+
+### `socialTags`
+
+- **Type:** `boolean`
+- **Default:** `true`
+
+Some social tags can be inferred from the <kbd>[site](#site)</kbd>.
+
+Set it to `false` to avoid adding social tags such as `og:title` and `twitter:description`.
+
+## Devtools 🛠
+
+Page information is available in a debug panel, similar to VitePress, but you may also access an _Islands_ inspector in Vue devtools.
+
+This can be useful when debugging [islands hydration][hydration].
+
+## Iles Configuration ⚙️
+
+You may provide a `iles.config.ts` configuration file at your project root to customize the various îles-specific features.
+
+You may also provide a `vite.config.ts` configuration file (or use the `vite` key in `iles.config.ts`) to add vite plugins and customize the various vite-specific features.
+
 ### Sitemap 🗺
 
-A sitemap can be automatically generated for your site, all you need to do is
-configure <kbd>[siteUrl]</kbd>. That will also make it available as `site.url` and `site.canonical`.
+A sitemap can be automatically generated when you build your site, all you need to do is configure <kbd>[siteUrl]</kbd> in your `iles.config.ts` configuration file. 
+
+If configured, `siteUrl` will also make it available as `site.url` and `site.canonical`.
 
 ```ts
 import { defineConfig } from 'iles'
@@ -206,8 +326,4 @@ export default defineConfig({
 })
 ```
 
-## Devtools 🛠
-
-Page information is available in a debug panel, similar to VitePress, but you may also access an _Islands_ inspector in Vue devtools.
-
-This can be useful when debugging [islands hydration][hydration].
+> To learn more about further Iles and Vite configurations, refer to the [config] page.
