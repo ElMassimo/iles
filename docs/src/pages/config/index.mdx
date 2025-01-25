@@ -11,7 +11,6 @@ sidebar: auto
 [meta tags]: /guide/meta-tags
 [sitemap]: /guide/development#sitemap
 
-[shortcodes]: /guide/markdown#advanced-provide-components-shortcodes
 [deployment]: /guide/deployment 
 [VitePress]: /faqs#vitepress
 [turbo]: /guide/turbo
@@ -48,7 +47,7 @@ export default defineConfig({
 You may provide an `iles.config.ts` configuration file to customize settings
 related to markdown, component resolution, and other îles-specific features.
 
-You can leverage your IDE's intellisense with jsdoc type hints or use the `defineConfig` helper:
+You can leverage your IDE's intellisense by using the `defineConfig` helper:
 
 ```ts
 import { defineConfig } from 'iles'
@@ -155,83 +154,6 @@ When set, it is exposed as `site.url` and `site.canonical`.
 - **Default:** `true`
 
 Whether to output more information about islands and hydration in development.
-
-## Your App
-
-<Iles/> will pre-configure a Vue 3 app that will load any [pages] defined in the
-site.
-
-You may provide additional configuration in `src/app.ts`, and leverage
-intellisense by using the `defineApp` helper.
-
-```ts
-import { defineApp } from 'iles'
-
-export default defineApp({
-  head ({ frontmatter, site }) {
-    return {
-      meta: [
-        { property: 'author', content: site.author },
-        { property: 'keywords', content: computed(() => frontmatter.tags) },
-      ]
-    }
-  },
-  enhanceApp ({ app, head, router }) {
-    // Configure the app to add plugins.
-  },
-  router: {
-    scrollBehavior (current, previous, savedPosition) {
-      // Configure the scroll behavior
-    }, 
-  },
-})
-```
-
-### `head`
-
-- **Type:** `HeadObject | (context: AppContext) => HeadObject`
-
-Set the page title, meta tags, additional CSS, or scripts using [`@unhead/vue`][@unhead/vue].
-
-### `enhanceApp`
-
-- **Type:** `(context: AppContext) => Promise<void>`
-
-A hook where you can add plugins to the Vue app, or do anything else prior to
-the app being mounted.
-
-### `mdxComponents`
-
-- **Type:** `MDXComponents | (context: AppContext) => MDXComponents`
-
-Provide an object that [maps tag names in MDX to components][shortcodes] to render.
-
-```ts
-import { defineApp } from 'iles'
-import Image from '~/components/Image.vue'
-
-export default defineApp({
-  mdxComponents: {
-    b: 'strong',
-    img: Image,
-  },
-})
-```
-
-### `router`
-
-- **Type:** `RouterOptions`
-
-Configure [`vue-router`][vue-router] by providing options such as `scrollBehavior` and `linkActiveClass`.
-
-### `socialTags`
-
-- **Type:** `boolean`
-- **Default:** `true`
-
-Some social tags can be inferred from the <kbd>[site]</kbd>.
-
-Set it to `false` to avoid adding social tags such as `og:title` and `twitter:description`.
 
 ## `iles.config.ts` Example
 
