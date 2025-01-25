@@ -21,11 +21,11 @@ const isProd = import.meta.env.PROD
     <meta property="og:type" content="website">
     <meta property="og:locale" content="en_US">
     <meta property="og:image" :content="imageUrl">
-    <meta property="twitter:image" :content="imageUrl">
-    <meta property="twitter:image:alt" content="îles">
-    <meta property="twitter:site" :content="`@${site.twitterHandle}`">
-    <meta property="twitter:creator" :content="`@${site.authorHandle}`">
-    <meta property="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" :content="imageUrl">
+    <meta name="twitter:image:alt" content="îles">
+    <meta name="twitter:site" :content="`@${site.twitterHandle}`">
+    <meta name="twitter:creator" :content="`@${site.authorHandle}`">
+    <meta name="twitter:card" content="summary_large_image">
     <link rel="icon" type="image/svg+xml" :href="logoSrc">
     <link rel="shortcut icon" :href="faviconSrc">
     <link rel="mask-icon" :href="logoSrc" color="#5C7E8F">
