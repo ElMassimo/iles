@@ -27,17 +27,17 @@ exports[`building docs site > html files 1`] = `
 <meta property="og:site_name" content="The Vue Point">
 <meta property="og:title" content="Not Found · The Vue Point">
 <meta property="og:description" content="Updates, tips & opinions from the maintainers of Vue.js.">
-<meta property="twitter:domain" content="the-vue-point-with-iles.netlify.app">
-<meta property="twitter:title" content="Not Found · The Vue Point">
-<meta property="twitter:description" content="Updates, tips & opinions from the maintainers of Vue.js.">
-<meta property="twitter:url" content="https://the-vue-point-with-iles.netlify.app/404.html">
+<meta name="twitter:domain" content="the-vue-point-with-iles.netlify.app">
+<meta name="twitter:title" content="Not Found · The Vue Point">
+<meta name="twitter:description" content="Updates, tips & opinions from the maintainers of Vue.js.">
+<meta name="twitter:url" content="https://the-vue-point-with-iles.netlify.app/404.html">
 <link rel="sitemap" href="https://the-vue-point-with-iles.netlify.app/sitemap.xml">
 <meta property="generator" content="îles">
 <script async>console.log("Powered by îles 🏝", "https://iles-docs.netlify.app")</script>
-<meta property="twitter:image" content="https://vuejs.org/images/logo.png">
-<meta property="twitter:image:alt" content="Vue">
-<meta property="twitter:site" content="@vuejs">
-<meta property="twitter:card" content="summary">
+<meta name="twitter:image" content="https://vuejs.org/images/logo.png">
+<meta name="twitter:image:alt" content="Vue">
+<meta name="twitter:site" content="@vuejs">
+<meta name="twitter:card" content="summary">
 <link rel="icon" type="image/x-icon" href="/favicon.ico">
     <link rel="stylesheet" href="/assets/default-.css">
 <link rel="stylesheet" href="/assets/app.css">
@@ -61,17 +61,17 @@ exports[`building docs site > html files 2`] = `
 <meta property="og:site_name" content="The Vue Point">
 <meta property="og:title" content="The Vue Point">
 <meta property="og:description" content="Updates, tips & opinions from the maintainers of Vue.js.">
-<meta property="twitter:domain" content="the-vue-point-with-iles.netlify.app">
-<meta property="twitter:title" content="The Vue Point">
-<meta property="twitter:description" content="Updates, tips & opinions from the maintainers of Vue.js.">
-<meta property="twitter:url" content="https://the-vue-point-with-iles.netlify.app/">
+<meta name="twitter:domain" content="the-vue-point-with-iles.netlify.app">
+<meta name="twitter:title" content="The Vue Point">
+<meta name="twitter:description" content="Updates, tips & opinions from the maintainers of Vue.js.">
+<meta name="twitter:url" content="https://the-vue-point-with-iles.netlify.app/">
 <link rel="sitemap" href="https://the-vue-point-with-iles.netlify.app/sitemap.xml">
 <meta property="generator" content="îles">
 <script async>console.log("Powered by îles 🏝", "https://iles-docs.netlify.app")</script>
-<meta property="twitter:image" content="https://vuejs.org/images/logo.png">
-<meta property="twitter:image:alt" content="Vue">
-<meta property="twitter:site" content="@vuejs">
-<meta property="twitter:card" content="summary">
+<meta name="twitter:image" content="https://vuejs.org/images/logo.png">
+<meta name="twitter:image:alt" content="Vue">
+<meta name="twitter:site" content="@vuejs">
+<meta name="twitter:card" content="summary">
 <link rel="icon" type="image/x-icon" href="/favicon.ico">
     <link rel="stylesheet" href="/assets/default-.css">
 <link rel="stylesheet" href="/assets/app.css">
@@ -108,17 +108,17 @@ exports[`building docs site > html files 3`] = `
 <meta property="og:site_name" content="The Vue Point">
 <meta property="og:title" content="The Vue Point">
 <meta property="og:description" content="Updates, tips & opinions from the maintainers of Vue.js.">
-<meta property="twitter:domain" content="the-vue-point-with-iles.netlify.app">
-<meta property="twitter:title" content="The Vue Point">
-<meta property="twitter:description" content="Updates, tips & opinions from the maintainers of Vue.js.">
-<meta property="twitter:url" content="https://the-vue-point-with-iles.netlify.app/posts/1.html">
+<meta name="twitter:domain" content="the-vue-point-with-iles.netlify.app">
+<meta name="twitter:title" content="The Vue Point">
+<meta name="twitter:description" content="Updates, tips & opinions from the maintainers of Vue.js.">
+<meta name="twitter:url" content="https://the-vue-point-with-iles.netlify.app/posts/1.html">
 <link rel="sitemap" href="https://the-vue-point-with-iles.netlify.app/sitemap.xml">
 <meta property="generator" content="îles">
 <script async>console.log("Powered by îles 🏝", "https://iles-docs.netlify.app")</script>
-<meta property="twitter:image" content="https://vuejs.org/images/logo.png">
-<meta property="twitter:image:alt" content="Vue">
-<meta property="twitter:site" content="@vuejs">
-<meta property="twitter:card" content="summary">
+<meta name="twitter:image" content="https://vuejs.org/images/logo.png">
+<meta name="twitter:image:alt" content="Vue">
+<meta name="twitter:site" content="@vuejs">
+<meta name="twitter:card" content="summary">
 <link rel="icon" type="image/x-icon" href="/favicon.ico">
     <link rel="stylesheet" href="/assets/default-.css">
 <link rel="stylesheet" href="/assets/app.css">
@@ -147,17 +147,17 @@ exports[`building docs site > html files 4`] = `
 <meta property="og:site_name" content="The Vue Point">
 <meta property="og:title" content="The Vue Point">
 <meta property="og:description" content="Updates, tips & opinions from the maintainers of Vue.js.">
-<meta property="twitter:domain" content="the-vue-point-with-iles.netlify.app">
-<meta property="twitter:title" content="The Vue Point">
-<meta property="twitter:description" content="Updates, tips & opinions from the maintainers of Vue.js.">
-<meta property="twitter:url" content="https://the-vue-point-with-iles.netlify.app/posts/2.html">
+<meta name="twitter:domain" content="the-vue-point-with-iles.netlify.app">
+<meta name="twitter:title" content="The Vue Point">
+<meta name="twitter:description" content="Updates, tips & opinions from the maintainers of Vue.js.">
+<meta name="twitter:url" content="https://the-vue-point-with-iles.netlify.app/posts/2.html">
 <link rel="sitemap" href="https://the-vue-point-with-iles.netlify.app/sitemap.xml">
 <meta property="generator" content="îles">
 <script async>console.log("Powered by îles 🏝", "https://iles-docs.netlify.app")</script>
-<meta property="twitter:image" content="https://vuejs.org/images/logo.png">
-<meta property="twitter:image:alt" content="Vue">
-<meta property="twitter:site" content="@vuejs">
-<meta property="twitter:card" content="summary">
+<meta name="twitter:image" content="https://vuejs.org/images/logo.png">
+<meta name="twitter:image:alt" content="Vue">
+<meta name="twitter:site" content="@vuejs">
+<meta name="twitter:card" content="summary">
 <link rel="icon" type="image/x-icon" href="/favicon.ico">
     <link rel="stylesheet" href="/assets/default-.css">
 <link rel="stylesheet" href="/assets/app.css">
@@ -184,17 +184,17 @@ exports[`building docs site > html files 5`] = `
 <meta property="og:site_name" content="The Vue Point">
 <meta property="og:title" content="Reflections for 2020-2021 · The Vue Point">
 <meta property="og:description" content="Updates, tips & opinions from the maintainers of Vue.js.">
-<meta property="twitter:domain" content="the-vue-point-with-iles.netlify.app">
-<meta property="twitter:title" content="Reflections for 2020-2021 · The Vue Point">
-<meta property="twitter:description" content="Updates, tips & opinions from the maintainers of Vue.js.">
-<meta property="twitter:url" content="https://the-vue-point-with-iles.netlify.app/posts/hello-2021.html">
+<meta name="twitter:domain" content="the-vue-point-with-iles.netlify.app">
+<meta name="twitter:title" content="Reflections for 2020-2021 · The Vue Point">
+<meta name="twitter:description" content="Updates, tips & opinions from the maintainers of Vue.js.">
+<meta name="twitter:url" content="https://the-vue-point-with-iles.netlify.app/posts/hello-2021.html">
 <link rel="sitemap" href="https://the-vue-point-with-iles.netlify.app/sitemap.xml">
 <meta property="generator" content="îles">
 <script async>console.log("Powered by îles 🏝", "https://iles-docs.netlify.app")</script>
-<meta property="twitter:image" content="https://vuejs.org/images/logo.png">
-<meta property="twitter:image:alt" content="Vue">
-<meta property="twitter:site" content="@vuejs">
-<meta property="twitter:card" content="summary">
+<meta name="twitter:image" content="https://vuejs.org/images/logo.png">
+<meta name="twitter:image:alt" content="Vue">
+<meta name="twitter:site" content="@vuejs">
+<meta name="twitter:card" content="summary">
 <link rel="icon" type="image/x-icon" href="/favicon.ico">
     <link rel="stylesheet" href="/assets/default-.css">
 <link rel="stylesheet" href="/assets/app.css">
@@ -256,17 +256,17 @@ exports[`building docs site > html files 6`] = `
 <meta property="og:site_name" content="The Vue Point">
 <meta property="og:title" content="Vue 3.2 Released! · The Vue Point">
 <meta property="og:description" content="Updates, tips & opinions from the maintainers of Vue.js.">
-<meta property="twitter:domain" content="the-vue-point-with-iles.netlify.app">
-<meta property="twitter:title" content="Vue 3.2 Released! · The Vue Point">
-<meta property="twitter:description" content="Updates, tips & opinions from the maintainers of Vue.js.">
-<meta property="twitter:url" content="https://the-vue-point-with-iles.netlify.app/posts/vue-3-2.html">
+<meta name="twitter:domain" content="the-vue-point-with-iles.netlify.app">
+<meta name="twitter:title" content="Vue 3.2 Released! · The Vue Point">
+<meta name="twitter:description" content="Updates, tips & opinions from the maintainers of Vue.js.">
+<meta name="twitter:url" content="https://the-vue-point-with-iles.netlify.app/posts/vue-3-2.html">
 <link rel="sitemap" href="https://the-vue-point-with-iles.netlify.app/sitemap.xml">
 <meta property="generator" content="îles">
 <script async>console.log("Powered by îles 🏝", "https://iles-docs.netlify.app")</script>
-<meta property="twitter:image" content="https://vuejs.org/images/logo.png">
-<meta property="twitter:image:alt" content="Vue">
-<meta property="twitter:site" content="@vuejs">
-<meta property="twitter:card" content="summary">
+<meta name="twitter:image" content="https://vuejs.org/images/logo.png">
+<meta name="twitter:image:alt" content="Vue">
+<meta name="twitter:site" content="@vuejs">
+<meta name="twitter:card" content="summary">
 <link rel="icon" type="image/x-icon" href="/favicon.ico">
     <link rel="stylesheet" href="/assets/default-.css">
 <link rel="stylesheet" href="/assets/app.css">
@@ -361,17 +361,17 @@ exports[`building docs site > html files 7`] = `
 <meta property="og:site_name" content="The Vue Point">
 <meta property="og:title" content="Announcing Vue 3.0 &quot;One Piece&quot; · The Vue Point">
 <meta property="og:description" content="Updates, tips & opinions from the maintainers of Vue.js.">
-<meta property="twitter:domain" content="the-vue-point-with-iles.netlify.app">
-<meta property="twitter:title" content="Announcing Vue 3.0 &quot;One Piece&quot; · The Vue Point">
-<meta property="twitter:description" content="Updates, tips & opinions from the maintainers of Vue.js.">
-<meta property="twitter:url" content="https://the-vue-point-with-iles.netlify.app/posts/vue-3-one-piece.html">
+<meta name="twitter:domain" content="the-vue-point-with-iles.netlify.app">
+<meta name="twitter:title" content="Announcing Vue 3.0 &quot;One Piece&quot; · The Vue Point">
+<meta name="twitter:description" content="Updates, tips & opinions from the maintainers of Vue.js.">
+<meta name="twitter:url" content="https://the-vue-point-with-iles.netlify.app/posts/vue-3-one-piece.html">
 <link rel="sitemap" href="https://the-vue-point-with-iles.netlify.app/sitemap.xml">
 <meta property="generator" content="îles">
 <script async>console.log("Powered by îles 🏝", "https://iles-docs.netlify.app")</script>
-<meta property="twitter:image" content="https://vuejs.org/images/logo.png">
-<meta property="twitter:image:alt" content="Vue">
-<meta property="twitter:site" content="@vuejs">
-<meta property="twitter:card" content="summary">
+<meta name="twitter:image" content="https://vuejs.org/images/logo.png">
+<meta name="twitter:image:alt" content="Vue">
+<meta name="twitter:site" content="@vuejs">
+<meta name="twitter:card" content="summary">
 <link rel="icon" type="image/x-icon" href="/favicon.ico">
     <link rel="stylesheet" href="/assets/default-.css">
 <link rel="stylesheet" href="/assets/app.css">
