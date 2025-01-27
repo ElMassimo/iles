@@ -17,7 +17,7 @@ import { resolveProps } from './props'
 
 const newApp = import.meta.env.SSR ? createSSRApp : createClientApp
 
-function createRouter (base: string | undefined, routerOptions: Partial<RouterOptions>) {
+function createRouter(base: string | undefined, routerOptions: Partial<RouterOptions>) {
   if (base === '/') base = undefined
 
   return createVueRouter({
@@ -78,7 +78,14 @@ export const createApp: CreateAppFactory = async (options = {}) => {
   // Apply any configuration added by the user in app.ts
   // if (headConfig) useHead(ref(typeof headConfig === 'function' ? headConfig(context) : headConfig))
   if (headConfig) head.push(ref(typeof headConfig === 'function' ? headConfig(context) : headConfig))
-  if (enhanceApp) await enhanceApp(context)
+
+  // enhanceIslands is called on the shell app during development otherwise user will have to duplicate `app.use(pinia)` in both enhanceIslands and enhanceApp
+  if (enhanceIslands) {
+    await enhanceIslands({ app })
+  }
+  if (enhanceApp) {
+    await enhanceApp(context)
+  }
   await installMDXComponents(context, userApp)
 
   return context
