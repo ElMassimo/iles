@@ -81,6 +81,7 @@
     "mico-spinner": "^1.4.0",
     "micromatch": "^4.0.7",
     "minimist": "^1.2.8",
+    "parse5": "^7.2.1",
     "pathe": "^1.1.2",
     "picocolors": "^1.0.1",
     "unist-util-visit": "^5.0.0",

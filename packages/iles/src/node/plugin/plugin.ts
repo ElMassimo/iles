@@ -2,6 +2,7 @@ import { promises as fs } from 'fs'
 import { basename, resolve, relative } from 'pathe'
 import type { PluginOption, ResolvedConfig, ViteDevServer } from 'vite'
 import { transformWithEsbuild } from 'vite'
+import { getUserShell } from './html';
 
 import MagicString from 'magic-string'
 
@@ -17,19 +18,19 @@ import { detectMDXComponents } from './markdown'
 import { autoImportComposables, writeComposablesDTS } from './composables'
 import documents from './documents'
 
-function isMarkdown (path: string) {
+function isMarkdown(path: string) {
   return path.endsWith('.mdx') || path.endsWith('.md')
 }
 
-function isSFCMain (path: string, query: Record<string, any>) {
+function isSFCMain(path: string, query: Record<string, any>) {
   return path.endsWith('.vue') && query.vue === undefined
 }
 
-function isVueScript (path: string, query: Record<string, any>) {
+function isVueScript(path: string, query: Record<string, any>) {
   return path.endsWith('.vue') && (!query.type || query.type === 'script')
 }
 
-async function transformUserFile (path: string) {
+async function transformUserFile(path: string) {
   return await exists(path)
     ? await transformWithEsbuild(await fs.readFile(path, 'utf-8'), path, { sourcemap: false })
     : { code: 'export default {}' }
@@ -38,7 +39,7 @@ async function transformUserFile (path: string) {
 const templateLayoutRegex = /<template.*?\slayout=\s*['"](\w+)['"].*?>/
 
 // Public: Configures MDX, Vue, Components, and Islands plugins.
-export default function IslandsPlugins (appConfig: AppConfig): PluginOption[] {
+export default function IslandsPlugins(appConfig: AppConfig): PluginOption[] {
   debug.config(appConfig)
 
   let base: ResolvedConfig['base']
@@ -53,7 +54,7 @@ export default function IslandsPlugins (appConfig: AppConfig): PluginOption[] {
 
   const plugins = appConfig.namedPlugins
 
-  function isLayout (path: string) {
+  function isLayout(path: string) {
     return path.includes(appConfig.layoutsDir)
   }
 
@@ -61,7 +62,7 @@ export default function IslandsPlugins (appConfig: AppConfig): PluginOption[] {
     {
       name: 'iles',
       enforce: 'pre',
-      async configResolved (config) {
+      async configResolved(config) {
         if (base) return
         base = config.base
         root = config.root
@@ -74,7 +75,7 @@ export default function IslandsPlugins (appConfig: AppConfig): PluginOption[] {
         const result = await transformUserFile(appPath)
         detectMDXComponents(result.code, appConfig, undefined)
       },
-      async resolveId (id) {
+      async resolveId(id) {
         if (id === ILES_APP_ENTRY)
           return APP_PATH
 
@@ -87,7 +88,7 @@ export default function IslandsPlugins (appConfig: AppConfig): PluginOption[] {
         // Prevent import analysis failure if the default layout doesn't exist.
         if (id === defaultLayoutPath) return resolve(root, id.slice(1))
       },
-      async load (id) {
+      async load(id) {
         if (id === APP_CONFIG_REQUEST_PATH) {
           const { base, debug, jsx, ssg: { sitemap }, siteUrl, markdown: { overrideElements = [] } } = appConfig
           const clientConfig: AppClientConfig = { base, debug, root, jsx, sitemap, siteUrl, overrideElements }
@@ -112,23 +113,39 @@ export default function IslandsPlugins (appConfig: AppConfig): PluginOption[] {
         if ((isBuild || process.env.VITEST) && id.includes(defaultLayoutPath) && !await exists(resolve(root, defaultLayoutPath.slice(1))))
           return '<template><slot/></template>'
       },
-      transform (code, id) {
+      transform(code, id) {
         if (id === APP_COMPONENT_PATH && !isBuild && appConfig.debug)
           return code.replace('const DebugPanel = () => null', () => `import DebugPanel from '${DEBUG_COMPONENT_PATH}'`)
       },
-      handleHotUpdate ({ file, server }) {
+      handleHotUpdate({ file, server }) {
         if (file === appPath) return [server.moduleGraph.getModuleById(USER_APP_REQUEST_PATH)!]
         if (file === sitePath) return [server.moduleGraph.getModuleById(USER_SITE_REQUEST_PATH)!]
       },
-      configureServer (devServer) {
+      configureServer(devServer) {
         server = devServer
         return configureMiddleware(appConfig, server, defaultLayoutPath)
       },
+      async transformIndexHtml(html, ctx) {
+        const indexHtmlFilePath = resolve(root, 'index.html')
+        if (ctx.filename === indexHtmlFilePath) {
+          // Validate user provided index.html
+          const {
+            userShell,
+            isValidUserShell,
+            errorMsgUserShell,
+          } = await getUserShell(appConfig, html)
+
+          if (!isValidUserShell) {
+            throw new Error(errorMsgUserShell)
+          }
+          return userShell
+        }
+      }
     },
     {
       name: 'iles:detect-islands-in-vue',
       enforce: 'pre',
-      async transform (code, id) {
+      async transform(code, id) {
         const { path, query } = parseId(id)
 
         if (query.vue !== undefined && query.type === 'script-client')
@@ -141,7 +158,7 @@ export default function IslandsPlugins (appConfig: AppConfig): PluginOption[] {
     {
       name: 'iles:layouts',
       enforce: 'pre',
-      transform (code, id) {
+      transform(code, id) {
         const { path, query } = parseId(id)
         if (!isSFCMain(path, query) || !isLayout(path)) return
         const layoutName = code.match(templateLayoutRegex)?.[1] || false
@@ -159,7 +176,7 @@ export default function IslandsPlugins (appConfig: AppConfig): PluginOption[] {
     {
       name: 'iles:composables',
       enforce: 'post',
-      async transform (code, id) {
+      async transform(code, id) {
         if (!id.startsWith(appConfig.srcDir)) return
 
         const { path, query } = parseId(id)
@@ -171,7 +188,7 @@ export default function IslandsPlugins (appConfig: AppConfig): PluginOption[] {
     {
       name: 'iles:page-data',
       enforce: 'post',
-      async transform (code, id, options) {
+      async transform(code, id, options) {
         const { path, query } = parseId(id)
         const isMdx = isMarkdown(path)
         if (!isMdx && !isVueScript(path, query)) return
@@ -231,7 +248,7 @@ export default function IslandsPlugins (appConfig: AppConfig): PluginOption[] {
       apply: 'serve',
       enforce: 'post',
       // Force a refresh for all page computed properties.
-      async transform (code, id) {
+      async transform(code, id) {
         const { path } = parseId(id)
         if (isLayout(path) || plugins.pages.api.isPage(path)) {
           return `${code}
@@ -243,7 +260,7 @@ import.meta.hot?.accept('/${relative(root, path)}', (...args) => __ILES_PAGE_UPD
 
     appConfig.jsx === 'preact' && {
       name: 'iles:preact-jsx-config',
-      config () {
+      config() {
         return { esbuild: { include: /\.(tsx?|jsx)$/ } }
       },
     },
@@ -252,7 +269,7 @@ import.meta.hot?.accept('/${relative(root, path)}', (...args) => __ILES_PAGE_UPD
 
 // Internal: Inspect the code definition for a Vue SFC to locate the place where
 // the SFC is defined, in order to inject additional data.
-function indexOfVueComponentDefinition (code: string) {
+function indexOfVueComponentDefinition(code: string) {
   let sfcConstIndex = code.indexOf('const _sfc_main = ')
 
   if (sfcConstIndex === -1)
