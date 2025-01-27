@@ -5,6 +5,7 @@ import headings from '@islands/headings'
 import icons from '@islands/icons'
 import prism from '@islands/prism'
 import pwa from '@islands/pwa'
+import excerpt from '@islands/excerpt'
 import reactivityTransform from '@vue-macros/reactivity-transform/vite'
 
 import UnoCSS from 'unocss/vite'
@@ -16,6 +17,13 @@ const { title, description } = site
 
 export default defineConfig({
   siteUrl: 'https://iles-docs.netlify.app',
+
+  extendFrontmatter(frontmatter, filename) {
+    if (filename.includes('/recipes/') && !filename.includes('/recipes/index.vue')) {
+      frontmatter.layout = 'recipe'
+    }
+  },
+
   turbo: true,
   jsx: 'preact',
   debug: false,
@@ -23,6 +31,7 @@ export default defineConfig({
     headings(),
     icons(),
     prism(),
+    excerpt({ maxLength: 140 }),
     lastUpdated(),
     pwa({
       manifestFilename: 'pwa-manifest.json',

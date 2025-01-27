@@ -1,5 +1,5 @@
 <script client:load lang="ts">
-import { OnLoadFn } from 'iles'
+import type { OnLoadFn } from 'iles'
 import { registerSW } from 'virtual:pwa-register'
 
 let refreshSW: ((reloadPage?: boolean) => Promise<void>) | undefined

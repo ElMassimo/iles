@@ -19,6 +19,7 @@
   "devDependencies": {
     "@iconify-json/bx": "^1.1.10",
     "@iconify-json/heroicons-outline": "^1.1.10",
+    "@islands/excerpt": "workspace:*",
     "@islands/headings": "workspace:*",
     "@islands/icons": "workspace:*",
     "@islands/prism": "workspace:*",

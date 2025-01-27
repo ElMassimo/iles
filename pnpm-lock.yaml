@@ -86,6 +86,9 @@ importers:
       '@iconify-json/heroicons-outline':
         specifier: ^1.1.10
         version: 1.1.10
+      '@islands/excerpt':
+        specifier: workspace:*
+        version: link:../packages/excerpt
       '@islands/headings':
         specifier: workspace:*
         version: link:../packages/headings

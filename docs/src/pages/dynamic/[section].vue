@@ -19,5 +19,5 @@ defineProps<{ message: string }>()
 <template>
   <h1>Dynamic Path Example</h1>
   <p v-html="message"/>
-  <p>Back to <a href="/guide/routing#getstaticpaths">Routing</a>.</p>
+  <p>Back to <a href="/guide/routing#generating-dynamic-routes">Routing</a>.</p>
 </template>
