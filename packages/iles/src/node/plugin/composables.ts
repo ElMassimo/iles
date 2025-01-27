@@ -4,12 +4,13 @@ import { uniq } from './utils'
 import { parseImports } from './parse'
 
 const definitionRegex = /(?:function|const|let|var)\s+(definePageComponent|use(?:Page|Route|Head|Documents)\b)/g
-const composableUsageRegex = /\b(definePageComponent|use(?:Page|Route|Head|Documents))\s*\(/g
+const composableUsageRegex = /\b(definePageComponent|use(?:Page|Route|Head|SeoMeta|Documents))\s*\(/g
 
 const composables = [
   'definePageComponent',
   'useDocuments',
   'useHead',
+  'useSeoMeta',
   'usePage',
   'useRoute',
 ]

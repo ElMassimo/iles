@@ -19,5 +19,9 @@
     "paths": {
       "~/*": ["src/*"]
     }
-  }
+  },
+  "include": [
+    "components.d.ts",
+    "composables.d.ts"
+  ]
 }

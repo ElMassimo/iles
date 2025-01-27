@@ -11,6 +11,7 @@ export default antfu(
         usePage: 'readonly',
         useRoute: 'readonly',
         useHead: 'readonly',
+        useSeoMeta: 'readonly',
         definePageComponent: 'readonly',
       },
     },
