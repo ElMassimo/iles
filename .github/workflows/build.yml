@@ -35,6 +35,9 @@ jobs:
       - name: Build
         run: pnpm build:all
 
+      - name: Build Blog Site
+        run: pnpm blog:build
+
       - name: Tests
         run: pnpm test
 

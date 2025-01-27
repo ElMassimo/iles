@@ -40,7 +40,7 @@ exports[`building docs site > html files 1`] = `
 <meta property="twitter:card" content="summary">
 <link rel="icon" type="image/x-icon" href="/favicon.ico">
     <link rel="stylesheet" href="/assets/default-.css">
-<link rel="stylesheet" href="/assets/app.css">
+<link rel="stylesheet" href="/assets/user-app.css">
     
   <script type="module" async src="/assets/turbo.BkUC-S31.js"></script></head>
   <body >
@@ -74,7 +74,7 @@ exports[`building docs site > html files 2`] = `
 <meta property="twitter:card" content="summary">
 <link rel="icon" type="image/x-icon" href="/favicon.ico">
     <link rel="stylesheet" href="/assets/default-.css">
-<link rel="stylesheet" href="/assets/app.css">
+<link rel="stylesheet" href="/assets/user-app.css">
     
   <script type="module" async src="/assets/turbo.BkUC-S31.js"></script></head>
   <body >
@@ -121,7 +121,7 @@ exports[`building docs site > html files 3`] = `
 <meta property="twitter:card" content="summary">
 <link rel="icon" type="image/x-icon" href="/favicon.ico">
     <link rel="stylesheet" href="/assets/default-.css">
-<link rel="stylesheet" href="/assets/app.css">
+<link rel="stylesheet" href="/assets/user-app.css">
     
   <script type="module" async src="/assets/turbo.BkUC-S31.js"></script></head>
   <body >
@@ -160,7 +160,7 @@ exports[`building docs site > html files 4`] = `
 <meta property="twitter:card" content="summary">
 <link rel="icon" type="image/x-icon" href="/favicon.ico">
     <link rel="stylesheet" href="/assets/default-.css">
-<link rel="stylesheet" href="/assets/app.css">
+<link rel="stylesheet" href="/assets/user-app.css">
     
   <script type="module" async src="/assets/turbo.BkUC-S31.js"></script></head>
   <body >
@@ -197,7 +197,7 @@ exports[`building docs site > html files 5`] = `
 <meta property="twitter:card" content="summary">
 <link rel="icon" type="image/x-icon" href="/favicon.ico">
     <link rel="stylesheet" href="/assets/default-.css">
-<link rel="stylesheet" href="/assets/app.css">
+<link rel="stylesheet" href="/assets/user-app.css">
     
   <script type="module" async src="/assets/turbo.BkUC-S31.js"></script></head>
   <body >
@@ -269,7 +269,7 @@ exports[`building docs site > html files 6`] = `
 <meta property="twitter:card" content="summary">
 <link rel="icon" type="image/x-icon" href="/favicon.ico">
     <link rel="stylesheet" href="/assets/default-.css">
-<link rel="stylesheet" href="/assets/app.css">
+<link rel="stylesheet" href="/assets/user-app.css">
     
   <script type="module" async src="/assets/turbo.BkUC-S31.js"></script></head>
   <body >
@@ -374,7 +374,7 @@ exports[`building docs site > html files 7`] = `
 <meta property="twitter:card" content="summary">
 <link rel="icon" type="image/x-icon" href="/favicon.ico">
     <link rel="stylesheet" href="/assets/default-.css">
-<link rel="stylesheet" href="/assets/app.css">
+<link rel="stylesheet" href="/assets/user-app.css">
     
   <script type="module" async src="/assets/turbo.BkUC-S31.js"></script></head>
   <body >
