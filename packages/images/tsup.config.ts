@@ -3,5 +3,5 @@ export const tsup: Options = {
   clean: true,
   dts: true,
   target: 'node20',
-  format: ['esm', 'cjs'],
+  format: ['esm'],
 }

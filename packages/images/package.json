@@ -12,12 +12,11 @@
     "dist",
     "src/Picture.vue"
   ],
-  "types": "dist/images.d.ts",
   "exports": {
     ".": {
+      "types": "./dist/images.d.ts",
       "import": "./dist/images.js",
-      "require": "./dist/images.cjs",
-      "types": "./dist/images.d.ts"
+      "require": "./src/images.cjs"
     },
     "./package.json": "./package.json"
   },

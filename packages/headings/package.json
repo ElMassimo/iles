@@ -12,9 +12,9 @@
     "dist",
     "src"
   ],
-  "types": "dist/headings.d.ts",
   "exports": {
     ".": {
+      "types": "./dist/headings.d.ts",
       "import": "./dist/headings.js",
       "require": "./src/headings.cjs"
     },

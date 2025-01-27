@@ -13,10 +13,10 @@
     "dist",
     "src"
   ],
-  "types": "dist/mdx.d.ts",
   "main": "dist/mdx.js",
   "exports": {
     ".": {
+      "types": "./dist/mdx.d.ts",
       "import": "./dist/mdx.js",
       "require": "./src/mdx.cjs"
     },
