@@ -83,6 +83,7 @@ export default defineComponent({
     const { _, ...slots } = this.$slots
     const slotVNodes = mapObject(slots, slotFn => slotFn?.())
     const hydrationPkg = `${isSSR ? '' : '/@id/'}@islands/hydration`
+    const userAppPkg = `${isSSR ? '@islands/user-app' : '/@id/virtual:user-app'}`
     let renderedSlots: Record<string, string>
 
     const renderSlots = async () =>
@@ -94,13 +95,16 @@ export default defineComponent({
       const frameworkPath = `${hydrationPkg}/${this.framework}`
 
       return `import { ${hydrationFns[this.strategy]} as hydrate } from '${hydrationPkg}'
+import userApp from '${userAppPkg}'
+
+const { enhanceIslands } = userApp
 ${isEager(this.strategy)
     ? `import framework from '${frameworkPath}'
 import { ${this.importName} as component } from '${componentPath}'`
     : `const framework = async () => (await import('${frameworkPath}')).default
 const component = async () => (await import('${componentPath}')).${this.importName}`
 }
-hydrate(framework, component, '${this.id}', ${serialize(props)}, ${serialize(slots)})
+hydrate(framework, component, '${this.id}', ${serialize(props)}, ${serialize(slots)}, enhanceIslands)
   `
     }
 

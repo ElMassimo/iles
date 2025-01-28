@@ -1,4 +1,4 @@
-[module]: /guide/plugins
+[module]: /guide/modules#islandspwa
 [@islands/pwa]: https://github.com/ElMassimo/iles/tree/main/packages/pwa
 [vite-plugin-pwa]: https://github.com/antfu/vite-plugin-pwa
 [generateSW]: https://vite-plugin-pwa.netlify.app/workbox/generate-sw.html
@@ -6,7 +6,7 @@
 [autoUpdate]: https://vite-plugin-pwa.netlify.app/guide/auto-update.html
 [PWA configuration]: https://github.com/ElMassimo/iles/blob/main/docs/iles.config.ts
 [ReloadPrompt component]: https://github.com/ElMassimo/iles/blob/main/docs/src/components/ReloadPrompt.vue
-[client script block]: /guide/client-scripts
+[client script block]: /guide/islands#client-script-block
 [@userquin]: https://twitter.com/userquin
 
 # Progressive Web Application (PWA)
@@ -21,7 +21,7 @@ import pwa from '@islands/pwa'
 
 export default defineConfig({
   modules: [
-    pwa(options),
+    pwa(/* options */),
   ],
 })
 ```

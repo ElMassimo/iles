@@ -8,7 +8,6 @@
   },
   "main": "./dist/node/index.js",
   "module": "./dist/node/index.js",
-  "types": "./types/index.d.ts",
   "exports": {
     ".": {
       "types": "./types/index.d.ts",
@@ -81,17 +80,19 @@
     "mico-spinner": "^1.4.0",
     "micromatch": "^4.0.7",
     "minimist": "^1.2.8",
+    "parse5": "^7.2.1",
     "pathe": "^1.1.2",
     "picocolors": "^1.0.1",
     "unist-util-visit": "^5.0.0",
+    "unplugin-auto-import": "^19.0.0",
     "unplugin-vue-components": "^0.27.3",
-    "vite": "^5.4.10",
+    "vite": "6.0.11",
     "vue": "^3.5.12",
     "vue-router": "^4.4.0"
   },
   "devDependencies": {
     "@preact/preset-vite": "^2.9.1",
-    "@sveltejs/vite-plugin-svelte": "^4.0.0",
+    "@sveltejs/vite-plugin-svelte": "^4.0.4",
     "@types/debug": "^4.1.12",
     "@types/fs-extra": "^11.0.4",
     "@types/micromatch": "^4.0.9",

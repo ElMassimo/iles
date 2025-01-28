@@ -1,7 +1,4 @@
 <script setup lang="ts">
-import { usePage } from 'iles'
-import { getPosts } from '~/logic/posts'
-
 const posts = $(getPosts())
 
 const { page } = $(usePage())

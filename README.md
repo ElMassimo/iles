@@ -34,8 +34,8 @@
 
 [blog]: https://the-vue-point-with-iles.netlify.app/
 
-[partial hydration]: https://iles-docs.netlify.app/guide/hydration
-[Batteries Included]: https://iles-docs.netlify.app/guide/development#components
+[partial hydration]: https://iles-docs.netlify.app/guide/islands
+[Batteries Included]: https://iles-docs.netlify.app/guide/project-structure#components
 [Multi-Framework]: https://iles-docs.netlify.app/guide/frameworks
 [markdown]: https://iles-docs.netlify.app/guide/markdown
 [routing]: https://iles-docs.netlify.app/guide/routing
@@ -96,5 +96,5 @@ Visit the [documentation website][docs] to check out the [guides][guide] and sea
 [VitePress]: https://vitepress.vuejs.org/
 [vite-ssg]: https://github.com/antfu/vite-ssg
 [vue-router]: https://next.router.vuejs.org/
-[@unhead/vue]: https://github.com/unjs/unhead
+[@unhead/vue]: https://unhead.unjs.io/
 

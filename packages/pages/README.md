@@ -20,7 +20,7 @@
 
 [îles]: https://github.com/ElMassimo/iles
 [docs]: https://iles-docs.netlify.app
-[pages]: https://iles-docs.netlify.app/guide/development#pages
+[pages]: https://iles-docs.netlify.app/guide/project-structure#pages
 [frontmatter]: /guide/markdown#frontmatter-and-meta
 [routing]: https://iles-docs.netlify.app/guide/routing
 [vite-plugin-pages]: https://github.com/hannoeru/vite-plugin-pages

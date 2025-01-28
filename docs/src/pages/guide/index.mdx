@@ -1,6 +1,7 @@
 [introduction]: /guide/introduction
 [configuration reference]: /config
 [starter]: https://github.com/ElMassimo/create-iles
+[recipes]: /recipes
 
 # Getting Started
 
@@ -18,38 +19,84 @@ import stackblitzSrc from '/images/stackblitz.svg'
 
 ## Installation 💿
 
-Run the following command to create a new îles project.
+Run the following command to create a new îles project using the [starter] template. Then, follow the [usage](#usage) section.
 
 ```bash
-pnpm create iles@next # or npm or yarn
+npm create -D iles@latest # or pnpm, yarn, bun
 ```
 
-The [starter] comes with Vue components and examples. Once you have installed
-all dependencies, give it a try by running <kbd>npm run dev</kbd> to start the
-development server.
+## Add îles to an Existing Project 💙 
 
-Alternatively, add `iles` to your `package.json` in an existing project.
+Add îles to your existing Vite-powered project using the following command:
+
+```bash
+npm add -D iles@latest # or pnpm, yarn, bun
+```
+
+îles serves pages from the `src/pages` folder, so ensure your pages are located there. They must be in one of the supported formats: `.vue`, `.md`, or `.mdx`. For example,
+
+<div class="language-tree">
+<pre class="code">
+<code>
+<kbd class="-ml-2">src/</kbd>
+  ├── <kbd>pages/</kbd>
+  │    ├── index.vue
+  │    └── about.md 
+  │    └── posts/
+  │         ├── intro.mdx
+  │         └── our-story.mdx
+  
+</code>
+</pre>
+</div>
+
+Now, follow the next [usage](#usage) section. Also explore the [recipes] page to learn through examples.
 
 ## Usage 🚀
 
-The `iles` executable provides the following commands:
-
-- <kbd>iles dev</kbd>: Starts the development server
-- <kbd>iles build</kbd>: Creates a production build of the site
-- <kbd>iles preview</kbd>: Preview the site after building
-
-The following shortcuts are added by default when using the [starter]:
+Add the iles executables to the `scripts` section of your `package.json` if it's not already there.
 
 ```json
   "scripts": {
-    "dev": "iles dev --open",
+    "dev": "iles dev",
     "build": "iles build",
-    "preview": "iles preview --open"
+    "preview": "iles preview --open",
+    "now": "npm run build && npm run preview"
   },
 ```
 
-- <kbd>npm run dev</kbd>: Starts the development server
-- <kbd>npm run build</kbd>: Creates a production build of the site
-- <kbd>npm run preview</kbd>: Preview the site after building
+From your terminal or integrated terminal of your editor (Visual Studio Code),
+
+### Install your dependencies:
+
+```bash
+npm install # or pnpm, yarn, bun
+```
+
+### Start your development server:
+
+```bash
+npm run dev # or pnpm, yarn, bun
+```
+
+### Build for production:
+
+Generates the final output (by default, `dist` folder).
+
+```bash
+npm run build # or pnpm, yarn, bun
+```
+
+### Preview your site locally after building:
+
+```bash
+npm run preview # or pnpm, yarn, bun
+```
+
+### Alternatively, Build and Preview with a single command:
+
+```bash
+npm run now # or pnpm, yarn, bun
+```
 
 <Contact/>

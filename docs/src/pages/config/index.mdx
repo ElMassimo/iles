@@ -2,22 +2,28 @@
 sidebar: auto
 ---
 
-[pages]: /guide/pages
-[plugins]: /guide/plugins
-[Vite's plugins]: https://vitejs.dev/plugins/
+[pages]: /guide/routing
+[modules]: /guide/modules
+[Vite's plugins]: https://vitejs.dev/modules/
 [config reference]: https://vitejs.dev/config/
 
-[site]: /guide/development#site
-[meta tags]: /guide/meta-tags
-[sitemap]: /guide/development#sitemap
+[site]: /guide/project-structure#site
+[meta tags]: /guide/head-and-meta
+[sitemap]: /guide/project-structure#sitemap
 
-[shortcodes]: /guide/markdown#advanced-provide-components-shortcodes
 [deployment]: /guide/deployment 
 [VitePress]: /faqs#vitepress
 [turbo]: /guide/turbo
 [documents]: /guide/documents
 [drafts]: /guide/markdown
 [useDocuments]: /guide/documents
+
+[vue-router]: https://next.router.vuejs.org/
+[@unhead/vue]: https://unhead.unjs.io/setup/vue/installation
+
+[@vitejs/plugin-vue]: https://github.com/vitejs/vite-plugin-vue/tree/main/packages/plugin-vue#options
+[unplugin-vue-components]: https://github.com/unplugin/unplugin-vue-components#configuration
+[unplugin-auto-import]: https://github.com/unplugin/unplugin-auto-import#configuration
 
 # Configuration
 
@@ -41,14 +47,14 @@ export default defineConfig({
 })
 ```
 
-> Visit the _[Plugins]_ section for more details about the [pre-configured Vite.js plugins](/guide/plugins#vite-plugins).
+> Visit the [_Modules and Plugins_][modules] guide for more details about the [pre-configured Vite.js plugins](/guide/modules#vite-plugins).
 
 ## Configuring <span class="hidden" aria-hidden="true">îles</span> <Iles heading/>
 
 You may provide an `iles.config.ts` configuration file to customize settings
 related to markdown, component resolution, and other îles-specific features.
 
-You can leverage your IDE's intellisense with jsdoc type hints or use the `defineConfig` helper:
+You can leverage your IDE's intellisense by using the `defineConfig` helper:
 
 ```ts
 import { defineConfig } from 'iles'
@@ -74,7 +80,97 @@ By default drafts will be displayed during development, but will be excluded whe
 
 - **Type:** `IlesModuleOption[]`
 
-<Iles/> modules to apply in the site. [Read the _Plugins and Modules_ guide][plugins].
+<Iles/> modules to apply in the site. Read the [_Modules and Plugins_][modules] guide.
+
+### `vue`
+
+- **Type:** `object`
+- **Default:** 
+
+```ts
+vue: {
+  template: {
+    compilerOptions: {},
+  },
+}
+```
+
+Provides support for Single File Components with Vue 3.
+
+To customize, refer to [@vitejs/plugin-vue].
+
+### `autoImport`
+
+- **Type:** `object`
+- **Default:** 
+
+```ts
+autoImport: {
+  dts: true,
+  include: [
+    /\.[tj]sx?$/, // .ts, .tsx, .js, .jsx
+    /\.vue$/,
+    /\.vue\?vue/, // .vue
+    /\.md$/, // .md
+    /\.mdx$/, // .mdx
+    /\.svelte$/, // .svelte
+  ],
+  imports: [
+    'vue',
+    // 'vue-i18n',
+    // 'vue/macros',
+    unheadVueComposablesImports,
+    // '@vueuse/core',
+    // 'pinia',
+    {
+      iles: [
+        'usePage',
+        'useRoute',
+        'definePageComponent',
+        'useDocuments',
+      ],
+    }
+  ],
+  dirs: [
+    // 'src/hooks',
+    'src/composables', // only root modules
+    // 'src/composables/**', // all nested modules
+    // 'src/utils',
+    // 'src/stores',
+  ],
+  vueTemplate: true,
+  resolvers: [
+    /* ... */
+  ],
+}
+```
+
+Enables auto-importing APIs on-demand, and is leveraged internally to support automatic import of APIs and composables from `vue`, `@unhead/vue` and from the users's `src/composables` folder. 
+
+To customize, refer to [unplugin-auto-import].
+
+### `components`
+
+- **Type:** `object`
+- **Default:** 
+
+```ts
+components: {
+  dts: true,
+  extensions: ['vue', 'jsx', 'tsx', 'js', 'ts', 'mdx', 'svelte'],
+  include: [/\.vue$/, /\.vue\?vue/, /\.mdx?/],
+  dirs: `${srcDir}/components`,
+  resolvers: [
+    IlesComponentResolver,
+    IlesLayoutResolver(appConfig),
+  ],
+  transformer: 'vue3',
+}
+```
+
+Enables auto-importing Vue components, and is leveraged internally to support automatic component resolution in MDX files. 
+
+To customize, refer to [unplugin-vue-components].
 
 ### `turbo` (experimental)
 
@@ -156,83 +252,6 @@ When set, it is exposed as `site.url` and `site.canonical`.
 
 Whether to output more information about islands and hydration in development.
 
-## Your App
-
-<Iles/> will pre-configure a Vue 3 app that will load any [pages] defined in the
-site.
-
-You may provide additional configuration in `src/app.ts`, and leverage
-intellisense by using the `defineApp` helper.
-
-```ts
-import { defineApp } from 'iles'
-
-export default defineApp({
-  head ({ frontmatter, site }) {
-    return {
-      meta: [
-        { property: 'author', content: site.author },
-        { property: 'keywords', content: computed(() => frontmatter.tags) },
-      ]
-    }
-  },
-  enhanceApp ({ app, head, router }) {
-    // Configure the app to add plugins.
-  },
-  router: {
-    scrollBehavior (current, previous, savedPosition) {
-      // Configure the scroll behavior
-    }, 
-  },
-})
-```
-
-### `head`
-
-- **Type:** `HeadObject | (context: AppContext) => HeadObject`
-
-Set the page title, meta tags, additional CSS, or scripts using [`@unhead/vue`][@unhead/vue].
-
-### `enhanceApp`
-
-- **Type:** `(context: AppContext) => Promise<void>`
-
-A hook where you can add plugins to the Vue app, or do anything else prior to
-the app being mounted.
-
-### `mdxComponents`
-
-- **Type:** `MDXComponents | (context: AppContext) => MDXComponents`
-
-Provide an object that [maps tag names in MDX to components][shortcodes] to render.
-
-```ts
-import { defineApp } from 'iles'
-import Image from '~/components/Image.vue'
-
-export default defineApp({
-  mdxComponents: {
-    b: 'strong',
-    img: Image,
-  },
-})
-```
-
-### `router`
-
-- **Type:** `RouterOptions`
-
-Configure [`vue-router`][vue-router] by providing options such as `scrollBehavior` and `linkActiveClass`.
-
-### `socialTags`
-
-- **Type:** `boolean`
-- **Default:** `true`
-
-Some social tags can be inferred from the <kbd>[site]</kbd>.
-
-Set it to `false` to avoid adding social tags such as `og:title` and `twitter:description`.
-
 ## `iles.config.ts` Example
 
 ```ts
@@ -263,8 +282,3 @@ export default defineConfig({
   },
 })
 ```
-
-
-[vue-router]: https://next.router.vuejs.org/
-[@unhead/vue]: https://github.com/@unhead/vue
-[site]: #the-site

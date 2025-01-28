@@ -5,6 +5,7 @@ import headings from '@islands/headings'
 import icons from '@islands/icons'
 import prism from '@islands/prism'
 import pwa from '@islands/pwa'
+import excerpt from '@islands/excerpt'
 import reactivityTransform from '@vue-macros/reactivity-transform/vite'
 
 import UnoCSS from 'unocss/vite'
@@ -16,6 +17,13 @@ const { title, description } = site
 
 export default defineConfig({
   siteUrl: 'https://iles-docs.netlify.app',
+
+  extendFrontmatter(frontmatter, filename) {
+    if (filename.includes('/recipes/') && !filename.includes('/recipes/index.vue')) {
+      frontmatter.layout = 'recipe'
+    }
+  },
+
   turbo: true,
   jsx: 'preact',
   debug: false,
@@ -23,6 +31,7 @@ export default defineConfig({
     headings(),
     icons(),
     prism(),
+    excerpt({ maxLength: 140 }),
     lastUpdated(),
     pwa({
       manifestFilename: 'pwa-manifest.json',
@@ -59,11 +68,27 @@ export default defineConfig({
   ],
   markdown: {
     rehypePlugins: [
-      'rehype-external-links',
+      [
+        'rehype-external-links',
+        {
+          target: '_blank',
+          rel: ['noopener'],
+          test: (node: any) => /^https?:\/\//.test(node.properties.href),
+        },
+      ],
+    ],
+  },
+  autoImport: {
+    imports: [
+      '@vueuse/core', // auto-import composables from library
+    ],
+    dirs: [
+      // 'src/composables', // already added by Îles
+      'src/logic', // auto-import composables from `src/logic` folder
     ],
   },
   ssg: {
-    manualChunks (id, api) {
+    manualChunks(id, api) {
       if (id.includes('preact') || id.includes('algolia') || id.toLowerCase().includes('docsearch'))
         return 'docsearch'
     },

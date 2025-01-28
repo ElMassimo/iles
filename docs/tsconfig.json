@@ -3,7 +3,7 @@
     "baseUrl": ".",
     "module": "esnext",
     "target": "esnext",
-    "moduleResolution": "node",
+    "moduleResolution": "bundler",
     "allowJs": true,
     "jsx": "preserve",
     "jsxFactory": "h",
@@ -22,6 +22,12 @@
       "~/*": ["src/*"]
     }
   },
+  "include": [
+    "src/**/*",
+    "auto-imports.d.ts",
+    "components.d.ts",
+    "composables.d.ts"
+  ],
   "exclude": [
     "node_modules/cypress"
   ]

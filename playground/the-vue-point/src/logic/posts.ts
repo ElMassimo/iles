@@ -1,5 +1,4 @@
 import type { Document, PageComponent } from 'iles'
-import { computed } from 'vue'
 
 export interface Post extends PageComponent {
   date: Date

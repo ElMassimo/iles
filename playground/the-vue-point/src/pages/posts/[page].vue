@@ -1,7 +1,4 @@
 <script lang="ts">
-import { definePageComponent } from 'iles'
-import { getPosts } from '~/logic/posts'
-import { paginate } from '~/logic/pagination'
 
 export default definePageComponent({
   getStaticPaths () {

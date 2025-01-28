@@ -22,8 +22,8 @@
 [docs]: https://iles-docs.netlify.app
 [markdown]: https://iles-docs.netlify.app/guide/markdown
 
-[pageData]: https://iles-docs.netlify.app/guide/development#using-page-data
-[SEO tags]: https://iles-docs.netlify.app/guide/meta-tags
+[pageData]: https://iles-docs.netlify.app/guide/project-structure#using-page-data
+[SEO tags]: https://iles-docs.netlify.app/guide/head-and-meta
 [RSS feeds]: https://iles-docs.netlify.app/guide/rss
 
 An [îles] module to extract an excerpt from [MDX documents][markdown]:

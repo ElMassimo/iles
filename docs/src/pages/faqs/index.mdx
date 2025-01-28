@@ -3,18 +3,20 @@
 [MDX]: https://github.com/mdx-js/mdx
 [Astro]: https://docs.astro.build/core-concepts/component-hydration
 [VitePress]: https://vitepress.vuejs.org/
-[vite-ssg]: https://github.com/antfu/vite-ssg
+[Vite-SSG]: https://github.com/antfu-collective/vite-ssg
 [vite-plugin-pages]: https://github.com/hannoeru/vite-plugin-pages
 [unplugin-vue-components]: https://github.com/antfu/unplugin-vue-components
+[unplugin-auto-import]: https://github.com/unplugin/unplugin-auto-import
 
 [frameworks]: /guide/frameworks
-[hydration]: /guide/hydration
-[islands]: https://jasonformat.com/islands-architecture/
+[islands]: /guide/islands
 
 [manually]: https://github.com/ElMassimo/iles/blob/main/playground/the-vue-point/src/pages/posts/%5Bpage%5D.vue
 [podcast]: https://dev.to/viewsonvue/islands-architecture-in-vue-with-maximo-mussini-vue-170
 
 [prettyUrls]: /config#prettyurls
+[vue-router]: https://next.router.vuejs.org/
+[@unhead/vue]: https://unhead.unjs.io/setup/vue/installation
 
 # FAQs
 
@@ -52,16 +54,16 @@ Would like to hear more? [Listen to this recent podcast][podcast].
 Love VitePress! Highly recommend it for most documentation websites. This site
 uses <Iles/> mostly for dogfooding purposes.
 
-The main difference is that <Iles/> supports [partial hydration][hydration], so
+The main difference is that <Iles/> supports [partial hydration][islands], so
 you can ship JS only for the interactive parts of the page. Currently, partial
 hydration in VitePress is a manual process, and its default mode is targeted at
 building single-page applications.
 
 VitePress has an MPA mode to strip away all JS. In <Iles/> that happens
-automatically if you don't use [hydration directives][hydration].
+automatically if you don't use [hydration directives][islands].
 
 <Tip>
-Use VitePress if you are building a documentation website, don't need [partial hydration][hydration], or if it has to be a single-page application.
+Use VitePress if you are building a documentation website, don't need [partial hydration][islands], or if it has to be a single-page application.
 </Tip>
 
 <Tip>
@@ -70,19 +72,19 @@ When migrating an existing site from VitePress to <Iles/>, you might want to dis
 
 ### [Astro] <AstroLogo/>
 
-Astro is the main inspiration for [partial hydration][hydration] in <Iles/>.
+Astro is the main inspiration for [partial hydration][islands] in <Iles/>.
 
 Now that Astro is moving to Vite.js, the differences will become smaller.
 
 The following is a list of features and differences to help you compare:
 
-- Astro uses an `.astro` file format. In <Iles small/> you use [Vue or MDX pages](/guide/development#pages)
-- <Iles small/> provides an [inspector panel](https://user-images.githubusercontent.com/1158253/133314267-f0ba784c-ff64-4ee8-b2bf-97ecffc2facd.jpg) in Vue devtools to inspect page data and [hydration](https://user-images.githubusercontent.com/1158253/133314279-1edc22d1-3ffb-414e-b994-212cb316593b.jpg)
-- Pages in <Iles small/> have access to [frontmatter and file metadata](/guide/development#using-page-data)
+- Astro uses an `.astro` file format. In <Iles small/> you use [Vue or MDX pages](/guide/project-structure#pages)
+- <Iles small/> provides an [inspector panel](https://user-images.githubusercontent.com/1158253/133314267-f0ba784c-ff64-4ee8-b2bf-97ecffc2facd.jpg) in Vue devtools to inspect page data and [islands](https://user-images.githubusercontent.com/1158253/133314279-1edc22d1-3ffb-414e-b994-212cb316593b.jpg)
+- Pages in <Iles small/> have access to [frontmatter and file metadata](/guide/project-structure#using-page-data)
 - You can [glob import](/guide/documents) pages in <Iles small/>, access their frontmatter, and render them
-- <Iles small/> provides [auto-import for components](/guide/development#components) in Vue and MDX files
+- <Iles small/> provides [auto-import for components](/guide/project-structure#components) in Vue and MDX files
 - Astro provides a `paginate` helper. In <Iles small/> you have to do that [manually].
-- <Iles small/> supports a [convenient syntax for layouts](/guide/development#layouts). In Astro you manually import and use components as layouts
+- <Iles small/> supports a [convenient syntax for layouts](/guide/project-structure#layouts). In Astro you manually import and use components as layouts
 - <Iles small/> has a very refined HMR, even site-wide data is automatically reloaded
 
 <Tip>
@@ -96,9 +98,7 @@ Use Astro if you are not familiar with Vue, or don't like its template syntax.
 - [MDX]: provides amazing flexibility when processing Markdown
 - [vue-router], [@unhead/vue], and [vite-plugin-pages]: the backbone of this library
 - [unplugin-vue-components]: allows you to avoid the boilerplate
-- [VitePress] and [vite-ssg]: for their different ideas on SSR
-
-[vue-router]: https://next.router.vuejs.org/
-[@unhead/vue]: https://github.com/@unhead/vue
+- [unplugin-auto-import]: lets you focus on building your site
+- [VitePress] and [Vite-SSG]: for their different ideas on SSR
 
 <Contact/>

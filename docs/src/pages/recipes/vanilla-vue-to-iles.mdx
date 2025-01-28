@@ -1,0 +1,272 @@
+---
+date: 2025-01-23
+author: Ahmed Kaja
+title: 'Vanilla Vue to îles'
+twitter: '@techakayy'
+# image is relative to src/assets folder
+image: 'assets/recipes/vanilla-vue-to-iles/vanilla-vue.jpg'
+---
+{/* This component overrides MetaTags.vue */}
+<MetaTagsRecipe/>
+
+[vite index html]: https://vite.dev/guide/#index-html-and-project-root
+[static assets]: /guide/static-assets
+[usage]: /guide#usage
+[frameworks]: /guide/frameworks
+[islands]: /guide/islands
+[VitePress]: https://vitepress.dev/
+[Vite-SSG]: https://github.com/antfu-collective/vite-ssg
+[project structure]: /guide/project-structure
+[frameworks]: /guide/frameworks
+[client directives]: /guide/islands
+
+New to Vue? 💚 Scaffold a new Vue project using the following command. Then, convert it into an îles project.
+
+```bash
+npm create vue@latest # or pnpm, yarn, bun
+```
+
+The scaffolded Vanilla Vue project is powered by Vite and serves as a great example of basic Vue concepts, including the Single File Component structure, props, and slots. It's a Single-Page Application (SPA) with snappy navigation, powered by `vue-router`.
+
+# Introduction
+
+In this guide, we will convert this SPA into a static Multi-Page Application (MPA) site. Once completed, we will build and deploy static HTML pages with `zero` JavaScript. 
+
+The goal is to understand the concepts by migrating between the two flavors (SPA and MPA).
+
+<Iles/> builds static Multi-Page Application (MPA) sites. Checkout [Vitepress] and [Vite-SSG] to build static Single Page Application (SPA) sites.
+
+<Image src='@/assets/recipes/vanilla-vue-to-iles/vanilla-vue.jpg' alt="Vanilla Vue App" wide narrow={false} />
+
+## 1. Install îles
+
+Before installing, since îles pre-includes `vite`, remove `"vite": "6.x.x"` from your `package.json` to prevent multiple Vite installations, which could cause TypeScript issues.
+
+```bash
+npm add -D iles@latest # or pnpm, yarn, bun
+```
+
+Once completed, start your development server with the following CLI command. Alternatively, refer to the [usage] to add commands to your `package.json`.
+
+```bash
+npx iles dev # or pnpm, yarn, bun
+```
+
+## 2. Remove `index.html` or Its Entry Files
+
+The `index.html` entry page in your project root does not load any other assets apart from the entry file (`/src/main.ts`). Therefore, either remove it or delete the below script tag shown below.
+
+```html
+<script type="module" src="/src/main.ts"></script>
+```
+
+If you want to retain this `index.html` to add external assets from CDN, refer to the [static assets] page for details. Additionally, remove the `title` and `meta` tags in your custom `index.html` as Îles will add them automatically. 
+
+## 3. Add `iles.config.ts`
+
+Create an `iles.config.ts` file at your project root as shown below.
+
+```ts
+import { defineConfig } from 'iles'
+
+export default defineConfig({
+  siteUrl: 'https://myawesomeidea.com', // Your site URL
+  modules: [
+    // Add iles modules here, refer to Modules page
+  ],
+})
+```
+
+### Existing `vite.config.ts`
+
+The `vite.config.ts` file in your project root, you can either keep it or migrate its configuration into the `vite` key of `iles.config.ts` as shown below.
+
+<b>Important</b> Remove `@vitejs/plugin-vue` (Vite plugin for Vue)
+
+- <b>Keeping</b> `vite.config.ts`: Remove `@vitejs/plugin-vue` from its plugins array to avoid conflicts, as îles already includes it.
+
+- <b>Migrating</b> to `iles.config.ts`: Do not include `@vitejs/plugin-vue` in the migration. After migrating, remove `vite.config.ts` file from your project root. You can also skip migrating `resolve.alias` object, as Îles already covers that.
+
+```ts
+import { defineConfig } from 'iles'
+import vueDevTools from 'vite-plugin-vue-devtools'
+
+export default defineConfig({
+  siteUrl: 'https://myawesomeidea.com', // Your site URL
+  modules: [
+    // Add iles modules here, refer to Modules page
+  ],
+  vite: {
+    // Vite configuration goes here
+    plugins: [
+      // Add vite plugins here
+      vueDevTools(),
+    ]
+  }
+})
+```
+
+## 4. Add `app.ts`
+
+- Create an `src/app.ts` file as shown below. 
+- Copy `import './assets/main.css'` from your entry file `src/main.ts` into `app.ts`.
+- Remove or archive `main.ts` as it's not required anymore.
+
+```ts
+import '@/assets/main.css' // from `src/main.ts`
+import { defineApp } from 'iles'
+
+export default defineApp({
+  head ({ frontmatter, site }) {
+    return {
+      meta: [
+        { property: 'author', content: site.author },
+        { property: 'keywords', content: () => frontmatter.tags },
+      ],
+      htmlAttrs: { lang: 'en-US' },
+      bodyAttrs: {},
+    }
+  },
+})
+```
+
+## 5. Add `site.ts`
+
+Create an `src/site.ts` file as shown below:
+
+```ts
+export default {
+  title: 'Cafe Tee Kaapi',
+  description: 'Sip, Savor, and Spark Ideas!',
+}
+```
+
+## 6. `App.vue` to Default Layout
+
+- Create a new `src/layouts` folder, copy `App.vue` into it, and rename it to `default.vue`. 
+- Convert the `RouterLink` components to simple anchor tags, change the `to` prop to `href`.
+- Replace `<RouterView />` with `<slot/>`. This slot will load all your pages in your site. 
+
+Your `layouts/default.vue` will look like the below.
+
+```vue
+<script setup lang="ts">
+import HelloWorld from '@/components/HelloWorld.vue'
+</script>
+
+<template>
+  <header>
+    <img alt="Vue logo" class="logo" src="@/assets/logo.svg" 
+      width="125" height="125" />
+
+    <div class="wrapper">
+      <HelloWorld msg="You did it!" />
+
+      <nav>
+        <a href="/">Home</a>
+        <a href="/about">About</a>
+      </nav>
+    </div>
+  </header>
+
+  <slot />
+</template>
+
+<style>
+/* Existing styles */
+</style>
+```
+
+> Remove the `src/router` folder, as îles uses file-based routing. Any custom logic might need to be migrated to `app.ts`, your default layout, or one of your interactive Islands.
+
+## 7. View to Pages
+
+îles uses the `pages` and `layouts` folder conventions with filenames in kebab-case.
+- Rename the folder that contains all your pages (for example, `src/views`) to `src/pages`.
+- Rename the `.vue` file of your home page (for example, `HomeView.vue`) to `index.vue`.
+- Rename the `.vue` files of your other pages to follow kebab-case. For example, `AboutView.vue` could be renamed to `about.vue`
+- Add a `<page></page>` tag at the top of your page files and add a `title` and `description` as `frontmatter`. 
+
+Your `index.vue` page will look like the below.
+
+```vue
+<page>
+  title: Home
+  description: First Coffee, Then Conquer!
+</page>
+
+<script setup lang="ts">
+import TheWelcome from '../components/TheWelcome.vue'
+</script>
+
+<template>
+  <main>
+    <TheWelcome />
+  </main>
+</template>
+```
+
+## 8. Add a New Page
+
+îles provides excellent support for authoring your pages with markdown (`.md`, `.mdx`). 
+
+- Create a third page `src/pages/our-story.md` as shown below. 
+- Add a third anchor tag for `our-story` under `nav` in `layouts/default.vue`. 
+
+```md
+---
+title: Our Story
+description: Crafting Memories, Brewing History!
+---
+
+# This is our story page
+```
+
+```vue
+<!-- within layouts/default.vue  -->
+<nav>
+  <a href="/">Home</a>
+  <a href="/about">About</a>
+  <a href="/our-story">Our Story</a>
+</nav>
+```
+
+## 9. Build Your Site
+
+- Stop your development server by pressing `Cmd/Ctrl+C` in your terminal.
+- Use the following command to build your site.
+- Alternatively, refer to the [usage] to add commands to your `package.json`.
+
+```bash
+npx iles build # or pnpm, yarn, bun
+```
+
+Check the `dist` folder to see the three HTML pages generated along with their CSS assets. 
+
+Note that `zero` JavaScript is shipped. To add interactive îslands, refer to the [islands] and [frameworks] pages.
+
+<Image src='@/assets/recipes/vanilla-vue-to-iles/iles-build.jpg' alt="Iles Build" wide narrow={false} />
+
+## 10. Preview Your Site
+
+- Use the following command to preview your site in your local browser.
+- Alternatively, drag and drop the `dist` folder from your Finder or file-explorer into [Netlify Drop](https://app.netlify.com/drop) for instant deployment and preview.
+- Test your production site by navigating through the different pages.
+
+```bash
+npx iles preview # or pnpm, yarn, bun
+```
+
+<Image src='@/assets/recipes/vanilla-vue-to-iles/netlify-drop.jpg' alt="Netlify Drop" wide narrow={false} />
+
+If you used Netlify Drop, once deployment has completed successfully, click the `Open Production deploy` button to preview your site.
+
+<Image src='@/assets/recipes/vanilla-vue-to-iles/netlify-preview.jpg' alt="Netlify Preview" wide narrow={false} />
+
+## What's Next
+
+Now, learn about the [project structure] to familiarize yourself with the various conventions and best practices in îles.
+
+To add interactive îslands to your static Îles site, explore using [islands] and [frameworks].
+
+Well Done. Have a joyful Îles experience!

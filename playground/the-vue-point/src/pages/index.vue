@@ -3,7 +3,6 @@ alias: ['/posts']
 </page>
 
 <script setup lang="ts">
-import { getPosts } from '~/logic/posts'
 
 let posts = $(getPosts())
 </script>
@@ -12,15 +11,7 @@ let posts = $(getPosts())
   <div class="divide-y divide-gray-200">
     <div class="pt-6 pb-8 space-y-2 md:space-y-5">
       <h1
-        class="
-          text-3xl
-          leading-9
-          font-extrabold
-          text-gray-900
-          tracking-tight
-          sm:text-4xl sm:leading-10
-          md:text-6xl
-        "
+        class="text-3xl leading-9 font-extrabold text-gray-900 tracking-tight sm:text-4xl sm:leading-10 md:text-6xl"
       >
         {{ $site.title }}
       </h1>
@@ -29,7 +20,9 @@ let posts = $(getPosts())
     </div>
     <ul class="divide-y divide-gray-200">
       <li v-for="post of posts" :key="post.href" class="py-12">
-        <article class="space-y-2 xl:(grid grid-cols-4 space-y-0 items-baseline)">
+        <article
+          class="space-y-2 xl:(grid grid-cols-4 space-y-0 items-baseline)"
+        >
           <PostDate :date="post.date"/>
           <div class="space-y-5 xl:col-span-3">
             <div class="space-y-6">

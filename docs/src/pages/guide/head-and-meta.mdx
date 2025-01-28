@@ -1,0 +1,132 @@
+[@unhead/vue]: https://unhead.unjs.io/setup/vue/installation
+[app]: /guide/project-structure#app-2
+[useHead]: https://unhead.unjs.io/usage/composables/use-head
+[useSeoMeta]: https://unhead.unjs.io/usage/composables/use-seo-meta
+[Head]: https://unhead.unjs.io/setup/vue/components
+[site]: /guide/project-structure#site
+[frontmatter]: /guide/project-structure#pages
+
+# Head and Meta Tags 🏷
+
+<Iles/> will use [site] data such as `title` and `description` and combine them
+with page titles—specified in [frontmatter]—to set reasonable default values
+for commonly used meta tags.
+
+There are several ways to customize `title` and `meta` tags in <Iles/>, powered by <kbd>[@unhead/vue]</kbd>.
+
+## `useHead` Composable
+
+[useHead] can be used within the `setup` function or `<script setup>` of any Vue component.
+
+```vue
+<script setup lang="ts">
+import { computed } from 'vue'
+  
+const { frontmatter } = usePage()
+const { title, description, tags, image } = frontmatter
+
+useHead({
+  title,
+  description,
+  meta: [
+    // useSeoMeta can be used to better manage meta tags
+    { property: 'og:type', content: 'website' },
+    { property: 'og:image', content: image },
+  ],
+  htmlAttrs: { lang: 'en-US' },
+  bodyAttrs: { class: 'dark-mode', 'data-theme': 'light' },
+  link: [],
+  style: [],
+  noscript: [],
+  // useScript can also be used to load scripts
+  script: [],
+})
+</script>
+```
+
+> `useHead` options support both static values and reactive variables, such as `ref`, `computed`, and `reactive`.
+
+## `useSeoMeta` Composable
+
+[useSeoMeta] can be used within the `setup` function or `<script setup>` of any Vue component.
+
+It lets you define your site's SEO meta as a flat object and helps you avoid common mistakes, such as using `name` instead of `property` as well typos with over 100+ meta tags fully typed.
+
+```vue
+<script setup lang="ts">
+import { computed } from 'vue'
+  
+const { frontmatter } = usePage()
+const { title, description, tags, image } = frontmatter
+
+useSeoMeta({
+  // Refer to type definition for the full list
+  title,
+  description,
+  author: 'Máximo Mussini',
+  charset: 'utf-8',
+  viewport: 'width=device-width, initial-scale=1',
+  generator: 'Îles v0.10.0-beta.1',
+  keywords: tags?.toString(),
+  ogTitle: title,
+  ogDescription: description,
+  ogType: 'website',
+  ogImage: image,
+  ogImageAlt: title,
+})
+</script>
+```
+
+> `useSeoMeta` options support both static values and reactive variables, such as `ref`, `computed`, and `reactive`.
+
+<AutoImported/>
+
+## `<Head>` Component
+
+Besides <kbd>[useHead](#usehead-composable)</kbd> and <kbd>[useSeoMeta](#useseometa-composable)</kbd>, you can also manipulate head tags using the [`<Head>`][Head] component:
+
+```vue
+<template>
+  <Head>
+    <title>Hello World</title>
+    <meta property="author" :content="$site.author">
+    <meta property="keywords" :content="$frontmatter.tags">
+    <html lang="en-US" class="theme-dark" />
+  </Head>
+</template>
+```
+
+This is often more intuitive, specially for dynamic values.
+
+## App Meta Tags
+
+Finally, you can use `head` in <kbd>[src/app.ts][app]</kbd>, which supports the
+same format as <kbd>[useHead](#usehead-composable)</kbd>.
+
+```ts
+import { defineApp } from 'iles'
+
+export default defineApp({
+  head: {
+    htmlAttrs: { lang: 'en-US' },
+    bodyAttrs: { class: 'dark-mode', 'data-theme': 'light' },
+  },
+})
+```
+
+If you need access to the site or page, you can provide a function instead:
+
+```ts
+import { defineApp } from 'iles'
+
+export default defineApp({
+  head ({ frontmatter, site }) {
+    return {
+      meta: [
+        { property: 'author', content: site.author },
+        { property: 'keywords', content: () => frontmatter.tags },
+      ]
+    }
+  },
+})
+```

@@ -20,6 +20,6 @@
 
 [îles]: https://github.com/ElMassimo/iles
 [cli]: https://iles-docs.netlify.app/guide#usage
-[client library]: https://iles-docs.netlify.app/guide/development#using-page-data
+[client library]: https://iles-docs.netlify.app/guide/project-structure#using-page-data
 
 The main [îles] package, which provides a [cli] and the [client library].

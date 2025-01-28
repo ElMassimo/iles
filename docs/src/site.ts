@@ -21,6 +21,7 @@ const site = {
     { text: 'Guide', link: '/guide' },
     { text: 'Config', link: '/config' },
     { text: 'FAQs', link: '/faqs' },
+    { text: 'Recipes', link: '/recipes' },
   ],
 
   sidebar: [
@@ -30,17 +31,17 @@ const site = {
       children: [
         { text: 'Introduction', link: '/guide/introduction' },
         { text: 'Getting Started', link: '/guide' },
-        { text: 'Development', link: '/guide/development' },
-        { text: 'Documents', link: '/guide/documents' },
-        { text: 'Markdown', link: '/guide/markdown' },
-        { text: 'Meta Tags', link: '/guide/meta-tags' },
-        { text: 'Hydration', link: '/guide/hydration' },
-        { text: 'Frameworks', link: '/guide/frameworks' },
-        { text: 'Client Scripts', link: '/guide/client-scripts' },
+        { text: 'Project Structure', link: '/guide/project-structure' },
         { text: 'Routing', link: '/guide/routing' },
+        { text: 'Markdown', link: '/guide/markdown' },
+        { text: 'Documents', link: '/guide/documents' },
+        { text: 'Head And Meta', link: '/guide/head-and-meta' },
+        { text: 'Static Assets', link: '/guide/static-assets' },
+        { text: 'Islands', link: '/guide/islands' },
+        { text: 'Frameworks', link: '/guide/frameworks' },
+        { text: 'Modules', link: '/guide/modules' },
         { text: 'Turbo', link: '/guide/turbo' },
         { text: 'RSS Feeds', link: '/guide/rss' },
-        { text: 'Plugins', link: '/guide/plugins' },
         { text: 'PWA', link: '/guide/pwa' },
         { text: 'Deployment', link: '/guide/deployment' },
       ],
@@ -54,6 +55,25 @@ const site = {
         { text: 'Troubleshooting', link: '/faqs/troubleshooting' },
       ],
     },
+    {
+      text: 'Recipes',
+      link: '/recipes',
+      children: [
+        {
+          text: 'Recipes',
+          link: '/recipes'
+        },
+        {
+          text: 'A Simple Iles App',
+          link: '/recipes/a-simple-iles-app'
+        },
+        {
+          text: 'Vanilla Vue to Îles',
+          link: '/recipes/vanilla-vue-to-iles'
+        }
+      ],
+    },    
+    
   ],
 }
 

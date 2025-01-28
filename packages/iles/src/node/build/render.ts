@@ -9,6 +9,7 @@ import type { Awaited, AppConfig, CreateAppFactory, IslandsByPath, RouteToRender
 import type { bundle } from './bundle'
 import { withSpinner } from './utils'
 import { getRoutesToRender } from './routes'
+import { getUserShell } from '../plugin/html';
 
 const commentsRegex = /<!--\[-->|<!--]-->|<!---->/g
 
@@ -55,7 +56,41 @@ export async function renderPage (
 
   const { headTags, htmlAttrs, bodyTagsOpen, bodyTags, bodyAttrs } = await renderSSRHead(head)
 
-  return `<!DOCTYPE html>
+  const {
+    userShell,
+    isValidUserShell,
+    errorMsgUserShell,
+  } = await getUserShell(config)
+
+  if (!isValidUserShell) {
+    throw new Error(errorMsgUserShell)
+  }
+
+  // Tried prettier format(), but it adds closing tag to void tags (link) which results in css not loading correctly, hence dropped it
+  // let transformedHtml = await format(userShell, { parser: 'html' });
+  // TODO: prettierx is a prettier fork with option to format without this issue
+  // let transformedHtml = await format(userShell, { parser: 'html', htmlVoidTags: true });
+  let transformedHtml = userShell
+
+  // Add <!DOCTYPE html> if missing
+  const doctypeRegex = /^\s*<!DOCTYPE html>/i
+  if (!doctypeRegex.test(transformedHtml)) {
+    transformedHtml = `<!DOCTYPE html>${transformedHtml}`;
+  }
+
+  // const ilesDevShellRegex = /<script\s[^>]*src=["']\/@iles-entry["'][^>]*>\s*<\/script>/gi
+  const ilesDevShellRegex = /<script\s[^>]*src=["']\/@iles-entry["'][^>]*>\s*<\/script>\s*/gi;
+
+  // TODO: Instead of string replacement, best to parse the html using parse5 to update it. User could already have meta tags defined in their userShell, and iles shall add duplicate them.
+  transformedHtml = transformedHtml
+    .replace(/<html([^>]*)>/, `<html$1 ${htmlAttrs}>`) // Add placeholder to html tag
+    .replace(/<\/head>/, `  ${headTags}\n    ${stylesheetTagsFrom(config, clientChunks)}\n    ${await scriptTagsFrom(config, islandsByPath[route.path])}\n  </head>`) // Append placeholders to head
+    .replace(/<body([^>]*)>/, `<body$1 ${bodyAttrs}>`) // Add placeholder to body tag
+    .replace(/<div id="app">/, `${bodyTagsOpen}<div id="app">${content}`) // Add placeholders to app div
+    .replace(/<\/body>/, `${bodyTags}  </body>`) // Add closing body placeholders
+    .replace(ilesDevShellRegex, ''); // Remove iles dev shell if it exists as it's only for development
+
+  const html = isValidUserShell ? transformedHtml : `<!DOCTYPE html>
 <html ${htmlAttrs}>
   <head>
     ${headTags}
@@ -66,6 +101,8 @@ export async function renderPage (
     ${bodyTagsOpen}<div id="app">${content}</div>${bodyTags}
   </body>
 </html>`
+
+  return html
 }
 
 function stylesheetTagsFrom (config: AppConfig, clientChunks: RollupOutput['output']) {

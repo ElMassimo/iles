@@ -1,5 +1,6 @@
 {
   "typescript.tsdk": "node_modules/typescript/lib",
+  "prettier.enable": false,
   "files.exclude": {
     "**/dist": true
   },

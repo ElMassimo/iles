@@ -11,10 +11,10 @@
     "dist",
     "src"
   ],
-  "types": "dist/feed.d.ts",
   "type": "module",
   "exports": {
     ".": {
+      "types": "./dist/feed.d.ts",
       "import": "./dist/feed.js",
       "require": "./src/feed.cjs"
     },

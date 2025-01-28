@@ -2,7 +2,6 @@
 import { useAppConfig } from 'iles'
 import type { SideBarItem } from '~/logic/config'
 import { joinUrl } from '~/logic/utils'
-import { useActive } from '~/logic/sidebar'
 
 const { item, header, table } = defineProps<{ item: SideBarItem; header?: boolean; table?: boolean }>()
 

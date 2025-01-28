@@ -1,0 +1,19 @@
+{
+  "name": "a-simple-iles-app",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "dev": "iles dev",
+    "build": "iles build",
+    "preview": "iles preview --open",
+    "now": "npm run build && npm run preview",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "iles": "workspace:*"
+  }
+}

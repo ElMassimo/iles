@@ -28,10 +28,10 @@ export function defaultHead ({ frontmatter, meta, route, config, site }: AppCont
       { property: 'og:site_name', content: site.title },
       { property: 'og:title', content: title },
       { property: 'og:description', content: description },
-      { property: 'twitter:domain', content: site.canonical },
-      { property: 'twitter:title', content: title },
-      { property: 'twitter:description', content: description },
-      { property: 'twitter:url', content: currentUrl },
+      { name: 'twitter:domain', content: site.canonical },
+      { name: 'twitter:title', content: title },
+      { name: 'twitter:description', content: description },
+      { name: 'twitter:url', content: currentUrl },
     )
   }
 

@@ -17,6 +17,13 @@ const debug = createDebugger('iles:html-page-fallback')
 export function configureMiddleware (config: AppConfig, server: ViteDevServer, defaultLayoutPath: string) {
   restartOnConfigChanges(config, server)
 
+  // If user included the vite vue plugin via their own vite.config.ts, then iles's vite vue plugin will consume a transformed sfc and error out. So, error out and alert user
+  const vueVitePlugins = server.config.plugins.filter(plugin => plugin.name === 'vite-plugin-vue' || plugin.name === 'vite:vue')
+
+  if (vueVitePlugins.length > 1) {
+    throw new Error(`[îles] Duplicate Vue Vite plugin detected. Ensure @vitejs/plugin-vue is removed from the Vite plugins array in vite.config.ts or iles.config.ts. Use the 'vue' property in iles.config.ts to pass any configuration to the Vue Vite plugin which is already included by îles.\n`)
+  }
+
   const htmlPagesMiddleware: Connect.NextHandleFunction = function ilesHtmlPagesMiddleware (req, res, next) {
     let { url = '' } = req
 

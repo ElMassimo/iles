@@ -12,9 +12,9 @@
     "dist",
     "src"
   ],
-  "types": "dist/excerpt.d.ts",
   "exports": {
     ".": {
+      "types": "./dist/excerpt.d.ts",
       "import": "./dist/excerpt.js",
       "require": "./src/excerpt.cjs"
     },

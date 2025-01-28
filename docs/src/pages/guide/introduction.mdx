@@ -7,17 +7,18 @@ tocLevel: 3
 [Vue]: https://v3.vuejs.org/
 [MDX]: https://github.com/mdx-js/mdx
 
-[Vue Plugin]: /guide/plugins#vitejsplugin-vue
-[Preact]: /guide/plugins#preactpreset-vite
-[SolidJS]: /guide/plugins#vite-plugin-solid
-[Svelte]: /guide/plugins#sveltejsvite-plugin-svelte
-[vanilla JS]: /guide/client-scripts#vanilla-components
+[Vue Plugin]: /guide/modules#vitejsplugin-vue
+[Preact]: /guide/modules#preactpreset-vite
+[SolidJS]: /guide/modules#vite-plugin-solid
+[Svelte]: /guide/modules#sveltejsvite-plugin-svelte
+[vanilla JS]: /guide/islands#vanilla-components
 
-[hydration]: /guide/hydration
+[islands]: /guide/islands
+[hydration strategies]: /guide/islands#hydration-strategies
 [markdown]: /guide/markdown
-[pages]: /guide/development#pages
-[layouts]: /guide/development#components
-[components]: /guide/development#components
+[pages]: /guide/project-structure#pages
+[layouts]: /guide/project-structure#layouts
+[components]: /guide/project-structure#components
 [Demo]: https://the-vue-point-with-iles.netlify.app/
 [devtools1]: https://user-images.githubusercontent.com/1158253/133314267-f0ba784c-ff64-4ee8-b2bf-97ecffc2facd.jpg
 [devtools2]: https://user-images.githubusercontent.com/1158253/133314279-1edc22d1-3ffb-414e-b994-212cb316593b.jpg
@@ -27,12 +28,12 @@ tocLevel: 3
 
 # Introduction
 
-<Iles/> is a __static-site generator__ that provides great support for __[partial hydration][hydration]__.
+<Iles/> is a __static-site generator__ that provides great support for __[partial hydration][islands]__.
 
 Use [Vue] and [MDX][markdown] to build your website, while enjoying the smooth development
 experience provided by [Vite.js].
 
-When building for production, use [`client` directives][hydration] to specify which components are interactive, and automatically ship the minimal amount of JS needed.
+When building for production, use [`client` directives][hydration strategies] to specify which components are interactive, and automatically ship the minimal amount of JS needed.
 
 <Tip title="Live Demos">
 This site is [built][docs repo] with <Iles/>, as well as [this port of the Vue.js blog][demo] ([repo][blog repo]).
@@ -40,11 +41,11 @@ This site is [built][docs repo] with <Iles/>, as well as [this port of the Vue.j
 
 ## Features ✨
 
-### 🏝 [Partial Hydration][hydration]
+### 🏝 [Partial Hydration][islands]
   
   Ship JS only for the interactive bits, by default that's zero.
 
-  [Islands][hydration] can be defined using [Vue][vue plugin], [Preact], [SolidJS], [Svelte], or [vanilla JS].
+  [Islands][islands] can be defined using [Vue][vue plugin], [Preact], [SolidJS], [Svelte], or [vanilla JS].
 
 ### ⚡️ Powered by [Vite.js]
 

@@ -1,0 +1,302 @@
+[Partial Hydration]: https://jasonformat.com/islands-architecture/
+[Astro]: https://docs.astro.build/core-concepts/component-hydration
+[requestIdleCallback]: https://developer.mozilla.org/en-US/docs/Web/API/Window/requestIdleCallback
+[intersectionobserver]: https://developer.mozilla.org/en-US/docs/Web/API/Intersection_Observer_API
+[matchMedia]: https://developer.mozilla.org/en-US/docs/Web/API/Window/matchMedia
+
+[Preact]: /guide/modules#preactpreset-vite
+[SolidJS]: /guide/modules#vite-plugin-solid
+[Svelte]: /guide/modules#sveltejsvite-plugin-svelte
+[Suspense]: https://vuejs.org/guide/built-ins/suspense
+[Demo]: https://the-vue-point-with-iles.netlify.app/cat-zone
+[blog repo]: https://github.com/ElMassimo/iles/blob/main/playground/the-vue-point/src/components/CatDisplay.vue
+
+[strategies]: /guide/islands#clientload
+[strategy]: /guide/islands#clientload
+[layout]: /guide/project-structure#layouts
+[components]: /guide/project-structure#components
+[frameworks]: /guide/frameworks
+[server components]: https://nuxt.com/docs/guide/directory-structure/components#server-components
+
+# Islands and Hydration <Logo/>
+
+<Iles/> uses the Islands Architecture. It creates fast, static web pages with only small interactive parts, like a carousel that requires JavaScript.
+
+> Learn about the Islands Architecture from the [Astro](https://docs.astro.build/en/concepts/islands/) docs, Jason Miller's [blog](https://jasonformat.com/islands-architecture/), and his [keynote](https://www.youtube.com/watch?v=k-A2VfuUROg&t=969s).
+
+## Îles vs Petite-Vue
+
+<VueLogo/> Petite-Vue lets you <kbd>progressively enhance</kbd> your server-rendered or statically generated HTML pages with sprinkes of interactivity. This can be done either through a global app (for the whole page) or with multiple îslands of interactivity.
+
+<Iles/> additionally lets you <kbd>progressively hydrate</kbd> (when to hydrate) your server-rendered or statically generated HTML pages with îslands of interactivity. It follows a component-driven workflow delivering a simple yet powerful development experience, thanks to <VueLogo/> and <ViteLogo/>.
+
+## Îles vs Nuxt
+
+<Iles/> follow an architecture where <kbd>dynamic îslands</kbd> are embedded within a static page. Hydration strategies are mandatory to make components interactive.
+
+<NuxtLogo/> Nuxt, on the contrary, follows an architecture where <kbd>static îslands</kbd> could be part of your dynamic app. Marking components as [server components] is optional.
+
+> Learn more about this architectural difference in Daniel Roe's blog post [here](https://roe.dev/blog/nuxt-server-components).
+
+## Hydration Strategies
+
+You can define which components in your îles project should remain interactive in the production build by using `client:` directives in your components (borrowed from [Astro]).
+
+Any JS required for these components will be automatically inferred and optimized to perform partial hydration in the final build.
+
+> No JS is shipped unless you use a hydration strategy! 🏝
+
+> Îles doesn't support an îsland within another îsland, so do not nest îslands in your project.
+
+Here's an example with MDX, an interactive audio player in a mostly static page:
+
+```mdx
+---
+title: Song for You
+audio: /song-for-you.mp3
+---
+
+I've recently recorded a song, listen:
+
+<AudioPlayer {...frontmatter} client:visible/>
+```
+
+You can also use these directives inside your Vue components. In the following
+example, the _Download_ link is rendered statically, while the `<Audio>`
+component is interactive and will be hydrated when visible.
+
+```vue
+<template>
+  <div class="audio-player">
+    <Audio client:visible :src="audio" :initialDuration="initialDuration"/>
+    <div>
+      <a :href="audio" :download="`${title}.mp3`">
+        Download the Song
+      </a>
+    </div>
+  </div>
+</template>
+```
+
+The following hydration strategies are available.
+
+## 🏝 client:load
+Hydrates the component immediately as the page loads.
+
+```vue
+<DarkModeSwitch client:load/>
+```
+
+## 🏝 client:idle
+Hydrate the component as soon as the main thread is [free][requestIdleCallback].
+
+```vue
+<TimeAgo :date="date" client:idle/>
+```
+
+## 🏝 client:visible
+Hydrates the component as soon as the element [enters the viewport][intersectionobserver].
+
+```vue
+<AudioPlayer :src="/example.mp3" client:visible/>
+```
+
+## 🏝 client:media
+Hydrates the component as soon as the browser [matches the given media query][matchMedia].
+
+Useful to avoid unnecessary work depending on the available viewport, such as in mobile devices.
+
+```vue
+<Sidebar client:media="screen and (min-width: 600px)"/>
+```
+
+## 🏝 client:none
+Does not hydrate the component in the client, it will be prerendered as static HTML.
+
+Allows <Iles/> to detect [Preact], [SolidJS], or [Svelte] components embedded in Vue or MDX files.
+
+<Tip title="No JS will be shipped in the build">
+You should use any of the other directives if you want the component to be interactive.
+</Tip>
+
+## 🏝 client:only
+Does not prerender the component during build.
+
+<Tip warn>
+Because it's not pre-rendered it could cause [layout shift] and affect the user experience.
+
+Prefer one of the previous strategies whenever possible.
+</Tip>
+
+[layout shift]: https://web.dev/cls/
+
+## 🍰 Client Script Block 
+
+<Iles/> provides support for a `script client` block in Vue single-file components.
+
+Sometimes you need client-side code that does not map to a component. Alternatively, you can use [vanilla](#vanilla-components) components.
+
+```vue
+<script client:load lang="ts">
+console.log('Powered by îles 🏝', 'https://iles-docs.netlify.app')
+</script>
+```
+
+<Tip warn>
+Client script blocks are completely detached from the Vue component, which will be statically pre-rendered. The [strategy] is applied to the script, __not__ the component.
+</Tip>
+
+The script will be injected every time the component is rendered, and it's
+guaranteed to execute after all elements rendered by the component are in the DOM.
+
+```vue
+<script client:load lang="ts">
+document.getElementById('sidebar').classList.toggle('live') // always works
+</script>
+
+<template>
+  <div id="sidebar"/>
+</template>
+```
+
+> If you need code to execute once, use `script client` in a [layout].
+
+### Execution Strategies <Logo/>
+
+Other [strategies] that we saw in the previous section are supported,
+but you must export `onLoad`.
+
+This function will be called when the condition for the selected strategy is met—when the element becomes visible if using `client:visible`, when the media query matches if using `client:media`, etc.
+
+```vue
+<script client:visible lang="ts">
+console.log('Not necessarily visible')
+
+export function onLoad () {
+  console.log('Now visible')
+}
+</script>
+```
+
+## 🍦 Vanilla Components
+
+`.js` and `.ts` files can also be used as client scripts in <Iles/>, and you can
+choose where to place them by rendering them as islands.
+
+```vue
+<script setup lang="ts">
+import GalleryPreloader from '~/composables/imagePreloader' // .ts
+</script>
+
+<template>
+  <GalleryPreloader client:visible/>
+  ...
+</template>
+```
+
+<Tip warn>
+You must provide a `client:` [strategy] when using vanilla components.
+</Tip>
+
+Vanilla components should export a function to call when the selected
+[hydration strategy][strategy] is fulfilled.
+
+```ts
+export const onLoad = () => fetch('/images').then(...)
+```
+
+If you need to use the provided parameters, use the `OnLoadFn` typings:
+
+```ts
+import type { OnLoadFn } from 'iles'
+
+export const onLoad: OnLoadFn = (el, props, slots) => {
+  // Do whatever you need with the element.
+}
+```
+
+<Tip title="Why not use a renderless component?">
+The benefit is that vanilla JS doesn't require a runtime, so the final
+bundle size will be smaller.
+
+If your app already [uses a framework][frameworks] in some of the islands, then use whatever you find more natural.
+</Tip>
+
+## 💫 Suspense
+
+Îles automatically wraps îslands with the Vue [Suspense] component when they use the `<script setup>` with top-level `await` expressions.
+
+This automatic suspense handling means you don't need to restructure your components to accomodate suspense logic manually. It is particularly useful when fetching data from external sources, such as databases or headless CMSs, within your island on the client side.
+
+In the following example from [The Vue Point in îles][demo] ([repo][blog repo]), the `CatDisplay` îsland is loaded from the `cat-zone` page and hydrated using the `client:load` directive.
+
+```vue
+<!-- cat-zone.mdx page -->
+<CatDisplay client:load />
+```
+
+The `CatDisplay` îsland fetches a random cat image from an API source. 
+
+```vue
+<!-- CatDisplay.vue -->
+<script setup lang="ts">
+import {$fetch} from 'ofetch'
+const data = ref()
+const isLoading = ref(true)
+const error = ref(false)
+
+await $fetch('https://api.thecatapi.com/v1/images/search', {
+  async onResponse({request, response, options}) {
+    isLoading.value = false
+    data.value = response._data[0]
+  },
+  async onResponseError({request, response, options}) {
+    error.value = true
+  },
+})
+</script>
+
+<template>
+  <p v-if="isLoading">Loading...</p>
+  <img
+    v-else
+    :src="data.url"
+    alt="Boots"
+    style="object-fit: cover; max-height: 600px" />
+  <p v-if="error">Oops! An error occured, please try again.</p>
+</template>
+```
+
+You can still manually handle [Suspense] yourselves if you want to use it's loading / error states, and don't mind creating a child component to handle the asynchronous data fetch.
+
+To illustrate, the top-level `await` in the above example and the `<img>` tag can be moved into a child component called `CatOfTheDay`. Then, the loading / error states of [Suspense] can be implemented like below.
+
+```vue
+<!-- cat-zone.mdx page -->
+<CatDisplay client:load />
+```
+
+```vue
+<!-- CatDisplay.vue -->
+<template>
+  <Suspense>
+    <CatOfTheDay />
+    <template #fallback><p>Loading...</p></template>
+  </Suspense>
+</template>
+```
+
+```vue
+<!-- CatOfTheDay.vue -->
+<script setup lang="ts">
+  import {$fetch} from 'ofetch'
+  const [data] = await $fetch('https://api.thecatapi.com/v1/images/search')
+</script>
+
+<template>
+  <img
+    :src="data.url"
+    alt="Awiwi"
+    style="object-fit: cover; max-height: 600px" />
+</template>
+```

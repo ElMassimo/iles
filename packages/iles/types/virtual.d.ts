@@ -24,7 +24,17 @@ declare module '@islands/user-app' {
   export default config
 }
 
+declare module 'virtual:user-app' {
+  const config: import('./shared').UserApp
+  export default config
+}
+
 declare module '@islands/user-site' {
+  const config: import('vue').Ref<import('./shared').UserSite>
+  export default config
+}
+
+declare module 'virtual:user-site' {
   const config: import('vue').Ref<import('./shared').UserSite>
   export default config
 }

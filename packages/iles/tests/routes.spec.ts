@@ -7,6 +7,7 @@ describe('app routes', () => {
     expect(routes.map(route => route.path)).toEqual([
       '/',
       '/404',
+      '/cat-zone',
       '/feed.rss',
       '/posts/hello-2021',
       '/posts/volar-1-0',

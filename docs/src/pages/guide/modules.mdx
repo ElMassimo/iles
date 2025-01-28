@@ -2,18 +2,19 @@
 tocLevel: 3
 ---
 
-[pages]: /guide/development#pages
+[pages]: /guide/project-structure#pages
 [markdown]: /guide/markdown
 [configuring them as usual]: /config#configuring-vite
 [config]: /config#configuring-%C3%AEles
-[components]: /guide/development#components
+[components]: /guide/project-structure#components
 [routing]: /guide/routing
 [rss]: /guide/rss
 [pwa]: /guide/pwa
 [@userquin]: https://twitter.com/userquin
 
-[@vitejs/plugin-vue]: https://www.npmjs.com/package/@vitejs/plugin-vue
-[unplugin-vue-components]: https://github.com/antfu/unplugin-vue-components
+[@vitejs/plugin-vue]: https://github.com/vitejs/vite-plugin-vue/tree/main/packages/plugin-vue
+[unplugin-vue-components]: https://github.com/unplugin/unplugin-vue-components
+[unplugin-auto-import]: https://github.com/unplugin/unplugin-auto-import
 [MDX]: https://github.com/mdx-js/mdx
 
 [vite-plugin-solid]: https://github.com/solidjs/vite-plugin-solid
@@ -43,11 +44,11 @@ tocLevel: 3
 
 [feed]: https://github.com/jpmonette/feed
 
-[pageData]: /guide/development#using-page-data
-[SEO tags]: /guide/meta-tags
+[pageData]: /guide/project-structure#using-page-data
+[SEO tags]: /guide/head-and-meta
 [RSS feeds]: /guide/rss
 
-[alias]: /guide/development#default-app-structure
+[alias]: /guide/project-structure#default-app-structure
 [vite-plugin-image-presets]: https://github.com/ElMassimo/vite-plugin-image-presets
 [the-vue-point]: https://the-vue-point-with-iles.netlify.app/
 
@@ -100,7 +101,7 @@ that work similarly to [those in Vite](https://vitejs.dev/guide/api-plugin.html#
 You can start your own module package by running:
 
 ```bash
-pnpm create iles-module@next # or npm or yarn
+npm create iles-module@latest # or pnpm, yarn, bun
 ```
 
 Module packages should be `"type": "module"` and have a default ESM export,
@@ -327,11 +328,29 @@ import { defineConfig } from 'iles'
 
 export default defineConfig({
   vue: {
-    reactivityTransform: true,
+    // options
   },
 })
 ```
 <Caption>`iles.config.ts`</Caption>
+
+### <kbd>[unplugin-auto-import]</kbd>
+
+Enables auto-importing APIs on-demand, and is leveraged internally to support
+automatic import of APIs and composables from `vue`, `@unhead/vue` and from the users's `src/composables` folder.
+
+```ts
+  // Example config from "The Vue Point in îles"
+  autoimports: {
+    imports: [
+      '@vueuse/core', // auto-import composables from library
+    ],
+    dirs: [
+      // 'src/composables', // already added by Îles
+      'src/logic', // auto-import composables from `src/logic` folder
+    ],    
+  }
+```
 
 ### <kbd>[unplugin-vue-components]</kbd>
 

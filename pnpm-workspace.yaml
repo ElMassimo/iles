@@ -12,4 +12,5 @@ packages:
   - packages/iles/
   - packages/pwa/
   - playground/the-vue-point/
+  - playground/a-simple-iles-app/
   - docs

@@ -4,9 +4,7 @@ import { createHead } from '@unhead/vue'
 
 import routes from '@islands/routes'
 import config from '@islands/app-config'
-import userApp from '@islands/user-app'
-import siteRef from '@islands/user-site'
-import type { CreateAppFactory, AppContext, RouterOptions } from '../shared'
+import type { CreateAppFactory, AppContext, RouterOptions, UserApp, UserSite } from '../shared'
 import App from './components/App.vue'
 import { installPageData, forcePageUpdate } from './composables/pageData'
 import { installMDXComponents } from './composables/mdxComponents'
@@ -32,8 +30,28 @@ function createRouter (base: string | undefined, routerOptions: Partial<RouterOp
   })
 }
 
+function unwrapModule (mod: any): any {
+  return mod && mod.default ? unwrapModule(mod.default) : mod
+}
+
 export const createApp: CreateAppFactory = async (options = {}) => {
-  const { head: headConfig, enhanceApp, router: routerOptions } = userApp
+  let userApp: UserApp
+  try {
+    userApp = unwrapModule(await import('@islands/user-app'))
+  }
+  catch (err) {
+    userApp = {}
+  }
+  
+  let siteRef: UserSite
+  try {
+    siteRef = unwrapModule(await import('@islands/user-site'))
+  }
+  catch (err) {
+    siteRef = {}
+  }
+  
+  const { head: headConfig, enhanceIslands, enhanceApp, router: routerOptions } = userApp
   const { routePath = config.base, ssrProps } = options
 
   const app = newApp(App)
@@ -78,7 +96,14 @@ export const createApp: CreateAppFactory = async (options = {}) => {
   // Apply any configuration added by the user in app.ts
   // if (headConfig) useHead(ref(typeof headConfig === 'function' ? headConfig(context) : headConfig))
   if (headConfig) head.push(ref(typeof headConfig === 'function' ? headConfig(context) : headConfig))
-  if (enhanceApp) await enhanceApp(context)
+  
+  // enhanceIslands is called on the shell app during development otherwise user will have to duplicate `app.use(pinia)` in both enhanceIslands and enhanceApp
+  if (enhanceIslands) {
+    await enhanceIslands({ app })
+  }
+  if (enhanceApp) {
+    await enhanceApp(context)
+  }
   await installMDXComponents(context, userApp)
 
   return context

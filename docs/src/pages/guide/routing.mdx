@@ -1,5 +1,5 @@
-[Page]: /guide/development#pages
-[Pages]: /guide/development#pages
+[Page]: /guide/project-structure#pages
+[Pages]: /guide/project-structure#pages
 [frontmatter]: /guide/markdown#frontmatter-and-meta
 [Vue Router]: https://next.router.vuejs.org/
 [getStaticPaths]: #generating-dynamic-routes
@@ -8,7 +8,7 @@
 [dynamic source]: https://github.com/ElMassimo/iles/blob/main/docs/src/pages/dynamic/%5Bsection%5D.vue
 [dynamic parameters]: #dynamic-routes
 
-[@islands/pages]: /guide/plugins#islandspages
+[@islands/pages]: /guide/modules#islandspages
 
 [prettyUrls]: /config#prettyurls
 
@@ -101,14 +101,15 @@ It must return an array of objects, where each object specifies:
 
 ```vue
 <script lang="ts">
-import { fetchArticles } from '~/logic/articles'
+import { fetchArticles } from '~/composables/articles'
 
 export default definePageComponent({
   async getStaticPaths () {
     const articles = await fetchArticles()
 
     return articles.map(article => ({
-      // Specify the parameters for the page.
+      // Specify the parameters for the page. 
+      // For example, `id` for `[id].vue` and `slug` for `[...slug].vue`
       params: { id: String(article.id) },
 
       // Pass any data needed to render the page.
@@ -119,7 +120,7 @@ export default definePageComponent({
 </script>
 
 <script setup lang="ts">
-import { Article } from '~/logic/articles'
+import { Article } from '~/composables/articles'
 
 defineProps<{ article: Article }>()
 </script>
@@ -148,6 +149,12 @@ You can access them using `defineProps` as in the example above, or as `props` i
 <kbd>getStaticPaths</kbd> must be specified inside the default export of a Vue component. 
 
 Use `definePageComponent` to provide intellisense, it will be automatically imported.
+</Tip>
+
+<Tip title="Matching Params" warn>
+Ensure that the `params` object includes the named route. For example, `params: { id: String(article.id) }` for a dynamic route `[id]`. 
+
+If no matching `params` are found in  <kbd>[getStaticPaths]</kbd>, then the route will not be generated during the build process.
 </Tip>
 
 <Tip title="Using External Data">

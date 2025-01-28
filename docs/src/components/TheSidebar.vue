@@ -1,6 +1,4 @@
 <script client:media="(max-width: 767px)" lang="ts">
-import { ref, watch } from 'vue'
-
 const doc = document
 
 export function onLoad () {

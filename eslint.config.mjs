@@ -11,6 +11,7 @@ export default antfu(
         usePage: 'readonly',
         useRoute: 'readonly',
         useHead: 'readonly',
+        useSeoMeta: 'readonly',
         definePageComponent: 'readonly',
       },
     },
@@ -146,6 +147,11 @@ export default antfu(
       'vue/block-tag-newline': 'off',
       'regexp/no-useless-lazy': 'off',
       'style/eol-last': 'off',
+      'perfectionist/sort-imports': 'off',
+      'perfectionist/sort-exports': 'off',
+      'perfectionist/sort-named-imports': 'off',
+      'perfectionist/sort-named-exports': 'off',
+      'unicorn/new-for-builtins': 'off'
     },
   },
 )

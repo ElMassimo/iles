@@ -21,7 +21,7 @@
 [îles]: https://github.com/ElMassimo/iles
 [docs]: https://iles-docs.netlify.app
 [MDX]: https://iles-docs.netlify.app/guide/markdown
-[alias]: https://iles-docs.netlify.app/guide/development#default-app-structure
+[alias]: https://iles-docs.netlify.app/guide/project-structure#default-app-structure
 [vite-plugin-image-presets]: https://github.com/ElMassimo/vite-plugin-image-presets
 
 [live]: https://the-vue-point-with-iles.netlify.app/

@@ -11,6 +11,9 @@ import mdx from '@islands/mdx'
 import type { ComponentResolverFunction } from 'unplugin-vue-components/types'
 import type { UserConfig } from 'iles'
 
+import autoImport from 'unplugin-auto-import/vite'
+import { unheadVueComposablesImports } from '@unhead/vue'
+
 import type {
   AppConfig,
   ConfigEnv,
@@ -135,6 +138,7 @@ async function setNamedPlugins (config: AppConfig, env: ConfigEnv, plugins: Name
     tagName.startsWith('ile-') || ceChecks.some(fn => fn!(tagName))
 
   plugins.components = components(config.components)
+  plugins.autoImport = autoImport(config.autoImport)
   plugins.vue = vue(config.vue)
 
   const optionalPlugins = {
@@ -269,6 +273,7 @@ function appConfigDefaults (appConfig: AppConfig, userConfig: UserConfig, env: C
         [remarkWrapIslands, { get config () { return appConfig } }],
       ],
     },
+    // For details, refer to https://github.com/antfu/unplugin-vue-components#configuration
     components: {
       dts: true,
       extensions: ['vue', 'jsx', 'tsx', 'js', 'ts', 'mdx', 'svelte'],
@@ -279,6 +284,45 @@ function appConfigDefaults (appConfig: AppConfig, userConfig: UserConfig, env: C
         IlesLayoutResolver(appConfig),
       ],
       transformer: 'vue3',
+    },
+    // For details, refer to https://github.com/antfu/unplugin-auto-import#configuration
+    autoImport: {
+      dts: true,
+      include: [
+        /\.[tj]sx?$/, // .ts, .tsx, .js, .jsx
+        /\.vue$/,
+        /\.vue\?vue/, // .vue
+        /\.md$/, // .md
+        /\.mdx$/, // .mdx
+        /\.svelte$/, // .svelte
+      ],
+      imports: [
+        'vue',
+        // 'vue-i18n',
+        // 'vue/macros',
+        unheadVueComposablesImports,
+        // '@vueuse/core',
+        // 'pinia',
+        {
+          iles: [
+            'usePage',
+            'useRoute',
+            'definePageComponent',
+            'useDocuments',
+          ],
+        }
+      ],
+      dirs: [
+        // 'src/hooks',
+        'src/composables', // only root modules
+        // 'src/composables/**', // all nested modules
+        // 'src/utils',
+        // 'src/stores',
+      ],
+      vueTemplate: true,
+      resolvers: [
+        /* ... */
+      ],
     },
   }
 }
@@ -310,6 +354,8 @@ function viteConfigDefaults (root: string, userConfig: UserConfig): ViteOptions 
         '@islands/hydration',
         '@islands/prerender',
         'vue/server-renderer',
+        'virtual:user-app',
+        'virtual:user-site',
       ],
     },
   }

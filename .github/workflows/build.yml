@@ -35,6 +35,12 @@ jobs:
       - name: Build
         run: pnpm build:all
 
+      - name: Build Docs Site
+        run: pnpm docs:build
+
+      - name: Build Blog Site
+        run: pnpm blog:build
+
       - name: Tests
         run: pnpm test
 
@@ -54,7 +60,7 @@ jobs:
       CI: true
 
     runs-on: ubuntu-latest
-    container: cypress/included:9.2.0
+    container: cypress/included:13.13.2
     steps:
       - uses: actions/checkout@v2
 

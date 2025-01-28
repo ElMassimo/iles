@@ -2,19 +2,19 @@ import { promises as fs } from 'fs'
 import { basename, resolve, relative } from 'pathe'
 import type { PluginOption, ResolvedConfig, ViteDevServer } from 'vite'
 import { transformWithEsbuild } from 'vite'
+import { getUserShell } from './html';
 
 import MagicString from 'magic-string'
 
 import type { AppConfig, AppClientConfig } from '../shared'
 import { ILES_APP_ENTRY } from '../constants'
-import { APP_PATH, APP_COMPONENT_PATH, USER_APP_REQUEST_PATH, USER_SITE_REQUEST_PATH, APP_CONFIG_REQUEST_PATH, NOT_FOUND_COMPONENT_PATH, NOT_FOUND_REQUEST_PATH, DEBUG_COMPONENT_PATH } from '../alias'
+import { APP_PATH, APP_COMPONENT_PATH, USER_APP_REQUEST_PATH, USER_SITE_REQUEST_PATH, APP_CONFIG_REQUEST_PATH, NOT_FOUND_COMPONENT_PATH, NOT_FOUND_REQUEST_PATH, USER_APP_ID_VIRTUAL, USER_APP_ID_VIRTUAL_RESOLVED, USER_SITE_ID_VIRTUAL, USER_SITE_ID_VIRTUAL_RESOLVED, DEBUG_COMPONENT_PATH } from '../alias'
 import { configureMiddleware } from './middleware'
 import { serialize, pascalCase, exists, debug } from './utils'
 import { parseId } from './parse'
 import { wrapIslandsInSFC, wrapLayout } from './wrap'
 import { extendSite } from './site'
 import { detectMDXComponents } from './markdown'
-import { autoImportComposables, writeComposablesDTS } from './composables'
 import documents from './documents'
 
 function isMarkdown (path: string) {
@@ -67,8 +67,6 @@ export default function IslandsPlugins (appConfig: AppConfig): PluginOption[] {
         root = config.root
         isBuild = config.command === 'build'
         appConfig.resolvePath = config.createResolver()
-
-        writeComposablesDTS(root)
 
         // Detect mdxComponents in app.ts to ensure MDX files are compiled accordingly.
         const result = await transformUserFile(appPath)
@@ -124,6 +122,60 @@ export default function IslandsPlugins (appConfig: AppConfig): PluginOption[] {
         server = devServer
         return configureMiddleware(appConfig, server, defaultLayoutPath)
       },
+      async transformIndexHtml (html, ctx) {
+        const indexHtmlFilePath = resolve(root, 'index.html')
+        if (ctx.filename === indexHtmlFilePath) {
+          // Validate user provided index.html
+          const {
+            userShell,
+            isValidUserShell,
+            errorMsgUserShell,
+          } = await getUserShell(appConfig, html)
+
+          if (!isValidUserShell) {
+            throw new Error(errorMsgUserShell)
+          }
+          return userShell
+        }
+      }
+    },
+    {
+      // app.ts (optional) - use virtual if not user-provided
+      name: 'iles:user-app',
+      enforce: 'pre',
+      resolveId (id) {
+        if (id === USER_APP_ID_VIRTUAL) {
+          return USER_APP_ID_VIRTUAL_RESOLVED
+        }
+        // Prevent import analysis failure if user-app (app.ts) doesn't exist.
+        if (id === appPath) return resolve(root, id.slice(1))
+      },
+      async load (id) {
+        if (id === USER_APP_ID_VIRTUAL_RESOLVED) {
+          const userAppExists = await exists(appPath)
+          return userAppExists ? `import userApp from "${appPath.replace('.ts', '')}"
+export default userApp`  : 'export default {}'
+        }
+      },
+    },
+    {
+      // site.ts (optional) - use virtual if not user-provided
+      name: 'iles:site-app',
+      enforce: 'pre',
+      resolveId (id) {
+        if (id === USER_SITE_ID_VIRTUAL) {
+          return USER_SITE_ID_VIRTUAL_RESOLVED
+        }
+        // Prevent import analysis failure if site-app (site.ts) doesn't exist.
+        if (id === sitePath) return resolve(root, id.slice(1))
+      },
+      async load (id) {
+        if (id === USER_SITE_ID_VIRTUAL_RESOLVED) {
+          const userSiteExists = await exists(sitePath)
+          return userSiteExists ? `import siteRef from "${sitePath.replace('.ts', '')}"
+export default siteRef`  : 'export default {}'
+        }
+      },
     },
     {
       name: 'iles:detect-islands-in-vue',
@@ -153,20 +205,9 @@ export default function IslandsPlugins (appConfig: AppConfig): PluginOption[] {
     plugins.vue,
     ...appConfig.vitePlugins,
     plugins.components,
-
+    plugins.autoImport,
+    
     documents(appConfig),
-
-    {
-      name: 'iles:composables',
-      enforce: 'post',
-      async transform (code, id) {
-        if (!id.startsWith(appConfig.srcDir)) return
-
-        const { path, query } = parseId(id)
-        if (isVueScript(path, query) || /\.[tj]sx?/.test(path))
-          return await autoImportComposables(code, id)
-      },
-    },
 
     {
       name: 'iles:page-data',
@@ -216,8 +257,11 @@ export default function IslandsPlugins (appConfig: AppConfig): PluginOption[] {
         }
 
         if (isPage) {
+          const layoutPath = `${layoutsRoot}/${layout}.vue`
+          const layoutExists = await exists(resolve(root, layoutPath.slice(1)))
+
           appendToSfc('layoutName', serialize(layout))
-          appendToSfc('layoutFn', String(layout) === 'false'
+          appendToSfc('layoutFn', String(layout) === 'false' || !layoutExists
             ? 'false'
             : `() => import('${layoutsRoot}/${layout}.vue').then(m => m.default)`)
         }

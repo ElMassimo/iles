@@ -1,0 +1,445 @@
+[srcDir]: /config#srcDir
+[devtools1]: https://user-images.githubusercontent.com/1158253/133314267-f0ba784c-ff64-4ee8-b2bf-97ecffc2facd.jpg
+[devtools2]: https://user-images.githubusercontent.com/1158253/133314279-1edc22d1-3ffb-414e-b994-212cb316593b.jpg
+[MDX]: /guide/markdown
+[glob]: https://vitejs.dev/guide/features.html#glob-import
+[config]: /config#configuring-%C3%AEles
+[frontmatter]: /guide/markdown#frontmatter-and-meta
+[routing]: /guide/routing
+[islands]: /guide/islands
+[siteUrl]: /config#siteurl
+[useDocuments]: /guide/documents
+[frameworks]: /guide/frameworks
+[head and meta]: /guide/head-and-meta
+[discussion]: https://github.com/ElMassimo/iles/discussions/6#discussioncomment-1479755
+[`@unhead/vue`]: https://unhead.unjs.io/setup/vue/installation
+[shortcodes]: /guide/markdown#advanced-provide-components-shortcodes
+[vue-router]: https://next.router.vuejs.org/
+[discussion]: https://github.com/ElMassimo/iles/discussions/6#discussioncomment-1479755
+[unplugin-auto-import]: https://github.com/unplugin/unplugin-auto-import#configuration
+[unplugin-vue-components]: https://github.com/unplugin/unplugin-vue-components#configuration
+[autoImport key]: /guide/modules#unplugin-auto-import
+[components key]: /guide/modules#unplugin-vue-components
+
+# Project Structure 💻
+
+In this section, we'll cover the basics to start building an <Iles/> application.
+
+## Default App Structure 📂
+
+<div class="language-tree">
+<pre class="code">
+<code><kbd class="-ml-2"><a href="#aliases-and-auto-imports">src/</a></kbd>
+  ├── <kbd><a href="#components">components/</a></kbd>
+  │    ├── ReadingTime.vue
+  │    └── Author.vue
+  │
+  ├── <kbd><a href="#layouts">layouts/</a></kbd>
+  │    ├── default.vue
+  │    └── post.vue
+  │
+  ├── <kbd><a href="#pages">pages/</a></kbd>
+  │    ├── posts/
+  │    │    ├── intro.mdx
+  │    │    └── goodbye.mdx
+  │    ├── about.vue
+  │    └── index.mdx
+  │
+  ├── <kbd><a href="#site">site.ts</a></kbd>
+  └── <kbd><a href="#app-2">app.ts</a></kbd></code>
+</pre>
+</div>
+
+## Aliases and Auto-Imports ✨ 
+
+### Aliases
+
+<kbd>srcDir</kbd> is the `src` directory at your project root, and is aliased as `~/` or `@/`. 
+
+For example:
+
+```ts
+// Named import from `src/utils/index.ts`
+import { camelize } from '~/utils'
+```
+
+```vue
+<!-- Asset import of src/assets/logo.svg -->
+<img src="@/assets/logo.svg"/>
+```
+
+### Auto Imports
+
+Îles auto-imports APIs on-demand, powered by [unplugin-auto-import] in the following file extensions.
+
+- `.vue`, `.md`, `.mdx`, `.ts`, `.tsx`, `.js`, `.jsx`, `.svelte`
+
+The auto-imported APIs includes: 
+
+- `vue` APIs: `ref`, `computed`, `reactive`, etc.
+- `Îles` composables: `usePage`, `useRoute`, `definePageComponent`, `useDocuments`.
+- `@unhead/vue` composables: `useHead`, `useSeoMeta`, `useScript`, etc.
+- Any composables in your `src/composables` folder. 
+
+To illustrate, the imports in the below example are not required.
+
+```vue
+<script setup lang="ts">
+import { computed } from 'vue' // not required
+import { usePage } from 'iles' // not required
+import { useHead } from '@unhead/vue' // not required
+import { isDark, toggleDark } from '@/composables/dark' // not required
+
+const toggleTheme = () => {
+  // Trigger with button click in the template
+  toggleDark() 
+}
+
+const { frontmatter, site, route } = usePage()
+const { title: pageTitle, description } = frontmatter
+const { title: siteTitle, titleSeparator } = site
+const canonicalUrl = new URL(route.path, site.url)
+
+useHead({
+  title: pageTitle
+    ? `${pageTitle} ${titleSeparator} ${siteTitle}`
+    : siteTitle,
+  meta: [
+    {
+      name: 'description',
+      content: description,
+    },
+  ],
+  link: [
+    {
+      rel: 'canonical',
+      href: canonicalUrl.href,
+    },
+  ],
+})
+
+const navs = [
+  { title: 'Home', to: '/' },
+  { title: 'About', to: '/about' },
+]
+const currentPath = computed(() => {
+  return route.path
+})
+
+</script>
+```
+
+> Use the [`autoImport`][autoImport key] key in `iles.config.ts` to customize [Auto Import][unplugin-auto-import] configurations.
+
+> [Auto Import][unplugin-auto-import] also supports presets and resolvers for popular libraries such as `vue-i18n`, `@vueuse/core`, `pinia`, `primevue`, etc.
+
+## Components 🧱
+
+Components in the <kbd>src/components</kbd> directory will be auto-imported on-demand, powered by [`unplugin-vue-components`](https://github.com/antfu/unplugin-vue-components).
+
+Îles extends this so that you don't need to import components in [MDX files][mdx].
+
+> Use the [`components`][components key] key in `iles.config.ts` to customize [Auto Import][unplugin-vue-components] configurations for components.
+
+> [Auto Import][unplugin-vue-components] configurations for components also includes options such as extensions, directories to scan, resolvers etc.
+
+## Layouts 📐
+
+Components in the <kbd>src/layouts</kbd> directory will be available as layouts, and they should provide a default `<slot/>`. 
+
+Pages may specify a layout using the `layout` property in frontmatter:
+
+```md
+---
+layout: post
+---
+```
+
+Layouts and Vue pages can also specify a parent layout using a `layout` attribute in the `template`:
+
+```vue
+<template layout="post">
+```
+
+> Layouts are optional; however, having a default layout is highly recommended.
+>
+> The `default` layout will be used for all pages unless specified.
+> 
+> Pages may opt-out by specifying `layout: false`
+
+<Tip warn>
+Layout files must be in lowercase, as in `post.vue` or `default.vue`.
+</Tip>
+
+## Pages 🛣
+
+[Routes will be auto-generated][routing] for files in the <kbd>src/pages</kbd> directory with the same file structure.
+
+Pages can be Vue components or [MDX files][mdx], and may specify frontmatter and route metadata.
+
+You may use [components][frameworks] inside [MDX], and access any properties defined in the [frontmatter]:
+
+```mdx
+---
+title: Song for You
+audio: /song-for-you.mp3
+---
+
+I've recently recorded a song, listen:
+
+<Song title={title} src={audio}/>
+```
+
+In Vue single-file components you can use a `<page>` block to define frontmatter:
+
+```vue
+<page>
+title: Song for You
+audio: /song-for-you.mp3
+</page>
+
+<template>
+  <p>I've recently recorded a song, listen:</p>
+
+  <Song :title="$frontmatter.title" :src="$frontmatter.audio"/>
+</template>
+```
+
+<PageHooks/>
+
+### Using Page Data
+
+You may access information about the current page using the `usePage` composition API helper, or by using the  `$frontmatter` or `$meta` global properties.
+
+- `frontmatter`: The [frontmatter] of an [MDX][frontmatter] document or Vue component (in `<page>`)
+- `meta`: Information about the page, including `href`, `filename`, and `lastUpdated`
+
+```vue
+<script setup>
+import { usePage } from 'iles' // not required
+
+const { frontmatter, meta } = usePage()
+</script>
+```
+
+<AutoImported/>
+
+
+### Glob Imports
+
+When rendering collections or index pages, you can leverage <kbd>[useDocuments]</kbd> to conveniently access multiple page components and their data.
+
+```ts {2}
+export function usePosts () {
+  const posts = useDocuments('~/pages/posts')
+  return computed(() => posts.value.sort(byDate))
+}
+```
+
+Page data is available directly in the component modules:
+
+```vue
+<script setup lang="ts">
+import { usePosts } from '~/composables/posts'
+
+const posts = usePosts()
+</script>
+
+<template>
+  <h1>Posts</h1>
+  <article v-for="post of posts" :key="post.href">
+    <time :datetime="post.date.toISOString()">{{ formatDate(post.date) }}</time>
+    <h2>
+      <a :href="post.href">{{ post.title }}</a>
+    </h2>
+    <component :is="post" excerpt/>
+  </article>
+</template>
+```
+
+## Site 🌐
+
+`src/site.ts` can be used to provide site-wide information such as `title`, `description`, etc.
+
+```ts
+export default {
+  title: 'About',
+  description: 'Learn more about what we do',
+}
+```
+
+It can be accessed as `$site` in component instances, or by using `usePage`.
+
+```vue
+<script setup>
+import { usePage } from 'iles' // not required
+
+const { site } = usePage()
+</script>
+```
+
+It's also displayed in the page information in _Islands_ devtools.
+
+> Adding `src/site.ts` to your project is optional.
+> 
+> Alternatively, you can use composables from [`@unhead/vue`] to manage the [head and meta] tags of your page.
+
+## App 📱
+
+<Iles/> will pre-configure a Vue 3 shell that, during development, will load your site comprising of your [layouts](#layouts) and [pages](#pages) within it.
+
+`src/app.ts` can be used to provide additional configurations with the `defineApp` helper, allowing you to customize:
+- using `enhanceApp`, the development and build logic of this "outer" shell.
+- using `enhanceIslands`, add Vue plugins and top level runtime logic in your Vue Islands.
+- your site's [head and meta] tags, scroll behavior, etc.
+
+> This "outer" shell is loaded only during development and is not included in your built site.
+>
+> Adding `src/app.ts` to your project is optional.
+
+```ts
+import { defineApp } from 'iles'
+
+export default defineApp({
+  enhanceApp ({ app, head, router }) {
+    // Configure the "outer" shell to customize it's development/build logic
+  },
+  enhanceIslands ({ app }) {
+    // Configure Vue Islands with plugins and other top level runtime logic
+  },
+  head ({ frontmatter, site }) {
+    return {
+      meta: [
+        { property: 'author', content: site.author },
+        { property: 'keywords', content: computed(() => frontmatter.tags) },
+      ]
+    }
+  },
+  router: {
+    scrollBehavior (current, previous, savedPosition) {
+      // Configure the scroll behavior
+    }, 
+  },
+  mdxComponents: {
+      // Options for tag mapping in MDX
+  },
+  socialTags: true // default
+})
+```
+
+### `enhanceApp` (Development only)
+
+- **Type:** `(context: AppContext) => void | Promise<void>`
+
+A hook that allows you to add additional development/build logic. See this [discussion] thread for few suggestions.
+
+### `enhanceIslands` (Vue Islands only)
+
+- **Type:** `(context: IslandContext) => void | Promise<void>`
+
+A hook that allows you to extend your Vue Islands with plugins such as Pinia, i18n, Vuetify, and more, along with any other top-level runtime logic on your site.
+
+The hook will be invoked for every Vue Island in your site.
+
+```ts
+import { defineApp } from 'iles'
+import { createI18n } from 'vue-i18n'
+import { createPinia } from 'pinia'
+import { createVuetify } from 'vuetify'
+
+const i18n = createI18n({
+  // vue-i18n options ...
+})
+const pinia = createPinia()
+const vuetify = createVuetify({
+  // vuetify options ...
+})
+
+export default defineApp({
+  enhanceIslands({ app }) {
+    app.use(i18n)
+    app.use(pinia)
+    if(app._component.name === 'Island: ChatboxIsland') {
+      // To initialise Vuetify only within ChatboxIsland.vue
+      app.use(vuetify)
+    }
+  },
+})
+```
+
+### `head`
+
+- **Type:** `HeadObject | (context: AppContext) => HeadObject`
+
+Set the [head and meta] tags, additional CSS, or scripts using [`@unhead/vue`].
+
+### `router`
+
+- **Type:** `RouterOptions`
+
+Configure [`vue-router`][vue-router] by providing options such as `scrollBehavior` and `linkActiveClass`.
+
+### `mdxComponents`
+
+- **Type:** `MDXComponents | (context: AppContext) => MDXComponents`
+
+Provide an object that [maps tag names in MDX to components][shortcodes] to render.
+
+```ts
+import { defineApp } from 'iles'
+import Image from '~/components/Image.vue'
+
+export default defineApp({
+  mdxComponents: {
+    b: 'strong',
+    img: Image,
+  },
+})
+```
+
+### `socialTags`
+
+- **Type:** `boolean`
+- **Default:** `true`
+
+Some social tags can be inferred from the <kbd>[site](#site)</kbd>.
+
+Set it to `false` to avoid adding social tags such as `og:title` and `twitter:description`.
+
+## Devtools 🛠
+
+Page information is available in a debug panel, similar to VitePress, but you may also access an _Islands_ inspector in Vue devtools.
+
+This can be useful when debugging [islands hydration][islands].
+
+## Iles Configuration ⚙️
+
+You may provide a `iles.config.ts` configuration file at your project root to customize the various îles-specific features.
+
+You may also provide a `vite.config.ts` configuration file (or use the `vite` key in `iles.config.ts`) to add vite plugins and customize the various vite-specific features.
+
+### Sitemap 🗺
+
+A sitemap can be automatically generated when you build your site, all you need to do is configure <kbd>[siteUrl]</kbd> in your `iles.config.ts` configuration file. 
+
+If configured, `siteUrl` will also make it available as `site.url` and `site.canonical`.
+
+```ts
+import { defineConfig } from 'iles'
+
+export default defineConfig({
+  siteUrl: 'https://iles-docs.netlify.app',
+})
+```
+ 
+If you would like to opt-out, you can [disable it explicitly][config]:
+
+```ts
+export default defineConfig({
+  ssg: {
+    sitemap: false
+  },
+})
+```
+
+> To learn more about further Iles and Vite configurations, refer to the [config] page.

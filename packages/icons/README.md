@@ -19,7 +19,7 @@
 </p>
 
 [îles]: https://github.com/ElMassimo/iles
-[components]: https://iles-docs.netlify.app/guide/development
+[components]: https://iles-docs.netlify.app/guide/project-structure
 [unplugin-icons]: https://github.com/antfu/unplugin-icons
 
 An [îles] module to add and configure [unplugin-icons]:

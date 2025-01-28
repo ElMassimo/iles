@@ -8,24 +8,36 @@ const { frontmatter, site } = usePage()
 let imageUrl = $computed(() => `${site.url}${frontmatter.image || bannerSrc}`)
 
 const isProd = import.meta.env.PROD
+
+const author = frontmatter.author || site.author
+const keywords = (frontmatter.tags || site.tags)?.join(', ')
+
+// Manage head meta with useSeoMeta
+useSeoMeta({
+  author,
+  keywords,
+
+  // Open Graph / Facebook / LinkedIn / Discord
+  ogType: 'website',
+  ogImage: imageUrl,
+  ogImageAlt: 'Îles',
+  ogLocale: 'en_US',
+
+  // Twitter (X)
+  twitterCard: 'summary_large_image',
+  twitterImage: imageUrl,
+  twitterImageAlt: 'Îles',
+  twitterSite: site.twitterHandle,
+  twitterCreator: site.authorHandle,
+})
 </script>
 
 <template>
   <Head>
-    <meta property="author" :content="site.author">
-    <meta property="keywords" :content="site.tags.join(', ')">
     <meta property="HandheldFriendly" content="True">
     <meta property="MobileOptimized" content="320">
     <meta http-equiv="cleartype" content="on">
     <meta name="theme-color" content="#5C7E8F">
-    <meta property="og:type" content="website">
-    <meta property="og:locale" content="en_US">
-    <meta property="og:image" :content="imageUrl">
-    <meta property="twitter:image" :content="imageUrl">
-    <meta property="twitter:image:alt" content="îles">
-    <meta property="twitter:site" :content="`@${site.twitterHandle}`">
-    <meta property="twitter:creator" :content="`@${site.authorHandle}`">
-    <meta property="twitter:card" content="summary_large_image">
     <link rel="icon" type="image/svg+xml" :href="logoSrc">
     <link rel="shortcut icon" :href="faviconSrc">
     <link rel="mask-icon" :href="logoSrc" color="#5C7E8F">

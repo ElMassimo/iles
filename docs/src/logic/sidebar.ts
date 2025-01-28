@@ -1,11 +1,9 @@
-import { MaybeRefOrGetter, computed, toValue } from 'vue'
-
 import type { Heading } from '@islands/headings'
 import type { SideBarItem, SideBarGroup } from '~/logic/config'
-
+import type { MaybeRefOrGetter } from 'vue';
 import { normalize } from '~/logic/utils'
 
-export function useSideBarLinks () {
+export function useSideBarLinks() {
   const { route, site } = usePage()
 
   const currentPath = $computed(() => normalize(route.path))
@@ -18,7 +16,7 @@ export function useSideBarLinks () {
   }
 }
 
-export function useSideBar () {
+export function useSideBar() {
   const { frontmatter, meta, site, route } = usePage()
 
   return computed(() => {
@@ -37,7 +35,7 @@ export function useSideBar () {
   })
 }
 
-export function useActive (itemRef: MaybeRefOrGetter<SideBarItem>) {
+export function useActive(itemRef: MaybeRefOrGetter<SideBarItem>) {
   const { route } = usePage()
 
   return computed(() => {
@@ -54,7 +52,7 @@ export function useActive (itemRef: MaybeRefOrGetter<SideBarItem>) {
   })
 }
 
-function linksFromHeadings (heading: undefined | Heading[], topLevel: number, depth: number): SideBarItem[] {
+function linksFromHeadings(heading: undefined | Heading[], topLevel: number, depth: number): SideBarItem[] {
   if (heading === undefined) return []
 
   const ret: SideBarItem[] = []

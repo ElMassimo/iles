@@ -42,6 +42,12 @@ export function installPageData (app: App, siteRef: Ref<UserSite>): PageData {
   const meta = reactiveFromFn(() => page.value.meta || {})
   const frontmatter = reactiveFromFn(() => page.value.frontmatter || {})
   const props = computedInPage(() => propsFromRoute(route))
+
+  siteRef.value = {
+    title: 'Îles',
+    description: 'An Îles Site',
+    ...siteRef.value,
+  }
   const site = toReactive(siteRef)
 
   const pageData: PageData = { route, page, meta, frontmatter, site, props }

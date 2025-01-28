@@ -18,8 +18,8 @@ describe('building docs site', () => {
     expect(files.sort()).toEqual(expect.arrayContaining([
       '404.html',
       '_headers',
-      'assets/app-Y_77dvPh.css',
       'assets/turbo.BkUC-S31.js',
+      'assets/user-app-Y_77dvPh.css',
       'favicon.ico',
       'feed.rss',
       'index.html',
@@ -45,8 +45,8 @@ describe('building docs site', () => {
   })
 
   test('styles', async () => {
-    await assertSnapshot('assets/app-Y_77dvPh.css')
-    await assertSnapshot('assets/default--6gluetn.css')
+    await assertSnapshot('assets/user-app-Y_77dvPh.css')
+    await assertSnapshot('assets/Island--6gluetn.css')
   })
   test('sitemap', async () => {
     await assertSnapshot('sitemap.xml')
@@ -98,11 +98,13 @@ async function assertHTML (path: string, { title }: any = {}) {
   expectContent.toContain('<meta name="description" content="Updates, tips & opinions from the maintainers of Vue.js.">')
   expectContent.toContain('<link rel="sitemap" href="https://the-vue-point-with-iles.netlify.app/sitemap.xml">')
   expectContent.toContain(`<meta property="og:url" content="https://the-vue-point-with-iles.netlify.app/${path.replace('index.html', '')}">`)
-  expectContent.toContain('<link rel="stylesheet" href="/assets/default-.css">')
-  expectContent.toContain('<link rel="stylesheet" href="/assets/app.css">')
+  expectContent.toContain('<link rel="stylesheet" href="/assets/Island-.css">')
+  expectContent.toContain('<link rel="stylesheet" href="/assets/user-app.css">')
 
   expectContent.toContain('<ile-root id="ile-1">'
     + '<div class="text-sm text-gray-500 leading-5">'
+    + '<a class="hover:text-gray-700" href="/cat-zone">Cat Zone</a>'
+    + '<span class="mr-1 ml-1">·</span>'
     + '<a class="hover:text-gray-700" href="https://github.com/ElMassimo/iles/tree/main/playground/the-vue-point" target="_blank" rel="noopener noreferrer">'
     + '<span class="hidden sm:inline">GitHub</span> Source</a>')
   if (path.includes('/posts/'))

@@ -12,10 +12,10 @@
     "dist",
     "src"
   ],
-  "types": "dist/pages.d.ts",
   "main": "dist/pages.js",
   "exports": {
     ".": {
+      "types": "./dist/pages.d.ts",
       "import": "./dist/pages.js",
       "require": "./src/pages.cjs"
     },

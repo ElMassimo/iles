@@ -4,7 +4,6 @@ path: /feed.rss
 
 <script setup lang="ts">
 import type { FeedOptions, FeedItem } from '@islands/feed'
-import { getPosts } from '~/logic/posts'
 
 const { site } = usePage()
 const url = site.url

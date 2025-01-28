@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { watch, onBeforeUnmount } from 'vue'
 
 const { date } = defineProps<{ date: Date }>()
 

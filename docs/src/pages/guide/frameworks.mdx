@@ -1,12 +1,12 @@
-[hydration]: /guide/hydration
-[client:none]: /guide/hydration#clientnone
+[islands]: /guide/islands
+[client:none]: /guide/islands#clientnone
 [mdx files]: /guide/markdown
 
-[Vue]: /guide/plugins#vitejsplugin-vue
-[Preact]: /guide/plugins#preactpreset-vite
-[SolidJS]: /guide/plugins#vite-plugin-solid
-[Svelte]: /guide/plugins#sveltejsvite-plugin-svelte
-[vanilla JS]: /guide/client-scripts#vanilla-components
+[Vue]: /guide/modules#vitejsplugin-vue
+[Preact]: /guide/modules#preactpreset-vite
+[SolidJS]: /guide/modules#vite-plugin-solid
+[Svelte]: /guide/modules#sveltejsvite-plugin-svelte
+[vanilla JS]: /guide/islands#vanilla-components
 
 [useDark]: https://vueuse.org/core/usedark/
 
@@ -23,7 +23,7 @@ Components from the following frameworks can be embedded in [Vue] and [MDX files
 - [Vanilla JS]
 
 <Tip warn>
-You must add a [hydration directive][hydration] when using non-Vue components in Vue and [MDX files].
+You must add a [hydration directive][islands] when using non-Vue components in Vue and [MDX files].
 </Tip>
 
 > No JS is shipped if you use <kbd>[client:none]</kbd> 🏝
@@ -31,7 +31,7 @@ You must add a [hydration directive][hydration] when using non-Vue components in
 ## Choosing a Framework 🤔
 
 While Vue is the natural choice given that pages and layouts in <Iles/> are Vue components,
-you might want to use a framework with a smaller runtime for the [interactive bits][hydration].
+you might want to use a framework with a smaller runtime for the [interactive bits][islands].
 
 For efficiency, you would want all islands to use the same framework, to offset
 the size of the runtime.

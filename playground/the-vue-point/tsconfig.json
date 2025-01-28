@@ -3,7 +3,7 @@
     "baseUrl": ".",
     "module": "esnext",
     "target": "esnext",
-    "moduleResolution": "node",
+    "moduleResolution": "bundler",
     "jsx": "preserve",
     "jsxFactory": "h",
     "jsxFragmentFactory": "Fragment",
@@ -19,5 +19,10 @@
     "paths": {
       "~/*": ["src/*"]
     }
-  }
+  },
+  "include": [
+    "auto-imports.d.ts",
+    "components.d.ts",
+    "composables.d.ts"
+  ]
 }

@@ -48,7 +48,7 @@ export async function wrapIslandsInSFC (config: AppConfig, code: string, filenam
   if (errors.length > 0) return
 
   if ((scriptClient && 'setup' in scriptClient.attrs) || (scriptSetup && Object.keys(scriptSetup.attrs).some(attr => attr.startsWith('client:'))))
-    throw new Error('Incorrect usage of hydration strategy in script setup.\nSee https://iles-docs.netlify.app/guide/client-scripts#client-script-block')
+    throw new Error('Incorrect usage of hydration strategy in script setup.\nSee https://iles-docs.netlify.app/guide/islands#client-script-block')
 
   if (!template?.ast?.children.length) {
     if (scriptClient) { throw new Error(`Vue components with <script client:...> must define a template containing at least one tag. No valid template found in ${filename}`) }
