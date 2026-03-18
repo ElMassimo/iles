@@ -244,7 +244,7 @@ import.meta.hot?.accept('/${relative(root, path)}', (...args) => __ILES_PAGE_UPD
     appConfig.jsx === 'preact' && {
       name: 'iles:preact-jsx-config',
       config () {
-        return { oxc: { include: /\.(tsx?|jsx)$/ } }
+        return { oxc: { jsx: { runtime: 'automatic', importSource: 'preact' }, include: /\.(tsx?|jsx)$/ } }
       },
     },
   ]
