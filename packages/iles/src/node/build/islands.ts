@@ -2,7 +2,7 @@ import { promises as fs } from 'fs'
 import { relative, resolve } from 'pathe'
 import { build as viteBuild, mergeConfig as mergeViteConfig } from 'vite'
 import type { UserConfig as ViteUserConfig, Plugin } from 'vite'
-import type { PreRenderedChunk } from 'rollup'
+import type { PreRenderedChunk } from 'rolldown'
 import IslandsPlugins from '../plugin/plugin'
 import type { AppConfig, IslandsByPath } from '../shared'
 import { TURBO_SCRIPT_PATH } from '../alias'
@@ -38,8 +38,8 @@ export async function bundleIslands (config: AppConfig, islandsByPath: IslandsBy
       emptyOutDir: false,
       outDir: config.outDir,
       manifest: true,
-      minify: 'esbuild',
-      rollupOptions: {
+      minify: true,
+      rolldownOptions: {
         input: entryFiles,
         output: {
           entryFileNames: chunkFileNames,

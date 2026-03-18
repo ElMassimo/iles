@@ -1,7 +1,7 @@
 import { existsSync } from 'fs'
 import { join } from 'pathe'
 import { renderSSRHead } from '@unhead/ssr'
-import type { RollupOutput } from 'rollup'
+import type { RolldownOutput } from 'rolldown'
 import { renderers } from '@islands/prerender'
 import { IslandDefinition } from 'iles'
 import { renderToString } from 'vue/server-renderer'
@@ -39,7 +39,7 @@ export async function renderPages (
 export async function renderPage (
   config: AppConfig,
   islandsByPath: IslandsByPath,
-  clientChunks: RollupOutput['output'],
+  clientChunks: RolldownOutput['output'],
   route: RouteToRender,
   createApp: CreateAppFactory,
 ) {
@@ -68,7 +68,7 @@ export async function renderPage (
 </html>`
 }
 
-function stylesheetTagsFrom (config: AppConfig, clientChunks: RollupOutput['output']) {
+function stylesheetTagsFrom (config: AppConfig, clientChunks: RolldownOutput['output']) {
   return clientChunks
     .filter(chunk => chunk.type === 'asset' && chunk.fileName.endsWith('.css'))
     .map(chunk => `<link rel="stylesheet" href="${config.base}${chunk.fileName}">`)

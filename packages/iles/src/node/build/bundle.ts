@@ -1,5 +1,5 @@
 import { promises as fs } from 'fs'
-import type { RollupOutput } from 'rollup'
+import type { RolldownOutput } from 'rolldown'
 import type { Plugin } from 'vite'
 import glob from 'fast-glob'
 import { relative, dirname, resolve, join } from 'pathe'
@@ -55,17 +55,16 @@ async function bundleWithVite (config: AppConfig, entrypoints: string[] | Entryp
     build: {
       ssr,
       cssCodeSplit: htmlBuild || !ssr,
-      minify: ssr ? false : 'esbuild',
+      minify: ssr ? false : true,
       emptyOutDir: ssr,
       outDir: ssr ? config.tempDir : config.outDir,
       sourcemap: false,
-      rollupOptions: {
+      rolldownOptions: {
         input: entrypoints,
-        preserveEntrySignatures: htmlBuild ? undefined : 'allow-extension',
         treeshake: htmlBuild,
       },
     },
-  } as ViteUserConfig)) as RollupOutput
+  } as ViteUserConfig)) as RolldownOutput
 }
 
 // Internal: Currently SSG supports a single stylesheet for all pages.

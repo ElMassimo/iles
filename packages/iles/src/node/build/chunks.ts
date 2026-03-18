@@ -1,5 +1,8 @@
-import type { GetManualChunk, ManualChunkMeta } from 'rollup'
+import type { GetModuleInfo } from 'rolldown'
 import type { AppConfig } from '../shared'
+
+type ManualChunkMeta = { getModuleInfo: GetModuleInfo }
+type GetManualChunk = (id: string, meta: ManualChunkMeta) => string | void
 
 export function extendManualChunks (config: AppConfig): GetManualChunk {
   const userChunks = config.ssg.manualChunks

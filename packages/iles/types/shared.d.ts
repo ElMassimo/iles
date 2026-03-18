@@ -1,5 +1,5 @@
 import type { ResolveFn, UserConfig as ViteOptions, ConfigEnv, PluginOption as VitePluginOption } from 'vite'
-import type { GetManualChunk } from 'rollup'
+import type { GetModuleInfo } from 'rolldown'
 import type { App, Ref, DefineComponent, VNode, AsyncComponentLoader } from 'vue'
 import type VuePlugin, { Options as VueOptions } from '@vitejs/plugin-vue'
 import type ComponentsPlugin from 'unplugin-vue-components/vite'
@@ -164,7 +164,7 @@ export interface BaseIlesConfig extends PagesOptions {
     /**
      * Allows to configure how JS chunks for islands should be grouped.
      */
-    manualChunks?: GetManualChunk
+    manualChunks?: (id: string, meta: { getModuleInfo: GetModuleInfo }) => string | void
     /**
      * Whether to generate a sitemap.xml and inject the meta tag referencing it.
      * NOTE: Must provide siteUrl to enable sitemap generation.

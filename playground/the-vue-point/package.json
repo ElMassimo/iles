@@ -26,7 +26,8 @@
     "@vue-macros/reactivity-transform": "^1.0.4",
     "iles": "workspace:*",
     "remark-gfm": "^4.0.0",
-    "unocss": "^0.61.8",
+    "@unocss/reset": "^66.6.6",
+    "unocss": "^66.6.6",
     "vue-tsc": "^2.1.10"
   }
 }
