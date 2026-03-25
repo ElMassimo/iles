@@ -58,7 +58,7 @@ export default function IlesPages (): any {
       },
       async configureServer (server) {
         options.server = server
-        plugin.handleHotUpdate = handleHMR(api, options, () => { generatedRoutes = undefined })
+        plugin.hotUpdate = handleHMR(api, options, () => { generatedRoutes = undefined })
       },
       async buildStart () {
         await api.addAllPages()

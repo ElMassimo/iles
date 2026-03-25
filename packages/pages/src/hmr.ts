@@ -1,37 +1,33 @@
 import type { ViteDevServer, Plugin } from 'vite'
 import { debug, slash } from './utils'
-import { Awaitable, MODULE_ID, ResolvedOptions, PagesApi } from './types'
+import { MODULE_ID, ResolvedOptions, PagesApi } from './types'
 
-export function handleHMR (api: PagesApi, options: ResolvedOptions, clearRoutes: () => void): Plugin['handleHotUpdate'] {
+export function handleHMR (api: PagesApi, options: ResolvedOptions, clearRoutes: () => void): Plugin['hotUpdate'] {
   const server = options.server!
 
-  onPage('add', async (path) => {
-    const page = await api.addPage(path)
-    debug.hmr('add %s %O', path, page)
-    return true
-  })
-
-  onPage('unlink', (path) => {
-    api.removePage(path)
-    debug.hmr('remove', path)
-    return true
-  })
-
-  return async (ctx) => {
-    const path = slash(ctx.file)
+  return async function ({ file, type }) {
+    const path = slash(file)
     if (api.isPage(path)) {
-      const { changed, needsReload } = await api.updatePage(path)
-      if (changed) debug.hmr('change', path)
-      if (needsReload) fullReload()
+      switch (type) {
+        case 'create': {
+          const page = await api.addPage(path)
+          debug.hmr('add %s %O', path, page)
+          fullReload()
+          return []
+        }
+        case 'delete': {
+          api.removePage(path)
+          debug.hmr('remove', path)
+          fullReload()
+          return []
+        }
+        case 'update': {
+          const { changed, needsReload } = await api.updatePage(path)
+          if (changed) debug.hmr('change', path)
+          if (needsReload) fullReload()
+        }
+      }
     }
-  }
-
-  function onPage (eventName: string, handler: (path: string) => Awaitable<void | boolean>) {
-    server.watcher.on(eventName, async (path) => {
-      path = slash(path)
-      if (api.isPage(path) && await handler(path))
-        fullReload()
-    })
   }
 
   function fullReload () {
@@ -39,11 +35,6 @@ export function handleHMR (api: PagesApi, options: ResolvedOptions, clearRoutes:
     clearRoutes()
     server.ws.send({ type: 'full-reload' })
   }
-}
-
-function invalidatePageFiles (path: string, { moduleGraph }: ViteDevServer) {
-  moduleGraph.getModulesByFile(path)
-    ?.forEach(mod => moduleGraph.invalidateModule(mod))
 }
 
 function invalidatePagesModule ({ moduleGraph }: ViteDevServer) {
