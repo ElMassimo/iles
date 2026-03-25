@@ -1,4 +1,3 @@
-import { resolve } from 'path'
 import { Plugin, ViteDevServer } from 'vite'
 
 import glob from 'fast-glob'
@@ -112,12 +111,6 @@ export default function documentsPlugin (config: AppConfig): Plugin {
       `
     },
     async transform (code, id) {
-      // Ensure Vite keeps track of files with the documents pattern that are added or removed.
-      if (server && id.startsWith(DOCS_VIRTUAL_ID)) {
-        (server as any)._importGlobMap.set(id, [resolve(root, modulesById[id].pattern)])
-        return
-      }
-
       // Replace each usage of useDocuments with an import of a virtual module.
       if (fileCanUseDocuments.test(id) && !definitionRegex.test(code)) {
         const paths: [string, string][] = []
@@ -135,13 +128,19 @@ export default function documentsPlugin (config: AppConfig): Plugin {
         }
       }
     },
-    handleHotUpdate (ctx) {
-      const file = relative(root, ctx.file)
+    hotUpdate ({ file, modules }) {
+      const relFile = relative(root, file)
+      const extra: typeof modules = []
 
+      // Ensure Vite keeps track of files with the documents pattern that are added or removed.
       for (const id in modulesById) {
-        if (modulesById[id].hasDocument(file))
-          ctx.modules.push(server.moduleGraph.getModuleById(id)!)
+        if (modulesById[id].hasDocument(relFile)) {
+          const mod = this.environment.moduleGraph.getModuleById(id)
+          if (mod) extra.push(mod)
+        }
       }
+
+      if (extra.length) return [...modules, ...extra]
     },
   }
 }
