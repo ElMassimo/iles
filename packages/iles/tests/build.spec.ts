@@ -1,6 +1,6 @@
-import { resolve } from 'path'
 import { promises as fs } from 'fs'
-import { test, describe, expect, beforeAll } from 'vitest'
+import { resolve } from 'path'
+import { beforeAll, describe, expect, test } from 'vitest'
 
 import { execa } from 'execa'
 import glob from 'fast-glob'
@@ -105,7 +105,7 @@ async function assertHTML (path: string, { title }: any = {}) {
   expectContent.toContain('<link rel="sitemap" href="https://the-vue-point-with-iles.netlify.app/sitemap.xml">')
   expectContent.toContain(`<meta property="og:url" content="https://the-vue-point-with-iles.netlify.app/${path.replace('index.html', '')}">`)
   expectContent.toContain('<link rel="stylesheet" href="/assets/app.css">')
-  expectContent.toContain('<link rel="stylesheet" href="/assets/default-.css">')
+  expectContent.toContain('<link rel="stylesheet" href="/assets/default.css">')
 
   expectContent.toContain('<ile-root id="ile-1">'
     + '<div class="text-sm text-gray-500 leading-5">'
