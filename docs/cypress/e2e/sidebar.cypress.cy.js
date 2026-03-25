@@ -1,4 +1,4 @@
-import { visit, navigateTo, goBackHome, assertPage, waitForHydration } from './helpers'
+import { assertPage, visit, visitHome, waitForHydration } from './helpers'
 
 describe('Sidebar Toggle', () => {
   const sidebar = () =>
@@ -24,7 +24,8 @@ describe('Sidebar Toggle', () => {
     sidebarToggle().should('not.be.visible')
   })
 
-  test.skipIf(process.env.CI)('can open in mobile', () => {
+  // test.skipIf(process.env.CI)('can open in mobile', () => {
+  it('can open in mobile', () => {
     visitHome()
     cy.viewport(500, 720)
     visit('/guide/frameworks')
