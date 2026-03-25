@@ -1,7 +1,9 @@
 import type { GetModuleInfo } from 'rolldown'
 import type { AppConfig } from '../shared'
 
-type ManualChunkMeta = { getModuleInfo: GetModuleInfo }
+interface ManualChunkMeta {
+  getModuleInfo: GetModuleInfo
+}
 type GetManualChunk = (id: string, meta: ManualChunkMeta) => string | void
 
 export function extendManualChunks (config: AppConfig): GetManualChunk {
