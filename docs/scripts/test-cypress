@@ -5,7 +5,7 @@ set -e
 cd "$(dirname "$0")/.."
 
 echo '== Starting server =='
-pnpm exec iles preview --port 3050 &
+pnpm exec iles preview --host 0.0.0.0 --port 3050 &
 
 echo '== Waiting for server to respond... =='
 pnpx wait-on http-get://localhost:3050 --delay 1000 --timeout 60000
