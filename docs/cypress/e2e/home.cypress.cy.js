@@ -15,4 +15,14 @@ describe('The Home Page', () => {
 
     goBackHome()
   })
+
+  it('serves a valid pwa-manifest.json', () => {
+    cy.request('/pwa-manifest.json').then((response) => {
+      expect(response.status).to.eq(200)
+      expect(response.headers['content-type']).to.include('application/json')
+      expect(response.body.name).to.eq('îles')
+      expect(response.body.theme_color).to.eq('#5C7E8F')
+      expect(response.body.icons).to.have.length(3)
+    })
+  })
 })
