@@ -35,6 +35,9 @@ jobs:
       - name: Build
         run: pnpm build:all
 
+      - name: Ensure Playwright is available
+        run: pnpm exec playwright install --with-deps
+
       - name: Tests
         run: pnpm test
 
