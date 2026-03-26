@@ -16,15 +16,14 @@
   "type": "module",
   "types": "dist/feed.d.ts",
   "exports": {
-    ".": {
-      "import": "./dist/feed.js",
-      "require": "./src/feed.cjs"
-    },
+    ".": "./dist/feed.mjs",
+    "./types": "./dist/types.mjs",
+    "./render-feed": "./dist/render-feed.mjs",
     "./package.json": "./package.json"
   },
   "scripts": {
-    "dev": "npm run build -- --watch",
-    "build": "tsup src/types.ts src/feed.ts src/render-feed.ts",
+    "dev": "vp pack src/types.ts src/feed.ts src/render-feed.ts --target node20 --watch",
+    "build": "vp pack src/types.ts src/feed.ts src/render-feed.ts --clean --target node20 && tsc --emitDeclarationOnly --noCheck --declaration --outDir dist --skipLibCheck --moduleResolution bundler --module esnext --target esnext --esModuleInterop --resolveJsonModule src/types.ts src/feed.ts src/render-feed.ts",
     "lint": "vp lint",
     "lint:fix": "vp lint --fix"
   },

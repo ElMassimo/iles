@@ -14,18 +14,14 @@
     "src"
   ],
   "type": "module",
-  "main": "dist/mdx.js",
-  "types": "dist/mdx.d.ts",
+  "types": "dist/mdx.d.mts",
   "exports": {
-    ".": {
-      "import": "./dist/mdx.js",
-      "require": "./src/mdx.cjs"
-    },
+    ".": "./dist/mdx.mjs",
     "./package.json": "./package.json"
   },
   "scripts": {
-    "dev": "npm run build -- --watch",
-    "build": "tsup src/mdx.ts",
+    "dev": "vp pack src/mdx.ts --target node20 --watch",
+    "build": "vp pack src/mdx.ts --dts --clean --target node20",
     "tsc": "tsc src/mdx.ts --noEmit --skipLibCheck",
     "lint": "vp lint",
     "lint:fix": "vp lint --fix"
@@ -45,7 +41,6 @@
     "@types/hast": "^3.0.4",
     "hast-util-raw": "^9.0.4",
     "mdast-util-mdx-expression": "^2.0.1",
-    "tsup": "8.2.4",
     "typescript": "^5.6.3",
     "unified": "^11.0.5",
     "vfile": "^6.0.2",

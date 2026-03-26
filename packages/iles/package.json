@@ -24,19 +24,15 @@
     "types",
     "config.js",
     "turbo.js",
-    "index.cjs",
     "jsx-runtime.js",
     "tsconfig.json"
   ],
   "type": "module",
-  "main": "./dist/node/index.js",
-  "module": "./dist/node/index.js",
   "types": "./types/index.d.ts",
   "exports": {
     ".": {
       "types": "./types/index.d.ts",
-      "import": "./dist/node/index.js",
-      "require": "./index.cjs"
+      "import": "./dist/node/index.mjs"
     },
     "./jsx-runtime": "./jsx-runtime.js",
     "./jsx-dev-runtime": "./jsx-runtime.js",
@@ -45,17 +41,15 @@
   },
   "scripts": {
     "dev": "rm -rf dist && npm run dev:shared && npm run dev:start",
-    "dev:start": "run-p dev:client dev:node dev:cjs dev:watch",
+    "dev:start": "run-p dev:client dev:node dev:watch",
     "dev:client": "npm run build:client -- --watch",
-    "dev:node": "npm run build:node -- --watch",
-    "dev:cjs": "npm run build:cjs -- --watch",
+    "dev:node": "vp pack src/node/index.ts src/node/cli.ts --target node20 --out-dir dist/node --watch",
     "dev:shared": "node scripts/copyShared",
     "dev:watch": "node scripts/watchAndCopy",
-    "build": "vp run build:prepare && vp run build:client && vp run build:node && vp run build:cjs",
+    "build": "vp run build:prepare && vp run build:client && vp run build:node",
     "build:prepare": "rm -rf dist && node scripts/copyShared",
     "build:client": "vue-tsc --noEmit -p src/client && tsc -p src/client && node scripts/copyClient",
-    "build:node": "tsup --config tsup.config.ts src/node",
-    "build:cjs": "tsup src/node/publicUtils.ts --config tsup-cjs.config.ts",
+    "build:node": "vp pack src/node/index.ts src/node/cli.ts --clean --target node20 --out-dir dist/node && tsc --emitDeclarationOnly --declaration --outDir dist/node --rootDir src/node --skipLibCheck --moduleResolution bundler --module esnext --target esnext --esModuleInterop --resolveJsonModule src/node/index.ts src/node/plugin/plugin.ts",
     "lint": "vp lint",
     "lint:fix": "vp lint --fix"
   },
@@ -108,7 +102,6 @@
     "rolldown": "1.0.0-rc.9",
     "semver": "^7.6.3",
     "tinyglobby": "0.2.6",
-    "tsup": "8.2.4",
     "typescript": "^5.6.3",
     "vfile": "^6.0.2",
     "vite-plugin-solid": "^2.10.2",

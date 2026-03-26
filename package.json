@@ -3,7 +3,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "build:all": "vp run build --filter=./packages/*",
+    "build:all": "pnpm nx run-many --target=build --all --exclude docs --exclude vue-blog",
     "lint": "vp lint",
     "lint:fix": "vp lint --fix",
     "fmt": "vp fmt",
@@ -21,6 +21,9 @@
     "test": "packages/iles/bin/iles.js test"
   },
   "devDependencies": {
+    "@nrwl/cli": "15.9.3",
+    "@nrwl/nx-cloud": "19.1.0",
+    "@nx/workspace": "19.8.4",
     "concurrently": "^8.2.2",
     "conventional-changelog-cli": "^5.0.0",
     "enquirer": "^2.4.1",
