@@ -138,7 +138,7 @@ hydrate(framework, component, '${this.id}', ${serialize(props)}, ${serialize(slo
 
     const ileRoot = h('ile-root', ileAttrs, prerenderIsland())
 
-    if (this.strategy === Hydrate.None)
+    if (isSSR && this.strategy === Hydrate.None)
       return ileRoot
 
     return [
