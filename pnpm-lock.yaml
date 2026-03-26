@@ -176,9 +176,6 @@ importers:
       hast-util-to-string:
         specifier: ^3.0.0
         version: 3.0.0
-      slugo:
-        specifier: ^0.4.0
-        version: 0.4.0
     devDependencies:
       '@types/estree':
         specifier: ^1.0.5
@@ -186,6 +183,9 @@ importers:
       iles:
         specifier: workspace:*
         version: link:../iles
+      slugo:
+        specifier: ^0.4.0
+        version: 0.4.0
       typescript:
         specifier: ^5.6.3
         version: 5.6.3
