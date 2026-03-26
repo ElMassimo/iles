@@ -1,4 +1,4 @@
-import type { AppConfig } from "../shared";
+import type { AppConfig } from "../shared"
 
 // Internal: Adds the url to the site for convenience, and enables HMR.
 export function extendSite(code: string, config: AppConfig) {
@@ -15,7 +15,7 @@ if (import.meta.hot)
     __site.ref.value = mod.__site.ref.value
     mod.__site.ref = __site.ref
   })
-`;
+`
   // NOTE: The last line replaces the ref of the current module with the ref in
   // the original module that was made reactive in `installPageData`, so that
   // subsequent HMRs are also performed as expected.

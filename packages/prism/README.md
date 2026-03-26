@@ -41,11 +41,11 @@ Add the module to `iles.config.ts`:
 
 ```js
 // iles.config.ts
-import { defineConfig } from "iles";
+import { defineConfig } from "iles"
 
 export default defineConfig({
   modules: ["@islands/prism"],
-});
+})
 ```
 
 Then, you can highlight lines or display line numbers in code blocks:
@@ -53,11 +53,11 @@ Then, you can highlight lines or display line numbers in code blocks:
 ````mdx
 ```js {6} showLineNumbers
 // iles.config.ts
-import { defineConfig } from "iles";
+import { defineConfig } from "iles"
 
 export default defineConfig({
   modules: ["@islands/prism"],
-});
+})
 ```
 ````
 
@@ -70,9 +70,9 @@ You can also import the module directly to get autocompletion when providing opt
 
 ```ts
 // iles.config.ts
-import { defineConfig } from "iles";
+import { defineConfig } from "iles"
 
-import prism from "@islands/prism";
+import prism from "@islands/prism"
 
 export default defineConfig({
   modules: [
@@ -81,7 +81,7 @@ export default defineConfig({
       showLineNumbers: true,
     }),
   ],
-});
+})
 ```
 
 When `showLineNumbers` is enabled globally, you can use `hideLineNumbers` to

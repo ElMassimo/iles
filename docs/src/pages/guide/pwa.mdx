@@ -15,12 +15,12 @@
 will add and configure <kbd>[vite-plugin-pwa]</kbd> to make your website work offline.
 
 ```ts
-import { defineConfig } from "iles";
-import pwa from "@islands/pwa";
+import { defineConfig } from "iles"
+import pwa from "@islands/pwa"
 
 export default defineConfig({
   modules: [pwa(options)],
-});
+})
 ```
 
 <Caption>`iles.config.ts`</Caption>
@@ -57,9 +57,9 @@ that is rendered in every page of your site (included in every layout).
 
 ```vue
 <script client:load lang="ts">
-import { registerSW } from "virtual:pwa-register";
+import { registerSW } from "virtual:pwa-register"
 
-registerSW({ immediate: true });
+registerSW({ immediate: true })
 </script>
 ```
 

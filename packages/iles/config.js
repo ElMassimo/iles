@@ -5,11 +5,11 @@ export default async (env, root = process.cwd()) => {
     default: IslandsPlugins,
     resolveConfig,
     mergeConfig,
-  } = await import("./dist/node/index.mjs");
+  } = await import("./dist/node/index.mjs")
 
-  const config = await resolveConfig(root);
+  const config = await resolveConfig(root)
 
   return mergeConfig(config.vite, {
     plugins: IslandsPlugins(config),
-  });
-};
+  })
+}

@@ -20,9 +20,9 @@ Here is an example component using these two new features together:
 
 ```vue
 <script setup>
-import { ref } from "vue";
+import { ref } from "vue"
 
-const color = ref("red");
+const color = ref("red")
 </script>
 
 <template>
@@ -48,16 +48,16 @@ Building on top of `<script setup>`, we also have a new RFC for improving the er
 Vue 3.2 introduces a new `defineCustomElement` method for easily creating native [custom elements](https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_custom_elements) using Vue component APIs:
 
 ```js
-import { defineCustomElement } from "vue";
+import { defineCustomElement } from "vue"
 
 const MyVueElement = defineCustomElement({
   // normal Vue component options here
-});
+})
 
 // Register the custom element.
 // After registration, all `<my-vue-element>` tags
 // on the page will be upgraded.
-customElements.define("my-vue-element", MyVueElement);
+customElements.define("my-vue-element", MyVueElement)
 ```
 
 This API allows developers to create Vue-powered UI component libraries that can be used with any framework, or no framework at all. We have also added a new section in our docs on [consuming and creating Web Components in Vue](https://v3.vuejs.org/guide/web-components.html).

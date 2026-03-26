@@ -1,4 +1,4 @@
-const twitterHandle = "ilesjs";
+const twitterHandle = "ilesjs"
 
 const site = {
   title: "îles",
@@ -64,6 +64,6 @@ const site = {
       ],
     },
   ],
-};
+}
 
-export default site;
+export default site

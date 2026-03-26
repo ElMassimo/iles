@@ -1,35 +1,35 @@
 <script client:media="(max-width: 767px)" lang="ts">
-import { ref, watch } from "vue";
+import { ref, watch } from "vue"
 
-const doc = document;
+const doc = document
 
 export function onLoad() {
-  const openSideBar = ref(false);
+  const openSideBar = ref(false)
 
   watch(openSideBar, (open) => {
-    doc.documentElement.classList.toggle("<md:overflow-hidden", open);
+    doc.documentElement.classList.toggle("<md:overflow-hidden", open)
 
     const [panel, bg] = [
       doc.getElementById("sidebar-panel")!,
       doc.getElementById("sidebar-background")!,
-    ];
+    ]
 
-    panel.style.setProperty("--un-translate-x", open ? "0" : null);
+    panel.style.setProperty("--un-translate-x", open ? "0" : null)
 
     if (open) {
-      bg.classList.remove("hidden");
-      bg.classList.remove("opacity-0");
+      bg.classList.remove("hidden")
+      bg.classList.remove("opacity-0")
     } else {
-      bg.classList.add("opacity-0");
-      panel.addEventListener("transitionend", (e) => bg.classList.add("hidden"), { once: true });
+      bg.classList.add("opacity-0")
+      panel.addEventListener("transitionend", (e) => bg.classList.add("hidden"), { once: true })
     }
-  });
+  })
 
   document.querySelectorAll<HTMLElement>("[data-sidebar]").forEach((el) => {
     el.addEventListener("click", () => {
-      openSideBar.value = el.dataset.sidebar === "open";
-    });
-  });
+      openSideBar.value = el.dataset.sidebar === "open"
+    })
+  })
 }
 </script>
 

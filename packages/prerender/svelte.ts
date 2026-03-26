@@ -1,26 +1,26 @@
-import { createRawSnippet } from "svelte";
-import type { Snippet } from "svelte";
-import { render } from "svelte/server";
-import type { PrerenderFn } from "./prerender";
+import { createRawSnippet } from "svelte"
+import type { Snippet } from "svelte"
+import { render } from "svelte/server"
+import type { PrerenderFn } from "./prerender"
 
 const renderSvelteComponent: PrerenderFn = async (Component, props, slots, _id) => {
-  let children;
-  let $$slots: (Record<string, Snippet> & { default?: boolean }) | undefined;
-  let renderFns: Record<string, Snippet> = {};
+  let children
+  let $$slots: (Record<string, Snippet> & { default?: boolean }) | undefined
+  let renderFns: Record<string, Snippet> = {}
 
   slots &&
     Object.entries(slots).forEach(([slotName, html]) => {
-      const fnName = slotName === "default" ? "children" : slotName;
-      renderFns[fnName] = createRawSnippet(() => ({ render: () => html }));
+      const fnName = slotName === "default" ? "children" : slotName
+      renderFns[fnName] = createRawSnippet(() => ({ render: () => html }))
 
-      $$slots ??= {};
+      $$slots ??= {}
       if (slotName === "default") {
-        $$slots.default = true;
-        children = renderFns[fnName];
+        $$slots.default = true
+        children = renderFns[fnName]
       } else {
-        $$slots[fnName] = renderFns[fnName];
+        $$slots[fnName] = renderFns[fnName]
       }
-    });
+    })
 
   return render(Component, {
     props: {
@@ -29,7 +29,7 @@ const renderSvelteComponent: PrerenderFn = async (Component, props, slots, _id) 
       $$slots,
       ...renderFns,
     },
-  }).body;
-};
+  }).body
+}
 
-export default renderSvelteComponent;
+export default renderSvelteComponent

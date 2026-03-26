@@ -1,11 +1,11 @@
-import { useSSRContext } from "vue";
+import { useSSRContext } from "vue"
 export function newHydrationId() {
   if (import.meta.env.SSR) {
-    const context = useSSRContext();
-    context!.hydrationSerialNumber ||= 1;
-    return `ile-${context!.hydrationSerialNumber++}`;
+    const context = useSSRContext()
+    context!.hydrationSerialNumber ||= 1
+    return `ile-${context!.hydrationSerialNumber++}`
   } else if (import.meta.env.DEV) {
-    return (window as any).__ILE_DEVTOOLS__.nextIslandId();
+    return (window as any).__ILE_DEVTOOLS__.nextIslandId()
   }
 }
 
@@ -25,11 +25,11 @@ export const hydrationFns = {
   [Hydrate.SkipPrerender]: "hydrateNow",
   [Hydrate.WhenVisible]: "hydrateWhenVisible",
   [Hydrate.None]: "hydrateNow",
-};
+}
 
 // Internal: Strategies that will hydrate instantly and don't need dynamic imports.
 export function isEager(strategy: string) {
   return (
     strategy === Hydrate.OnLoad || strategy === Hydrate.SkipPrerender || strategy === Hydrate.None
-  );
+  )
 }

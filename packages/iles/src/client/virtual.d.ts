@@ -1,1 +1,1 @@
-import "../../types/virtual";
+import "../../types/virtual"

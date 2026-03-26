@@ -52,11 +52,11 @@ which allows you to import code or data as needed, including composables such as
 
 ```vue
 <script setup lang="ts">
-import type { FeedOptions } from "@islands/feed";
+import type { FeedOptions } from "@islands/feed"
 
-const { site } = usePage();
+const { site } = usePage()
 
-const url = site.url;
+const url = site.url
 
 const options: FeedOptions = {
   title: "The Vue Point",
@@ -66,7 +66,7 @@ const options: FeedOptions = {
   language: "en",
   image: "https://vuejs.org/images/logo.png",
   copyright: "Copyright (c) 2021-present",
-};
+}
 </script>
 ```
 
@@ -79,9 +79,9 @@ which are convenient to enable intellisense and type-checking for the feed optio
 items.
 
 ```ts
-import type { FeedItem } from "@islands/feed";
+import type { FeedItem } from "@islands/feed"
 
-const posts = useDocuments("~/pages/posts");
+const posts = useDocuments("~/pages/posts")
 
 const items = posts.value.map<FeedItem>((post) => ({
   link: url + post.href,
@@ -89,7 +89,7 @@ const items = posts.value.map<FeedItem>((post) => ({
   title: post.title,
   description: post.description,
   content: post,
-}));
+}))
 ```
 
 See [this full example] as a configuration reference.
@@ -99,9 +99,9 @@ See [this full example] as a configuration reference.
 <Iles /> supports async rendering, so you can also fetch remote content as needed:
 
 ```ts
-import { $fetch } from "ohmyfetch";
+import { $fetch } from "ohmyfetch"
 
-const { posts } = await $fetch("/api/posts");
+const { posts } = await $fetch("/api/posts")
 ```
 
 ## Generating a Feed Manually

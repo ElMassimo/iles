@@ -1,46 +1,46 @@
-import fs from "fs";
-import { performance } from "perf_hooks";
-import newSpinner from "mico-spinner";
+import fs from "fs"
+import { performance } from "perf_hooks"
+import newSpinner from "mico-spinner"
 
-export const warnMark = "\x1B[33m⚠\x1B[0m";
+export const warnMark = "\x1B[33m⚠\x1B[0m"
 
 export async function withSpinner<T>(message: string, fn: () => Promise<T>) {
-  const spinner = newSpinner(message).start();
-  const startTime = performance.now();
+  const spinner = newSpinner(message).start()
+  const startTime = performance.now()
   try {
-    const result = await fn();
-    spinner.succeed();
-    console.info(`  done in ${timeSince(startTime)}\n`);
-    return result;
+    const result = await fn()
+    spinner.succeed()
+    console.info(`  done in ${timeSince(startTime)}\n`)
+    return result
   } catch (e) {
-    spinner.fail();
-    throw e;
+    spinner.fail()
+    throw e
   }
 }
 
 function timeSince(start: number): string {
-  const diff = performance.now() - start;
-  return diff < 750 ? `${Math.round(diff)}ms` : `${(diff / 1000).toFixed(1)}s`;
+  const diff = performance.now() - start
+  return diff < 750 ? `${Math.round(diff)}ms` : `${(diff / 1000).toFixed(1)}s`
 }
 
 export function slash(path: string): string {
-  return path.replace(/\\/g, "/");
+  return path.replace(/\\/g, "/")
 }
 
 export function uniq<T>(arr: Array<T>) {
-  return [...new Set(arr.filter((x) => x))];
+  return [...new Set(arr.filter((x) => x))]
 }
 
 export function flattenPath(path: string) {
-  return pathToFilename(path).replace(/\//g, "_");
+  return pathToFilename(path).replace(/\//g, "_")
 }
 
 // Internal: Removes starting slash and ensures the provided extension.
 // Paths ending with '/' are represented with index.html files.
 export function pathToFilename(path: string, ext = "") {
-  if (path.endsWith(ext)) ext = "";
-  const decodedPath = decodeURIComponent(path);
-  return `${(decodedPath.endsWith("/") ? `${decodedPath}index` : decodedPath).replace(/^\//g, "")}${ext}`;
+  if (path.endsWith(ext)) ext = ""
+  const decodedPath = decodeURIComponent(path)
+  return `${(decodedPath.endsWith("/") ? `${decodedPath}index` : decodedPath).replace(/^\//g, "")}${ext}`
 }
 
 export async function replaceAsync(
@@ -50,11 +50,11 @@ export async function replaceAsync(
 ) {
   const promises = Array.from(str.matchAll(regex)).map(([match, ...args]) =>
     asyncFn(match, ...args),
-  );
-  const replacements = await Promise.all(promises);
-  return str.replace(regex, () => replacements.shift()!);
+  )
+  const replacements = await Promise.all(promises)
+  return str.replace(regex, () => replacements.shift()!)
 }
 
 export function rm(dir: string) {
-  fs.rmSync(dir, { recursive: true, force: true });
+  fs.rmSync(dir, { recursive: true, force: true })
 }

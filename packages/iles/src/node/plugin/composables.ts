@@ -1,26 +1,26 @@
-import { promises as fs } from "fs";
-import { resolve } from "pathe";
-import { uniq } from "./utils";
-import { parseImports } from "./parse";
+import { promises as fs } from "fs"
+import { resolve } from "pathe"
+import { uniq } from "./utils"
+import { parseImports } from "./parse"
 
 const definitionRegex =
-  /(?:function|const|let|var)\s+(definePageComponent|use(?:Page|Route|Head|Documents)\b)/g;
-const composableUsageRegex = /\b(definePageComponent|use(?:Page|Route|Head|Documents))\s*\(/g;
+  /(?:function|const|let|var)\s+(definePageComponent|use(?:Page|Route|Head|Documents)\b)/g
+const composableUsageRegex = /\b(definePageComponent|use(?:Page|Route|Head|Documents))\s*\(/g
 
-const composables = ["definePageComponent", "useDocuments", "useHead", "usePage", "useRoute"];
+const composables = ["definePageComponent", "useDocuments", "useHead", "usePage", "useRoute"]
 
 export async function autoImportComposables(code: string, id: string): Promise<string | undefined> {
-  const matches = Array.from(code.matchAll(composableUsageRegex));
-  if (matches.length === 0) return;
+  const matches = Array.from(code.matchAll(composableUsageRegex))
+  if (matches.length === 0) return
 
-  const imports = await parseImports(code);
-  const defined = new Set(Array.from(code.matchAll(definitionRegex)).map((a) => a[1]));
+  const imports = await parseImports(code)
+  const defined = new Set(Array.from(code.matchAll(definitionRegex)).map((a) => a[1]))
 
   const composables = uniq(matches.map((a) => a[1]))
     .filter((composable) => !defined.has(composable) && !imports[composable])
-    .join(", ");
+    .join(", ")
 
-  if (composables) return `${code}\nimport { ${composables} } from "iles"`;
+  if (composables) return `${code}\nimport { ${composables} } from "iles"`
 }
 
 export function writeComposablesDTS(root: string) {
@@ -36,5 +36,5 @@ ${composables.map((fn) => `  const ${fn}: typeof import('iles')['${fn}']`).join(
 export { }
 `,
     "utf-8",
-  );
+  )
 }

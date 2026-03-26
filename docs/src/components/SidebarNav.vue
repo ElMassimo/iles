@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import { useSideBar } from "~/logic/sidebar";
+import { useSideBar } from "~/logic/sidebar"
 
-let items = useSideBar();
-let hasItem = $computed(() => items.value.length > 0);
+let items = useSideBar()
+let hasItem = $computed(() => items.value.length > 0)
 </script>
 
 <template>

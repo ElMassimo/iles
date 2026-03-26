@@ -16,13 +16,13 @@ The <kbd>useDocuments</kbd> composable can be used to access all files that are
 under the specified directory, or match a given pattern.
 
 ```ts
-useDocuments("~/pages/posts");
+useDocuments("~/pages/posts")
 ```
 
 Provide a glob pattern if you need to narrow down the matched documents:
 
 ```ts
-useDocuments("~/pages/(posts|articles)/*.{md,mdx}");
+useDocuments("~/pages/(posts|articles)/*.{md,mdx}")
 ```
 
 <Tip title="Great HMR Support 🚀">
@@ -44,7 +44,7 @@ You can access each file's [`frontmatter` and `meta`][pageData] directly:
 
 ```vue
 <script setup lang="ts">
-const posts = useDocuments("~/pages/posts");
+const posts = useDocuments("~/pages/posts")
 </script>
 
 <template>
@@ -69,15 +69,15 @@ Any `frontmatter` and `meta` properties will be typed, including extensions you 
 
 ```ts
 function usePosts() {
-  return useDocuments<Post>("~/pages/posts");
+  return useDocuments<Post>("~/pages/posts")
 }
 // typeof usePosts === ComputedRef<Post[]>
 ```
 
 ```ts
-post.href; // string
-post.meta; // PageMeta
-post.frontmatter; // PageFrontmatter
+post.href // string
+post.meta // PageMeta
+post.frontmatter // PageFrontmatter
 ```
 
 ## Ref Sugar (experimental in Vue)
@@ -86,8 +86,8 @@ Since <kbd>useDocuments</kbd> returns a `Ref`, when accessing documents in a scr
 
 ```ts
 export function usePosts() {
-  const posts = useDocuments("~/pages/posts");
-  return computed(() => posts.value.sort(byDate));
+  const posts = useDocuments("~/pages/posts")
+  return computed(() => posts.value.sort(byDate))
 }
 ```
 

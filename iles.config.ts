@@ -1,5 +1,5 @@
-import { defineConfig } from "iles";
-import { join } from "pathe";
+import { defineConfig } from "iles"
+import { join } from "pathe"
 
 const testConfig = {
   test: {
@@ -9,7 +9,7 @@ const testConfig = {
       },
     },
   },
-};
+}
 
 // NOTE: This config is used when running tests.
 export default defineConfig({
@@ -30,4 +30,4 @@ export default defineConfig({
     },
     ...(testConfig as any),
   },
-});
+})

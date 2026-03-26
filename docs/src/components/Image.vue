@@ -4,7 +4,7 @@ defineProps({
   src: { type: String, required: true },
   narrow: { type: Boolean, default: true },
   wide: { type: Boolean, default: false },
-});
+})
 </script>
 
 <template>

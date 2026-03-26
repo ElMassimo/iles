@@ -1,6 +1,6 @@
-import { test, describe, expect } from "vite-plus/test";
+import { test, describe, expect } from "vite-plus/test"
 
-import { extendSite } from "@node/plugin/site";
+import { extendSite } from "@node/plugin/site"
 
 describe("site", () => {
   test("without data", () => {
@@ -9,9 +9,9 @@ describe("site", () => {
 export default {}
 `,
       { siteUrl: "http://example.com", base: "/" },
-    );
-    expect(extended).toMatchSnapshot();
-  });
+    )
+    expect(extended).toMatchSnapshot()
+  })
 
   test("without site url", () => {
     const extended = extendSite(
@@ -23,9 +23,9 @@ const site = {
 export default site
 `,
       { siteUrl: "", base: "/" },
-    );
-    expect(extended).toMatchSnapshot();
-  });
+    )
+    expect(extended).toMatchSnapshot()
+  })
 
   test("with site url", () => {
     const extended = extendSite(
@@ -35,7 +35,7 @@ export default {
 }
 `,
       { siteUrl: "https://example.com", base: "/awesome/" },
-    );
-    expect(extended).toMatchSnapshot();
-  });
-});
+    )
+    expect(extended).toMatchSnapshot()
+  })
+})

@@ -1,22 +1,22 @@
-import { Plugin, ViteDevServer } from "vite-plus";
+import { Plugin, ViteDevServer } from "vite-plus"
 
-import glob from "fast-glob";
-import micromatch from "micromatch";
-import { relative } from "pathe";
-import type { AppConfig } from "../shared";
-import { parseId } from "./parse";
-import { debug, serialize } from "./utils";
+import glob from "fast-glob"
+import micromatch from "micromatch"
+import { relative } from "pathe"
+import type { AppConfig } from "../shared"
+import { parseId } from "./parse"
+import { debug, serialize } from "./utils"
 
-const definitionRegex = /(function|const|let|var)[\s\n]+\buseDocuments\b/;
-const usageRegex = /\buseDocuments[\s\n]*\(([^)]+)\)/g;
+const definitionRegex = /(function|const|let|var)[\s\n]+\buseDocuments\b/
+const usageRegex = /\buseDocuments[\s\n]*\(([^)]+)\)/g
 
-const fileCanUseDocuments = /(\.vue|\.[tj]sx?)$/;
+const fileCanUseDocuments = /(\.vue|\.[tj]sx?)$/
 
-const DOCS_VIRTUAL_ID = "/@islands/documents";
+const DOCS_VIRTUAL_ID = "/@islands/documents"
 
 interface DocumentModule {
-  pattern: string;
-  hasDocument: (path: string) => boolean;
+  pattern: string
+  hasDocument: (path: string) => boolean
 }
 
 export default function documentsPlugin(config: AppConfig): Plugin {
@@ -24,63 +24,63 @@ export default function documentsPlugin(config: AppConfig): Plugin {
     root,
     drafts,
     namedPlugins: { pages },
-  } = config;
+  } = config
 
-  let server: ViteDevServer;
+  let server: ViteDevServer
 
-  const modulesById: Record<string, DocumentModule> = Object.create(null);
+  const modulesById: Record<string, DocumentModule> = Object.create(null)
 
   return {
     name: "iles:documents",
     configureServer(devServer) {
-      server = devServer;
+      server = devServer
     },
     resolveId(id) {
-      if (id.startsWith(DOCS_VIRTUAL_ID)) return id;
+      if (id.startsWith(DOCS_VIRTUAL_ID)) return id
     },
     // Extract frontmatter for each file in the matching pattern, and create a
     // module where the default export is an array with each matching document.
     async load(id, options) {
-      if (!id.startsWith(DOCS_VIRTUAL_ID)) return;
+      if (!id.startsWith(DOCS_VIRTUAL_ID)) return
 
       const {
         query: { pattern: rawPath },
-      } = parseId(id);
+      } = parseId(id)
 
       // Extract pattern from the virtual module path, and resolve any alias.
-      const path = relative(root, (await config.resolvePath(rawPath)) || rawPath);
-      const pattern = path.includes("*") ? path : `${path}/**/*.{md,mdx}`;
+      const path = relative(root, (await config.resolvePath(rawPath)) || rawPath)
+      const pattern = path.includes("*") ? path : `${path}/**/*.{md,mdx}`
 
       // Allow Vite to automatically detect added or removed files.
       if (server)
-        modulesById[id] = { pattern, hasDocument: (path) => micromatch.isMatch(path, pattern) };
+        modulesById[id] = { pattern, hasDocument: (path) => micromatch.isMatch(path, pattern) }
 
       // Obtain files matching the specified pattern and extract frontmatter.
-      const files = await glob(pattern, { cwd: root });
-      debug.documents("%s %O", rawPath, { path, pattern, files });
+      const files = await glob(pattern, { cwd: root })
+      debug.documents("%s %O", rawPath, { path, pattern, files })
 
       let data = await Promise.all(
         files.map(async (file) => {
-          const frontmatter = await pages.api.frontmatterForPageOrFile(file);
-          frontmatter.meta.filename ||= file;
-          return frontmatter;
+          const frontmatter = await pages.api.frontmatterForPageOrFile(file)
+          frontmatter.meta.filename ||= file
+          return frontmatter
         }),
-      );
+      )
 
       // Filter drafts from documents if needed.
-      if (!drafts) data = data.filter((page) => !page.draft);
-      debug.documents(`${files.length} files, ${data.length} documents, drafts: ${drafts}`);
+      if (!drafts) data = data.filter((page) => !page.draft)
+      debug.documents(`${files.length} files, ${data.length} documents, drafts: ${drafts}`)
 
       // Create the structure of each document in the default export.
       const documents = data.map(({ route: _, meta, layout, ...frontmatter }, index) => {
-        return { ...meta, ...frontmatter, meta, frontmatter, component: `${index}_component` };
-      });
+        return { ...meta, ...frontmatter, meta, frontmatter, component: `${index}_component` }
+      })
 
       // Serialize all the documents, adding a `component` factory function.
       const serialized = serialize(documents).replace(/component:"(\w+)"/g, (_, id) => {
-        const index = id.split("_component")[0];
-        return `component: unwrapDefault(() => import('/${documents[index].filename}'))`;
-      });
+        const index = id.split("_component")[0]
+        return `component: unwrapDefault(() => import('/${documents[index].filename}'))`
+      })
 
       // Use defineAsyncComponent to support using <component :is="doc">.
       // HMR works by updating the value of the computed ref, while preserving
@@ -114,40 +114,40 @@ export default function documentsPlugin(config: AppConfig): Plugin {
             mod.documents.ref = documents.ref
           })
         }
-      `;
+      `
     },
     async transform(code, id) {
       // Replace each usage of useDocuments with an import of a virtual module.
       if (fileCanUseDocuments.test(id) && !definitionRegex.test(code)) {
-        const paths: [string, string][] = [];
+        const paths: [string, string][] = []
         code = code.replace(usageRegex, (_, path) => {
-          path = path.trim().slice(1, -1);
-          const id = `_documents_${paths.length}`;
-          paths.push([id, path]);
-          return id;
-        });
+          path = path.trim().slice(1, -1)
+          const id = `_documents_${paths.length}`
+          paths.push([id, path])
+          return id
+        })
         if (paths.length) {
           const imports = paths.map(
             ([id, path]) => `import ${id} from '${DOCS_VIRTUAL_ID}?pattern=${path}'`,
-          );
+          )
 
-          return `${code};${imports.join(";")}`;
+          return `${code};${imports.join(";")}`
         }
       }
     },
     hotUpdate({ file, modules }) {
-      const relFile = relative(root, file);
-      const extra: typeof modules = [];
+      const relFile = relative(root, file)
+      const extra: typeof modules = []
 
       // Ensure Vite keeps track of files with the documents pattern that are added or removed.
       for (const id in modulesById) {
         if (modulesById[id].hasDocument(relFile)) {
-          const mod = this.environment.moduleGraph.getModuleById(id);
-          if (mod) extra.push(mod);
+          const mod = this.environment.moduleGraph.getModuleById(id)
+          if (mod) extra.push(mod)
         }
       }
 
-      if (extra.length) return [...modules, ...extra];
+      if (extra.length) return [...modules, ...extra]
     },
-  };
+  }
 }

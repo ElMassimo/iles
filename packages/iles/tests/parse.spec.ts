@@ -1,6 +1,6 @@
-import { test, describe, expect } from "vite-plus/test";
+import { test, describe, expect } from "vite-plus/test"
 
-import { parseImports, parseImportVariables } from "@node/plugin/parse";
+import { parseImports, parseImportVariables } from "@node/plugin/parse"
 
 describe("parsing component imports", () => {
   test("default imports", async () => {
@@ -10,8 +10,8 @@ describe("parsing component imports", () => {
         as: "__unplugin_components_0",
         from: "/absolute/path",
       },
-    });
-  });
+    })
+  })
 
   test("named imports", async () => {
     expect(
@@ -22,27 +22,27 @@ describe("parsing component imports", () => {
         as: "__unplugin_components_1",
         from: "ant-design-vue/es",
       },
-    });
-  });
-});
+    })
+  })
+})
 
 describe("parseImportVariables", () => {
   test("parse import statements", () => {
-    expect(parseImportVariables("import '")).toEqual([]);
-    expect(parseImportVariables("import Button from '")).toEqual([["default", "Button"]]);
-    expect(parseImportVariables("import Button from '")).toEqual([["default", "Button"]]);
+    expect(parseImportVariables("import '")).toEqual([])
+    expect(parseImportVariables("import Button from '")).toEqual([["default", "Button"]])
+    expect(parseImportVariables("import Button from '")).toEqual([["default", "Button"]])
     expect(parseImportVariables("import { default as Button } from '")).toEqual([
       ["default", "Button"],
-    ]);
+    ])
     expect(parseImportVariables("import{ default as Button }from '")).toEqual([
       ["default", "Button"],
-    ]);
-    expect(parseImportVariables("import{B as X}from '")).toEqual([["B", "X"]]);
+    ])
+    expect(parseImportVariables("import{B as X}from '")).toEqual([["B", "X"]])
     expect(parseImportVariables("import { B as X, C as D } from '")).toEqual([
       ["B", "X"],
       ["C", "D"],
-    ]);
-    expect(parseImportVariables("import * as Button from '")).toEqual([["*", "Button"]]);
+    ])
+    expect(parseImportVariables("import * as Button from '")).toEqual([["*", "Button"]])
 
     // Stress test
     expect(parseImportVariables("import{B as X}, * as D, C, { C as F } from '")).toEqual([
@@ -50,7 +50,7 @@ describe("parseImportVariables", () => {
       ["*", "D"],
       ["default", "C"],
       ["C", "F"],
-    ]);
+    ])
     expect(
       parseImportVariables(`import
       {
@@ -64,6 +64,6 @@ describe("parseImportVariables", () => {
       ["*", "D"],
       ["default", "C"],
       ["C", "F"],
-    ]);
-  });
-});
+    ])
+  })
+})

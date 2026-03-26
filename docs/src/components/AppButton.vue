@@ -1,7 +1,7 @@
 <script setup lang="ts">
 defineProps({
   outline: { type: Boolean, default: false },
-});
+})
 </script>
 
 <template>

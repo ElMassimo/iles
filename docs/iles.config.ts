@@ -1,18 +1,18 @@
-import { resolve } from "path";
-import { defineConfig } from "iles";
+import { resolve } from "path"
+import { defineConfig } from "iles"
 
-import headings from "@islands/headings";
-import icons from "@islands/icons";
-import prism from "@islands/prism";
-import pwa from "@islands/pwa";
-import reactivityTransform from "@vue-macros/reactivity-transform/vite";
+import headings from "@islands/headings"
+import icons from "@islands/icons"
+import prism from "@islands/prism"
+import pwa from "@islands/pwa"
+import reactivityTransform from "@vue-macros/reactivity-transform/vite"
 
-import UnoCSS from "unocss/vite";
-import inspect from "vite-plugin-inspect";
-import lastUpdated from "./modules/lastUpdated";
-import site from "./src/site";
+import UnoCSS from "unocss/vite"
+import inspect from "vite-plugin-inspect"
+import lastUpdated from "./modules/lastUpdated"
+import site from "./src/site"
 
-const { title, description } = site;
+const { title, description } = site
 
 export default defineConfig({
   siteUrl: "https://iles-docs.netlify.app",
@@ -63,7 +63,7 @@ export default defineConfig({
   ssg: {
     manualChunks(id, api) {
       if (id.includes("preact") || id.includes("algolia") || id.toLowerCase().includes("docsearch"))
-        return "docsearch";
+        return "docsearch"
     },
   },
   vite: {
@@ -78,4 +78,4 @@ export default defineConfig({
       Boolean(process.env.DEBUG) && (inspect() as any),
     ],
   },
-});
+})

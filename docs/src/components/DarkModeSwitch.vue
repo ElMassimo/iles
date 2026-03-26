@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { isDark, toggleDark } from "~/logic/dark";
+import { isDark, toggleDark } from "~/logic/dark"
 </script>
 
 <template>

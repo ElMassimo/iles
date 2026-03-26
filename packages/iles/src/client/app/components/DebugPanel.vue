@@ -1,52 +1,52 @@
 <script lang="ts">
-import { defineComponent, computed, watch, ref } from "vue";
-import { usePage } from "../composables/pageData";
+import { defineComponent, computed, watch, ref } from "vue"
+import { usePage } from "../composables/pageData"
 
 export default defineComponent({
   name: "DebugPanel",
   setup() {
-    const { page, meta, frontmatter, props } = usePage();
-    const message = ref<string | undefined>(undefined);
-    const el = ref<HTMLElement | null>(null);
-    const content = ref<any>(null);
-    const open = ref(false);
-    const buttonLabel = computed(() => message.value || "Debug");
+    const { page, meta, frontmatter, props } = usePage()
+    const message = ref<string | undefined>(undefined)
+    const el = ref<HTMLElement | null>(null)
+    const content = ref<any>(null)
+    const open = ref(false)
+    const buttonLabel = computed(() => message.value || "Debug")
 
     const cleanPage = computed(() => {
-      const layout = page.value.layoutName || "false";
-      return { layout, frontmatter, meta, props };
-    });
+      const layout = page.value.layoutName || "false"
+      return { layout, frontmatter, meta, props }
+    })
 
-    let timeoutId: any;
+    let timeoutId: any
     function copyIfSelected() {
-      if (!getSelection()?.toString()) return;
-      document.execCommand("copy");
-      message.value = "Copied!";
+      if (!getSelection()?.toString()) return
+      document.execCommand("copy")
+      message.value = "Copied!"
       timeoutId = setTimeout(() => {
-        message.value = undefined;
-      }, 3000);
+        message.value = undefined
+      }, 3000)
     }
 
     function copyAll(el: HTMLElement | null) {
-      const selection = getSelection();
-      if (!selection || !el) return;
-      const range = document.createRange();
-      range.selectNode(el);
-      selection.removeAllRanges();
-      selection.addRange(range);
-      copyIfSelected();
+      const selection = getSelection()
+      if (!selection || !el) return
+      const range = document.createRange()
+      range.selectNode(el)
+      selection.removeAllRanges()
+      selection.addRange(range)
+      copyIfSelected()
     }
 
     watch(open, (open) => {
       if (open && message.value) {
-        clearTimeout(timeoutId);
-        message.value = undefined;
+        clearTimeout(timeoutId)
+        message.value = undefined
       }
       if (!open && el.value) {
-        el.value.scrollLeft = 0;
-        el.value.scrollTop = 0;
+        el.value.scrollLeft = 0
+        el.value.scrollTop = 0
       }
-    });
+    })
 
     return {
       el,
@@ -56,9 +56,9 @@ export default defineComponent({
       cleanPage,
       copyAll,
       content,
-    };
+    }
   },
-});
+})
 </script>
 
 <template>

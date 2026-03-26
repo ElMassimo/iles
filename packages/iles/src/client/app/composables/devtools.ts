@@ -1,21 +1,21 @@
-import type { App, ComponentPublicInstance } from "vue";
-import { reactive, computed } from "vue";
-import type { InspectorNodeTag } from "@vue/devtools-kit";
-import { setupDevtoolsPlugin } from "@vue/devtools-api";
-import { usePage } from "iles";
-import type { AppClientConfig, PageData } from "../../shared";
-import { getComponentName } from "../utils";
+import type { App, ComponentPublicInstance } from "vue"
+import { reactive, computed } from "vue"
+import type { InspectorNodeTag } from "@vue/devtools-kit"
+import { setupDevtoolsPlugin } from "@vue/devtools-api"
+import { usePage } from "iles"
+import type { AppClientConfig, PageData } from "../../shared"
+import { getComponentName } from "../utils"
 
-const ISLAND_TYPE = "Islands 🏝";
-const componentStateTypes = [ISLAND_TYPE];
+const ISLAND_TYPE = "Islands 🏝"
+const componentStateTypes = [ISLAND_TYPE]
 
-const INSPECTOR_ID = "iles";
-const HYDRATION_LAYER_ID = "iles:hydration";
+const INSPECTOR_ID = "iles"
+const HYDRATION_LAYER_ID = "iles:hydration"
 
 // Internal: Used to present sequential island ids during development.
-let lastUsedIslandId = 0;
-const islandsById = reactive<Record<string, ComponentPublicInstance>>({});
-const islands = computed(() => Object.values(islandsById));
+let lastUsedIslandId = 0
+const islandsById = reactive<Record<string, ComponentPublicInstance>>({})
+const islands = computed(() => Object.values(islandsById))
 
 const strategyLabels: Record<string, any> = {
   "client:idle": "whenIdle",
@@ -24,82 +24,82 @@ const strategyLabels: Record<string, any> = {
   "client:only": "noPrerender",
   "client:visible": "whenVisible",
   "client:none": "static",
-};
+}
 
 const frameworkColors: Record<any, any> = {
   preact: { backgroundColor: 0x673ab8, textColor: 0xffffff },
   solid: { backgroundColor: 0x446b9e, textColor: 0xffffff },
   svelte: { backgroundColor: 0xff3e00, textColor: 0xffffff },
   vue: { backgroundColor: 0x42b983, textColor: 0xffffff },
-};
+}
 
-type DevToolsPluginAPI = Parameters<Parameters<typeof setupDevtoolsPlugin>[1]>[0];
-let devtoolsApi: DevToolsPluginAPI;
-let appConfig: AppClientConfig;
+type DevToolsPluginAPI = Parameters<Parameters<typeof setupDevtoolsPlugin>[1]>[0]
+let devtoolsApi: DevToolsPluginAPI
+let appConfig: AppClientConfig
 
-let page = {} as PageData["page"];
-let route = {} as PageData["route"];
-let meta = {} as PageData["meta"];
-let frontmatter = {} as PageData["frontmatter"];
-let props = {} as PageData["props"];
-let site = {} as PageData["site"];
+let page = {} as PageData["page"]
+let route = {} as PageData["route"]
+let meta = {} as PageData["meta"]
+let frontmatter = {} as PageData["frontmatter"]
+let props = {} as PageData["props"]
+let site = {} as PageData["site"]
 
 const devtools = {
   updateIslandsInspector() {
-    devtoolsApi?.sendInspectorTree(INSPECTOR_ID);
+    devtoolsApi?.sendInspectorTree(INSPECTOR_ID)
   },
 
   addIslandToDevtools(island: any) {
-    islandsById[island.id] = island;
-    devtools.updateIslandsInspector();
-    devtoolsApi?.selectInspectorNode(INSPECTOR_ID, route?.path);
+    islandsById[island.id] = island
+    devtools.updateIslandsInspector()
+    devtoolsApi?.selectInspectorNode(INSPECTOR_ID, route?.path)
   },
 
   removeIslandFromDevtools(island: any) {
-    delete islandsById[island.id];
+    delete islandsById[island.id]
 
     // NOTE: Vue could unmount ile-1 before ile-2, so check for unused ids.
-    while (lastUsedIslandId > 0 && !islandsById[`ile-${lastUsedIslandId}`]) lastUsedIslandId -= 1;
+    while (lastUsedIslandId > 0 && !islandsById[`ile-${lastUsedIslandId}`]) lastUsedIslandId -= 1
 
-    devtools.updateIslandsInspector();
+    devtools.updateIslandsInspector()
   },
 
   nextIslandId() {
-    return `ile-${++lastUsedIslandId}`;
+    return `ile-${++lastUsedIslandId}`
   },
 
   onHydration({ id, ...event }: any) {
-    const time = Date.now();
-    const island: any = islandsById[id];
-    if (!island) return;
-    const hydrated = getStrategy(island);
-    const mediaQuery = getMediaQuery(island);
-    const component = island.componentName;
+    const time = Date.now()
+    const island: any = islandsById[id]
+    if (!island) return
+    const hydrated = getStrategy(island)
+    const mediaQuery = getMediaQuery(island)
+    const component = island.componentName
 
-    const data = { event, hydrated, ...(mediaQuery ? { mediaQuery } : {}) };
+    const data = { event, hydrated, ...(mediaQuery ? { mediaQuery } : {}) }
     devtoolsApi?.addTimelineEvent({
       layerId: HYDRATION_LAYER_ID,
       event: { time, title: component, subtitle: hydrated, data },
-    });
+    })
 
     if (appConfig?.debug === "log") {
-      const { el, slots } = event;
-      console.info(`🏝 hydrated ${component}`, el, slots);
+      const { el, slots } = event
+      console.info(`🏝 hydrated ${component}`, el, slots)
     }
   },
-};
+}
 
-(window as any).__ILE_DEVTOOLS__ = devtools;
+;(window as any).__ILE_DEVTOOLS__ = devtools
 
 export function installDevtools(app: App, config: AppClientConfig) {
-  appConfig = config;
-  const pageData = usePage(app);
-  route = pageData.route;
-  page = pageData.page;
-  frontmatter = pageData.frontmatter;
-  props = pageData.props;
-  meta = pageData.meta;
-  site = pageData.site;
+  appConfig = config
+  const pageData = usePage(app)
+  route = pageData.route
+  page = pageData.page
+  frontmatter = pageData.frontmatter
+  props = pageData.props
+  meta = pageData.meta
+  site = pageData.site
 
   setupDevtoolsPlugin(
     {
@@ -112,30 +112,30 @@ export function installDevtools(app: App, config: AppClientConfig) {
       app: app as any,
     },
     (api) => {
-      devtoolsApi = api;
+      devtoolsApi = api
 
       api.addInspector({
         id: INSPECTOR_ID,
         label: ISLAND_TYPE,
         icon: "waves",
         treeFilterPlaceholder: "Search islands",
-      });
+      })
 
       api.addTimelineLayer({
         id: HYDRATION_LAYER_ID,
         color: 0xff984f,
         label: "Hydration 🏝",
-      });
+      })
 
       api.on.inspectComponent(({ componentInstance, instanceData }) => {
-        const island = findIsland(componentInstance?.proxy);
-        if (!island) return;
-        instanceData.state.push({ type: ISLAND_TYPE, key: "within", value: island });
-      });
+        const island = findIsland(componentInstance?.proxy)
+        if (!island) return
+        instanceData.state.push({ type: ISLAND_TYPE, key: "within", value: island })
+      })
 
       api.on.getInspectorTree(async (payload) => {
-        if (payload.app !== app || payload.inspectorId !== INSPECTOR_ID) return;
-        const userFilter = payload.filter?.toLowerCase() || "";
+        if (payload.app !== app || payload.inspectorId !== INSPECTOR_ID) return
+        const userFilter = payload.filter?.toLowerCase() || ""
         const islandNodes = islands.value
           .filter(
             (island: any) =>
@@ -154,7 +154,7 @@ export function installDevtools(app: App, config: AppClientConfig) {
                 backgroundColor: 0xfb923c,
               },
             ].filter((x) => x) as InspectorNodeTag[],
-          }));
+          }))
         payload.rootNodes = [
           {
             id: meta.href,
@@ -168,11 +168,11 @@ export function installDevtools(app: App, config: AppClientConfig) {
               },
             ],
           },
-        ];
-      });
+        ]
+      })
 
       api.on.getInspectorState((payload) => {
-        if (payload.app !== app || payload.inspectorId !== INSPECTOR_ID) return;
+        if (payload.app !== app || payload.inspectorId !== INSPECTOR_ID) return
 
         if (payload.nodeId === route.path) {
           payload.state = {
@@ -184,13 +184,13 @@ export function installDevtools(app: App, config: AppClientConfig) {
               { key: "props", value: props.value },
               { key: "site", value: site },
             ].filter((x) => x),
-          };
-          return;
+          }
+          return
         }
 
-        const island = islandsById[payload.nodeId] as any;
-        if (!island) return;
-        const ileRoot = island.$el?.nextSibling;
+        const island = islandsById[payload.nodeId] as any
+        if (!island) return
+        const ileRoot = island.$el?.nextSibling
         payload.state = {
           props: [
             { key: "component", value: island.component },
@@ -202,22 +202,22 @@ export function installDevtools(app: App, config: AppClientConfig) {
             { key: "importName", value: island.importName },
             { key: "importFrom", value: island.importFrom.replace(island.appConfig.root, "") },
           ].filter((x) => x),
-        };
-      });
+        }
+      })
     },
-  );
+  )
 }
 
 function findIsland(component: any): any {
-  if (!component) return null;
-  if (component.strategy?.startsWith("client:")) return component;
-  return findIsland(component.$parent);
+  if (!component) return null
+  if (component.strategy?.startsWith("client:")) return component
+  return findIsland(component.$parent)
 }
 
 function getStrategy(island: any) {
-  return strategyLabels[island.strategy];
+  return strategyLabels[island.strategy]
 }
 
 function getMediaQuery(island: any) {
-  if (island.strategy === "client:media") return island["client:media"];
+  if (island.strategy === "client:media") return island["client:media"]
 }

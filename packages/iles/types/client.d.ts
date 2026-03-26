@@ -5,13 +5,13 @@ import type {
   StaticPath,
   Router,
   RouteLocationNormalizedLoaded,
-} from "./shared";
+} from "./shared"
 
 declare module "vue-router" {
   interface RouteMeta {
-    layout?: import("vue").Ref<import("vue").DefineComponent | false>;
-    pathVariants?: import("vue").Ref<StaticPath[]>;
-    pathVariantsPromise?: import("vue").ComputedRef<Promise<StaticPath[]>>;
+    layout?: import("vue").Ref<import("vue").DefineComponent | false>
+    pathVariants?: import("vue").Ref<StaticPath[]>
+    pathVariantsPromise?: import("vue").ComputedRef<Promise<StaticPath[]>>
   }
 }
 
@@ -20,23 +20,23 @@ declare module "@vue/runtime-core" {
     /**
      * The frontmatter of the current page.
      */
-    $frontmatter: PageFrontmatter;
+    $frontmatter: PageFrontmatter
     /**
      * Information about the current page, including href and filename.
      */
-    $meta: PageMeta;
+    $meta: PageMeta
     /**
      * Information about the site as exported in src/site.ts
      */
-    $site: UserSite;
+    $site: UserSite
     /**
      * Normalized current location. See {@link RouteLocationNormalizedLoaded}.
      */
-    $route: RouteLocationNormalizedLoaded;
+    $route: RouteLocationNormalizedLoaded
     /**
      * {@link Router} instance used by the application.
      */
-    $router: Router;
+    $router: Router
   }
 }
 
