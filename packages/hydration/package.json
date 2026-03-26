@@ -19,20 +19,20 @@
     "island.svelte"
   ],
   "type": "module",
-  "types": "dist/hydration.d.mts",
+  "types": "dist/hydration.d.ts",
   "exports": {
-    ".": "./dist/hydration.mjs",
-    "./preact": "./dist/preact.mjs",
-    "./solid": "./dist/solid.mjs",
-    "./svelte": "./dist/svelte.mjs",
-    "./vanilla": "./dist/vanilla.mjs",
-    "./vue": "./dist/vue.mjs",
+    ".": "./dist/hydration.js",
+    "./preact": "./dist/preact.js",
+    "./solid": "./dist/solid.js",
+    "./svelte": "./dist/svelte.js",
+    "./vanilla": "./dist/vanilla.js",
+    "./vue": "./dist/vue.js",
     "./dist/*": "./dist/*",
     "./package.json": "./package.json"
   },
   "scripts": {
-    "dev": "vp pack hydration.ts preact.ts vue.ts vanilla.ts solid.ts svelte.ts --target node20 --watch",
-    "build": "vp pack hydration.ts preact.ts vue.ts vanilla.ts solid.ts svelte.ts --dts --clean --target node20",
+    "dev": "vp pack hydration.ts preact.ts vue.ts vanilla.ts solid.ts svelte.ts --platform browser --watch",
+    "build": "vp pack hydration.ts preact.ts vue.ts vanilla.ts solid.ts svelte.ts --dts --clean --platform browser",
     "lint": "vp lint",
     "lint:fix": "vp lint --fix"
   },
