@@ -11,7 +11,7 @@ export function onLoad () {
 
     const [panel, bg] = [doc.getElementById('sidebar-panel')!, doc.getElementById('sidebar-background')!]
 
-    panel.classList.toggle('!-translate-x-0', open)
+    panel.style.setProperty('--un-translate-x', open ? '0' : null)
 
     if (open) {
       bg.classList.remove('hidden')

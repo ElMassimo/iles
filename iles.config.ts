@@ -3,10 +3,12 @@ import { join } from 'pathe'
 
 const testConfig = {
   test: {
-    deps: {
-      inline: [
-        '@vue/devtools-api',
-      ],
+    server: {
+      deps: {
+        inline: [
+          '@vue/devtools-api',
+        ],
+      },
     },
   },
 }

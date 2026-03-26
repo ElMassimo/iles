@@ -1,5 +1,10 @@
-import type { GetManualChunk, ManualChunkMeta } from 'rollup'
+import type { GetModuleInfo } from 'rolldown'
 import type { AppConfig } from '../shared'
+
+interface ManualChunkMeta {
+  getModuleInfo: GetModuleInfo
+}
+type GetManualChunk = (id: string, meta: ManualChunkMeta) => string | void
 
 export function extendManualChunks (config: AppConfig): GetManualChunk {
   const userChunks = config.ssg.manualChunks
@@ -11,10 +16,13 @@ export function extendManualChunks (config: AppConfig): GetManualChunk {
     vue: 'vendor-vue',
   }
   return (id, api) => {
-    const name = userChunks?.(id, api)
-    if (name) return name
+    // Internal chunks must take priority to ensure hydration works correctly.
+    // User manualChunks could inadvertently match hydration modules (e.g.
+    // id.includes('preact') also matches @islands/hydration/preact).
     if (id.includes('vite/') || id.includes('plugin-vue')) return 'vite'
     if (id.includes('hydration/dist')) return 'iles'
+    const name = userChunks?.(id, api)
+    if (name) return name
     if (id.includes('node_modules')) return vendorPerFramework(chunkForExtension, id, api, cache)
   }
 }

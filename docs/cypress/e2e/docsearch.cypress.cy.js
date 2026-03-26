@@ -39,4 +39,37 @@ describe('DocSearch', () => {
     openSearchModalWithKeyboard()
     closeSearchModal()
   })
+
+  it('can search and navigate to a result', () => {
+    visitHome()
+    openSearchModal()
+
+    // Type a search query.
+    cy.get('.DocSearch-Input').type('hydration')
+    cy.get('.DocSearch-Hit', { timeout: 10000 }).should('exist')
+
+    // Click the first result.
+    cy.get('.DocSearch-Hit').first().click()
+
+    // Verify navigation happened — should be on a page about hydration.
+    cy.url().should('include', 'hydration')
+    cy.get('h1').invoke('text').then((text) => {
+      expect(text.toLowerCase()).to.include('hydration')
+    })
+  })
+
+  it('search works after turbo navigation', () => {
+    visitHome()
+
+    // Navigate to another page via sidebar link.
+    navigateTo('FAQs')
+    assertPage({ title: 'FAQs' })
+
+    // Search should still work after turbo navigation.
+    openSearchModalWithKeyboard()
+    closeSearchModal()
+
+    openSearchModal()
+    closeSearchModal()
+  })
 })

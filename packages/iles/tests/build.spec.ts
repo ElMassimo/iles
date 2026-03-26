@@ -1,6 +1,6 @@
-import { resolve } from 'path'
 import { promises as fs } from 'fs'
-import { test, describe, expect, beforeAll } from 'vitest'
+import { resolve } from 'path'
+import { beforeAll, describe, expect, test } from 'vitest'
 
 import { execa } from 'execa'
 import glob from 'fast-glob'
@@ -15,11 +15,10 @@ describe('building docs site', () => {
 
   test('generated files', async () => {
     const files = await glob('**/*', { cwd: `${vuePoint}/dist`, onlyFiles: true })
-    expect(files.sort()).toEqual(expect.arrayContaining([
+    const normalized = files.map(f => f.replace(/\/assets\/([^.]+)(?:[.-])\w+\.(\w+)\b/g, '/assets/$1.$2')).sort()
+    expect(normalized).toEqual(expect.arrayContaining([
       '404.html',
       '_headers',
-      'assets/app-Y_77dvPh.css',
-      'assets/turbo.BkUC-S31.js',
       'favicon.ico',
       'feed.rss',
       'index.html',
@@ -32,6 +31,8 @@ describe('building docs site', () => {
       'posts/vue-3-one-piece.html',
       'sitemap.xml',
     ]))
+    expect(files.some(f => f.match(/assets\/app.*\.css/))).toBe(true)
+    expect(files.some(f => f.match(/assets\/turbo.*\.js/))).toBe(true)
   })
 
   test('html files', async () => {
@@ -45,8 +46,13 @@ describe('building docs site', () => {
   })
 
   test('styles', async () => {
-    await assertSnapshot('assets/app-Y_77dvPh.css')
-    await assertSnapshot('assets/default--6gluetn.css')
+    const files = await glob('assets/*.css', { cwd: `${vuePoint}/dist`, onlyFiles: true })
+    const appCss = files.find(f => f.startsWith('assets/app'))!
+    const defaultCss = files.find(f => f.startsWith('assets/default'))!
+    expect(appCss).toBeTruthy()
+    expect(defaultCss).toBeTruthy()
+    await assertSnapshot(appCss)
+    await assertSnapshot(defaultCss)
   })
   test('sitemap', async () => {
     await assertSnapshot('sitemap.xml')
@@ -98,8 +104,8 @@ async function assertHTML (path: string, { title }: any = {}) {
   expectContent.toContain('<meta name="description" content="Updates, tips & opinions from the maintainers of Vue.js.">')
   expectContent.toContain('<link rel="sitemap" href="https://the-vue-point-with-iles.netlify.app/sitemap.xml">')
   expectContent.toContain(`<meta property="og:url" content="https://the-vue-point-with-iles.netlify.app/${path.replace('index.html', '')}">`)
-  expectContent.toContain('<link rel="stylesheet" href="/assets/default-.css">')
   expectContent.toContain('<link rel="stylesheet" href="/assets/app.css">')
+  expectContent.toContain('<link rel="stylesheet" href="/assets/default.css">')
 
   expectContent.toContain('<ile-root id="ile-1">'
     + '<div class="text-sm text-gray-500 leading-5">'

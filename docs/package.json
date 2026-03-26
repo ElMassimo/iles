@@ -34,7 +34,7 @@
     "preact": "^10.24.3",
     "preact-render-to-string": "^6.5.11",
     "rehype-external-links": "^3.0.0",
-    "unocss": "^0.61.8",
+    "unocss": "^66.6.6",
     "vite-plugin-inspect": "^0.8.7",
     "vue-tsc": "^2.1.10"
   },

@@ -1,7 +1,7 @@
 import { promises as fs } from 'fs'
 import { basename, resolve, relative } from 'pathe'
 import type { PluginOption, ResolvedConfig, ViteDevServer } from 'vite'
-import { transformWithEsbuild } from 'vite'
+import { transformWithOxc } from 'vite'
 
 import MagicString from 'magic-string'
 
@@ -31,7 +31,7 @@ function isVueScript (path: string, query: Record<string, any>) {
 
 async function transformUserFile (path: string) {
   return await exists(path)
-    ? await transformWithEsbuild(await fs.readFile(path, 'utf-8'), path, { sourcemap: false })
+    ? await transformWithOxc(await fs.readFile(path, 'utf-8'), path, { sourcemap: false })
     : { code: 'export default {}' }
 }
 
@@ -116,9 +116,9 @@ export default function IslandsPlugins (appConfig: AppConfig): PluginOption[] {
         if (id === APP_COMPONENT_PATH && !isBuild && appConfig.debug)
           return code.replace('const DebugPanel = () => null', () => `import DebugPanel from '${DEBUG_COMPONENT_PATH}'`)
       },
-      handleHotUpdate ({ file, server }) {
-        if (file === appPath) return [server.moduleGraph.getModuleById(USER_APP_REQUEST_PATH)!]
-        if (file === sitePath) return [server.moduleGraph.getModuleById(USER_SITE_REQUEST_PATH)!]
+      hotUpdate ({ file }) {
+        if (file === appPath) return [this.environment.moduleGraph.getModuleById(USER_APP_REQUEST_PATH)!]
+        if (file === sitePath) return [this.environment.moduleGraph.getModuleById(USER_SITE_REQUEST_PATH)!]
       },
       configureServer (devServer) {
         server = devServer
@@ -244,7 +244,7 @@ import.meta.hot?.accept('/${relative(root, path)}', (...args) => __ILES_PAGE_UPD
     appConfig.jsx === 'preact' && {
       name: 'iles:preact-jsx-config',
       config () {
-        return { esbuild: { include: /\.(tsx?|jsx)$/ } }
+        return { oxc: { jsx: { runtime: 'automatic', importSource: 'preact' }, include: /\.(tsx?|jsx)$/ } }
       },
     },
   ]

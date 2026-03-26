@@ -5,11 +5,11 @@ set -e
 cd "$(dirname "$0")/.."
 
 echo '== Starting server =='
-pnpm run preview &
+pnpm exec iles preview --host 0.0.0.0 --port 3050 &
 
 echo '== Waiting for server to respond... =='
-pnpx wait-on http-get://localhost:3050 --delay 1000 --timeout 15000
+pnpx wait-on http-get://localhost:3050 --delay 1000 --timeout 60000
 
 echo '== Server ready! =='
 
-pnpx cypress@10.6.0 run && echo '== Finished! =='
+pnpx cypress@15.13.0 run && echo '== Finished! =='
