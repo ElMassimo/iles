@@ -1,10 +1,10 @@
-import type { MdxJsxFlowElement, MdxJsxTextElement } from "mdast-util-mdx-jsx"
-import type { Root } from "mdast"
-import type { Plugin, Transformer } from "unified"
+import type { MdxJsxFlowElement, MdxJsxTextElement } from 'mdast-util-mdx-jsx'
+import type { Root } from 'mdast'
+import type { Plugin, Transformer } from 'unified'
 
-import { visit, SKIP } from "unist-util-visit"
+import { visit, SKIP } from 'unist-util-visit'
 
-import { isJsxElement, isString, toExplicitHtmlPath } from "./utils"
+import { isJsxElement, isString, toExplicitHtmlPath } from './utils'
 
 export interface HrefOptions {
   prettyUrls?: boolean
@@ -23,13 +23,13 @@ export const remarkInternalHrefs: HrefPlugin = (options) => {
 
 const remarkProcessor: HrefProcessor = (ast, vfile) => {
   visit(ast, (node) => {
-    if (node.type === "link") {
+    if (node.type === 'link') {
       const { url } = node
       if (url) node.url = toExplicitHtmlPath(url)
       return SKIP
     }
 
-    if (isJsxElement(node) && (node.name === "a" || node.name === "Link")) {
+    if (isJsxElement(node) && (node.name === 'a' || node.name === 'Link')) {
       replaceHrefAttribute(node)
       return SKIP
     }
@@ -37,7 +37,7 @@ const remarkProcessor: HrefProcessor = (ast, vfile) => {
 
   function replaceHrefAttribute(node: MdxJsxTextElement | MdxJsxFlowElement) {
     for (const attr of node.attributes) {
-      if (attr.type === "mdxJsxAttribute" && attr.name === "href") {
+      if (attr.type === 'mdxJsxAttribute' && attr.name === 'href') {
         if (isString(attr.value) && attr.value) attr.value = toExplicitHtmlPath(attr.value)
         break
       }

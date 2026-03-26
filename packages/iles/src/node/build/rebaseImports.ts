@@ -1,7 +1,7 @@
-import { posix } from "path"
-import { init as initESLexer, parse as parseESModules } from "es-module-lexer"
-import MagicString from "magic-string"
-import type { AppConfig } from "../shared"
+import { posix } from 'path'
+import { init as initESLexer, parse as parseESModules } from 'es-module-lexer'
+import MagicString from 'magic-string'
+import type { AppConfig } from '../shared'
 
 export default async function rebaseImports({ base, assetsDir }: AppConfig, codeStr: string) {
   const assetsBase = posix.join(base, assetsDir)

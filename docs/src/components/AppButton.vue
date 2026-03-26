@@ -28,11 +28,11 @@ defineProps({
 }
 
 .outline {
-  background: theme("colors.gray.100");
-  color: theme("colors.gray.500");
+  background: theme('colors.gray.100');
+  color: theme('colors.gray.500');
   outline-style: none;
   &:hover {
-    background: theme("colors.gray.200");
+    background: theme('colors.gray.200');
   }
 }
 
@@ -47,11 +47,11 @@ html.dark {
   }
 
   .outline {
-    background: theme("colors.warmgray.800");
-    color: theme("colors.gray.200");
+    background: theme('colors.warmgray.800');
+    color: theme('colors.gray.200');
 
     &:hover {
-      background: theme("colors.warmgray.600");
+      background: theme('colors.warmgray.600');
     }
   }
 }

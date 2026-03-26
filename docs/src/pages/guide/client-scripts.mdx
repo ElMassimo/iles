@@ -17,7 +17,7 @@ There are two main ways to achieve this in <Iles/>.
 
 ```vue
 <script client:load lang="ts">
-console.log("Powered by îles 🏝", "https://iles-docs.netlify.app")
+console.log('Powered by îles 🏝', 'https://iles-docs.netlify.app')
 </script>
 ```
 
@@ -31,7 +31,7 @@ guaranteed to execute after all elements rendered by the component are in the DO
 
 ```vue
 <script client:load lang="ts">
-document.getElementById("sidebar").classList.toggle("live") // always works
+document.getElementById('sidebar').classList.toggle('live') // always works
 </script>
 
 <template>
@@ -50,10 +50,10 @@ This function will be called when the condition for the selected strategy is met
 
 ```vue
 <script client:visible lang="ts">
-console.log("Not necessarily visible")
+console.log('Not necessarily visible')
 
 export function onLoad() {
-  console.log("Now visible")
+  console.log('Now visible')
 }
 </script>
 ```
@@ -65,7 +65,7 @@ choose where to place them by rendering them as islands.
 
 ```vue
 <script setup lang="ts">
-import GalleryPreloader from "~/logic/imagePreloader" // .ts
+import GalleryPreloader from '~/logic/imagePreloader' // .ts
 </script>
 
 <template>
@@ -86,7 +86,7 @@ export const onLoad = () => fetch('/images').then(...)
 If you need to use the provided parameters, use the `OnLoadFn` typings:
 
 ```ts
-import type { OnLoadFn } from "iles"
+import type { OnLoadFn } from 'iles'
 
 export const onLoad: OnLoadFn = (el, props, slots) => {
   // Do whatever you need with the element.

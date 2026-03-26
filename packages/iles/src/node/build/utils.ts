@@ -1,8 +1,8 @@
-import fs from "fs"
-import { performance } from "perf_hooks"
-import newSpinner from "mico-spinner"
+import fs from 'fs'
+import { performance } from 'perf_hooks'
+import newSpinner from 'mico-spinner'
 
-export const warnMark = "\x1B[33m⚠\x1B[0m"
+export const warnMark = '\x1B[33m⚠\x1B[0m'
 
 export async function withSpinner<T>(message: string, fn: () => Promise<T>) {
   const spinner = newSpinner(message).start()
@@ -24,7 +24,7 @@ function timeSince(start: number): string {
 }
 
 export function slash(path: string): string {
-  return path.replace(/\\/g, "/")
+  return path.replace(/\\/g, '/')
 }
 
 export function uniq<T>(arr: Array<T>) {
@@ -32,15 +32,15 @@ export function uniq<T>(arr: Array<T>) {
 }
 
 export function flattenPath(path: string) {
-  return pathToFilename(path).replace(/\//g, "_")
+  return pathToFilename(path).replace(/\//g, '_')
 }
 
 // Internal: Removes starting slash and ensures the provided extension.
 // Paths ending with '/' are represented with index.html files.
-export function pathToFilename(path: string, ext = "") {
-  if (path.endsWith(ext)) ext = ""
+export function pathToFilename(path: string, ext = '') {
+  if (path.endsWith(ext)) ext = ''
   const decodedPath = decodeURIComponent(path)
-  return `${(decodedPath.endsWith("/") ? `${decodedPath}index` : decodedPath).replace(/^\//g, "")}${ext}`
+  return `${(decodedPath.endsWith('/') ? `${decodedPath}index` : decodedPath).replace(/^\//g, '')}${ext}`
 }
 
 export async function replaceAsync(

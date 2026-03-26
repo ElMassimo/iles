@@ -1,23 +1,23 @@
-import { resolve } from "path"
-import { defineConfig } from "iles"
+import { resolve } from 'path'
+import { defineConfig } from 'iles'
 
-import headings from "@islands/headings"
-import icons from "@islands/icons"
-import prism from "@islands/prism"
-import pwa from "@islands/pwa"
-import reactivityTransform from "@vue-macros/reactivity-transform/vite"
+import headings from '@islands/headings'
+import icons from '@islands/icons'
+import prism from '@islands/prism'
+import pwa from '@islands/pwa'
+import reactivityTransform from '@vue-macros/reactivity-transform/vite'
 
-import UnoCSS from "unocss/vite"
-import inspect from "vite-plugin-inspect"
-import lastUpdated from "./modules/lastUpdated"
-import site from "./src/site"
+import UnoCSS from 'unocss/vite'
+import inspect from 'vite-plugin-inspect'
+import lastUpdated from './modules/lastUpdated'
+import site from './src/site'
 
 const { title, description } = site
 
 export default defineConfig({
-  siteUrl: "https://iles-docs.netlify.app",
+  siteUrl: 'https://iles-docs.netlify.app',
   turbo: true,
-  jsx: "preact",
+  jsx: 'preact',
   debug: false,
   modules: [
     headings(),
@@ -25,51 +25,51 @@ export default defineConfig({
     prism(),
     lastUpdated(),
     pwa({
-      manifestFilename: "pwa-manifest.json",
+      manifestFilename: 'pwa-manifest.json',
       manifest: {
-        id: "/",
+        id: '/',
         name: title,
         short_name: title,
         description,
-        theme_color: "#5C7E8F",
-        background_color: "#ffffff",
+        theme_color: '#5C7E8F',
+        background_color: '#ffffff',
         icons: [
           {
-            src: "pwa-192x192.png",
-            sizes: "192x192",
-            type: "image/png",
+            src: 'pwa-192x192.png',
+            sizes: '192x192',
+            type: 'image/png',
           },
           {
-            src: "pwa-512x512.png",
-            sizes: "512x512",
-            type: "image/png",
+            src: 'pwa-512x512.png',
+            sizes: '512x512',
+            type: 'image/png',
           },
           {
-            src: "pwa-192x192.png",
-            sizes: "192x192",
-            type: "image/png",
-            purpose: "any maskable",
+            src: 'pwa-192x192.png',
+            sizes: '192x192',
+            type: 'image/png',
+            purpose: 'any maskable',
           },
         ],
       },
       workbox: {
-        globPatterns: ["**/*.{js,css,svg,ico,png,avif,json,xml,html}"],
+        globPatterns: ['**/*.{js,css,svg,ico,png,avif,json,xml,html}'],
       },
     }),
   ],
   markdown: {
-    rehypePlugins: ["rehype-external-links"],
+    rehypePlugins: ['rehype-external-links'],
   },
   ssg: {
     manualChunks(id, api) {
-      if (id.includes("preact") || id.includes("algolia") || id.toLowerCase().includes("docsearch"))
-        return "docsearch"
+      if (id.includes('preact') || id.includes('algolia') || id.toLowerCase().includes('docsearch'))
+        return 'docsearch'
     },
   },
   vite: {
     resolve: {
       alias: {
-        "~images": resolve(__dirname, "images"),
+        '~images': resolve(__dirname, 'images'),
       },
     },
     plugins: [

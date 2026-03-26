@@ -1,13 +1,13 @@
 <script lang="ts">
-import { defineComponent, computed, watch } from "vue"
-import { Head } from "@unhead/vue/components"
-import { usePage } from "../composables/pageData"
-import { useRouterLinks } from "../composables/routerLinks"
-import { resolveLayout } from "../layout"
+import { defineComponent, computed, watch } from 'vue'
+import { Head } from '@unhead/vue/components'
+import { usePage } from '../composables/pageData'
+import { useRouterLinks } from '../composables/routerLinks'
+import { resolveLayout } from '../layout'
 const DebugPanel = () => null
 
 export default defineComponent({
-  name: "îles",
+  name: 'îles',
   components: {
     DebugPanel,
     Head,

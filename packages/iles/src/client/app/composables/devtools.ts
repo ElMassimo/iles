@@ -1,16 +1,16 @@
-import type { App, ComponentPublicInstance } from "vue"
-import { reactive, computed } from "vue"
-import type { InspectorNodeTag } from "@vue/devtools-kit"
-import { setupDevtoolsPlugin } from "@vue/devtools-api"
-import { usePage } from "iles"
-import type { AppClientConfig, PageData } from "../../shared"
-import { getComponentName } from "../utils"
+import type { App, ComponentPublicInstance } from 'vue'
+import { reactive, computed } from 'vue'
+import type { InspectorNodeTag } from '@vue/devtools-kit'
+import { setupDevtoolsPlugin } from '@vue/devtools-api'
+import { usePage } from 'iles'
+import type { AppClientConfig, PageData } from '../../shared'
+import { getComponentName } from '../utils'
 
-const ISLAND_TYPE = "Islands 🏝"
+const ISLAND_TYPE = 'Islands 🏝'
 const componentStateTypes = [ISLAND_TYPE]
 
-const INSPECTOR_ID = "iles"
-const HYDRATION_LAYER_ID = "iles:hydration"
+const INSPECTOR_ID = 'iles'
+const HYDRATION_LAYER_ID = 'iles:hydration'
 
 // Internal: Used to present sequential island ids during development.
 let lastUsedIslandId = 0
@@ -18,12 +18,12 @@ const islandsById = reactive<Record<string, ComponentPublicInstance>>({})
 const islands = computed(() => Object.values(islandsById))
 
 const strategyLabels: Record<string, any> = {
-  "client:idle": "whenIdle",
-  "client:load": "instant",
-  "client:media": "onMediaQuery",
-  "client:only": "noPrerender",
-  "client:visible": "whenVisible",
-  "client:none": "static",
+  'client:idle': 'whenIdle',
+  'client:load': 'instant',
+  'client:media': 'onMediaQuery',
+  'client:only': 'noPrerender',
+  'client:visible': 'whenVisible',
+  'client:none': 'static',
 }
 
 const frameworkColors: Record<any, any> = {
@@ -37,12 +37,12 @@ type DevToolsPluginAPI = Parameters<Parameters<typeof setupDevtoolsPlugin>[1]>[0
 let devtoolsApi: DevToolsPluginAPI
 let appConfig: AppClientConfig
 
-let page = {} as PageData["page"]
-let route = {} as PageData["route"]
-let meta = {} as PageData["meta"]
-let frontmatter = {} as PageData["frontmatter"]
-let props = {} as PageData["props"]
-let site = {} as PageData["site"]
+let page = {} as PageData['page']
+let route = {} as PageData['route']
+let meta = {} as PageData['meta']
+let frontmatter = {} as PageData['frontmatter']
+let props = {} as PageData['props']
+let site = {} as PageData['site']
 
 const devtools = {
   updateIslandsInspector() {
@@ -82,7 +82,7 @@ const devtools = {
       event: { time, title: component, subtitle: hydrated, data },
     })
 
-    if (appConfig?.debug === "log") {
+    if (appConfig?.debug === 'log') {
       const { el, slots } = event
       console.info(`🏝 hydrated ${component}`, el, slots)
     }
@@ -103,11 +103,11 @@ export function installDevtools(app: App, config: AppClientConfig) {
 
   setupDevtoolsPlugin(
     {
-      id: "com.maximomussini.iles",
+      id: 'com.maximomussini.iles',
       label: ISLAND_TYPE,
-      logo: "https://iles-docs.netlify.app/favicon.svg",
-      packageName: "iles",
-      homepage: "https://github.com/ElMassimo/iles",
+      logo: 'https://iles-docs.netlify.app/favicon.svg',
+      packageName: 'iles',
+      homepage: 'https://github.com/ElMassimo/iles',
       componentStateTypes,
       app: app as any,
     },
@@ -117,25 +117,25 @@ export function installDevtools(app: App, config: AppClientConfig) {
       api.addInspector({
         id: INSPECTOR_ID,
         label: ISLAND_TYPE,
-        icon: "waves",
-        treeFilterPlaceholder: "Search islands",
+        icon: 'waves',
+        treeFilterPlaceholder: 'Search islands',
       })
 
       api.addTimelineLayer({
         id: HYDRATION_LAYER_ID,
         color: 0xff984f,
-        label: "Hydration 🏝",
+        label: 'Hydration 🏝',
       })
 
       api.on.inspectComponent(({ componentInstance, instanceData }) => {
         const island = findIsland(componentInstance?.proxy)
         if (!island) return
-        instanceData.state.push({ type: ISLAND_TYPE, key: "within", value: island })
+        instanceData.state.push({ type: ISLAND_TYPE, key: 'within', value: island })
       })
 
       api.on.getInspectorTree(async (payload) => {
         if (payload.app !== app || payload.inspectorId !== INSPECTOR_ID) return
-        const userFilter = payload.filter?.toLowerCase() || ""
+        const userFilter = payload.filter?.toLowerCase() || ''
         const islandNodes = islands.value
           .filter(
             (island: any) =>
@@ -162,7 +162,7 @@ export function installDevtools(app: App, config: AppClientConfig) {
             children: islandNodes,
             tags: [
               {
-                label: page.value.layoutName ?? "no layout",
+                label: page.value.layoutName ?? 'no layout',
                 textColor: 0,
                 backgroundColor: 0x42b983,
               },
@@ -177,12 +177,12 @@ export function installDevtools(app: App, config: AppClientConfig) {
         if (payload.nodeId === route.path) {
           payload.state = {
             props: [
-              { key: "component", value: page.value },
-              { key: "layout", value: page.value.layoutName },
-              { key: "frontmatter", value: frontmatter },
-              { key: "meta", value: meta },
-              { key: "props", value: props.value },
-              { key: "site", value: site },
+              { key: 'component', value: page.value },
+              { key: 'layout', value: page.value.layoutName },
+              { key: 'frontmatter', value: frontmatter },
+              { key: 'meta', value: meta },
+              { key: 'props', value: props.value },
+              { key: 'site', value: site },
             ].filter((x) => x),
           }
           return
@@ -193,14 +193,14 @@ export function installDevtools(app: App, config: AppClientConfig) {
         const ileRoot = island.$el?.nextSibling
         payload.state = {
           props: [
-            { key: "component", value: island.component },
-            { key: "el", value: ileRoot?.children?.[0] || ileRoot },
-            { key: "strategy", value: getStrategy(island) },
-            getMediaQuery(island) && { key: "mediaQuery", value: getMediaQuery(island) },
-            { key: "framework", value: island.framework },
-            { key: "props", value: island.$attrs },
-            { key: "importName", value: island.importName },
-            { key: "importFrom", value: island.importFrom.replace(island.appConfig.root, "") },
+            { key: 'component', value: island.component },
+            { key: 'el', value: ileRoot?.children?.[0] || ileRoot },
+            { key: 'strategy', value: getStrategy(island) },
+            getMediaQuery(island) && { key: 'mediaQuery', value: getMediaQuery(island) },
+            { key: 'framework', value: island.framework },
+            { key: 'props', value: island.$attrs },
+            { key: 'importName', value: island.importName },
+            { key: 'importFrom', value: island.importFrom.replace(island.appConfig.root, '') },
           ].filter((x) => x),
         }
       })
@@ -210,7 +210,7 @@ export function installDevtools(app: App, config: AppClientConfig) {
 
 function findIsland(component: any): any {
   if (!component) return null
-  if (component.strategy?.startsWith("client:")) return component
+  if (component.strategy?.startsWith('client:')) return component
   return findIsland(component.$parent)
 }
 
@@ -219,5 +219,5 @@ function getStrategy(island: any) {
 }
 
 function getMediaQuery(island: any) {
-  if (island.strategy === "client:media") return island["client:media"]
+  if (island.strategy === 'client:media') return island['client:media']
 }

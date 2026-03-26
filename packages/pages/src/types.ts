@@ -1,7 +1,7 @@
-import type { ViteDevServer } from "vite-plus"
-import type { createApi } from "./api"
+import type { ViteDevServer } from 'vite-plus'
+import type { createApi } from './api'
 
-export const MODULE_ID = "@islands/routes"
+export const MODULE_ID = '@islands/routes'
 
 export type Awaitable<T> = T | Promise<T>
 
@@ -94,7 +94,7 @@ export interface PagesOptions {
   extendRoutes?: (routes: PageRoute[]) => Awaitable<UserRoute[] | void>
 }
 
-export interface ResolvedOptions extends Omit<PagesOptions, "pagesDir" | "pageExtensions"> {
+export interface ResolvedOptions extends Omit<PagesOptions, 'pagesDir' | 'pageExtensions'> {
   /**
    * The root of the project.
    */

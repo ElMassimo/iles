@@ -1,18 +1,18 @@
-import { Plugin, ViteDevServer } from "vite-plus"
+import { Plugin, ViteDevServer } from 'vite-plus'
 
-import glob from "fast-glob"
-import micromatch from "micromatch"
-import { relative } from "pathe"
-import type { AppConfig } from "../shared"
-import { parseId } from "./parse"
-import { debug, serialize } from "./utils"
+import glob from 'fast-glob'
+import micromatch from 'micromatch'
+import { relative } from 'pathe'
+import type { AppConfig } from '../shared'
+import { parseId } from './parse'
+import { debug, serialize } from './utils'
 
 const definitionRegex = /(function|const|let|var)[\s\n]+\buseDocuments\b/
 const usageRegex = /\buseDocuments[\s\n]*\(([^)]+)\)/g
 
 const fileCanUseDocuments = /(\.vue|\.[tj]sx?)$/
 
-const DOCS_VIRTUAL_ID = "/@islands/documents"
+const DOCS_VIRTUAL_ID = '/@islands/documents'
 
 interface DocumentModule {
   pattern: string
@@ -31,7 +31,7 @@ export default function documentsPlugin(config: AppConfig): Plugin {
   const modulesById: Record<string, DocumentModule> = Object.create(null)
 
   return {
-    name: "iles:documents",
+    name: 'iles:documents',
     configureServer(devServer) {
       server = devServer
     },
@@ -49,7 +49,7 @@ export default function documentsPlugin(config: AppConfig): Plugin {
 
       // Extract pattern from the virtual module path, and resolve any alias.
       const path = relative(root, (await config.resolvePath(rawPath)) || rawPath)
-      const pattern = path.includes("*") ? path : `${path}/**/*.{md,mdx}`
+      const pattern = path.includes('*') ? path : `${path}/**/*.{md,mdx}`
 
       // Allow Vite to automatically detect added or removed files.
       if (server)
@@ -57,7 +57,7 @@ export default function documentsPlugin(config: AppConfig): Plugin {
 
       // Obtain files matching the specified pattern and extract frontmatter.
       const files = await glob(pattern, { cwd: root })
-      debug.documents("%s %O", rawPath, { path, pattern, files })
+      debug.documents('%s %O', rawPath, { path, pattern, files })
 
       let data = await Promise.all(
         files.map(async (file) => {
@@ -78,7 +78,7 @@ export default function documentsPlugin(config: AppConfig): Plugin {
 
       // Serialize all the documents, adding a `component` factory function.
       const serialized = serialize(documents).replace(/component:"(\w+)"/g, (_, id) => {
-        const index = id.split("_component")[0]
+        const index = id.split('_component')[0]
         return `component: unwrapDefault(() => import('/${documents[index].filename}'))`
       })
 
@@ -131,7 +131,7 @@ export default function documentsPlugin(config: AppConfig): Plugin {
             ([id, path]) => `import ${id} from '${DOCS_VIRTUAL_ID}?pattern=${path}'`,
           )
 
-          return `${code};${imports.join(";")}`
+          return `${code};${imports.join(';')}`
         }
       }
     },

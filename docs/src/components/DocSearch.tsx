@@ -1,5 +1,5 @@
-import { DocSearch, DocSearchProps } from "@mussi/docsearch"
-import "~/styles/docsearch.css"
+import { DocSearch, DocSearchProps } from '@mussi/docsearch'
+import '~/styles/docsearch.css'
 
 const options: Partial<DocSearchProps> = {
   transformItems(items) {

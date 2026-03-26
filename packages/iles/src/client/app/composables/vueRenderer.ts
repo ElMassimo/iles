@@ -1,5 +1,5 @@
-import type { AppContext, Component, VNode, AsyncComponentLoader } from "vue"
-import { h, getCurrentInstance, createApp, createSSRApp, ssrContextKey, withCtx } from "vue"
+import type { AppContext, Component, VNode, AsyncComponentLoader } from 'vue'
+import { h, getCurrentInstance, createApp, createSSRApp, ssrContextKey, withCtx } from 'vue'
 
 const newApp = import.meta.env.SSR ? createApp : createSSRApp
 
@@ -14,7 +14,7 @@ export type VNodeRenderer = (content: VueRenderable) => Promise<string>
 export function useVueRenderer(): VNodeRenderer {
   return withCtx(
     (async (content) => {
-      if (!content) return ""
+      if (!content) return ''
 
       // Obtain the app context of the current app to enable nested renders.
       const {
@@ -36,7 +36,7 @@ export function useVueRenderer(): VNodeRenderer {
       // Set the external app context to the temporary app.
       Object.assign(proxyApp._context, { ...appContext, provides })
 
-      const { renderToString } = await import("vue/server-renderer")
+      const { renderToString } = await import('vue/server-renderer')
       return await renderToString(proxyApp, ssrContext)
     }) as VNodeRenderer,
     getCurrentInstance(),
@@ -44,7 +44,7 @@ export function useVueRenderer(): VNodeRenderer {
 }
 
 function isFunction(val: any): val is Function {
-  return typeof val === "function"
+  return typeof val === 'function'
 }
 
 function isComponent(val: any): val is Component {

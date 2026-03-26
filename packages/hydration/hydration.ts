@@ -1,5 +1,5 @@
-import { AsyncFrameworkFn, FrameworkFn, Component, AsyncComponent, Props, Slots } from "./types"
-export { Framework, Props, Slots } from "./types"
+import { AsyncFrameworkFn, FrameworkFn, Component, AsyncComponent, Props, Slots } from './types'
+export { Framework, Props, Slots } from './types'
 
 const findById = (id: string) =>
   document.getElementById(id) || console.error(`Missing #${id}, could not mount island.`)
@@ -15,7 +15,7 @@ export function hydrateNow(
   const el = findById(id)
   if (el) {
     framework(component, id, el, props, slots)
-    el.setAttribute("hydrated", "")
+    el.setAttribute('hydrated', '')
   }
 }
 
@@ -81,14 +81,14 @@ export function hydrateWhenVisible(
   const el = findById(id)
   if (el) {
     // NOTE: Force detection of the element for non-Vue frameworks.
-    if (import.meta.env.DEV) el.style.display = "initial"
+    if (import.meta.env.DEV) el.style.display = 'initial'
 
     const observer = new IntersectionObserver(([{ isIntersecting }]) => {
       if (isIntersecting) {
         stopObserver()
 
         // NOTE: Reset the display value.
-        if (import.meta.env.DEV) el.style.display = ""
+        if (import.meta.env.DEV) el.style.display = ''
 
         resolveAndHydrate(framework, component, id, props, slots)
       }

@@ -1,9 +1,9 @@
-import { MaybeRefOrGetter, computed, toValue } from "vue"
+import { MaybeRefOrGetter, computed, toValue } from 'vue'
 
-import type { Heading } from "@islands/headings"
-import type { SideBarItem, SideBarGroup } from "~/logic/config"
+import type { Heading } from '@islands/headings'
+import type { SideBarItem, SideBarGroup } from '~/logic/config'
 
-import { normalize } from "~/logic/utils"
+import { normalize } from '~/logic/utils'
 
 export function useSideBarLinks() {
   const { route, site } = usePage()
@@ -28,7 +28,7 @@ export function useSideBar() {
       link = normalize(link)
 
       if (!path.includes(link)) children = []
-      else if (frontmatter.sidebar === "auto") children = linksFromHeadings(meta.headings, 2, 1)
+      else if (frontmatter.sidebar === 'auto') children = linksFromHeadings(meta.headings, 2, 1)
 
       return { ...group, link, children } as SideBarGroup
     })
@@ -46,7 +46,7 @@ export function useActive(itemRef: MaybeRefOrGetter<SideBarItem>) {
     const routePath = normalize(route.path)
     const pagePath = normalize(link)
 
-    return routePath === pagePath || ("children" in item && routePath.startsWith(pagePath))
+    return routePath === pagePath || ('children' in item && routePath.startsWith(pagePath))
   })
 }
 

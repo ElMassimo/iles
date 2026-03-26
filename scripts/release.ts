@@ -1,21 +1,21 @@
 /**
  * modified from https://github.com/vuejs/vue-next/blob/master/scripts/release.js
  */
-import path from "node:path"
-import fs from "node:fs"
-import { execa } from "execa"
-import semver from "semver"
-import pc from "picocolors"
-import enquirer from "enquirer"
-import minimist from "minimist"
-import { fileURLToPath } from "url"
-import { createRequire } from "module"
+import path from 'node:path'
+import fs from 'node:fs'
+import { execa } from 'execa'
+import semver from 'semver'
+import pc from 'picocolors'
+import enquirer from 'enquirer'
+import minimist from 'minimist'
+import { fileURLToPath } from 'url'
+import { createRequire } from 'module'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 const require = createRequire(import.meta.url)
 
 const args = minimist(process.argv.slice(2))
-const name = args._[0]?.trim() || "iles"
+const name = args._[0]?.trim() || 'iles'
 
 const pkg = jsPackage()
 
@@ -32,13 +32,13 @@ const skipBuild = args.skipBuild
  * @type {import('semver').ReleaseType[]}
  */
 const versionIncrements = [
-  "patch",
-  "minor",
-  "major",
-  "prepatch",
-  "preminor",
-  "premajor",
-  "prerelease",
+  'patch',
+  'minor',
+  'major',
+  'prepatch',
+  'preminor',
+  'premajor',
+  'prerelease',
 ]
 
 /**
@@ -54,7 +54,7 @@ function inc(i) {
  * @param {object} opts
  */
 async function run(bin, args, opts = {}) {
-  return execa(bin, args, { stdio: "inherit", ...opts })
+  return execa(bin, args, { stdio: 'inherit', ...opts })
 }
 
 /**
@@ -63,7 +63,7 @@ async function run(bin, args, opts = {}) {
  * @param {object} opts
  */
 async function dryRun(bin, args, opts = {}) {
-  console.info(pc.blue(`[dryrun] ${bin} ${args.join(" ")}`), opts)
+  console.info(pc.blue(`[dryrun] ${bin} ${args.join(' ')}`), opts)
 }
 
 /**
@@ -81,10 +81,10 @@ function resolve(paths) {
 }
 
 function jsPackage() {
-  const path = resolve("package.json")
-  const content = fs.readFileSync(path, "utf-8")
+  const path = resolve('package.json')
+  const content = fs.readFileSync(path, 'utf-8')
   return {
-    type: "package",
+    type: 'package',
     path,
     content,
     ...require(path),
@@ -102,21 +102,21 @@ async function main() {
    * @type {{ release: string }}
    */
   const { release } = await enquirer.prompt<{ release: string }>({
-    type: "select",
-    name: "release",
-    message: "Select release type",
-    choices: versionIncrements.map((i) => `${i} (${inc(i)})`).concat(["custom"]),
+    type: 'select',
+    name: 'release',
+    message: 'Select release type',
+    choices: versionIncrements.map((i) => `${i} (${inc(i)})`).concat(['custom']),
   })
 
   let targetVersion
-  if (release === "custom") {
+  if (release === 'custom') {
     /**
      * @type {{ version: string }}
      */
     const res = await enquirer.prompt<{ version: string }>({
-      type: "input",
-      name: "version",
-      message: "Input custom version",
+      type: 'input',
+      name: 'version',
+      message: 'Input custom version',
       initial: pkg.version,
     })
     targetVersion = res.version
@@ -126,14 +126,14 @@ async function main() {
 
   if (!semver.valid(targetVersion)) throw new Error(`invalid target version: ${targetVersion}`)
 
-  const tag = name === "iles" ? `v${targetVersion}` : `${name}@${targetVersion}`
+  const tag = name === 'iles' ? `v${targetVersion}` : `${name}@${targetVersion}`
 
   /**
    * @type {{ yes: boolean }}
    */
   const { yes } = await enquirer.prompt<{ yes: boolean }>({
-    type: "confirm",
-    name: "yes",
+    type: 'confirm',
+    name: 'yes',
     message: `Releasing ${tag}. Confirm?`,
   })
 
@@ -144,28 +144,28 @@ async function main() {
 
   step(`\nBuilding ${pkg.type}...`)
   if (!skipBuild && !isDryRun)
-    await run("pnpm", ["nx", "run", `${pkg.name}:build`], { cwd: path.resolve(__dirname, "..") })
-  else console.info("(skipped)")
+    await run('pnpm', ['nx', 'run', `${pkg.name}:build`], { cwd: path.resolve(__dirname, '..') })
+  else console.info('(skipped)')
 
-  step("\nGenerating changelog...")
-  await run("pnpm", ["changelog", name])
+  step('\nGenerating changelog...')
+  await run('pnpm', ['changelog', name])
 
-  const { stdout } = await run("git", ["diff"], { stdio: "pipe" })
+  const { stdout } = await run('git', ['diff'], { stdio: 'pipe' })
   if (stdout) {
-    step("\nCommitting changes...")
-    await runIfNotDry("git", ["add", "-A"])
-    await runIfNotDry("git", ["commit", "-m", `release: ${tag}`])
+    step('\nCommitting changes...')
+    await runIfNotDry('git', ['add', '-A'])
+    await runIfNotDry('git', ['commit', '-m', `release: ${tag}`])
   } else {
-    console.info("No changes to commit.")
+    console.info('No changes to commit.')
   }
 
   step(`\nPublishing ${pkg.type}...`)
   await publishPackage(targetVersion, runIfNotDry)
 
-  step("\nPushing to GitHub...")
-  await runIfNotDry("git", ["tag", tag])
-  await runIfNotDry("git", ["push", "origin", `refs/tags/${tag}`])
-  await runIfNotDry("git", ["push"])
+  step('\nPushing to GitHub...')
+  await runIfNotDry('git', ['tag', tag])
+  await runIfNotDry('git', ['push', 'origin', `refs/tags/${tag}`])
+  await runIfNotDry('git', ['push'])
 
   if (isDryRun) console.info(`\nDry run finished - run git diff to see ${pkg.type} changes.`)
 
@@ -178,9 +178,9 @@ async function main() {
  */
 async function publishPackage(version, runIfNotDry) {
   try {
-    await runIfNotDry("pnpm", ["publish", "--access", "public"], {
-      stdio: "inherit",
-      cwd: resolve("."),
+    await runIfNotDry('pnpm', ['publish', '--access', 'public'], {
+      stdio: 'inherit',
+      cwd: resolve('.'),
     })
     console.info(pc.green(`Successfully published ${name}@${version}`))
   } catch (e) {

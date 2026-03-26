@@ -1,19 +1,19 @@
-import { PageComponent } from "iles"
-import { extname } from "pathe"
-import type { RouteComponent, RouteRecordNormalized } from "vue-router"
-import type { AppConfig, CreateAppFactory, Router, RouteToRender } from "../shared"
-import { pathToFilename } from "./utils"
+import { PageComponent } from 'iles'
+import { extname } from 'pathe'
+import type { RouteComponent, RouteRecordNormalized } from 'vue-router'
+import type { AppConfig, CreateAppFactory, Router, RouteToRender } from '../shared'
+import { pathToFilename } from './utils'
 
-const DYNAMIC_PARAM = "/:"
+const DYNAMIC_PARAM = '/:'
 
 export async function getRoutesToRender(config: AppConfig, createApp: CreateAppFactory) {
   const routesToRender = new Map<string, RouteToRender>()
   const { router } = await createApp()
 
   for (const { path, ssrProps } of await resolveRoutesToRender(router)) {
-    const extension = extname(path).slice(1) || ".html"
+    const extension = extname(path).slice(1) || '.html'
     const outputFilename = pathToFilename(path, extension)
-    routesToRender.set(path, { path, ssrProps, outputFilename, rendered: "" })
+    routesToRender.set(path, { path, ssrProps, outputFilename, rendered: '' })
   }
 
   return Array.from(routesToRender.values())
@@ -46,7 +46,7 @@ async function getDynamicPaths(route: RouteRecordNormalized) {
   const { default: component } = components || {}
 
   const page: PageComponent | undefined = isLazy(component)
-    ? await component().then((m) => ("default" in m ? m.default : m))
+    ? await component().then((m) => ('default' in m ? m.default : m))
     : component
 
   const variants = await page?.getStaticPaths?.({ route })
@@ -67,9 +67,9 @@ async function getDynamicPaths(route: RouteRecordNormalized) {
 }
 
 function isLazy(
-  value: NonNullable<RouteRecordNormalized["components"]>["default"],
+  value: NonNullable<RouteRecordNormalized['components']>['default'],
 ): value is () => Promise<RouteComponent> {
-  return typeof value === "function"
+  return typeof value === 'function'
 }
 
 export function toArray<T>(array?: T | T[]): T[] {

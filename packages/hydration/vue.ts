@@ -1,7 +1,7 @@
-import { h, createApp as createClientApp, createStaticVNode, createSSRApp } from "vue"
-import type { DefineComponent as Component, Component as App } from "vue"
-import type { Props, Slots } from "./types"
-import { onDispose } from "./hydration"
+import { h, createApp as createClientApp, createStaticVNode, createSSRApp } from 'vue'
+import type { DefineComponent as Component, Component as App } from 'vue'
+import type { Props, Slots } from './types'
+import { onDispose } from './hydration'
 
 const createVueApp = import.meta.env.SSR ? createSSRApp : createClientApp
 

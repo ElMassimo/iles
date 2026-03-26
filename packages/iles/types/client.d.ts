@@ -5,17 +5,17 @@ import type {
   StaticPath,
   Router,
   RouteLocationNormalizedLoaded,
-} from "./shared"
+} from './shared'
 
-declare module "vue-router" {
+declare module 'vue-router' {
   interface RouteMeta {
-    layout?: import("vue").Ref<import("vue").DefineComponent | false>
-    pathVariants?: import("vue").Ref<StaticPath[]>
-    pathVariantsPromise?: import("vue").ComputedRef<Promise<StaticPath[]>>
+    layout?: import('vue').Ref<import('vue').DefineComponent | false>
+    pathVariants?: import('vue').Ref<StaticPath[]>
+    pathVariantsPromise?: import('vue').ComputedRef<Promise<StaticPath[]>>
   }
 }
 
-declare module "@vue/runtime-core" {
+declare module '@vue/runtime-core' {
   export interface ComponentCustomProperties {
     /**
      * The frontmatter of the current page.

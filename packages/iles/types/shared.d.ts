@@ -3,16 +3,16 @@ import type {
   UserConfig as ViteOptions,
   ConfigEnv,
   PluginOption as VitePluginOption,
-} from "vite-plus"
-import type { GetModuleInfo } from "rolldown"
-import type { App, Ref, DefineComponent, VNode, AsyncComponentLoader } from "vue"
-import type { Plugin as VuePlugin, Options as VueOptions } from "@vitejs/plugin-vue"
-import type ComponentsPlugin from "unplugin-vue-components/vite"
-import type { Options as ComponentOptions } from "unplugin-vue-components/types"
+} from 'vite-plus'
+import type { GetModuleInfo } from 'rolldown'
+import type { App, Ref, DefineComponent, VNode, AsyncComponentLoader } from 'vue'
+import type { Plugin as VuePlugin, Options as VueOptions } from '@vitejs/plugin-vue'
+import type ComponentsPlugin from 'unplugin-vue-components/vite'
+import type { Options as ComponentOptions } from 'unplugin-vue-components/types'
 
-import type { Options as RequiredSolidOptions } from "vite-plugin-solid"
-import type { Options as SvelteOptions } from "@sveltejs/vite-plugin-svelte"
-import type { PreactPluginOptions as PreactOptions } from "@preact/preset-vite"
+import type { Options as RequiredSolidOptions } from 'vite-plugin-solid'
+import type { Options as SvelteOptions } from '@sveltejs/vite-plugin-svelte'
+import type { PreactPluginOptions as PreactOptions } from '@preact/preset-vite'
 
 import type {
   Router,
@@ -23,17 +23,17 @@ import type {
   RouteRecordNormalized,
   RouteLocationNormalizedLoaded,
   RouteParams,
-} from "vue-router"
-import type { HeadClient, HeadObject } from "@unhead/vue"
-import type { PagesApi, PagesOptions, PageFrontmatter, PageMeta } from "@islands/pages"
-export type { RawPageMatter, PageFrontmatter, PageMeta } from "@islands/pages"
-export type { OnLoadFn } from "@islands/hydration/dist/vanilla"
+} from 'vue-router'
+import type { HeadClient, HeadObject } from '@unhead/vue'
+import type { PagesApi, PagesOptions, PageFrontmatter, PageMeta } from '@islands/pages'
+export type { RawPageMatter, PageFrontmatter, PageMeta } from '@islands/pages'
+export type { OnLoadFn } from '@islands/hydration/dist/vanilla'
 
-import type { MarkdownOptions } from "@islands/mdx"
+import type { MarkdownOptions } from '@islands/mdx'
 
 export type { ViteOptions, ConfigEnv }
 export type { Router, RouteRecordRaw, RouteMeta }
-export type { RouteLocationNormalizedLoaded } from "vue-router"
+export type { RouteLocationNormalizedLoaded } from 'vue-router'
 
 export type RouterOptions = VueRouterOptions & { base?: string }
 
@@ -98,7 +98,7 @@ export interface StaticPath<T = Record<string, any>> {
 
 export interface RouteToRender {
   path: string
-  ssrProps: StaticPath["props"]
+  ssrProps: StaticPath['props']
   outputFilename: string
   rendered: string
 }
@@ -208,11 +208,11 @@ export interface UserApp {
   mdxComponents?:
     | MDXComponents
     | ((ctx: EnhanceAppContext) => MDXComponents | Promise<MDXComponents>)
-  router?: Omit<VueRouterOptions, "history", "routes">
+  router?: Omit<VueRouterOptions, 'history', 'routes'>
   socialTags?: boolean
 }
 
-export type UserSite = typeof import("~/site").default & {
+export type UserSite = typeof import('~/site').default & {
   url: string
   canonical: string
 }
@@ -236,11 +236,11 @@ export interface RequiredConfig {
    * Whether to output more information about islands and hydration in development.
    * @default true
    */
-  debug: boolean | "log"
+  debug: boolean | 'log'
   /**
    * Which framework to use to process `.jsx` and `.tsx` files.
    */
-  jsx?: "vue" | "preact" | "solid"
+  jsx?: 'vue' | 'preact' | 'solid'
   /**
    * Whether to skip `.html` in hrefs and router paths.
    * @default true
@@ -282,7 +282,7 @@ export interface UserConfig extends Partial<RequiredConfig>, Partial<IlesModule>
   modules?: IlesModuleOption[]
 }
 
-export interface AppConfig extends RequiredConfig, Omit<BaseIlesConfig, "pagesDir"> {
+export interface AppConfig extends RequiredConfig, Omit<BaseIlesConfig, 'pagesDir'> {
   base: string
   root: string
   drafts: boolean
@@ -293,8 +293,8 @@ export interface AppConfig extends RequiredConfig, Omit<BaseIlesConfig, "pagesDi
   resolvePath: ResolveFn
 }
 
-export type AppClientConfig = Pick<AppConfig, "base" | "root" | "debug" | "siteUrl" | "jsx"> & {
-  overrideElements?: MarkdownOptions["overrideElements"]
+export type AppClientConfig = Pick<AppConfig, 'base' | 'root' | 'debug' | 'siteUrl' | 'jsx'> & {
+  overrideElements?: MarkdownOptions['overrideElements']
   sitemap?: boolean
 }
 

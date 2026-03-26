@@ -1,13 +1,13 @@
-import { basename, extname } from "pathe"
-import grayMatter from "gray-matter"
-import { parse as parseSFC } from "vue/compiler-sfc"
+import { basename, extname } from 'pathe'
+import grayMatter from 'gray-matter'
+import { parse as parseSFC } from 'vue/compiler-sfc'
 
-import type { RawPageMatter, PageMeta } from "./types"
+import type { RawPageMatter, PageMeta } from './types'
 
 const dateRegex = /^(?<year>\d{4})-(?<month>\d{2})-(?<day>\d{2})-(?<slug>.*)(?<ext>\.\w+)$/
 
 export async function parsePageMatter(filename: string, content: string) {
-  const parse = extname(filename) === ".vue" ? parsePageBlock : parseFrontmatter
+  const parse = extname(filename) === '.vue' ? parsePageBlock : parseFrontmatter
   const matter = await parse(filename, content)
   return preparePageMatter(filename, matter)
 }
@@ -17,9 +17,9 @@ export async function parsePageMatter(filename: string, content: string) {
  * Supports extracting the layout from `<template layout="default">`.
  */
 async function parsePageBlock(filename: string, content: string) {
-  const parsed = await parseSFC(content, { pad: "space" }).descriptor
+  const parsed = await parseSFC(content, { pad: 'space' }).descriptor
 
-  const block = parsed.customBlocks.find((block) => block.type === "page")
+  const block = parsed.customBlocks.find((block) => block.type === 'page')
   const templateAttrs = parsed.template?.attrs
 
   const frontmatter = block && parseFrontmatter(filename, `---\n${block.content}\n---`, block.lang)
@@ -48,8 +48,8 @@ function preparePageMatter(filename: string, matter: Record<string, any>): RawPa
 
   // Skip layout for non-HTML files, such as RSS feeds.
   if (layout === undefined) {
-    const ext = extname(route.path) || ".html"
-    layout = ext !== ".html" ? false : undefined
+    const ext = extname(route.path) || '.html'
+    layout = ext !== '.html' ? false : undefined
   }
 
   // Add filename, date, and id.

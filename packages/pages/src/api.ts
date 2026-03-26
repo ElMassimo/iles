@@ -1,18 +1,18 @@
-import { promises as fs } from "fs"
-import glob from "fast-glob"
-import deepEqual from "deep-equal"
-import { relative, resolve } from "pathe"
-import type { RawPageMatter, PageRoute, ResolvedOptions, UserRoute } from "./types"
+import { promises as fs } from 'fs'
+import glob from 'fast-glob'
+import deepEqual from 'deep-equal'
+import { relative, resolve } from 'pathe'
+import type { RawPageMatter, PageRoute, ResolvedOptions, UserRoute } from './types'
 
-import { parsePageMatter } from "./frontmatter"
-import { debug, slash } from "./utils"
+import { parsePageMatter } from './frontmatter'
+import { debug, slash } from './utils'
 
 export function createApi(options: ResolvedOptions) {
   let addedAllPages: Promise<void>
   let pagesByFile = new Map<string, PageRoute>()
 
   const { root, pagesDir, pageExtensions } = options
-  const extensionsRE = new RegExp(`\\.${pageExtensions.join("|")}`)
+  const extensionsRE = new RegExp(`\\.${pageExtensions.join('|')}`)
 
   return {
     isPage(file: string) {
@@ -23,7 +23,7 @@ export function createApi(options: ResolvedOptions) {
       return pagesByFile.get(resolve(root, file))
     },
     async forceAddAllPages() {
-      const files = await glob(`${options.pagesDir}/**/*.{${pageExtensions.join(",")}}`, {
+      const files = await glob(`${options.pagesDir}/**/*.{${pageExtensions.join(',')}}`, {
         onlyFiles: true,
       })
       await Promise.all(files.map(async (file) => await this.addPage(slash(file))))
@@ -44,8 +44,8 @@ export function createApi(options: ResolvedOptions) {
       const prevMatter = this.pageForFilename(file)?.frontmatter
       const { frontmatter } = await this.addPage(file)
 
-      debug.hmr("%s old: %O", file, prevMatter)
-      debug.hmr("%s new: %O", file, frontmatter)
+      debug.hmr('%s old: %O', file, prevMatter)
+      debug.hmr('%s new: %O', file, frontmatter)
 
       return {
         changed: !deepEqual(prevMatter, frontmatter),
@@ -55,7 +55,7 @@ export function createApi(options: ResolvedOptions) {
     async pageRouteFromFile(file: string) {
       const frontmatter = await this.frontmatterForFile(file)
       const filePath = relative(pagesDir, file)
-      const extIndex = filePath.lastIndexOf(".")
+      const extIndex = filePath.lastIndexOf('.')
       const { path, name } = extractPathAndName(
         frontmatter.route.path || filePath.slice(0, extIndex),
       )
@@ -88,7 +88,7 @@ export function createApi(options: ResolvedOptions) {
       try {
         file = resolve(root, file)
 
-        if (content === undefined) content = await fs.readFile(file, "utf8")
+        if (content === undefined) content = await fs.readFile(file, 'utf8')
 
         file = relative(root, file)
 
@@ -98,7 +98,7 @@ export function createApi(options: ResolvedOptions) {
       } catch (error: any) {
         if (!options.server) throw error
         options.server.config.logger.error(error.message, { timestamp: true, error })
-        options.server.ws.send({ type: "error", err: error })
+        options.server.ws.send({ type: 'error', err: error })
         return { frontmatter: {}, meta: {} as any, route: {}, layout: false }
       }
     },
@@ -128,26 +128,26 @@ function extractPathAndName(pathOrFilename: string) {
   const paths: string[] = []
 
   pathOrFilename
-    .split("/")
+    .split('/')
     .filter((x) => x)
     .forEach((segment) => {
       const isDynamic = isDynamicRoute(segment)
 
       const path = isDynamic
-        ? segment.replace(/^\[(\.{3})?/, "").replace(/\]$/, "")
+        ? segment.replace(/^\[(\.{3})?/, '').replace(/\]$/, '')
         : segment.toLowerCase()
 
-      const isIndex = path === "index"
+      const isIndex = path === 'index'
 
       if (names.length === 0 || !isIndex) names.push(path)
 
       if (!isIndex) {
-        if (isDynamic) paths.push(`:${path}${isCatchAllRoute(segment) ? "(.*)*" : ""}`)
+        if (isDynamic) paths.push(`:${path}${isCatchAllRoute(segment) ? '(.*)*' : ''}`)
         else paths.push(path)
       }
     })
 
-  return { name: names.join("-"), path: `/${paths.join("/")}` }
+  return { name: names.join('-'), path: `/${paths.join('/')}` }
 }
 
 function isDynamicRoute(segment: string) {
@@ -166,7 +166,7 @@ export function countSlash(value: string) {
 function byDynamicParams({ path: a }: PageRoute, { path: b }: PageRoute) {
   const diff = countSlash(a) - countSlash(b)
   if (diff) return diff
-  const aDynamic = a.includes(":")
-  const bDynamic = b.includes(":")
+  const aDynamic = a.includes(':')
+  const bDynamic = b.includes(':')
   return aDynamic === bDynamic ? a.localeCompare(b) : aDynamic ? 1 : -1
 }

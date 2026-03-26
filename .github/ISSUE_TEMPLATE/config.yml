@@ -2,10 +2,10 @@ blank_issues_enabled: false
 contact_links:
   - name: Troubleshooting & FAQs
     url: https://iles-docs.netlify.app/faqs/troubleshooting
-    about: "Please check the most common configuration problems before opening an issue."
+    about: 'Please check the most common configuration problems before opening an issue.'
   - name: Discord Chat
     url: https://discord.com/channels/804011606160703521/900707742203920394
-    about: "Discuss with other users in the #iles channel of the Vite.js Discord server."
+    about: 'Discuss with other users in the #iles channel of the Vite.js Discord server.'
   - name: Questions & Discussions
     url: https://github.com/ElMassimo/iles/discussions
     about: Use GitHub discussions for questions and discussions.

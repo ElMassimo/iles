@@ -42,7 +42,7 @@ blockquote {
   &::before {
     border-left: 0.4rem solid var(--bg-primary);
     bottom: 0;
-    content: "";
+    content: '';
     height: 100%;
     left: 0;
     position: absolute;

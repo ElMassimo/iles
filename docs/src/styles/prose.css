@@ -4,7 +4,7 @@
 }
 
 .prose > *,
-.prose > div[class*="language-"] > pre,
+.prose > div[class*='language-'] > pre,
 .page-footer {
   margin-left: auto;
   margin-right: auto;
@@ -37,7 +37,7 @@
   ul > li::before {
     background-color: var(--bg-primary);
     border-radius: 50%;
-    content: "";
+    content: '';
     height: 0.375em;
     left: 0.25em;
     position: absolute;
@@ -88,7 +88,7 @@
 
   p,
   blockquote,
-  div[class*="language-"] {
+  div[class*='language-'] {
     margin-bottom: 1.25em;
     margin-top: 1.25em;
   }
@@ -139,7 +139,7 @@
   }
 
   blockquote,
-  div[class*="language-"] pre {
+  div[class*='language-'] pre {
     @apply py-4;
   }
 
@@ -168,7 +168,7 @@ a.heading-anchor {
   text-decoration: none !important;
 
   &::before {
-    content: "#";
+    content: '#';
   }
 }
 
@@ -176,7 +176,7 @@ a.heading-anchor {
   &::before {
     --offset: calc(var(--navbar-height) + 1rem);
     display: block;
-    content: " ";
+    content: ' ';
     margin-top: calc(var(--offset) * -1);
     height: var(--offset);
     visibility: hidden;

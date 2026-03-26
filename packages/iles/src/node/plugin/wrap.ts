@@ -1,11 +1,11 @@
-import MagicString from "magic-string"
-import type { SFCBlock } from "vue/compiler-sfc"
-import { parse } from "vue/compiler-sfc"
-import type { ComponentInfo, PublicPluginAPI as ComponentsApi } from "unplugin-vue-components/types"
-import type { ElementNode, RootNode, TemplateChildNode } from "@vue/compiler-core"
-import type { AppConfig } from "../shared"
-import { pascalCase, isString, debug } from "./utils"
-import { parseImports, parseExports } from "./parse"
+import MagicString from 'magic-string'
+import type { SFCBlock } from 'vue/compiler-sfc'
+import { parse } from 'vue/compiler-sfc'
+import type { ComponentInfo, PublicPluginAPI as ComponentsApi } from 'unplugin-vue-components/types'
+import type { ElementNode, RootNode, TemplateChildNode } from '@vue/compiler-core'
+import type { AppConfig } from '../shared'
+import { pascalCase, isString, debug } from './utils'
+import { parseImports, parseExports } from './parse'
 
 interface SfcRootNode extends RootNode {
   ast: {
@@ -13,7 +13,7 @@ interface SfcRootNode extends RootNode {
   }
 }
 
-export const unresolvedIslandKey = "__viteIslandComponent"
+export const unresolvedIslandKey = '__viteIslandComponent'
 
 export async function wrapLayout(code: string, filename: string) {
   const {
@@ -51,16 +51,16 @@ export async function wrapIslandsInSFC(config: AppConfig, code: string, filename
     descriptor: { template, script, scriptSetup, customBlocks },
     errors,
   } = parse(code, { filename })
-  const scriptClientIndex = customBlocks.findIndex((b) => b.type === "script-client")
+  const scriptClientIndex = customBlocks.findIndex((b) => b.type === 'script-client')
   const scriptClient = scriptClientIndex > -1 && customBlocks[scriptClientIndex]
   if (errors.length > 0) return
 
   if (
-    (scriptClient && "setup" in scriptClient.attrs) ||
-    (scriptSetup && Object.keys(scriptSetup.attrs).some((attr) => attr.startsWith("client:")))
+    (scriptClient && 'setup' in scriptClient.attrs) ||
+    (scriptSetup && Object.keys(scriptSetup.attrs).some((attr) => attr.startsWith('client:')))
   )
     throw new Error(
-      "Incorrect usage of hydration strategy in script setup.\nSee https://iles-docs.netlify.app/guide/client-scripts#client-script-block",
+      'Incorrect usage of hydration strategy in script setup.\nSee https://iles-docs.netlify.app/guide/client-scripts#client-script-block',
     )
 
   if (!template?.ast?.children.length) {
@@ -93,7 +93,7 @@ export async function wrapIslandsInSFC(config: AppConfig, code: string, filename
   }
 
   // Close script setup tag if any component was injected.
-  if (!scriptSetup && injectionOffset === 0) s.appendRight(0, "\n</script>\n")
+  if (!scriptSetup && injectionOffset === 0) s.appendRight(0, '\n</script>\n')
 
   return { code: s.toString(), map: s.generateMap({ hires: true }) }
 
@@ -101,13 +101,13 @@ export async function wrapIslandsInSFC(config: AppConfig, code: string, filename
     debug.detect(`<${tagName} ${strategy}>`)
     if (imports[tagName]) return await resolveImportPath(config, imports[tagName], filename)
     const info = await resolveComponent(components, tagName, filename, componentCounter++)
-    if (strategy !== "client:only") injectComponentImport(info)
+    if (strategy !== 'client:only') injectComponentImport(info)
     return info
   }
 
   function injectComponentImport(info: ComponentInfo) {
     if (injectionOffset === undefined) {
-      const opening = `<script setup lang="${script?.attrs?.lang || "ts"}">`
+      const opening = `<script setup lang="${script?.attrs?.lang || 'ts'}">`
       s.prepend(opening)
       injectionOffset = 0
     }
@@ -121,7 +121,7 @@ async function visitSFCNode(
   resolveComponentImport: (strategy: string, tag: string) => Promise<ComponentInfo>,
 ) {
   const strategy =
-    "props" in node && node.props.find((prop) => prop.name.startsWith("client:"))?.name
+    'props' in node && node.props.find((prop) => prop.name.startsWith('client:'))?.name
 
   if (strategy) {
     const {
@@ -131,7 +131,7 @@ async function visitSFCNode(
 
     const importMeta = await resolveComponentImport(strategy, tag)
     const componentProps = `
-      :component="${strategy === "client:only" ? null : importMeta.as}"
+      :component="${strategy === 'client:only' ? null : importMeta.as}"
       componentName="${tag}"
       importName="${importMeta.name}"
       importFrom="${importMeta.from}"
@@ -141,16 +141,16 @@ async function visitSFCNode(
     s.overwrite(
       start.offset + 1,
       start.offset + 1 + tag.length,
-      `Island ${componentProps.replace(/\n\s*/g, " ")}`,
+      `Island ${componentProps.replace(/\n\s*/g, ' ')}`,
       { contentOnly: true },
     )
 
     // Replace closing tag.
     if (!node.isSelfClosing)
-      s.overwrite(end.offset - 1 - tag.length, end.offset - 1, "Island", { contentOnly: true })
+      s.overwrite(end.offset - 1 - tag.length, end.offset - 1, 'Island', { contentOnly: true })
   }
 
-  if ("children" in node) {
+  if ('children' in node) {
     for (const child of node.children) await visitSFCNode(child as any, s, resolveComponentImport)
   }
 }
@@ -166,7 +166,7 @@ export async function resolveComponent(
     throw new Error(
       `Could not resolve ${tag} in ${filename}. Make sure to import it explicitly, or add a component resolver.`,
     )
-  return { name: "default", ...info, as: `__ile_components_${counter}` }
+  return { name: 'default', ...info, as: `__ile_components_${counter}` }
 }
 
 export async function resolveImportPath(config: AppConfig, info: ComponentInfo, importer: string) {
@@ -186,17 +186,17 @@ async function injectClientScript(
     content,
     loc: { end },
   } = block
-  const { lang = "ts", ...props } = attrs
+  const { lang = 'ts', ...props } = attrs
 
   // NOTE: Faking the extension ensures it's processed by esbuild.
   const importFrom = `${filename}?vue&index=${index}&clientScript=true&lang.${lang}`
 
   const exported = await parseExports(content)
-  if (!exported.includes("onLoad")) {
-    if (attrs["client:load"] || attrs["client:only"]) {
-      s.appendLeft(end.offset, "\nexport const onLoad = undefined\n")
+  if (!exported.includes('onLoad')) {
+    if (attrs['client:load'] || attrs['client:only']) {
+      s.appendLeft(end.offset, '\nexport const onLoad = undefined\n')
     } else {
-      const prettyFilename = filename.slice(Math.max(0, filename.indexOf("src/")))
+      const prettyFilename = filename.slice(Math.max(0, filename.indexOf('src/')))
       throw new Error(
         `Client script in ${prettyFilename} does not export 'onLoad'. Should be a function to execute when the strategy condition is met.`,
       )
@@ -207,7 +207,7 @@ async function injectClientScript(
   const elements = node.children.filter((n: any) => n.tag) as ElementNode[]
   if (elements.length === 1) {
     const el = elements[0]
-    if (!el.props.some((prop) => prop.name === "bind" && prop.loc.source.includes("$attrs")))
+    if (!el.props.some((prop) => prop.name === 'bind' && prop.loc.source.includes('$attrs')))
       s.appendRight(el.loc.start.offset + 1 + el.tag.length, ' v-bind="$attrs"')
   }
 
@@ -218,9 +218,9 @@ async function injectClientScript(
   <Island v-bind='${JSON.stringify({
     ...props,
     component: {},
-    componentName: "clientScript",
-    importName: "onLoad",
-    using: "vanilla",
+    componentName: 'clientScript',
+    importName: 'onLoad',
+    using: 'vanilla',
     importFrom,
   })}'/>`,
   )

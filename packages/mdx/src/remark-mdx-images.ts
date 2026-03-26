@@ -2,15 +2,15 @@ import type {
   MdxJsxFlowElement,
   MdxJsxTextElement,
   MdxJsxAttributeValueExpression,
-} from "mdast-util-mdx-jsx"
-import type { MdxjsEsm } from "mdast-util-mdxjs-esm"
-import type { Root, Image } from "mdast"
-import type { Plugin } from "unified"
-import type { Parent } from "unist"
-import { visit, SKIP } from "unist-util-visit"
-import type { MarkdownOptions } from "./types"
+} from 'mdast-util-mdx-jsx'
+import type { MdxjsEsm } from 'mdast-util-mdxjs-esm'
+import type { Root, Image } from 'mdast'
+import type { Plugin } from 'unified'
+import type { Parent } from 'unist'
+import { visit, SKIP } from 'unist-util-visit'
+import type { MarkdownOptions } from './types'
 
-import { isAbsolute, isJsxElement, isString } from "./utils"
+import { isAbsolute, isJsxElement, isString } from './utils'
 
 type ImagePlugin = Plugin<[MarkdownOptions?], Root, Root>
 
@@ -23,9 +23,9 @@ export const remarkMdxImages: ImagePlugin = (options) => (ast, vfile) => {
   const imported = new Map<string, string>()
 
   visit(ast, (node, index, parent) => {
-    if (node.type === "image") return replaceMarkdownImage(node, index!, parent!)
+    if (node.type === 'image') return replaceMarkdownImage(node, index!, parent!)
 
-    if (isJsxElement(node) && (node.name === "img" || node.name === "Img" || node.name === "Image"))
+    if (isJsxElement(node) && (node.name === 'img' || node.name === 'Img' || node.name === 'Image'))
       return replaceSrcAttribute(node)
   })
 
@@ -33,7 +33,7 @@ export const remarkMdxImages: ImagePlugin = (options) => (ast, vfile) => {
 
   function replaceSrcAttribute(node: MdxJsxTextElement | MdxJsxFlowElement) {
     for (const attr of node.attributes) {
-      if (attr.type === "mdxJsxAttribute" && attr.name === "src" && isString(attr.value)) {
+      if (attr.type === 'mdxJsxAttribute' && attr.name === 'src' && isString(attr.value)) {
         const srcExpression = imageSrcToMdxExpression(attr.value)
         if (srcExpression) attr.value = srcExpression
         break
@@ -50,11 +50,11 @@ export const remarkMdxImages: ImagePlugin = (options) => (ast, vfile) => {
       if (!node.title) delete attrs.title
 
       const mdxImage: MdxJsxTextElement = {
-        type: "mdxJsxTextElement",
-        name: "img",
+        type: 'mdxJsxTextElement',
+        name: 'img',
         children: [],
         attributes: Object.entries(attrs).map(([name, value]) => ({
-          type: "mdxJsxAttribute",
+          type: 'mdxJsxAttribute',
           name,
           value,
         })),
@@ -70,13 +70,13 @@ export const remarkMdxImages: ImagePlugin = (options) => (ast, vfile) => {
     const name = imageSrcToIdentifier(url)
     if (!name) return
     return {
-      type: "mdxJsxAttributeValueExpression",
+      type: 'mdxJsxAttributeValueExpression',
       value: name,
       data: {
         estree: {
-          type: "Program",
-          sourceType: "module",
-          body: [{ type: "ExpressionStatement", expression: { type: "Identifier", name } }],
+          type: 'Program',
+          sourceType: 'module',
+          body: [{ type: 'ExpressionStatement', expression: { type: 'Identifier', name } }],
         },
       },
     }
@@ -93,20 +93,20 @@ export const remarkMdxImages: ImagePlugin = (options) => (ast, vfile) => {
       const src = options?.withImageSrc?.(url, vfile) || url
 
       imports.push({
-        type: "mdxjsEsm",
-        value: "_not_used_",
+        type: 'mdxjsEsm',
+        value: '_not_used_',
         data: {
           estree: {
-            type: "Program",
-            sourceType: "module",
+            type: 'Program',
+            sourceType: 'module',
             body: [
               {
-                type: "ImportDeclaration",
-                source: { type: "Literal", value: src, raw: JSON.stringify(src) },
+                type: 'ImportDeclaration',
+                source: { type: 'Literal', value: src, raw: JSON.stringify(src) },
                 specifiers: [
                   {
-                    type: "ImportDefaultSpecifier",
-                    local: { type: "Identifier", name },
+                    type: 'ImportDefaultSpecifier',
+                    local: { type: 'Identifier', name },
                   },
                 ],
               },

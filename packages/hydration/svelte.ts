@@ -1,7 +1,7 @@
-import { createRawSnippet, mount, unmount } from "svelte"
-import type { Snippet } from "svelte"
-import type { Props, Slots } from "./types"
-import { onDispose } from "./hydration"
+import { createRawSnippet, mount, unmount } from 'svelte'
+import type { Snippet } from 'svelte'
+import type { Props, Slots } from './types'
+import { onDispose } from './hydration'
 
 type Component = any
 
@@ -17,11 +17,11 @@ export default function createIsland(
   let renderFns: Record<string, Snippet> = {}
 
   Object.entries(slots).forEach(([slotName, html]) => {
-    const fnName = slotName === "default" ? "children" : slotName
+    const fnName = slotName === 'default' ? 'children' : slotName
     renderFns[fnName] = createRawSnippet(() => ({ render: () => html }))
 
     $$slots ??= {}
-    if (slotName === "default") {
+    if (slotName === 'default') {
       $$slots.default = true
       children = renderFns[fnName]
     } else {
@@ -48,6 +48,6 @@ export default function createIsland(
       props,
       slots,
       component,
-      framework: "svelte",
+      framework: 'svelte',
     })
 }

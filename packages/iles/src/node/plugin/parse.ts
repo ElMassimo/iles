@@ -1,11 +1,11 @@
-import { init as initESLexer, parse as parseESModules } from "es-module-lexer"
-import type { ComponentInfo } from "unplugin-vue-components/types"
-import type { Awaited } from "../shared"
+import { init as initESLexer, parse as parseESModules } from 'es-module-lexer'
+import type { ComponentInfo } from 'unplugin-vue-components/types'
+import type { Awaited } from '../shared'
 
 export type ImportsMetadata = Record<string, ComponentInfo>
 
 export function parseId(id: string) {
-  const index = id.indexOf("?")
+  const index = id.indexOf('?')
   if (index < 0) return { path: id, query: {} }
 
   // @ts-ignore
@@ -57,13 +57,13 @@ export function parseImportVariables(partialStatement: string) {
     ([, inBrackets, outer]) => {
       if (inBrackets)
         return inBrackets
-          .split(",")
+          .split(',')
           .map(trim)
           .filter((x) => x)
       outer = outer.trim()
-      return outer.includes(" as ") ? outer : `default as ${outer}`
+      return outer.includes(' as ') ? outer : `default as ${outer}`
     },
   )
 
-  return variables.map((variable) => variable.split(" as ").map(trim))
+  return variables.map((variable) => variable.split(' as ').map(trim))
 }

@@ -1,9 +1,9 @@
 <script lang="ts">
-import { defineComponent, computed } from "vue"
-import { useRoute, useRouter } from "iles"
+import { defineComponent, computed } from 'vue'
+import { useRoute, useRouter } from 'iles'
 
 export default defineComponent({
-  name: "NotFound",
+  name: 'NotFound',
   layoutFn: false,
   setup() {
     const route = useRoute()

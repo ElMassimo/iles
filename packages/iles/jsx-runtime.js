@@ -4,12 +4,12 @@ import {
   createVNode,
   createStaticVNode as raw,
   Fragment,
-} from "vue"
+} from 'vue'
 
 // Internal: Compatibility layer with the automatic JSX runtime of React.
 //
 // NOTE: Supports v-slots for consistency with @vue/babel-plugin-jsx.
-function jsx(type, { children, "v-slots": vSlots, ...props }) {
+function jsx(type, { children, 'v-slots': vSlots, ...props }) {
   let slots
 
   if (children) {

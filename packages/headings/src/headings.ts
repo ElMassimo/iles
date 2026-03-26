@@ -1,10 +1,10 @@
-import type { Plugin } from "unified"
-import type { Parent } from "unist"
-import type { IlesModule } from "iles"
+import type { Plugin } from 'unified'
+import type { Parent } from 'unist'
+import type { IlesModule } from 'iles'
 
-import { toString } from "hast-util-to-string"
-import { headingRank } from "hast-util-heading-rank"
-import slugo from "slugo"
+import { toString } from 'hast-util-to-string'
+import { headingRank } from 'hast-util-heading-rank'
+import slugo from 'slugo'
 
 export interface Heading {
   level: number
@@ -19,7 +19,7 @@ export interface HeadingOptions {
 
 export type HeadingPlugin = Plugin<[HeadingOptions?]>
 
-declare module "iles" {
+declare module 'iles' {
   interface PageMeta {
     /**
      * Headings for MDX documents.
@@ -34,7 +34,7 @@ declare module "iles" {
  */
 export default function IlesHeadings(): IlesModule {
   return {
-    name: "@islands/headings",
+    name: '@islands/headings',
     markdown: {
       rehypePlugins: [rehypePlugin],
     },
@@ -72,7 +72,7 @@ export const rehypePlugin: HeadingPlugin =
 
 function initCounter() {
   const counter = new Map<string, number>()
-  counter.set("app", 1)
+  counter.set('app', 1)
   return counter
 }
 
@@ -81,9 +81,9 @@ const emojiRegex =
 const hyphens = /(^-+)|(-+$)/g
 
 function toSlug(val: string, counter: Map<string, number>) {
-  if (typeof val !== "string") return ""
+  if (typeof val !== 'string') return ''
 
-  const originalSlug = slugo(val.replace(emojiRegex, "-")).replace(hyphens, "")
+  const originalSlug = slugo(val.replace(emojiRegex, '-')).replace(hyphens, '')
   let slug = originalSlug
 
   if (counter.has(originalSlug)) {
@@ -101,8 +101,8 @@ function toSlug(val: string, counter: Map<string, number>) {
 }
 
 const anchorTag = (properties: any) => ({
-  type: "element",
-  tagName: "a",
+  type: 'element',
+  tagName: 'a',
   properties,
   children: [],
 })
@@ -115,12 +115,12 @@ function generateSlug(
 ): string {
   const slug = (properties.id ||= toSlug(title, counter))
 
-  properties.className = properties.className ? `${properties.className} heading` : "heading"
+  properties.className = properties.className ? `${properties.className} heading` : 'heading'
 
   children.unshift(
     anchorTag({
       href: `#${slug}`,
-      className: "heading-anchor",
+      className: 'heading-anchor',
       ariaLabel: `Permalink for ${title}`,
       tabIndex: -1,
     }),

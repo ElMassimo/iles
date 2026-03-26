@@ -1,5 +1,5 @@
-import type { Pluggable } from "unified"
-import type { PluginLike, PluginOption } from "./types"
+import type { Pluggable } from 'unified'
+import type { PluginLike, PluginOption } from './types'
 
 // Resolve plugins that might need an async import in CJS.
 export async function resolvePlugins(plugins: PluginOption[]) {
@@ -22,7 +22,7 @@ function unwrapModule(mod: any): any {
 }
 
 export function isString(val: any): val is string {
-  return typeof val === "string"
+  return typeof val === 'string'
 }
 
 export function isStringPlugin(val: any): val is [string, any] {

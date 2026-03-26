@@ -1,13 +1,13 @@
-import { promises as fs } from "fs"
-import { join, resolve, dirname } from "pathe"
-import glob from "fast-glob"
-import type { Manifest } from "vite-plus"
-import type { Awaited, AppConfig, IslandsByPath, IslandDefinition, RouteToRender } from "../shared"
-import rebaseImports from "./rebaseImports"
-import { uniq } from "./utils"
-import type { renderPages } from "./render"
+import { promises as fs } from 'fs'
+import { join, resolve, dirname } from 'pathe'
+import glob from 'fast-glob'
+import type { Manifest } from 'vite-plus'
+import type { Awaited, AppConfig, IslandsByPath, IslandDefinition, RouteToRender } from '../shared'
+import rebaseImports from './rebaseImports'
+import { uniq } from './utils'
+import type { renderPages } from './render'
 
-import { VIRTUAL_PREFIX, VIRTUAL_TURBO_ID } from "./islands"
+import { VIRTUAL_PREFIX, VIRTUAL_TURBO_ID } from './islands'
 
 export async function writePages(
   config: AppConfig,
@@ -35,7 +35,7 @@ async function writeRoute(
 ) {
   let content = route.rendered
 
-  if (route.outputFilename.endsWith(".html")) {
+  if (route.outputFilename.endsWith('.html')) {
     const preloadScripts: string[] = []
 
     for (const island of islands) {
@@ -44,7 +44,7 @@ async function writeRoute(
 
       if (!entry) {
         const message = `Unable to find entry for island '${island.entryFilename}' in manifest.json`
-        console.error(`${message}. Island:\n`, island, "\n\nManifest:\n", manifest)
+        console.error(`${message}. Island:\n`, island, '\n\nManifest:\n', manifest)
         throw new Error(message)
       }
 
@@ -52,7 +52,7 @@ async function writeRoute(
 
       // Read the compiled code for the island.
       const filename = resolve(config.outDir, entry.file)
-      const code = await fs.readFile(filename, "utf-8")
+      const code = await fs.readFile(filename, 'utf-8')
 
       // Inline the script in the SSR'ed html to load the island.
       const rebasedCode = await rebaseImports(config, code)
@@ -66,7 +66,7 @@ async function writeRoute(
 
     // Preload scripts for islands in the page.
     route.rendered = content.replace(
-      "</head>",
+      '</head>',
       () => `${stringifyScripts(config, manifest, preloadScripts)}</head>`,
     )
   }
@@ -75,13 +75,13 @@ async function writeRoute(
 
   const filename = resolve(config.outDir, route.outputFilename)
   await fs.mkdir(dirname(filename), { recursive: true })
-  await fs.writeFile(filename, route.rendered, "utf-8")
+  await fs.writeFile(filename, route.rendered, 'utf-8')
 }
 
 function stringifyScripts({ turbo, base }: AppConfig, manifest: Manifest, hrefs: string[]) {
   return [turbo && injectNavigation(base, manifest), stringifyPreload(base, manifest, hrefs)]
     .filter((x) => x)
-    .join("")
+    .join('')
 }
 
 function injectNavigation(base: string, manifest: Manifest) {
@@ -92,7 +92,7 @@ function injectNavigation(base: string, manifest: Manifest) {
 function stringifyPreload(base: string, manifest: Manifest, hrefs: string[]) {
   return uniq(resolveManifestEntries(manifest, hrefs))
     .map((href) => `<link rel="modulepreload" href="${base}${href}" crossorigin/>`)
-    .join("")
+    .join('')
 }
 
 function resolveManifestEntries(manifest: Manifest, entryNames: string[]): string[] {
@@ -103,9 +103,9 @@ function resolveManifestEntries(manifest: Manifest, entryNames: string[]): strin
 }
 
 async function parseManifest(outDir: string, islandsByPath: IslandsByPath) {
-  const manifestPath = join(outDir, ".vite", "manifest.json")
+  const manifestPath = join(outDir, '.vite', 'manifest.json')
   try {
-    return JSON.parse(await fs.readFile(manifestPath, "utf-8"))
+    return JSON.parse(await fs.readFile(manifestPath, 'utf-8'))
   } catch (err) {
     if (Object.keys(islandsByPath).length > 0) throw err
     return {}

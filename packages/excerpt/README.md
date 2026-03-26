@@ -37,10 +37,10 @@ An [îles] module to extract an excerpt from [MDX documents][markdown]:
 
 ```ts
 // iles.config.ts
-import { defineConfig } from "iles"
+import { defineConfig } from 'iles'
 
 export default defineConfig({
-  modules: [["@islands/excerpt", { maxLength: 140 }]],
+  modules: [['@islands/excerpt', { maxLength: 140 }]],
 })
 ```
 
@@ -58,9 +58,9 @@ excerpt by passing an `excerpt: true` prop.
 
 ```vue
 <script setup>
-import Introduction from "~/pages/intro.mdx"
+import Introduction from '~/pages/intro.mdx'
 
-const pages = useDocuments("~/pages/posts")
+const pages = useDocuments('~/pages/posts')
 </script>
 
 <template>

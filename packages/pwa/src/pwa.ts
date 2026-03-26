@@ -1,11 +1,11 @@
-import fs from "fs"
-import { resolve as resolvePath } from "path"
-import { performance } from "perf_hooks"
-import type { IlesModule, UserConfig } from "iles"
-import type { VitePluginPWAAPI, VitePWAOptions } from "vite-plugin-pwa"
-import type { Plugin, PluginOption } from "vite-plus"
-import type { ManifestTransform } from "workbox-build"
-import { VitePWA } from "vite-plugin-pwa"
+import fs from 'fs'
+import { resolve as resolvePath } from 'path'
+import { performance } from 'perf_hooks'
+import type { IlesModule, UserConfig } from 'iles'
+import type { VitePluginPWAAPI, VitePWAOptions } from 'vite-plugin-pwa'
+import type { Plugin, PluginOption } from 'vite-plus'
+import type { ManifestTransform } from 'workbox-build'
+import { VitePWA } from 'vite-plugin-pwa'
 
 /**
  * An iles module that configures vite-plugin-pwa and
@@ -19,25 +19,25 @@ export default function IlesPWA(options: Partial<VitePWAOptions> = {}): IlesModu
     enabled: false,
     prettyUrls: true,
     srcDir: undefined!,
-    base: "/",
+    base: '/',
   }
   const resolver: PWAContextResolver = () => {
     return ctx
   }
   return {
-    name: "@islands/pwa",
+    name: '@islands/pwa',
     config(config) {
       const pluginsNested: PluginOption[] = config.vite?.plugins ?? []
       const pluginsFlattened: Plugin[] = pluginsNested.flat() as Plugin[]
-      const plugin = pluginsFlattened.find((p) => p.name === "vite-plugin-pwa")
+      const plugin = pluginsFlattened.find((p) => p.name === 'vite-plugin-pwa')
 
       if (plugin)
         throw new Error(
-          "Remove the vite-plugin-pwa plugin from Vite plugins entry in iles config file, configure it via @islands/pwa plugin",
+          'Remove the vite-plugin-pwa plugin from Vite plugins entry in iles config file, configure it via @islands/pwa plugin',
         )
 
       const pluginPWA = VitePWA(configureDefaults(config, resolver, options))
-      api = pluginPWA.find((p) => p.name === "vite-plugin-pwa")?.api
+      api = pluginPWA.find((p) => p.name === 'vite-plugin-pwa')?.api
       return {
         vite: {
           plugins: [pluginPWA] as any,
@@ -53,7 +53,7 @@ export default function IlesPWA(options: Partial<VitePWAOptions> = {}): IlesModu
     ssg: {
       async onSiteRendered() {
         if (api && !api.disabled) {
-          console.info("Regenerating PWA service worker...")
+          console.info('Regenerating PWA service worker...')
           const startTime = performance.now()
           ctx.enabled = true
           // regenerate the sw
@@ -81,7 +81,7 @@ function timeSince(start: number): string {
 
 async function pageExists(page: string, srcDir: string): Promise<boolean> {
   return new Promise((resolve) => {
-    fs.lstat(resolvePath(srcDir, "pages", page), (err, stats) => {
+    fs.lstat(resolvePath(srcDir, 'pages', page), (err, stats) => {
       if (err) resolve(false)
       else resolve(stats.isFile())
     })
@@ -94,10 +94,10 @@ function createManifestTransform(resolve: PWAContextResolver): ManifestTransform
     // entries already in the precache manifest, we only need to change the mapping when prettyUrls is enabled
     if (enabled && prettyUrls) {
       entries
-        .filter((e) => e.url.endsWith(".html"))
+        .filter((e) => e.url.endsWith('.html'))
         .forEach((e) => {
-          if (e.url === "index.html") e.url = base
-          else e.url = e.url.replace(/\.html$/, "")
+          if (e.url === 'index.html') e.url = base
+          else e.url = e.url.replace(/\.html$/, '')
         })
     }
 
@@ -111,15 +111,15 @@ function configureDefaults(
   options: Partial<VitePWAOptions> = {},
 ): Partial<VitePWAOptions> {
   const {
-    strategies = "generateSW",
-    registerType = "prompt",
+    strategies = 'generateSW',
+    registerType = 'prompt',
     injectRegister,
     workbox = {},
     injectManifest = {},
     ...rest
   } = options
 
-  if (strategies === "generateSW") {
+  if (strategies === 'generateSW') {
     const useWorkbox = { ...workbox }
     const newOptions: Partial<VitePWAOptions> = {
       ...rest,
@@ -142,7 +142,7 @@ function configureDefaults(
           const { base, prettyUrls, srcDir } = resolve()
           let navigateFallback = base
           const found404 = (
-            await Promise.all(["404.vue", "404.mdx"].map((p) => pageExists(p, srcDir)))
+            await Promise.all(['404.vue', '404.mdx'].map((p) => pageExists(p, srcDir)))
           ).some(Boolean)
           if (found404) navigateFallback = prettyUrls ? `${base}404` : `${base}404.html`
 

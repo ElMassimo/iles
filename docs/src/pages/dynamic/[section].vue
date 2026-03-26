@@ -5,8 +5,8 @@ const messageFor = (val: string) =>
 export default definePageComponent({
   getStaticPaths() {
     return [
-      { params: { section: "one" }, props: { message: messageFor("one") } },
-      { params: { section: "two" }, props: { message: messageFor("two") } },
+      { params: { section: 'one' }, props: { message: messageFor('one') } },
+      { params: { section: 'two' }, props: { message: messageFor('two') } },
     ]
   },
 })

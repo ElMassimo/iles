@@ -1,10 +1,10 @@
-import type { InjectionKey } from "vue"
-import { inject, provide } from "vue"
+import type { InjectionKey } from 'vue'
+import { inject, provide } from 'vue'
 
-import type { AppContext, MDXComponents, UserApp } from "../../shared"
-import { useAppConfig } from "./appConfig"
+import type { AppContext, MDXComponents, UserApp } from '../../shared'
+import { useAppConfig } from './appConfig'
 
-export const mdxComponentsKey: InjectionKey<MDXComponents> = Symbol("[iles-mdx-components]")
+export const mdxComponentsKey: InjectionKey<MDXComponents> = Symbol('[iles-mdx-components]')
 
 // Public: Allows to globally obtain replacements for built-ins, such as img.
 export function useMDXComponents() {
@@ -27,7 +27,7 @@ export function provideMDXComponents(mdxComponents: MDXComponents) {
 
 export async function installMDXComponents(context: AppContext, { mdxComponents }: UserApp) {
   const components = mdxComponents
-    ? typeof mdxComponents === "function"
+    ? typeof mdxComponents === 'function'
       ? await mdxComponents(context)
       : mdxComponents
     : {}

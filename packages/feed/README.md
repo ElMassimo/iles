@@ -35,10 +35,10 @@ An [îles] module to generate feeds for your site:
 
 ```ts
 // iles.config.ts
-import { defineConfig } from "iles"
+import { defineConfig } from 'iles'
 
 export default defineConfig({
-  modules: ["@islands/feed"],
+  modules: ['@islands/feed'],
 })
 ```
 

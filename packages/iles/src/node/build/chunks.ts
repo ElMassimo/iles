@@ -1,5 +1,5 @@
-import type { GetModuleInfo } from "rolldown"
-import type { AppConfig } from "../shared"
+import type { GetModuleInfo } from 'rolldown'
+import type { AppConfig } from '../shared'
 
 interface ManualChunkMeta {
   getModuleInfo: GetModuleInfo
@@ -12,18 +12,18 @@ export function extendManualChunks(config: AppConfig): GetManualChunk {
   const chunkForExtension = {
     jsx: `vendor-${config.jsx}`,
     tsx: `vendor-${config.jsx}`,
-    svelte: "vendor-svelte",
-    vue: "vendor-vue",
+    svelte: 'vendor-svelte',
+    vue: 'vendor-vue',
   }
   return (id, api) => {
     // Internal chunks must take priority to ensure hydration works correctly.
     // User manualChunks could inadvertently match hydration modules (e.g.
     // id.includes('preact') also matches @islands/hydration/preact).
-    if (id.includes("vite/") || id.includes("plugin-vue")) return "vite"
-    if (id.includes("hydration/dist")) return "iles"
+    if (id.includes('vite/') || id.includes('plugin-vue')) return 'vite'
+    if (id.includes('hydration/dist')) return 'iles'
     const name = userChunks?.(id, api)
     if (name) return name
-    if (id.includes("node_modules")) return vendorPerFramework(chunkForExtension, id, api, cache)
+    if (id.includes('node_modules')) return vendorPerFramework(chunkForExtension, id, api, cache)
   }
 }
 
@@ -53,9 +53,9 @@ function vendorPerFramework(
   }
 
   if (mod.isEntry) {
-    const queryIndex = id.lastIndexOf("?")
+    const queryIndex = id.lastIndexOf('?')
     const idWithoutQuery = queryIndex > -1 ? id.slice(0, queryIndex) : id
-    const extension = idWithoutQuery.slice(idWithoutQuery.lastIndexOf(".") + 1)
+    const extension = idWithoutQuery.slice(idWithoutQuery.lastIndexOf('.') + 1)
     const name = chunkForExtension[extension]
     cache.set(id, name)
     return name

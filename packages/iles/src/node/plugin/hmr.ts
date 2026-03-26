@@ -1,4 +1,4 @@
-import hash from "hash-sum"
+import hash from 'hash-sum'
 
 export function hmrRuntime(id: string) {
   const hmrId = hash(`${id}default`)

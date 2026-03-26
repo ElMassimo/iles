@@ -1,13 +1,13 @@
 <script setup lang="ts">
-import type { Heading } from "@islands/headings"
-import type { SideBarItem } from "~/logic/config"
+import type { Heading } from '@islands/headings'
+import type { SideBarItem } from '~/logic/config'
 
 interface HeadingWithChildren extends Heading {
   children?: Heading[]
 }
 
 let { meta, frontmatter } = usePage()
-let level = $computed(() => frontmatter.tocLevel || (frontmatter.sidebar === "auto" ? 3 : 2))
+let level = $computed(() => frontmatter.tocLevel || (frontmatter.sidebar === 'auto' ? 3 : 2))
 
 let headings = $computed(() => resolveHeaders(meta.headings || []))
 

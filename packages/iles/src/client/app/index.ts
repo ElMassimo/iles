@@ -1,24 +1,24 @@
-import { createApp as createClientApp, createSSRApp, ref } from "vue"
-import { createMemoryHistory, createRouter as createVueRouter, createWebHistory } from "vue-router"
-import { createHead } from "@unhead/vue"
+import { createApp as createClientApp, createSSRApp, ref } from 'vue'
+import { createMemoryHistory, createRouter as createVueRouter, createWebHistory } from 'vue-router'
+import { createHead } from '@unhead/vue'
 
-import routes from "@islands/routes"
-import config from "@islands/app-config"
-import userApp from "@islands/user-app"
-import siteRef from "@islands/user-site"
-import type { CreateAppFactory, AppContext, RouterOptions } from "../shared"
-import App from "./components/App.vue"
-import { installPageData, forcePageUpdate } from "./composables/pageData"
-import { installMDXComponents } from "./composables/mdxComponents"
-import { installAppConfig } from "./composables/appConfig"
-import { defaultHead } from "./head"
-import { resolveLayout } from "./layout"
-import { resolveProps } from "./props"
+import routes from '@islands/routes'
+import config from '@islands/app-config'
+import userApp from '@islands/user-app'
+import siteRef from '@islands/user-site'
+import type { CreateAppFactory, AppContext, RouterOptions } from '../shared'
+import App from './components/App.vue'
+import { installPageData, forcePageUpdate } from './composables/pageData'
+import { installMDXComponents } from './composables/mdxComponents'
+import { installAppConfig } from './composables/appConfig'
+import { defaultHead } from './head'
+import { resolveLayout } from './layout'
+import { resolveProps } from './props'
 
 const newApp = import.meta.env.SSR ? createSSRApp : createClientApp
 
 function createRouter(base: string | undefined, routerOptions: Partial<RouterOptions>) {
-  if (base === "/") base = undefined
+  if (base === '/') base = undefined
 
   return createVueRouter({
     scrollBehavior: (current, previous, savedPosition) => {
@@ -56,9 +56,9 @@ export const createApp: CreateAppFactory = async (options = {}) => {
   }
 
   const { frontmatter, meta, page, props, route, site } = installPageData(app, siteRef)
-  Object.defineProperty(app.config.globalProperties, "$frontmatter", { get: () => frontmatter })
-  Object.defineProperty(app.config.globalProperties, "$meta", { get: () => meta })
-  Object.defineProperty(app.config.globalProperties, "$site", { get: () => site })
+  Object.defineProperty(app.config.globalProperties, '$frontmatter', { get: () => frontmatter })
+  Object.defineProperty(app.config.globalProperties, '$meta', { get: () => meta })
+  Object.defineProperty(app.config.globalProperties, '$site', { get: () => site })
 
   const context: AppContext = {
     app,
@@ -79,7 +79,7 @@ export const createApp: CreateAppFactory = async (options = {}) => {
   // Apply any configuration added by the user in app.ts
   // if (headConfig) useHead(ref(typeof headConfig === 'function' ? headConfig(context) : headConfig))
   if (headConfig)
-    head.push(ref(typeof headConfig === "function" ? headConfig(context) : headConfig))
+    head.push(ref(typeof headConfig === 'function' ? headConfig(context) : headConfig))
   if (enhanceApp) await enhanceApp(context)
   await installMDXComponents(context, userApp)
 
@@ -90,11 +90,11 @@ if (!import.meta.env.SSR) {
   ;(async () => {
     const { app, router } = await createApp()
 
-    const devtools = await import("./composables/devtools")
+    const devtools = await import('./composables/devtools')
     devtools.installDevtools(app, config)
     Object.assign(window, { __ILES_PAGE_UPDATE__: forcePageUpdate })
 
     await router.isReady() // wait until page component is fetched before mounting
-    app.mount("#app", true)
+    app.mount('#app', true)
   })()
 }

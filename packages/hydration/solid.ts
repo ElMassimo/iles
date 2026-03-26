@@ -1,7 +1,7 @@
-import { hydrate, render, createComponent } from "solid-js/web"
-import type { Component } from "solid-js"
-import type { Props, Slots } from "./types"
-import { onDispose } from "./hydration"
+import { hydrate, render, createComponent } from 'solid-js/web'
+import type { Component } from 'solid-js'
+import type { Props, Slots } from './types'
+import { onDispose } from './hydration'
 
 export default function createIsland(
   component: Component,
@@ -29,13 +29,13 @@ export default function createIsland(
       props,
       slots,
       component,
-      framework: "solid",
+      framework: 'solid',
     })
 }
 
 function createContent(slots: Slots | undefined) {
   if (!slots?.default) return
-  const content = document.createElement("iles-content")
+  const content = document.createElement('iles-content')
   content.innerHTML = slots.default
   return Array.from(content.childNodes)
 }

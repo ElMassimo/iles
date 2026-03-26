@@ -1,27 +1,27 @@
 <script lang="ts">
-import { defineComponent, computed, watch, ref } from "vue"
-import { usePage } from "../composables/pageData"
+import { defineComponent, computed, watch, ref } from 'vue'
+import { usePage } from '../composables/pageData'
 
 export default defineComponent({
-  name: "DebugPanel",
+  name: 'DebugPanel',
   setup() {
     const { page, meta, frontmatter, props } = usePage()
     const message = ref<string | undefined>(undefined)
     const el = ref<HTMLElement | null>(null)
     const content = ref<any>(null)
     const open = ref(false)
-    const buttonLabel = computed(() => message.value || "Debug")
+    const buttonLabel = computed(() => message.value || 'Debug')
 
     const cleanPage = computed(() => {
-      const layout = page.value.layoutName || "false"
+      const layout = page.value.layoutName || 'false'
       return { layout, frontmatter, meta, props }
     })
 
     let timeoutId: any
     function copyIfSelected() {
       if (!getSelection()?.toString()) return
-      document.execCommand("copy")
-      message.value = "Copied!"
+      document.execCommand('copy')
+      message.value = 'Copied!'
       timeoutId = setTimeout(() => {
         message.value = undefined
       }, 3000)

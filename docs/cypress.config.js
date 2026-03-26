@@ -5,6 +5,6 @@ export default {
     runMode: 4,
   },
   e2e: {
-    baseUrl: "http://localhost:3050",
+    baseUrl: 'http://localhost:3050',
   },
 }

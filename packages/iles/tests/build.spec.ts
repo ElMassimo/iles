@@ -1,95 +1,95 @@
-import { promises as fs } from "fs"
-import { resolve } from "path"
-import { beforeAll, describe, expect, test } from "vite-plus/test"
+import { promises as fs } from 'fs'
+import { resolve } from 'path'
+import { beforeAll, describe, expect, test } from 'vite-plus/test'
 
-import { execa } from "execa"
-import glob from "fast-glob"
+import { execa } from 'execa'
+import glob from 'fast-glob'
 
-const projectRoot = resolve(__dirname, "../../..")
+const projectRoot = resolve(__dirname, '../../..')
 const vuePoint = `${projectRoot}/playground/the-vue-point`
 
-describe("building docs site", () => {
+describe('building docs site', () => {
   beforeAll(async () => {
-    await execa("npm", ["run", "build"], {
-      stdio: process.env.DEBUG ? "inherit" : undefined,
+    await execa('npm', ['run', 'build'], {
+      stdio: process.env.DEBUG ? 'inherit' : undefined,
       cwd: vuePoint,
     })
   }, 60000)
 
-  test("generated files", async () => {
-    const files = await glob("**/*", { cwd: `${vuePoint}/dist`, onlyFiles: true })
+  test('generated files', async () => {
+    const files = await glob('**/*', { cwd: `${vuePoint}/dist`, onlyFiles: true })
     const normalized = files
-      .map((f) => f.replace(/\/assets\/([^.]+)(?:[.-])\w+\.(\w+)\b/g, "/assets/$1.$2"))
+      .map((f) => f.replace(/\/assets\/([^.]+)(?:[.-])\w+\.(\w+)\b/g, '/assets/$1.$2'))
       .sort()
     expect(normalized).toEqual(
       expect.arrayContaining([
-        "404.html",
-        "_headers",
-        "favicon.ico",
-        "feed.rss",
-        "index.html",
-        "logo.svg",
-        "posts/1.html",
-        "posts/2.html",
-        "posts/hello-2021.html",
-        "posts/volar-1-0.html",
-        "posts/vue-3-2.html",
-        "posts/vue-3-one-piece.html",
-        "sitemap.xml",
+        '404.html',
+        '_headers',
+        'favicon.ico',
+        'feed.rss',
+        'index.html',
+        'logo.svg',
+        'posts/1.html',
+        'posts/2.html',
+        'posts/hello-2021.html',
+        'posts/volar-1-0.html',
+        'posts/vue-3-2.html',
+        'posts/vue-3-one-piece.html',
+        'sitemap.xml',
       ]),
     )
     expect(files.some((f) => f.match(/assets\/app.*\.css/))).toBe(true)
     expect(files.some((f) => f.match(/assets\/turbo.*\.js/))).toBe(true)
   })
 
-  test("html files", async () => {
-    await assertHTML("404.html", { title: "Not Found" })
-    await assertHTML("index.html")
-    await assertHTML("posts/1.html")
-    await assertHTML("posts/2.html")
-    await assertHTML("posts/hello-2021.html", { title: "Reflections for 2020-2021" })
-    await assertHTML("posts/vue-3-2.html", { title: "Vue 3.2 Released!" })
-    await assertHTML("posts/vue-3-one-piece.html", { title: 'Announcing Vue 3.0 "One Piece"' })
+  test('html files', async () => {
+    await assertHTML('404.html', { title: 'Not Found' })
+    await assertHTML('index.html')
+    await assertHTML('posts/1.html')
+    await assertHTML('posts/2.html')
+    await assertHTML('posts/hello-2021.html', { title: 'Reflections for 2020-2021' })
+    await assertHTML('posts/vue-3-2.html', { title: 'Vue 3.2 Released!' })
+    await assertHTML('posts/vue-3-one-piece.html', { title: 'Announcing Vue 3.0 "One Piece"' })
   })
 
-  test("styles", async () => {
-    const files = await glob("assets/*.css", { cwd: `${vuePoint}/dist`, onlyFiles: true })
-    const appCss = files.find((f) => f.startsWith("assets/app"))!
-    const defaultCss = files.find((f) => f.startsWith("assets/default"))!
+  test('styles', async () => {
+    const files = await glob('assets/*.css', { cwd: `${vuePoint}/dist`, onlyFiles: true })
+    const appCss = files.find((f) => f.startsWith('assets/app'))!
+    const defaultCss = files.find((f) => f.startsWith('assets/default'))!
     expect(appCss).toBeTruthy()
     expect(defaultCss).toBeTruthy()
     await assertSnapshot(appCss)
     await assertSnapshot(defaultCss)
   })
-  test("sitemap", async () => {
-    await assertSnapshot("sitemap.xml")
+  test('sitemap', async () => {
+    await assertSnapshot('sitemap.xml')
   })
-  test("headers", async () => {
-    await assertSnapshot("_headers")
+  test('headers', async () => {
+    await assertSnapshot('_headers')
   })
-  test("rss feed", async () => {
-    await assertSnapshot("feed.rss", (content: string) =>
+  test('rss feed', async () => {
+    await assertSnapshot('feed.rss', (content: string) =>
       content
-        .replace(/<\/description>.*?<\/lastBuildDate>/s, "</description>")
-        .replace(/ \d\d:\d\d:\d\d GMT/g, ""),
+        .replace(/<\/description>.*?<\/lastBuildDate>/s, '</description>')
+        .replace(/ \d\d:\d\d:\d\d GMT/g, ''),
     )
   })
 
-  test("remark-mdx-image", async () => {
+  test('remark-mdx-image', async () => {
     const markdownImage =
       '<p><picture><source media="(-webkit-min-device-pixel-ratio: 1.5)" type="image/avif" srcset="/assets/bench.avif 440w, /assets/bench.avif 758w"><source media="(-webkit-min-device-pixel-ratio: 1.5)" type="image/webp" srcset="/assets/bench.webp 440w, /assets/bench.webp 758w"><source media="(-webkit-min-device-pixel-ratio: 1.5)" srcset="/assets/bench.png 440w, /assets/bench.png 758w"><source type="image/avif" srcset="/assets/bench.avif 758w"><source type="image/webp" srcset="/assets/bench.webp 758w"><img srcset="/assets/bench.png 758w" loading="lazy" src="/assets/bench.png" alt="benchmark"></picture></p>'
-    await assertContent("posts/vue-3-2.html", markdownImage)
-    await assertContent("feed.rss", markdownImage)
+    await assertContent('posts/vue-3-2.html', markdownImage)
+    await assertContent('feed.rss', markdownImage)
   })
 
-  test("manifest", async () => {
-    await assertContent(".vite/manifest.json", '"iles/turbo":')
+  test('manifest', async () => {
+    await assertContent('.vite/manifest.json', '"iles/turbo":')
   })
 })
 
 async function expectFileContent(path: string, transform?: (val: string) => string) {
-  let content = await fs.readFile(`${vuePoint}/dist/${path}`, "utf-8")
-  content = content.replace(/\/assets\/([^.]+)(?:[.-])\w+\.(\w+)\b/g, "/assets/$1.$2")
+  let content = await fs.readFile(`${vuePoint}/dist/${path}`, 'utf-8')
+  content = content.replace(/\/assets\/([^.]+)(?:[.-])\w+\.(\w+)\b/g, '/assets/$1.$2')
   return expect(transform ? transform(content) : content)
 }
 
@@ -108,7 +108,7 @@ async function assertHTML(path: string, { title }: any = {}) {
   const expectContent = await expectFileContent(path)
   expectContent.toMatchSnapshot()
   expectContent.toContain(
-    `<title>${`${title ? `${title.replaceAll('"', "&quot;")} · ` : ""}The Vue Point`}</title>`,
+    `<title>${`${title ? `${title.replaceAll('"', '&quot;')} · ` : ''}The Vue Point`}</title>`,
   )
   expectContent.toContain('<meta charset="UTF-8">')
   expectContent.toContain(
@@ -118,7 +118,7 @@ async function assertHTML(path: string, { title }: any = {}) {
     '<link rel="sitemap" href="https://the-vue-point-with-iles.netlify.app/sitemap.xml">',
   )
   expectContent.toContain(
-    `<meta property="og:url" content="https://the-vue-point-with-iles.netlify.app/${path.replace("index.html", "")}">`,
+    `<meta property="og:url" content="https://the-vue-point-with-iles.netlify.app/${path.replace('index.html', '')}">`,
   )
   expectContent.toContain('<link rel="stylesheet" href="/assets/app.css">')
   expectContent.toContain('<link rel="stylesheet" href="/assets/default.css">')
@@ -129,7 +129,7 @@ async function assertHTML(path: string, { title }: any = {}) {
       '<a class="hover:text-gray-700" href="https://github.com/ElMassimo/iles/tree/main/playground/the-vue-point" target="_blank" rel="noopener noreferrer">' +
       '<span class="hidden sm:inline">GitHub</span> Source</a>',
   )
-  if (path.includes("/posts/"))
+  if (path.includes('/posts/'))
     expectContent.toContain(
       '<ile-root id="ile-2"><a class="link" href="/">← <!--#-->Back to the blog<!--/--></a></ile-root>',
     )

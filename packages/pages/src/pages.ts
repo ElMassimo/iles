@@ -1,12 +1,12 @@
-import type { Plugin } from "vite-plus"
+import type { Plugin } from 'vite-plus'
 
-import type { PagesApi, ResolvedOptions } from "./types"
+import type { PagesApi, ResolvedOptions } from './types'
 
-import { createApi } from "./api"
-import { handleHMR } from "./hmr"
-import { MODULE_ID } from "./types"
+import { createApi } from './api'
+import { handleHMR } from './hmr'
+import { MODULE_ID } from './types'
 
-export * from "./types"
+export * from './types'
 
 /**
  * An iles module that injects remark plugins to parse pages and expose it
@@ -16,7 +16,7 @@ export default function IlesPages(): any {
   let api: PagesApi
 
   return {
-    name: "@islands/pages",
+    name: '@islands/pages',
     configResolved(config: any) {
       let {
         root,
@@ -25,7 +25,7 @@ export default function IlesPages(): any {
         extendRoute,
         extendRoutes,
         pagesDir,
-        pageExtensions = ["vue", "md", "mdx"],
+        pageExtensions = ['vue', 'md', 'mdx'],
       } = config
 
       const options: ResolvedOptions = {
@@ -48,8 +48,8 @@ export default function IlesPages(): any {
     let generatedRoutes: string | undefined
 
     const plugin: Plugin = {
-      name: "iles:pages",
-      enforce: "pre",
+      name: 'iles:pages',
+      enforce: 'pre',
       get api() {
         return api
       },
@@ -72,7 +72,7 @@ export default function IlesPages(): any {
         if (id === MODULE_ID) return (generatedRoutes ||= await api.generateRoutesModule())
       },
       async transform(_code, id) {
-        if (id.includes("vue&type=page")) return "export default {};"
+        if (id.includes('vue&type=page')) return 'export default {};'
       },
     }
 

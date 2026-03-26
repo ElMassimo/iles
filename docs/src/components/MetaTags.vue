@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import bannerSrc from "/images/banner.png"
-import logoSrc from "/icons/logo.svg"
-import faviconSrc from "/images/favicon.ico"
+import bannerSrc from '/images/banner.png'
+import logoSrc from '/icons/logo.svg'
+import faviconSrc from '/images/favicon.ico'
 
 const { frontmatter, site } = usePage()
 

@@ -1,6 +1,6 @@
-import type { RouteLocationNormalizedLoaded, RouteParams } from "vue-router"
-import { shallowRef, watch } from "vue"
-import { computedInPage, pageFromRoute } from "./composables/pageData"
+import type { RouteLocationNormalizedLoaded, RouteParams } from 'vue-router'
+import { shallowRef, watch } from 'vue'
+import { computedInPage, pageFromRoute } from './composables/pageData'
 
 export function propsFromRoute(route: RouteLocationNormalizedLoaded) {
   if (import.meta.env.SSR) return route.meta.ssrProps as Record<string, any>
@@ -9,9 +9,9 @@ export function propsFromRoute(route: RouteLocationNormalizedLoaded) {
   const pathVariant = pathVariants.find((path) => sameParams(path.params, route.params))
   if (Object.keys(route.params).length > 0 && !pathVariant)
     console.warn(
-      "This route will not be generated, unable to find matching params in `getStaticPaths`.\nFound:\n\t",
+      'This route will not be generated, unable to find matching params in `getStaticPaths`.\nFound:\n\t',
       route.params,
-      "\nPaths:\n\t",
+      '\nPaths:\n\t',
       pathVariants,
     )
   return pathVariant ? { ...pathVariant.params, ...pathVariant.props } : {}

@@ -1,16 +1,16 @@
 /// <reference types="mdast-util-mdx-expression" />
 /// <reference types="mdast-util-mdxjs-esm" />
 
-import type { CompileOptions } from "@mdx-js/mdx"
-import type { Pluggable } from "unified"
-import type { VFile } from "vfile"
+import type { CompileOptions } from '@mdx-js/mdx'
+import type { Pluggable } from 'unified'
+import type { VFile } from 'vfile'
 
 export type PluginLike = null | undefined | false | Pluggable
 export type PluginOption = PluginLike | Promise<PluginLike> | string | [string, any]
 
 export interface MarkdownOptions extends Omit<
   CompileOptions,
-  "remarkPlugins" | "rehypePlugins" | "recmaPlugins"
+  'remarkPlugins' | 'rehypePlugins' | 'recmaPlugins'
 > {
   /**
    * Recma plugins that should be used to process files.

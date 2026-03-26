@@ -1,1 +1,1 @@
-import "../../types/client"
+import '../../types/client'

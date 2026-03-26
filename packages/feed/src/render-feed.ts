@@ -1,18 +1,18 @@
-import { createStaticVNode, defineComponent, defineAsyncComponent, h } from "vue"
-import type { PropType } from "vue"
-import { useVueRenderer } from "iles"
-import type { FeedOptions, FeedFormat, FeedItem, Author, Extension, ResolvedItem } from "./types"
+import { createStaticVNode, defineComponent, defineAsyncComponent, h } from 'vue'
+import type { PropType } from 'vue'
+import { useVueRenderer } from 'iles'
+import type { FeedOptions, FeedFormat, FeedItem, Author, Extension, ResolvedItem } from './types'
 
 const formats: Record<string, FeedFormat> = {
-  atom: "atom1",
-  rss: "rss2",
-  json: "json1",
+  atom: 'atom1',
+  rss: 'rss2',
+  json: 'json1',
 }
 
 type MaybeAsync<T> = Promise<T> | T
 
 export interface FeedProps<T = FeedItem> {
-  format?: "atom" | "rss" | "json"
+  format?: 'atom' | 'rss' | 'json'
   options: FeedOptions
   items?: MaybeAsync<T>[]
   categories?: string[]
@@ -21,9 +21,9 @@ export interface FeedProps<T = FeedItem> {
 }
 
 export const RenderFeed = defineComponent({
-  name: "RenderFeed",
+  name: 'RenderFeed',
   props: {
-    format: { type: String as PropType<"atom" | "rss" | "json">, required: true },
+    format: { type: String as PropType<'atom' | 'rss' | 'json'>, required: true },
     options: { type: Object as PropType<FeedOptions>, required: true },
     items: { type: Array as PropType<MaybeAsync<FeedItem>[]>, default: undefined },
     categories: { type: Array as PropType<string[]>, default: undefined },
@@ -35,7 +35,7 @@ export const RenderFeed = defineComponent({
     const renderComponent = import.meta.env.SSR ? renderFeed : renderRaw
 
     return () => {
-      const format = formats[props.format || "atom"]
+      const format = formats[props.format || 'atom']
       if (!format) throw new Error(`@islands/feed: Unknown format '${props.format}'`)
 
       return h(
@@ -63,7 +63,7 @@ export const RenderFeed = defineComponent({
 })
 
 async function renderFeed(format: FeedFormat, { options, ...props }: FeedProps<ResolvedItem>) {
-  const { Feed } = await import("feed")
+  const { Feed } = await import('feed')
   const feed = new Feed(options)
 
   if (props.items) (await Promise.all(props.items)).forEach(feed.addItem)
@@ -76,10 +76,10 @@ async function renderFeed(format: FeedFormat, { options, ...props }: FeedProps<R
 
 function renderRaw(_format: FeedFormat, { options, ...props }: FeedProps) {
   const json = JSON.stringify({ ...options, ...props }, null, 2)
-  const style = "word-break: break-word; white-space: pre-wrap;"
-  return h("pre", { style }, h("code", null, json))
+  const style = 'word-break: break-word; white-space: pre-wrap;'
+  return h('pre', { style }, h('code', null, json))
 }
 
 function skipRender(content: any): content is string | undefined {
-  return content === undefined || typeof content === "string"
+  return content === undefined || typeof content === 'string'
 }

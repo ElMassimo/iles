@@ -1,8 +1,8 @@
-import type { IlesModule } from "iles"
-import type { Element } from "hast"
-import type { Plugin } from "unified"
-import { toString } from "hast-util-to-string"
-import type { Options, SeparatorFn } from "./types"
+import type { IlesModule } from 'iles'
+import type { Element } from 'hast'
+import type { Plugin } from 'unified'
+import { toString } from 'hast-util-to-string'
+import type { Options, SeparatorFn } from './types'
 
 /**
  * A rehype plugin to extract an excerpt from the document, adding `excerpt` to
@@ -23,7 +23,7 @@ export const rehypePlugin: Plugin<[Options], Element> =
       // Take until the first paragraph if no separator was found.
       if (separatorIndex === -1)
         separatorIndex =
-          children.findIndex((node) => node.type === "element" && node.tagName === "p") + 1
+          children.findIndex((node) => node.type === 'element' && node.tagName === 'p') + 1
 
       // Ensure only one element is used if no paragraph was found.
       if (separatorIndex <= 1) separatorIndex = 1
@@ -31,12 +31,12 @@ export const rehypePlugin: Plugin<[Options], Element> =
       // Ignore the title for the excerpt.
       const excerptElements = children
         .slice(0, separatorIndex)
-        .filter((el) => el.type !== "element" || el.tagName !== "h1")
+        .filter((el) => el.type !== 'element' || el.tagName !== 'h1')
 
       // Convert the elements of the excerpt to plain text.
       excerpt = toString({
-        type: "element",
-        tagName: "div",
+        type: 'element',
+        tagName: 'div',
         children: excerptElements,
         properties: {},
       })
@@ -46,8 +46,8 @@ export const rehypePlugin: Plugin<[Options], Element> =
       children.splice(
         separatorIndex,
         // @ts-ignore replace <Excerpt/> with an `excerpt` HTML element
-        separator?.type === "mdxJsxFlowElement" ? 1 : 0,
-        { type: "element", tagName: "excerpt", children: [], properties: {} },
+        separator?.type === 'mdxJsxFlowElement' ? 1 : 0,
+        { type: 'element', tagName: 'excerpt', children: [], properties: {} },
       )
     }
 

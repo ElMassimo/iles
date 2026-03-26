@@ -1,5 +1,5 @@
-import type { Node } from "hast"
-import type { VFile } from "vfile"
+import type { Node } from 'hast'
+import type { VFile } from 'vfile'
 
 export type ExtractFn = (content: string, vfile: VFile) => string | undefined
 

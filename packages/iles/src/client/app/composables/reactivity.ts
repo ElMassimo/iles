@@ -1,6 +1,6 @@
-import { reactive } from "vue"
+import { reactive } from 'vue'
 
-import type { Ref } from "vue"
+import type { Ref } from 'vue'
 
 /**
  * Converts ref to a reactive value.

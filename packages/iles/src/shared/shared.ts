@@ -40,4 +40,4 @@ export type {
   PreactOptions,
   SolidOptions,
   SvelteOptions,
-} from "../../types/shared"
+} from '../../types/shared'

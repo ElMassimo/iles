@@ -1,4 +1,4 @@
-export { default as serialize } from "@nuxt/devalue"
+export { default as serialize } from '@nuxt/devalue'
 
 export function mapObject<I, O>(
   obj: Record<string, I>,

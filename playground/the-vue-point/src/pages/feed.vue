@@ -3,21 +3,21 @@ path: /feed.rss
 </page>
 
 <script setup lang="ts">
-import type { FeedOptions, FeedItem } from "@islands/feed"
-import { getPosts } from "~/logic/posts"
+import type { FeedOptions, FeedItem } from '@islands/feed'
+import { getPosts } from '~/logic/posts'
 
 const { site } = usePage()
 const url = site.url
 
 const options: FeedOptions = {
-  title: "The Vue Point",
-  description: "The official blog for the Vue.js project",
+  title: 'The Vue Point',
+  description: 'The official blog for the Vue.js project',
   id: url,
   link: url,
-  language: "en",
-  image: "https://vuejs.org/images/logo.png",
+  language: 'en',
+  image: 'https://vuejs.org/images/logo.png',
   favicon: `${url}/favicon.ico`,
-  copyright: "Copyright (c) 2021-present, Yuxi (Evan) You and blog contributors",
+  copyright: 'Copyright (c) 2021-present, Yuxi (Evan) You and blog contributors',
 }
 
 const posts = $(getPosts())

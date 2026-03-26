@@ -1,33 +1,33 @@
-import type { ViteDevServer, Plugin } from "vite-plus"
-import { debug, slash } from "./utils"
-import { MODULE_ID, ResolvedOptions, PagesApi } from "./types"
+import type { ViteDevServer, Plugin } from 'vite-plus'
+import { debug, slash } from './utils'
+import { MODULE_ID, ResolvedOptions, PagesApi } from './types'
 
 export function handleHMR(
   api: PagesApi,
   options: ResolvedOptions,
   clearRoutes: () => void,
-): Plugin["hotUpdate"] {
+): Plugin['hotUpdate'] {
   const server = options.server!
 
   return async function ({ file, type }) {
     const path = slash(file)
     if (api.isPage(path)) {
       switch (type) {
-        case "create": {
+        case 'create': {
           const page = await api.addPage(path)
-          debug.hmr("add %s %O", path, page)
+          debug.hmr('add %s %O', path, page)
           fullReload()
           return []
         }
-        case "delete": {
+        case 'delete': {
           api.removePage(path)
-          debug.hmr("remove", path)
+          debug.hmr('remove', path)
           fullReload()
           return []
         }
-        case "update": {
+        case 'update': {
           const { changed, needsReload } = await api.updatePage(path)
-          if (changed) debug.hmr("change", path)
+          if (changed) debug.hmr('change', path)
           if (needsReload) fullReload()
         }
       }
@@ -37,7 +37,7 @@ export function handleHMR(
   function fullReload() {
     invalidatePagesModule(server)
     clearRoutes()
-    server.ws.send({ type: "full-reload" })
+    server.ws.send({ type: 'full-reload' })
   }
 }
 

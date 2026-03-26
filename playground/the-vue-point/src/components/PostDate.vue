@@ -12,10 +12,10 @@ function getDateTime(date: string | Date) {
 function formatDate(dateStr: string | Date) {
   const date = toDate(dateStr)
   date.setUTCHours(12)
-  return date.toLocaleDateString("en-US", {
-    year: "numeric",
-    month: "long",
-    day: "numeric",
+  return date.toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
   })
 }
 </script>

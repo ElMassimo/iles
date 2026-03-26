@@ -1,12 +1,12 @@
-import type { App, Ref, InjectionKey } from "vue"
-import type { RouteLocationNormalizedLoaded } from "vue-router"
-import { computed, ref, inject } from "vue"
-import { routeLocationKey } from "vue-router"
-import type { PageData, PageProps, PageComponent, UserSite } from "../../shared"
-import { propsFromRoute } from "../props"
-import { toReactive } from "./reactivity"
+import type { App, Ref, InjectionKey } from 'vue'
+import type { RouteLocationNormalizedLoaded } from 'vue-router'
+import { computed, ref, inject } from 'vue'
+import { routeLocationKey } from 'vue-router'
+import type { PageData, PageProps, PageComponent, UserSite } from '../../shared'
+import { propsFromRoute } from '../props'
+import { toReactive } from './reactivity'
 
-export const pageDataKey: InjectionKey<PageData> = Symbol("[iles-page-data]")
+export const pageDataKey: InjectionKey<PageData> = Symbol('[iles-page-data]')
 
 function last<T>(arr: T[]) {
   return arr[arr.length - 1]
@@ -15,7 +15,7 @@ function last<T>(arr: T[]) {
 function injectFromApp<T>(key: InjectionKey<T>, app?: App) {
   const result = app ? (app._context.provides[key as any] as T) : inject(key)
   if (!result)
-    throw new Error("Page data not properly injected in app. Are you using it inside an island?")
+    throw new Error('Page data not properly injected in app. Are you using it inside an island?')
   return result
 }
 

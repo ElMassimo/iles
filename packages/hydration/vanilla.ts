@@ -1,5 +1,5 @@
-import type { Component, Props, Slots } from "./types"
-import { onDispose } from "./hydration"
+import type { Component, Props, Slots } from './types'
+import { onDispose } from './hydration'
 
 type MaybeAsync<T> = T | Promise<T>
 export type OnDisposeFn = () => void
@@ -9,7 +9,7 @@ export type OnLoadFn = (
   slots: Slots | undefined,
 ) => MaybeAsync<void | OnDisposeFn>
 
-const isFunction = (val: any): val is Function => typeof val === "function"
+const isFunction = (val: any): val is Function => typeof val === 'function'
 
 // Internal: Calls the function to run custom client code.
 export default async function createIsland(
@@ -32,6 +32,6 @@ export default async function createIsland(
       props,
       slots,
       component,
-      framework: "none",
+      framework: 'none',
     })
 }

@@ -18,15 +18,15 @@ const queryAll = (selector, el = dom) => toArray(el.querySelectorAll(selector))
 
 const adoptNode = (node) => dom.adoptNode(node)
 
-const createElement = (tagName = "link") => dom.createElement(tagName)
+const createElement = (tagName = 'link') => dom.createElement(tagName)
 
 const whenIdle = window.requestIdleCallback || setTimeout
 
 const normalizeURL = (url) => new URL(url, location.href).pathname
 
-const prefetchNow = (url, importance = "high") => fetch(url, { credentials: "include", importance })
+const prefetchNow = (url, importance = 'high') => fetch(url, { credentials: 'include', importance })
 
-const prefetchWhenIdle = hasPrefetch() ? prefetchWithLinkTag : (url) => prefetchNow(url, "low")
+const prefetchWhenIdle = hasPrefetch() ? prefetchWithLinkTag : (url) => prefetchNow(url, 'low')
 
 // Cache of URLs and Promises we've prefetched
 const hasFetched = new Set()
@@ -40,7 +40,7 @@ function prefetch(url) {
 }
 
 watchLinks()
-addEventListener("popstate", (e) => {
+addEventListener('popstate', (e) => {
   if (currentPath !== location.pathname)
     replacePage(location.href, (e.state && e.state.scrollPosition) || 0)
 })
@@ -57,30 +57,30 @@ function watchLinks() {
     entries.forEach(({ target: link, isIntersecting }) => {
       if (isIntersecting) {
         observer.unobserve(link)
-        link.addEventListener("click", onLinkClick)
+        link.addEventListener('click', onLinkClick)
         prefetch(normalizeURL(link.href))
       }
     })
   })
 
   whenIdle(() => {
-    queryAll("a").forEach((link) => {
+    queryAll('a').forEach((link) => {
       const extMatch = link.pathname.match(/\.\w+$/)
-      if ((!extMatch || extMatch[0] === ".html") && link.hostname === location.hostname)
+      if ((!extMatch || extMatch[0] === '.html') && link.hostname === location.hostname)
         observer.observe(link)
     })
   })
 }
 
 function onLinkClick(e) {
-  const link = e.target.closest("a")
+  const link = e.target.closest('a')
   if (
     !e.ctrlKey &&
     !e.shiftKey &&
     !e.altKey &&
     !e.metaKey &&
     event.which <= 1 &&
-    link.target !== "_blank"
+    link.target !== '_blank'
   ) {
     const sameLocation = link.pathname === location.pathname
     const sameHash = link.hash === location.hash
@@ -90,7 +90,7 @@ function onLinkClick(e) {
     if (!sameLocation) {
       replacePage(link.href, 0, () => {
         history.replaceState({ scrollPosition: scrollY }, dom.title)
-        history.pushState(null, "", link.href)
+        history.pushState(null, '', link.href)
       })
     }
   }
@@ -104,7 +104,7 @@ function replacePage(url, scrollPosition, callback) {
       callback?.()
       currentPath = location.pathname
       replaceHtml(html)
-      scrollTo(0, scrollPosition || dom.querySelector(location.hash || "body").offsetTop)
+      scrollTo(0, scrollPosition || dom.querySelector(location.hash || 'body').offsetTop)
       watchLinks()
     })
     .catch((e) => {
@@ -114,14 +114,14 @@ function replacePage(url, scrollPosition, callback) {
 }
 
 function replaceHtml(html) {
-  const { head, body } = new DOMParser().parseFromString(html, "text/html")
+  const { head, body } = new DOMParser().parseFromString(html, 'text/html')
 
   const prevHead = dom.head
   queryAll(':not(link[rel="stylesheet"]):not(style)', prevHead).forEach((el) => el.remove())
 
-  const prevHeadHrefs = new Set(queryAll("link", prevHead).map((el) => el.href))
+  const prevHeadHrefs = new Set(queryAll('link', prevHead).map((el) => el.href))
   toArray(head.children).forEach((el) => {
-    if (el.tagName !== "LINK" || el.rel !== "stylesheet" || !prevHeadHrefs.has(el.href)) {
+    if (el.tagName !== 'LINK' || el.rel !== 'stylesheet' || !prevHeadHrefs.has(el.href)) {
       adoptNode(el)
       prevHead.appendChild(el)
     }
@@ -134,12 +134,12 @@ function replaceHtml(html) {
 }
 
 function activateScripts(el) {
-  queryAll("script", el).forEach(activateScript)
+  queryAll('script', el).forEach(activateScript)
 }
 
 function activateScript(el) {
-  if (el.getAttribute("once") === null) {
-    const script = createElement("script")
+  if (el.getAttribute('once') === null) {
+    const script = createElement('script')
 
     toArray(el.attributes).forEach((attr) => script.setAttribute(attr.nodeName, attr.nodeValue))
 
@@ -151,12 +151,12 @@ function activateScript(el) {
 
 function hasPrefetch(link) {
   link = createElement()
-  return link.relList && link.relList.supports && link.relList.supports("prefetch")
+  return link.relList && link.relList.supports && link.relList.supports('prefetch')
 }
 
 function prefetchWithLinkTag(url, link) {
   link = createElement()
-  link.rel = "prefetch"
+  link.rel = 'prefetch'
   link.href = url
   dom.head.appendChild(link)
 }

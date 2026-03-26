@@ -1,7 +1,7 @@
-import { h, render, toChildArray } from "preact"
-import type { FunctionComponent as Component } from "preact"
-import type { Props, Slots } from "./types"
-import { onDispose } from "./hydration"
+import { h, render, toChildArray } from 'preact'
+import type { FunctionComponent as Component } from 'preact'
+import type { Props, Slots } from './types'
+import { onDispose } from './hydration'
 
 export default function createIsland(
   component: Component,
@@ -21,7 +21,7 @@ export default function createIsland(
       props,
       slots,
       component,
-      framework: "preact",
+      framework: 'preact',
     })
 }
 
@@ -29,7 +29,7 @@ export default function createIsland(
  * Preact doesn't have an equivalent for createStaticVNode.
  */
 const IslandContent = (props: any) => {
-  return h("iles-content", { dangerouslySetInnerHTML: { __html: props.content } })
+  return h('iles-content', { dangerouslySetInnerHTML: { __html: props.content } })
 }
 IslandContent.shouldComponentUpdate = () => false
 

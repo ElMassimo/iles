@@ -99,7 +99,7 @@ It must return an array of objects, where each object specifies:
 
 ```vue
 <script lang="ts">
-import { fetchArticles } from "~/logic/articles"
+import { fetchArticles } from '~/logic/articles'
 
 export default definePageComponent({
   async getStaticPaths() {
@@ -117,7 +117,7 @@ export default definePageComponent({
 </script>
 
 <script setup lang="ts">
-import { Article } from "~/logic/articles"
+import { Article } from '~/logic/articles'
 
 defineProps<{ article: Article }>()
 </script>

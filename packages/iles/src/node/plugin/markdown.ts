@@ -1,6 +1,6 @@
-import type { ViteDevServer } from "vite-plus"
-import deepEqual from "deep-equal"
-import type { AppConfig } from "../shared"
+import type { ViteDevServer } from 'vite-plus'
+import deepEqual from 'deep-equal'
+import type { AppConfig } from '../shared'
 
 let originalTags: string[]
 

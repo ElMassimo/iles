@@ -1,11 +1,11 @@
-import remarkFrontmatter from "remark-frontmatter"
+import remarkFrontmatter from 'remark-frontmatter'
 
-import type { VFile } from "vfile"
-import recmaPlugin from "./recma-plugin"
-import mdxPlugins from "./mdx-vite-plugins"
-import { remarkInternalHrefs } from "./remark-internal-hrefs"
-import { remarkMdxImages } from "./remark-mdx-images"
-import { rehypeRawExpressions } from "./rehype-raw-expressions"
+import type { VFile } from 'vfile'
+import recmaPlugin from './recma-plugin'
+import mdxPlugins from './mdx-vite-plugins'
+import { remarkInternalHrefs } from './remark-internal-hrefs'
+import { remarkMdxImages } from './remark-mdx-images'
+import { rehypeRawExpressions } from './rehype-raw-expressions'
 
 /**
  * An iles module that injects a recma plugin that transforms MDX to allow
@@ -13,7 +13,7 @@ import { rehypeRawExpressions } from "./rehype-raw-expressions"
  */
 export function vueMdx(): any {
   return {
-    name: "@islands/mdx",
+    name: '@islands/mdx',
     markdown: {
       recmaPlugins: [recmaPlugin],
     },
@@ -21,7 +21,7 @@ export function vueMdx(): any {
       const { markdown, prettyUrls, namedPlugins } = config
 
       markdown.remarkPlugins.unshift(
-        [remarkFrontmatter, ["yaml", "toml"]],
+        [remarkFrontmatter, ['yaml', 'toml']],
         [remarkMdxImages, markdown],
         [remarkInternalHrefs, { prettyUrls }],
       )
@@ -42,4 +42,4 @@ export function vueMdx(): any {
 }
 
 export { vueMdx as default, recmaPlugin }
-export * from "./types"
+export * from './types'

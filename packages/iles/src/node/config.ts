@@ -1,16 +1,16 @@
-import { promises as fs, existsSync } from "fs"
-import { join, resolve } from "pathe"
-import pc from "picocolors"
-import creatDebugger from "debug"
-import { loadConfigFromFile, mergeConfig as mergeViteConfig, PluginOption } from "vite-plus"
-import type { Plugin } from "vite-plus"
-import vue from "@vitejs/plugin-vue"
-import components from "unplugin-vue-components/vite"
-import pages from "@islands/pages"
-import mdx from "@islands/mdx"
+import { promises as fs, existsSync } from 'fs'
+import { join, resolve } from 'pathe'
+import pc from 'picocolors'
+import creatDebugger from 'debug'
+import { loadConfigFromFile, mergeConfig as mergeViteConfig, PluginOption } from 'vite-plus'
+import type { Plugin } from 'vite-plus'
+import vue from '@vitejs/plugin-vue'
+import components from 'unplugin-vue-components/vite'
+import pages from '@islands/pages'
+import mdx from '@islands/mdx'
 
-import type { ComponentResolverFunction } from "unplugin-vue-components/types"
-import type { UserConfig } from "iles"
+import type { ComponentResolverFunction } from 'unplugin-vue-components/types'
+import type { UserConfig } from 'iles'
 
 import type {
   AppConfig,
@@ -23,7 +23,7 @@ import type {
   PreactOptions,
   SolidOptions,
   SvelteOptions,
-} from "./shared"
+} from './shared'
 
 import {
   camelCase,
@@ -33,39 +33,39 @@ import {
   isStringPlugin,
   tryImportOrInstallModule,
   uncapitalize,
-} from "./plugin/utils"
+} from './plugin/utils'
 import {
   DIST_CLIENT_PATH,
   HYDRATION_DIST_PATH,
   ISLAND_COMPONENT_PATH,
   resolveAliases,
-} from "./alias"
-import remarkWrapIslands from "./plugin/remarkWrapIslands"
+} from './alias'
+import remarkWrapIslands from './plugin/remarkWrapIslands'
 
-import { explicitHtmlPath } from "./utils"
+import { explicitHtmlPath } from './utils'
 
-const debug = creatDebugger("iles:config")
+const debug = creatDebugger('iles:config')
 
 export type { AppConfig }
 
 export const IlesComponentResolver: ComponentResolverFunction = (name) => {
-  if (name === "Island") return { from: ISLAND_COMPONENT_PATH }
-  if (name === "Head") return { name: "Head", from: "@unhead/vue/components" }
+  if (name === 'Island') return { from: ISLAND_COMPONENT_PATH }
+  if (name === 'Head') return { name: 'Head', from: '@unhead/vue/components' }
 }
 
 export function IlesLayoutResolver(config: AppConfig): ComponentResolverFunction {
   return (name) => {
-    const [layoutName, isLayout] = name.split("Layout", 2)
-    if (layoutName && isLayout === "") {
+    const [layoutName, isLayout] = name.split('Layout', 2)
+    if (layoutName && isLayout === '') {
       const layoutFile = join(config.layoutsDir, `${uncapitalize(camelCase(layoutName))}.vue`)
-      if (existsSync(layoutFile)) return { name: "default", from: layoutFile }
+      if (existsSync(layoutFile)) return { name: 'default', from: layoutFile }
     }
   }
 }
 
 export async function resolveConfig(root?: string, env?: ConfigEnv): Promise<AppConfig> {
   if (!root) root = process.cwd()
-  if (!env) env = { mode: "development", command: "serve", isSsrBuild: false }
+  if (!env) env = { mode: 'development', command: 'serve', isSsrBuild: false }
 
   const appConfig = await resolveUserConfig(root, env)
 
@@ -80,8 +80,8 @@ export async function resolveConfig(root?: string, env?: ConfigEnv): Promise<App
 
   for (const mod of appConfig.modules) await mod.configResolved?.(appConfig, env)
 
-  appConfig.vite.define!["import.meta.env.DISPOSE_ISLANDS"] =
-    env.mode === "development" || appConfig.turbo
+  appConfig.vite.define!['import.meta.env.DISPOSE_ISLANDS'] =
+    env.mode === 'development' || appConfig.turbo
 
   checkDeprecations(appConfig as any)
 
@@ -101,11 +101,11 @@ async function resolveUserConfig(root: string, configEnv: ConfigEnv) {
   config.modules = compact<IlesModule>(
     await resolveIlesModules([
       {
-        name: "iles:base-config",
+        name: 'iles:base-config',
         ...appConfigDefaults(config, userConfig as UserConfig, configEnv),
       },
       mdx(),
-      { name: "user-config", ...userConfig },
+      { name: 'user-config', ...userConfig },
       ...modules,
       pages(),
     ]).then((modules) => modules.flat()),
@@ -114,12 +114,12 @@ async function resolveUserConfig(root: string, configEnv: ConfigEnv) {
   Object.assign(config, await applyModules(config, configEnv))
   await setNamedPlugins(config, configEnv, config.namedPlugins)
 
-  const siteUrl = config.siteUrl || ""
-  const protocolIndex = siteUrl.indexOf("//")
-  const baseIndex = siteUrl.indexOf("/", protocolIndex > -1 ? protocolIndex + 2 : 0)
+  const siteUrl = config.siteUrl || ''
+  const protocolIndex = siteUrl.indexOf('//')
+  const baseIndex = siteUrl.indexOf('/', protocolIndex > -1 ? protocolIndex + 2 : 0)
   config.siteUrl = baseIndex > -1 ? siteUrl.slice(0, baseIndex) : siteUrl
-  config.base = baseIndex > -1 ? siteUrl.slice(baseIndex) : "/"
-  if (!config.base.endsWith("/")) config.base = `${config.base}/`
+  config.base = baseIndex > -1 ? siteUrl.slice(baseIndex) : '/'
+  if (!config.base.endsWith('/')) config.base = `${config.base}/`
   config.vite.base = config.base
   config.vite.build!.assetsDir = config.assetsDir
 
@@ -129,17 +129,17 @@ async function resolveUserConfig(root: string, configEnv: ConfigEnv) {
 async function loadUserConfigFile(root: string, configEnv: ConfigEnv): Promise<UserConfig> {
   try {
     const { path, config = {} } =
-      (await loadConfigFromFile(configEnv, "iles.config.ts", root)) || {}
+      (await loadConfigFromFile(configEnv, 'iles.config.ts', root)) || {}
     if (path && config) {
       ;(config! as AppConfig).configPath = path
       debug(`loaded config at ${pc.yellow(path)}`)
     } else {
-      debug("no iles.config.ts file found.")
+      debug('no iles.config.ts file found.')
     }
     return config as UserConfig
   } catch (error) {
-    if (error.message.includes("Could not resolve")) {
-      debug("no iles.config.ts file found.")
+    if (error.message.includes('Could not resolve')) {
+      debug('no iles.config.ts file found.')
       return {}
     }
     throw error
@@ -151,7 +151,7 @@ async function setNamedPlugins(config: AppConfig, env: ConfigEnv, plugins: Named
     .map((mod) => mod.vue?.template?.compilerOptions?.isCustomElement)
     .filter((x) => x)
   config.vue.template!.compilerOptions!.isCustomElement = (tagName: string) =>
-    tagName.startsWith("ile-") || ceChecks.some((fn) => fn!(tagName))
+    tagName.startsWith('ile-') || ceChecks.some((fn) => fn!(tagName))
 
   plugins.components = components(config.components)
   plugins.vue = vue(config.vue)
@@ -159,21 +159,21 @@ async function setNamedPlugins(config: AppConfig, env: ConfigEnv, plugins: Named
   const optionalPlugins = {
     async solid(options: SolidOptions) {
       const solid =
-        await importLibrary<(typeof import("vite-plugin-solid"))["default"]>("vite-plugin-solid")
+        await importLibrary<(typeof import('vite-plugin-solid'))['default']>('vite-plugin-solid')
       return solid({ ssr: true, ...options })
     },
     async preact(options: PreactOptions) {
       const preact =
-        await importLibrary<(typeof import("@preact/preset-vite"))["default"]>(
-          "@preact/preset-vite",
+        await importLibrary<(typeof import('@preact/preset-vite'))['default']>(
+          '@preact/preset-vite',
         )
       return preact(options)
     },
     async svelte(options: SvelteOptions) {
-      const { svelte } = await importLibrary<typeof import("@sveltejs/vite-plugin-svelte")>(
-        "@sveltejs/vite-plugin-svelte",
+      const { svelte } = await importLibrary<typeof import('@sveltejs/vite-plugin-svelte')>(
+        '@sveltejs/vite-plugin-svelte',
       )
-      const dev = env.mode === "development"
+      const dev = env.mode === 'development'
       return svelte({
         emitCss: true,
         ...options,
@@ -186,7 +186,7 @@ async function setNamedPlugins(config: AppConfig, env: ConfigEnv, plugins: Named
     if (addPlugin) {
       const options = isObject(addPlugin) ? addPlugin : {}
       config.vitePlugins.push((await createPlugin(options as any)) as Plugin)
-      if (optionName === "preact") await tryImportOrInstallModule("preact-render-to-string")
+      if (optionName === 'preact') await tryImportOrInstallModule('preact-render-to-string')
     }
   }
 }
@@ -206,8 +206,8 @@ async function applyModules(config: AppConfig, configEnv: ConfigEnv) {
       if (partialConfig) config = mergeConfig(config, partialConfig as any)
     }
   }
-  chainModuleCallbacks(config, ["extendFrontmatter", "extendRoute", "extendRoutes"])
-  chainModuleCallbacks(config, ["beforePageRender", "onSiteBundled", "onSiteRendered"], "ssg")
+  chainModuleCallbacks(config, ['extendFrontmatter', 'extendRoute', 'extendRoutes'])
+  chainModuleCallbacks(config, ['beforePageRender', 'onSiteBundled', 'onSiteRendered'], 'ssg')
   return config
 }
 
@@ -232,9 +232,9 @@ function inferJSX(config: UserConfig) {
   for (const plugin of plugins) {
     if (!plugin) continue
 
-    const { name = "" } = plugin
-    if (name.includes("preact")) return "preact"
-    if (name.includes("solid")) return "solid"
+    const { name = '' } = plugin
+    if (name.includes('preact')) return 'preact'
+    if (name.includes('solid')) return 'solid'
   }
 }
 
@@ -244,8 +244,8 @@ function appConfigDefaults(
   env: ConfigEnv,
 ): AppConfig {
   const { root } = appConfig
-  const isDevelopment = env.mode === "development"
-  const { drafts = isDevelopment, jsx = inferJSX(userConfig), srcDir = "src" } = userConfig
+  const isDevelopment = env.mode === 'development'
+  const { drafts = isDevelopment, jsx = inferJSX(userConfig), srcDir = 'src' } = userConfig
 
   return {
     debug: true,
@@ -253,19 +253,19 @@ function appConfigDefaults(
     turbo: false,
     jsx,
     root,
-    base: "/",
-    siteUrl: "",
+    base: '/',
+    siteUrl: '',
     prettyUrls: true,
     ssg: {
       sitemap: true,
     },
-    configPath: resolve(root, "iles.config.ts"),
-    assetsDir: "assets",
-    pagesDir: "pages",
+    configPath: resolve(root, 'iles.config.ts'),
+    assetsDir: 'assets',
+    pagesDir: 'pages',
     srcDir,
-    outDir: "dist",
-    layoutsDir: "layouts",
-    tempDir: ".iles-ssg-temp",
+    outDir: 'dist',
+    layoutsDir: 'layouts',
+    tempDir: '.iles-ssg-temp',
     modules: [] as IlesModule[],
     namedPlugins: {} as NamedPlugins,
     resolvePath: undefined as any,
@@ -291,17 +291,17 @@ function appConfigDefaults(
         return [
           ...routes,
           {
-            path: "/:zzz(.*)*",
-            name: "NotFoundInDev",
-            componentFilename: "@islands/components/NotFound",
+            path: '/:zzz(.*)*',
+            name: 'NotFoundInDev',
+            componentFilename: '@islands/components/NotFound',
           },
         ]
       else if (!drafts) return routes.filter((route) => !route.frontmatter?.draft)
     },
     markdown: {
-      jsxRuntime: "automatic",
-      jsxImportSource: "iles",
-      providerImportSource: "iles",
+      jsxRuntime: 'automatic',
+      jsxImportSource: 'iles',
+      providerImportSource: 'iles',
       rehypePlugins: [],
       remarkPlugins: [
         [
@@ -316,11 +316,11 @@ function appConfigDefaults(
     },
     components: {
       dts: true,
-      extensions: ["vue", "jsx", "tsx", "js", "ts", "mdx", "svelte"],
+      extensions: ['vue', 'jsx', 'tsx', 'js', 'ts', 'mdx', 'svelte'],
       include: [/\.vue$/, /\.vue\?vue/, /\.mdx?/],
       dirs: `${srcDir}/components`,
       resolvers: [IlesComponentResolver, IlesLayoutResolver(appConfig)],
-      transformer: "vue3",
+      transformer: 'vue3',
     },
   }
 }
@@ -330,7 +330,7 @@ function viteConfigDefaults(root: string, userConfig: UserConfig): ViteOptions {
     root,
     resolve: {
       alias: resolveAliases(root, userConfig),
-      dedupe: ["vue", "vue-router", "@unhead/vue", "@vue/devtools-api"],
+      dedupe: ['vue', 'vue-router', '@unhead/vue', '@vue/devtools-api'],
     },
     server: {
       fs: { allow: [root, DIST_CLIENT_PATH, HYDRATION_DIST_PATH] },
@@ -340,13 +340,13 @@ function viteConfigDefaults(root: string, userConfig: UserConfig): ViteOptions {
     },
     define: {},
     optimizeDeps: {
-      include: ["vue", "vue-router", "@unhead/vue", "@vue/devtools-api"],
+      include: ['vue', 'vue-router', '@unhead/vue', '@vue/devtools-api'],
       exclude: [
-        "iles",
-        "@nuxt/devalue",
-        "@islands/hydration",
-        "@islands/prerender",
-        "vue/server-renderer",
+        'iles',
+        '@nuxt/devalue',
+        '@islands/hydration',
+        '@islands/prerender',
+        'vue/server-renderer',
       ],
     },
   }
@@ -364,7 +364,7 @@ function mergeConfig<T = Record<string, any>>(a: T, b: T, isRoot = true): AppCon
       continue
     }
     if (isObject(existing) && isObject(value)) {
-      if (isRoot && key === "vite") merged[key] = mergeViteConfig(existing, value as any)
+      if (isRoot && key === 'vite') merged[key] = mergeViteConfig(existing, value as any)
       else merged[key] = mergeConfig(existing, value, false)
 
       continue
@@ -398,19 +398,19 @@ function chainCallbacks(fns: any): any {
 }
 
 function isObject(value: unknown): value is Record<string, any> {
-  return Object.prototype.toString.call(value) === "[object Object]"
+  return Object.prototype.toString.call(value) === '[object Object]'
 }
 
 function checkDeprecations(config: any) {
   if (config.markdown?.extendFrontmatter)
-    throw new Error("CHANGES REQUIRED: `markdown.extendFrontmatter` is now `extendFrontmatter`")
+    throw new Error('CHANGES REQUIRED: `markdown.extendFrontmatter` is now `extendFrontmatter`')
 
   if (config.pages?.extendRoute)
-    throw new Error("CHANGES REQUIRED: `pages.extendRoute` is now `extendRoute`")
+    throw new Error('CHANGES REQUIRED: `pages.extendRoute` is now `extendRoute`')
 
   if (config.pages?.onRoutesGenerated)
-    throw new Error("CHANGES REQUIRED: `pages.onRoutesGenerated` is now `extendRoutes`")
+    throw new Error('CHANGES REQUIRED: `pages.onRoutesGenerated` is now `extendRoutes`')
 
   if (config.pages)
-    throw new Error("CHANGES REQUIRED: `pages` is no longer an option, see @islands/pages")
+    throw new Error('CHANGES REQUIRED: `pages` is no longer an option, see @islands/pages')
 }

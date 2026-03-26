@@ -17,14 +17,14 @@ This helper can be used in the `setup` function or `<script setup>` of any Vue c
 
 ```vue
 <script setup lang="ts">
-import { computed } from "vue"
+import { computed } from 'vue'
 
 const { frontmatter } = usePage()
 
 useHead({
   meta: [
-    { property: "og:type", content: "website" },
-    { property: "keywords", content: computed(() => frontmatter.tags) },
+    { property: 'og:type', content: 'website' },
+    { property: 'keywords', content: computed(() => frontmatter.tags) },
   ],
 })
 </script>
@@ -57,11 +57,11 @@ Finally, you can use `head` in <kbd>[src/app.ts][app]</kbd>, which supports the
 same format as <kbd>[useHead]</kbd>.
 
 ```ts
-import { defineApp } from "iles"
+import { defineApp } from 'iles'
 
 export default defineApp({
   head: {
-    htmlAttrs: { lang: "en-US" },
+    htmlAttrs: { lang: 'en-US' },
   },
 })
 ```
@@ -69,14 +69,14 @@ export default defineApp({
 If you need access to the site or page, you can provide a function instead:
 
 ```ts
-import { defineApp } from "iles"
+import { defineApp } from 'iles'
 
 export default defineApp({
   head({ frontmatter, site }) {
     return {
       meta: [
-        { property: "author", content: site.author },
-        { property: "keywords", content: computed(() => frontmatter.tags) },
+        { property: 'author', content: site.author },
+        { property: 'keywords', content: computed(() => frontmatter.tags) },
       ],
     }
   },

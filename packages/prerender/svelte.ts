@@ -1,7 +1,7 @@
-import { createRawSnippet } from "svelte"
-import type { Snippet } from "svelte"
-import { render } from "svelte/server"
-import type { PrerenderFn } from "./prerender"
+import { createRawSnippet } from 'svelte'
+import type { Snippet } from 'svelte'
+import { render } from 'svelte/server'
+import type { PrerenderFn } from './prerender'
 
 const renderSvelteComponent: PrerenderFn = async (Component, props, slots, _id) => {
   let children
@@ -10,11 +10,11 @@ const renderSvelteComponent: PrerenderFn = async (Component, props, slots, _id) 
 
   slots &&
     Object.entries(slots).forEach(([slotName, html]) => {
-      const fnName = slotName === "default" ? "children" : slotName
+      const fnName = slotName === 'default' ? 'children' : slotName
       renderFns[fnName] = createRawSnippet(() => ({ render: () => html }))
 
       $$slots ??= {}
-      if (slotName === "default") {
+      if (slotName === 'default') {
         $$slots.default = true
         children = renderFns[fnName]
       } else {

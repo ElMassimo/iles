@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed } from "vue"
+import { computed } from 'vue'
 const { src } = defineProps<{ src: string | any[] }>()
 
 const allSources = computed(() => (Array.isArray(src) ? src : [{ srcset: src, src }]))

@@ -52,24 +52,24 @@ tocLevel: 3
 Use the <kbd>modules</kbd> option in [`iles.config.ts`][config] to add modules to your application.
 
 ```ts
-import { defineConfig } from "iles"
+import { defineConfig } from 'iles'
 
-import icons from "@islands/icons"
+import icons from '@islands/icons'
 
 export default defineConfig({
   modules: [
     // Automatically imported and instantiated
-    "@islands/headings",
+    '@islands/headings',
 
     // Use an array to pass options
-    ["@islands/prism", { showLineNumbers: true }],
+    ['@islands/prism', { showLineNumbers: true }],
 
     // Manually imported, provides better type-inference
     icons({ autoInstall: false }),
 
     // A one-off module that won't be published
     {
-      name: "custom-module",
+      name: 'custom-module',
       configResolved(config) {
         console.log({ config })
       },
@@ -115,10 +115,10 @@ A module to extract an excerpt from [MDX documents][markdown]:
 - ⚙️ `maxLength`, `separator`, and `extract` options to customize excerpt
 
 ```ts
-import { defineConfig } from "iles"
+import { defineConfig } from 'iles'
 
 export default defineConfig({
-  modules: [["@islands/excerpt", { maxLength: 140 }]],
+  modules: [['@islands/excerpt', { maxLength: 140 }]],
 })
 ```
 
@@ -135,9 +135,9 @@ When importing [MDX components][markdown], you use the `excerpt` prop to render 
 
 ```vue
 <script setup>
-import Introduction from "~/pages/intro.mdx"
+import Introduction from '~/pages/intro.mdx'
 
-const pages = useDocuments("~/pages/posts")
+const pages = useDocuments('~/pages/posts')
 </script>
 
 <template>
@@ -159,10 +159,10 @@ A module that injects a [rehype] plugin to parse headings in [MDX documents][mar
 - 📖 sets `meta.headings` to enable rendering sidebars and table of contents
 
 ```ts
-import { defineConfig } from "iles"
+import { defineConfig } from 'iles'
 
 export default defineConfig({
-  modules: ["@islands/headings"],
+  modules: ['@islands/headings'],
 })
 ```
 
@@ -240,8 +240,8 @@ A module to add and configure <kbd>[vite-plugin-pwa]</kbd> to make your website
 work offline, created by <kbd>[@userquin]</kbd>.
 
 ```ts
-import { defineConfig } from "iles"
-import pwa from "@islands/pwa"
+import { defineConfig } from 'iles'
+import pwa from '@islands/pwa'
 
 export default defineConfig({
   modules: [pwa(options)],
@@ -312,7 +312,7 @@ The examples list some of the defaults for each plugin.
 Provides support for Single File Components with Vue 3.
 
 ```ts
-import { defineConfig } from "iles"
+import { defineConfig } from 'iles'
 
 export default defineConfig({
   vue: {
