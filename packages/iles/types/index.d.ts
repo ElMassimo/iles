@@ -1,4 +1,4 @@
-/// <reference types="vite-plus/client" />
+/// <reference types="vite/client" />
 
 import Plugin from '../dist/node/plugin/plugin'
 

@@ -1,4 +1,4 @@
-import type { ResolveFn, UserConfig as ViteOptions, ConfigEnv, PluginOption as VitePluginOption } from 'vite-plus'
+import type { ResolveFn, UserConfig as ViteOptions, ConfigEnv, PluginOption as VitePluginOption } from 'vite'
 import type { GetModuleInfo } from 'rolldown'
 import type { App, Ref, DefineComponent, VNode, AsyncComponentLoader } from 'vue'
 import type { Plugin as VuePlugin, Options as VueOptions } from '@vitejs/plugin-vue'

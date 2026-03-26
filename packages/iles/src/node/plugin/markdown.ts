@@ -1,4 +1,4 @@
-import type { ViteDevServer } from 'vite-plus'
+import type { ViteDevServer } from 'vite'
 import deepEqual from 'deep-equal'
 import type { AppConfig } from '../shared'
 

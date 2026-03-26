@@ -76,7 +76,7 @@
     "picocolors": "^1.0.1",
     "unist-util-visit": "^5.0.0",
     "unplugin-vue-components": "^0.27.3",
-    "vite-plus": "^0.1.14",
+    "vite": "^8.0.2",
     "vue": "^3.5.12",
     "vue-router": "^4.4.0"
   },

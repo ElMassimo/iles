@@ -3,7 +3,7 @@ import { resolve as resolvePath } from 'path'
 import { performance } from 'perf_hooks'
 import type { IlesModule, UserConfig } from 'iles'
 import type { VitePluginPWAAPI, VitePWAOptions } from 'vite-plugin-pwa'
-import type { Plugin, PluginOption } from 'vite-plus'
+import type { Plugin, PluginOption } from 'vite'
 import type { ManifestTransform } from 'workbox-build'
 import { VitePWA } from 'vite-plugin-pwa'
 

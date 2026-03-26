@@ -1,4 +1,4 @@
-import type { Plugin } from 'vite-plus'
+import type { Plugin } from 'vite'
 
 import type { PagesApi, ResolvedOptions } from './types'
 

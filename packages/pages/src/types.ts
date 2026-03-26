@@ -1,4 +1,4 @@
-import type { ViteDevServer } from 'vite-plus'
+import type { ViteDevServer } from 'vite'
 import type { createApi } from './api'
 
 export const MODULE_ID = '@islands/routes'

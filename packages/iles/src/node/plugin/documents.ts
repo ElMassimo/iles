@@ -1,4 +1,4 @@
-import { Plugin, ViteDevServer } from 'vite-plus'
+import { Plugin, ViteDevServer } from 'vite'
 
 import glob from 'fast-glob'
 import micromatch from 'micromatch'

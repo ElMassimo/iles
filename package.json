@@ -36,10 +36,5 @@
     "typescript": "^5.6.3",
     "vite-plus": "^0.1.14"
   },
-  "packageManager": "pnpm@9.8.0",
-  "pnpm": {
-    "overrides": {
-      "vite-plus": "0.1.14"
-    }
-  }
+  "packageManager": "pnpm@9.8.0"
 }

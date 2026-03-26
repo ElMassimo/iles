@@ -1,7 +1,7 @@
 import { promises as fs } from 'fs'
 import { basename, resolve, relative } from 'pathe'
-import type { PluginOption, ResolvedConfig, ViteDevServer } from 'vite-plus'
-import { transformWithOxc } from 'vite-plus'
+import type { PluginOption, ResolvedConfig, ViteDevServer } from 'vite'
+import { transformWithOxc } from 'vite'
 
 import MagicString from 'magic-string'
 

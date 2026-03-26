@@ -1,7 +1,7 @@
 import { promises as fs } from 'fs'
 import { join, resolve, dirname } from 'pathe'
 import glob from 'fast-glob'
-import type { Manifest } from 'vite-plus'
+import type { Manifest } from 'vite'
 import type { Awaited, AppConfig, IslandsByPath, IslandDefinition, RouteToRender } from '../shared'
 import rebaseImports from './rebaseImports'
 import { uniq } from './utils'

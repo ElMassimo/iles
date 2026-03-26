@@ -1,5 +1,5 @@
-import type { ServerOptions, UserConfig as ViteUserConfig } from 'vite-plus'
-import { preview as vitePreview, mergeConfig } from 'vite-plus'
+import type { ServerOptions, UserConfig as ViteUserConfig } from 'vite'
+import { preview as vitePreview, mergeConfig } from 'vite'
 import { resolveConfig } from './config'
 
 export async function preview (root: string = process.cwd(), serverOptions: ServerOptions = {}) {
