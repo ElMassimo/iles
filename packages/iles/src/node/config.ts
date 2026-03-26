@@ -288,6 +288,7 @@ function viteConfigDefaults (root: string, userConfig: UserConfig): ViteOptions 
     root,
     resolve: {
       alias: resolveAliases(root, userConfig),
+      conditions: ['module', 'browser', 'development'],
       dedupe: ['vue', 'vue-router', '@unhead/vue', '@vue/devtools-api'],
     },
     server: {
