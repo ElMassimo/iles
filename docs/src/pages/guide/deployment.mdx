@@ -13,8 +13,8 @@ This section contains useful information for building and deploying an <Iles/> a
 
 If you used the [starter], the default configuration to [build](/guide#usage) your site is:
 
-- __Build Command__: <kbd>npm run build</kbd>
-- __Output Directory__: <kbd>dist</kbd>
+- **Build Command**: <kbd>npm run build</kbd>
+- **Output Directory**: <kbd>dist</kbd>
 
 Else, you could manually add a `"build": "iles build",` script to your `package.json`.
 
@@ -25,7 +25,7 @@ Like in most [Vite.js] projects, the default output dir is <kbd>/dist</kbd>.
 [pnpm] is not supported out of the box in most providers, but you can still use it.
 
 In most cases, that requires manually installing dependencies by prepending an install
-command to the configured __Build Command__:
+command to the configured **Build Command**:
 
 ```bash
 npx pnpm i --store=node_modules/.pnpm-store && npx pnpm run build
@@ -35,8 +35,8 @@ npx pnpm i --store=node_modules/.pnpm-store && npx pnpm run build
 
 To deploy in Cloudflare Pages, you will need to [create a project](https://developers.cloudflare.com/pages/get-started) and configure:
 
-- __Build Command__: <kbd>npm run build</kbd>
-- __Output Directory__: <kbd>dist</kbd>
+- **Build Command**: <kbd>npm run build</kbd>
+- **Output Directory**: <kbd>dist</kbd>
 
 Additionally, since the default version of node is `12.18.0`, you will need to
 set the `NODE_VERSION` environment variable to `20` or higher.
@@ -53,7 +53,7 @@ Add a `netlify.toml` file to your project:
 [build.environment]
   NODE_VERSION = "20"
   # NPM_FLAGS = "--version" # uncomment if using pnpm to skip npm install
-``` 
+```
 
 Then, push to your git repository [as usual](https://docs.netlify.com/configure-builds/get-started/).
 
@@ -111,7 +111,10 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./dist
 ```
-<Caption><code>.github/workflows/deploy.yml</code></Caption>
+
+<Caption>
+  <code>.github/workflows/deploy.yml</code>
+</Caption>
 
 The example above assumes `pnpm`, but you can use a different package manager
 and adjust the workflow accordingly.

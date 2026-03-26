@@ -3,7 +3,7 @@ title: Reflections for 2020-2021
 date: 2021-01-11
 author: Evan You
 gravatar: eca93da2c67aadafe35d477aa8f454b8
-twitter: '@youyuxi'
+twitter: "@youyuxi"
 ---
 
 With a new year upon us, we also have a new blog! In this post, we would like to take a look back at some of the highlights from 2020, as well as some ideas we have for 2021.

@@ -1,17 +1,19 @@
 {
   "name": "@islands/headings",
   "version": "0.10.0-beta.1",
-  "scripts": {
-    "dev": "npm run build -- --watch",
-    "build": "tsup src/headings.ts",
-    "lint": "eslint .",
-    "lint:fix": "eslint . --fix"
+  "homepage": "https://github.com/ElMassimo/iles",
+  "bugs": "https://github.com/ElMassimo/iles/issues",
+  "author": "Máximo Mussini <maximomussini@gmail.com>",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ElMassimo/iles"
   },
-  "type": "module",
+  "funding": "https://github.com/sponsors/ElMassimo",
   "files": [
     "dist",
     "src"
   ],
+  "type": "module",
   "types": "dist/headings.d.ts",
   "exports": {
     ".": {
@@ -20,14 +22,12 @@
     },
     "./package.json": "./package.json"
   },
-  "funding": "https://github.com/sponsors/ElMassimo",
-  "author": "Máximo Mussini <maximomussini@gmail.com>",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/ElMassimo/iles"
+  "scripts": {
+    "dev": "npm run build -- --watch",
+    "build": "tsup src/headings.ts",
+    "lint": "vp lint",
+    "lint:fix": "vp lint --fix"
   },
-  "homepage": "https://github.com/ElMassimo/iles",
-  "bugs": "https://github.com/ElMassimo/iles/issues",
   "dependencies": {
     "hast-util-heading-rank": "^3.0.0",
     "hast-util-to-string": "^3.0.0"

@@ -1,28 +1,28 @@
-import type { ViteDevServer } from 'vite'
-import type { createApi } from './api'
+import type { ViteDevServer } from "vite-plus";
+import type { createApi } from "./api";
 
-export const MODULE_ID = '@islands/routes'
+export const MODULE_ID = "@islands/routes";
 
-export type Awaitable<T> = T | Promise<T>
+export type Awaitable<T> = T | Promise<T>;
 
-export type PagesApi = ReturnType<typeof createApi>
+export type PagesApi = ReturnType<typeof createApi>;
 
 export interface PageFrontmatter extends Record<string, any> {}
 
 export interface RawPageMatter extends PageFrontmatter {
-  meta: PageMeta
-  layout: false | string
+  meta: PageMeta;
+  layout: false | string;
   route: {
-    name?: string
-    path?: string
-    redirect?: string
-    alias?: string | string[]
-  }
+    name?: string;
+    path?: string;
+    redirect?: string;
+    alias?: string | string[];
+  };
 }
 
 export interface PageMeta extends Record<string, any> {
-  filename: string
-  href: string
+  filename: string;
+  href: string;
 }
 
 /**
@@ -35,81 +35,84 @@ export interface PageRoute {
   /**
    * Name for the route, can be use as a shortcut in <router-link>.
    */
-  name: string
+  name: string;
   /**
    * Path of the record. Should start with `/`.
    *
    * @example `/projects/:name` matches `/projects/vue` as well as `/projects/iles`.
    */
-  path: string
+  path: string;
   /**
    * Where to redirect if the route is directly matched. When building the site,
    * any routes with `redirect` will use <meta http-equiv="refresh">.
    */
-  redirect?: string
+  redirect?: string;
   /**
    * Additional paths for the page, that behave like a copy of the route.
    * When building the site, each path will be rendered separately.
    */
-  alias?: string | string[]
+  alias?: string | string[];
   /**
    * Filename of the component associated with the route.
    */
-  componentFilename: string
+  componentFilename: string;
   /**
    * Frontmatter associated with the page.
    */
-  frontmatter: RawPageMatter
+  frontmatter: RawPageMatter;
 }
 
-export type UserRoute = Partial<PageRoute>
+export type UserRoute = Partial<PageRoute>;
 
 export interface PagesOptions {
   /**
    * Specify the pages directory (relative to srcDir).
    * @default 'pages'
    */
-  pagesDir?: string
+  pagesDir?: string;
   /**
    * Allowed extensions of page files.
    * @default ['vue', 'md', 'mdx']
    */
-  pageExtensions?: string[]
+  pageExtensions?: string[];
   /**
    * Use this hook to modify the frontmatter for pages and MDX files.
    * See `extendRoute` if you only want to modify route information.
    */
-  extendFrontmatter?: (frontmatter: RawPageMatter, filename: string) => Awaitable<RawPageMatter | void>
+  extendFrontmatter?: (
+    frontmatter: RawPageMatter,
+    filename: string,
+  ) => Awaitable<RawPageMatter | void>;
   /**
    * Use this hook to modify route
    * See `extendFrontmatter` if you want to add metadata.
    */
-  extendRoute?: (route: PageRoute) => Awaitable<PageRoute | void>
+  extendRoute?: (route: PageRoute) => Awaitable<PageRoute | void>;
   /**
    * Use this hook to access the generated routes, and modify them (optional).
    */
-  extendRoutes?: (routes: PageRoute[]) => Awaitable<UserRoute[] | void>
+  extendRoutes?: (routes: PageRoute[]) => Awaitable<UserRoute[] | void>;
 }
 
-export interface ResolvedOptions extends Omit<PagesOptions, 'pagesDir' | 'pageExtensions'> {
+export interface ResolvedOptions extends Omit<PagesOptions, "pagesDir" | "pageExtensions"> {
   /**
    * The root of the project.
    */
-  root: string
+  root: string;
   /**
    * URL base of the generated site.
    */
-  base: string
+  base: string;
   /**
    * Absolute path to the directory that contains the page files.
    */
-  pagesDir: string
+  pagesDir: string;
   /**
    * Allowed extensions of page files.
    */
-  pageExtensions: string[]
+  pageExtensions: string[];
   /**
    * Used to notify errors in a user-friendly way.
    */
-  server?: ViteDevServer
+  server?: ViteDevServer;
 }

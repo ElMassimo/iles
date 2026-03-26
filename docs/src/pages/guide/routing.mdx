@@ -7,18 +7,15 @@
 [pagination source]: https://github.com/ElMassimo/iles/blob/main/playground/the-vue-point/src/pages/posts/%5Bpage%5D.vue
 [dynamic source]: https://github.com/ElMassimo/iles/blob/main/docs/src/pages/dynamic/%5Bsection%5D.vue
 [dynamic parameters]: #dynamic-routes
-
 [@islands/pages]: /guide/plugins#islandspages
-
 [prettyUrls]: /config#prettyurls
-
 [cms]: https://directus.io
 [directus]: https://github.com/ElMassimo/iles-directus-example/tree/main/iles
 [obtains articles]: https://github.com/ElMassimo/iles-directus-example/blob/main/iles/src/pages/articles/%5Bid%5D.vue#L5-L15
 
 # Routing 🛣
 
-<Iles/> provides file-based routing, powered by <kbd>[@islands/pages]</kbd>
+<Iles /> provides file-based routing, powered by <kbd>[@islands/pages]</kbd>
 
 As you add files to the <kbd>src/pages</kbd> directory, they will become
 available as routes based on their filename, and [Vue Router] will be configured
@@ -61,31 +58,32 @@ path: /guide/intro
 ```
 
 <Tip title="Pretty URLs by Default">
-If you prefer explicit `.html` paths, such as `/guide/intro.html`, disable <kbd>[prettyUrls]</kbd>.
+  If you prefer explicit `.html` paths, such as `/guide/intro.html`, disable <kbd>[prettyUrls]</kbd>
+  .
 </Tip>
 
-<PageHooks/>
+<PageHooks />
 
 ## Dynamic Routes
 
-<Iles/> supports _dynamic parameters_ in the filename, so that one [page]
-can be used to generate many different paths based on custom logic.
+<Iles /> supports _dynamic parameters_ in the filename, so that one [page] can be used to generate
+many different paths based on custom logic.
 
 <Tip warn>
-Pages with dynamic parameters must define <kbd>[getStaticPaths]</kbd>.
+  Pages with dynamic parameters must define <kbd>[getStaticPaths]</kbd>.
 </Tip>
 
 ### Named Parameters
 
 Named parameters are denoted using square brackets:
 
-- `src/pages/posts/[slug].vue` -> `/posts/:slug`, __example__: `/posts/introduction`
+- `src/pages/posts/[slug].vue` -> `/posts/:slug`, **example**: `/posts/introduction`
 
 ### Rest Parameters
 
 Catch-all routes are denoted with square brackets containing an ellipsis:
 
-- `src/pages/[...all].vue` -> `/:all(.*)*`, __example__: `/a/dynamic/path`
+- `src/pages/[...all].vue` -> `/:all(.*)*`, **example**: `/a/dynamic/path`
 
 The text after the ellipsis will be used both to name the route, and as the name
 of the prop in which the route parameters are passed.
@@ -101,33 +99,34 @@ It must return an array of objects, where each object specifies:
 
 ```vue
 <script lang="ts">
-import { fetchArticles } from '~/logic/articles'
+import { fetchArticles } from "~/logic/articles";
 
 export default definePageComponent({
-  async getStaticPaths () {
-    const articles = await fetchArticles()
+  async getStaticPaths() {
+    const articles = await fetchArticles();
 
-    return articles.map(article => ({
+    return articles.map((article) => ({
       // Specify the parameters for the page.
       params: { id: String(article.id) },
 
       // Pass any data needed to render the page.
       props: { article },
-    }))
+    }));
   },
-})
+});
 </script>
 
 <script setup lang="ts">
-import { Article } from '~/logic/articles'
+import { Article } from "~/logic/articles";
 
-defineProps<{ article: Article }>()
+defineProps<{ article: Article }>();
 </script>
 
 <template>
   <p>{{ article.title }}</p>
 </template>
 ```
+
 <Caption>`src/pages/articles/[id].vue`</Caption>
 
 ### `params`
@@ -145,9 +144,10 @@ path object, and they will be provided as Vue props in the [page] component.
 You can access them using `defineProps` as in the example above, or as `props` in `usePage` if you need to access them in a parent layout.
 
 <Tip title="Common Gotchas" warn>
-<kbd>getStaticPaths</kbd> must be specified inside the default export of a Vue component. 
+<kbd>getStaticPaths</kbd> must be specified inside the default export of a Vue component.
 
 Use `definePageComponent` to provide intellisense, it will be automatically imported.
+
 </Tip>
 
 <Tip title="Using External Data">
@@ -155,10 +155,12 @@ Use `definePageComponent` to provide intellisense, it will be automatically impo
 data from an API or CMS.
 
 [See this example][directus] that [generates pages][obtains articles] for articles obtained using a [Directus][cms] API.
+
 </Tip>
 
 <Tip title="More Demos">
 See examples of dynamic paths in this site: [one](/dynamic/one) and [two](/dynamic/two), and the [source code][dynamic source].
 
 See a [pagination demo in a blog], and the [source code][pagination source].
+
 </Tip>

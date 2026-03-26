@@ -12,7 +12,7 @@
     "esModuleInterop": true,
     "useUnknownInCatchVariables": false,
     "lib": ["esnext", "DOM"],
-    "types": ["node", "vite/client", "vitest"],
+    "types": ["node", "vite-plus/client", "vite-plus/test"],
     "paths": {
       "src/*": ["src/*"],
       "@components/*": ["src/client/app/components/*"],

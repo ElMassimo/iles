@@ -11,25 +11,19 @@ tocLevel: 3
 [rss]: /guide/rss
 [pwa]: /guide/pwa
 [@userquin]: https://twitter.com/userquin
-
 [@vitejs/plugin-vue]: https://www.npmjs.com/package/@vitejs/plugin-vue
 [unplugin-vue-components]: https://github.com/antfu/unplugin-vue-components
 [MDX]: https://github.com/mdx-js/mdx
-
 [vite-plugin-solid]: https://github.com/solidjs/vite-plugin-solid
 [@preact/preset-vite]: https://github.com/preactjs/preset-vite
 [@sveltejs/vite-plugin-svelte]: https://github.com/sveltejs/vite-plugin-svelte
-
 [Preact]: https://preactjs.com
 [SolidJS]: https://www.solidjs.com
 [Svelte]: https://svelte.dev
-
 [remark]: https://github.com/remarkjs/remark
 [rehype]: https://github.com/rehypejs/rehype
-
 [unplugin-icons]: https://github.com/antfu/unplugin-icons
 [vite-plugin-pwa]: https://github.com/antfu/vite-plugin-pwa
-
 [prismjs]: https://prismjs.com/
 [@islands/excerpt]: https://github.com/ElMassimo/iles/tree/main/packages/excerpt
 [@islands/headings]: https://github.com/ElMassimo/iles/tree/main/packages/headings
@@ -40,52 +34,50 @@ tocLevel: 3
 [@islands/prism]: https://github.com/ElMassimo/iles/tree/main/packages/prism
 [@islands/feed]: https://github.com/ElMassimo/iles/tree/main/packages/feed
 [@islands/pwa]: https://github.com/ElMassimo/iles/tree/main/packages/pwa
-
 [feed]: https://github.com/jpmonette/feed
-
 [pageData]: /guide/development#using-page-data
 [SEO tags]: /guide/meta-tags
 [RSS feeds]: /guide/rss
-
 [alias]: /guide/development#default-app-structure
 [vite-plugin-image-presets]: https://github.com/ElMassimo/vite-plugin-image-presets
 [the-vue-point]: https://the-vue-point-with-iles.netlify.app/
 
 # Modules and Plugins 🔌
 
-<Iles/> has an extensible module system, which is used internally to provide
-features such as `frontmatter` and `meta` information for [pages].
+<Iles /> has an extensible module system, which is used internally to provide features such as
+`frontmatter` and `meta` information for [pages].
 
 ## Adding a Module
 
 Use the <kbd>modules</kbd> option in [`iles.config.ts`][config] to add modules to your application.
 
 ```ts
-import { defineConfig } from 'iles'
+import { defineConfig } from "iles";
 
-import icons from '@islands/icons'
+import icons from "@islands/icons";
 
 export default defineConfig({
   modules: [
     // Automatically imported and instantiated
-    '@islands/headings',
+    "@islands/headings",
 
     // Use an array to pass options
-    ['@islands/prism', { showLineNumbers: true }] ,
+    ["@islands/prism", { showLineNumbers: true }],
 
     // Manually imported, provides better type-inference
     icons({ autoInstall: false }),
 
     // A one-off module that won't be published
     {
-      name: 'custom-module',
-      configResolved (config) {
-        console.log({ config })
+      name: "custom-module",
+      configResolved(config) {
+        console.log({ config });
       },
     },
   ],
-})
+});
 ```
+
 <Caption>`iles.config.ts`</Caption>
 
 When providing a string, <Iles/> will automatically add the specified module to
@@ -123,36 +115,35 @@ A module to extract an excerpt from [MDX documents][markdown]:
 - ⚙️ `maxLength`, `separator`, and `extract` options to customize excerpt
 
 ```ts
-import { defineConfig } from 'iles'
+import { defineConfig } from "iles";
 
 export default defineConfig({
-  modules: [
-    ['@islands/excerpt', { maxLength: 140 }],
-  ],
-})
+  modules: [["@islands/excerpt", { maxLength: 140 }]],
+});
 ```
+
 <Caption>`iles.config.ts`</Caption>
 
 Use <kbd>[meta][pageData]</kbd> to access a plain-text version of the excerpt for the current page:
 
 ```js
-const { meta } = usePage()
-const text = meta.excerpt
+const { meta } = usePage();
+const text = meta.excerpt;
 ```
 
 When importing [MDX components][markdown], you use the `excerpt` prop to render HTML:
 
 ```vue
 <script setup>
-import Introduction from '~/pages/intro.mdx'
+import Introduction from "~/pages/intro.mdx";
 
-const pages = useDocuments('~/pages/posts')
+const pages = useDocuments("~/pages/posts");
 </script>
 
 <template>
-  <Introduction excerpt/>
+  <Introduction excerpt />
   <template v-for="page in pages">
-    <component :is="page" excerpt/>
+    <component :is="page" excerpt />
   </template>
 </template>
 ```
@@ -168,14 +159,13 @@ A module that injects a [rehype] plugin to parse headings in [MDX documents][mar
 - 📖 sets `meta.headings` to enable rendering sidebars and table of contents
 
 ```ts
-import { defineConfig } from 'iles'
+import { defineConfig } from "iles";
 
 export default defineConfig({
-  modules: [
-    '@islands/headings',
-  ],
-})
+  modules: ["@islands/headings"],
+});
 ```
+
 <Caption>`iles.config.ts`</Caption>
 
 ### <kbd>[@islands/icons]</kbd>
@@ -250,15 +240,14 @@ A module to add and configure <kbd>[vite-plugin-pwa]</kbd> to make your website
 work offline, created by <kbd>[@userquin]</kbd>.
 
 ```ts
-import { defineConfig } from 'iles'
-import pwa from '@islands/pwa'
+import { defineConfig } from "iles";
+import pwa from "@islands/pwa";
 
 export default defineConfig({
-  modules: [
-    pwa(options),
-  ],
-})
+  modules: [pwa(options)],
+});
 ```
+
 <Caption>`iles.config.ts`</Caption>
 
 See the [_PWA_][pwa] guide for more information.
@@ -307,7 +296,7 @@ Shipped inside <Iles/> to provide support for [pages].
 - Infer the title or date from the filename
 - Set a different layout for all pages in a specific dir
 - Provide additional data to use in the page, such as `gitLastUpdated`
-</Tip>
+  </Tip>
 
 ## Vite Plugins <ViteLogo/>
 
@@ -323,14 +312,15 @@ The examples list some of the defaults for each plugin.
 Provides support for Single File Components with Vue 3.
 
 ```ts
-import { defineConfig } from 'iles'
+import { defineConfig } from "iles";
 
 export default defineConfig({
   vue: {
     reactivityTransform: true,
   },
-})
+});
 ```
+
 <Caption>`iles.config.ts`</Caption>
 
 ### <kbd>[unplugin-vue-components]</kbd>
@@ -365,4 +355,3 @@ Provides support for [Svelte] islands.
 
 Auto-installed when configuring `svelte: true`, or providing
 plugin options for `svelte` in [`iles.config.ts`][config].
-

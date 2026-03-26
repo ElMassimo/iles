@@ -9,9 +9,9 @@
 
 # Turbo (Experimental) 🚀
 
-<Iles/> provides an __experimental__ <kbd>[turbo]</kbd> mode that enables SPA-like navigation.
+<Iles /> provides an __experimental__ <kbd>[turbo]</kbd> mode that enables SPA-like navigation.
 
-It combines techniques from [`quicklink`][quicklink] and [`@hotwired/turbo`][hotwired], but taking advantage of the architecture of every <Iles/> site to achieve it in __under 2kb__.
+It combines techniques from [`quicklink`][quicklink] and [`@hotwired/turbo`][hotwired], but taking advantage of the architecture of every <Iles/> site to achieve it in **under 2kb**.
 
 You can see it in action in [this site][docs config]!
 
@@ -31,15 +31,16 @@ any of the [supported frameworks], and it will progressively enhance the site,
 you can use it whenever a snappy navigation is preferrable.
 
 <Tip title="Caveats" warn>
-- All `script type="module"` [execute once][modules]
-- For islands, use the lifecycle of each component as usual (`onMounted`, `onUnmounted`)
-- In [client scripts], use the `onLoad` callback for effects that should run on every page load
-- Code __outside__ components or callbacks won't run on each page navigation
-- Add the `once` attribute to non-module scripts that should only execute once
+  - All `script type="module"` [execute once][modules] - For islands, use the lifecycle of each
+  component as usual (`onMounted`, `onUnmounted`) - In [client scripts], use the `onLoad` callback
+  for effects that should run on every page load - Code __outside__ components or callbacks won't
+  run on each page navigation - Add the `once` attribute to non-module scripts that should only
+  execute once
 </Tip>
 
 <Tip title="Roadmap 🛣">
 It's possible to avoid unmounting islands that don't change from one page navigation to the other, making them automatically "permanent" (in the `@hotwired/turbo` terminology) without any intervention from the user.
 
 That would allow persistent components typically found in SPAs like shopping carts to work seamlessly.
+
 </Tip>

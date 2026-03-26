@@ -3,17 +3,15 @@
 [@islands/feed]: /guide/plugins#islandsfeed
 [usePage]: /guide/development#using-page-data
 [path]: /guide/routing#override-routes
-
 [feed]: https://github.com/jpmonette/feed
 [this full example]: https://github.com/ElMassimo/iles/blob/main/playground/the-vue-point/src/pages/feed.vue
 [extract the content]: https://github.com/vuejs/blog/blob/master/.vitepress/genFeed.js#L22-L24
 [ssg.onSiteRendered]: /config#ssg-onsiterendered
-
 [useDocuments]: /guide/documents
 
 # RSS Feeds
 
-<Iles/> provides the <kbd>[@islands/feed]</kbd> module to generate RSS, Atom, and JSON feeds.
+<Iles /> provides the <kbd>[@islands/feed]</kbd> module to generate RSS, Atom, and JSON feeds.
 
 ## Adding a Feed
 
@@ -26,14 +24,14 @@ path: /feed.atom
 ```
 
 <Tip title="Recommended Extensions">
-Use `.atom` for Atom feeds, `.rss` for RSS feeds, and `.json` for JSON feeds.
+  Use `.atom` for Atom feeds, `.rss` for RSS feeds, and `.json` for JSON feeds.
 </Tip>
 
 <kbd>[@islands/feed]</kbd> provides a `RenderFeed` component:
 
 ```vue
 <template>
-  <RenderFeed format="atom" :options="options" :items="items"/>
+  <RenderFeed format="atom" :options="options" :items="items" />
 </template>
 ```
 
@@ -44,7 +42,7 @@ When building the site, it will use the <kbd>[feed]</kbd> package to generate
 a feed using the specified format. You can choose between `rss`, `atom`, and `json`.
 
 <Tip>
-Besides `items`, you can also provide [`categories`, `contributors`, and `extensions`][feed].
+  Besides `items`, you can also provide [`categories`, `contributors`, and `extensions`][feed].
 </Tip>
 
 ## Configuring the Feed
@@ -54,21 +52,21 @@ which allows you to import code or data as needed, including composables such as
 
 ```vue
 <script setup lang="ts">
-import type { FeedOptions } from '@islands/feed'
+import type { FeedOptions } from "@islands/feed";
 
-const { site } = usePage()
+const { site } = usePage();
 
-const url = site.url
+const url = site.url;
 
 const options: FeedOptions = {
-  title: 'The Vue Point',
-  description: 'The official blog for the Vue.js project',
+  title: "The Vue Point",
+  description: "The official blog for the Vue.js project",
   id: url,
   link: url,
-  language: 'en',
-  image: 'https://vuejs.org/images/logo.png',
-  copyright: 'Copyright (c) 2021-present',
-}
+  language: "en",
+  image: "https://vuejs.org/images/logo.png",
+  copyright: "Copyright (c) 2021-present",
+};
 </script>
 ```
 
@@ -77,12 +75,13 @@ which are convenient to enable intellisense and type-checking for the feed optio
 
 ## Adding Items to the Feed
 
-<kbd>[useDocuments]</kbd> is a convenient way to access multiple files or pages to generate feed items.
+<kbd>[useDocuments]</kbd> is a convenient way to access multiple files or pages to generate feed
+items.
 
 ```ts
-import type { FeedItem } from '@islands/feed'
+import type { FeedItem } from "@islands/feed";
 
-const posts = useDocuments('~/pages/posts')
+const posts = useDocuments("~/pages/posts");
 
 const items = posts.value.map<FeedItem>((post) => ({
   link: url + post.href,
@@ -90,19 +89,19 @@ const items = posts.value.map<FeedItem>((post) => ({
   title: post.title,
   description: post.description,
   content: post,
-}))
+}));
 ```
 
 See [this full example] as a configuration reference.
 
 ## Using External Content
 
-<Iles/> supports async rendering, so you can also fetch remote content as needed:
+<Iles /> supports async rendering, so you can also fetch remote content as needed:
 
 ```ts
-import { $fetch } from 'ohmyfetch'
+import { $fetch } from "ohmyfetch";
 
-const { posts } = await $fetch('/api/posts')
+const { posts } = await $fetch("/api/posts");
 ```
 
 ## Generating a Feed Manually

@@ -1,15 +1,15 @@
 <script client:load lang="ts">
-import type { OnLoadFn } from 'iles'
+import type { OnLoadFn } from "iles";
 
-export const onLoad: OnLoadFn = el =>
-  el.previousElementSibling?.addEventListener('click', () => {
-    document.querySelector<HTMLElement>('.DocSearch-Button')?.click()
-  })
+export const onLoad: OnLoadFn = (el) =>
+  el.previousElementSibling?.addEventListener("click", () => {
+    document.querySelector<HTMLElement>(".DocSearch-Button")?.click();
+  });
 </script>
 
 <template>
-  <DocSearch class="hidden" client:idle/>
+  <DocSearch class="hidden" client:idle />
   <NavBarButton aria-label="Search">
-    <IconBxBxSearch/>
+    <IconBxBxSearch />
   </NavBarButton>
 </template>

@@ -1,18 +1,20 @@
 {
   "name": "@islands/feed",
   "version": "0.10.0-beta.1",
-  "scripts": {
-    "dev": "npm run build -- --watch",
-    "build": "tsup src/types.ts src/feed.ts src/render-feed.ts",
-    "lint": "eslint .",
-    "lint:fix": "eslint . --fix"
+  "homepage": "https://github.com/ElMassimo/iles",
+  "bugs": "https://github.com/ElMassimo/iles/issues",
+  "author": "Máximo Mussini <maximomussini@gmail.com>",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ElMassimo/iles"
   },
+  "funding": "https://github.com/sponsors/ElMassimo",
   "files": [
     "dist",
     "src"
   ],
-  "types": "dist/feed.d.ts",
   "type": "module",
+  "types": "dist/feed.d.ts",
   "exports": {
     ".": {
       "import": "./dist/feed.js",
@@ -20,14 +22,16 @@
     },
     "./package.json": "./package.json"
   },
-  "funding": "https://github.com/sponsors/ElMassimo",
-  "author": "Máximo Mussini <maximomussini@gmail.com>",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/ElMassimo/iles"
+  "scripts": {
+    "dev": "npm run build -- --watch",
+    "build": "tsup src/types.ts src/feed.ts src/render-feed.ts",
+    "lint": "vp lint",
+    "lint:fix": "vp lint --fix"
   },
-  "homepage": "https://github.com/ElMassimo/iles",
-  "bugs": "https://github.com/ElMassimo/iles/issues",
+  "dependencies": {
+    "feed": "^4.2",
+    "pathe": "^1.1.2"
+  },
   "devDependencies": {
     "iles": "workspace:*",
     "vue": "^3.5.12"
@@ -35,9 +39,5 @@
   "peerDependencies": {
     "iles": "workspace:*",
     "vue": "^3.3.4"
-  },
-  "dependencies": {
-    "feed": "^4.2",
-    "pathe": "^1.1.2"
   }
 }

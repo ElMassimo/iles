@@ -19,9 +19,7 @@
       "page_rank": 4
     }
   ],
-  "stop_urls": [
-    ".html$"
-  ],
+  "stop_urls": [".html$"],
   "selectors": {
     "default": {
       "lvl0": {
@@ -71,8 +69,6 @@
   "scrape_start_urls": true,
   "strip_chars": " .,;:#",
   "custom_settings": {
-    "attributesForFaceting": [
-      "lang"
-    ]
+    "attributesForFaceting": ["lang"]
   }
 }

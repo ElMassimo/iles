@@ -1,18 +1,20 @@
 {
   "name": "@islands/icons",
   "version": "0.10.0-beta.1",
-  "scripts": {
-    "dev": "npm run build -- --watch",
-    "build": "tsup src/icons.ts",
-    "lint": "eslint .",
-    "lint:fix": "eslint . --fix"
+  "homepage": "https://github.com/ElMassimo/iles",
+  "bugs": "https://github.com/ElMassimo/iles/issues",
+  "author": "Máximo Mussini <maximomussini@gmail.com>",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ElMassimo/iles"
   },
+  "funding": "https://github.com/sponsors/ElMassimo",
   "files": [
     "dist",
     "src"
   ],
-  "types": "dist/icons.d.cts",
   "type": "module",
+  "types": "dist/icons.d.cts",
   "exports": {
     ".": {
       "import": "./src/icons.mjs",
@@ -20,14 +22,12 @@
     },
     "./package.json": "./package.json"
   },
-  "funding": "https://github.com/sponsors/ElMassimo",
-  "author": "Máximo Mussini <maximomussini@gmail.com>",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/ElMassimo/iles"
+  "scripts": {
+    "dev": "npm run build -- --watch",
+    "build": "tsup src/icons.ts",
+    "lint": "vp lint",
+    "lint:fix": "vp lint --fix"
   },
-  "homepage": "https://github.com/ElMassimo/iles",
-  "bugs": "https://github.com/ElMassimo/iles/issues",
   "dependencies": {
     "unplugin-icons": "^0.19.0"
   },

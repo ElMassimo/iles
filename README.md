@@ -27,13 +27,10 @@
 [îles]: https://github.com/ElMassimo/iles
 [docs]: https://iles-docs.netlify.app
 [twitter]: https://twitter.com/ilesjs
-[follow me]:  https://twitter.com/MaximoMussini
-
+[follow me]: https://twitter.com/MaximoMussini
 [guide]: https://iles-docs.netlify.app/guide/introduction
 [configuration reference]: https://iles-docs.netlify.app/config
-
 [blog]: https://the-vue-point-with-iles.netlify.app/
-
 [partial hydration]: https://iles-docs.netlify.app/guide/hydration
 [Batteries Included]: https://iles-docs.netlify.app/guide/development#components
 [Multi-Framework]: https://iles-docs.netlify.app/guide/frameworks
@@ -41,7 +38,6 @@
 [routing]: https://iles-docs.netlify.app/guide/routing
 [devtools]: https://user-images.githubusercontent.com/1158253/133314267-f0ba784c-ff64-4ee8-b2bf-97ecffc2facd.jpg
 [hydration timeline]: https://user-images.githubusercontent.com/1158253/133314279-1edc22d1-3ffb-414e-b994-212cb316593b.jpg
-
 [stackblitz]: https://stackblitz.com/fork/iles?file=src%2Fcomponents%2FWelcome.vue
 
 ## Features ✨
@@ -56,9 +52,9 @@
 
 ## Demos 🚀
 
-__[Documentation Website][docs]__
+**[Documentation Website][docs]**
 
-__[Official Vue.js Blog][blog]__ 
+**[Official Vue.js Blog][blog]**
 
 ## Try it Online ⚡️
 
@@ -97,4 +93,3 @@ Visit the [documentation website][docs] to check out the [guides][guide] and sea
 [vite-ssg]: https://github.com/antfu/vite-ssg
 [vue-router]: https://next.router.vuejs.org/
 [@unhead/vue]: https://github.com/unjs/unhead
-

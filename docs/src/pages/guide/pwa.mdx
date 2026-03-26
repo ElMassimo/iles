@@ -11,20 +11,18 @@
 
 # Progressive Web Application (PWA)
 
-<Iles/> provides the <kbd>[@islands/pwa]</kbd> [module], created by <kbd>[@userquin]</kbd>,
-which will add and configure <kbd>[vite-plugin-pwa]</kbd> to make your
-website work offline.
+<Iles /> provides the <kbd>[@islands/pwa]</kbd> [module], created by <kbd>[@userquin]</kbd>, which
+will add and configure <kbd>[vite-plugin-pwa]</kbd> to make your website work offline.
 
 ```ts
-import { defineConfig } from 'iles'
-import pwa from '@islands/pwa'
+import { defineConfig } from "iles";
+import pwa from "@islands/pwa";
 
 export default defineConfig({
-  modules: [
-    pwa(options),
-  ],
-})
+  modules: [pwa(options)],
+});
 ```
+
 <Caption>`iles.config.ts`</Caption>
 
 ## Defaults
@@ -41,7 +39,6 @@ By default, it will use the <kbd>[generateSW]</kbd> strategy, and it will [promp
 - When using <kbd>[generateSW]</kbd> with [`autoUpdate`][autoUpdate]:
   - `clientsClaim` and `skipWaiting` will be enabled
   - `registerSW.js` won't be generated unless explicitly enabled
-
 
 ## Using a `prompt` for updates
 
@@ -60,14 +57,15 @@ that is rendered in every page of your site (included in every layout).
 
 ```vue
 <script client:load lang="ts">
-import { registerSW } from 'virtual:pwa-register'
+import { registerSW } from "virtual:pwa-register";
 
-registerSW({ immediate: true })
+registerSW({ immediate: true });
 </script>
 ```
+
 <Caption>`src/layouts/base.vue`</Caption>
 
 <Tip warn title="Don't specify the Vite plugin manually">
-You should provide any configuration for <kbd>[vite-plugin-pwa]</kbd> in the <kbd>[@islands/pwa]</kbd> module.
+  You should provide any configuration for <kbd>[vite-plugin-pwa]</kbd> in the{" "}
+  <kbd>[@islands/pwa]</kbd> module.
 </Tip>
-

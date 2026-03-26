@@ -1,50 +1,52 @@
 <script lang="ts">
-import { defineComponent, computed, watch, ref } from 'vue'
-import { usePage } from '../composables/pageData'
+import { defineComponent, computed, watch, ref } from "vue";
+import { usePage } from "../composables/pageData";
 
 export default defineComponent({
-  name: 'DebugPanel',
-  setup () {
-    const { page, meta, frontmatter, props } = usePage()
-    const message = ref<string | undefined>(undefined)
-    const el = ref<HTMLElement | null>(null)
-    const content = ref<any>(null)
-    const open = ref(false)
-    const buttonLabel = computed(() => message.value || 'Debug')
+  name: "DebugPanel",
+  setup() {
+    const { page, meta, frontmatter, props } = usePage();
+    const message = ref<string | undefined>(undefined);
+    const el = ref<HTMLElement | null>(null);
+    const content = ref<any>(null);
+    const open = ref(false);
+    const buttonLabel = computed(() => message.value || "Debug");
 
     const cleanPage = computed(() => {
-      const layout = page.value.layoutName || 'false'
-      return { layout, frontmatter, meta, props }
-    })
+      const layout = page.value.layoutName || "false";
+      return { layout, frontmatter, meta, props };
+    });
 
-    let timeoutId: any
-    function copyIfSelected () {
-      if (!getSelection()?.toString()) return
-      document.execCommand('copy')
-      message.value = 'Copied!'
-      timeoutId = setTimeout(() => { message.value = undefined }, 3000)
+    let timeoutId: any;
+    function copyIfSelected() {
+      if (!getSelection()?.toString()) return;
+      document.execCommand("copy");
+      message.value = "Copied!";
+      timeoutId = setTimeout(() => {
+        message.value = undefined;
+      }, 3000);
     }
 
-    function copyAll (el: HTMLElement | null) {
-      const selection = getSelection()
-      if (!selection || !el) return
-      const range = document.createRange()
-      range.selectNode(el)
-      selection.removeAllRanges()
-      selection.addRange(range)
-      copyIfSelected()
+    function copyAll(el: HTMLElement | null) {
+      const selection = getSelection();
+      if (!selection || !el) return;
+      const range = document.createRange();
+      range.selectNode(el);
+      selection.removeAllRanges();
+      selection.addRange(range);
+      copyIfSelected();
     }
 
     watch(open, (open) => {
       if (open && message.value) {
-        clearTimeout(timeoutId)
-        message.value = undefined
+        clearTimeout(timeoutId);
+        message.value = undefined;
       }
       if (!open && el.value) {
-        el.value.scrollLeft = 0
-        el.value.scrollTop = 0
+        el.value.scrollLeft = 0;
+        el.value.scrollTop = 0;
       }
-    })
+    });
 
     return {
       el,
@@ -54,14 +56,16 @@ export default defineComponent({
       cleanPage,
       copyAll,
       content,
-    }
+    };
   },
-})
+});
 </script>
 
 <template>
   <div ref="el" class="debug" :class="{ open }" @click="open = !open" @mouseup="copyIfSelected">
-    <p class="title">{{ buttonLabel }}<span class="info">Open DevTools to inspect <b>islands</b> 🏝</span></p>
+    <p class="title">
+      {{ buttonLabel }}<span class="info">Open DevTools to inspect <b>islands</b> 🏝</span>
+    </p>
     <pre ref="content" class="block">{{ cleanPage }}</pre>
     <button v-show="open" class="debug title" @click="copyAll(content)">Copy to Clipboard</button>
   </div>
@@ -72,7 +76,7 @@ export default defineComponent({
   --debug-rgba: 0, 0, 0;
   --debug-opacity: 0.75;
   --debug-bg: rgba(var(--debug-rgba), var(--debug-opacity));
-  --debug-color: #EEE;
+  --debug-color: #eee;
 
   box-sizing: border-box;
   position: fixed;
@@ -90,7 +94,7 @@ export default defineComponent({
 }
 
 .info {
-  display: none
+  display: none;
 }
 
 .debug:not(.open):hover {
@@ -116,14 +120,14 @@ export default defineComponent({
 
 .debug.open .info {
   display: inline;
-  float:  right;
+  float: right;
 }
 
 @media (prefers-color-scheme: light) {
   .debug.open {
     --debug-rgba: 255, 255, 255;
     --debug-color: #444;
-    border-left: 1px solid #DDD;
+    border-left: 1px solid #ddd;
   }
 }
 
@@ -151,7 +155,7 @@ export default defineComponent({
 
 .block {
   margin: 2px 0 0;
-  border-top: 1px solid #DDD;
+  border-top: 1px solid #ddd;
   padding: 8px 16px;
   font-family: Hack, monospace;
   font-size: 13px;

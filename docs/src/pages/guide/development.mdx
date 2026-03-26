@@ -18,43 +18,50 @@ In this section, we'll cover the basics to start building an <Iles/> application
 ## Default App Structure 📂
 
 <div class="language-tree">
-<pre class="code">
-<code><kbd class="-ml-2"><a href="/config#srcDir">src/</a></kbd>
-  ├── <kbd><a href="#components">components/</a></kbd>
-  │    ├── ReadingTime.vue
-  │    └── Author.vue
-  │
-  ├── <kbd><a href="#layouts">layouts/</a></kbd>
-  │    ├── default.vue
-  │    └── post.vue
-  │
-  ├── <kbd><a href="#pages">pages/</a></kbd>
-  │    ├── posts/
-  │    │    ├── intro.mdx
-  │    │    └── goodbye.mdx
-  │    ├── about.vue
-  │    └── index.mdx
-  │
-  ├── <kbd><a href="/config#your-app">app.ts</a></kbd>
-  └── <kbd><a href="#site">site.ts</a></kbd></code>
-</pre>
+  <pre class="code">
+    <code>
+      <kbd class="-ml-2">
+        <a href="/config#srcDir">src/</a>
+      </kbd>
+      ├──{" "}
+      <kbd>
+        <a href="#components">components/</a>
+      </kbd>
+      │ ├── ReadingTime.vue │ └── Author.vue │ ├──{" "}
+      <kbd>
+        <a href="#layouts">layouts/</a>
+      </kbd>
+      │ ├── default.vue │ └── post.vue │ ├──{" "}
+      <kbd>
+        <a href="#pages">pages/</a>
+      </kbd>
+      │ ├── posts/ │ │ ├── intro.mdx │ │ └── goodbye.mdx │ ├── about.vue │ └── index.mdx │ ├──{" "}
+      <kbd>
+        <a href="/config#your-app">app.ts</a>
+      </kbd>
+      └──{" "}
+      <kbd>
+        <a href="#site">site.ts</a>
+      </kbd>
+    </code>
+  </pre>
 </div>
 
 By default, <kbd>[srcDir]</kbd> is aliased as `~/` or `@/`. For example:
 
 ```ts
-import { useDark } from '~/logic/dark'
+import { useDark } from "~/logic/dark";
 ```
 
 ```vue
-<img src="@/assets/logo.svg"/>
+<img src="@/assets/logo.svg" />
 ```
 
 ## Components 🧱
 
 Components in the <kbd>src/components</kbd> dir will be auto-imported on-demand, powered by [`unplugin-vue-components`](https://github.com/antfu/unplugin-vue-components).
 
-<Iles/> extends this so that you don't need to import components in [MDX files][mdx].
+<Iles /> extends this so that you don't need to import components in [MDX files][mdx].
 
 ## Pages 🛣
 
@@ -72,7 +79,7 @@ audio: /song-for-you.mp3
 
 I've recently recorded a song, listen:
 
-<Song title={title} src={audio}/>
+<Song title={title} src={audio} />
 ```
 
 In Vue single-file components you can use a `<page>` block to define frontmatter:
@@ -86,38 +93,37 @@ audio: /song-for-you.mp3
 <template>
   <p>I've recently recorded a song, listen:</p>
 
-  <Song :title="$frontmatter.title" :src="$frontmatter.audio"/>
+  <Song :title="$frontmatter.title" :src="$frontmatter.audio" />
 </template>
 ```
 
-<PageHooks/>
+<PageHooks />
 
 ### Using Page Data
 
-You may access information about the current page using the `usePage` composition API helper, or by using the  `$frontmatter` or `$meta` global properties.
+You may access information about the current page using the `usePage` composition API helper, or by using the `$frontmatter` or `$meta` global properties.
 
 - `frontmatter`: The [frontmatter] of an [MDX][frontmatter] document or Vue component (in `<page>`)
 - `meta`: Information about the page, including `href`, `filename`, and `lastUpdated`
 
 ```vue
 <script setup>
-import { usePage } from 'iles'
+import { usePage } from "iles";
 
-const { frontmatter, meta } = usePage()
+const { frontmatter, meta } = usePage();
 </script>
 ```
 
-<AutoImported/>
-
+<AutoImported />
 
 ### Glob Imports
 
 When rendering collections or index pages, you can leverage <kbd>[useDocuments]</kbd> to conveniently access multiple page components and their data.
 
 ```ts {2}
-export function usePosts () {
-  const posts = useDocuments('~/pages/posts')
-  return computed(() => posts.value.sort(byDate))
+export function usePosts() {
+  const posts = useDocuments("~/pages/posts");
+  return computed(() => posts.value.sort(byDate));
 }
 ```
 
@@ -125,9 +131,9 @@ Page data is available directly in the component modules:
 
 ```vue
 <script setup lang="ts">
-import { usePosts } from '~/logic/posts'
+import { usePosts } from "~/logic/posts";
 
-const posts = usePosts()
+const posts = usePosts();
 </script>
 
 <template>
@@ -137,7 +143,7 @@ const posts = usePosts()
     <h2>
       <a :href="post.href">{{ post.title }}</a>
     </h2>
-    <component :is="post" excerpt/>
+    <component :is="post" excerpt />
   </article>
 </template>
 ```
@@ -157,16 +163,14 @@ layout: post
 Layouts and Vue pages can also specify a parent layout using a `layout` attribute in the `template`:
 
 ```vue
-<template layout="post">
+<template layout="post"></template>
 ```
 
 > The `default` layout will be used for all pages unless specified.
 >
 > Pages may opt-out by specifying `layout: false`
 
-<Tip warn>
-Layout files must be lowercase, as in `post.vue` or `default.vue`.
-</Tip>
+<Tip warn>Layout files must be lowercase, as in `post.vue` or `default.vue`.</Tip>
 
 ## Site 🌐
 
@@ -178,9 +182,9 @@ It's also displayed in the page information in _Islands_ devtools.
 
 ```ts
 export default {
-  title: 'About',
-  description: 'Learn more about what we do',
-}
+  title: "About",
+  description: "Learn more about what we do",
+};
 ```
 
 ### Sitemap 🗺
@@ -189,21 +193,21 @@ A sitemap can be automatically generated for your site, all you need to do is
 configure <kbd>[siteUrl]</kbd>. That will also make it available as `site.url` and `site.canonical`.
 
 ```ts
-import { defineConfig } from 'iles'
+import { defineConfig } from "iles";
 
 export default defineConfig({
-  siteUrl: 'https://iles-docs.netlify.app',
-})
+  siteUrl: "https://iles-docs.netlify.app",
+});
 ```
- 
+
 If you would like to opt-out, you can [disable it explicitly][config]:
 
 ```ts
 export default defineConfig({
   ssg: {
-    sitemap: false
+    sitemap: false,
   },
-})
+});
 ```
 
 ## Devtools 🛠

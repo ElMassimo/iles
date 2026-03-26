@@ -2,12 +2,12 @@
 const { href, external } = defineProps({
   href: { type: String, default: undefined },
   external: { type: Boolean, default: false },
-  text: { type: String, default: '' },
-})
+  text: { type: String, default: "" },
+});
 
-const route = useRoute()
-let attrs = $computed(() => external ? { rel: 'noreferrer', target: '_blank' } : {})
-let isActive = $computed(() => href && route.path.includes(href))
+const route = useRoute();
+let attrs = $computed(() => (external ? { rel: "noreferrer", target: "_blank" } : {}));
+let isActive = $computed(() => href && route.path.includes(href));
 </script>
 
 <template>
@@ -19,6 +19,6 @@ let isActive = $computed(() => href && route.path.includes(href))
     v-bind="attrs"
   >
     <slot>{{ text }}</slot>
-    <OutboundLink v-if="external && text"/>
+    <OutboundLink v-if="external && text" />
   </component>
 </template>

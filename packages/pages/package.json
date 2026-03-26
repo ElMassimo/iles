@@ -1,19 +1,21 @@
 {
   "name": "@islands/pages",
   "version": "0.10.0-beta.1",
-  "scripts": {
-    "dev": "npm run build -- --watch",
-    "build": "tsup src/pages.ts",
-    "lint": "eslint .",
-    "lint:fix": "eslint . --fix"
+  "homepage": "https://github.com/ElMassimo/iles",
+  "bugs": "https://github.com/ElMassimo/iles/issues",
+  "author": "Máximo Mussini <maximomussini@gmail.com>",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ElMassimo/iles"
   },
-  "type": "module",
+  "funding": "https://github.com/sponsors/ElMassimo",
   "files": [
     "dist",
     "src"
   ],
-  "types": "dist/pages.d.ts",
+  "type": "module",
   "main": "dist/pages.js",
+  "types": "dist/pages.d.ts",
   "exports": {
     ".": {
       "import": "./dist/pages.js",
@@ -21,23 +23,18 @@
     },
     "./package.json": "./package.json"
   },
-  "funding": "https://github.com/sponsors/ElMassimo",
-  "author": "Máximo Mussini <maximomussini@gmail.com>",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/ElMassimo/iles"
+  "scripts": {
+    "dev": "npm run build -- --watch",
+    "build": "tsup src/pages.ts",
+    "lint": "vp lint",
+    "lint:fix": "vp lint --fix"
   },
-  "homepage": "https://github.com/ElMassimo/iles",
-  "bugs": "https://github.com/ElMassimo/iles/issues",
   "dependencies": {
     "debug": "^4.3.5",
     "deep-equal": "^2.2.3",
     "fast-glob": "^3.3.2",
     "gray-matter": "^4.0.3",
     "pathe": "^1.1.2"
-  },
-  "peerDependencies": {
-    "vue": "^3.3.4"
   },
   "devDependencies": {
     "@types/deep-equal": "^1.0.4",
@@ -46,5 +43,8 @@
     "typescript": "^5.6.3",
     "unified": "^11.0.5",
     "vue": "^3.5.12"
+  },
+  "peerDependencies": {
+    "vue": "^3.3.4"
   }
 }

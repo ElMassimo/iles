@@ -101,7 +101,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Netlify
-        run: 'curl -X POST -d {} $BUILD_HOOK'
+        run: "curl -X POST -d {} $BUILD_HOOK"
 
   blog:
     if: github.ref == 'refs/heads/main' && contains(github.event.head_commit.message, 'blog')
@@ -112,7 +112,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Netlify
-        run: 'curl -X POST -d {} $BUILD_HOOK'
+        run: "curl -X POST -d {} $BUILD_HOOK"
 
   crawl:
     if: github.ref == 'refs/heads/main' && (contains(github.event.head_commit.message, 'docs') || startsWith(github.event.head_commit.message, 'crawl'))
@@ -127,9 +127,9 @@ jobs:
       - name: Wait for Netlify deployment
         uses: whatnick/wait-action@master
         with:
-          time: '30s'
+          time: "30s"
       - uses: actions/checkout@v2
-      - run: 'sudo apt-get install -y jq'
+      - run: "sudo apt-get install -y jq"
       - run: 'echo "CONFIG=$(cat docs/.algolia/config.json | jq -r tostring)" >> $GITHUB_ENV'
       - run: "cd /root && pipenv install"
       - run: "cd /root && pipenv run python -m src.index"

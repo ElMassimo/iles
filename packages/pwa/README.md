@@ -30,12 +30,10 @@ See the [_PWA guide_][pwa] for more information.
 
 ```ts
 // iles.config.ts
-import { defineConfig } from 'iles'
-import pwa from '@islands/pwa'
+import { defineConfig } from "iles";
+import pwa from "@islands/pwa";
 
 export default defineConfig({
-  modules: [
-    pwa(options),
-  ],
-})
+  modules: [pwa(options)],
+});
 ```

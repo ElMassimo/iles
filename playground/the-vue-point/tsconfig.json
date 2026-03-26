@@ -13,10 +13,7 @@
     "skipLibCheck": true,
     "esModuleInterop": true,
     "lib": ["esnext", "DOM"],
-    "types": [
-      "@vue-macros/reactivity-transform/macros-global",
-      "node"
-    ],
+    "types": ["@vue-macros/reactivity-transform/macros-global", "node"],
     "paths": {
       "~/*": ["src/*"]
     }

@@ -3,11 +3,16 @@ title: Vue 2.7 "Naruto" Released
 date: 2022-07-01
 author: Evan You
 gravatar: eca93da2c67aadafe35d477aa8f454b8
-twitter: '@youyuxi'
+twitter: "@youyuxi"
 ---
 
 <p align="center">
-  <img width="300" height="128px" src="https://user-images.githubusercontent.com/499550/176823239-f59d75de-1d24-4b2d-b04b-fcc95db2903e.png" alt="naruto-vue-logo"/>
+  <img
+    width="300"
+    height="128px"
+    src="https://user-images.githubusercontent.com/499550/176823239-f59d75de-1d24-4b2d-b04b-fcc95db2903e.png"
+    alt="naruto-vue-logo"
+  />
 </p>
 
 Today we are happy to announce that Vue 2.7 "Naruto" has been released!
@@ -36,9 +41,9 @@ In addition, the following APIs are also supported:
 - In ESM builds, these APIs are provided as named exports (and named exports only):
 
   ```js
-  import Vue, { ref } from 'vue'
+  import Vue, { ref } from "vue";
 
-  Vue.ref // undefined, use named export instead
+  Vue.ref; // undefined, use named export instead
   ```
 
 - In UMD and CJS builds, these APIs are exposed as properties on the global `Vue` object.
@@ -55,7 +60,7 @@ The Composition API is backported using Vue 2's getter/setter-based reactivity s
 
   ```js
   // true in 2.7, false in 3.x
-  reactive(foo) === foo
+  reactive(foo) === foo;
   ```
 
 - `readonly()` **does** create a separate object, but it won't track newly added properties and does not work on arrays.
@@ -77,7 +82,6 @@ In addition, the following features are explicitly **NOT** ported:
 ### Vue CLI / webpack
 
 1. Upgrade local `@vue/cli-xxx` dependencies the latest version in your major version range (if applicable):
-
    - `~4.5.18` for v4
    - `~5.0.6` for v5
 
@@ -86,7 +90,6 @@ In addition, the following features are explicitly **NOT** ported:
    Note: if you are using `@vue/test-utils`, you may need to keep it in the dependencies for now, but this requirement will also be lifted in a new release of test utils.
 
 3. Check your package manager lockfile to ensure the following dependencies meet the version requirements. They may be transitive dependencies not listed in `package.json`.
-
    - `vue-loader`: `^15.10.0`
    - `vue-demi`: `^0.13.1`
 

@@ -41,13 +41,11 @@ Add the module to `iles.config.ts`:
 
 ```js
 // iles.config.ts
-import { defineConfig } from 'iles'
+import { defineConfig } from "iles";
 
 export default defineConfig({
-  modules: [
-    '@islands/prism',
-  ],
-})
+  modules: ["@islands/prism"],
+});
 ```
 
 Then, you can highlight lines or display line numbers in code blocks:
@@ -55,13 +53,11 @@ Then, you can highlight lines or display line numbers in code blocks:
 ````mdx
 ```js {6} showLineNumbers
 // iles.config.ts
-import { defineConfig } from 'iles'
+import { defineConfig } from "iles";
 
 export default defineConfig({
-  modules: [
-    '@islands/prism',
-  ],
-})
+  modules: ["@islands/prism"],
+});
 ```
 ````
 
@@ -74,18 +70,18 @@ You can also import the module directly to get autocompletion when providing opt
 
 ```ts
 // iles.config.ts
-import { defineConfig } from 'iles'
+import { defineConfig } from "iles";
 
-import prism from '@islands/prism'
+import prism from "@islands/prism";
 
 export default defineConfig({
   modules: [
     prism({
-      aliases: { zsh: 'bash' },
+      aliases: { zsh: "bash" },
       showLineNumbers: true,
     }),
   ],
-})
+});
 ```
 
 When `showLineNumbers` is enabled globally, you can use `hideLineNumbers` to
@@ -106,16 +102,16 @@ Each code block will be transformed to HTML with the following structure:
 You can use the following styles to ensure everything _lines up_ as expected:
 
 ```css
-div[class*='language-'] {
+div[class*="language-"] {
   position: relative;
   /* background, font-size, line-height */
 }
 
-div[class*='language-'] pre {
+div[class*="language-"] pre {
   /* padding */
 }
 
-pre[class*='language-'] {
+pre[class*="language-"] {
   position: relative; /* position it to allow text selection */
   overflow: auto;
 }
@@ -133,29 +129,29 @@ pre.line-numbers {
 }
 
 .line-highlight > .highlighted {
-  background: rgba(0,0,0,0.1);
+  background: rgba(0, 0, 0, 0.1);
 }
 
-div[class*='language-'].line-numbers-mode {
+div[class*="language-"].line-numbers-mode {
   --gutter-width: 3.5rem;
   padding-left: calc(var(--gutter-width) + 1rem);
 }
 
 pre.line-numbers {
-  border-right: 1px solid rgba(0,0,0,0.1);
+  border-right: 1px solid rgba(0, 0, 0, 0.1);
   text-align: center;
   width: var(--gutter-width);
 }
 ```
 
-If you wish to display the language, you can use the value of the `data-lang` attribute by using the [`attr` CSS function](https://developer.mozilla.org/en-US/docs/Web/CSS/attr()):
+If you wish to display the language, you can use the value of the `data-lang` attribute by using the [`attr` CSS function](<https://developer.mozilla.org/en-US/docs/Web/CSS/attr()>):
 
 ```css
-div[class*='language-'] {
+div[class*="language-"] {
   position: relative;
 }
 
-div[class*='language-']::before {
+div[class*="language-"]::before {
   content: attr(data-lang);
   color: #888;
   font-size: 0.8rem;

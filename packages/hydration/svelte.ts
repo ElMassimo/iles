@@ -1,29 +1,34 @@
-import { createRawSnippet, mount, unmount, type Snippet } from 'svelte'
-import type { Props, Slots } from './types'
-import { onDispose } from './hydration'
+import { createRawSnippet, mount, unmount } from "svelte";
+import type { Snippet } from "svelte";
+import type { Props, Slots } from "./types";
+import { onDispose } from "./hydration";
 
-type Component = any
+type Component = any;
 
-export default function createIsland (Component: Component, id: string, el: Element, props: Props, slots: Slots | undefined = {}) {
-  let children
-  let $$slots: Record<string, Snippet> & { default?: boolean } | undefined
-  let renderFns: Record<string, Snippet> = {}
+export default function createIsland(
+  Component: Component,
+  id: string,
+  el: Element,
+  props: Props,
+  slots: Slots | undefined = {},
+) {
+  let children;
+  let $$slots: (Record<string, Snippet> & { default?: boolean }) | undefined;
+  let renderFns: Record<string, Snippet> = {};
 
   Object.entries(slots).forEach(([slotName, html]) => {
-    const fnName = slotName === 'default' ? 'children' : slotName
-    renderFns[fnName] = createRawSnippet(() => ({ render: () => html }))
+    const fnName = slotName === "default" ? "children" : slotName;
+    renderFns[fnName] = createRawSnippet(() => ({ render: () => html }));
 
-    $$slots ??= {}
-    if (slotName === 'default') {
-      $$slots.default = true
-      children = renderFns[fnName]
+    $$slots ??= {};
+    if (slotName === "default") {
+      $$slots.default = true;
+      children = renderFns[fnName];
+    } else {
+      $$slots[fnName] = renderFns[fnName];
     }
-    else {
-      $$slots[fnName] = renderFns[fnName]
-    }
-  })
+  });
 
-   
   const component = mount(Component, {
     target: el,
     props: {
@@ -34,9 +39,15 @@ export default function createIsland (Component: Component, id: string, el: Elem
     },
   });
 
-  if (import.meta.env.DISPOSE_ISLANDS)
-    onDispose(id, () => unmount(component))
+  if (import.meta.env.DISPOSE_ISLANDS) onDispose(id, () => unmount(component));
 
   if (import.meta.env.DEV)
-    (window as any).__ILE_DEVTOOLS__?.onHydration({ id, el, props, slots, component, framework: 'svelte' })
+    (window as any).__ILE_DEVTOOLS__?.onHydration({
+      id,
+      el,
+      props,
+      slots,
+      component,
+      framework: "svelte",
+    });
 }
