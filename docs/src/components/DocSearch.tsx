@@ -1,17 +1,17 @@
-import { DocSearch, DocSearchProps } from '@mussi/docsearch'
-import '~/styles/docsearch.css'
+import { DocSearch, DocSearchProps } from "@mussi/docsearch";
+import "~/styles/docsearch.css";
 
 const options: Partial<DocSearchProps> = {
   transformItems(items) {
     return items.map((item) => {
       const getRelativePath = (url: string) => {
-        const { pathname, hash } = new URL(url)
-        return pathname + hash
-      }
-      return Object.assign({}, item, { url: getRelativePath(item.url) })
-    })
+        const { pathname, hash } = new URL(url);
+        return pathname + hash;
+      };
+      return Object.assign({}, item, { url: getRelativePath(item.url) });
+    });
   },
-}
+};
 
 const IlesDocSearch = (props: Partial<DocSearchProps>) => (
   <DocSearch
@@ -21,6 +21,6 @@ const IlesDocSearch = (props: Partial<DocSearchProps>) => (
     {...options}
     {...props}
   />
-)
+);
 
-export default IlesDocSearch
+export default IlesDocSearch;

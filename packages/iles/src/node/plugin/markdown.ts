@@ -1,8 +1,8 @@
-import type { ViteDevServer } from 'vite-plus'
-import deepEqual from 'deep-equal'
-import type { AppConfig } from '../shared'
+import type { ViteDevServer } from "vite-plus";
+import deepEqual from "deep-equal";
+import type { AppConfig } from "../shared";
 
-let originalTags: string[]
+let originalTags: string[];
 
 // Internal: Detects markdown components overriden in the app.
 export function detectMDXComponents(
@@ -10,16 +10,16 @@ export function detectMDXComponents(
   config: AppConfig,
   server?: ViteDevServer | undefined,
 ) {
-  const mdxComponents = code.match(/\bmdxComponents\b(?:.*?){(.*?)}/s)?.[1]
-  if (!mdxComponents) return
+  const mdxComponents = code.match(/\bmdxComponents\b(?:.*?){(.*?)}/s)?.[1];
+  if (!mdxComponents) return;
 
-  const foundTags = Array.from(mdxComponents.matchAll(/\b['"]?(\w+)['"]?:/g)).map((m) => m[1])
+  const foundTags = Array.from(mdxComponents.matchAll(/\b['"]?(\w+)['"]?:/g)).map((m) => m[1]);
 
-  if (!originalTags) originalTags = config.markdown.overrideElements ||= []
+  if (!originalTags) originalTags = config.markdown.overrideElements ||= [];
 
-  const dynamicElements = Array.from(new Set([...originalTags, ...foundTags])).sort()
+  const dynamicElements = Array.from(new Set([...originalTags, ...foundTags])).sort();
   if (!deepEqual(dynamicElements, config.markdown.overrideElements)) {
-    config.markdown.overrideElements = dynamicElements
-    server?.moduleGraph.invalidateAll()
+    config.markdown.overrideElements = dynamicElements;
+    server?.moduleGraph.invalidateAll();
   }
 }

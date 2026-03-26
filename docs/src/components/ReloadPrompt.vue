@@ -1,20 +1,20 @@
 <script client:load lang="ts">
-import { OnLoadFn } from 'iles'
-import { registerSW } from 'virtual:pwa-register'
+import { OnLoadFn } from "iles";
+import { registerSW } from "virtual:pwa-register";
 
-let refreshSW: ((reloadPage?: boolean) => Promise<void>) | undefined
+let refreshSW: ((reloadPage?: boolean) => Promise<void>) | undefined;
 
 const showDialog = (display: boolean) =>
-  document.getElementById('pwa-dialog')?.setAttribute('aria-hidden', String(!display))
+  document.getElementById("pwa-dialog")?.setAttribute("aria-hidden", String(!display));
 
-addEventListener('load', () => {
-  refreshSW = registerSW({ immediate: true, onNeedRefresh: () => showDialog(true) })
-})
+addEventListener("load", () => {
+  refreshSW = registerSW({ immediate: true, onNeedRefresh: () => showDialog(true) });
+});
 
 export const onLoad: OnLoadFn = () => {
-  document.getElementById('pwa-cancel')!.addEventListener('click', () => showDialog(false))
-  document.getElementById('pwa-refresh')!.addEventListener('click', () => refreshSW?.(true))
-}
+  document.getElementById("pwa-cancel")!.addEventListener("click", () => showDialog(false));
+  document.getElementById("pwa-refresh")!.addEventListener("click", () => refreshSW?.(true));
+};
 </script>
 
 <template>
@@ -32,7 +32,7 @@ export const onLoad: OnLoadFn = () => {
 </template>
 
 <style scoped>
-#pwa-dialog[aria-hidden='true'] {
+#pwa-dialog[aria-hidden="true"] {
   display: none;
 }
 

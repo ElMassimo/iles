@@ -1,4 +1,4 @@
-div[class*='language-'] {
+div[class*="language-"] {
   background: var(--h-background);
   border-radius: 0.2rem;
   color: var(--h-foreground);
@@ -15,7 +15,7 @@ div[class*='language-'] {
   word-spacing: normal;
 }
 
-pre[class*='language-'] {
+pre[class*="language-"] {
   position: relative; /* position it to allow text selection */
   overflow: auto;
 }
@@ -36,7 +36,7 @@ pre.line-numbers {
   background: var(--bg-highlight);
 }
 
-div[class*='language-']:before {
+div[class*="language-"]:before {
   content: attr(data-lang);
   color: var(--fc-softer);
   font-size: 0.8rem;

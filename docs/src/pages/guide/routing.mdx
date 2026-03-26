@@ -99,11 +99,11 @@ It must return an array of objects, where each object specifies:
 
 ```vue
 <script lang="ts">
-import { fetchArticles } from '~/logic/articles'
+import { fetchArticles } from "~/logic/articles";
 
 export default definePageComponent({
   async getStaticPaths() {
-    const articles = await fetchArticles()
+    const articles = await fetchArticles();
 
     return articles.map((article) => ({
       // Specify the parameters for the page.
@@ -111,15 +111,15 @@ export default definePageComponent({
 
       // Pass any data needed to render the page.
       props: { article },
-    }))
+    }));
   },
-})
+});
 </script>
 
 <script setup lang="ts">
-import { Article } from '~/logic/articles'
+import { Article } from "~/logic/articles";
 
-defineProps<{ article: Article }>()
+defineProps<{ article: Article }>();
 </script>
 
 <template>

@@ -1,19 +1,19 @@
-import { test, describe, expect } from 'vite-plus/test'
+import { test, describe, expect } from "vite-plus/test";
 
-import { extendSite } from '@node/plugin/site'
+import { extendSite } from "@node/plugin/site";
 
-describe('site', () => {
-  test('without data', () => {
+describe("site", () => {
+  test("without data", () => {
     const extended = extendSite(
       `
 export default {}
 `,
-      { siteUrl: 'http://example.com', base: '/' },
-    )
-    expect(extended).toMatchSnapshot()
-  })
+      { siteUrl: "http://example.com", base: "/" },
+    );
+    expect(extended).toMatchSnapshot();
+  });
 
-  test('without site url', () => {
+  test("without site url", () => {
     const extended = extendSite(
       `
 const site = {
@@ -22,20 +22,20 @@ const site = {
 
 export default site
 `,
-      { siteUrl: '', base: '/' },
-    )
-    expect(extended).toMatchSnapshot()
-  })
+      { siteUrl: "", base: "/" },
+    );
+    expect(extended).toMatchSnapshot();
+  });
 
-  test('with site url', () => {
+  test("with site url", () => {
     const extended = extendSite(
       `
 export default {
   title: 'îles',
 }
 `,
-      { siteUrl: 'https://example.com', base: '/awesome/' },
-    )
-    expect(extended).toMatchSnapshot()
-  })
-})
+      { siteUrl: "https://example.com", base: "/awesome/" },
+    );
+    expect(extended).toMatchSnapshot();
+  });
+});

@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import type { SideBarGroup } from '~/logic/config'
+import type { SideBarGroup } from "~/logic/config";
 
-const { item } = defineProps<{ item: SideBarGroup }>()
+const { item } = defineProps<{ item: SideBarGroup }>();
 
-let children = $computed(() => item.children)
+let children = $computed(() => item.children);
 </script>
 
 <template>

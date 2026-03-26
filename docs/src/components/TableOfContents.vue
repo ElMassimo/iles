@@ -1,28 +1,28 @@
 <script setup lang="ts">
-import type { Heading } from '@islands/headings'
-import type { SideBarItem } from '~/logic/config'
+import type { Heading } from "@islands/headings";
+import type { SideBarItem } from "~/logic/config";
 
 interface HeadingWithChildren extends Heading {
-  children?: Heading[]
+  children?: Heading[];
 }
 
-let { meta, frontmatter } = usePage()
-let level = $computed(() => frontmatter.tocLevel || (frontmatter.sidebar === 'auto' ? 3 : 2))
+let { meta, frontmatter } = usePage();
+let level = $computed(() => frontmatter.tocLevel || (frontmatter.sidebar === "auto" ? 3 : 2));
 
-let headings = $computed(() => resolveHeaders(meta.headings || []))
+let headings = $computed(() => resolveHeaders(meta.headings || []));
 
 function resolveHeaders(headings: Heading[]): SideBarItem[] {
-  return mapHeaders(groupHeaders(headings))
+  return mapHeaders(groupHeaders(headings));
 }
 
 function groupHeaders(headings: Heading[]): HeadingWithChildren[] {
-  headings = headings.map((h) => Object.assign({}, h))
-  let lastHeading: HeadingWithChildren
+  headings = headings.map((h) => Object.assign({}, h));
+  let lastHeading: HeadingWithChildren;
   headings.forEach((h) => {
-    if (h.level === level) lastHeading = h
-    else if (lastHeading) (lastHeading.children || (lastHeading.children = [])).push(h)
-  })
-  return headings.filter((h) => h.level === level)
+    if (h.level === level) lastHeading = h;
+    else if (lastHeading) (lastHeading.children || (lastHeading.children = [])).push(h);
+  });
+  return headings.filter((h) => h.level === level);
 }
 
 function mapHeaders(headings: HeadingWithChildren[]): SideBarItem[] {
@@ -30,7 +30,7 @@ function mapHeaders(headings: HeadingWithChildren[]): SideBarItem[] {
     text: Heading.title,
     link: `#${Heading.slug}`,
     children: Heading.children ? mapHeaders(Heading.children) : undefined,
-  }))
+  }));
 }
 </script>
 

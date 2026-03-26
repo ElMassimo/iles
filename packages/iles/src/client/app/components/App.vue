@@ -1,41 +1,41 @@
 <script lang="ts">
-import { defineComponent, computed, watch } from 'vue'
-import { Head } from '@unhead/vue/components'
-import { usePage } from '../composables/pageData'
-import { useRouterLinks } from '../composables/routerLinks'
-import { resolveLayout } from '../layout'
-const DebugPanel = () => null
+import { defineComponent, computed, watch } from "vue";
+import { Head } from "@unhead/vue/components";
+import { usePage } from "../composables/pageData";
+import { useRouterLinks } from "../composables/routerLinks";
+import { resolveLayout } from "../layout";
+const DebugPanel = () => null;
 
 export default defineComponent({
-  name: 'îles',
+  name: "îles",
   components: {
     DebugPanel,
     Head,
   },
   setup() {
-    if (import.meta.env.DEV && !import.meta.env.SSR) useRouterLinks()
+    if (import.meta.env.DEV && !import.meta.env.SSR) useRouterLinks();
 
-    const { page, route, props } = usePage()
+    const { page, route, props } = usePage();
 
-    const layoutName = computed(() => page.value.layoutName)
-    const layout = computed(() => route.meta.layout?.value)
+    const layoutName = computed(() => page.value.layoutName);
+    const layout = computed(() => route.meta.layout?.value);
     if (import.meta.env.DEV) {
       // HMR for layout changes
       watch([page, layoutName], async ([page], [oldPage]) => {
-        if (page === oldPage) await resolveLayout(route)
-      })
+        if (page === oldPage) await resolveLayout(route);
+      });
     }
 
     return {
       layout,
       page,
       props,
-    }
+    };
   },
   mounted() {
-    ;(window as any).__ILE_DISPOSE__ ||= new Map()
+    (window as any).__ILE_DISPOSE__ ||= new Map();
   },
-})
+});
 </script>
 
 <template>

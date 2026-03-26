@@ -1,22 +1,22 @@
 <script setup lang="ts">
-defineProps<{ date: string | Date }>()
+defineProps<{ date: string | Date }>();
 
 function toDate(date: string | Date) {
-  return date instanceof Date ? date : new Date(date)
+  return date instanceof Date ? date : new Date(date);
 }
 
 function getDateTime(date: string | Date) {
-  return toDate(date).toISOString()
+  return toDate(date).toISOString();
 }
 
 function formatDate(dateStr: string | Date) {
-  const date = toDate(dateStr)
-  date.setUTCHours(12)
-  return date.toLocaleDateString('en-US', {
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric',
-  })
+  const date = toDate(dateStr);
+  date.setUTCHours(12);
+  return date.toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
 }
 </script>
 

@@ -23,23 +23,23 @@ In this section, we'll cover the basics to start building an <Iles/> application
       <kbd class="-ml-2">
         <a href="/config#srcDir">src/</a>
       </kbd>
-      ├──{' '}
+      ├──{" "}
       <kbd>
         <a href="#components">components/</a>
       </kbd>
-      │ ├── ReadingTime.vue │ └── Author.vue │ ├──{' '}
+      │ ├── ReadingTime.vue │ └── Author.vue │ ├──{" "}
       <kbd>
         <a href="#layouts">layouts/</a>
       </kbd>
-      │ ├── default.vue │ └── post.vue │ ├──{' '}
+      │ ├── default.vue │ └── post.vue │ ├──{" "}
       <kbd>
         <a href="#pages">pages/</a>
       </kbd>
-      │ ├── posts/ │ │ ├── intro.mdx │ │ └── goodbye.mdx │ ├── about.vue │ └── index.mdx │ ├──{' '}
+      │ ├── posts/ │ │ ├── intro.mdx │ │ └── goodbye.mdx │ ├── about.vue │ └── index.mdx │ ├──{" "}
       <kbd>
         <a href="/config#your-app">app.ts</a>
       </kbd>
-      └──{' '}
+      └──{" "}
       <kbd>
         <a href="#site">site.ts</a>
       </kbd>
@@ -50,7 +50,7 @@ In this section, we'll cover the basics to start building an <Iles/> application
 By default, <kbd>[srcDir]</kbd> is aliased as `~/` or `@/`. For example:
 
 ```ts
-import { useDark } from '~/logic/dark'
+import { useDark } from "~/logic/dark";
 ```
 
 ```vue
@@ -108,9 +108,9 @@ You may access information about the current page using the `usePage` compositio
 
 ```vue
 <script setup>
-import { usePage } from 'iles'
+import { usePage } from "iles";
 
-const { frontmatter, meta } = usePage()
+const { frontmatter, meta } = usePage();
 </script>
 ```
 
@@ -122,8 +122,8 @@ When rendering collections or index pages, you can leverage <kbd>[useDocuments]<
 
 ```ts {2}
 export function usePosts() {
-  const posts = useDocuments('~/pages/posts')
-  return computed(() => posts.value.sort(byDate))
+  const posts = useDocuments("~/pages/posts");
+  return computed(() => posts.value.sort(byDate));
 }
 ```
 
@@ -131,9 +131,9 @@ Page data is available directly in the component modules:
 
 ```vue
 <script setup lang="ts">
-import { usePosts } from '~/logic/posts'
+import { usePosts } from "~/logic/posts";
 
-const posts = usePosts()
+const posts = usePosts();
 </script>
 
 <template>
@@ -182,9 +182,9 @@ It's also displayed in the page information in _Islands_ devtools.
 
 ```ts
 export default {
-  title: 'About',
-  description: 'Learn more about what we do',
-}
+  title: "About",
+  description: "Learn more about what we do",
+};
 ```
 
 ### Sitemap 🗺
@@ -193,11 +193,11 @@ A sitemap can be automatically generated for your site, all you need to do is
 configure <kbd>[siteUrl]</kbd>. That will also make it available as `site.url` and `site.canonical`.
 
 ```ts
-import { defineConfig } from 'iles'
+import { defineConfig } from "iles";
 
 export default defineConfig({
-  siteUrl: 'https://iles-docs.netlify.app',
-})
+  siteUrl: "https://iles-docs.netlify.app",
+});
 ```
 
 If you would like to opt-out, you can [disable it explicitly][config]:
@@ -207,7 +207,7 @@ export default defineConfig({
   ssg: {
     sitemap: false,
   },
-})
+});
 ```
 
 ## Devtools 🛠

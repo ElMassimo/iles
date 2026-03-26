@@ -30,13 +30,13 @@ You can configure Vite.js as [usual](https://vitejs.dev/config/) using `vite.con
 Alternatively, you can provide a `vite` option in [`iles.config.ts`](#configuring-îles) with the same options.
 
 ```ts
-import { defineConfig } from 'iles'
+import { defineConfig } from "iles";
 
 export default defineConfig({
   vite: {
     plugins: [],
   },
-})
+});
 ```
 
 > Visit the _[Plugins]_ section for more details about the [pre-configured Vite.js plugins](/guide/plugins#vite-plugins).
@@ -49,12 +49,12 @@ related to markdown, component resolution, and other îles-specific features.
 You can leverage your IDE's intellisense with jsdoc type hints or use the `defineConfig` helper:
 
 ```ts
-import { defineConfig } from 'iles'
+import { defineConfig } from "iles";
 
 export default defineConfig({
-  siteUrl: 'https://iles-docs.netlify.app',
-  jsx: 'preact',
-})
+  siteUrl: "https://iles-docs.netlify.app",
+  jsx: "preact",
+});
 ```
 
 ### `drafts`
@@ -158,16 +158,16 @@ You may provide additional configuration in `src/app.ts`, and leverage
 intellisense by using the `defineApp` helper.
 
 ```ts
-import { defineApp } from 'iles'
+import { defineApp } from "iles";
 
 export default defineApp({
   head({ frontmatter, site }) {
     return {
       meta: [
-        { property: 'author', content: site.author },
-        { property: 'keywords', content: computed(() => frontmatter.tags) },
+        { property: "author", content: site.author },
+        { property: "keywords", content: computed(() => frontmatter.tags) },
       ],
-    }
+    };
   },
   enhanceApp({ app, head, router }) {
     // Configure the app to add plugins.
@@ -177,7 +177,7 @@ export default defineApp({
       // Configure the scroll behavior
     },
   },
-})
+});
 ```
 
 ### `head`
@@ -200,15 +200,15 @@ the app being mounted.
 Provide an object that [maps tag names in MDX to components][shortcodes] to render.
 
 ```ts
-import { defineApp } from 'iles'
-import Image from '~/components/Image.vue'
+import { defineApp } from "iles";
+import Image from "~/components/Image.vue";
 
 export default defineApp({
   mdxComponents: {
-    b: 'strong',
+    b: "strong",
     img: Image,
   },
-})
+});
 ```
 
 ### `router`
@@ -229,23 +229,23 @@ Set it to `false` to avoid adding social tags such as `og:title` and `twitter:de
 ## `iles.config.ts` Example
 
 ```ts
-import { defineConfig } from 'iles'
+import { defineConfig } from "iles";
 
-import UnoCSS from 'unocss/vite'
+import UnoCSS from "unocss/vite";
 
 export default defineConfig({
-  siteUrl: 'https://iles-docs.netlify.app',
+  siteUrl: "https://iles-docs.netlify.app",
   extendFrontmatter(frontmatter, filename) {
-    if (filename.includes('/posts/')) frontmatter.layout = 'post'
+    if (filename.includes("/posts/")) frontmatter.layout = "post";
   },
   markdown: {
-    remarkPlugins: ['remark-gemoji'],
+    remarkPlugins: ["remark-gemoji"],
   },
-  modules: ['@islands/icons', '@islands/headings', '@islands/prism'],
+  modules: ["@islands/icons", "@islands/headings", "@islands/prism"],
   vite: {
     plugins: [UnoCSS()],
   },
-})
+});
 ```
 
 [vue-router]: https://next.router.vuejs.org/

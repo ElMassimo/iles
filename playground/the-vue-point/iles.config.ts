@@ -1,15 +1,15 @@
-import { defineConfig } from 'iles'
+import { defineConfig } from "iles";
 
-import excerpt from '@islands/excerpt'
-import feed from '@islands/feed'
-import headings from '@islands/headings'
-import icons from '@islands/icons'
-import images, { hdPreset } from '@islands/images'
-import prism from '@islands/prism'
-import reactivityTransform from '@vue-macros/reactivity-transform/vite'
+import excerpt from "@islands/excerpt";
+import feed from "@islands/feed";
+import headings from "@islands/headings";
+import icons from "@islands/icons";
+import images, { hdPreset } from "@islands/images";
+import prism from "@islands/prism";
+import reactivityTransform from "@vue-macros/reactivity-transform/vite";
 
-import UnoCSS from 'unocss/vite'
-import inspect from 'vite-plugin-inspect'
+import UnoCSS from "unocss/vite";
+import inspect from "vite-plugin-inspect";
 
 const presets = {
   narrow: hdPreset({
@@ -29,16 +29,16 @@ const presets = {
       original: {},
     },
   }),
-}
+};
 
 export default defineConfig({
-  siteUrl: 'https://the-vue-point-with-iles.netlify.app/',
+  siteUrl: "https://the-vue-point-with-iles.netlify.app/",
   turbo: true,
-  jsx: 'solid',
+  jsx: "solid",
   prettyUrls: false,
   svelte: true,
   modules: [
-    excerpt({ separator: ['hr', 'h2', 'excerpt', 'Excerpt'] }),
+    excerpt({ separator: ["hr", "h2", "excerpt", "Excerpt"] }),
     feed(),
     headings(),
     icons(),
@@ -48,13 +48,13 @@ export default defineConfig({
   // Example: Configure all posts to use a different layout without having to
   // add `layout: 'post'` in every file.
   extendFrontmatter(frontmatter, filename) {
-    if (filename.includes('/posts/')) frontmatter.layout ||= 'post'
+    if (filename.includes("/posts/")) frontmatter.layout ||= "post";
   },
   markdown: {
     withImageSrc(src) {
-      if (!src.includes('?')) return `${src}?preset=post`
+      if (!src.includes("?")) return `${src}?preset=post`;
     },
-    remarkPlugins: ['remark-gfm'],
+    remarkPlugins: ["remark-gfm"],
   },
   vite: {
     plugins: [
@@ -63,4 +63,4 @@ export default defineConfig({
       Boolean(process.env.DEBUG) && (inspect() as any),
     ],
   },
-})
+});

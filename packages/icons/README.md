@@ -34,9 +34,9 @@ An [îles] module to add and configure [unplugin-icons]:
 
 ```ts
 // iles.config.ts
-import { defineConfig } from 'iles'
+import { defineConfig } from "iles";
 
 export default defineConfig({
-  modules: ['@islands/icons'],
-})
+  modules: ["@islands/icons"],
+});
 ```

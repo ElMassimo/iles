@@ -1,79 +1,79 @@
-import { PageComponent } from 'iles'
-import { extname } from 'pathe'
-import type { RouteComponent, RouteRecordNormalized } from 'vue-router'
-import type { AppConfig, CreateAppFactory, Router, RouteToRender } from '../shared'
-import { pathToFilename } from './utils'
+import { PageComponent } from "iles";
+import { extname } from "pathe";
+import type { RouteComponent, RouteRecordNormalized } from "vue-router";
+import type { AppConfig, CreateAppFactory, Router, RouteToRender } from "../shared";
+import { pathToFilename } from "./utils";
 
-const DYNAMIC_PARAM = '/:'
+const DYNAMIC_PARAM = "/:";
 
 export async function getRoutesToRender(config: AppConfig, createApp: CreateAppFactory) {
-  const routesToRender = new Map<string, RouteToRender>()
-  const { router } = await createApp()
+  const routesToRender = new Map<string, RouteToRender>();
+  const { router } = await createApp();
 
   for (const { path, ssrProps } of await resolveRoutesToRender(router)) {
-    const extension = extname(path).slice(1) || '.html'
-    const outputFilename = pathToFilename(path, extension)
-    routesToRender.set(path, { path, ssrProps, outputFilename, rendered: '' })
+    const extension = extname(path).slice(1) || ".html";
+    const outputFilename = pathToFilename(path, extension);
+    routesToRender.set(path, { path, ssrProps, outputFilename, rendered: "" });
   }
 
-  return Array.from(routesToRender.values())
+  return Array.from(routesToRender.values());
 }
 
 async function resolveRoutesToRender(router: Router) {
   const toResolvedPath = (route: any) => {
     try {
-      return { path: router.resolve(route).fullPath, ssrProps: route.ssrProps }
+      return { path: router.resolve(route).fullPath, ssrProps: route.ssrProps };
     } catch (error) {
       throw new Error(
         `Could not resolve ${String(route.name)}. Params: ${JSON.stringify(route.params)}. Error: ${error.message}`,
-      )
+      );
     }
-  }
+  };
 
   return (
     await Promise.all(
       router.getRoutes().map(async (route) => {
-        const routes = route.path.includes(DYNAMIC_PARAM) ? await getDynamicPaths(route) : [route]
-        return routes.map(toResolvedPath)
+        const routes = route.path.includes(DYNAMIC_PARAM) ? await getDynamicPaths(route) : [route];
+        return routes.map(toResolvedPath);
       }),
     )
-  ).flat()
+  ).flat();
 }
 
 async function getDynamicPaths(route: RouteRecordNormalized) {
-  const { components, path } = route
-  const file = path
-  const { default: component } = components || {}
+  const { components, path } = route;
+  const file = path;
+  const { default: component } = components || {};
 
   const page: PageComponent | undefined = isLazy(component)
-    ? await component().then((m) => ('default' in m ? m.default : m))
-    : component
+    ? await component().then((m) => ("default" in m ? m.default : m))
+    : component;
 
-  const variants = await page?.getStaticPaths?.({ route })
+  const variants = await page?.getStaticPaths?.({ route });
   if (!variants) {
-    console.warn(`'getStaticPaths' is not defined for ${file} so ${path} it won't be generated.`)
-    return []
+    console.warn(`'getStaticPaths' is not defined for ${file} so ${path} it won't be generated.`);
+    return [];
   }
   if (!Array.isArray(variants))
     throw new Error(
       `Expected array from 'getStaticPaths' in ${file}, got: ${JSON.stringify(variants)}`,
-    )
+    );
 
   return variants.map(({ params, props }) => ({
     name: route.name,
     params,
     ssrProps: { ...params, ...props },
-  }))
+  }));
 }
 
 function isLazy(
-  value: NonNullable<RouteRecordNormalized['components']>['default'],
+  value: NonNullable<RouteRecordNormalized["components"]>["default"],
 ): value is () => Promise<RouteComponent> {
-  return typeof value === 'function'
+  return typeof value === "function";
 }
 
 export function toArray<T>(array?: T | T[]): T[] {
-  array = array || []
-  if (Array.isArray(array)) return array
-  return [array]
+  array = array || [];
+  if (Array.isArray(array)) return array;
+  return [array];
 }

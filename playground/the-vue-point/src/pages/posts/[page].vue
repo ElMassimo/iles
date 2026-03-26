@@ -1,24 +1,24 @@
 <script lang="ts">
-import { definePageComponent } from 'iles'
-import { getPosts } from '~/logic/posts'
-import { paginate } from '~/logic/pagination'
+import { definePageComponent } from "iles";
+import { getPosts } from "~/logic/posts";
+import { paginate } from "~/logic/pagination";
 
 export default definePageComponent({
   getStaticPaths() {
-    const posts = $(getPosts())
-    return paginate(posts, { pageSize: 2 })
+    const posts = $(getPosts());
+    return paginate(posts, { pageSize: 2 });
   },
-})
+});
 </script>
 
 <script setup lang="ts">
-import type { Post } from '~/logic/posts'
+import type { Post } from "~/logic/posts";
 
 defineProps<{
-  items: Post[]
-  nextPage?: number
-  prevPage?: number
-}>()
+  items: Post[];
+  nextPage?: number;
+  prevPage?: number;
+}>();
 </script>
 
 <template layout="default">

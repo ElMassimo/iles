@@ -2,7 +2,7 @@
 defineProps({
   title: { type: String, default: null },
   warn: { type: Boolean, default: false },
-})
+});
 </script>
 
 <template>

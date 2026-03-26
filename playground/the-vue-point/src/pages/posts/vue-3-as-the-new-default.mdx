@@ -3,7 +3,7 @@ title: Vue 3 as the New Default
 date: 2022-01-20
 author: Evan You
 gravatar: eca93da2c67aadafe35d477aa8f454b8
-twitter: '@youyuxi'
+twitter: "@youyuxi"
 ---
 
 TL;DR: Vue 3 is now the new default version as of **Monday, February 7, 2022**!

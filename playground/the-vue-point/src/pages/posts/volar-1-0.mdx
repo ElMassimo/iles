@@ -3,7 +3,7 @@ title: Volar 1.0 "Nika" Released!
 date: 2022-10-10
 author: Johnson Chu
 avatar: https://avatars.githubusercontent.com/u/16279759?v=4
-twitter: '@johnsoncodehk'
+twitter: "@johnsoncodehk"
 ---
 
 We are happy to announce that we have released v1.0 of Volar, the official IDE/TS tooling support for Vue! 🎉

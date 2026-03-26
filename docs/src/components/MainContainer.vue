@@ -1,5 +1,5 @@
 <script setup lang="ts">
-defineProps({ grid: { type: Boolean, default: false } })
+defineProps({ grid: { type: Boolean, default: false } });
 </script>
 
 <template>

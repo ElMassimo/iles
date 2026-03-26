@@ -1,20 +1,20 @@
 <script setup lang="ts">
-import { usePage } from 'iles'
-import { getPosts } from '~/logic/posts'
+import { usePage } from "iles";
+import { getPosts } from "~/logic/posts";
 
-const posts = $(getPosts())
+const posts = $(getPosts());
 
-const { page } = $(usePage())
+const { page } = $(usePage());
 
-const currentIndex = $computed(() => posts.findIndex((p) => p.href === page.href))
-const post = $computed(() => posts[currentIndex])
-const nextPost = $computed(() => posts[currentIndex - 1])
-const prevPost = $computed(() => posts[currentIndex + 1])
+const currentIndex = $computed(() => posts.findIndex((p) => p.href === page.href));
+const post = $computed(() => posts[currentIndex]);
+const nextPost = $computed(() => posts[currentIndex - 1]);
+const prevPost = $computed(() => posts[currentIndex + 1]);
 
 const author = $computed(() => {
-  const { twitter, avatar, gravatar, author } = post
-  return { twitter, avatar, gravatar, author }
-})
+  const { twitter, avatar, gravatar, author } = post;
+  return { twitter, avatar, gravatar, author };
+});
 </script>
 
 <template layout="default">

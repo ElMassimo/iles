@@ -1,5 +1,5 @@
 <script setup lang="ts">
-defineProps<{ twitter: string; gravatar?: string; avatar?: string; author: string }>()
+defineProps<{ twitter: string; gravatar?: string; avatar?: string; author: string }>();
 </script>
 
 <template>

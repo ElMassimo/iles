@@ -94,7 +94,7 @@ The syntax of MDX is different from Vue templates when it comes to binding dynam
 Instead of `:title="example"`, you would do `title={example}`:
 
 ```mdx
-export const example = 'Variables in Markdown'
+export const example = "Variables in Markdown";
 
 <Tip title={example}>
 You can access the document's `frontmatter`, and `meta` info injected by <Iles/>.
@@ -104,7 +104,7 @@ And use expressions, such as { meta.lastUpdated.toLocaleDateString('en-US') }.
 </Tip>
 ```
 
-export const example = 'Variables in Markdown'
+export const example = "Variables in Markdown";
 
 <Tip title={example}>
 You can access the document's `frontmatter`, and `meta` info injected by <Iles/>.
@@ -120,7 +120,7 @@ imported if they are placed in the [components] dir.
 
 ```vue
 <script setup>
-import Acknowledgements from '~/components/Acknowledgements.mdx' // not needed
+import Acknowledgements from "~/components/Acknowledgements.mdx"; // not needed
 </script>
 
 <template>
@@ -145,7 +145,7 @@ When importing an [MDX] component from Vue, you can render its content using [`<
 
 ```vue
 <script setup lang="ts">
-import doc from '~/pages/introduction.mdx'
+import doc from "~/pages/introduction.mdx";
 </script>
 
 <template>
@@ -173,13 +173,13 @@ Use the <kbd>[mdxComponents]</kbd> option to override elements globally
 in all MDX documents.
 
 ```ts
-import ResponsiveImage from '~/components/ResponsiveImage.vue'
+import ResponsiveImage from "~/components/ResponsiveImage.vue";
 
 export default defineApp({
   mdxComponents: {
     img: ResponsiveImage,
   },
-})
+});
 ```
 
 <Caption>`src/app.ts`</Caption>
@@ -194,11 +194,11 @@ If you need more control, you can use the `components` prop in MDX components.
 
 ```vue
 <script setup>
-import Introduction from '~/pages/introduction.mdx'
+import Introduction from "~/pages/introduction.mdx";
 
-import Footer from '~/components/SpecialFooter.vue'
+import Footer from "~/components/SpecialFooter.vue";
 
-const components = { Footer }
+const components = { Footer };
 </script>
 
 <template>
@@ -211,11 +211,11 @@ Use `provideMDXComponents` to override elements and components in all nested com
 
 ```vue
 <script setup>
-import { provideMDXComponents } from 'iles'
+import { provideMDXComponents } from "iles";
 
-import Footer from '~/components/PostFooter.vue'
+import Footer from "~/components/PostFooter.vue";
 
-provideMDXComponents({ Footer })
+provideMDXComponents({ Footer });
 </script>
 
 ...
@@ -239,7 +239,7 @@ export const titleWithMarkdown = (
   <span>
     But better keep it <b>simple</b>
   </span>
-)
+);
 
 <Tip warn v-slots={{ title: () => titleWithMarkdown }}>
   The syntax is confusing, and you can often achieve the same using props.
