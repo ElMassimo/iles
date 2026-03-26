@@ -1,14 +1,14 @@
 ---
 name: Bug report
 about: Create a report to help us improve. Please check the Troubleshooting section before opening an issue.
-title: ""
-labels: "bug: pending triage"
-assignees: ""
+title: ''
+labels: 'bug: pending triage'
+assignees: ''
 ---
 
 [troubleshooting section]: https://iles-docs.netlify.app/faqs/troubleshooting
 
-- [ ] I have read the **[troubleshooting section]** before opening an issue.
+- [ ] I have read the __[troubleshooting section]__ before opening an issue.
 - [ ] I have tried upgrading `iles` and `vite`.
 
 ### Description 📖
@@ -27,7 +27,6 @@ _Run `npx iles info` and `pnpm list` (or `npm list`) and provide the output:_
 ```
 
 ```
-
 </details>
 
 ### Logs 📜
@@ -42,9 +41,9 @@ _Run `DEBUG=iles:* npm run dev` or `DEBUG=iles:* npm run build` and provide the 
 ```
 
 ```
-
 </details>
 
 ### Screenshots 📷
 
 _Provide console or browser screenshots of the problem_.
+

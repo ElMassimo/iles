@@ -1,9 +1,6 @@
 /** @jsxImportSource solid-js */
 
-const BackLink = ({ href, children }: { href: string; children?: any }) => (
-  <a class="link" href={href}>
-    ← {children}
-  </a>
-);
+const BackLink = ({ href, children }: { href: string, children?: any }) =>
+  <a class="link" href={ href }>← { children }</a>
 
-export default BackLink;
+export default BackLink

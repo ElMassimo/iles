@@ -7,7 +7,7 @@
 
 This section lists a few common gotchas, and bugs introduced in the past.
 
-Please skim through **before** opening an [issue][GitHub Issues].
+Please skim through __before__ opening an [issue][GitHub Issues].
 
 ## Page data not properly injected in app
 
@@ -17,7 +17,7 @@ Please skim through **before** opening an [issue][GitHub Issues].
 Instead, pass the necessary data explicitly as props. For example:
 
 ```vue
-<TimeAgo :date="$meta.lastUpdated" client:visible />
+<TimeAgo :date="$meta.lastUpdated" client:visible/>
 ```
 
 ## Could not load layout file during build
@@ -27,4 +27,4 @@ Instead, pass the necessary data explicitly as props. For example:
 Most [service providers][deployment] are Linux-based, which is case-sensitive.
 This is why it might work in your local macOS or Windows, but fail when [deploying][deployment].
 
-<Contact />
+<Contact/>

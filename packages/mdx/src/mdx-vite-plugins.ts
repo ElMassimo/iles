@@ -1,77 +1,73 @@
-import { extname } from "path";
+import { extname } from 'path'
 
-import type { Plugin, TransformResult } from "vite-plus";
-import type { createFormatAwareProcessors } from "@mdx-js/mdx/internal-create-format-aware-processors";
-import hash from "hash-sum";
-import type { MarkdownOptions, PluginLike, PluginOption } from "./types";
+import type { Plugin, TransformResult } from 'vite-plus'
+import type { createFormatAwareProcessors } from '@mdx-js/mdx/internal-create-format-aware-processors'
+import hash from 'hash-sum'
+import type { MarkdownOptions, PluginLike, PluginOption } from './types'
 
-import { resolvePlugins } from "./plugins";
+import { resolvePlugins } from './plugins'
 
-export default function IlesMdx(options: MarkdownOptions = {}): Plugin[] {
-  const { remarkPlugins = [], rehypePlugins = [], recmaPlugins = [], ...rest } = options;
+export default function IlesMdx (options: MarkdownOptions = {}): Plugin[] {
+  const { remarkPlugins = [], rehypePlugins = [], recmaPlugins = [], ...rest } = options
 
-  let markdownProcessor: ReturnType<typeof createFormatAwareProcessors>;
-  let isDevelopment: boolean;
+  let markdownProcessor: ReturnType<typeof createFormatAwareProcessors>
+  let isDevelopment: boolean
 
-  function shouldTransform(path: string) {
-    return markdownProcessor.extnames.includes(extname(path));
+  function shouldTransform (path: string) {
+    return markdownProcessor.extnames.includes(extname(path))
   }
 
-  async function createMdxProcessor(sourcemap: string | boolean) {
-    const { createFormatAwareProcessors } =
-      await import("@mdx-js/mdx/internal-create-format-aware-processors");
+  async function createMdxProcessor (sourcemap: string | boolean) {
+    const { createFormatAwareProcessors } = await import('@mdx-js/mdx/internal-create-format-aware-processors')
     markdownProcessor = createFormatAwareProcessors({
       remarkPlugins: await resolvePlugins(remarkPlugins),
       rehypePlugins: await resolvePlugins(rehypePlugins),
       recmaPlugins: await resolvePlugins(recmaPlugins),
-      SourceMapGenerator: sourcemap ? (await import("source-map")).SourceMapGenerator : undefined,
+      SourceMapGenerator: sourcemap ? (await import('source-map')).SourceMapGenerator : undefined,
       ...rest,
-    });
+    })
   }
 
   return [
     {
-      name: "iles:mdx:compile",
+      name: 'iles:mdx:compile',
 
-      async configResolved(config) {
-        isDevelopment = config.mode === "development";
-        await createMdxProcessor(isDevelopment || config.build.sourcemap);
+      async configResolved (config) {
+        isDevelopment = config.mode === 'development'
+        await createMdxProcessor(isDevelopment || config.build.sourcemap)
       },
 
-      async transform(value, path) {
-        if (!shouldTransform(path)) return;
+      async transform (value, path) {
+        if (!shouldTransform(path)) return
 
-        const compiled = await markdownProcessor.process({ value, path });
-        return { code: String(compiled.value), map: compiled.map } as TransformResult;
+        const compiled = await markdownProcessor.process({ value, path })
+        return { code: String(compiled.value), map: compiled.map } as TransformResult
       },
     },
     {
-      name: "iles:mdx:sfc",
+      name: 'iles:mdx:sfc',
 
-      async transform(code, path) {
-        if (!shouldTransform(path)) return;
+      async transform (code, path) {
+        if (!shouldTransform(path)) return
 
-        return code.replace(
-          "export default function MDXContent",
-          () => `
+        return code.replace('export default function MDXContent', () => `
 import { defineComponent as $defineComponent } from 'iles/jsx-runtime'
 
 const _sfc_main = /* @__PURE__ */ $defineComponent(MDXContent, {${
-            isDevelopment ? `\n  __file: '${path}',` : ""
-          }})
+  isDevelopment ? `\n  __file: '${path}',` : ''
+}})
 export default _sfc_main
 
-function MDXContent`,
-        );
+function MDXContent`)
       },
     },
     {
-      name: "iles:mdx:hmr",
-      apply: "serve",
-      transform(code: string, path: string) {
-        if (!shouldTransform(path)) return;
+      name: 'iles:mdx:hmr',
+      apply: 'serve',
+      transform (code: string, path: string) {
+        if (!shouldTransform(path)) return
 
-        const hmrId = hash(`${path.split("?", 2)[0]}default`);
+        const hmrId = hash(`${path.split('?', 2)[0]}default`)
 
         return `${code}
       _sfc_main.__hmrId = "${hmrId}"
@@ -80,8 +76,8 @@ function MDXContent`,
         if (component)
           __VUE_HMR_RUNTIME__.reload(component.__hmrId, component)
       })
-      `;
+      `
       },
     },
-  ];
+  ]
 }

@@ -1,3 +1,3 @@
-import mod from "../dist/pwa.cjs";
+import mod from '../dist/pwa.cjs'
 
-export default mod.default;
+export default mod.default

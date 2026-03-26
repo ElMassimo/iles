@@ -1,12 +1,12 @@
-import type { IlesModule } from "iles";
-import type { Options } from "unplugin-icons";
+import type { IlesModule } from 'iles'
+import type { Options } from 'unplugin-icons'
 
-import icons from "unplugin-icons/vite";
-import iconsResolver from "unplugin-icons/resolver";
-import { FileSystemIconLoader } from "unplugin-icons/loaders";
+import icons from 'unplugin-icons/vite'
+import iconsResolver from 'unplugin-icons/resolver'
+import { FileSystemIconLoader } from 'unplugin-icons/loaders'
 
 interface ModuleOptions extends Options {
-  resolver?: Parameters<typeof iconsResolver>[0];
+  resolver?: Parameters<typeof iconsResolver>[0]
 }
 
 /**
@@ -15,16 +15,16 @@ interface ModuleOptions extends Options {
  *
  * @param options - Optional options to configure the output.
  */
-export default function IlesIcons(options?: ModuleOptions): IlesModule {
-  const { resolver, ...iconsOptions } = options || {};
+export default function IlesIcons (options?: ModuleOptions): IlesModule {
+  const { resolver, ...iconsOptions } = options || {}
 
   return {
-    name: "@islands/icons",
+    name: '@islands/icons',
     components: {
       resolvers: [
         iconsResolver({
-          prefix: "icon",
-          customCollections: ["app"],
+          prefix: 'icon',
+          customCollections: ['app'],
           ...resolver,
         }),
       ],
@@ -34,11 +34,11 @@ export default function IlesIcons(options?: ModuleOptions): IlesModule {
         icons({
           autoInstall: true,
           customCollections: {
-            app: FileSystemIconLoader("./icons"),
+            app: FileSystemIconLoader('./icons'),
           },
           ...iconsOptions,
         }),
       ],
     },
-  };
+  }
 }

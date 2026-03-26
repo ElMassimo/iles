@@ -6,11 +6,14 @@
 [vite-ssg]: https://github.com/antfu/vite-ssg
 [vite-plugin-pages]: https://github.com/hannoeru/vite-plugin-pages
 [unplugin-vue-components]: https://github.com/antfu/unplugin-vue-components
+
 [frameworks]: /guide/frameworks
 [hydration]: /guide/hydration
 [islands]: https://jasonformat.com/islands-architecture/
+
 [manually]: https://github.com/ElMassimo/iles/blob/main/playground/the-vue-point/src/pages/posts/%5Bpage%5D.vue
 [podcast]: https://dev.to/viewsonvue/islands-architecture-in-vue-with-maximo-mussini-vue-170
+
 [prettyUrls]: /config#prettyurls
 
 # FAQs
@@ -31,17 +34,16 @@ entire page.
 
 I started working on <Iles/> because I wanted [VitePress] + [Astro] using <ViteLogo/> instead of Snowpack.
 
-<Iles /> philosophy is to provide a smooth integration with Vite.js and its wonderful plugin
-ecosystem, and enable using [components from any frameworks][frameworks] so that you can focus on
-shipping value.
+<Iles/> philosophy is to provide a smooth integration with Vite.js and its
+wonderful plugin ecosystem, and enable using [components from any frameworks][frameworks] so that you can focus on shipping value.
 
 Would like to hear more? [Listen to this recent podcast][podcast].
 
-<Should />
+<Should/>
 
 ## Comparisons ⚖️
 
-<Iles /> builds upon the ideas of old and new frameworks for static-site generation.
+<Iles/> builds upon the ideas of old and new frameworks for static-site generation.
 
 > Pull requests to add more comparisons are welcome!
 
@@ -59,13 +61,11 @@ VitePress has an MPA mode to strip away all JS. In <Iles/> that happens
 automatically if you don't use [hydration directives][hydration].
 
 <Tip>
-  Use VitePress if you are building a documentation website, don't need [partial
-  hydration][hydration], or if it has to be a single-page application.
+Use VitePress if you are building a documentation website, don't need [partial hydration][hydration], or if it has to be a single-page application.
 </Tip>
 
 <Tip>
-  When migrating an existing site from VitePress to <Iles />, you might want to disable{" "}
-  <kbd>[prettyUrls]</kbd>.
+When migrating an existing site from VitePress to <Iles/>, you might want to disable <kbd>[prettyUrls]</kbd>.
 </Tip>
 
 ### [Astro] <AstroLogo/>
@@ -77,20 +77,17 @@ Now that Astro is moving to Vite.js, the differences will become smaller.
 The following is a list of features and differences to help you compare:
 
 - Astro uses an `.astro` file format. In <Iles small/> you use [Vue or MDX pages](/guide/development#pages)
-- <Iles small /> provides an [inspector
-  panel](https://user-images.githubusercontent.com/1158253/133314267-f0ba784c-ff64-4ee8-b2bf-97ecffc2facd.jpg)
-  in Vue devtools to inspect page data and
-  [hydration](https://user-images.githubusercontent.com/1158253/133314279-1edc22d1-3ffb-414e-b994-212cb316593b.jpg)
+- <Iles small/> provides an [inspector panel](https://user-images.githubusercontent.com/1158253/133314267-f0ba784c-ff64-4ee8-b2bf-97ecffc2facd.jpg) in Vue devtools to inspect page data and [hydration](https://user-images.githubusercontent.com/1158253/133314279-1edc22d1-3ffb-414e-b994-212cb316593b.jpg)
 - Pages in <Iles small/> have access to [frontmatter and file metadata](/guide/development#using-page-data)
 - You can [glob import](/guide/documents) pages in <Iles small/>, access their frontmatter, and render them
-- <Iles small /> provides [auto-import for components](/guide/development#components) in Vue and MDX
-  files
+- <Iles small/> provides [auto-import for components](/guide/development#components) in Vue and MDX files
 - Astro provides a `paginate` helper. In <Iles small/> you have to do that [manually].
-- <Iles small /> supports a [convenient syntax for layouts](/guide/development#layouts). In Astro
-  you manually import and use components as layouts
-- <Iles small /> has a very refined HMR, even site-wide data is automatically reloaded
+- <Iles small/> supports a [convenient syntax for layouts](/guide/development#layouts). In Astro you manually import and use components as layouts
+- <Iles small/> has a very refined HMR, even site-wide data is automatically reloaded
 
-<Tip>Use Astro if you are not familiar with Vue, or don't like its template syntax.</Tip>
+<Tip>
+Use Astro if you are not familiar with Vue, or don't like its template syntax.
+</Tip>
 
 ## Acknowledgements 🙇‍♂️
 
@@ -104,4 +101,4 @@ The following is a list of features and differences to help you compare:
 [vue-router]: https://next.router.vuejs.org/
 [@unhead/vue]: https://github.com/@unhead/vue
 
-<Contact />
+<Contact/>

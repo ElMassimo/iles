@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import { isDark, toggleDark } from "~/logic/dark";
+import { isDark, toggleDark } from '~/logic/dark'
 </script>
 
 <template>
   <NavBarButton aria-label="Toggle theme" @click="toggleDark()">
     <transition name="slide" mode="out-in">
-      <IconBxBxMoon v-if="isDark" />
-      <IconBxBxSun v-else />
+      <IconBxBxMoon v-if="isDark"/>
+      <IconBxBxSun v-else/>
     </transition>
   </NavBarButton>
 </template>

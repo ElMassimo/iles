@@ -1,20 +1,20 @@
 <script lang="ts">
-import { defineComponent, computed } from "vue";
-import { useRoute, useRouter } from "iles";
+import { defineComponent, computed } from 'vue'
+import { useRoute, useRouter } from 'iles'
 
 export default defineComponent({
-  name: "NotFound",
+  name: 'NotFound',
   layoutFn: false,
-  setup() {
-    const route = useRoute();
-    const router = useRouter();
+  setup () {
+    const route = useRoute()
+    const router = useRouter()
     const routes = computed(() => {
-      const info = router.getRoutes().map(({ path, name }) => ({ path, name }));
-      return JSON.stringify(info, null, 2);
-    });
-    return { route, routes };
+      const info = router.getRoutes().map(({ path, name }) => ({ path, name }))
+      return JSON.stringify(info, null, 2)
+    })
+    return { route, routes }
   },
-});
+})
 </script>
 
 <template>
@@ -52,7 +52,7 @@ dt {
 
 dl,
 dd {
-  font-size: 0.9rem;
+  font-size: .9rem;
 }
 
 dd {

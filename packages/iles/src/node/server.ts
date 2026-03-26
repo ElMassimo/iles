@@ -1,22 +1,19 @@
-import type { ServerOptions, UserConfig as ViteUserConfig } from "vite-plus";
-import { createServer as createViteServer, mergeConfig } from "vite-plus";
-import { resolveConfig } from "./config";
-import IslandsPlugins from "./plugin/plugin";
+import type { ServerOptions, UserConfig as ViteUserConfig } from 'vite-plus'
+import { createServer as createViteServer, mergeConfig } from 'vite-plus'
+import { resolveConfig } from './config'
+import IslandsPlugins from './plugin/plugin'
 
-export async function createServer(
-  root: string = process.cwd(),
-  serverOptions: ServerOptions = {},
-) {
-  const config = await resolveConfig(root);
+export async function createServer (root: string = process.cwd(), serverOptions: ServerOptions = {}) {
+  const config = await resolveConfig(root)
 
   const viteConfig = mergeConfig(config.vite, {
     plugins: IslandsPlugins(config),
     server: serverOptions,
-  } as ViteUserConfig);
+  } as ViteUserConfig)
 
   return {
     config,
     viteConfig,
     server: await createViteServer(viteConfig),
-  };
+  }
 }

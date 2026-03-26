@@ -4,8 +4,8 @@ import {
   presetTypography,
   presetUno,
   transformerDirectives,
-} from "unocss";
-import transformerVariantGroup from "@unocss/transformer-variant-group";
+} from 'unocss'
+import transformerVariantGroup from '@unocss/transformer-variant-group'
 
 export default defineConfig({
   transformers: [transformerDirectives(), transformerVariantGroup()],
@@ -13,15 +13,15 @@ export default defineConfig({
     presetUno(),
     presetTypography({
       cssExtend: {
-        ".prose pre": {
-          "background-color": "#1f2937 !important",
-          color: "#e5e7eb !important",
+        '.prose pre': {
+          'background-color': '#1f2937 !important',
+          'color': '#e5e7eb !important',
         },
       },
     }),
     presetIcons({
-      prefix: "i-", // default prefix
+      prefix: 'i-', // default prefix
     }),
   ],
-  safelist: ["blockquote", "figure", "code", "p", "a"],
-});
+  safelist: ['blockquote', 'figure', 'code', 'p', 'a'],
+})

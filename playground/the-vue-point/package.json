@@ -1,8 +1,8 @@
 {
   "name": "vue-blog",
+  "type": "module",
   "version": "1.0.0",
   "private": true,
-  "type": "module",
   "scripts": {
     "dev": "iles",
     "build": "iles build",
@@ -12,6 +12,9 @@
     "lint": "eslint .",
     "lint:fix": "eslint . --fix"
   },
+  "engines": {
+    "node": "^14.18 || >= 16.0.0"
+  },
   "devDependencies": {
     "@iconify-json/carbon": "^1.1.36",
     "@islands/excerpt": "workspace:^0.10.0-beta.1",
@@ -20,14 +23,11 @@
     "@islands/icons": "workspace:*",
     "@islands/images": "workspace:*",
     "@islands/prism": "workspace:*",
-    "@unocss/reset": "^66.6.6",
     "@vue-macros/reactivity-transform": "^1.0.4",
     "iles": "workspace:*",
     "remark-gfm": "^4.0.0",
+    "@unocss/reset": "^66.6.6",
     "unocss": "^66.6.6",
     "vue-tsc": "^2.1.10"
-  },
-  "engines": {
-    "node": "^14.18 || >= 16.0.0"
   }
 }

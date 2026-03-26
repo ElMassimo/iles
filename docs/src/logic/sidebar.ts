@@ -1,79 +1,81 @@
-import { MaybeRefOrGetter, computed, toValue } from "vue";
+import { MaybeRefOrGetter, computed, toValue } from 'vue'
 
-import type { Heading } from "@islands/headings";
-import type { SideBarItem, SideBarGroup } from "~/logic/config";
+import type { Heading } from '@islands/headings'
+import type { SideBarItem, SideBarGroup } from '~/logic/config'
 
-import { normalize } from "~/logic/utils";
+import { normalize } from '~/logic/utils'
 
-export function useSideBarLinks() {
-  const { route, site } = usePage();
+export function useSideBarLinks () {
+  const { route, site } = usePage()
 
-  const currentPath = $computed(() => normalize(route.path));
-  const links = $computed(() => site.sidebar.flatMap((group) => group.children || group));
-  const index = $computed(() => links.findIndex((item) => normalize(item.link) === currentPath));
+  const currentPath = $computed(() => normalize(route.path))
+  const links = $computed(() => site.sidebar.flatMap(group => group.children || group))
+  const index = $computed(() => links.findIndex(item => normalize(item.link) === currentPath))
 
   return {
     next: computed(() => index > -1 && links[index + 1]),
     prev: computed(() => index > -1 && links[index - 1]),
-  };
+  }
 }
 
-export function useSideBar() {
-  const { frontmatter, meta, site, route } = usePage();
+export function useSideBar () {
+  const { frontmatter, meta, site, route } = usePage()
 
   return computed(() => {
-    const path = normalize(route.path);
+    const path = normalize(route.path)
 
     return site.sidebar.map(({ children, link, ...group }) => {
-      link = normalize(link);
+      link = normalize(link)
 
-      if (!path.includes(link)) children = [];
-      else if (frontmatter.sidebar === "auto") children = linksFromHeadings(meta.headings, 2, 1);
+      if (!path.includes(link))
+        children = []
+      else if (frontmatter.sidebar === 'auto')
+        children = linksFromHeadings(meta.headings, 2, 1)
 
-      return { ...group, link, children } as SideBarGroup;
-    });
-  });
+      return { ...group, link, children } as SideBarGroup
+    })
+  })
 }
 
-export function useActive(itemRef: MaybeRefOrGetter<SideBarItem>) {
-  const { route } = usePage();
+export function useActive (itemRef: MaybeRefOrGetter<SideBarItem>) {
+  const { route } = usePage()
 
   return computed(() => {
-    const { link, ...item } = toValue(itemRef);
+    const { link, ...item } = toValue(itemRef)
 
-    if (link === undefined) return false;
+    if (link === undefined)
+      return false
 
-    const routePath = normalize(route.path);
-    const pagePath = normalize(link);
+    const routePath = normalize(route.path)
+    const pagePath = normalize(link)
 
-    return routePath === pagePath || ("children" in item && routePath.startsWith(pagePath));
-  });
+    return routePath === pagePath
+      || ('children' in item && routePath.startsWith(pagePath))
+  })
 }
 
-function linksFromHeadings(
-  heading: undefined | Heading[],
-  topLevel: number,
-  depth: number,
-): SideBarItem[] {
-  if (heading === undefined) return [];
+function linksFromHeadings (heading: undefined | Heading[], topLevel: number, depth: number): SideBarItem[] {
+  if (heading === undefined) return []
 
-  const ret: SideBarItem[] = [];
-  let lastTopHeading: SideBarItem | undefined;
+  const ret: SideBarItem[] = []
+  let lastTopHeading: SideBarItem | undefined
   heading.forEach(({ level, title, slug }) => {
-    if (level - 1 > depth) return;
+    if (level - 1 > depth)
+      return
 
     const item: SideBarItem = {
       text: title,
       link: `#${slug}`,
-    };
+    }
 
     if (level === topLevel) {
-      lastTopHeading = item;
-      ret.push(item);
-    } else if (lastTopHeading) {
-      ((lastTopHeading as any).children || ((lastTopHeading as any).children = [])).push(item);
+      lastTopHeading = item
+      ret.push(item)
     }
-  });
+    else if (lastTopHeading) {
+      ((lastTopHeading as any).children || ((lastTopHeading as any).children = [])).push(item)
+    }
+  })
 
-  return ret;
+  return ret
 }

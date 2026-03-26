@@ -6,8 +6,9 @@
 
 # Head and Meta Tags 🏷
 
-<Iles /> will use [site] data such as `title` and `description` and combine them with page
-titles—specified in [frontmatter]—to set reasonable default values for commonly used meta tags.
+<Iles/> will use [site] data such as `title` and `description` and combine them
+with page titles—specified in [frontmatter]—to set reasonable default values
+for commonly used meta tags.
 
 There are several ways to customize `title` and `meta` tags in <Iles/>, powered by <kbd>[@unhead/vue]</kbd>.
 
@@ -17,22 +18,22 @@ This helper can be used in the `setup` function or `<script setup>` of any Vue c
 
 ```vue
 <script setup lang="ts">
-import { computed } from "vue";
-
-const { frontmatter } = usePage();
+import { computed } from 'vue' 
+  
+const { frontmatter } = usePage()
 
 useHead({
   meta: [
-    { property: "og:type", content: "website" },
-    { property: "keywords", content: computed(() => frontmatter.tags) },
+    { property: 'og:type', content: 'website' },
+    { property: 'keywords', content: computed(() => frontmatter.tags) },
   ],
-});
+})
 </script>
 ```
 
 Notice that values can be static or computed.
 
-<AutoImported />
+<AutoImported/>
 
 ## [`<Head>` Component](https://github.com/@unhead/vue#head)
 
@@ -42,8 +43,8 @@ Besides <kbd>[useHead]</kbd>, you can also manipulate head tags using the `<Head
 <template>
   <Head>
     <title>Hello World</title>
-    <meta property="author" :content="$site.author" />
-    <meta property="keywords" :content="$frontmatter.tags" />
+    <meta property="author" :content="$site.author">
+    <meta property="keywords" :content="$frontmatter.tags">
     <html lang="en-US" class="theme-dark" />
   </Head>
 </template>
@@ -57,28 +58,28 @@ Finally, you can use `head` in <kbd>[src/app.ts][app]</kbd>, which supports the
 same format as <kbd>[useHead]</kbd>.
 
 ```ts
-import { defineApp } from "iles";
+import { defineApp } from 'iles'
 
 export default defineApp({
   head: {
-    htmlAttrs: { lang: "en-US" },
+    htmlAttrs: { lang: 'en-US' },
   },
-});
+})
 ```
 
 If you need access to the site or page, you can provide a function instead:
 
 ```ts
-import { defineApp } from "iles";
+import { defineApp } from 'iles'
 
 export default defineApp({
-  head({ frontmatter, site }) {
+  head ({ frontmatter, site }) {
     return {
       meta: [
-        { property: "author", content: site.author },
-        { property: "keywords", content: computed(() => frontmatter.tags) },
-      ],
-    };
+        { property: 'author', content: site.author },
+        { property: 'keywords', content: computed(() => frontmatter.tags) },
+      ]
+    }
   },
-});
+})
 ```

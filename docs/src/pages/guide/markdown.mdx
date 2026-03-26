@@ -11,8 +11,7 @@
 
 # Markdown 📖
 
-<Iles /> provides excellent support for using [components][frameworks] inside markdown (`.mdx`), as
-well as using markdown components inside Vue.
+<Iles/> provides excellent support for using [components][frameworks] inside markdown (`.mdx`), as well as using markdown components inside Vue.
 
 ## What is [MDX]?
 
@@ -26,15 +25,14 @@ date: 2020-10-14
 
 # Markdown 📖
 
-<Iles /> provides excellent support for using components inside markdown (`.mdx`), as well as using
-markdown components inside Vue.
+<Iles/> provides excellent support for using components inside markdown (`.mdx`),
+as well as using markdown components inside Vue.
 ```
-
 <Caption>The introduction of this MDX page.</Caption>
 
 ## Frontmatter and Meta 📃
 
-<Iles /> exposes [frontmatter] properties so that they can be referenced directly in MDX.
+<Iles/> exposes [frontmatter] properties so that they can be referenced directly in MDX.
 
 ```mdx
 ---
@@ -42,19 +40,21 @@ title: Both of these
 description: Will be available as variables in the component.
 ---
 
-<Tip title={title}>{description}</Tip>
+<Tip title={ title }>
+  { description }
+</Tip>
 ```
 
 If you need all properties, you can use the `frontmatter` object.
 
 ```mdx
-<Summary {...frontmatter} />
+<Summary { ...frontmatter }/>
 ```
 
 The `filename` and the page `href` can be accessed through [`meta`][meta].
 
 ```mdx
-<SuggestChangesLink filename={meta.filename} />
+<SuggestChangesLink filename={ meta.filename }/>
 ```
 
 ### Markdown Drafts 📝
@@ -72,20 +72,23 @@ By default, draft pages and documents will be displayed in development, but will
 
 ## Components in Markdown 🧱
 
-<Iles /> extends [MDX] enabling you to use [components from different frameworks][frameworks] in MDX
-files.
+<Iles/> extends [MDX] enabling you to use [components from different frameworks][frameworks] in MDX files.
 
-HMR is fully supported, and components can be used [without importing them][components].
+HMR is fully supported, and components can be used [without importing them][components]. 
 
 ### Markdown in Slots
 
 Components can receive markdown content using slots:
 
 ```mdx
-<Tip title="Markdown in Slots">This is a _markdown-based_ comment. **Great!**</Tip>
+<Tip title="Markdown in Slots">
+This is a _markdown-based_ comment. **Great!**
+</Tip>
 ```
 
-<Tip title="Markdown in Slots">This is a _markdown-based_ comment. **Great!**</Tip>
+<Tip title="Markdown in Slots">
+This is a _markdown-based_ comment. **Great!**
+</Tip>
 
 ### Binding Dynamic Values
 
@@ -94,23 +97,20 @@ The syntax of MDX is different from Vue templates when it comes to binding dynam
 Instead of `:title="example"`, you would do `title={example}`:
 
 ```mdx
-export const example = "Variables in Markdown";
+export const example = 'Variables in Markdown'
 
 <Tip title={example}>
 You can access the document's `frontmatter`, and `meta` info injected by <Iles/>.
 
 And use expressions, such as { meta.lastUpdated.toLocaleDateString('en-US') }.
-
 </Tip>
 ```
-
-export const example = "Variables in Markdown";
+export const example = 'Variables in Markdown'
 
 <Tip title={example}>
 You can access the document's `frontmatter`, and `meta` info injected by <Iles/>.
 
 And use expressions, such as { meta.lastUpdated.toLocaleDateString('en-US') }.
-
 </Tip>
 
 ## Markdown in Vue <VueLogo/>
@@ -120,11 +120,11 @@ imported if they are placed in the [components] dir.
 
 ```vue
 <script setup>
-import Acknowledgements from "~/components/Acknowledgements.mdx"; // not needed
+import Acknowledgements from '~/components/Acknowledgements.mdx' // not needed
 </script>
 
 <template>
-  <Acknowledgements />
+  <Acknowledgements/>
 </template>
 ```
 
@@ -145,7 +145,7 @@ When importing an [MDX] component from Vue, you can render its content using [`<
 
 ```vue
 <script setup lang="ts">
-import doc from "~/pages/introduction.mdx";
+import doc from '~/pages/introduction.mdx'
 </script>
 
 <template>
@@ -153,9 +153,8 @@ import doc from "~/pages/introduction.mdx";
     <a :href="doc.href">{{ doc.title }}</a>
   </h1>
   <p>{{ doc.frontmatter.description }}</p>
-  <component :is="doc" />
-  <span>Last Updated: {{ formatDate(doc.meta.lastUpdated) }}</span
-  >>
+  <component :is="doc"/>
+  <span>Last Updated: {{ formatDate(doc.meta.lastUpdated) }}</span>>
 </template>
 ```
 
@@ -173,37 +172,36 @@ Use the <kbd>[mdxComponents]</kbd> option to override elements globally
 in all MDX documents.
 
 ```ts
-import ResponsiveImage from "~/components/ResponsiveImage.vue";
+import ResponsiveImage from '~/components/ResponsiveImage.vue'
 
 export default defineApp({
   mdxComponents: {
     img: ResponsiveImage,
   },
-});
+})
 ```
-
 <Caption>`src/app.ts`</Caption>
 
 <Tip title="Recommended ✨">
-  Easy to setup, and provides consistency in how documents are rendered across the site.
+Easy to setup, and provides consistency in how documents are rendered across the site.
 </Tip>
 
-### Override Components Explicitly
+### Override Components Explicitly 
 
 If you need more control, you can use the `components` prop in MDX components.
 
 ```vue
 <script setup>
-import Introduction from "~/pages/introduction.mdx";
+import Introduction from '~/pages/introduction.mdx'
 
-import Footer from "~/components/SpecialFooter.vue";
+import Footer from '~/components/SpecialFooter.vue'
 
-const components = { Footer };
+const components = { Footer }
 </script>
 
 <template>
   <h1>{{ Introduction.title }}</h1>
-  <Introduction :components="components" />
+  <Introduction :components="components"/>
 </template>
 ```
 
@@ -211,16 +209,15 @@ Use `provideMDXComponents` to override elements and components in all nested com
 
 ```vue
 <script setup>
-import { provideMDXComponents } from "iles";
+import { provideMDXComponents } from 'iles'
 
-import Footer from "~/components/PostFooter.vue";
+import Footer from '~/components/PostFooter.vue'
 
-provideMDXComponents({ Footer });
+provideMDXComponents({ Footer })
 </script>
 
 ...
 ```
-
 <Caption>`src/layouts/post.vue`</Caption>
 
 ## Advanced: Multiple Slots in MDX
@@ -235,12 +232,8 @@ The syntax is confusing, and you can often achieve the same using props.
 </Tip>
 ```
 
-export const titleWithMarkdown = (
-  <span>
-    But better keep it <b>simple</b>
-  </span>
-);
+export const titleWithMarkdown = <span>But better keep it <b>simple</b></span>
 
 <Tip warn v-slots={{ title: () => titleWithMarkdown }}>
-  The syntax is confusing, and you can often achieve the same using props.
+The syntax is confusing, and you can often achieve the same using props.
 </Tip>

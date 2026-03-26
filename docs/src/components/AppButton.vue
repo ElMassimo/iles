@@ -1,19 +1,15 @@
 <script setup lang="ts">
 defineProps({
   outline: { type: Boolean, default: false },
-});
+})
 </script>
 
 <template>
-  <component
-    :is="$attrs.href ? 'a' : 'button'"
-    class="app-button font-medium"
-    :class="{ outline, colored: !outline }"
-  >
+  <component :is="$attrs.href ? 'a' : 'button'" class="app-button font-medium" :class="{ outline, colored: !outline }">
     <div v-if="$slots.icon" class="inline-block mr-1">
-      <slot name="icon" />
+      <slot name="icon"/>
     </div>
-    <slot />
+    <slot/>
   </component>
 </template>
 
@@ -28,11 +24,11 @@ defineProps({
 }
 
 .outline {
-  background: theme("colors.gray.100");
-  color: theme("colors.gray.500");
+  background: theme('colors.gray.100');
+  color: theme('colors.gray.500');
   outline-style: none;
   &:hover {
-    background: theme("colors.gray.200");
+    background: theme('colors.gray.200');
   }
 }
 
@@ -47,11 +43,11 @@ html.dark {
   }
 
   .outline {
-    background: theme("colors.warmgray.800");
-    color: theme("colors.gray.200");
+    background: theme('colors.warmgray.800');
+    color: theme('colors.gray.200');
 
     &:hover {
-      background: theme("colors.warmgray.600");
+      background: theme('colors.warmgray.600');
     }
   }
 }
@@ -68,7 +64,7 @@ html.dark {
     top: -1px;
     margin-left: 2px;
     fill: currentColor;
-    transition: transform 0.2s;
+    transition: transform .2s;
   }
 
   &:hover :deep(.icon) {

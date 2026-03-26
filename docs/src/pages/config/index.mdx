@@ -6,11 +6,13 @@ sidebar: auto
 [plugins]: /guide/plugins
 [Vite's plugins]: https://vitejs.dev/plugins/
 [config reference]: https://vitejs.dev/config/
+
 [site]: /guide/development#site
 [meta tags]: /guide/meta-tags
 [sitemap]: /guide/development#sitemap
+
 [shortcodes]: /guide/markdown#advanced-provide-components-shortcodes
-[deployment]: /guide/deployment
+[deployment]: /guide/deployment 
 [VitePress]: /faqs#vitepress
 [turbo]: /guide/turbo
 [documents]: /guide/documents
@@ -30,13 +32,13 @@ You can configure Vite.js as [usual](https://vitejs.dev/config/) using `vite.con
 Alternatively, you can provide a `vite` option in [`iles.config.ts`](#configuring-îles) with the same options.
 
 ```ts
-import { defineConfig } from "iles";
+import { defineConfig } from 'iles'
 
 export default defineConfig({
   vite: {
     plugins: [],
   },
-});
+})
 ```
 
 > Visit the _[Plugins]_ section for more details about the [pre-configured Vite.js plugins](/guide/plugins#vite-plugins).
@@ -49,12 +51,12 @@ related to markdown, component resolution, and other îles-specific features.
 You can leverage your IDE's intellisense with jsdoc type hints or use the `defineConfig` helper:
 
 ```ts
-import { defineConfig } from "iles";
+import { defineConfig } from 'iles'
 
 export default defineConfig({
-  siteUrl: "https://iles-docs.netlify.app",
-  jsx: "preact",
-});
+  siteUrl: 'https://iles-docs.netlify.app',
+  jsx: 'preact',
+})
 ```
 
 ### `drafts`
@@ -72,7 +74,7 @@ By default drafts will be displayed during development, but will be excluded whe
 
 - **Type:** `IlesModuleOption[]`
 
-<Iles /> modules to apply in the site. [Read the _Plugins and Modules_ guide][plugins].
+<Iles/> modules to apply in the site. [Read the _Plugins and Modules_ guide][plugins].
 
 ### `turbo` (experimental)
 
@@ -96,9 +98,8 @@ Which framework to use to compile `.jsx` and `.tsx` files.
 Whether to skip `.html` and trailing slashes in link hrefs and router paths.
 
 <Tip>
-  Set `prettyUrls: false` to simplify the migration of an existing [VitePress] site without having
-  to add redirects, or when deploying on services that don't support pretty urls ([most
-  do][deployment]).
+Set `prettyUrls: false` to simplify the migration of an existing [VitePress] site
+without having to add redirects, or when deploying on services that don't support pretty urls ([most do][deployment]).
 </Tip>
 
 ### `ssg`
@@ -111,7 +112,9 @@ Options applied during site generation when running <kbd>iles build</kbd>.
 
 This hook will be invoked before îles renders a page.
 
-<Tip>Modify `page.rendered` to alter the content of the page as needed.</Tip>
+<Tip>
+Modify `page.rendered` to alter the content of the page as needed.
+</Tip>
 
 #### `ssg.onSiteRendered`
 
@@ -131,7 +134,7 @@ Allows to configure how JS chunks for islands should be grouped.
 Whether to [generate a sitemap][sitemap] and reference it using a meta tag in all pages.
 
 <Tip warn>
-  You must provide <kbd>[siteUrl](#siteurl)</kbd> to enable sitemap generation.
+You must provide <kbd>[siteUrl](#siteurl)</kbd> to enable sitemap generation.
 </Tip>
 
 ### `siteUrl`
@@ -141,7 +144,10 @@ Whether to [generate a sitemap][sitemap] and reference it using a meta tag in al
 URL for the [site] in production, used to generate absolute URLs for the [sitemap]
 and social [meta tags].
 
-<Tip>When set, it is exposed as `site.url` and `site.canonical`.</Tip>
+
+<Tip>
+When set, it is exposed as `site.url` and `site.canonical`.
+</Tip>
 
 ### `debug`
 
@@ -152,32 +158,33 @@ Whether to output more information about islands and hydration in development.
 
 ## Your App
 
-<Iles /> will pre-configure a Vue 3 app that will load any [pages] defined in the site.
+<Iles/> will pre-configure a Vue 3 app that will load any [pages] defined in the
+site.
 
 You may provide additional configuration in `src/app.ts`, and leverage
 intellisense by using the `defineApp` helper.
 
 ```ts
-import { defineApp } from "iles";
+import { defineApp } from 'iles'
 
 export default defineApp({
-  head({ frontmatter, site }) {
+  head ({ frontmatter, site }) {
     return {
       meta: [
-        { property: "author", content: site.author },
-        { property: "keywords", content: computed(() => frontmatter.tags) },
-      ],
-    };
+        { property: 'author', content: site.author },
+        { property: 'keywords', content: computed(() => frontmatter.tags) },
+      ]
+    }
   },
-  enhanceApp({ app, head, router }) {
+  enhanceApp ({ app, head, router }) {
     // Configure the app to add plugins.
   },
   router: {
-    scrollBehavior(current, previous, savedPosition) {
+    scrollBehavior (current, previous, savedPosition) {
       // Configure the scroll behavior
-    },
+    }, 
   },
-});
+})
 ```
 
 ### `head`
@@ -200,15 +207,15 @@ the app being mounted.
 Provide an object that [maps tag names in MDX to components][shortcodes] to render.
 
 ```ts
-import { defineApp } from "iles";
-import Image from "~/components/Image.vue";
+import { defineApp } from 'iles'
+import Image from '~/components/Image.vue'
 
 export default defineApp({
   mdxComponents: {
-    b: "strong",
+    b: 'strong',
     img: Image,
   },
-});
+})
 ```
 
 ### `router`
@@ -229,24 +236,34 @@ Set it to `false` to avoid adding social tags such as `og:title` and `twitter:de
 ## `iles.config.ts` Example
 
 ```ts
-import { defineConfig } from "iles";
+import { defineConfig } from 'iles'
 
-import UnoCSS from "unocss/vite";
+import UnoCSS from 'unocss/vite'
 
 export default defineConfig({
-  siteUrl: "https://iles-docs.netlify.app",
-  extendFrontmatter(frontmatter, filename) {
-    if (filename.includes("/posts/")) frontmatter.layout = "post";
+  siteUrl: 'https://iles-docs.netlify.app',
+  extendFrontmatter (frontmatter, filename) {
+    if (filename.includes('/posts/'))
+      frontmatter.layout = 'post'
   },
   markdown: {
-    remarkPlugins: ["remark-gemoji"],
+    remarkPlugins: [
+      'remark-gemoji',
+    ],
   },
-  modules: ["@islands/icons", "@islands/headings", "@islands/prism"],
+  modules: [
+    '@islands/icons',
+    '@islands/headings',
+    '@islands/prism',
+  ],
   vite: {
-    plugins: [UnoCSS()],
+    plugins: [
+      UnoCSS(),
+    ],
   },
-});
+})
 ```
+
 
 [vue-router]: https://next.router.vuejs.org/
 [@unhead/vue]: https://github.com/@unhead/vue

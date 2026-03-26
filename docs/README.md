@@ -30,4 +30,4 @@ This is the source code of the [documentation website for îles][docs].
 
 It's built using [îles].
 
-[**Live Website**][docs]
+[__Live Website__][docs]

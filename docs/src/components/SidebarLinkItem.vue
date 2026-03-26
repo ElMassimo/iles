@@ -1,24 +1,25 @@
 <script setup lang="ts">
-import { useAppConfig } from "iles";
-import type { SideBarItem } from "~/logic/config";
-import { joinUrl } from "~/logic/utils";
-import { useActive } from "~/logic/sidebar";
+import { useAppConfig } from 'iles'
+import type { SideBarItem } from '~/logic/config'
+import { joinUrl } from '~/logic/utils'
+import { useActive } from '~/logic/sidebar'
 
-const { item, header, table } = defineProps<{
-  item: SideBarItem;
-  header?: boolean;
-  table?: boolean;
-}>();
+const { item, header, table } = defineProps<{ item: SideBarItem; header?: boolean; table?: boolean }>()
 
-const { base } = useAppConfig();
+const { base } = useAppConfig()
 
-const active = $(useActive(() => item));
-const link = $computed(() => item.link && joinUrl(base, item.link));
+const active = $(useActive(() => item))
+const link = $computed(() => item.link && joinUrl(base, item.link))
 
-const style = $computed(() => [
-  header ? "font-bold py-2" : table ? "toc-link" : "sidebar-link",
+const style = $computed(() => ([
+  header
+    ? 'font-bold py-2'
+    : table
+      ? 'toc-link'
+      : 'sidebar-link',
   { active: !table && active },
-]);
+]))
+
 </script>
 
 <template>

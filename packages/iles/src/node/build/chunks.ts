@@ -1,78 +1,72 @@
-import type { GetModuleInfo } from "rolldown";
-import type { AppConfig } from "../shared";
+import type { GetModuleInfo } from 'rolldown'
+import type { AppConfig } from '../shared'
 
 interface ManualChunkMeta {
-  getModuleInfo: GetModuleInfo;
+  getModuleInfo: GetModuleInfo
 }
-type GetManualChunk = (id: string, meta: ManualChunkMeta) => string | void;
+type GetManualChunk = (id: string, meta: ManualChunkMeta) => string | void
 
-export function extendManualChunks(config: AppConfig): GetManualChunk {
-  const userChunks = config.ssg.manualChunks;
-  const cache = new Map<string, string | undefined>();
+export function extendManualChunks (config: AppConfig): GetManualChunk {
+  const userChunks = config.ssg.manualChunks
+  const cache = new Map<string, string | undefined>()
   const chunkForExtension = {
     jsx: `vendor-${config.jsx}`,
     tsx: `vendor-${config.jsx}`,
-    svelte: "vendor-svelte",
-    vue: "vendor-vue",
-  };
+    svelte: 'vendor-svelte',
+    vue: 'vendor-vue',
+  }
   return (id, api) => {
     // Internal chunks must take priority to ensure hydration works correctly.
     // User manualChunks could inadvertently match hydration modules (e.g.
     // id.includes('preact') also matches @islands/hydration/preact).
-    if (id.includes("vite/") || id.includes("plugin-vue")) return "vite";
-    if (id.includes("hydration/dist")) return "iles";
-    const name = userChunks?.(id, api);
-    if (name) return name;
-    if (id.includes("node_modules")) return vendorPerFramework(chunkForExtension, id, api, cache);
-  };
+    if (id.includes('vite/') || id.includes('plugin-vue')) return 'vite'
+    if (id.includes('hydration/dist')) return 'iles'
+    const name = userChunks?.(id, api)
+    if (name) return name
+    if (id.includes('node_modules')) return vendorPerFramework(chunkForExtension, id, api, cache)
+  }
 }
 
 // Internal: Categorizes dependencies based on which islands are importing them.
 //
 // This heuristic ensures that framework-specific dependencies don't end up in a
 // shared chunk which would delay hydration for all islands.
-function vendorPerFramework(
+function vendorPerFramework (
   chunkForExtension: Record<string, string>,
   id: string,
   api: ManualChunkMeta,
   cache: Map<string, string | undefined>,
   importStack: string[] = [],
 ): string | undefined {
-  if (cache.has(id)) return cache.get(id);
+  if (cache.has(id)) return cache.get(id)
 
   if (importStack.includes(id)) {
     // circular deps!
-    cache.set(id, undefined);
-    return;
+    cache.set(id, undefined)
+    return
   }
 
-  const mod = api.getModuleInfo(id);
+  const mod = api.getModuleInfo(id)
   if (!mod) {
-    cache.set(id, undefined);
-    return;
+    cache.set(id, undefined)
+    return
   }
 
   if (mod.isEntry) {
-    const queryIndex = id.lastIndexOf("?");
-    const idWithoutQuery = queryIndex > -1 ? id.slice(0, queryIndex) : id;
-    const extension = idWithoutQuery.slice(idWithoutQuery.lastIndexOf(".") + 1);
-    const name = chunkForExtension[extension];
-    cache.set(id, name);
-    return name;
+    const queryIndex = id.lastIndexOf('?')
+    const idWithoutQuery = queryIndex > -1 ? id.slice(0, queryIndex) : id
+    const extension = idWithoutQuery.slice(idWithoutQuery.lastIndexOf('.') + 1)
+    const name = chunkForExtension[extension]
+    cache.set(id, name)
+    return name
   }
 
-  let name;
+  let name
   for (const importer of mod.importers) {
-    const importerChunk = vendorPerFramework(
-      chunkForExtension,
-      importer,
-      api,
-      cache,
-      importStack.concat(id),
-    );
-    if (!name) name = importerChunk;
-    if (importerChunk && importerChunk !== name) break;
+    const importerChunk = vendorPerFramework(chunkForExtension, importer, api, cache, importStack.concat(id))
+    if (!name) name = importerChunk
+    if (importerChunk && importerChunk !== name) break
   }
-  cache.set(id, name);
-  return name;
+  cache.set(id, name)
+  return name
 }

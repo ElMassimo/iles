@@ -12,5 +12,9 @@
     "jsx": "preserve",
     "lib": ["esnext", "dom", "dom.iterable"]
   },
-  "exclude": ["**/dist", "**/node_modules", "**/test"]
+  "exclude": [
+    "**/dist",
+    "**/node_modules",
+    "**/test"
+  ]
 }

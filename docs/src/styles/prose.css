@@ -4,7 +4,7 @@
 }
 
 .prose > *,
-.prose > div[class*="language-"] > pre,
+.prose > div[class*='language-'] > pre,
 .page-footer {
   margin-left: auto;
   margin-right: auto;
@@ -59,7 +59,7 @@
     margin-bottom: 2rem;
     font-size: 38px;
     line-height: 1.4;
-    letter-spacing: -0.02em;
+    letter-spacing: -.02em;
     font-weight: 700;
   }
 
@@ -88,7 +88,7 @@
 
   p,
   blockquote,
-  div[class*="language-"] {
+  div[class*='language-'] {
     margin-bottom: 1.25em;
     margin-top: 1.25em;
   }
@@ -139,7 +139,7 @@
   }
 
   blockquote,
-  div[class*="language-"] pre {
+  div[class*='language-'] pre {
     @apply py-4;
   }
 
@@ -160,15 +160,15 @@
 a.heading-anchor {
   @apply text-primary;
   float: left;
-  margin-top: 0.125em;
-  margin-left: -0.87em;
-  padding-right: 0.23em;
-  font-size: 0.85em;
+  margin-top: .125em;
+  margin-left: -.87em;
+  padding-right: .23em;
+  font-size: .85em;
   opacity: 0;
-  text-decoration: none !important;
+  text-decoration: none!important;
 
   &::before {
-    content: "#";
+    content: '#';
   }
 }
 
@@ -183,8 +183,7 @@ a.heading-anchor {
     pointer-events: none;
   }
 
-  &:focus,
-  &:hover {
+  &:focus, &:hover {
     a.heading-anchor {
       opacity: 1;
     }
