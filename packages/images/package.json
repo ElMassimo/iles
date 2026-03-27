@@ -30,7 +30,7 @@
   },
   "dependencies": {
     "pathe": "^1.1.2",
-    "vite-plugin-image-presets": "^0.3.4"
+    "vite-plugin-image-presets": "^0.3.5"
   },
   "peerDependencies": {
     "iles": "workspace:*"
