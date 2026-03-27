@@ -1,6 +1,15 @@
 import { defineConfig } from 'vite-plus'
-import pack from './tsdown.config'
 
 export default defineConfig({
-  pack,
+  lint: {
+    options: {
+      typeAware: true,
+      typeCheck: true,
+    },
+  },
+  pack: {
+    entry: ['src/node/index.ts', 'src/node/cli.ts'],
+    target: 'node20',
+    outDir: 'dist/node',
+  },
 })

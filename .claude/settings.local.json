@@ -1,5 +1,9 @@
 {
   "permissions": {
-    "allow": ["mcp__Claude_Preview__preview_start"]
+    "allow": [
+      "mcp__Claude_Preview__preview_start",
+      "Bash(pnpm lint:*)",
+      "Bash(pnpm lint:all)"
+    ]
   }
 }

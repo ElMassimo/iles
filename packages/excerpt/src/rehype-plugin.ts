@@ -1,8 +1,7 @@
-import type { IlesModule } from 'iles'
 import type { Element } from 'hast'
 import type { Plugin } from 'unified'
 import { toString } from 'hast-util-to-string'
-import type { Options, SeparatorFn } from './types'
+import type { Options } from './types'
 
 /**
  * A rehype plugin to extract an excerpt from the document, adding `excerpt` to

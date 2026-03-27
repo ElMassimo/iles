@@ -1,6 +1,18 @@
 import { defineConfig } from 'vite-plus'
-import pack from './tsdown.config'
 
 export default defineConfig({
-  pack,
+  lint: {
+    options: {
+      typeAware: true,
+      typeCheck: true,
+    },
+  },
+  pack: {
+    entry: ['src/images.ts'],
+    target: 'node20',
+    dts: true,
+    deps: {
+      onlyBundle: [],
+    },
+  },
 })
