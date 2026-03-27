@@ -144,6 +144,9 @@ importers:
       unified:
         specifier: ^11.0.5
         version: 11.0.5
+      vfile:
+        specifier: ^6.0.2
+        version: 6.0.2
     devDependencies:
       typescript:
         specifier: ^5.6.3
@@ -239,6 +242,30 @@ importers:
       '@nuxt/devalue':
         specifier: ^2.0.2
         version: 2.0.2
+      '@preact/preset-vite':
+        specifier: ^2.10.5
+        version: 2.10.5(@babel/core@7.26.0)(preact@10.24.3)(rollup@4.25.0)(vite@8.0.3(@types/node@20.14.12)(jiti@2.6.1)(terser@5.36.0)(tsx@4.19.2)(yaml@2.8.3))
+      '@sveltejs/vite-plugin-svelte':
+        specifier: ^7.0.0
+        version: 7.0.0(svelte@5.55.0)(vite@8.0.3(@types/node@20.14.12)(jiti@2.6.1)(terser@5.36.0)(tsx@4.19.2)(yaml@2.8.3))
+      '@types/debug':
+        specifier: ^4.1.12
+        version: 4.1.12
+      '@types/fs-extra':
+        specifier: ^11.0.4
+        version: 11.0.4
+      '@types/micromatch':
+        specifier: ^4.0.9
+        version: 4.0.9
+      '@types/minimist':
+        specifier: ^1.2.5
+        version: 1.2.5
+      '@types/node':
+        specifier: ^20.14.12
+        version: 20.14.12
+      '@types/unist':
+        specifier: ^3.0.2
+        version: 3.0.2
       '@unhead/ssr':
         specifier: ^1.9.16
         version: 1.9.16
@@ -266,6 +293,12 @@ importers:
       local-pkg:
         specifier: ^0.5.0
         version: 0.5.0
+      mdast-util-mdx-jsx:
+        specifier: ^3.1.2
+        version: 3.1.2
+      mdast-util-mdxjs-esm:
+        specifier: ^2.0.1
+        version: 2.0.1
       mico-spinner:
         specifier: ^1.4.0
         version: 1.4.0
@@ -281,15 +314,24 @@ importers:
       picocolors:
         specifier: ^1.0.1
         version: 1.0.1
+      rolldown:
+        specifier: 1.0.0-rc.9
+        version: 1.0.0-rc.9
       unist-util-visit:
         specifier: ^5.0.0
         version: 5.0.0
       unplugin-vue-components:
         specifier: ^0.27.3
         version: 0.27.3(@babel/parser@7.29.2)(rollup@4.25.0)(vue@3.5.12(typescript@5.6.3))
+      vfile:
+        specifier: ^6.0.2
+        version: 6.0.2
       vite:
         specifier: ^8.0.2
         version: 8.0.3(@types/node@20.14.12)(jiti@2.6.1)(terser@5.36.0)(tsx@4.19.2)(yaml@2.8.3)
+      vite-plugin-solid:
+        specifier: ^2.11.11
+        version: 2.11.11(solid-js@1.9.3)(vite@8.0.3(@types/node@20.14.12)(jiti@2.6.1)(terser@5.36.0)(tsx@4.19.2)(yaml@2.8.3))
       vue:
         specifier: ^3.5.12
         version: 3.5.12(typescript@5.6.3)
@@ -297,30 +339,6 @@ importers:
         specifier: ^4.4.0
         version: 4.4.0(vue@3.5.12(typescript@5.6.3))
     devDependencies:
-      '@preact/preset-vite':
-        specifier: ^2.10.5
-        version: 2.10.5(@babel/core@7.26.0)(preact@10.24.3)(rollup@4.25.0)(vite@8.0.3(@types/node@20.14.12)(jiti@2.6.1)(terser@5.36.0)(tsx@4.19.2)(yaml@2.8.3))
-      '@sveltejs/vite-plugin-svelte':
-        specifier: ^7.0.0
-        version: 7.0.0(svelte@5.55.0)(vite@8.0.3(@types/node@20.14.12)(jiti@2.6.1)(terser@5.36.0)(tsx@4.19.2)(yaml@2.8.3))
-      '@types/debug':
-        specifier: ^4.1.12
-        version: 4.1.12
-      '@types/fs-extra':
-        specifier: ^11.0.4
-        version: 11.0.4
-      '@types/micromatch':
-        specifier: ^4.0.9
-        version: 4.0.9
-      '@types/minimist':
-        specifier: ^1.2.5
-        version: 1.2.5
-      '@types/node':
-        specifier: ^20.14.12
-        version: 20.14.12
-      '@types/unist':
-        specifier: ^3.0.2
-        version: 3.0.2
       chokidar:
         specifier: ^3
         version: 3.5.3
@@ -339,18 +357,9 @@ importers:
       fs-extra:
         specifier: ^11
         version: 11.1.1
-      mdast-util-mdx-jsx:
-        specifier: ^3.1.2
-        version: 3.1.2
-      mdast-util-mdxjs-esm:
-        specifier: ^2.0.1
-        version: 2.0.1
       npm-run-all:
         specifier: ^4.1.5
         version: 4.1.5
-      rolldown:
-        specifier: 1.0.0-rc.9
-        version: 1.0.0-rc.9
       semver:
         specifier: ^7.6.3
         version: 7.6.3
@@ -360,12 +369,6 @@ importers:
       typescript:
         specifier: ^5.6.3
         version: 5.6.3
-      vfile:
-        specifier: ^6.0.2
-        version: 6.0.2
-      vite-plugin-solid:
-        specifier: ^2.11.11
-        version: 2.11.11(solid-js@1.9.3)(vite@8.0.3(@types/node@20.14.12)(jiti@2.6.1)(terser@5.36.0)(tsx@4.19.2)(yaml@2.8.3))
       vue-tsc:
         specifier: ^2.1.10
         version: 2.1.10(typescript@5.6.3)
