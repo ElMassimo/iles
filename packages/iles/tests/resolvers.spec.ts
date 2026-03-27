@@ -1,5 +1,6 @@
-import { test, describe, expect } from 'vitest'
+import { test, describe, expect } from 'vite-plus/test'
 import path from 'path'
+import type { AppConfig } from 'iles'
 
 import { IlesComponentResolver, IlesLayoutResolver } from '@node/config'
 import { ISLAND_COMPONENT_PATH } from '@node/alias'
@@ -17,7 +18,7 @@ describe('resolvers', () => {
 
   test('can resolve layouts', async () => {
     const layoutsDir = path.resolve(vuePoint, 'src/layouts')
-    const resolve = IlesLayoutResolver({ layoutsDir })
+    const resolve = IlesLayoutResolver({ layoutsDir } satisfies Partial<AppConfig> as AppConfig)
 
     expect(resolve('DefaultLayout'))
       .toEqual({ name: 'default', from: `${layoutsDir}/default.vue` })

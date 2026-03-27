@@ -1,35 +1,31 @@
 {
   "name": "@islands/mdx",
   "version": "0.10.0-beta.1",
-  "scripts": {
-    "dev": "npm run build -- --watch",
-    "build": "tsup src/mdx.ts",
-    "tsc": "tsc src/mdx.ts --noEmit --skipLibCheck",
-    "lint": "eslint .",
-    "lint:fix": "eslint . --fix"
-  },
-  "type": "module",
-  "files": [
-    "dist",
-    "src"
-  ],
-  "types": "dist/mdx.d.ts",
-  "main": "dist/mdx.js",
-  "exports": {
-    ".": {
-      "import": "./dist/mdx.js",
-      "require": "./src/mdx.cjs"
-    },
-    "./package.json": "./package.json"
-  },
-  "funding": "https://github.com/sponsors/ElMassimo",
+  "homepage": "https://github.com/ElMassimo/iles",
+  "bugs": "https://github.com/ElMassimo/iles/issues",
   "author": "Máximo Mussini <maximomussini@gmail.com>",
   "repository": {
     "type": "git",
     "url": "https://github.com/ElMassimo/iles"
   },
-  "homepage": "https://github.com/ElMassimo/iles",
-  "bugs": "https://github.com/ElMassimo/iles/issues",
+  "funding": "https://github.com/sponsors/ElMassimo",
+  "files": [
+    "dist",
+    "src"
+  ],
+  "type": "module",
+  "types": "dist/mdx.d.mts",
+  "exports": {
+    ".": "./dist/mdx.mjs",
+    "./package.json": "./package.json"
+  },
+  "scripts": {
+    "dev": "vp pack --watch",
+    "build": "vp pack --clean",
+    "tsc": "tsc src/mdx.ts --noEmit --skipLibCheck",
+    "lint": "vp lint",
+    "lint:fix": "vp lint --fix"
+  },
   "dependencies": {
     "@mdx-js/mdx": "3.0.1",
     "estree-walker": "^3.0",
@@ -39,16 +35,16 @@
     "source-map": "^0.7.4",
     "unist-util-visit": "^5.0.0"
   },
-  "devDependencies": {
+  "peerDependencies": {
     "@types/estree-jsx": "^1.0.5",
     "@types/hash-sum": "^1.0",
     "@types/hast": "^3.0.4",
     "hast-util-raw": "^9.0.4",
     "mdast-util-mdx-expression": "^2.0.1",
-    "tsup": "8.2.4",
-    "typescript": "^5.6.3",
     "unified": "^11.0.5",
-    "vfile": "^6.0.2",
-    "vite": "^8.0.0"
+    "vfile": "^6.0.2"
+  },
+  "devDependencies": {
+    "typescript": "^5.6.3"
   }
 }

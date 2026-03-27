@@ -3,7 +3,7 @@ import { extname } from 'path'
 import type { Plugin, TransformResult } from 'vite'
 import type { createFormatAwareProcessors } from '@mdx-js/mdx/internal-create-format-aware-processors'
 import hash from 'hash-sum'
-import type { MarkdownOptions, PluginLike, PluginOption } from './types'
+import type { MarkdownOptions } from './types'
 
 import { resolvePlugins } from './plugins'
 

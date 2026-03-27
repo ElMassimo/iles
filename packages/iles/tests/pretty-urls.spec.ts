@@ -1,5 +1,5 @@
 import { toExplicitHtmlPath } from '@mdx/utils'
-import { test, describe, expect, beforeAll } from 'vitest'
+import { test, describe, expect } from 'vite-plus/test'
 
 describe('prettyUrls', () => {
   const expectExplicitPath = (path: string) => expect(toExplicitHtmlPath(path))

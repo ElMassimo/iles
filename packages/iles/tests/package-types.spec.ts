@@ -1,0 +1,38 @@
+import { promises as fs } from 'fs'
+import { resolve } from 'path'
+import { beforeAll, describe, expect, test } from 'vite-plus/test'
+
+import { execa } from 'execa'
+
+const projectRoot = resolve(__dirname, '../../..')
+
+const packageNames = ['excerpt', 'feed', 'headings', 'icons', 'images', 'prism', 'pwa']
+const expectedTypes = {
+  excerpt: ['excerpt.d.mts'],
+  feed: ['feed.d.mts', 'render-feed.d.mts', 'types.d.mts'],
+  headings: ['headings.d.mts'],
+  icons: ['icons.d.mts'],
+  images: ['images.d.mts'],
+  prism: ['prism.d.mts'],
+  pwa: ['pwa.d.mts'],
+}
+
+describe('package type outputs', () => {
+  beforeAll(async () => {
+    await execa('pnpm', ['nx', 'run-many', '--target=build', '--projects', packageNames.map(name => `@islands/${name}`).join(',')], {
+      cwd: projectRoot,
+      stdio: process.env.DEBUG ? 'inherit' : undefined,
+    })
+  }, 120000)
+
+  test('uses .d.mts outputs for migrated packages', async () => {
+    for (const packageName of packageNames) {
+      const distPath = resolve(projectRoot, `packages/${packageName}/dist`)
+      const files = await fs.readdir(distPath)
+      const dtsFiles = files.filter(file => file.endsWith('.d.mts')).sort()
+
+      expect(dtsFiles).toEqual(expectedTypes[packageName as keyof typeof expectedTypes])
+      expect(files.some(file => file.endsWith('.d.ts'))).toBe(false)
+    }
+  })
+})

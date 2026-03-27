@@ -1,12 +1,13 @@
 {
   "name": "root",
-  "type": "module",
   "private": true,
-  "packageManager": "pnpm@9.8.0",
+  "type": "module",
   "scripts": {
     "build:all": "pnpm nx run-many --target=build --all --exclude docs --exclude vue-blog",
-    "lint:all": "pnpm nx run-many --target=lint --all",
-    "lint:fix:all": "pnpm nx run-many --target=lint:fix --all",
+    "lint:all": "NX_NO_CLOUD=true pnpm nx run-many --target=lint --all --parallel --skip-nx-cache",
+    "lint:fix:all": "NX_NO_CLOUD=true pnpm nx run-many --target=lint:fix --all --parallel --skip-nx-cache",
+    "fmt": "vp fmt",
+    "check": "vp check",
     "docs": "npm -C docs run dev",
     "docs:build": "npm -C docs run build",
     "docs:now": "npm -C docs run now",
@@ -17,20 +18,16 @@
     "blog:check": "npm -C playground/the-vue-point run check",
     "release": "tsx scripts/release.ts",
     "changelog": "tsx scripts/changelog.ts",
+    "pkg-size": "tsx scripts/pkg-size.ts",
     "test": "packages/iles/bin/iles.js test"
   },
   "devDependencies": {
-    "@antfu/eslint-config": "^2.24.0",
-    "@nrwl/cli": "^15.9.3",
-    "@nrwl/nx-cloud": "^19.1.0",
-    "@nx/workspace": "^19.7.3",
+    "@nrwl/cli": "15.9.3",
+    "@nrwl/nx-cloud": "19.1.0",
+    "@nx/workspace": "19.8.4",
     "concurrently": "^8.2.2",
     "conventional-changelog-cli": "^5.0.0",
     "enquirer": "^2.4.1",
-    "eslint": "^9.8.0",
-    "eslint-plugin-format": "^0.1.2",
-    "eslint-plugin-solid": "^0.14.1",
-    "eslint-plugin-svelte": "^2.43.0",
     "execa": "^9.3.0",
     "iles": "workspace:*",
     "minimist": "^1.2.8",
@@ -38,17 +35,7 @@
     "semver": "^7.6.3",
     "tsx": "^4.19.2",
     "typescript": "^5.6.3",
-    "vitest": "^4.1.0"
+    "vite-plus": "^0.1.14"
   },
-  "pnpm": {
-    "overrides": {
-      "@typescript-eslint/typescript-estree": "8.5.0",
-      "vite": "8.0.0"
-    },
-    "peerDependencyRules": {
-      "allowedVersions": {
-        "eslint": "9"
-      }
-    }
-  }
+  "packageManager": "pnpm@9.8.0"
 }

@@ -8,13 +8,14 @@
     "build": "iles build",
     "preview": "iles preview --open --port 3050",
     "now": "npm run build && npm run preview",
-    "lint": "eslint .",
-    "lint:fix": "eslint . --fix",
+    "lint": "vp lint",
+    "lint:fix": "vp lint --fix",
     "check": "vue-tsc --noEmit",
     "cy:run": "scripts/test-cypress"
   },
-  "engines": {
-    "node": "^14.18 || >= 16.0.0"
+  "dependencies": {
+    "@docsearch/css": "^3.6.1",
+    "@mussi/docsearch": "3.1.2-beta.0"
   },
   "devDependencies": {
     "@iconify-json/bx": "^1.1.10",
@@ -25,8 +26,8 @@
     "@islands/pwa": "workspace:*",
     "@preact/preset-vite": "^2.9.0",
     "@types/cross-spawn": "^6.0.6",
-    "@vueuse/core": "^10.11.0",
     "@vue-macros/reactivity-transform": "^1.0.4",
+    "@vueuse/core": "^10.11.0",
     "autoprefixer": "^10.4.19",
     "cross-spawn": "^7.0.3",
     "iles": "workspace:*",
@@ -36,10 +37,9 @@
     "rehype-external-links": "^3.0.0",
     "unocss": "^66.6.6",
     "vite-plugin-inspect": "^0.8.7",
-    "vue-tsc": "^2.1.10"
+    "vue-tsc": "^3.2.6"
   },
-  "dependencies": {
-    "@docsearch/css": "^3.6.1",
-    "@mussi/docsearch": "3.1.2-beta.0"
+  "engines": {
+    "node": "^14.18 || >= 16.0.0"
   }
 }

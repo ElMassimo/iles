@@ -1,6 +1,6 @@
 import { copy, remove } from 'fs-extra'
 import { watch } from 'chokidar'
-import { normalizePath } from 'vite'
+import { normalizePath } from 'vite-plus'
 
 function toClientAndNode (method, file) {
   file = normalizePath(file)

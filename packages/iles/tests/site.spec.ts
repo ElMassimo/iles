@@ -1,4 +1,5 @@
-import { test, describe, expect } from 'vitest'
+import { test, describe, expect } from 'vite-plus/test'
+import type { AppConfig } from 'iles'
 
 import { extendSite } from '@node/plugin/site'
 
@@ -6,7 +7,7 @@ describe('site', () => {
   test('without data', () => {
     const extended = extendSite(`
 export default {}
-`, { siteUrl: 'http://example.com', base: '/' })
+`, { siteUrl: 'http://example.com', base: '/' } satisfies Partial<AppConfig> as AppConfig)
     expect(extended).toMatchSnapshot()
   })
 
@@ -17,7 +18,7 @@ const site = {
 }
 
 export default site
-`, { siteUrl: '', base: '/' })
+`, { siteUrl: '', base: '/' } satisfies Partial<AppConfig> as AppConfig)
     expect(extended).toMatchSnapshot()
   })
 
@@ -26,7 +27,7 @@ export default site
 export default {
   title: 'îles',
 }
-`, { siteUrl: 'https://example.com', base: '/awesome/' })
+`, { siteUrl: 'https://example.com', base: '/awesome/' } satisfies Partial<AppConfig> as AppConfig)
     expect(extended).toMatchSnapshot()
   })
 })

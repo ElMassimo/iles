@@ -1,4 +1,4 @@
-import { test, describe, expect } from 'vitest'
+import { test, describe, expect } from 'vite-plus/test'
 
 import config from '@islands/app-config'
 

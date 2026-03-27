@@ -1,6 +1,6 @@
 import { promises as fs } from 'fs'
 import { resolve } from 'path'
-import { beforeAll, describe, expect, test } from 'vitest'
+import { beforeAll, describe, expect, test } from 'vite-plus/test'
 
 import { execa } from 'execa'
 import glob from 'fast-glob'

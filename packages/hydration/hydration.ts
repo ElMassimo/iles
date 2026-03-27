@@ -1,5 +1,5 @@
 import { AsyncFrameworkFn, FrameworkFn, Component, AsyncComponent, Props, Slots } from './types'
-export { Framework, Props, Slots } from './types'
+export type { Framework, Props, Slots } from './types'
 
 const findById = (id: string) =>
   document.getElementById(id) || console.error(`Missing #${id}, could not mount island.`)

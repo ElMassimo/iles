@@ -1,24 +1,21 @@
 {
   "name": "iles",
-  "description": "Vite & Vue powered static site generator with partial hydration",
   "version": "0.10.0-beta.1",
-  "type": "module",
+  "description": "Vite & Vue powered static site generator with partial hydration",
+  "keywords": [
+    "islands",
+    "ssg",
+    "vite",
+    "vue"
+  ],
+  "homepage": "https://github.com/ElMassimo/iles",
+  "bugs": {
+    "url": "https://github.com/ElMassimo/iles/issues"
+  },
+  "license": "MIT",
+  "author": "Máximo Mussini",
   "bin": {
     "iles": "bin/iles.js"
-  },
-  "main": "./dist/node/index.js",
-  "module": "./dist/node/index.js",
-  "types": "./types/index.d.ts",
-  "exports": {
-    ".": {
-      "types": "./types/index.d.ts",
-      "import": "./dist/node/index.js",
-      "require": "./index.cjs"
-    },
-    "./jsx-runtime": "./jsx-runtime.js",
-    "./jsx-dev-runtime": "./jsx-runtime.js",
-    "./dist/client/*": "./dist/client/*",
-    "./package.json": "./package.json"
   },
   "files": [
     "bin",
@@ -27,40 +24,34 @@
     "types",
     "config.js",
     "turbo.js",
-    "index.cjs",
     "jsx-runtime.js",
     "tsconfig.json"
   ],
+  "type": "module",
+  "types": "./types/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./types/index.d.ts",
+      "import": "./dist/node/index.mjs"
+    },
+    "./jsx-runtime": "./jsx-runtime.js",
+    "./jsx-dev-runtime": "./jsx-runtime.js",
+    "./dist/client/*": "./dist/client/*",
+    "./package.json": "./package.json"
+  },
   "scripts": {
     "dev": "rm -rf dist && npm run dev:shared && npm run dev:start",
-    "dev:start": "run-p dev:client dev:node dev:cjs dev:watch",
+    "dev:start": "run-p dev:client dev:node dev:watch",
     "dev:client": "npm run build:client -- --watch",
-    "dev:node": "npm run build:node -- --watch",
-    "dev:cjs": "npm run build:cjs -- --watch",
+    "dev:node": "vp pack --watch",
     "dev:shared": "node scripts/copyShared",
     "dev:watch": "node scripts/watchAndCopy",
-    "build": "pnpm build:prepare && pnpm build:client && pnpm build:node && pnpm build:cjs",
+    "build": "vp run build:prepare && vp run build:client && vp run build:node",
     "build:prepare": "rm -rf dist && node scripts/copyShared",
     "build:client": "vue-tsc --noEmit -p src/client && tsc -p src/client && node scripts/copyClient",
-    "build:node": "tsup --config tsup.config.ts src/node",
-    "build:cjs": "tsup src/node/publicUtils.ts --config tsup-cjs.config.ts",
-    "lint": "eslint .",
-    "lint:fix": "eslint . --fix"
-  },
-  "engines": {
-    "node": ">=20.19.0 || >=22.12.0"
-  },
-  "keywords": [
-    "vite",
-    "vue",
-    "islands",
-    "ssg"
-  ],
-  "author": "Máximo Mussini",
-  "license": "MIT",
-  "homepage": "https://github.com/ElMassimo/iles",
-  "bugs": {
-    "url": "https://github.com/ElMassimo/iles/issues"
+    "build:node": "vp pack --clean",
+    "lint": "vp lint",
+    "lint:fix": "vp lint --fix"
   },
   "dependencies": {
     "@antfu/install-pkg": "^0.3.3",
@@ -85,36 +76,40 @@
     "picocolors": "^1.0.1",
     "unist-util-visit": "^5.0.0",
     "unplugin-vue-components": "^0.27.3",
-    "vite": "^8.0.0",
+    "vite": "^8.0.2",
     "vue": "^3.5.12",
     "vue-router": "^4.4.0"
   },
-  "devDependencies": {
-    "@preact/preset-vite": "^2.9.1",
-    "@sveltejs/vite-plugin-svelte": "^7.0.0",
+  "peerDependencies": {
     "@types/debug": "^4.1.12",
     "@types/fs-extra": "^11.0.4",
     "@types/micromatch": "^4.0.9",
     "@types/minimist": "^1.2.5",
     "@types/node": "^20.14.12",
     "@types/unist": "^3.0.2",
+    "rolldown": "1.0.0-rc.9",
+    "@preact/preset-vite": "^2.10.5",
+    "@sveltejs/vite-plugin-svelte": "^7.0.0",
+    "vite-plugin-solid": "^2.11.11",
+    "mdast-util-mdx-jsx": "^3.1.2",
+    "vfile": "^6.0.2",
+    "mdast-util-mdxjs-esm": "^2.0.1"
+  },
+  "devDependencies": {
     "chokidar": "^3",
     "conventional-changelog-cli": "^5.0.0",
     "enquirer": "^2",
     "execa": "^9",
     "find-up": "7.0.0",
     "fs-extra": "^11",
-    "mdast-util-mdx-jsx": "^3.1.2",
-    "mdast-util-mdxjs-esm": "^2.0.1",
     "micromatch": "^4.0.7",
     "npm-run-all": "^4.1.5",
-    "rolldown": "1.0.0-rc.9",
     "semver": "^7.6.3",
     "tinyglobby": "0.2.6",
-    "tsup": "8.2.4",
     "typescript": "^5.6.3",
-    "vfile": "^6.0.2",
-    "vite-plugin-solid": "^2.10.2",
-    "vue-tsc": "^2.1.10"
+    "vue-tsc": "^3.2.6"
+  },
+  "engines": {
+    "node": ">=20.19.0 || >=22.12.0"
   }
 }

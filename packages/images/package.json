@@ -1,41 +1,38 @@
 {
   "name": "@islands/images",
   "version": "0.10.0-beta.1",
-  "scripts": {
-    "dev": "npm run build -- --watch",
-    "build": "tsup src/images.ts",
-    "lint": "eslint .",
-    "lint:fix": "eslint . --fix"
-  },
-  "type": "module",
-  "files": [
-    "dist",
-    "src/Picture.vue"
-  ],
-  "types": "dist/images.d.ts",
-  "exports": {
-    ".": {
-      "import": "./dist/images.js",
-      "require": "./dist/images.cjs",
-      "types": "./dist/images.d.ts"
-    },
-    "./package.json": "./package.json"
-  },
-  "funding": "https://github.com/sponsors/ElMassimo",
+  "homepage": "https://github.com/ElMassimo/iles",
+  "bugs": "https://github.com/ElMassimo/iles/issues",
   "author": "Máximo Mussini <maximomussini@gmail.com>",
   "repository": {
     "type": "git",
     "url": "https://github.com/ElMassimo/iles"
   },
-  "homepage": "https://github.com/ElMassimo/iles",
-  "bugs": "https://github.com/ElMassimo/iles/issues",
+  "funding": "https://github.com/sponsors/ElMassimo",
+  "files": [
+    "dist",
+    "src/Picture.vue"
+  ],
+  "type": "module",
+  "types": "dist/images.d.mts",
+  "exports": {
+    ".": {
+      "types": "./dist/images.d.mts",
+      "import": "./dist/images.mjs"
+    },
+    "./package.json": "./package.json"
+  },
+  "scripts": {
+    "dev": "vp pack --watch",
+    "build": "vp pack --clean",
+    "lint": "vp lint",
+    "lint:fix": "vp lint --fix"
+  },
   "dependencies": {
     "pathe": "^1.1.2",
     "vite-plugin-image-presets": "^0.3.4"
   },
-  "devDependencies": {
-    "iles": "workspace:*",
-    "tsup": "8.2.4",
-    "typescript": "^5.6.3"
+  "peerDependencies": {
+    "iles": "workspace:*"
   }
 }

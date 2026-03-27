@@ -3,7 +3,8 @@ import type { MdxFlowExpression } from 'mdast-util-mdx-expression'
 import type { MdxjsEsm } from 'mdast-util-mdxjs-esm'
 import type { Plugin } from 'unified'
 import type { Parent, Content, Element } from 'hast'
-import { toHtml as hastToHtml, type Options as ToHtmlOptions } from 'hast-util-to-html'
+import { toHtml as hastToHtml } from 'hast-util-to-html'
+import type { Options as ToHtmlOptions } from 'hast-util-to-html'
 import type { MarkdownOptions } from './types'
 
 type Child = Content

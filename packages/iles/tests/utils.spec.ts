@@ -1,4 +1,4 @@
-import { test, describe, expect } from 'vitest'
+import { test, describe, expect } from 'vite-plus/test'
 
 import { pascalCase, serialize } from '@node/plugin/utils'
 
@@ -16,7 +16,6 @@ describe('serialize', () => {
     const recordedAt = new Date()
     const value = { audio, recordedAt }
     const serialized = serialize(value)
-    // eslint-disable-next-line no-new-func
-    expect(Function(`return ${serialized}`)()).toEqual(value)
+    expect(new Function(`return ${serialized}`)()).toEqual(value)
   })
 })

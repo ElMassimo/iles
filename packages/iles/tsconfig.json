@@ -1,6 +1,5 @@
 {
   "compilerOptions": {
-    "baseUrl": ".",
     "module": "esnext",
     "target": "esnext",
     "moduleResolution": "bundler",
@@ -12,18 +11,18 @@
     "esModuleInterop": true,
     "useUnknownInCatchVariables": false,
     "lib": ["esnext", "DOM"],
-    "types": ["node", "vite/client", "vitest"],
+    "types": ["node", "vite-plus/client", "vite-plus/test"],
     "paths": {
-      "src/*": ["src/*"],
-      "@components/*": ["src/client/app/components/*"],
-      "@client/*": ["src/client/*"],
-      "@node/*": ["src/node/*"],
-      "@mdx/*": ["../mdx/src/*"],
-      "lib/*": ["src/node/*"],
-      "shared/*": ["src/shared/*"],
-      "tests/*": ["__tests__/*"],
-      "/@shared/*": ["src/client/shared/*"],
-      "iles": ["types/index.d.ts"]
+      "src/*": ["./src/*"],
+      "@components/*": ["./src/client/app/components/*"],
+      "@client/*": ["./src/client/*"],
+      "@node/*": ["./src/node/*"],
+      "@mdx/*": ["./../mdx/src/*"],
+      "lib/*": ["./src/node/*"],
+      "shared/*": ["./src/shared/*"],
+      "tests/*": ["./__tests__/*"],
+      "/@shared/*": ["./src/client/shared/*"],
+      "iles": ["./types/index.d.ts"]
     }
   },
   "include": ["src", "tests", "types"],

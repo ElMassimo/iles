@@ -2,7 +2,8 @@ import { promises as fs, existsSync } from 'fs'
 import { join, resolve } from 'pathe'
 import pc from 'picocolors'
 import creatDebugger from 'debug'
-import { loadConfigFromFile, mergeConfig as mergeViteConfig, type Plugin, PluginOption } from 'vite'
+import { loadConfigFromFile, mergeConfig as mergeViteConfig, PluginOption } from 'vite'
+import type { Plugin } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import components from 'unplugin-vue-components/vite'
 import pages from '@islands/pages'
@@ -288,6 +289,7 @@ function viteConfigDefaults (root: string, userConfig: UserConfig): ViteOptions 
     root,
     resolve: {
       alias: resolveAliases(root, userConfig),
+      conditions: ['module', 'browser', 'development'],
       dedupe: ['vue', 'vue-router', '@unhead/vue', '@vue/devtools-api'],
     },
     server: {

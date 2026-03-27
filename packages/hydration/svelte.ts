@@ -1,4 +1,5 @@
-import { createRawSnippet, mount, unmount, type Snippet } from 'svelte'
+import { createRawSnippet, mount, unmount } from 'svelte'
+import type { Snippet } from 'svelte'
 import type { Props, Slots } from './types'
 import { onDispose } from './hydration'
 
