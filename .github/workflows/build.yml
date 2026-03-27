@@ -45,7 +45,7 @@ jobs:
         run: pnpm docs:check
 
       - name: Lint
-        run: pnpm lint:all
+        run: pnpm lint
 
   cypress:
     name: cypress
