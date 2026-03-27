@@ -14,11 +14,20 @@
     "src"
   ],
   "type": "module",
-  "types": "dist/feed.d.ts",
+  "types": "dist/feed.d.mts",
   "exports": {
-    ".": "./dist/feed.mjs",
-    "./types": "./dist/types.mjs",
-    "./render-feed": "./dist/render-feed.mjs",
+    ".": {
+      "types": "./dist/feed.d.mts",
+      "import": "./dist/feed.mjs"
+    },
+    "./types": {
+      "types": "./dist/types.d.mts",
+      "import": "./dist/types.mjs"
+    },
+    "./render-feed": {
+      "types": "./dist/render-feed.d.mts",
+      "import": "./dist/render-feed.mjs"
+    },
     "./package.json": "./package.json"
   },
   "scripts": {

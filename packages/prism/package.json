@@ -14,9 +14,12 @@
     "src"
   ],
   "type": "module",
-  "types": "dist/prism.d.ts",
+  "types": "dist/prism.d.mts",
   "exports": {
-    ".": "./dist/prism.mjs",
+    ".": {
+      "types": "./dist/prism.d.mts",
+      "import": "./dist/prism.mjs"
+    },
     "./package.json": "./package.json"
   },
   "scripts": {

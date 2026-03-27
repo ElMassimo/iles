@@ -14,9 +14,12 @@
     "src/Picture.vue"
   ],
   "type": "module",
-  "types": "dist/images.d.ts",
+  "types": "dist/images.d.mts",
   "exports": {
-    ".": "./dist/images.mjs",
+    ".": {
+      "types": "./dist/images.d.mts",
+      "import": "./dist/images.mjs"
+    },
     "./package.json": "./package.json"
   },
   "scripts": {

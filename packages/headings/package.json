@@ -14,9 +14,12 @@
     "src"
   ],
   "type": "module",
-  "types": "dist/headings.d.ts",
+  "types": "dist/headings.d.mts",
   "exports": {
-    ".": "./dist/headings.mjs",
+    ".": {
+      "types": "./dist/headings.d.mts",
+      "import": "./dist/headings.mjs"
+    },
     "./package.json": "./package.json"
   },
   "scripts": {

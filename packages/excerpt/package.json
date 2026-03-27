@@ -14,9 +14,12 @@
     "src"
   ],
   "type": "module",
-  "types": "dist/excerpt.d.ts",
+  "types": "dist/excerpt.d.mts",
   "exports": {
-    ".": "./dist/excerpt.mjs",
+    ".": {
+      "types": "./dist/excerpt.d.mts",
+      "import": "./dist/excerpt.mjs"
+    },
     "./package.json": "./package.json"
   },
   "scripts": {
