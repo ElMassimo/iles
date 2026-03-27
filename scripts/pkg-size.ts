@@ -7,6 +7,7 @@ const packagesDir = path.resolve(__dirname, '../packages')
 
 /**
  * @param {number} bytes
+ * @returns {string}
  */
 function formatSize (bytes: number) {
   if (bytes < 1024) return `${bytes} B`
@@ -16,6 +17,7 @@ function formatSize (bytes: number) {
 
 /**
  * @param {string} dir
+ * @returns {{ js: number, dts: number }}
  */
 function getDistSizes (dir: string) {
   let js = 0
