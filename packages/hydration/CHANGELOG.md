@@ -1,3 +1,12 @@
+# [0.10.0](https://github.com/ElMassimo/iles/compare/hydration@0.10.0-beta.1...hydration@0.10.0) (2026-03-27)
+
+
+### Features
+
+* upgrade to vite 8 and rolldown ([#332](https://github.com/ElMassimo/iles/issues/332)) ([e54954a](https://github.com/ElMassimo/iles/commit/e54954a7e0528f53dd1fb7dbe57198c481847800))
+
+
+
 # [0.10.0-beta.1](https://github.com/ElMassimo/iles/compare/hydration@0.8.2...hydration@0.10.0-beta.1) (2024-12-04)
 
 
