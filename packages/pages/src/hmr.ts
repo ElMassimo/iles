@@ -1,6 +1,7 @@
 import type { ViteDevServer, Plugin } from 'vite'
 import { debug, slash } from './utils'
-import { MODULE_ID, ResolvedOptions, PagesApi } from './types'
+import { MODULE_ID } from './types'
+import type { ResolvedOptions, PagesApi } from './types'
 
 export function handleHMR (api: PagesApi, options: ResolvedOptions, clearRoutes: () => void): Plugin['hotUpdate'] {
   const server = options.server!

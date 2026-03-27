@@ -19,15 +19,15 @@
     "./package.json": "./package.json"
   },
   "scripts": {
-    "dev": "vp pack src/pwa.ts --target node20 --watch",
-    "build": "vp pack src/pwa.ts --clean --target node20 && tsc --emitDeclarationOnly --noCheck --declaration --outDir dist --skipLibCheck --moduleResolution bundler --module esnext --target esnext --esModuleInterop --resolveJsonModule src/pwa.ts",
+    "dev": "vp pack --watch",
+    "build": "vp pack --clean && tsc --emitDeclarationOnly --noCheck --declaration --outDir dist --skipLibCheck --moduleResolution bundler --module esnext --target esnext --esModuleInterop --resolveJsonModule src/pwa.ts",
     "lint": "vp lint",
     "lint:fix": "vp lint --fix"
   },
   "dependencies": {
     "vite-plugin-pwa": "^1.2.0"
   },
-  "devDependencies": {
+  "peerDependencies": {
     "iles": "workspace:*"
   },
   "authors": [

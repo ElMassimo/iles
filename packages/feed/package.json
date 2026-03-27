@@ -22,8 +22,8 @@
     "./package.json": "./package.json"
   },
   "scripts": {
-    "dev": "vp pack src/types.ts src/feed.ts src/render-feed.ts --target node20 --watch",
-    "build": "vp pack src/types.ts src/feed.ts src/render-feed.ts --clean --target node20 && tsc --emitDeclarationOnly --noCheck --declaration --outDir dist --skipLibCheck --moduleResolution bundler --module esnext --target esnext --esModuleInterop --resolveJsonModule src/types.ts src/feed.ts src/render-feed.ts",
+    "dev": "vp pack --watch",
+    "build": "vp pack --clean && tsc --emitDeclarationOnly --noCheck --declaration --outDir dist --skipLibCheck --moduleResolution bundler --module esnext --target esnext --esModuleInterop --resolveJsonModule src/types.ts src/feed.ts src/render-feed.ts",
     "lint": "vp lint",
     "lint:fix": "vp lint --fix"
   },
@@ -31,12 +31,8 @@
     "feed": "^4.2",
     "pathe": "^1.1.2"
   },
-  "devDependencies": {
-    "iles": "workspace:*",
-    "vue": "^3.5.12"
-  },
   "peerDependencies": {
     "iles": "workspace:*",
-    "vue": "^3.3.4"
+    "vue": "^3.5.12"
   }
 }

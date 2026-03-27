@@ -20,8 +20,8 @@
     "./package.json": "./package.json"
   },
   "scripts": {
-    "dev": "vp pack src/excerpt.ts --target node20 --watch",
-    "build": "vp pack src/excerpt.ts --clean --target node20 && tsc --emitDeclarationOnly --noCheck --declaration --outDir dist --skipLibCheck --moduleResolution bundler --module esnext --target esnext --esModuleInterop --resolveJsonModule src/excerpt.ts",
+    "dev": "vp pack --watch",
+    "build": "vp pack --clean && tsc --emitDeclarationOnly --noCheck --declaration --outDir dist --skipLibCheck --moduleResolution bundler --module esnext --target esnext --esModuleInterop --resolveJsonModule src/excerpt.ts",
     "lint": "vp lint",
     "lint:fix": "vp lint --fix"
   },
@@ -30,11 +30,14 @@
     "hast-util-to-string": "^3.0.0"
   },
   "devDependencies": {
+    "typescript": "^5.6.3"
+  },
+  "peerDependencies": {
     "@types/estree": "^1.0.6",
     "@types/estree-jsx": "^1.0.5",
     "@types/hast": "^3.0.4",
     "iles": "workspace:*",
-    "typescript": "^5.6.3",
+    "vfile": "^6.0.2",
     "unified": "^11.0.5"
   }
 }

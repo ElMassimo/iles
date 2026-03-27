@@ -31,8 +31,8 @@
     "./package.json": "./package.json"
   },
   "scripts": {
-    "dev": "vp pack hydration.ts preact.ts vue.ts vanilla.ts solid.ts svelte.ts --platform browser --watch",
-    "build": "vp pack hydration.ts preact.ts vue.ts vanilla.ts solid.ts svelte.ts --dts --clean --platform browser",
+    "dev": "vp pack --watch",
+    "build": "vp pack --clean",
     "lint": "vp lint",
     "lint:fix": "vp lint --fix"
   },
@@ -42,7 +42,6 @@
     "solid-js": "^1.9.3",
     "svelte": "^5.46.4",
     "typescript": "^5.6.3",
-    "vite-plus": "^0.1.14",
     "vue": "^3.5.12"
   },
   "peerDependencies": {
@@ -52,9 +51,17 @@
     "vue": "^3.5.12"
   },
   "peerDependenciesMeta": {
-    "preact": { "optional": true },
-    "solid-js": { "optional": true },
-    "svelte": { "optional": true },
-    "vue": { "optional": true }
+    "preact": {
+      "optional": true
+    },
+    "solid-js": {
+      "optional": true
+    },
+    "svelte": {
+      "optional": true
+    },
+    "vue": {
+      "optional": true
+    }
   }
 }

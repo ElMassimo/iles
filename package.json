@@ -18,6 +18,7 @@
     "blog:check": "npm -C playground/the-vue-point run check",
     "release": "tsx scripts/release.ts",
     "changelog": "tsx scripts/changelog.ts",
+    "pkg-size": "tsx scripts/pkg-size.ts",
     "test": "packages/iles/bin/iles.js test"
   },
   "devDependencies": {

@@ -24,8 +24,8 @@
     "./package.json": "./package.json"
   },
   "scripts": {
-    "dev": "vp pack prerender.ts --target node20 --watch",
-    "build": "vp pack prerender.ts --dts --clean --target node20",
+    "dev": "vp pack --watch",
+    "build": "vp pack --clean",
     "lint": "vp lint",
     "lint:fix": "vp lint --fix"
   },
@@ -38,7 +38,6 @@
     "solid-js": "^1.9.3",
     "svelte": "^5.46.4",
     "typescript": "^5.6.3",
-    "vite-plus": "^0.1.14",
     "vue": "^3.5.12"
   },
   "peerDependencies": {
@@ -49,10 +48,20 @@
     "vue": "^3.5.12"
   },
   "peerDependenciesMeta": {
-    "preact": { "optional": true },
-    "preact-render-to-string": { "optional": true },
-    "solid-js": { "optional": true },
-    "svelte": { "optional": true },
-    "vue": { "optional": true }
+    "preact": {
+      "optional": true
+    },
+    "preact-render-to-string": {
+      "optional": true
+    },
+    "solid-js": {
+      "optional": true
+    },
+    "svelte": {
+      "optional": true
+    },
+    "vue": {
+      "optional": true
+    }
   }
 }
