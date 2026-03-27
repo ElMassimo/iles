@@ -147,10 +147,6 @@ importers:
       vfile:
         specifier: ^6.0.2
         version: 6.0.2
-    devDependencies:
-      typescript:
-        specifier: ^5.6.3
-        version: 5.6.3
 
   packages/feed:
     dependencies:
@@ -181,6 +177,9 @@ importers:
       iles:
         specifier: workspace:*
         version: link:../iles
+      typescript:
+        specifier: ^5.6.3
+        version: 5.6.3
       unified:
         specifier: ^11.0.5
         version: 11.0.5
@@ -188,9 +187,6 @@ importers:
       slugo:
         specifier: ^0.4.0
         version: 0.4.0
-      typescript:
-        specifier: ^5.6.3
-        version: 5.6.3
 
   packages/hydration:
     devDependencies:
@@ -384,10 +380,6 @@ importers:
       vite-plugin-image-presets:
         specifier: ^0.3.4
         version: 0.3.4
-    devDependencies:
-      typescript:
-        specifier: ^5.6.3
-        version: 5.6.3
 
   packages/mdx:
     dependencies:
@@ -517,10 +509,6 @@ importers:
       unist-util-visit:
         specifier: ^5.0.0
         version: 5.0.0
-    devDependencies:
-      typescript:
-        specifier: ^5.6.3
-        version: 5.6.3
 
   packages/pwa:
     dependencies:
