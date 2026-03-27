@@ -1,3 +1,7 @@
+# [0.10.0](https://github.com/ElMassimo/iles/compare/excerpt@0.10.0-beta.1...excerpt@0.10.0) (2026-03-27)
+
+
+
 # [0.10.0-beta.1](https://github.com/ElMassimo/iles/compare/excerpt@0.9.0...excerpt@0.10.0-beta.1) (2024-12-04)
 
 
