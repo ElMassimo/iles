@@ -5,6 +5,6 @@ export default defineConfig({
   platform: 'browser',
   dts: true,
   deps: {
-    // oNlybundle: [],
+    onlyBundle: [],
   },
 })

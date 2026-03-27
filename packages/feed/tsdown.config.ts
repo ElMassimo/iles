@@ -4,6 +4,6 @@ export default defineConfig({
   entry: ['src/types.ts', 'src/feed.ts', 'src/render-feed.ts'],
   target: 'node20',
   deps: {
-    // oNlybundle: [],
+    onlyBundle: [],
   },
 })

@@ -4,6 +4,6 @@ export default defineConfig({
   entry: ['src/icons.ts'],
   target: 'node20',
   deps: {
-    // oNlybundle: [],
+    onlyBundle: [],
   },
 })
