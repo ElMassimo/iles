@@ -1,3 +1,7 @@
+# [0.10.0](https://github.com/ElMassimo/iles/compare/icons@0.10.0-beta.1...icons@0.10.0) (2026-03-27)
+
+
+
 # [0.10.0-beta.1](https://github.com/ElMassimo/iles/compare/icons@0.8.0...icons@0.10.0-beta.1) (2024-12-04)
 
 
