@@ -1,6 +1,6 @@
 {
   "name": "@islands/prerender",
-  "version": "0.10.0-beta.1",
+  "version": "0.10.0",
   "description": "Prerender utilities for îles",
   "keywords": [
     "islands",
