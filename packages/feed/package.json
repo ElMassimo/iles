@@ -23,7 +23,7 @@
   },
   "scripts": {
     "dev": "vp pack --watch",
-    "build": "vp pack --clean && tsc --emitDeclarationOnly --noCheck --declaration --outDir dist --skipLibCheck --moduleResolution bundler --module esnext --target esnext --esModuleInterop --resolveJsonModule src/types.ts src/feed.ts src/render-feed.ts",
+    "build": "vp pack --clean",
     "lint": "vp lint",
     "lint:fix": "vp lint --fix"
   },

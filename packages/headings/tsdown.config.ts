@@ -3,7 +3,10 @@ import { defineConfig } from 'vite-plus/pack'
 export default defineConfig({
   entry: ['src/headings.ts'],
   target: 'node20',
-  dts: false,
+  dts: true,
+  outExtensions: () => ({
+    dts: '.d.ts',
+  }),
   deps: {
     onlyBundle: ['slugo'],
   },
