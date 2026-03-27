@@ -24,8 +24,8 @@
     "./package.json": "./package.json"
   },
   "scripts": {
-    "dev": "vp pack prerender.ts --target node20 --watch",
-    "build": "vp pack prerender.ts --dts --clean --target node20",
+    "dev": "vp pack --watch",
+    "build": "vp pack --clean",
     "lint": "vp lint",
     "lint:fix": "vp lint --fix"
   },
@@ -49,10 +49,20 @@
     "vue": "^3.5.12"
   },
   "peerDependenciesMeta": {
-    "preact": { "optional": true },
-    "preact-render-to-string": { "optional": true },
-    "solid-js": { "optional": true },
-    "svelte": { "optional": true },
-    "vue": { "optional": true }
+    "preact": {
+      "optional": true
+    },
+    "preact-render-to-string": {
+      "optional": true
+    },
+    "solid-js": {
+      "optional": true
+    },
+    "svelte": {
+      "optional": true
+    },
+    "vue": {
+      "optional": true
+    }
   }
 }

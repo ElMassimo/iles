@@ -20,8 +20,8 @@
     "./package.json": "./package.json"
   },
   "scripts": {
-    "dev": "vp pack src/mdx.ts --target node20 --watch",
-    "build": "vp pack src/mdx.ts --dts --clean --target node20",
+    "dev": "vp pack --watch",
+    "build": "vp pack --clean",
     "tsc": "tsc src/mdx.ts --noEmit --skipLibCheck",
     "lint": "vp lint",
     "lint:fix": "vp lint --fix"
