@@ -1,6 +1,6 @@
 {
   "name": "iles",
-  "version": "0.10.0-beta.1",
+  "version": "0.10.0",
   "description": "Vite & Vue powered static site generator with partial hydration",
   "keywords": [
     "islands",

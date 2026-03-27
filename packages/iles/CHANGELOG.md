@@ -1,3 +1,17 @@
+# [0.10.0](https://github.com/ElMassimo/iles/compare/v0.10.0-beta.1...v0.10.0) (2026-03-27)
+
+
+### Bug Fixes
+
+* avoid bundling `magic-string` ([8aa8e5d](https://github.com/ElMassimo/iles/commit/8aa8e5dc58b50526340ddc3266620cff60b2aaac))
+
+
+### Features
+
+* upgrade to vite 8 and rolldown ([#332](https://github.com/ElMassimo/iles/issues/332)) ([e54954a](https://github.com/ElMassimo/iles/commit/e54954a7e0528f53dd1fb7dbe57198c481847800))
+
+
+
 # [0.10.0-beta.1](https://github.com/ElMassimo/iles/compare/v0.9.5...v0.10.0-beta.1) (2024-12-04)
 
 
