@@ -2,7 +2,7 @@ import { basename, extname } from 'pathe'
 import grayMatter from 'gray-matter'
 import { parse as parseSFC } from 'vue/compiler-sfc'
 
-import type { RawPageMatter, PageMeta } from './types'
+import type { RawPageMatter } from './types'
 
 const dateRegex = /^(?<year>\d{4})-(?<month>\d{2})-(?<day>\d{2})-(?<slug>.*)(?<ext>\.\w+)$/
 

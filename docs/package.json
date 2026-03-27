@@ -8,8 +8,8 @@
     "build": "iles build",
     "preview": "iles preview --open --port 3050",
     "now": "npm run build && npm run preview",
-    "lint": "eslint .",
-    "lint:fix": "eslint . --fix",
+    "lint": "vp lint",
+    "lint:fix": "vp lint --fix",
     "check": "vue-tsc --noEmit",
     "cy:run": "scripts/test-cypress"
   },
@@ -37,7 +37,7 @@
     "rehype-external-links": "^3.0.0",
     "unocss": "^66.6.6",
     "vite-plugin-inspect": "^0.8.7",
-    "vue-tsc": "^2.1.10"
+    "vue-tsc": "^3.2.6"
   },
   "engines": {
     "node": "^14.18 || >= 16.0.0"
