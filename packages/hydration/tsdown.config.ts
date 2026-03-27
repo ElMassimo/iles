@@ -3,6 +3,10 @@ import { defineConfig } from 'vite-plus/pack'
 export default defineConfig({
   entry: ['hydration.ts', 'preact.ts', 'vue.ts', 'vanilla.ts', 'solid.ts', 'svelte.ts'],
   platform: 'browser',
+  lint: {
+    typeAware: true,
+    typeCheck: true,
+  },
   dts: true,
   deps: {
     onlyBundle: [],
