@@ -1,3 +1,7 @@
+# [0.10.0](https://github.com/ElMassimo/iles/compare/headings@0.10.0-beta.1...headings@0.10.0) (2026-03-27)
+
+
+
 # [0.10.0-beta.1](https://github.com/ElMassimo/iles/compare/headings@0.8.2...headings@0.10.0-beta.1) (2024-12-04)
 
 
