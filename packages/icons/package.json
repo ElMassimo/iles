@@ -28,7 +28,7 @@
   "dependencies": {
     "unplugin-icons": "^0.19.0"
   },
-  "devDependencies": {
+  "peerDependencies": {
     "iles": "workspace:*"
   }
 }

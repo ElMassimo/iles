@@ -30,11 +30,14 @@
     "hast-util-to-string": "^3.0.0"
   },
   "devDependencies": {
+    "typescript": "^5.6.3"
+  },
+  "peerDependencies": {
     "@types/estree": "^1.0.6",
     "@types/estree-jsx": "^1.0.5",
     "@types/hast": "^3.0.4",
     "iles": "workspace:*",
-    "typescript": "^5.6.3",
+    "vfile": "^6.0.2",
     "unified": "^11.0.5"
   }
 }

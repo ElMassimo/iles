@@ -29,11 +29,14 @@
     "hast-util-heading-rank": "^3.0.0",
     "hast-util-to-string": "^3.0.0"
   },
-  "devDependencies": {
+  "peerDependencies": {
+    "typescript": "^5.6.3",
     "@types/estree": "^1.0.5",
     "iles": "workspace:*",
-    "slugo": "^0.4.0",
-    "typescript": "^5.6.3",
     "unified": "^11.0.5"
+  },
+  "devDependencies": {
+    "slugo": "^0.4.0",
+    "typescript": "^5.6.3"
   }
 }

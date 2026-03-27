@@ -27,7 +27,7 @@
   "dependencies": {
     "vite-plugin-pwa": "^1.2.0"
   },
-  "devDependencies": {
+  "peerDependencies": {
     "iles": "workspace:*"
   },
   "authors": [

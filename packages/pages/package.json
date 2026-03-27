@@ -35,11 +35,10 @@
   "devDependencies": {
     "@types/deep-equal": "^1.0.4",
     "@types/js-yaml": "^4.0.9",
-    "typescript": "^5.6.3",
-    "unified": "^11.0.5",
     "vue": "^3.5.12"
   },
   "peerDependencies": {
+    "unified": "^11.0.5",
     "vite": "^8.0.2",
     "vue": "^3.5.12"
   }

@@ -31,12 +31,8 @@
     "feed": "^4.2",
     "pathe": "^1.1.2"
   },
-  "devDependencies": {
-    "iles": "workspace:*",
-    "vue": "^3.5.12"
-  },
   "peerDependencies": {
     "iles": "workspace:*",
-    "vue": "^3.3.4"
+    "vue": "^3.5.12"
   }
 }

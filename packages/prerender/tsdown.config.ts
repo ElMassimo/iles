@@ -5,6 +5,6 @@ export default defineConfig({
   target: 'node20',
   dts: true,
   deps: {
-    onlyBundle: false,
+    // oNlybundle: [],
   },
 })
