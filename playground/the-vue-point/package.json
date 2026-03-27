@@ -9,8 +9,8 @@
     "preview": "iles preview --open",
     "now": "npm run build && npm run preview",
     "check": "vue-tsc --noEmit",
-    "lint": "eslint .",
-    "lint:fix": "eslint . --fix"
+    "lint": "vp lint",
+    "lint:fix": "vp lint --fix"
   },
   "engines": {
     "node": "^14.18 || >= 16.0.0"
@@ -28,6 +28,6 @@
     "remark-gfm": "^4.0.0",
     "@unocss/reset": "^66.6.6",
     "unocss": "^66.6.6",
-    "vue-tsc": "^2.1.10"
+    "vue-tsc": "^3.2.6"
   }
 }

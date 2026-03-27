@@ -13,14 +13,17 @@
     "src"
   ],
   "type": "module",
-  "types": "dist/pwa.d.ts",
+  "types": "dist/pwa.d.mts",
   "exports": {
-    ".": "./dist/pwa.mjs",
+    ".": {
+      "types": "./dist/pwa.d.mts",
+      "import": "./dist/pwa.mjs"
+    },
     "./package.json": "./package.json"
   },
   "scripts": {
     "dev": "vp pack --watch",
-    "build": "vp pack --clean && tsc --emitDeclarationOnly --noCheck --declaration --outDir dist --skipLibCheck --moduleResolution bundler --module esnext --target esnext --esModuleInterop --resolveJsonModule src/pwa.ts",
+    "build": "vp pack --clean",
     "lint": "vp lint",
     "lint:fix": "vp lint --fix"
   },

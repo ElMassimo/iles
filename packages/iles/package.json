@@ -49,7 +49,7 @@
     "build": "vp run build:prepare && vp run build:client && vp run build:node",
     "build:prepare": "rm -rf dist && node scripts/copyShared",
     "build:client": "vue-tsc --noEmit -p src/client && tsc -p src/client && node scripts/copyClient",
-    "build:node": "vp pack --clean && tsc --emitDeclarationOnly --declaration --outDir dist/node --rootDir src/node --skipLibCheck --moduleResolution bundler --module esnext --target esnext --esModuleInterop --resolveJsonModule src/node/index.ts src/node/plugin/plugin.ts",
+    "build:node": "vp pack --clean",
     "lint": "vp lint",
     "lint:fix": "vp lint --fix"
   },
@@ -107,7 +107,7 @@
     "semver": "^7.6.3",
     "tinyglobby": "0.2.6",
     "typescript": "^5.6.3",
-    "vue-tsc": "^2.1.10"
+    "vue-tsc": "^3.2.6"
   },
   "engines": {
     "node": ">=20.19.0 || >=22.12.0"

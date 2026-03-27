@@ -14,14 +14,17 @@
     "src"
   ],
   "type": "module",
-  "types": "dist/icons.d.ts",
+  "types": "dist/icons.d.mts",
   "exports": {
-    ".": "./dist/icons.mjs",
+    ".": {
+      "types": "./dist/icons.d.mts",
+      "import": "./dist/icons.mjs"
+    },
     "./package.json": "./package.json"
   },
   "scripts": {
     "dev": "vp pack --watch",
-    "build": "vp pack --clean && tsc --emitDeclarationOnly --noCheck --declaration --outDir dist --skipLibCheck --moduleResolution bundler --module esnext --target esnext --esModuleInterop --resolveJsonModule src/icons.ts",
+    "build": "vp pack --clean",
     "lint": "vp lint",
     "lint:fix": "vp lint --fix"
   },
