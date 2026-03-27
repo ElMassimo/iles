@@ -4,8 +4,8 @@
   "type": "module",
   "scripts": {
     "build:all": "pnpm nx run-many --target=build --all --exclude docs --exclude vue-blog",
-    "lint": "vp lint",
-    "lint:fix": "vp lint --fix",
+    "lint:all": "vp lint",
+    "lint:fix:all": "vp lint --fix",
     "fmt": "vp fmt",
     "check": "vp check",
     "docs": "npm -C docs run dev",

@@ -1,4 +1,5 @@
-import { createRawSnippet, type Snippet } from 'svelte'
+import { createRawSnippet } from 'svelte'
+import type { Snippet } from 'svelte'
 import { render } from 'svelte/server'
 import type { PrerenderFn } from './prerender'
 
