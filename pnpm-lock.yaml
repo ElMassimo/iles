@@ -460,6 +460,9 @@ importers:
       pathe:
         specifier: ^1.1.2
         version: 1.1.2
+      vite:
+        specifier: ^8.0.2
+        version: 8.0.3(@types/node@20.14.12)(jiti@2.6.1)(terser@5.36.0)(tsx@4.19.2)(yaml@2.8.3)
     devDependencies:
       '@types/deep-equal':
         specifier: ^1.0.4
