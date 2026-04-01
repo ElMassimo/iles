@@ -8,7 +8,7 @@ export default defineConfig({
     },
   },
   pack: {
-    entry: ['hydration.ts', 'preact.ts', 'vue.ts', 'vanilla.ts', 'solid.ts', 'svelte.ts'],
+    entry: ['hydration.ts', 'preact.ts', 'vue.ts', 'vue-vapor.ts', 'vapor-shim.ts', 'vanilla.ts', 'solid.ts', 'svelte.ts'],
     platform: 'browser',
     dts: true,
     deps: {

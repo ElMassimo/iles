@@ -28,6 +28,7 @@
     "./vanilla": "./dist/vanilla.js",
     "./vue": "./dist/vue.js",
     "./vue-vapor": "./dist/vue-vapor.js",
+    "./vapor-shim": "./dist/vapor-shim.js",
     "./dist/*": "./dist/*",
     "./package.json": "./package.json"
   },

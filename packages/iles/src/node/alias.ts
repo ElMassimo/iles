@@ -68,6 +68,11 @@ export function resolveAliases (root: string, userConfig: UserConfig): AliasOpti
         '@vue/runtime-dom/dist/runtime-dom.esm-bundler.js',
       ),
     },
+    // Shim for vue/vapor until Vue 3.6+ is available.
+    {
+      find: /^vue\/vapor$/,
+      replacement: require.resolve('@islands/hydration/vapor-shim'),
+    },
     {
       find: /^vue-router$/,
       replacement: require.resolve(

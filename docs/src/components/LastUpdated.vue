@@ -1,3 +1,7 @@
+<script setup lang="ts">
+import TimeAgo from './TimeAgo.vapor.vue'
+</script>
+
 <template>
   <p v-if="$meta.lastUpdated" class="text-sm">
     <span class="inline-block font-medium">Last Updated:</span>

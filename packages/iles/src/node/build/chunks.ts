@@ -26,7 +26,7 @@ export function extendManualChunks (config: AppConfig): GetManualChunk {
     if (id.includes('hydration/dist')) return 'iles'
     const name = userChunks?.(id, api)
     if (name) return name
-    if (id.includes('node_modules')) return vendorPerFramework(chunkForExtension, id, api, cache)
+    if (id.includes('node_modules')) return vendorPerFramework(chunkForExtension, chunkForSpecialExtension, id, api, cache)
   }
 }
 
@@ -36,6 +36,7 @@ export function extendManualChunks (config: AppConfig): GetManualChunk {
 // shared chunk which would delay hydration for all islands.
 function vendorPerFramework (
   chunkForExtension: Record<string, string>,
+  chunkForSpecialExtension: Record<string, string>,
   id: string,
   api: ManualChunkMeta,
   cache: Map<string, string | undefined>,
@@ -67,7 +68,7 @@ function vendorPerFramework (
 
   let name
   for (const importer of mod.importers) {
-    const importerChunk = vendorPerFramework(chunkForExtension, importer, api, cache, importStack.concat(id))
+    const importerChunk = vendorPerFramework(chunkForExtension, chunkForSpecialExtension, importer, api, cache, importStack.concat(id))
     if (!name) name = importerChunk
     if (importerChunk && importerChunk !== name) break
   }

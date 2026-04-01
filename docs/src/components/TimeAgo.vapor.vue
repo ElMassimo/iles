@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import { watch, onBeforeUnmount } from 'vue'
+import { ref, computed, watch, onBeforeUnmount } from 'vue'
 
 const { date } = defineProps<{ date: Date }>()
 
-let relativeTimeStr = $ref('')
-let dateStr = $computed(() => date.toLocaleDateString('en-US', { day: 'numeric', month: 'long', year: 'numeric' }))
-let timeStr = $computed(() => date.toISOString())
+const relativeTimeStr = ref('')
+const dateStr = computed(() => date.toLocaleDateString('en-US', { day: 'numeric', month: 'long', year: 'numeric' }))
+const timeStr = computed(() => date.toISOString())
 
 if (!import.meta.env.SSR) {
   const currentTime = (hoursAgo: number): string => {
@@ -19,10 +19,10 @@ if (!import.meta.env.SSR) {
   }
 
   const updateRelativeTimeStr = () => {
-    relativeTimeStr = currentTime((Number(new Date()) - Number(date)) / (60 * 60 * 1000))
+    relativeTimeStr.value = currentTime((Number(new Date()) - Number(date)) / (60 * 60 * 1000))
   }
 
-  let activeInterval = setInterval(updateRelativeTimeStr, 60 * 1000)
+  const activeInterval = setInterval(updateRelativeTimeStr, 60 * 1000)
   onBeforeUnmount(() => clearInterval(activeInterval))
   watch(() => date, updateRelativeTimeStr, { immediate: true })
 }

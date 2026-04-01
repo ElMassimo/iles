@@ -1,3 +1,7 @@
+<script setup lang="ts">
+import DarkModeSwitch from './DarkModeSwitch.vapor.vue'
+</script>
+
 <template>
   <header class="nav-bar bg-html flex items-center border-b">
     <div class="flex flex-1 h-full container !max-w-screen-2xl mx-auto px-3 md:px-6">
