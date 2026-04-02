@@ -15,6 +15,9 @@ export function extendManualChunks (config: AppConfig): GetManualChunk {
     svelte: 'vendor-svelte',
     vue: 'vendor-vue',
   }
+  const chunkForSpecialExtension: Record<string, string> = {
+    'vapor.vue': 'vendor-vue-vapor',
+  }
   return (id, api) => {
     // Internal chunks must take priority to ensure hydration works correctly.
     // User manualChunks could inadvertently match hydration modules (e.g.
@@ -56,7 +59,8 @@ function vendorPerFramework (
     const queryIndex = id.lastIndexOf('?')
     const idWithoutQuery = queryIndex > -1 ? id.slice(0, queryIndex) : id
     const extension = idWithoutQuery.slice(idWithoutQuery.lastIndexOf('.') + 1)
-    const name = chunkForExtension[extension]
+    const specialExt = Object.keys(chunkForSpecialExtension).find(ext => idWithoutQuery.endsWith(`.${ext}`))
+    const name = (specialExt && chunkForSpecialExtension[specialExt]) || chunkForExtension[extension]
     cache.set(id, name)
     return name
   }

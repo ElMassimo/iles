@@ -36,6 +36,12 @@ export const renderers: Record<Framework, PrerenderFn> = {
     const renderSvelteComponent = (await import('./svelte')).default
     return renderSvelteComponent(component, props, slots, renderId)
   },
+  async 'vue-vapor' (component, props, slots) {
+    const { createVaporApp } = await import('vue/vapor')
+    const { renderToString } = await import('vue/server-renderer')
+    const app = createVaporApp(component, props)
+    return await renderToString(app)
+  },
   async vanilla () {
     throw new Error('The vanilla strategy does not prerender islands.')
   },

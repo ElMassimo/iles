@@ -51,11 +51,13 @@ export default defineComponent({
     }
 
     const ext = props.importFrom.split('.').slice(-1)[0]
+    const isVaporVue = props.importFrom.endsWith('.vapor.vue')
     const appConfig = useAppConfig()
     const framework: Framework = props.using
       || (ext === 'svelte' && 'svelte')
       || ((ext === 'js' || ext === 'ts') && 'vanilla')
       || ((ext === 'jsx' || ext === 'tsx') && appConfig.jsx)
+      || (isVaporVue && 'vue-vapor')
       || 'vue'
 
     return {

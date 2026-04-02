@@ -27,6 +27,7 @@
     "./svelte": "./dist/svelte.js",
     "./vanilla": "./dist/vanilla.js",
     "./vue": "./dist/vue.js",
+    "./vue-vapor": "./dist/vue-vapor.js",
     "./dist/*": "./dist/*",
     "./package.json": "./package.json"
   },
