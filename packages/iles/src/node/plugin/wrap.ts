@@ -135,7 +135,7 @@ function processSFCListeners (elements: ElementNode[], s: MagicString, filename:
         options.warn?.(warning)
 
       if (options.wrapListeners && prop.exp?.loc?.source)
-        s.overwrite(prop.exp.loc.start.offset, prop.exp.loc.end.offset, guardedVueExpression(prop.exp.loc.source, warning))
+        wrapVueExpression(s, prop.exp.loc.start.offset, prop.exp.loc.end.offset, warning)
     }
 
     for (const child of node.children || []) {
@@ -148,13 +148,13 @@ function processSFCListeners (elements: ElementNode[], s: MagicString, filename:
     walk(element)
 }
 
-function guardedVueExpression (expression: string, warning: ListenerWarning) {
+function wrapVueExpression (s: MagicString, start: number, end: number, warning: ListenerWarning) {
   const details = JSON.stringify({
     source: 'vue',
     ...warning,
   })
-  const run = `{ const __ile_handler = (${expression}); return typeof __ile_handler === 'function' ? __ile_handler($event) : __ile_handler }`
-  return `($event) => (window.__ILE_GUARD_LISTENER_CALL__ ? window.__ILE_GUARD_LISTENER_CALL__(() => ${run}, $event, ${details}) : (() => ${run})())`
+  s.appendLeft(start, `($event) => window.__ILE_GUARD_LISTENER_CALL__(() => { const _ileHandler = (`)
+  s.appendRight(end, `); return typeof _ileHandler === 'function' ? _ileHandler($event) : _ileHandler }, $event, ${details})`)
 }
 
 function isOnDirective (prop: any): prop is DirectiveNode {

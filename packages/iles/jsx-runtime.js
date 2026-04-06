@@ -42,7 +42,7 @@ function wrapListeners (props, type) {
       args[0],
       {
         source: 'mdx',
-        event: key.slice(2).toLowerCase(),
+        event: key.slice(2),
         tag: typeof type === 'string' ? type : type?.name || 'Component',
       },
     )

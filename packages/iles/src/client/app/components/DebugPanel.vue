@@ -12,6 +12,7 @@ export default defineComponent({
     const open = ref(false)
     const buttonLabel = computed(() => message.value || 'Debug')
     const listenerWarnings = computed(() => (window as any).__ILE_DEVTOOLS__?.getListenerWarnings?.() || [])
+    const formattedListenerWarnings = computed(() => listenerWarnings.value.map((item: any) => item.message).join('\n\n'))
 
     const cleanPage = computed(() => {
       const layout = page.value.layoutName || 'false'
@@ -56,6 +57,7 @@ export default defineComponent({
       copyAll,
       content,
       listenerWarnings,
+      formattedListenerWarnings,
     }
   },
 })
@@ -66,7 +68,7 @@ export default defineComponent({
     <p class="title">{{ buttonLabel }}<span class="info">Open DevTools to inspect <b>islands</b> 🏝</span></p>
     <pre ref="content" class="block">{{ cleanPage }}</pre>
     <pre v-if="listenerWarnings.length" class="block warning">
-{{ listenerWarnings.map((item: any) => item.message).join('\n\n') }}
+{{ formattedListenerWarnings }}
     </pre>
     <button v-show="open" class="debug title" @click="copyAll(content)">Copy to Clipboard</button>
   </div>

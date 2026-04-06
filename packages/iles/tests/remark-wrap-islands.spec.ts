@@ -31,4 +31,3 @@ describe('remarkWrapIslands listener diagnostics', () => {
     expect(warnings[0]).toContain('/src/pages/demo.mdx')
   })
 })
-

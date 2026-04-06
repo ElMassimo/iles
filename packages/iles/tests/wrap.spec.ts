@@ -34,4 +34,3 @@ describe('wrapIslandsInSFC listener diagnostics', () => {
     expect(result?.code).toContain('__ILE_GUARD_LISTENER_CALL__')
   })
 })
-

@@ -46,4 +46,3 @@ export function guardListenerCall<T> (handler: () => T, event: Event, details: L
 
 if (typeof window !== 'undefined')
   (window as any).__ILE_GUARD_LISTENER_CALL__ = guardListenerCall
-

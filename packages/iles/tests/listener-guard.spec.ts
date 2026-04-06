@@ -37,4 +37,3 @@ describe('listener guard', () => {
     expect(errors.length).toBe(0)
   })
 })
-
