@@ -14,7 +14,7 @@ export default function IlesMdx (options: MarkdownOptions = {}): Plugin[] {
   let isDevelopment: boolean
 
   function shouldTransform (path: string) {
-    return markdownProcessor.extnames.includes(extname(path))
+    return markdownProcessor.extnames.includes(extname(path.split('?', 2)[0]))
   }
 
   async function createMdxProcessor (sourcemap: string | boolean) {
