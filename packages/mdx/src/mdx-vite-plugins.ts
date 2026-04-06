@@ -13,8 +13,12 @@ export default function IlesMdx (options: MarkdownOptions = {}): Plugin[] {
   let markdownProcessor: ReturnType<typeof createFormatAwareProcessors>
   let isDevelopment: boolean
 
+  function stripQueryParams (path: string) {
+    return path.split('?', 2)[0]
+  }
+
   function shouldTransform (path: string) {
-    return markdownProcessor.extnames.includes(extname(path))
+    return markdownProcessor.extnames.includes(extname(stripQueryParams(path)))
   }
 
   async function createMdxProcessor (sourcemap: string | boolean) {
