@@ -6,10 +6,6 @@ interface ListenerWarningDetails {
   column?: number
 }
 
-type DevtoolsApi = {
-  reportStaticListenerWarning?: (payload: any) => void
-}
-
 const warned = new Set<string>()
 
 function getEventTarget (event: any) {
