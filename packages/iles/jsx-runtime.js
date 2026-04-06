@@ -5,11 +5,13 @@ import {
   createStaticVNode as raw,
   Fragment,
 } from 'vue'
+import { guardListenerCall } from './dist/client/app/listenerGuard'
 
 // Internal: Compatibility layer with the automatic JSX runtime of React.
 //
 // NOTE: Supports v-slots for consistency with @vue/babel-plugin-jsx.
 function jsx (type, { children, 'v-slots': vSlots, ...props }) {
+  wrapListeners(props, type)
   let slots
 
   if (children) {
@@ -29,6 +31,23 @@ function jsx (type, { children, 'v-slots': vSlots, ...props }) {
   }
 
   return createVNode(type, props, slots)
+}
+
+function wrapListeners (props, type) {
+  if (!props || typeof window === 'undefined') return
+
+  for (const [key, value] of Object.entries(props)) {
+    if (!/^on[A-Z]/.test(key) || typeof value !== 'function') continue
+    props[key] = (...args) => guardListenerCall(
+      () => value(...args),
+      args[0],
+      {
+        source: 'mdx',
+        event: key.slice(2).toLowerCase(),
+        tag: typeof type === 'string' ? type : type?.name || 'Component',
+      },
+    )
+  }
 }
 
 // Internal: Extends it to be a stateful component that can perform prop checks.

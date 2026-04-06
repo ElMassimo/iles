@@ -26,6 +26,9 @@ export default ({ config }: { config: AppConfig }) => async (ast: any, file: any
       wrapWithIsland(strategy, node, resolveComponentImport)
       return SKIP
     }
+
+    if (isJsxElement(node))
+      warnStaticListeners(node, file.path)
   })
 
   const componentsToImport = await Promise.all(componentPromises)
@@ -39,6 +42,18 @@ export default ({ config }: { config: AppConfig }) => async (ast: any, file: any
     const info = resolveComponent(components, tagName, file.path, componentCounter++)
     if (strategy !== 'client:only') componentPromises.push(info)
     return await info
+  }
+}
+
+function warnStaticListeners (node: MdxJsxFlowElement | MdxJsxTextElement, filename: string) {
+  const tagName = node.name || 'Component'
+  for (const attr of node.attributes) {
+    if ('name' in attr && /^on[A-Z]/.test(String(attr.name))) {
+      const point = (attr as any).position?.start || (node as any).position?.start
+      const line = point?.line || 0
+      const column = point?.column || 0
+      console.warn(`[iles] Listener '${attr.name}' on <${tagName}> in ${filename}:${line}:${column} will be static at runtime unless wrapped in <Island client:...>.`)
+    }
   }
 }
 

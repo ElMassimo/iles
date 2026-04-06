@@ -2,7 +2,7 @@ import MagicString from 'magic-string'
 import type { SFCBlock } from 'vue/compiler-sfc'
 import { parse } from 'vue/compiler-sfc'
 import type { ComponentInfo, PublicPluginAPI as ComponentsApi } from 'unplugin-vue-components/types'
-import type { ElementNode, RootNode, TemplateChildNode } from '@vue/compiler-core'
+import type { DirectiveNode, ElementNode, RootNode, TemplateChildNode } from '@vue/compiler-core'
 import type { AppConfig } from '../shared'
 import { pascalCase, isString, debug } from './utils'
 import { parseImports, parseExports } from './parse'
@@ -14,6 +14,20 @@ interface SfcRootNode extends RootNode {
 }
 
 export const unresolvedIslandKey = '__viteIslandComponent'
+
+export interface ListenerWarning {
+  event: string
+  tag: string
+  line: number
+  column: number
+  message: string
+}
+
+export interface WrapIslandsOptions {
+  analyzeListeners?: boolean
+  wrapListeners?: boolean
+  warn?: (warning: ListenerWarning) => void
+}
 
 export async function wrapLayout (code: string, filename: string) {
   const { descriptor: { template }, errors } = parse(code, { filename })
@@ -38,7 +52,7 @@ export async function wrapLayout (code: string, filename: string) {
 
 const scriptClientRE = /<script\b([^>]*\bclient:[^>]*)>([^]*?)<\/script>/
 
-export async function wrapIslandsInSFC (config: AppConfig, code: string, filename: string) {
+export async function wrapIslandsInSFC (config: AppConfig, code: string, filename: string, options: WrapIslandsOptions = {}) {
   code = code.replace(scriptClientRE, (_, attrs, content) =>
     `<script-client${attrs}>${content}</script-client>`)
 
@@ -69,6 +83,9 @@ export async function wrapIslandsInSFC (config: AppConfig, code: string, filenam
 
   const elements = sfcRootNode.children.filter((n: any) => n.tag) as ElementNode[]
 
+  if (options.analyzeListeners || options.wrapListeners)
+    processSFCListeners(elements, s, filename, options)
+
   for (const child of elements) {
     await visitSFCNode(child, s, resolveComponentImport)
   }
@@ -95,6 +112,59 @@ export async function wrapIslandsInSFC (config: AppConfig, code: string, filenam
     }
     s.appendRight(injectionOffset, `\n${components.stringifyImport(info)};`)
   }
+}
+
+function processSFCListeners (elements: ElementNode[], s: MagicString, filename: string, options: WrapIslandsOptions) {
+  const walk = (node: ElementNode, insideIsland = false) => {
+    const hasClientDirective = node.props.some(prop => 'name' in prop && prop.name.startsWith('client:'))
+    const withinIsland = insideIsland || hasClientDirective || node.tag === 'Island'
+
+    for (const prop of node.props) {
+      if (!isOnDirective(prop)) continue
+      const event = getEventName(prop)
+      const location = prop.loc.start
+      const warning: ListenerWarning = {
+        event,
+        tag: node.tag,
+        line: location.line,
+        column: location.column,
+        message: `[iles] Listener '${event}' on <${node.tag}> in ${filename}:${location.line}:${location.column} will be static at runtime unless wrapped in <Island client:...>.`,
+      }
+
+      if (!withinIsland && options.analyzeListeners)
+        options.warn?.(warning)
+
+      if (options.wrapListeners && prop.exp?.loc?.source)
+        s.overwrite(prop.exp.loc.start.offset, prop.exp.loc.end.offset, guardedVueExpression(prop.exp.loc.source, warning))
+    }
+
+    for (const child of node.children || []) {
+      if ('tag' in (child as any))
+        walk(child as ElementNode, withinIsland)
+    }
+  }
+
+  for (const element of elements)
+    walk(element)
+}
+
+function guardedVueExpression (expression: string, warning: ListenerWarning) {
+  const details = JSON.stringify({
+    source: 'vue',
+    ...warning,
+  })
+  const run = `{ const __ile_handler = (${expression}); return typeof __ile_handler === 'function' ? __ile_handler($event) : __ile_handler }`
+  return `($event) => (window.__ILE_GUARD_LISTENER_CALL__ ? window.__ILE_GUARD_LISTENER_CALL__(() => ${run}, $event, ${details}) : (() => ${run})())`
+}
+
+function isOnDirective (prop: any): prop is DirectiveNode {
+  return prop?.type === 7 && prop?.name === 'on'
+}
+
+function getEventName (prop: DirectiveNode) {
+  if (prop.arg?.type === 4)
+    return prop.arg.content || 'event'
+  return 'event'
 }
 
 async function visitSFCNode (node: ElementNode, s: MagicString, resolveComponentImport: (strategy: string, tag: string) => Promise<ComponentInfo>) {

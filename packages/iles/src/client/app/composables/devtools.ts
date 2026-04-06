@@ -16,6 +16,7 @@ const HYDRATION_LAYER_ID = 'iles:hydration'
 let lastUsedIslandId = 0
 const islandsById = reactive<Record<string, ComponentPublicInstance>>({})
 const islands = computed(() => Object.values(islandsById))
+const listenerWarnings = reactive<any[]>([])
 
 const strategyLabels: Record<string, any> = {
   'client:idle': 'whenIdle',
@@ -87,6 +88,15 @@ const devtools = {
       const { el, slots } = event
       console.info(`🏝 hydrated ${component}`, el, slots)
     }
+  },
+
+  reportStaticListenerWarning (warning: any) {
+    if (listenerWarnings.some(item => item.key === warning.key)) return
+    listenerWarnings.push({ time: Date.now(), ...warning })
+  },
+
+  getListenerWarnings () {
+    return listenerWarnings
   },
 }
 
