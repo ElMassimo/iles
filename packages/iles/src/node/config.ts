@@ -26,6 +26,7 @@ import type {
 } from './shared'
 
 import { camelCase, compact, importLibrary, isString, isStringPlugin, tryImportOrInstallModule, uncapitalize } from './plugin/utils'
+import { transformOnWithIslandCheck } from './plugin/wrapEventListeners'
 import { DIST_CLIENT_PATH, HYDRATION_DIST_PATH, ISLAND_COMPONENT_PATH, resolveAliases } from './alias'
 import remarkWrapIslands from './plugin/remarkWrapIslands'
 
@@ -134,6 +135,10 @@ async function setNamedPlugins (config: AppConfig, env: ConfigEnv, plugins: Name
   const ceChecks = config.modules.map(mod => mod.vue?.template?.compilerOptions?.isCustomElement).filter(x => x)
   config.vue.template!.compilerOptions!.isCustomElement = (tagName: string) =>
     tagName.startsWith('ile-') || ceChecks.some(fn => fn!(tagName))
+
+  // In development, wrap all v-on handlers to warn when used outside islands.
+  if (env.mode === 'development')
+    config.vue.template!.compilerOptions!.directiveTransforms = { ...config.vue.template!.compilerOptions!.directiveTransforms, on: transformOnWithIslandCheck }
 
   plugins.components = components(config.components)
   plugins.vue = vue(config.vue)
