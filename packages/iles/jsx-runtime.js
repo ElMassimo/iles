@@ -5,7 +5,6 @@ import {
   createStaticVNode as raw,
   Fragment,
 } from 'vue'
-import { guardListenerCall } from './dist/client/app/listenerGuard'
 
 // Internal: Compatibility layer with the automatic JSX runtime of React.
 //
@@ -48,6 +47,11 @@ function wrapListeners (props, type) {
       },
     )
   }
+}
+
+function guardListenerCall (handler, event, details) {
+  const guard = typeof window !== 'undefined' && window.__ILE_GUARD_LISTENER_CALL__
+  return guard ? guard(handler, event, details) : handler()
 }
 
 // Internal: Extends it to be a stateful component that can perform prop checks.
