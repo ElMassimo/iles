@@ -90,6 +90,10 @@ if (!import.meta.env.SSR) {
 
     const devtools = await import('./composables/devtools')
     devtools.installDevtools(app, config)
+
+    const { installEventListenerWarning } = await import('./composables/eventListenerWarning')
+    installEventListenerWarning()
+
     Object.assign(window, { __ILES_PAGE_UPDATE__: forcePageUpdate })
 
     await router.isReady() // wait until page component is fetched before mounting
