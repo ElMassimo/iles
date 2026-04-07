@@ -68,23 +68,20 @@ export default function IlesPages (): any {
       },
       resolveId: {
         filter: { id: moduleIdRegex },
-        async handler (id) {
-          if (moduleIdRegex.test(id))
-            return MODULE_ID
+        async handler (_id) {
+          return MODULE_ID
         },
       },
       load: {
         filter: { id: moduleIdRegex },
-        async handler (id) {
-          if (moduleIdRegex.test(id))
-            return generatedRoutes ||= await api.generateRoutesModule()
+        async handler (_id) {
+          return generatedRoutes ||= await api.generateRoutesModule()
         },
       },
       transform: {
         filter: { id: /vue&type=page/ },
-        async handler (_code, id) {
-          if (id.includes('vue&type=page'))
-            return 'export default {};'
+        async handler (_code, _id) {
+          return 'export default {};'
         },
       },
     }

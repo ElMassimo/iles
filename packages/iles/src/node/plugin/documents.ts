@@ -35,17 +35,14 @@ export default function documentsPlugin (config: AppConfig): Plugin {
     resolveId: {
       filter: { id: docsVirtualIdFilter },
       handler (id) {
-        if (id.startsWith(DOCS_VIRTUAL_ID))
-          return id
+        return id
       },
     },
     // Extract frontmatter for each file in the matching pattern, and create a
     // module where the default export is an array with each matching document.
     load: {
       filter: { id: docsVirtualIdFilter },
-      async handler (id, options) {
-        if (!id.startsWith(DOCS_VIRTUAL_ID)) return
-
+      async handler (id, _options) {
         const { query: { pattern: rawPath } } = parseId(id)
 
         // Extract pattern from the virtual module path, and resolve any alias.
@@ -121,7 +118,7 @@ export default function documentsPlugin (config: AppConfig): Plugin {
       filter: { id: fileCanUseDocuments },
       async handler (code, id) {
         // Replace each usage of useDocuments with an import of a virtual module.
-        if (fileCanUseDocuments.test(id) && !definitionRegex.test(code)) {
+        if (!definitionRegex.test(code)) {
           const paths: [string, string][] = []
           code = code.replace(usageRegex, (_, path) => {
             path = path.trim().slice(1, -1)

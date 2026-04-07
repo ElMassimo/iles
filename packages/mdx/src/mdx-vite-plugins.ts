@@ -1,5 +1,3 @@
-import { extname } from 'path'
-
 import type { Plugin, TransformResult } from 'vite'
 import type { createFormatAwareProcessors } from '@mdx-js/mdx/internal-create-format-aware-processors'
 import hash from 'hash-sum'
@@ -12,10 +10,6 @@ export default function IlesMdx (options: MarkdownOptions = {}): Plugin[] {
 
   let markdownProcessor: ReturnType<typeof createFormatAwareProcessors>
   let isDevelopment: boolean
-
-  function shouldTransform (path: string) {
-    return markdownProcessor.extnames.includes(extname(path))
-  }
 
   async function createMdxProcessor (sourcemap: string | boolean) {
     const { createFormatAwareProcessors } = await import('@mdx-js/mdx/internal-create-format-aware-processors')
@@ -42,8 +36,6 @@ export default function IlesMdx (options: MarkdownOptions = {}): Plugin[] {
       transform: {
         filter: { id: markdownIdFilter },
         async handler (value, path) {
-          if (!shouldTransform(path)) return
-
           const compiled = await markdownProcessor.process({ value, path })
           return { code: String(compiled.value), map: compiled.map } as TransformResult
         },
@@ -55,8 +47,6 @@ export default function IlesMdx (options: MarkdownOptions = {}): Plugin[] {
       transform: {
         filter: { id: markdownIdFilter },
         async handler (code, path) {
-          if (!shouldTransform(path)) return
-
           return code.replace('export default function MDXContent', () => `
 import { defineComponent as $defineComponent } from 'iles/jsx-runtime'
 
@@ -75,8 +65,6 @@ function MDXContent`)
       transform: {
         filter: { id: markdownIdFilter },
         handler (code: string, path: string) {
-          if (!shouldTransform(path)) return
-
           const hmrId = hash(`${path.split('?', 2)[0]}default`)
 
           return `${code}

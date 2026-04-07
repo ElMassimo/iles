@@ -136,8 +136,8 @@ export default function IslandsPlugins (appConfig: AppConfig): PluginOption[] {
       },
       transform: {
         filter: { id: APP_COMPONENT_PATH },
-        handler (code, id) {
-          if (id === APP_COMPONENT_PATH && !isBuild && appConfig.debug)
+        handler (code, _id) {
+          if (!isBuild && appConfig.debug)
             return code.replace('const DebugPanel = () => null', () => `import DebugPanel from '${DEBUG_COMPONENT_PATH}'`)
         },
       },
