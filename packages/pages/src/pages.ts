@@ -8,7 +8,8 @@ import { MODULE_ID } from './types'
 
 export * from './types'
 
-const moduleIdRegex = new RegExp(`^${MODULE_ID.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}$`)
+const escapedModuleId = MODULE_ID.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+const moduleIdRegex = new RegExp(`^(?:\\0|/@id/)?${escapedModuleId}(?:\\?.*)?$`)
 
 /**
  * An iles module that injects remark plugins to parse pages and expose it
@@ -68,14 +69,14 @@ export default function IlesPages (): any {
       resolveId: {
         filter: { id: moduleIdRegex },
         async handler (id) {
-          if (id === MODULE_ID)
+          if (moduleIdRegex.test(id))
             return MODULE_ID
         },
       },
       load: {
-        filter: { id: MODULE_ID },
+        filter: { id: moduleIdRegex },
         async handler (id) {
-          if (id === MODULE_ID)
+          if (moduleIdRegex.test(id))
             return generatedRoutes ||= await api.generateRoutesModule()
         },
       },

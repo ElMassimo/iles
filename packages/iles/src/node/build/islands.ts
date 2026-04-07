@@ -56,34 +56,21 @@ export async function bundleIslands (config: AppConfig, islandsByPath: IslandsBy
 }
 
 function virtualEntrypointsPlugin (root: string, entrypoints: Record<string, string>): Plugin {
-  const escapeRegex = (value: string) => value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
-  const entryIds = Object.keys(entrypoints)
-  const entrypointIdFilter = entryIds.length > 0
-    ? new RegExp(`^(?:${entryIds.map(escapeRegex).join('|')})$`)
-    : /^$/
-  const turboIdFilter = /(?:^|[\\/])iles[\\/]turbo(?:\?|$)/
-
   return {
     name: 'iles:entrypoints',
-    resolveId: {
-      filter: { id: [entrypointIdFilter, turboIdFilter] },
-      handler (id, importer) {
-        if (id in entrypoints)
-          return VIRTUAL_PREFIX + id
+    resolveId (id, importer) {
+      if (id in entrypoints)
+        return VIRTUAL_PREFIX + id
 
-        if (relative(root, id.split('?', 2)[0]) === VIRTUAL_TURBO_ID)
-          return VIRTUAL_TURBO_ID
-      },
+      if (relative(root, id.split('?', 2)[0]) === VIRTUAL_TURBO_ID)
+        return VIRTUAL_TURBO_ID
     },
-    load: {
-      filter: { id: { include: [/^virtual_ile_/, VIRTUAL_TURBO_ID] } },
-      async handler (id) {
-        if (id.startsWith(VIRTUAL_PREFIX))
-          return entrypoints[id.slice(VIRTUAL_PREFIX.length)]
+    async load (id) {
+      if (id.startsWith(VIRTUAL_PREFIX))
+        return entrypoints[id.slice(VIRTUAL_PREFIX.length)]
 
-        if (id === VIRTUAL_TURBO_ID)
-          return await fs.readFile(TURBO_SCRIPT_PATH, 'utf-8')
-      },
+      if (id === VIRTUAL_TURBO_ID)
+        return await fs.readFile(TURBO_SCRIPT_PATH, 'utf-8')
     },
   }
 }
