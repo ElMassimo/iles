@@ -10,6 +10,7 @@ import {
 //
 // NOTE: Supports v-slots for consistency with @vue/babel-plugin-jsx.
 function jsx (type, { children, 'v-slots': vSlots, ...props }) {
+  wrapListeners(props, type)
   let slots
 
   if (children) {
@@ -29,6 +30,28 @@ function jsx (type, { children, 'v-slots': vSlots, ...props }) {
   }
 
   return createVNode(type, props, slots)
+}
+
+function wrapListeners (props, type) {
+  if (!props || typeof window === 'undefined') return
+
+  for (const [key, value] of Object.entries(props)) {
+    if (!/^on[A-Z]/.test(key) || typeof value !== 'function') continue
+    props[key] = (...args) => guardListenerCall(
+      () => value(...args),
+      args[0],
+      {
+        source: 'mdx',
+        event: key.slice(2),
+        tag: typeof type === 'string' ? type : type?.name || 'Component',
+      },
+    )
+  }
+}
+
+function guardListenerCall (handler, event, details) {
+  const guard = typeof window !== 'undefined' && window.__ILE_GUARD_LISTENER_CALL__
+  return guard ? guard(handler, event, details) : handler()
 }
 
 // Internal: Extends it to be a stateful component that can perform prop checks.

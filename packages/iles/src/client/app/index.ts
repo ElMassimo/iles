@@ -1,6 +1,7 @@
 import { createApp as createClientApp, createSSRApp, ref } from 'vue'
 import { createMemoryHistory, createRouter as createVueRouter, createWebHistory } from 'vue-router'
 import { createHead } from '@unhead/vue'
+import './listenerGuard'
 
 import routes from '@islands/routes'
 import config from '@islands/app-config'

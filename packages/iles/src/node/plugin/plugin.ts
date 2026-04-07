@@ -134,8 +134,23 @@ export default function IslandsPlugins (appConfig: AppConfig): PluginOption[] {
         if (query.vue !== undefined && query.type === 'script-client')
           return 'export default {}; if (import.meta.hot) import.meta.hot.accept()'
 
-        if (isSFCMain(path, query) && code.includes('client:') && code.includes('<template'))
-          return wrapIslandsInSFC(appConfig, code, path)
+        const sfcMain = isSFCMain(path, query)
+        const isPageOrLayout = isLayout(path) || plugins.pages.api.isPage(path)
+        const shouldProcessListeners = !isBuild && isPageOrLayout
+
+        if (sfcMain && code.includes('client:') && code.includes('<template'))
+          return wrapIslandsInSFC(appConfig, code, path, {
+            analyzeListeners: shouldProcessListeners,
+            wrapListeners: shouldProcessListeners,
+            warn: ({ message }) => console.warn(message),
+          })
+
+        if (sfcMain && shouldProcessListeners && code.includes('<template') && (code.includes('@') || code.includes('v-on:')))
+          return wrapIslandsInSFC(appConfig, code, path, {
+            analyzeListeners: true,
+            wrapListeners: true,
+            warn: ({ message }) => console.warn(message),
+          })
       },
     },
     {
