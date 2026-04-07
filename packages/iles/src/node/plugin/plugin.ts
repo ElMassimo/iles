@@ -3,7 +3,7 @@ import { basename, resolve, relative } from 'pathe'
 import type { PluginOption, ResolvedConfig, ViteDevServer } from 'vite'
 import { transformWithOxc } from 'vite'
 
-import { RolldownMagicString as MagicString } from 'rolldown'
+import type { RolldownMagicString as MagicString } from 'rolldown'
 
 import type { AppConfig, AppClientConfig } from '../shared'
 import { ILES_APP_ENTRY } from '../constants'
@@ -128,25 +128,25 @@ export default function IslandsPlugins (appConfig: AppConfig): PluginOption[] {
     {
       name: 'iles:detect-islands-in-vue',
       enforce: 'pre',
-      async transform (code, id) {
+      async transform (code, id, meta) {
         const { path, query } = parseId(id)
 
         if (query.vue !== undefined && query.type === 'script-client')
           return 'export default {}; if (import.meta.hot) import.meta.hot.accept()'
 
         if (isSFCMain(path, query) && code.includes('client:') && code.includes('<template'))
-          return wrapIslandsInSFC(appConfig, code, path)
+          return wrapIslandsInSFC(appConfig, code, path, (meta as any).magicString)
       },
     },
     {
       name: 'iles:layouts',
       enforce: 'pre',
-      transform (code, id) {
+      transform (code, id, meta) {
         const { path, query } = parseId(id)
         if (!isSFCMain(path, query) || !isLayout(path)) return
         const layoutName = code.match(templateLayoutRegex)?.[1] || false
         if (String(layoutName) === 'false') return
-        return wrapLayout(code, path)
+        return wrapLayout(code, path, (meta as any).magicString)
       },
     },
 
@@ -171,7 +171,7 @@ export default function IslandsPlugins (appConfig: AppConfig): PluginOption[] {
     {
       name: 'iles:page-data',
       enforce: 'post',
-      async transform (code, id, options) {
+      async transform (code, id, transformMeta) {
         const { path, query } = parseId(id)
         const isMdx = isMarkdown(path)
         if (!isMdx && !isVueScript(path, query)) return
@@ -184,7 +184,7 @@ export default function IslandsPlugins (appConfig: AppConfig): PluginOption[] {
         if (!sfcIndex || sfcIndex === -1)
           return
 
-        const s = new MagicString(code)
+        const s = (transformMeta as any).magicString as MagicString
         const appendToSfc = (key: string, value?: string) =>
           s.appendRight(sfcIndex, value ? `${key}:${value},` : `${key},`)
 

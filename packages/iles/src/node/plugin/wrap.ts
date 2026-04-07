@@ -1,4 +1,4 @@
-import { RolldownMagicString as MagicString } from 'rolldown'
+import type { RolldownMagicString as MagicString } from 'rolldown'
 import type { SFCBlock } from 'vue/compiler-sfc'
 import { parse } from 'vue/compiler-sfc'
 import type { ComponentInfo, PublicPluginAPI as ComponentsApi } from 'unplugin-vue-components/types'
@@ -15,11 +15,9 @@ interface SfcRootNode extends RootNode {
 
 export const unresolvedIslandKey = '__viteIslandComponent'
 
-export async function wrapLayout (code: string, filename: string) {
+export async function wrapLayout (code: string, filename: string, s: MagicString) {
   const { descriptor: { template }, errors } = parse(code, { filename })
   if (errors.length > 0 || !template || !isString(template.attrs.layout)) return
-
-  const s = new MagicString(code)
 
   const nodes = template.ast?.children
   if (!nodes?.length) {
@@ -38,9 +36,14 @@ export async function wrapLayout (code: string, filename: string) {
 
 const scriptClientRE = /<script\b([^>]*\bclient:[^>]*)>([^]*?)<\/script>/
 
-export async function wrapIslandsInSFC (config: AppConfig, code: string, filename: string) {
-  code = code.replace(scriptClientRE, (_, attrs, content) =>
-    `<script-client${attrs}>${content}</script-client>`)
+export async function wrapIslandsInSFC (config: AppConfig, code: string, filename: string, s: MagicString) {
+  const match = scriptClientRE.exec(code)
+  if (match) {
+    const [full, attrs, content] = match
+    const replacement = `<script-client${attrs}>${content}</script-client>`
+    s.overwrite(match.index, match.index + full.length, replacement)
+    code = s.toString()
+  }
 
   const { descriptor: { template, script, scriptSetup, customBlocks }, errors } = parse(code, { filename })
   const scriptClientIndex = customBlocks.findIndex(b => b.type === 'script-client')
@@ -55,8 +58,6 @@ export async function wrapIslandsInSFC (config: AppConfig, code: string, filenam
     return
   }
   const sfcRootNode = template.ast as any as SfcRootNode
-
-  const s = new MagicString(code)
   const components: ComponentsApi = config.namedPlugins.components.api
 
   if (scriptClient) { await injectClientScript(sfcRootNode, s, filename, scriptClientIndex, scriptClient) }
