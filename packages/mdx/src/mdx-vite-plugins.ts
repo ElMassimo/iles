@@ -28,6 +28,8 @@ export default function IlesMdx (options: MarkdownOptions = {}): Plugin[] {
     })
   }
 
+  const markdownIdFilter = /\.(?:md|mdx)(?:$|\?)/
+
   return [
     {
       name: 'iles:mdx:compile',
@@ -37,20 +39,25 @@ export default function IlesMdx (options: MarkdownOptions = {}): Plugin[] {
         await createMdxProcessor(isDevelopment || config.build.sourcemap)
       },
 
-      async transform (value, path) {
-        if (!shouldTransform(path)) return
+      transform: {
+        filter: { id: markdownIdFilter },
+        async handler (value, path) {
+          if (!shouldTransform(path)) return
 
-        const compiled = await markdownProcessor.process({ value, path })
-        return { code: String(compiled.value), map: compiled.map } as TransformResult
+          const compiled = await markdownProcessor.process({ value, path })
+          return { code: String(compiled.value), map: compiled.map } as TransformResult
+        },
       },
     },
     {
       name: 'iles:mdx:sfc',
 
-      async transform (code, path) {
-        if (!shouldTransform(path)) return
+      transform: {
+        filter: { id: markdownIdFilter },
+        async handler (code, path) {
+          if (!shouldTransform(path)) return
 
-        return code.replace('export default function MDXContent', () => `
+          return code.replace('export default function MDXContent', () => `
 import { defineComponent as $defineComponent } from 'iles/jsx-runtime'
 
 const _sfc_main = /* @__PURE__ */ $defineComponent(MDXContent, {${
@@ -59,17 +66,20 @@ const _sfc_main = /* @__PURE__ */ $defineComponent(MDXContent, {${
 export default _sfc_main
 
 function MDXContent`)
+        },
       },
     },
     {
       name: 'iles:mdx:hmr',
       apply: 'serve',
-      transform (code: string, path: string) {
-        if (!shouldTransform(path)) return
+      transform: {
+        filter: { id: markdownIdFilter },
+        handler (code: string, path: string) {
+          if (!shouldTransform(path)) return
 
-        const hmrId = hash(`${path.split('?', 2)[0]}default`)
+          const hmrId = hash(`${path.split('?', 2)[0]}default`)
 
-        return `${code}
+          return `${code}
       _sfc_main.__hmrId = "${hmrId}"
       __VUE_HMR_RUNTIME__.createRecord("${hmrId}", _sfc_main)
       import.meta.hot?.accept(({ default: component } = {}) => {
@@ -77,6 +87,7 @@ function MDXContent`)
           __VUE_HMR_RUNTIME__.reload(component.__hmrId, component)
       })
       `
+        },
       },
     },
   ]
