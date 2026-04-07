@@ -1,6 +1,6 @@
 import { posix } from 'path'
 import { init as initESLexer, parse as parseESModules } from 'es-module-lexer'
-import MagicString from 'magic-string'
+import { RolldownMagicString as MagicString } from 'rolldown'
 import type { AppConfig } from '../shared'
 
 export default async function rebaseImports ({ base, assetsDir }: AppConfig, codeStr: string) {
@@ -15,7 +15,7 @@ export default async function rebaseImports ({ base, assetsDir }: AppConfig, cod
         s += 1
         e -= 1
       }
-      code.overwrite(s, e, posix.join(assetsBase, code.slice(s, e)), { contentOnly: true })
+      code.overwrite(s, e, posix.join(assetsBase, code.slice(s, e)))
     })
     return code.toString()
   }

@@ -3,7 +3,7 @@ import { basename, resolve, relative } from 'pathe'
 import type { PluginOption, ResolvedConfig, ViteDevServer } from 'vite'
 import { transformWithOxc } from 'vite'
 
-import MagicString from 'magic-string'
+import { RolldownMagicString as MagicString } from 'rolldown'
 
 import type { AppConfig, AppClientConfig } from '../shared'
 import { ILES_APP_ENTRY } from '../constants'
@@ -190,7 +190,7 @@ export default function IslandsPlugins (appConfig: AppConfig): PluginOption[] {
 
         if (isLayoutFile) {
           appendToSfc('name', `'${pascalCase(basename(path).replace('.vue', 'Layout'))}'`)
-          return s.toString()
+          return { code: s }
         }
 
         appendToSfc('inheritAttrs', serialize(false))
@@ -222,7 +222,7 @@ export default function IslandsPlugins (appConfig: AppConfig): PluginOption[] {
             : `() => import('${layoutsRoot}/${layout}.vue').then(m => m.default)`)
         }
 
-        return s.toString()
+        return { code: s }
       },
     },
 

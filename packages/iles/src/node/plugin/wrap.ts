@@ -1,4 +1,4 @@
-import MagicString from 'magic-string'
+import { RolldownMagicString as MagicString } from 'rolldown'
 import type { SFCBlock } from 'vue/compiler-sfc'
 import { parse } from 'vue/compiler-sfc'
 import type { ComponentInfo, PublicPluginAPI as ComponentsApi } from 'unplugin-vue-components/types'
@@ -33,7 +33,7 @@ export async function wrapLayout (code: string, filename: string) {
   s.appendLeft(nodes[0].loc.start.offset, `<${Layout}>`)
   s.appendRight(nodes[nodes.length - 1].loc.end.offset, `</${Layout}>`)
 
-  return { code: s.toString(), map: s.generateMap({ hires: true }) }
+  return { code: s }
 }
 
 const scriptClientRE = /<script\b([^>]*\bclient:[^>]*)>([^]*?)<\/script>/
@@ -77,7 +77,7 @@ export async function wrapIslandsInSFC (config: AppConfig, code: string, filenam
   if (!scriptSetup && injectionOffset === 0)
     s.appendRight(0, '\n</script>\n')
 
-  return { code: s.toString(), map: s.generateMap({ hires: true }) }
+  return { code: s }
 
   async function resolveComponentImport (strategy: string, tagName: string): Promise<ComponentInfo> {
     debug.detect(`<${tagName} ${strategy}>`)
@@ -114,11 +114,11 @@ async function visitSFCNode (node: ElementNode, s: MagicString, resolveComponent
 
     // Replace opening tag.
     s.overwrite(start.offset + 1, start.offset + 1 + tag.length,
-      `Island ${componentProps.replace(/\n\s*/g, ' ')}`, { contentOnly: true })
+      `Island ${componentProps.replace(/\n\s*/g, ' ')}`)
 
     // Replace closing tag.
     if (!node.isSelfClosing)
-      s.overwrite(end.offset - 1 - tag.length, end.offset - 1, 'Island', { contentOnly: true })
+      s.overwrite(end.offset - 1 - tag.length, end.offset - 1, 'Island')
   }
 
   if ('children' in node) {
