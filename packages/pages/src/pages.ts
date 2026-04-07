@@ -8,6 +8,9 @@ import { MODULE_ID } from './types'
 
 export * from './types'
 
+const escapedModuleId = MODULE_ID.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+const moduleIdRegex = new RegExp(`^(?:\\0|/@id/)?${escapedModuleId}(?:\\?.*)?$`)
+
 /**
  * An iles module that injects remark plugins to parse pages and expose it
  * to the MDX JS expressions as `meta` and `pages`.
@@ -63,17 +66,23 @@ export default function IlesPages (): any {
       async buildStart () {
         await api.addAllPages()
       },
-      async resolveId (id) {
-        if (id === MODULE_ID)
+      resolveId: {
+        filter: { id: moduleIdRegex },
+        async handler (_id) {
           return MODULE_ID
+        },
       },
-      async load (id) {
-        if (id === MODULE_ID)
+      load: {
+        filter: { id: moduleIdRegex },
+        async handler (_id) {
           return generatedRoutes ||= await api.generateRoutesModule()
+        },
       },
-      async transform (_code, id) {
-        if (id.includes('vue&type=page'))
+      transform: {
+        filter: { id: /vue&type=page/ },
+        async handler (_code, _id) {
           return 'export default {};'
+        },
       },
     }
 

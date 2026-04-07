@@ -46,11 +46,12 @@ export default function IlesImagePresets (presets: ImagePresets, options?: Optio
         plugin,
         {
           name: '@islands/images:inject-mdx-component',
-          transform (code, id) {
-            if (id.includes('/composables/mdxComponents.js')) {
+          transform: {
+            filter: { id: /\/composables\/mdxComponents\.js/ },
+            handler (code, _id) {
               code = code.replace('inject(mdxComponentsKey)', '{ img: _Picture, ...inject(mdxComponentsKey) }')
               return `import _Picture from '${PICTURE_COMPONENT_PATH}'\n${code}`
-            }
+            },
           },
         },
       ],

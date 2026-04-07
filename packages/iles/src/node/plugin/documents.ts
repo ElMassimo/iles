@@ -10,9 +10,10 @@ import { debug, serialize } from './utils'
 const definitionRegex = /(function|const|let|var)[\s\n]+\buseDocuments\b/
 const usageRegex = /\buseDocuments[\s\n]*\(([^)]+)\)/g
 
-const fileCanUseDocuments = /(\.vue|\.[tj]sx?)$/
+const fileCanUseDocuments = /(\.vue|\.[tj]sx?)(?:$|\?)/
 
 const DOCS_VIRTUAL_ID = '/@islands/documents'
+const docsVirtualIdFilter = new RegExp(`^${DOCS_VIRTUAL_ID.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}(?:\\?|$)`)
 
 interface DocumentModule {
   pattern: string
@@ -31,55 +32,57 @@ export default function documentsPlugin (config: AppConfig): Plugin {
     configureServer (devServer) {
       server = devServer
     },
-    resolveId (id) {
-      if (id.startsWith(DOCS_VIRTUAL_ID))
+    resolveId: {
+      filter: { id: docsVirtualIdFilter },
+      handler (id) {
         return id
+      },
     },
     // Extract frontmatter for each file in the matching pattern, and create a
     // module where the default export is an array with each matching document.
-    async load (id, options) {
-      if (!id.startsWith(DOCS_VIRTUAL_ID)) return
+    load: {
+      filter: { id: docsVirtualIdFilter },
+      async handler (id, _options) {
+        const { query: { pattern: rawPath } } = parseId(id)
 
-      const { query: { pattern: rawPath } } = parseId(id)
+        // Extract pattern from the virtual module path, and resolve any alias.
+        const path = relative(root, await config.resolvePath(rawPath) || rawPath)
+        const pattern = path.includes('*') ? path : `${path}/**/*.{md,mdx}`
 
-      // Extract pattern from the virtual module path, and resolve any alias.
-      const path = relative(root, await config.resolvePath(rawPath) || rawPath)
-      const pattern = path.includes('*') ? path : `${path}/**/*.{md,mdx}`
+        // Allow Vite to automatically detect added or removed files.
+        if (server)
+          modulesById[id] = { pattern, hasDocument: path => micromatch.isMatch(path, pattern) }
 
-      // Allow Vite to automatically detect added or removed files.
-      if (server)
-        modulesById[id] = { pattern, hasDocument: path => micromatch.isMatch(path, pattern) }
+        // Obtain files matching the specified pattern and extract frontmatter.
+        const files = await glob(pattern, { cwd: root })
+        debug.documents('%s %O', rawPath, { path, pattern, files })
 
-      // Obtain files matching the specified pattern and extract frontmatter.
-      const files = await glob(pattern, { cwd: root })
-      debug.documents('%s %O', rawPath, { path, pattern, files })
+        let data = await Promise.all(files.map(async (file) => {
+          const frontmatter = await pages.api.frontmatterForPageOrFile(file)
+          frontmatter.meta.filename ||= file
+          return frontmatter
+        }))
 
-      let data = await Promise.all(files.map(async (file) => {
-        const frontmatter = await pages.api.frontmatterForPageOrFile(file)
-        frontmatter.meta.filename ||= file
-        return frontmatter
-      }))
+        // Filter drafts from documents if needed.
+        if (!drafts)
+          data = data.filter(page => !page.draft)
+        debug.documents(`${files.length} files, ${data.length} documents, drafts: ${drafts}`)
 
-      // Filter drafts from documents if needed.
-      if (!drafts)
-        data = data.filter(page => !page.draft)
-      debug.documents(`${files.length} files, ${data.length} documents, drafts: ${drafts}`)
+        // Create the structure of each document in the default export.
+        const documents = data.map(({ route: _, meta, layout, ...frontmatter }, index) => {
+          return { ...meta, ...frontmatter, meta, frontmatter, component: `${index}_component` }
+        })
 
-      // Create the structure of each document in the default export.
-      const documents = data.map(({ route: _, meta, layout, ...frontmatter }, index) => {
-        return { ...meta, ...frontmatter, meta, frontmatter, component: `${index}_component` }
-      })
+        // Serialize all the documents, adding a `component` factory function.
+        const serialized = serialize(documents).replace(/component:"(\w+)"/g, (_, id) => {
+          const index = id.split('_component')[0]
+          return `component: unwrapDefault(() => import('/${documents[index].filename}'))`
+        })
 
-      // Serialize all the documents, adding a `component` factory function.
-      const serialized = serialize(documents).replace(/component:"(\w+)"/g, (_, id) => {
-        const index = id.split('_component')[0]
-        return `component: unwrapDefault(() => import('/${documents[index].filename}'))`
-      })
-
-      // Use defineAsyncComponent to support using <component :is="doc">.
-      // HMR works by updating the value of the computed ref, while preserving
-      // any previously resolved component promises to avoid refetching.
-      return `
+        // Use defineAsyncComponent to support using <component :is="doc">.
+        // HMR works by updating the value of the computed ref, while preserving
+        // any previously resolved component promises to avoid refetching.
+        return `
         import { shallowRef, defineAsyncComponent } from 'vue'
 
         export const documents = ${serialized}
@@ -108,25 +111,29 @@ export default function documentsPlugin (config: AppConfig): Plugin {
             mod.documents.ref = documents.ref
           })
         }
-      `
+        `
+      },
     },
-    async transform (code, id) {
-      // Replace each usage of useDocuments with an import of a virtual module.
-      if (fileCanUseDocuments.test(id) && !definitionRegex.test(code)) {
-        const paths: [string, string][] = []
-        code = code.replace(usageRegex, (_, path) => {
-          path = path.trim().slice(1, -1)
-          const id = `_documents_${paths.length}`
-          paths.push([id, path])
-          return id
-        })
-        if (paths.length) {
-          const imports = paths.map(([id, path]) =>
-            `import ${id} from '${DOCS_VIRTUAL_ID}?pattern=${path}'`)
+    transform: {
+      filter: { id: fileCanUseDocuments },
+      async handler (code, id) {
+        // Replace each usage of useDocuments with an import of a virtual module.
+        if (!definitionRegex.test(code)) {
+          const paths: [string, string][] = []
+          code = code.replace(usageRegex, (_, path) => {
+            path = path.trim().slice(1, -1)
+            const id = `_documents_${paths.length}`
+            paths.push([id, path])
+            return id
+          })
+          if (paths.length) {
+            const imports = paths.map(([id, path]) =>
+              `import ${id} from '${DOCS_VIRTUAL_ID}?pattern=${path}'`)
 
-          return `${code};${imports.join(';')}`
+            return `${code};${imports.join(';')}`
+          }
         }
-      }
+      },
     },
     hotUpdate ({ file, modules }) {
       const relFile = relative(root, file)
