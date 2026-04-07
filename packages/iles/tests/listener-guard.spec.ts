@@ -1,6 +1,6 @@
 import { describe, expect, test } from 'vite-plus/test'
 
-import { guardListenerCall } from '@client/app/listenerGuard'
+import { guardListenerCall } from '../src/client/app/listenerGuard'
 
 describe('listener guard', () => {
   test('calls original handler when no island context and reports once', () => {
