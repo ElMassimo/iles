@@ -14,7 +14,7 @@ import { parseId } from './parse'
 import { wrapIslandsInSFC, wrapLayout } from './wrap'
 import { extendSite } from './site'
 import { detectMDXComponents } from './markdown'
-import { autoImportComposables, writeComposablesDTS } from './composables'
+import { autoImportComposables, composablesInjectConfig, writeComposablesDTS } from './composables'
 import documents from './documents'
 
 function isMarkdown (path: string) {
@@ -159,7 +159,17 @@ export default function IslandsPlugins (appConfig: AppConfig): PluginOption[] {
     {
       name: 'iles:composables',
       enforce: 'post',
+      config () {
+        return {
+          build: {
+            rolldownOptions: {
+              transform: { inject: composablesInjectConfig },
+            },
+          },
+        }
+      },
       async transform (code, id) {
+        if (isBuild) return
         if (!id.startsWith(appConfig.srcDir)) return
 
         const { path, query } = parseId(id)
