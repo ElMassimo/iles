@@ -14,6 +14,10 @@ const composables = [
   'useRoute',
 ]
 
+export const composablesInjectConfig: Record<string, [string, string]> = Object.fromEntries(
+  composables.map(name => [name, ['iles', name]]),
+)
+
 export async function autoImportComposables (code: string, id: string): Promise<string | undefined> {
   const matches = Array.from(code.matchAll(composableUsageRegex))
   if (matches.length === 0) return
